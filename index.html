@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ElementZoom Live Demo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+body{margin:0}
+/* Layout: guide column beside a device on wide screens; on phones the guide is one compact card above a full-width live dashboard. */
+@font-face{font-family:"Outfit";src:url("app/fonts/outfit.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Plus Jakarta Sans";src:url("app/fonts/plus-jakarta-sans.woff2") format("woff2");font-weight:200 800;font-display:swap}
+:root{
+  --bg:#f3f2f8; --panel:#ffffff; --line:#dddbe8; --fg:#171628; --muted:#5f5c75;
+  --accent:#5b3fe6; --accent-ink:#ffffff; --hint:#f2a93b; --ok:#16996a; --ok-bg:#e3f6ee;
+  --bezel:#0c0d14; --shadow:0 30px 60px -28px rgba(30,20,80,.45);
+  --display:"Outfit",ui-sans-serif,system-ui,sans-serif; --body:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c0d16; --panel:#151726; --line:#272a3e; --fg:#ecebf5; --muted:#a29fba;
+  --accent:#c4b4ff; --accent-ink:#1a1240; --hint:#ffbe5a; --ok:#4fd59a; --ok-bg:#12291f;
+  --bezel:#05060a; --shadow:0 30px 70px -26px rgba(0,0,0,.8); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c0d16; --panel:#151726; --line:#272a3e; --fg:#ecebf5; --muted:#a29fba;
+  --accent:#c4b4ff; --accent-ink:#1a1240; --hint:#ffbe5a; --ok:#4fd59a; --ok-bg:#12291f;
+  --bezel:#05060a; --shadow:0 30px 70px -26px rgba(0,0,0,.8); color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--body)}
+.demo{display:grid;grid-template-columns:minmax(300px,360px) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start;
+  max-width:1440px;margin:0 auto;padding-block:28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.guide{display:flex;flex-direction:column;gap:20px;min-width:0}
+.eyebrow{display:flex;align-items:center;gap:8px;font:600 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.live{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 var(--ok);animation:live 2s infinite}
+@keyframes live{70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;margin:10px 0 8px;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:40ch}
+.seg{display:inline-flex;padding:4px;border-radius:999px;background:var(--panel);border:1px solid var(--line);gap:2px;align-self:flex-start}
+.seg button{border:0;background:transparent;color:var(--muted);font:600 13px/1 var(--body);padding:9px 16px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.step{border-radius:16px;border:1px solid transparent;transition:background .2s,border-color .2s}
+.step > button.head{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:12px;padding:11px 14px;cursor:pointer;border-radius:16px}
+.step > button.head:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.num{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:600 13px/1 var(--display);border:1.5px solid var(--line);color:var(--muted);font-variant-numeric:tabular-nums}
+.step .t{font:500 15.5px/1.3 var(--display)}
+.step.done .num{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+.step.done .t{color:var(--muted)}
+.step.on{background:var(--panel);border-color:var(--line);box-shadow:var(--shadow)}
+.step.on .num{border-color:var(--accent);color:var(--accent)}
+.step.on.done .num{color:var(--bg)}
+.body{display:none;padding:0 16px 16px 54px}
+.step.on .body{display:block}
+.body p{margin:0 0 12px;color:var(--muted);font-size:14.5px}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.btn{font:600 13.5px/1 var(--body);border-radius:999px;padding:11px 16px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--fg)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn:disabled{opacity:.5;cursor:default}
+.okmsg{display:none;margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--ok-bg);color:var(--ok);font-weight:600;font-size:13.5px}
+.step.on.done .okmsg{display:block}
+.finish{border-radius:18px;padding:20px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow)}
+.finish h2{font:600 22px/1.2 var(--display);margin:0 0 6px}
+.finish p{margin:0 0 14px;color:var(--muted)}
+.finish a.btn{display:inline-block;text-decoration:none}
+.foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;font-size:12.5px;color:var(--muted)}
+.foot button{all:unset;cursor:pointer;color:var(--fg);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.foot button:focus-visible{outline:2px solid var(--accent)}
+.stage{min-width:0;display:flex;justify-content:center;position:sticky;top:max(16px,env(safe-area-inset-top,0px))}
+.device{position:relative;background:var(--bezel);box-shadow:var(--shadow),inset 0 0 0 1px rgba(255,255,255,.08)}
+.device.tablet{border-radius:30px;padding:16px;width:100%;max-width:1060px}
+.device.phone{border-radius:48px;padding:11px;width:auto}
+.screen{position:relative;overflow:hidden;background:#000;border-radius:16px}
+.device.phone .screen{border-radius:38px}
+.screen iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;display:block;background:#0c0d16}
+.loading{position:absolute;inset:0;display:grid;place-items:center;color:#a29fba;font:500 13px var(--body);pointer-events:none;transition:opacity .4s}
+.dock{display:flex;flex-direction:column;gap:20px;min-width:0}
+.dockhead{display:none}
+
+/* ---- phones and small tablets ---- */
+@media (max-width:900px){
+  .demo{grid-template-columns:minmax(0,1fr);gap:14px;padding-block:14px}
+  .guide{gap:12px}
+  h1{font-size:25px;margin:8px 0 4px}
+  .lede,.seg{display:none}
+  .steps .step:not(.on){display:none}
+  .step.on{box-shadow:none}
+  .step > button.head{cursor:default;padding:12px 14px 6px}
+  .body{padding:0 14px 14px}
+  .stage{flex-direction:column;align-items:stretch;gap:10px}
+  .dock{gap:8px}
+  .dockhead{display:flex;align-items:center;gap:12px}
+  .mnav{display:flex;gap:6px}
+  .step .t{font-size:15px}
+  .body p{font-size:13.5px;margin-bottom:10px}
+  .btn{padding:10px 14px}
+  .finish{padding:16px}
+  .mnav button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:600 16px/1 var(--body);cursor:pointer}
+  .mnav button:disabled{opacity:.35}
+  .bar{display:flex;gap:4px;flex:1}
+  .bar i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+  .bar i.done{background:var(--ok)}
+  .bar i.on{background:var(--accent)}
+  .stage{position:static}
+  .device.phone{border-radius:0;padding:0;background:none;box-shadow:none;width:100%}
+  .device.phone .screen{border-radius:22px;box-shadow:var(--shadow)}
+}
+@media (prefers-reduced-motion:reduce){.live{animation:none}*{transition:none!important}}
+</style>
+
+<div class="demo" id="demo">
+  <section class="guide" aria-label="Guided tour">
+    <div>
+      <div class="eyebrow"><span class="live" aria-hidden="true"></span><span>Live demo</span></div>
+      <h1>Try the app your home runs on</h1>
+      <p class="lede">This is the real ElementZoom dashboard, running on a pretend house. Follow the steps, or tap around on your own.</p>
+    </div>
+    <div class="seg" role="group" aria-label="Screen size">
+      <button id="v-tablet" aria-pressed="true">Wall tablet</button><button id="v-phone" aria-pressed="false">Phone</button>
+    </div>
+    <div class="dock" id="dock">
+    <div class="dockhead"><div class="bar" id="bar" aria-hidden="true"></div><span class="mnav"><button id="prev" aria-label="Previous step">‹</button><button id="next" aria-label="Next step">›</button></span></div>
+    <ol class="steps" id="steps"></ol>
+    <div class="finish" id="finish" hidden>
+      <h2>That's the whole house, in one app</h2>
+      <p>We set this up in your home: your lights, heating, cameras, garage and garden, on a wall tablet and every phone in the family.</p>
+      <div class="acts"><a class="btn primary" href="https://wa.me/64225294960" target="_blank" rel="noopener">Book a free consultation</a><a class="btn" href="https://elementzoom.co.nz/our-packages/" target="_blank" rel="noopener">See packages</a></div>
+    </div>
+    </div>
+    <div class="foot"><button id="reset">Reset demo</button><span>Pretend devices only. Nothing here controls a real home.</span></div>
+  </section>
+  <section class="stage" aria-label="Dashboard">
+    <div class="device tablet" id="device">
+      <div class="screen" id="screen">
+        <div class="loading" id="loading">Loading the dashboard…</div>
+        <iframe id="dash" title="ElementZoom dashboard, live demo" src="app/dash.html#home"></iframe>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var frame = $("dash"), screen = $("screen"), device = $("device");
+  var narrow = matchMedia("(max-width:900px)");
+  var mode = narrow.matches ? "phone" : "tablet";
+  var D = null, W = null, active = 0, done = {}, armed = {}, scrolled = null, scrollN = 0, scrollT = 0;
+
+  // ---------- looking inside the dashboard ----------
+  function vis(el) {
+    if (!el || !W) return false; var r = el.getBoundingClientRect();
+    if (r.width < 4 || r.height < 4 || r.bottom < 6 || r.right < 6 || r.top > W.innerHeight - 6 || r.left > W.innerWidth - 6) return false;
+    var x = Math.min(Math.max(r.left + r.width / 2, 2), W.innerWidth - 2), y = Math.min(Math.max(r.top + r.height / 2, 2), W.innerHeight - 2);
+    var hit = D.elementFromPoint(x, y); return !!hit && (hit === el || el.contains(hit));
+  }
+  function all(sel) { return D ? Array.prototype.slice.call(D.querySelectorAll(sel)) : []; }
+  function q(sel, text) { var re = text && new RegExp(text, "i"); return all(sel).filter(function (e) { return !re || re.test(e.textContent); }).find(vis) || null; }
+  function shown(el) { if (!el) return false; var r = el.getBoundingClientRect(), pg = el.closest && el.closest(".page"); return r.width > 4 && r.height > 4 && (!pg || pg.classList.contains("on")); }
+  function qd(sel, text) { var re = text && new RegExp(text, "i"); var L = all(sel).filter(function (e) { return (!re || re.test(e.textContent)) && shown(e); }); return L.find(vis) || L[0] || null; }   // on the current page, even if scrolled out of view
+  function card(name) { return all("#climate section.card").find(function (c) { return new RegExp(name, "i").test(c.textContent); }) || null; }
+  function cam(name) { var L = all(".cam").filter(function (c) { var l = c.querySelector(".lbl"); return l && new RegExp(name, "i").test(l.textContent) && shown(c); }); return L.find(vis) || L[0] || null; }
+  function hit(e, id) { var t = e.target && e.target.entity_id || e.data && e.data.entity_id; return [].concat(t || []).indexOf(id) > -1; }
+  function go(hash) { if (W) W.location.hash = hash; }
+
+  // ---------- the tour ----------
+  var STEPS = [
+    { title: "Switch a light", text: "Tap the Living Lights tile to switch it off and on. Press and hold it to dim it or change the colour.",
+      ok: "Every light in the house works the same way, from any room.", go: "#rooms/living",
+      chain: [[function () { return qd('[data-e="light.demo_living_lights"]'); }, "Tap · or hold to dim"],
+              [function () { return q('a[href="#rooms/living"]'); }, "Open Living area"], [function () { return q('a[href="#rooms"]'); }, "Open Rooms"]],
+      when: function (e) { return e.kind === "service" && hit(e, "light.demo_living_lights"); } },
+    { title: "Warm up the bedroom", text: "Turn on heating in the Master bedroom, or press + to raise the target. Watch the room temperature start to climb.",
+      ok: "Heating can also come on by itself before bedtime.", go: "#climate",
+      after: function () { var c = card("Master bedroom"); if (c) c.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" }); },
+      chain: [[function () { var c = card("Master bedroom"); if (!c) return null; if (!shown(c)) return null; return [c.querySelector('button[data-m="heat"]:not(.on)'), c.querySelector('button[data-d="1"]')].find(shown) || null; }, "Turn up the heat"],
+              [function () { return q('a[href="#climate"]'); }, "Open Climate"], [function () { return q("#bmore"); }, "Tap More"]],
+      when: function (e) { return e.kind === "service" && e.domain === "climate" && hit(e, "climate.demo_master"); } },
+    { title: "Close the curtains", text: "In the Master bedroom, tap Close all and watch both curtains move. Most clients have this happen on its own at sunset.",
+      ok: "Curtains, blinds and shades all work like this.", go: "#rooms/master",
+      chain: [[function () { return qd("button.eb", "^\\s*close all\\s*$"); }, "Close all"], [function () { return q('a[href="#rooms/master"]'); }, "Open Master bedroom"], [function () { return q("button.chip", "^\\s*main\\s*$"); }, "Show the main rooms"], [function () { return q('a[href="#rooms"]'); }, "Open Rooms"]],
+      when: function (e) { return e.kind === "service" && e.domain === "cover" && /master_curtain/.test(JSON.stringify(e.target || e.data)); } },
+    { title: "Someone's on the driveway", text: "Send a visitor up the driveway. The camera tags them as a person straight away. Then tap the camera to see it full screen.",
+      ok: "On a real install your phone gets the alert with a snapshot, even when you're out.",
+      action: ["Send a visitor", function () { W.DEMO.person(true); go(mode === "phone" ? "#security" : "#home"); }],
+      chain: [[function () { return armed[3] && !D.querySelector(".cam.fs") ? cam("driveway") : null; }, "Tap to watch"]],
+      check: function () { return armed[3] && D.querySelector(".cam.fs"); } },
+    { title: "The garage was left open", text: "Leave the garage door open and see the camera turn red. Then close it from the Garage room: tap the door tile twice to confirm.",
+      ok: "On a real install the door can also close itself after a set time.",
+      action: ["Leave it open", function () { var x = D.querySelector(".cam.fs .cx"); if (x) x.click(); W.DEMO.garage(true); go(mode === "phone" ? "#security" : "#home"); }],
+      chain: [[function () { return armed[4] === true ? qd('[data-e="switch.demo_garage_opener"]') : null; }, "Tap twice to close"],
+              [function () { return armed[4] === true ? q('a[href="#rooms/garage"]') : null; }, "Open Garage"], [function () { return armed[4] === true ? q("button.chip", "^\\s*utility\\s*$") : null; }, "Show utility rooms"], [function () { return armed[4] === true ? q('a[href="#rooms"]') : null; }, "Open Rooms"]],
+      when: function (e) { return armed[4] && e.kind === "state" && e.id === "binary_sensor.demo_garage_door_contact" && e.state === "off"; } },
+    { title: "Water the garden", text: "The driveway soil is dry. Open Irrigation, pick a zone and start a 15-minute timer.",
+      ok: "The tap turns itself off when the timer ends, and skips watering when rain is coming.", go: "#irrigation",
+      chain: [[function () { return q('.zd button[data-d="00:15:00"]'); }, "Water for 15 minutes"], [function () { return q(".sch[data-zsh]"); }, "Open the zones"], [function () { return qd('.zd button[data-d="00:15:00"]'); }, "Water for 15 minutes"],
+              [function () { return q('a[href="#irrigation"]'); }, "Open Irrigation"], [function () { return q("#bmore"); }, "Tap More"]],
+      when: function (e) { return e.kind === "state" && /_tap$/.test(e.id) && e.state === "on"; } },
+    { title: "Pick a look", text: "Same dashboard, four styles. Choose one on the Theme page and the whole app changes.",
+      ok: "We match the look to your home when we install it.", go: "#theme",
+      chain: [[function () { return qd("button.eb.sty:not(.sel)"); }, "Pick a style"], [function () { return q('a[href="#theme"]'); }, "Open Theme"], [function () { return q("#bmore"); }, "Tap More"]],
+      click: ".sty" }
+  ];
+
+  function render() {
+    var ol = $("steps"); ol.innerHTML = ""; var bar = $("bar"); bar.innerHTML = "";
+    STEPS.forEach(function (s, i) {
+      var li = document.createElement("li"); li.className = "step" + (i === active ? " on" : "") + (done[i] ? " done" : "");
+      li.innerHTML = '<button class="head" aria-expanded="' + (i === active) + '"><span class="num">' + (done[i] ? "✓" : i + 1) + '</span><span class="t"></span></button>' +
+        '<div class="body"><p></p><div class="acts"></div><div class="okmsg"></div></div>';
+      li.querySelector(".t").textContent = s.title; li.querySelector("p").textContent = s.text; li.querySelector(".okmsg").textContent = "Done. " + s.ok;
+      li.querySelector(".head").onclick = function () { if (!narrow.matches) setActive(i); };
+      var acts = li.querySelector(".acts");
+      if (s.action) { var a = document.createElement("button"); a.className = "btn primary"; a.textContent = s.action[0]; a.onclick = function () { if (!W || !W.DEMO) return; armed[i] = true; s.action[1](); focusStage(); }; acts.appendChild(a); }
+      if (s.go) { var g = document.createElement("button"); g.className = "btn" + (s.action ? "" : " primary"); g.textContent = "Take me there"; g.onclick = function () { go(s.go); if (s.after) setTimeout(s.after, 450); focusStage(); }; acts.appendChild(g); }
+      if (i < STEPS.length - 1 && done[i]) { var n = document.createElement("button"); n.className = "btn"; n.textContent = "Next step"; n.onclick = function () { setActive(i + 1); }; acts.appendChild(n); }
+      ol.appendChild(li);
+      var b = document.createElement("i"); b.className = done[i] ? "done" : i === active ? "on" : ""; bar.appendChild(b);
+    });
+    $("prev").disabled = active === 0; $("next").disabled = active === STEPS.length - 1;
+    $("finish").hidden = Object.keys(done).length < STEPS.length;
+    if (narrow.matches) size();
+  }
+  function setActive(i) { active = Math.max(0, Math.min(STEPS.length - 1, i)); render(); }
+  function complete(i) {
+    if (done[i]) return; done[i] = true; render();
+    if (i === active) setTimeout(function () {
+      if (active !== i) return; for (var k = 1; k <= STEPS.length; k++) { var j = (i + k) % STEPS.length; if (!done[j]) return setActive(j); }
+    }, 2600);
+  }
+  $("prev").onclick = function () { setActive(active - 1); };
+  $("next").onclick = function () { setActive(active + 1); focusStage(); };
+
+  // ---------- the highlight drawn over the dashboard ----------
+  var CSS = "#ez-ring{position:fixed;z-index:2147483646;pointer-events:none;border-radius:16px;transition:left .25s,top .25s,width .25s,height .25s;" +
+    "box-shadow:0 0 0 2px #fff,0 0 0 5px rgba(255,190,90,.95),0 0 26px 8px rgba(255,190,90,.5);animation:ezp 1.5s ease-in-out infinite}" +
+    "@keyframes ezp{50%{box-shadow:0 0 0 2px #fff,0 0 0 8px rgba(255,190,90,.55),0 0 38px 14px rgba(255,190,90,.3)}}" +
+    "#ez-tip{position:fixed;z-index:2147483647;pointer-events:none;background:#ffbe5a;color:#221500;font:700 13px/1 'Plus Jakarta Sans',system-ui,sans-serif;" +
+    "padding:8px 12px;border-radius:999px;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.4);transition:left .25s,top .25s}" +
+    "@media (prefers-reduced-motion:reduce){#ez-ring{animation:none}}";
+  function overlay() {
+    if (!D || D.getElementById("ez-ring")) return;
+    var st = D.createElement("style"); st.textContent = CSS; D.head.appendChild(st);
+    ["ez-ring", "ez-tip"].forEach(function (id) { var d = D.createElement("div"); d.id = id; d.style.display = "none"; D.body.appendChild(d); });
+  }
+  function tick() {
+    if (!D || !W || !D.body) return; overlay();
+    var s = STEPS[active], ring = D.getElementById("ez-ring"), tip = D.getElementById("ez-tip"); if (!ring) return;
+    if (s.check && !done[active] && s.check()) complete(active);
+    var target = null, label = "";
+    if (!done[active]) for (var k = 0; k < s.chain.length; k++) { var el = null; try { el = s.chain[k][0](); } catch (e) {} if (el) { target = el; label = s.chain[k][1]; break; } }
+    if (!target && !done[active]) { target = q(".schc") || q(".cam.fs .cx"); label = "Close this first"; }   // a sheet or full-screen camera is in the way
+    if (!target) { ring.style.display = tip.style.display = "none"; return; }
+    var r0 = target.getBoundingClientRect();   // bring a half-hidden target into view once, so the hint never points off screen
+    if (r0.bottom > W.innerHeight - 4 || r0.top < 0 || r0.left < 0 || r0.right > W.innerWidth || !vis(target)) {
+      var t = Date.now(); if (scrolled !== target) { scrolled = target; scrollN = 0; scrollT = 0; }
+      if (scrollN < 3 && t - scrollT > 1400) { target.scrollIntoView({ block: "center", inline: "nearest", behavior: scrollN ? "auto" : "smooth" }); scrollN++; scrollT = t; } }
+    if (!vis(target)) { ring.style.display = tip.style.display = "none"; return; }   // never point at something that is covered
+    var r = target.getBoundingClientRect(), pad = 4, rad = parseFloat(W.getComputedStyle(target).borderTopLeftRadius) || 12;
+    ring.style.display = tip.style.display = "block";
+    ring.style.left = (r.left - pad) + "px"; ring.style.top = (r.top - pad) + "px"; ring.style.width = (r.width + pad * 2) + "px"; ring.style.height = (r.height + pad * 2) + "px";
+    ring.style.borderRadius = Math.min(rad + pad, (r.height + pad * 2) / 2) + "px";
+    if (tip.textContent !== label) tip.textContent = label;
+    var tw = tip.offsetWidth, th = tip.offsetHeight, tx = Math.min(Math.max(r.left + r.width / 2 - tw / 2, 8), W.innerWidth - tw - 8);
+    var ty = r.top - th - 12; if (ty < 8) ty = Math.min(r.bottom + 12, W.innerHeight - th - 8);
+    tip.style.left = tx + "px"; tip.style.top = ty + "px";
+  }
+  setInterval(tick, 120);
+
+  // ---------- wiring the dashboard up ----------
+  frame.addEventListener("load", function () {
+    try { W = frame.contentWindow; D = frame.contentDocument; } catch (e) { return; }
+    var tries = 0, wait = setInterval(function () {
+      if (W.DEMO || ++tries > 50) { clearInterval(wait); if (!W.DEMO) return;
+        W.DEMO.on(function (e) { if (armed[4] === true && e.kind === "service" && hit(e, "switch.demo_garage_opener")) armed[4] = "closing"; STEPS.forEach(function (s, i) { if (s.when && s.when(e)) complete(i); }); });
+        $("loading").style.opacity = 0; }
+    }, 100);
+    D.addEventListener("click", function (e) { STEPS.forEach(function (s, i) { if (s.click && e.target.closest && e.target.closest(s.click)) setTimeout(function () { complete(i); }, 300); }); }, true);
+  });
+  $("reset").onclick = function () { try { W && W.localStorage.clear(); } catch (e) {} done = {}; armed = {}; active = 0; $("loading").style.opacity = 1; D = W = null; frame.src = "app/dash.html#home"; render(); };
+
+  // ---------- sizing the device ----------
+  var dock = $("dock"), guide = document.querySelector(".guide"), stage = document.querySelector(".stage"), foot = document.querySelector(".foot");
+  function place() {   // phones: the step card sits right above the dashboard so both fit on one screen
+    if (narrow.matches) { if (dock.parentElement !== stage) { stage.insertBefore(dock, device); stage.appendChild(foot); } }
+    else if (dock.parentElement !== guide) { guide.appendChild(dock); guide.appendChild(foot); }
+  }
+  // inside the website's iframe our own window is as tall as the iframe, so the page tells us the real screen height
+  var embedded = window.parent !== window, parentVH = 0;
+  function viewH() { return embedded ? (parentVH || 760) : window.innerHeight; }
+  window.addEventListener("message", function (e) { if (e.data && e.data.ezViewport) { parentVH = +e.data.ezViewport; size(); } });
+  function focusStage() { if (narrow.matches) dock.scrollIntoView({ block: "start", behavior: "smooth" }); }
+  function size() {
+    var phone = mode === "phone"; device.className = "device " + mode; place();
+    if (narrow.matches) {   // real phone: the dashboard gets the real width, no scaling
+      var w = Math.min(stage.clientWidth || 360, 560), h = Math.max(460, Math.min(viewH() - dock.offsetHeight - 26, 820));
+      screen.style.width = w + "px"; screen.style.height = h + "px";
+      frame.style.width = w + "px"; frame.style.height = h + "px"; frame.style.transform = "none"; return;
+    }
+    var VW = phone ? 390 : 1180, VH = phone ? 844 : 820, avail = device.parentElement.clientWidth - (phone ? 22 : 32);
+    var maxH = Math.max(560, viewH() - 90) - (phone ? 22 : 32), s = Math.min(avail / VW, maxH / VH, phone ? 1 : 0.9);
+    screen.style.width = Math.round(VW * s) + "px"; screen.style.height = Math.round(VH * s) + "px";
+    frame.style.width = VW + "px"; frame.style.height = VH + "px"; frame.style.transform = "scale(" + s + ")";
+  }
+  function setMode(m) { mode = m; $("v-tablet").setAttribute("aria-pressed", m === "tablet"); $("v-phone").setAttribute("aria-pressed", m === "phone"); size(); }
+  $("v-tablet").onclick = function () { setMode("tablet"); };
+  $("v-phone").onclick = function () { setMode("phone"); };
+  narrow.addEventListener("change", function () { setMode(narrow.matches ? "phone" : "tablet"); });
+  window.addEventListener("resize", size);
+  setMode(mode); render();
+
+  // tell a parent page (the website) how tall this page is, so its iframe can fit it
+  if (embedded) { var lastH = 0; setInterval(function () { var h = document.documentElement.scrollHeight; if (h !== lastH) { lastH = h; window.parent.postMessage({ ezDemoHeight: h }, "*"); } }, 400); }
+})();
+</script>
+
+</html>
