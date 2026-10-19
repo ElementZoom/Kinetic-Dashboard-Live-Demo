@@ -9,3 +9,5 @@ Everything runs in the visitor's browser; it never connects to a real Home Assis
 - `app/config.js` — the showcase config from the Kinetic repo
 
 Embedding on the website: see `embed-snippet.html`.
+
+Live: https://elementzoom.github.io/Kinetic-Dashboard-Live-Demo/
