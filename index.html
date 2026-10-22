@@ -98,9 +98,22 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   .bar i.done{background:var(--ok)}
   .bar i.on{background:var(--accent)}
   .stage{position:static}
-  .device.phone{border-radius:0;padding:0;background:none;box-shadow:none;width:100%}
-  .device.phone .screen{border-radius:22px;box-shadow:var(--shadow)}
+  .device.phone{border-radius:46px;padding:9px;width:100%;box-sizing:border-box;box-shadow:var(--shadow),inset 0 0 0 1px rgba(255,255,255,.08)}
+  .device.phone .screen{border-radius:37px;box-shadow:none}
+  .device.phone::before,.device.phone::after{display:none}
 }
+/* ---- phone frame: bezel, status bar with island, home indicator ---- */
+.sbar,.hbar{display:none}
+.device.phone .sbar,.device.phone .hbar{display:flex;position:absolute;left:0;right:0;z-index:3;pointer-events:none;color:#fff;background:#000}
+.device.phone .sbar{top:0;height:var(--sb,34px);align-items:center;justify-content:space-between;padding:0 24px 0 26px;font:600 13px/1 var(--body);letter-spacing:.01em}
+.sbar .isl{position:absolute;left:50%;top:9px;width:92px;height:24px;margin-left:-46px;border-radius:14px;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.07)}
+.sbar .ic{display:flex;align-items:center;gap:6px}.sbar svg{display:block;fill:currentColor}
+.device.phone .hbar{bottom:0;height:var(--hb,20px);align-items:center;justify-content:center}
+.hbar i{width:118px;height:5px;border-radius:3px;background:rgba(255,255,255,.85)}
+.device.phone .screen iframe{top:var(--sb,34px)}
+.device.phone::before,.device.phone::after{content:"";position:absolute;width:3px;background:var(--bezel);border-radius:2px;filter:brightness(1.8)}
+.device.phone::before{left:-3px;top:120px;height:56px;box-shadow:0 74px 0 var(--bezel)}
+.device.phone::after{right:-3px;top:160px;height:84px}
 @media (prefers-reduced-motion:reduce){.live{animation:none}*{transition:none!important}}
 </style>
 
@@ -128,6 +141,8 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   <section class="stage" aria-label="Dashboard">
     <div class="device tablet" id="device">
       <div class="screen" id="screen">
+        <div class="sbar" aria-hidden="true"><span id="clk">9:41</span><span class="isl"></span><span class="ic"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="4.5" y="5" width="3" height="6" rx=".8"/><rect x="9" y="2.5" width="3" height="8.5" rx=".8"/><rect x="13.5" y="0" width="3" height="11" rx=".8"/></svg><svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 2.2c2.2 0 4.2.9 5.7 2.3l1-1.1A9.6 9.6 0 0 0 8 .7 9.6 9.6 0 0 0 1.300 3.400l1 1.100A8 8 0 0 1 8 2.200zm0 3.300c1.300 0 2.500.5 3.400 1.300l1-1.100A6.500 6.500 0 0 0 8 4a6.500 6.500 0 0 0-4.400 1.700l1 1.100C5.500 6 6.700 5.500 8 5.500zm0 3.200c.6 0 1.200.2 1.600.6L8 11 6.400 9.300c.4-.4 1-.6 1.600-.6z"/></svg><svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.500" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.500" y="4" width="2" height="4" rx="1" opacity=".5"/></svg></span></div>
+        <div class="hbar" aria-hidden="true"><i></i></div>
         <div class="loading" id="loading">Loading the dashboard…</div>
         <iframe id="dash" title="ElementZoom dashboard, live demo" src="app/dash.html#home"></iframe>
       </div>
@@ -285,18 +300,20 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   var embedded = window.parent !== window, parentVH = 0;
   function viewH() { return embedded ? (parentVH || 760) : window.innerHeight; }
   window.addEventListener("message", function (e) { if (e.data && e.data.ezViewport) { parentVH = +e.data.ezViewport; size(); } });
+  function frameFit(h) { frame.style.height = (h - 34 - 20) + "px"; screen.style.setProperty("--sb", "34px"); screen.style.setProperty("--hb", "20px"); }
+  setInterval(function () { var d = new Date(), c = $("clk"); if (c) c.textContent = d.getHours() + ":" + ("0" + d.getMinutes()).slice(-2); }, 1000);
   function focusStage() { if (narrow.matches) dock.scrollIntoView({ block: "start", behavior: "smooth" }); }
   function size() {
     var phone = mode === "phone"; device.className = "device " + mode; place();
     if (narrow.matches) {   // real phone: the dashboard gets the real width, no scaling
-      var w = Math.min(stage.clientWidth || 360, 560), h = Math.max(460, Math.min(viewH() - dock.offsetHeight - 26, 820));
-      screen.style.width = w + "px"; screen.style.height = h + "px";
-      frame.style.width = w + "px"; frame.style.height = h + "px"; frame.style.transform = "none"; return;
+      var w = Math.min(stage.clientWidth || 360, 560) - 18, h = Math.max(500, Math.min(viewH() - dock.offsetHeight - 44, 840));
+      screen.style.width = w + "px"; screen.style.height = h + "px"; frameFit(h); frame.style.width = w + "px"; frame.style.transform = "none"; return;
     }
     var VW = phone ? 390 : 1180, VH = phone ? 844 : 820, avail = device.parentElement.clientWidth - (phone ? 22 : 32);
     var maxH = Math.max(560, viewH() - 90) - (phone ? 22 : 32), s = Math.min(avail / VW, maxH / VH, phone ? 1 : 0.9);
     screen.style.width = Math.round(VW * s) + "px"; screen.style.height = Math.round(VH * s) + "px";
-    frame.style.width = VW + "px"; frame.style.height = VH + "px"; frame.style.transform = "scale(" + s + ")";
+    screen.style.setProperty("--sb", phone ? Math.round(34 * s) + "px" : "0px"); screen.style.setProperty("--hb", Math.round(20 * s) + "px");
+    frame.style.width = VW + "px"; frame.style.height = phone ? Math.round(VH - (34 + 20) / s) + "px" : VH + "px"; frame.style.transform = "scale(" + s + ")";
   }
   function setMode(m) { mode = m; $("v-tablet").setAttribute("aria-pressed", m === "tablet"); $("v-phone").setAttribute("aria-pressed", m === "phone"); size(); }
   $("v-tablet").onclick = function () { setMode("tablet"); };
