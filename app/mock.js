@@ -26,8 +26,8 @@
       else if (/humidity/.test(o)) { var h = key(o, HUMS); st = String(h ? HUMS[h] : 54); a.unit_of_measurement = "%"; a.device_class = "humidity"; }
       else if (/moisture/.test(o)) { st = o.indexOf("drw") > -1 ? (o.indexOf("_1_") > -1 ? "17" : "19") : (o.indexOf("_1_") > -1 ? "37" : "41"); a.unit_of_measurement = "%"; a.device_class = "moisture"; }
       else if (/flow/.test(o)) { st = "0"; a.unit_of_measurement = "L/min"; }
+      else if (/low_battery_count/.test(o)) st = "3";
       else if (/battery/.test(o)) { st = "86"; a.unit_of_measurement = "%"; a.device_class = "battery"; }
-      else if (/low_battery_count/.test(o)) st = "0";
       else if (/air_quality/.test(o)) { st = "14"; a.device_class = "aqi"; }
       else if (/weather_warnings/.test(o)) { st = "0"; a.warnings = []; }
       else if (/washer_state/.test(o)) st = "Running";
@@ -63,7 +63,14 @@
     Object.keys(a).forEach(function (k) { if (a[k] === undefined) delete a[k]; });
     return { entity_id: id, state: st, attributes: a, last_changed: now(), last_updated: now(), context: { id: "c" + Math.random().toString(36).slice(2) } };
   }
+  // Battery Notes style "Battery+" sensors: a few are low so the Batteries tab has something to show
+  var BAT = { front_door_sensor: 14, garage_remote: 9, bathroom_motion: 22, patio_door_sensor: 78, kitchen_leak_sensor: 91, hallway_motion: 64 };
+  Object.keys(BAT).forEach(function (k) { ids["sensor.demo_" + k + "_battery_plus"] = 1; });
   Object.keys(ids).forEach(function (id) { S[id] = mk(id); });
+  Object.keys(BAT).forEach(function (k) { var s = S["sensor.demo_" + k + "_battery_plus"]; s.state = String(BAT[k]); s.attributes.friendly_name = nm("sensor.demo_" + k) + " Battery+"; });
+  // whole-house groups that are real entities in the demo (e.g. light.all_lights): list their members so the Active tab can see what is on
+  var DG = (CFG.derived && CFG.derived.groups) || {};
+  Object.keys(DG).forEach(function (g) { if (!S[g]) return; var L = [].concat(DG[g]); S[g].attributes.entity_id = L; S[g].state = L.some(function (x) { return S[x] && S[x].state === "on"; }) ? "on" : "off"; });
 
   // camera pictures: the dashboard asks for one fixed picture per camera; the demo swaps in the right still (person on the driveway, garage door position)
   var IMG = { person: false, garage: 0 };
