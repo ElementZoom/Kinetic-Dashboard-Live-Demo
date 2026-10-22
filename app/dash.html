@@ -304,7 +304,7 @@ body.ev-open #evm{visibility:visible;pointer-events:auto;transition:none}
 .cd .n{font:600 17px var(--mono);color:var(--mut)}.cd.t .n{color:var(--mint)}
 .ce{border-left:3px solid var(--c);background:rgba(var(--w),.07);padding:4px 9px;border-radius:7px;font-size:15px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mo{font:12px var(--mono);color:var(--mut)}
-.cg.ag{display:block}.ag .ah{font:600 13px var(--mono);letter-spacing:.1em;color:var(--mut);margin:18px 0 8px}.ag .ah.t{color:var(--mint)}.ag .ce{margin-bottom:6px;white-space:normal;padding:9px 12px}
+.cg.ag{display:block}.ag .ah{font:600 13px var(--mono);letter-spacing:.1em;color:var(--mut);margin:18px 0 8px}.ag .ah{scroll-margin-top:150px}.ag .agt{margin:14px 0 0;padding:2px 6px 10px;border-radius:18px;background:linear-gradient(160deg,color-mix(in srgb,var(--mint) 30%,transparent),color-mix(in srgb,var(--mint) 6%,transparent) 70%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--mint) 35%,transparent)}.ag .agt .ah{margin-top:14px}.ag .ah.t{color:var(--mint)}.ag .ce{margin-bottom:6px;white-space:normal;padding:9px 12px}
 /* climate */
 #grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;align-content:start;padding-bottom:6px}
 .card{display:flex;flex-direction:column;gap:12px;transition:background .3s,border-color .3s}
@@ -366,7 +366,12 @@ body.m-tabs .main{padding-bottom:72px}
 #np{top:0;right:0;bottom:0;width:100vw;border-radius:0}
 .mpg{grid-template-columns:1fr}
 }
-
+@media(max-width:760px){
+  #eadd{position:fixed;right:16px;bottom:calc(var(--dock) + 8px);z-index:43;width:56px;height:56px;padding:0;border-radius:50%;font-size:0;display:flex;align-items:center;justify-content:center;background:var(--mint);color:var(--bg);border:0;box-shadow:0 6px 18px rgba(0,0,0,.28);transition:bottom .25s}
+  #eadd::before{content:"+";font:300 34px/1 var(--sans,system-ui);margin-top:-3px}
+  body.np-on:not(.np-home):not(.np-media) #eadd{bottom:calc(var(--dock) + 86px)}
+  #events .cg.ag{padding-bottom:90px}
+}
 /* light / dark surfaces */
 .cam,nav{--w:255,255,255;--line:rgba(255,255,255,.1)}
 .cam{--ink:#eaf1fb;--ink-rgb:234,241,251;--mut:rgba(234,241,251,.6)}
@@ -422,7 +427,7 @@ button,input,select,textarea{font-family:inherit}
 
 .srl{display:flex;flex-direction:column;gap:6px}
 .sr{--rc:var(--mint);display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:16px;background:rgba(var(--w),.05);cursor:pointer;transition:background .25s;min-width:0}
-.sr .sbd{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;flex:none;color:var(--rc);background:color-mix(in srgb,var(--rc) 20%,transparent)}.sr .sbd svg{width:20px;height:20px;fill:currentColor}
+.sr .sbd{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;flex:none;color:var(--mut);background:rgba(var(--w),.08);transition:color .25s,background .25s}.sr.on .sbd{color:var(--rc);background:color-mix(in srgb,var(--rc) 20%,transparent)}.sr .sbd svg{width:20px;height:20px;fill:currentColor}
 .sr b{flex:1;min-width:0;font-weight:500;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sr .ts2{flex:none;max-width:48%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:99px;background:rgba(var(--w),.08);color:var(--mut);transition:background .25s,color .25s}
 .sr.on{background:color-mix(in srgb,var(--rc) 14%,transparent)}.sr.on .ts2{background:var(--rc);color:#161519}
@@ -768,7 +773,7 @@ html[data-mode=light]:not(#x) :is(#rv,.vbl,#np) .bd[data-k=window].on{background
 @media(max-width:760px){.rn12 .ws{padding:10px}.rn12 .ws b{font-size:17px}}
 .wrs .h3{margin:6px 0}
 @media(max-width:760px){.wrs{padding:10px 14px;margin-bottom:10px}.wrs>.lbl{margin-bottom:2px}.wrs .h3{margin:0;font-size:16px}.wrs .sm{font-size:12px;margin-top:1px}
-.irc{align-items:stretch}.irc>.rn12{display:flex;flex-direction:column}.irc>.rn12 .r12{flex:1;align-content:space-evenly}}
+.irc{align-items:flex-start}}
 @media(max-width:760px){.hs::after{top:18px;transform:rotate(45deg)}}
 .fcs{overflow-y:hidden}
 .wdots{display:none}
@@ -856,7 +861,7 @@ html[data-mode=light]:not(#x) :is(#rv,.vbl,#np) .bd[data-k].on i,html[data-mode=
 html[data-mode=light]:not(#x) :is(#rv,.vbl,#np) .bd[data-k][data-k=door].on i,html[data-mode=light]:not(#x) :is(#rv,.vbl,#np) .bd[data-k][data-k=door].on span.st{color:#c42a1f}
 html[data-mode=light]:not(#x) :is(#rv,.vbl,#np) .bd[data-k][data-k=window].on i,html[data-mode=light]:not(#x) :is(#rv,.vbl,#np) .bd[data-k][data-k=window].on span.st{color:#9a5300}
 html[data-mode=dark]:not(#x) .tl.sir.on .ts2{color:#ffd0d6}
-html[data-mode=light] .sr .sbd{color:color-mix(in srgb,var(--rc) 60%,#000)}
+html[data-mode=light] .sr.on .sbd{color:color-mix(in srgb,var(--rc) 60%,#000)}
 /* room cards carry a temperature glow behind their text: keep secondary text and status pills strong on it */
 html:not(#x) .rooms2 .rc{--mut:rgba(var(--ink-rgb),.86)}
 html:not(#x) .rooms2 .rc .md{color:var(--ink)}
@@ -914,6 +919,7 @@ html[data-mode=dark][data-style=glass]:not(#x) :is(.card.auto,.rc.auto){backgrou
 @media(max-width:760px){.rh{flex-wrap:wrap}.cps{flex:1 0 100%;order:3}.cps>:first-child{margin-left:0}}
 
 /* phone: bottom navigation */
+:root{--dock:calc(var(--navh,72px) + 22px)}   /* where the floating pills sit: just above the tab bar. --navh is its real height, measured in 41-start.js */
 #btab,#mshe{display:none}
 @media(max-width:760px){
 nav,#hb{display:none!important}
@@ -926,7 +932,7 @@ html:not([data-style=material]) #btab a span,html:not([data-style=material]) #bt
 html:not([data-style=material]) #btab a.on,html:not([data-style=material]) #btab button.on{flex:2.4}
 html:not([data-style=material]) #btab a.on span,html:not([data-style=material]) #btab button.on span{display:inline;white-space:nowrap}
 #btab a.on,#btab button.on{background:color-mix(in srgb,var(--mint) 24%,transparent);color:var(--mint)}
-#mshe{position:fixed;left:10px;right:10px;bottom:92px;z-index:46;padding:12px;border-radius:24px;background:linear-gradient(160deg,var(--bg2),var(--bg));border:1px solid var(--line);box-shadow:0 10px 40px rgba(0,0,0,.5);grid-template-columns:repeat(3,1fr);gap:8px}
+#mshe{position:fixed;left:10px;right:10px;bottom:calc(var(--dock) + 6px);z-index:46;padding:12px;border-radius:24px;background:linear-gradient(160deg,var(--bg2),var(--bg));border:1px solid var(--line);box-shadow:0 10px 40px rgba(0,0,0,.5);grid-template-columns:repeat(3,1fr);gap:8px}
 body.more-open #mshe{display:grid}
 #mshe a{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 0;border-radius:16px;background:rgba(var(--w),.06);color:var(--ink);font:600 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
 #mshe a.on{background:var(--mint);color:var(--onmint,#07241a)}
@@ -1319,7 +1325,7 @@ body.ly-open .mlay.hasly .ly{font-size:20px;padding:8px 10px}body.ly-open .mlay.
 .npsp{display:flex;flex-wrap:wrap;gap:6px}.npsp .chip{cursor:default;display:inline-flex;align-items:center;gap:6px}.npsp .chip svg{width:16px;height:16px;fill:currentColor}
 #npmini,#npsheet{display:none}
 @media(max-width:760px){
-body.np-on:not(.np-home):not(.np-media) #npmini{display:block;position:fixed;left:10px;right:10px;bottom:86px;z-index:44;padding:9px 12px;border-radius:18px;background:rgba(var(--w),.08);background-color:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.08);border:1px solid var(--line)}
+body.np-on:not(.np-home):not(.np-media) #npmini{display:block;position:fixed;left:10px;right:10px;bottom:var(--dock);z-index:44;padding:9px 12px;border-radius:18px;background:rgba(var(--w),.08);background-color:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.08);border:1px solid var(--line)}
 #npmini .npr{margin:0}#npmini .npart{width:40px;height:40px}#npmini .mpb{height:3px;margin-top:8px}
 body.np-on:not(.np-home):not(.np-media) .main{padding-bottom:150px}
 body.vwb #npmini{display:none!important}
@@ -1354,9 +1360,9 @@ html[data-style] #npmini{background-color:var(--bg)}
 @keyframes shUp{from{transform:translateY(102%)}to{transform:none}}@keyframes shDn{from{transform:none}to{transform:translateY(102%)}}
 @keyframes bkIn{from{opacity:0}to{opacity:1}}@keyframes bkOut{from{opacity:1}to{opacity:0}}
 @media(max-width:760px){
-  html:not(#x) .thr:not(.open),html:not(#x) #scenes .sct.col{left:10px;right:10px;bottom:86px;height:56px;padding:7px 7px 7px 8px;border-radius:18px;border:1px solid var(--line);background:var(--bg)!important;box-shadow:inset 0 0 0 999px rgba(var(--w),.08);backdrop-filter:none;-webkit-backdrop-filter:none}html:not(#x) #irrigation .zsx.col{left:10px;right:10px;bottom:86px;height:56px;padding:7px 7px 7px 8px;border-radius:18px;border:1px solid var(--line);background:var(--bg)!important;box-shadow:inset 0 0 0 999px rgba(var(--w),.08);backdrop-filter:none;-webkit-backdrop-filter:none}
+  html:not(#x) .thr:not(.open),html:not(#x) #scenes .sct.col{left:10px;right:10px;bottom:var(--dock);height:56px;padding:7px 7px 7px 8px;border-radius:18px;border:1px solid var(--line);background:var(--bg)!important;box-shadow:inset 0 0 0 999px rgba(var(--w),.08);backdrop-filter:none;-webkit-backdrop-filter:none}html:not(#x) #irrigation .zsx.col{left:10px;right:10px;bottom:var(--dock);height:56px;padding:7px 7px 7px 8px;border-radius:18px;border:1px solid var(--line);background:var(--bg)!important;box-shadow:inset 0 0 0 999px rgba(var(--w),.08);backdrop-filter:none;-webkit-backdrop-filter:none}
   html:not(#x) body.np-fab:not(.pill-open) .thr:not(.open),html:not(#x) body.np-fab:not(.pill-open) #scenes .sct.col{right:76px}html:not(#x) body.np-fab:not(.pill-open) #irrigation .zsx.col{right:76px}
-  html:not(#x) #npfab{right:10px;bottom:86px}
+  html:not(#x) #npfab{right:10px;bottom:var(--dock)}
   html:not(#x) #scenes .sct .schi{width:40px!important;height:40px!important;border-radius:10px;box-shadow:none;flex:none}html:not(#x) #irrigation .zsx .schi{width:40px!important;height:40px!important;border-radius:10px;box-shadow:none;flex:none}
   html:not(#x) #scenes .sct .sch{gap:12px}html:not(#x) #irrigation .zsx .sch{gap:12px}
   html:not(#x) #scenes .sct .h3{display:block;font:500 15px var(--font,inherit);letter-spacing:0;text-transform:none;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0}html:not(#x) #irrigation .zsx .h3{display:block;font:500 15px var(--font,inherit);letter-spacing:0;text-transform:none;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0}
@@ -1404,6 +1410,22 @@ html[data-style] #npmini{background-color:var(--bg)}
   #scenes .sct .srl .sr.on .ts2{color:color-mix(in srgb,var(--rc,var(--mint)) 55%,var(--ink))!important}#irrigation .zsx .srl .sr.on .ts2{color:color-mix(in srgb,var(--rc,var(--mint)) 55%,var(--ink))!important}
   #scenes .sct .np2{margin-top:22px!important}#irrigation .zsx .np2{margin-top:22px!important}#scenes .sct .mv{margin:10px 0!important}#irrigation .zsx .mv{margin:10px 0!important}
   #scenes .sct .sr.stp{margin-top:16px!important;padding:12px!important;min-height:56px}#irrigation .zsx .sr.stp{margin-top:16px!important;padding:12px!important;min-height:56px}
+}
+/* phone, Irrigation: compact rain card, so the dots under it (swipe to soil moisture) stay on screen above the floating bar */
+@media(max-width:760px){
+  html:not(#x) .rn12{padding:14px 16px}
+  .rn12 .h3{margin:2px 0 8px!important;font-size:18px}
+  .rn12 .wg{gap:6px}.rn12 .ws{padding:7px 10px}.rn12 .ws b{font-size:16px}
+  .rn12 .r12{margin-top:10px;gap:3px}.r12>div{gap:3px}.r12>div>span:first-child{height:11px}.r12 .bar{height:38px}
+  .rn12>.sm{margin-top:6px!important;font-size:11px}
+  /* Irrigation: both cards share one height. irrFit() (23-soil-moisture-history.js) sets --irh / shrinks the soil chart so the dots end above the floating bar */
+  .irc{align-items:stretch;overflow-y:hidden}
+  .irc>.pn{display:flex;flex-direction:column;min-height:0;overflow:hidden}.irc>.pn>*{flex:none}
+  .rn12 .r12{flex:1 1 auto;min-height:0}.rn12 .r12 .bar{height:auto;flex:1 1 auto;min-height:24px}
+  html:not(#x) .imc{padding:14px 16px}.imc .h3{margin:2px 0 8px!important;font-size:16px}
+  .imc .wg{gap:6px}.imc .ws{padding:7px 10px}.imc .ws b{font-size:16px}.imc .imw{margin-top:8px}.imc .iml{font-size:11px;gap:2px 12px;margin-top:4px}
+  #irrigation.irtight{padding-bottom:calc(var(--dock,100px) + 76px)}
+}
 }
 /* camera viewer / full screen: the close, PLAYBACK and landscape buttons share one row (same centre line), one height and one glass look */
 .cam .px,.cam .cx,.cam .fsb,.vwx{box-sizing:border-box;height:44px;border:1px solid rgba(255,255,255,.2);background:rgba(18,18,24,.55);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 2px 10px rgba(0,0,0,.35);color:#fff}
@@ -1624,7 +1646,7 @@ html[data-mode=light] .ldt.run{background:linear-gradient(160deg,rgba(60,150,255
   <div id="climate" class="page"><div id="gsum" class="pn"></div><div id="grid"></div><div class="dots" id="gdots"></div></div>
 
   <div id="events" class="page">
-    <div class="eh"><button class="eb" id="ep" data-i="chevron-left"></button><h2 id="et"></h2><button class="eb" id="en" data-i="chevron-right"></button><button class="eb" id="etd">TODAY</button><button class="eb" id="eadd" style="display:none">+ ADD EVENT</button><div class="lg" id="elg"></div></div>
+    <div class="eh"><button class="eb" id="ep" data-i="chevron-left"></button><h2 id="et"></h2><button class="eb" id="en" data-i="chevron-right"></button><button class="eb" id="etd">TODAY</button><button class="eb" id="eadd" aria-label="Add event" style="display:none">+ ADD EVENT</button><div class="lg" id="elg"></div></div>
     <div class="cg" id="cg"></div>
   </div>
 </div>
@@ -1636,14 +1658,14 @@ html[data-mode=light] .ldt.run{background:linear-gradient(160deg,rgba(60,150,255
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
 <script src="brand-logo.js?v=1"></script>
-<script src="mock.js?v=1.5.8"></script>
+<script src="mock.js?v=1.5.14"></script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "1.5.8";   // the one place to change the version
+window.DASH_VER = "1.5.14";   // the one place to change the version
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -1834,6 +1856,7 @@ Object.assign(MDI, {"water-alert": {"v": "3 1.5 18 21", "p": "M12,3.77L11.25,4.6
 Object.assign(MDI, {"plus":"M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"});
 
 Object.assign(MDI, {"lyrics":"M4,5H14V7H4V5M4,9H14V11H4V9M4,13H10V15H4V13M18,3V12.6A3,3 0 1,0 20,15.4V6H22V3H18Z"});
+MDI["battery-low"] = "M9,2H15V4H16.5A1.5,1.5 0 0,1 18,5.5V20.5A1.5,1.5 0 0,1 16.5,22H7.5A1.5,1.5 0 0,1 6,20.5V5.5A1.5,1.5 0 0,1 7.5,4H9V2M8,6V20H16V6H8M9,14H15V18H9V14Z";
 const isMobile = () => window.matchMedia("(max-width:760px)").matches;
 const MAIN = CONFIG.rooms.filter(r => r.main)[0].id, W = CONFIG.weather;
 const MODE = { heat_cool: "AUTO", fan_only: "FAN", off: "OFF", heat: "HEAT", cool: "COOL", dry: "DRY", auto: "AUTO" };
@@ -2041,7 +2064,7 @@ function openWs(tk) {
     else if (m.type === "auth_invalid") authBad();
     else if (m.type === "auth_ok") {
       setStatus(true); hideLogin();
-      send({ type: "get_states" }, list => { list.forEach(setState); palTick(); vGroups(); buildDep(); drawGsum(); if (cards[MAIN]) render(MAIN); if (!identDone) identify(); batTick(); tick(); bootMark("s"); setTimeout(bootGo, 1400); if (camPage()) startCams(); if (onRooms) { if (curRoom) drawRoom(curRoom.id); else updRooms(); } });
+      send({ type: "get_states" }, list => { list.forEach(setState); palTick(); vGroups(); buildDep(); drawGsum(); if (cards[MAIN]) render(MAIN); if (!identDone) identify(); batTick(); tick(); bootMark("s"); queueNotif(); setTimeout(bootGo, 1400); if (camPage()) startCams(); if (onRooms) { if (curRoom) drawRoom(curRoom.id); else updRooms(); } });
       send({ type: "subscribe_events", event_type: "state_changed" });
       loadFc(); loadFcH(); evBtn(); if (curPg() === "energy") { en.busy = false; loadEnergy(); }
     } else if (m.type === "result" && pending[m.id]) { try { pending[m.id](m.result, m); } catch (x) {} delete pending[m.id]; }
@@ -2191,7 +2214,7 @@ const evKey = (cal, t) => cal + "|" + (t || "").trim().toLowerCase();
 function evColSave() { try { localStorage.dashEvCol = JSON.stringify(EVCOL); } catch (e) {} send({ type: "frontend/set_user_data", key: "dash_evcol", value: EVCOL }); }
 function evColSync() { if (evColSynced) return; evColSynced = true; send({ type: "frontend/get_user_data", key: "dash_evcol" }, (r, m) => { const v = r && r.value; if (v && typeof v === "object") { EVCOL = Object.assign({}, v, EVCOL); try { localStorage.dashEvCol = JSON.stringify(EVCOL); } catch (e) {} loadEvents(); } }); }
 const CALCOL = ["#6bb8ff", "#ff9f7a", "#8ff0c4", "#f0d36b", "#c79bff", "#ff7a6b"];
-let cy = new Date().getFullYear(), cm = new Date().getMonth(), evTok = 0;
+let evWasOn = false; let cy = new Date().getFullYear(), cm = new Date().getMonth(), evTok = 0, evJump = true;   // evJump: phone agenda scrolls to today (or the next event day) on entry / month change
 const dk = d => d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
 const pd = v => { if (v.dateTime) return new Date(v.dateTime); const p = v.date.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); };
 const calName = c => (CONFIG.calNames || {})[c] || (states[c] && states[c].attributes.friendly_name) || c.replace("calendar.", "").replace(/_/g, " ");
@@ -2209,9 +2232,9 @@ function loadEvents() {
       let d = new Date(s.getFullYear(), s.getMonth(), s.getDate());
       for (let n = 0; n < 42 && d <= last; n++, d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1))
         (map[dk(d)] = map[dk(d)] || []).push({ t: s, ad: ad, s: v.summary, c: EVCOL[evKey(c, v.summary)] || CALCOL[i % CALCOL.length], i: EVS.push({ v: v, cal: c, ci: i }) - 1 });
-    } catch (x) { evErr.push(calName(c) + ": skipped \"" + (v && v.summary || "?") + "\" (" + x.message + ")"); } })).catch(x => { evErr.push(calName(c) + ": " + x.message); }))).then(() => { if (tok === evTok) { evLast = { k: mk, gs: gs, map: map }; drawEvents(gs, map); const el = $("#eerr"); if (el) el.textContent = evErr.length ? evErr.join(" · ") + "  |  Calendars HA has: " + Object.keys(states).filter(k => k.indexOf("calendar.") === 0).join(", ") : ""; } });
+    } catch (x) { evErr.push(calName(c) + ": skipped \"" + (v && v.summary || "?") + "\" (" + x.message + ")"); } })).catch(x => { evErr.push(calName(c) + ": " + x.message); }))).then(() => { if (tok === evTok) { evLast = { k: mk, gs: gs, map: map }; drawEvents(gs, map, true); const el = $("#eerr"); if (el) el.textContent = evErr.length ? evErr.join(" · ") + "  |  Calendars HA has: " + Object.keys(states).filter(k => k.indexOf("calendar.") === 0).join(", ") : ""; } });
 }
-function drawEvents(gs, map) {
+function drawEvents(gs, map, fin) {
   $("#et").textContent = new Date(cy, cm, 1).toLocaleDateString([], { month: "long", year: "numeric" });
   evBtn();
   if (!$("#eerr")) { const e = document.createElement("div"); e.id = "eerr"; e.style.cssText = "color:var(--heat);font-size:12px;margin:6px 2px;empty-cells:hide"; $("#elg").after(e); }
@@ -2223,10 +2246,12 @@ function drawEvents(gs, map) {
   if (isMobile()) {   // phones: agenda list instead of a month grid
     for (let i = 1, dim = new Date(cy, cm + 1, 0).getDate(); i <= dim; i++) {
       const d = new Date(cy, cm, i), l = srt(map[dk(d)] || []); if (!l.length) continue;
-      h += '<div class="ah' + (dk(d) === today ? " t" : "") + '">' + d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }).toUpperCase() + '</div>' +
-        l.map(v => '<div class="ce" data-ev="' + v.i + '" style="--c:' + v.c + '"><span class="mo">' + (v.ad ? "All day" : tm(v)) + '</span> ' + esc(v.s) + '</div>').join("");
+      h += (dk(d) === today ? '<div class="agt">' : "") + '<div class="ah' + (dk(d) >= today ? " up" : "") + (dk(d) === today ? " t" : "") + '">' + d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }).toUpperCase() + '</div>' +
+        l.map(v => '<div class="ce" data-ev="' + v.i + '" style="--c:' + v.c + '"><span class="mo">' + (v.ad ? "All day" : tm(v)) + '</span> ' + esc(v.s) + '</div>').join("") + (dk(d) === today ? "</div>" : "");
     }
-    g.className = "cg ag"; g.innerHTML = h || '<div class="lbl" style="margin-top:18px">No events this month</div>'; return;
+    g.className = "cg ag"; g.innerHTML = h || '<div class="lbl" style="margin-top:18px">No events this month</div>';
+    if (evJump) { const f = g.querySelector(".ah.up"); if (f && cy === new Date().getFullYear() && cm === new Date().getMonth()) f.scrollIntoView({ block: "start" }); if (fin) evJump = false; }   // current month: start at today / the next event, earlier days stay above to scroll back to
+    return;
   }
   h = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].map(n => '<div class="cw">' + n + '</div>').join("");
   for (let i = 0; i < rows * 7; i++) {
@@ -2371,9 +2396,9 @@ $("#cg").addEventListener("click", e => {
   if (ce) { const x = EVS[+ce.dataset.ev]; if (x) evOpen({ ev: x }); }
   else if (cd && evWritable().length) evOpen({ date: cd.dataset.d });
 });
-function shiftMonth(d) { txGo($("#cg"), d, false); cm += d; if (cm < 0) { cm = 11; cy--; } if (cm > 11) { cm = 0; cy++; } loadEvents(); }
+function shiftMonth(d) { txGo($("#cg"), d, false); evJump = true; cm += d; if (cm < 0) { cm = 11; cy--; } if (cm > 11) { cm = 0; cy++; } loadEvents(); }
 $("#ep").onclick = () => shiftMonth(-1); $("#en").onclick = () => shiftMonth(1);
-$("#etd").onclick = () => { cy = new Date().getFullYear(); cm = new Date().getMonth(); loadEvents(); };
+$("#etd").onclick = () => { evJump = true; cy = new Date().getFullYear(); cm = new Date().getMonth(); loadEvents(); };
 const HOME = { status: ".hs", cams: "#cams", rooms: "#rooms", heatpump: "#mini", nowplaying: "#npw", forecast: "#fcp" };
 const layout = () => {
   const L = ((CONFIG.layout || {})[isMobile() ? "mobile" : "tablet"] || Object.keys(HOME)).slice();
@@ -2648,7 +2673,7 @@ const ROOM = id => HOUSE().filter(r => r.id === id)[0];
 let curPanels = [], curRoom = null, onRooms = false, rq = 0;
 const camOpen = () => onView() || !!document.querySelector(".cam.fs .cpanel:not(:empty)");
 function queueRoom() { if (!rq) rq = requestAnimationFrame(() => { rq = 0; updRooms(); }); }
-let rtab = 0; try { rtab = +localStorage.getItem("dashRtab") || 0; } catch (_) {}
+let rtab = 0, rtabName = "", rEnter = true;   // rtabName: tab kept by name (the Occupied tab comes and goes); rEnter: next draw opens the first tab
 function occOf(r) {   // presence entities for a room: r.occ, else found by name
   if (r.occ) return [].concat(r.occ);
   const sl = x => String(x || "").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, ""), out = [];
@@ -2662,15 +2687,15 @@ function roomTabs() {
   if (CONFIG.roomsByPresence !== false && HOUSE().some(r => occOf(r).length)) {
     const occ = HOUSE().filter(roomOccupied).map(r => r.id);
     t.forEach(x => { x[1] = x[1].filter(i => occ.indexOf(i) < 0); });
-    t.unshift(["Occupied", occ, "No rooms are occupied right now"]);
+    if (occ.length) t.unshift(["Occupied", occ, ""]);
   }
-  return RU && Array.isArray(RU.rooms) ? t.filter((x, i) => x[1].length || x[0] === "Occupied") : t;
+  return RU && Array.isArray(RU.rooms) ? t.filter(x => x[1].length) : t;
 }
 let rlq = 0; const queueRl = () => { if (!rlq) rlq = requestAnimationFrame(() => { rlq = 0; if (onRooms && !curRoom) drawRooms(); }); };
-$("#rtabs").onclick = e => { const b = e.target.closest("[data-rt]"); if (!b) return; const old = rtab; rtab = +b.dataset.rt; try { localStorage.setItem("dashRtab", rtab); } catch (_) {} drawRooms(); if (rtab !== old) txGo($("#rl"), rtab > old ? 1 : -1, true); };
+$("#rtabs").onclick = e => { const b = e.target.closest("[data-rt]"); if (!b) return; const old = rtab; rtab = +b.dataset.rt; rtabName = (roomTabs()[rtab] || [])[0] || ""; drawRooms(); if (rtab !== old) txGo($("#rl"), rtab > old ? 1 : -1, true); };
 function drawRooms() {
   curRoom = null; $("#cpp").classList.remove("on"); $("#rl").style.display = ""; $("#rv").style.display = "none"; $("#rtabs").style.display = "";
-  const tabs = roomTabs(); if (rtab >= tabs.length) rtab = 0;
+  const tabs = roomTabs(); if (!tabs.length) tabs.push(["Rooms", [], "No rooms"]); if (rEnter) { rtab = 0; rtabName = ""; rEnter = false; } else if (rtabName) { const ix = tabs.findIndex(x => x[0] === rtabName); rtab = ix < 0 ? 0 : ix; } if (rtab >= tabs.length) rtab = 0; rtabName = tabs[rtab] ? tabs[rtab][0] : "";
   const th = tabs.map((t, i) => '<button class="chip' + (i === rtab ? " on" : "") + '" data-rt="' + i + '">' + esc(t[0]) + '</button>').join(""), rs = tabs[rtab][1].map(ROOM).filter(Boolean);
   const key = th + "|" + rs.map(r => r.id + "," + r.name + "," + r.icon).join(";") + "|" + (tabs[rtab][1].length ? "" : tabs[rtab][2] || "No rooms");
   if ($("#rl")._k === key && $("#rl").firstChild) { updRooms(); return; }   // same tabs and cards (a motion sensor changed): keep them, only refresh the live values
@@ -3010,6 +3035,8 @@ const sv = id => VIRT[id] ? VIRT[id]() : rawSv(id);
 // ---------- values the dashboard works out itself (instead of template sensors / count groups in HA) ----------
 const avgOf = ids => { const v = ids.map(x => parseFloat(rawSv(x))).filter(x => !isNaN(x)); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
 const fx = v => v == null ? null : v.toFixed(1);
+// Low batteries: Battery Notes makes one "Battery+" sensor per device (sensor.<device>_battery_plus). The Notifications pop-up and the low-battery count both read these, listing any below derived.batteryBelow (%, 61 if not set)
+const lowBatt = () => { const th = CONFIG.derived.batteryBelow != null ? +CONFIG.derived.batteryBelow : 61; return Object.keys(states).filter(k => /^sensor\..*battery_plus$/.test(k) && parseFloat(states[k].state) < th).sort((x, y) => states[x].state - states[y].state); };
 const wLevel = () => { const on = x => states["input_boolean." + x] && states["input_boolean." + x].state === "on"; for (let i = 4; i >= 1; i--) if (on("water_level_" + i)) return i; return on("no_water_restriction") ? 0 : -1; };
 const VIRT = {
   "sensor.house_average_temperature": () => fx(avgOf(CONFIG.derived.houseTemps)),
@@ -3017,7 +3044,7 @@ const VIRT = {
   "sensor.laundry_time_remaining_friendly": () => { const sec = parseInt(rawSv(E("laundryRemaining"))) || 0; if (!sec) return "Done"; const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60); return h > 0 ? h + "h " + m + "m" : m + "m"; },
   "sensor.current_water_restriction": () => { const l = wLevel(); return l === 0 ? "No Water Restriction" : l > 0 ? "Water Level " + l : "Unknown"; },
   "sensor.current_water_restriction_description": () => { const l = wLevel(); return l === 0 ? "Use water sensibly." : l > 0 ? rawSv("input_text.water_restrictions_level_" + l) : "Unknown"; },
-  "sensor.low_battery_count": () => Object.keys(states).filter(k => /^sensor\./.test(k) && /battery/.test(k) && !/temperature/.test(k) && !isNaN(parseFloat(states[k].state)) && parseFloat(states[k].state) < CONFIG.derived.batteryBelow).length
+  "sensor.low_battery_count": () => lowBatt().length
 };
 Object.keys(CONFIG.derived.soil).forEach(z => { VIRT["sensor.average_" + z + "_soil_moisture"] = () => fx(avgOf(CONFIG.derived.soil[z].moisture)); VIRT["sensor.average_" + z + "_soil_temperature"] = () => fx(avgOf(CONFIG.derived.soil[z].temp)); });
 // dashboard knows which entities feed the room badges / house average, so it refreshes when they change
@@ -3364,7 +3391,7 @@ function loadIrrH(force) {
 function irrMoist() {
   const Z = CONFIG.irrigation.filter(z => z.moist && IH.d && IH.d[z.moist]); if (!Z.length) return "";
   const PC = ["#2b8fd6", "#e0a21f", "#9a6bff", "#2fb67e"], mc = m => m < 15 ? "#a9a9a9" : m < 25 ? "#d9a400" : m < 45 ? "#3fb6b8" : "#2b8fd6";
-  const n = IH.d[Z[0].moist].length, W = Math.max(Math.round((n - 1) * 5.4), (($("#irrigation").clientWidth || 360) / (innerWidth > 760 ? 2 : 1) - 100)), H = 150, y = v => H - Math.max(0, Math.min(100, v)) / 100 * H;
+  const n = IH.d[Z[0].moist].length, W = Math.max(Math.round((n - 1) * 5.4), (($("#irrigation").clientWidth || 360) / (innerWidth > 760 ? 2 : 1) - 100)), H = isMobile() ? irrHn : 150, y = v => H - Math.max(0, Math.min(100, v)) / 100 * H;
   const now = Z.map(z => { const a = IH.d[z.moist], v = parseFloat(sv(z.moist)); if (!isNaN(v)) a[a.length - 1] = v; return a[a.length - 1]; });
   const dl = Z.map((z, i) => now[i] - IH.d[z.moist][IH.d[z.moist].length - 49]).filter(x => !isNaN(x)), tr = dl.length ? dl.reduce((p, q) => p + q, 0) / dl.length : 0;
   const dry = Z.filter((z, i) => now[i] < 25), wet = now.every(v => v >= 45);
@@ -3379,10 +3406,28 @@ function irrMoist() {
     Z.map((z, i) => '<path d="' + path(IH.d[z.moist]) + '" fill="none" stroke="' + PC[i % 4] + '" stroke-width="2.4" stroke-linejoin="round"/><circle cx="' + (W - PD) + '" cy="' + y(now[i]) + '" r="4" fill="' + PC[i % 4] + '"/>').join("") + '</svg>';
   return '<div class="pn pg imc"><div class="lbl">' + mdi("water-percent") + ' Soil moisture · last 72 hours</div><div class="h3" style="margin:6px 0 10px">' + head + '</div>' +
     '<div class="wg">' + Z.map((z, i) => '<div class="ws"><span class="lbl">' + esc(z.name) + ' now</span><b style="color:' + mc(now[i]) + '">' + Math.round(now[i]) + '%</b></div>').join("") + '<div class="ws"><span class="lbl">Trend (24 h)</span><b>' + (Math.abs(tr) < 1 ? "steady" : (tr < 0 ? "▼ " : "▲ ") + Math.abs(Math.round(tr)) + "%") + '</b></div></div>' +
-    '<div class="imw"><div class="imy"><span>100</span><span>50</span><span>0</span></div>' + hsw('<div class="ims">' + svg + '</div>') + '</div>' +
+    '<div class="imw"><div class="imy" style="height:' + H + 'px"><span>100</span><span>50</span><span>0</span></div>' + hsw('<div class="ims">' + svg + '</div>') + '</div>' +
     '<div class="iml">' + Z.map((z, i) => '<span><b style="color:' + PC[i % 4] + '">━</b> ' + esc(z.name) + '</span>').join("") + '<span>shaded: wet · moist · dry</span><span class="imh">swipe to look back →</span></div></div>';
 }
-let irrCi = 0;
+let irrCi = 0, irrHn = 110, irrFitBusy = false;   // irrHn = height of the soil chart on a phone; irrFit() shrinks it only as far as needed
+function irrFit() {   // phone: both cards share one height, short enough that the swipe dots end just above the floating bar, whatever the font size
+  const pg = $("#irrigation"), g = $("#irrigation .irc"); if (!g) return;
+  if (!isMobile()) { g.style.removeProperty("--irh"); pg.classList.remove("irtight"); return; }
+  irrFitBusy = true;
+  try {
+    const navh = parseFloat(document.documentElement.style.getPropertyValue("--navh")) || 72, pillTop = innerHeight - (navh + 22) - 56;   // top of the floating bar (see --dock in 13-phone-nav.css)
+    let over = 0;
+    for (let k = 0; k < 5; k++) {
+      const gg = $("#irrigation .irc"); if (!gg) return;
+      const dots = $("#irrigation .irdots"), tail = dots ? dots.offsetHeight : 24, top = gg.getBoundingClientRect().top + (pg.scrollTop || 0) + (window.scrollY || 0);
+      const avail = pillTop - 8 - tail - top, nat = gg.offsetHeight; over = nat - avail;
+      if (over > 1 && irrHn > 64) { irrHn = Math.max(64, irrHn - Math.ceil(over)); drawIrr(); }
+      else if (over < -6 && irrHn < 150 && gg.querySelector(".imc")) { const n = Math.min(150, irrHn + Math.floor(-over)); if (n === irrHn) break; irrHn = n; drawIrr(); }
+      else break;
+    }
+    pg.classList.toggle("irtight", over > 1);   // even the smallest chart does not fit (a very short screen or huge text): the page may scroll, with room under the cards
+  } finally { irrFitBusy = false; }
+}
 function irrPair() {   // rain + soil moisture side by side on a tablet, swipeable on a phone
   const c = [irrRain(), irrMoist()].filter(Boolean); if (c.length < 2) return c.join("");
   return '<div class="irc">' + c.join("") + '</div><div class="dots irdots">' + c.map((_, i) => '<i data-ci="' + i + '"' + (i === irrCi ? ' class="on"' : "") + '></i>').join("") + '</div>';
@@ -3418,6 +3463,7 @@ function drawIrr() {
   else { h += '<div class="zg">' + CONFIG.irrigation.map(irrZone).join("") + '</div><div class="dots">' + CONFIG.irrigation.map((z, i) => '<i data-zi="' + i + '" title="' + esc(z.name) + '"' + (i === irrI ? ' class="on"' : "") + '></i>').join("") + '</div>'; pg.classList.remove("zop"); }
   const tmp = document.createElement("div"); tmp.innerHTML = h; for (const c of tmp.children) irrStamp(c); irrSync(pg, tmp); tickIrr();   // only the parts that changed are replaced
   { const z = $("#irrigation .zsx"); if (z && kst) z.scrollTop = kst; }
+  if (!irrFitBusy) irrFit();
   const irc = $("#irrigation .irc"); if (irc && !irc._r) { irc._r = 1; if (irrCi && irc.clientWidth) irc.scrollLeft = irrCi * (irc.clientWidth + 12); }
   const ims = $("#irrigation .ims"); if (ims) { if (!ims._r) { ims._r = 1; ims.scrollLeft = IH.sc == null ? ims.scrollWidth : IH.sc; requestAnimationFrame(hsAll); } ims.onscroll = () => { IH.sc = ims.scrollLeft >= ims.scrollWidth - ims.clientWidth - 4 ? null : ims.scrollLeft; }; }
   const zg = $("#irrigation .zg"); if (zg && !zg._r) { zg._r = 1; if (irrI && zg.clientWidth) zg.scrollLeft = irrI * (zg.clientWidth + 14); }
@@ -3491,7 +3537,7 @@ function updScenes() {
     if (th) { th.classList.toggle("has", !!v); const im = $("img", th); if (v && fn) { if (!im || im.getAttribute("src") !== fn) th.innerHTML = '<img alt="" src="' + fn + '">'; } else if (im || !$("svg", th)) th.innerHTML = mdi("palette"); } }
   $$("#scenes .sc").forEach(el => el.classList.toggle("on", el.dataset.v === v));
   $$("#scenes [data-md]").forEach(b => b.classList.toggle("on", b.dataset.md === scMode));
-  $$("#scenes [data-r]").forEach(el => { const t = sv(S.rooms[el.dataset.r].t) || ""; el.classList.toggle("on", !!t); $(".ts2", el).textContent = t ? title(t) : "OFF"; });
+  $$("#scenes [data-r]").forEach(el => { const R = S.rooms[el.dataset.r], t = sv(R.t) || "", on = R.b && states[R.b] ? isOn(R.b) : !!t; el.classList.toggle("on", on); $(".ts2", el).textContent = on ? (t ? title(t) : "ON") : "OFF"; });   // grey until the room's boolean is on
   $$("#scenes [data-g]").forEach(el => { const l = S.lights[el.dataset.g], on = isOn(l.l); el.classList.toggle("on", on); $(".ts2", el).textContent = on ? title(sv(l.s) || "ON") : "OFF"; });
   $$("#scenes [data-nb]").forEach(r => { const s = states[r.dataset.nb]; if (!s) return; const a = s.attributes; r.min = a.min != null ? a.min : 0; r.max = a.max != null ? a.max : 100; r.step = a.step || 1; if (document.activeElement !== r) r.value = s.state; $(".nbv", r.parentNode).textContent = Math.round(r.value); });
   { const sm = $("#scsum"), num = k => { const x = states[E(k)], v = x ? Math.round(+x.state) : NaN; return isNaN(v) ? "" : v; }, bb = num("dynBrightness"), iv = num("dynInterval"); if (sm) sm.textContent = [scMode === "preset" ? (S.groups[scTab] || [""])[0] : "Gradient", bb !== "" ? "Brightness " + bb : "", iv !== "" ? "Interval " + iv : ""].filter(Boolean).join(" · "); }
@@ -4081,7 +4127,7 @@ function notif(full) {
   const tm = (CONFIG.notifTimers || []).filter(x => states[x] && states[x].state === "active");   // optional Timers card: config notifTimers ["timer.x", ...] (none by default; tiles show their own countdown, see tileTimers)
   n += tm.length;
   sec("Timers", tm.map(x => { const t = states[x].attributes, fin = Date.parse(t.finishes_at || "") || 0, dur = (t.duration || "0:00:00").split(":").reduce((p, q) => p * 60 + +q, 0) * 1000; return '<div class="ws" style="margin-bottom:8px"><span class="lbl">' + esc(fname(x)) + '</span><div class="lbl tmr" data-fin="' + fin + '">--</div><div class="zb"><i data-dur="' + dur + '"></i></div></div>'; }).join(""));
-  const bl = Object.keys(states).filter(k => /^sensor\..*battery_plus$/.test(k) && parseFloat(states[k].state) < 61).sort((x, y) => states[x].state - states[y].state);
+  const bl = lowBatt();
   if (bl.length || parseFloat(sv(E("lowBatteryCount"))) > 0) { n++; hasB = true; nb = bl.length; if (full) bh = bl.map(x => { const v = Math.round(states[x].state), hh = Math.max(1.5, 13 * Math.min(v, 100) / 100); return '<div class="nrow ' + (v <= 15 ? "bad" : v < 40 ? "warn" : "ok") + '"><svg class="nbi" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="10" height="17" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="10" y="2" width="4" height="2" rx=".5" fill="currentColor"/><rect x="9" y="' + (19 - hh) + '" width="6" height="' + hh + '" rx="1" fill="currentColor"/></svg><span class="nbn">' + esc(fname(x).replace(/\s+battery(\s+plus|\+)$/i, "")) + '</span><b class="nbp">' + v + '%</b></div>'; }).join(""); }
   sec("Controls", TOG.map(g => { const c = parseInt(sv(g[1])) || 0, sub = c === 0 ? "All " + g[2] + "s active" : c + " " + g[2] + (c > 1 ? "s" : "") + " disabled"; return '<div class="ws" style="margin-bottom:10px"><span class="lbl">' + g[0] + '</span><div style="margin:6px 0 10px;color:var(--mut)">' + sub + '</div><div class="chips cscr">' + g[3].map(x => '<button class="chip' + (isOn(x[0]) ? " on" : "") + '" data-nt="' + x[0] + '"' + (x[2] ? ' data-sc="' + x[2] + '"' : "") + '>' + x[1] + '</button>').join("") + '</div></div>'; }).join(""));
   return { n: n - (hasB ? 1 : 0), all: n, nb: nb, html: h, bh: bh };
@@ -4106,6 +4152,16 @@ const nskRel = id => LEAKS().some(x => x[0] === id) || id === E("weatherWarnings
 let npTab = "alerts";
 const ACTC = CONFIG.quickAll || [];
 
+let npGo = null, npUser = 0;   // npGo = { s: section, t: time }: #active/<section> from a notification link. Scrolls there as soon as that section is on screen (the states can still be loading when the pop-up opens)
+["pointerdown", "wheel", "touchmove"].forEach(ev => $("#np").addEventListener(ev, () => { npUser = Date.now(); }, { passive: true }));
+function npGoRun() {
+  if (!npGo) return;
+  if (Date.now() - npGo.t > 20000) { npGo = null; return; }
+  if (npTab !== "active" || !$('#np [data-sec="' + npGo.s + '"]')) return;
+  const sec = npGo.s, t0 = Date.now(); npGo = null;
+  [80, 1500].forEach(ms => setTimeout(() => { if (npUser > t0 || !document.body.classList.contains("np-open")) return; const t = $('#np [data-sec="' + sec + '"]'); if (t) t.scrollIntoView({ block: "start" }); }, ms));   // the second pass catches rows that arrive just after; it never fights a finger already scrolling
+}
+const npLoading = () => !Object.keys(states).length;   // nothing from Home Assistant yet: say so instead of "Nothing is on or open" / "All clear"
 const NPOFF = {}; let npHold = 0, npht = 0;   // tiles switched off from the Active list vanish at once (a slow light transition would keep them "on" for seconds)
 const npGone = x => { const t = NPOFF[x]; if (!t) return false; if (!isOn(x) || Date.now() - t > 12000) { delete NPOFF[x]; return false; } return true; };
 const actList = () => {
@@ -4148,8 +4204,9 @@ function drawNotif() {
   const np = $("#np"), tb = [["alerts", "ALERTS", r.n], ["active", "ACTIVE", tot], ["batteries", "BATTERIES", r.nb]]; let tc = false;
   if (!np.querySelector(".nptabs")) { tc = true; np.innerHTML = '<div class="nh"><div><div class="lbl">Home</div><h3>Notifications</h3></div><button class="eb" data-close="1">DONE</button></div>' + hsw('<div class="chips tabs nptabs">' + tb.map(t => '<button class="chip" data-npt="' + t[0] + '"></button>').join("") + '</div>') + '<div id="npc"></div>'; }
   np.querySelectorAll(".nptabs .chip").forEach((c, k) => { const tx = tb[k][1] + (tb[k][2] ? " · " + tb[k][2] : ""); if (c.textContent !== tx) { c.textContent = tx; tc = true; } c.classList.toggle("on", c.dataset.npt === npTab); });
-  const body = npTab === "active" ? actHtml(A) : npTab === "batteries" ? (r.bh || '<div class="lbl" style="margin:14px 0">All batteries are fine</div>') : (r.n ? "" : '<div class="lbl" style="margin:14px 0">All clear</div>') + r.html, nc = $("#npc"), key = npTab + "|" + body.replace(/<em class="ldr">[^<]*<\/em>/g, '<em class="ldr"></em>');   // the remaining time is filled in below, so the minute ticking over does not redraw the list (and restart the drum)
+  const body = npLoading() ? '<div class="lbl" style="margin:14px 0">Loading…</div>' : npTab === "active" ? actHtml(A) : npTab === "batteries" ? (r.bh ? '<div class="lbl np2 il">' + mdi("battery-low") + 'Batteries · ' + r.nb + '</div>' + r.bh : '<div class="lbl" style="margin:14px 0">All batteries are fine</div>') : (r.n ? "" : '<div class="lbl" style="margin:14px 0">All clear</div>') + r.html, nc = $("#npc"), key = npTab + "|" + body.replace(/<em class="ldr">[^<]*<\/em>/g, '<em class="ldr"></em>');   // the remaining time is filled in below, so the minute ticking over does not redraw the list (and restart the drum)
   if (nc._k !== key) { nc._k = key; nc.innerHTML = body; }
+  npGoRun();
   $$("#npc .ldr").forEach(el => { const t = ldTime(); if (el.textContent !== t) el.textContent = t; });
   if (tc) requestAnimationFrame(hsAll);
   updTiles(); tickIrr();
@@ -4316,7 +4373,7 @@ function npPlay(g, big) {
   const prog = '<div class="mpb" ' + mpData(g.ctl) + '><i></i></div>';
   if (!big) return { art: art, title: title, sub: (a.media_artist ? esc(a.media_artist) + " · " : "") + esc(spk), pp: bt("pp", mdi(play ? "pause" : "play")), prog: mpPos(g.ctl).dur > 0 ? prog : "" };   // no bar (and no empty strip under the row) for a stream without a length, so the row sits in the middle of the card
   const vols = g.mem.map(x => { const v = states[x] ? states[x].attributes : {}; return '<div class="mv"><span>' + esc(fname(x)) + '</span><input type="range" min="0" max="100" data-vol="' + x + '" value="' + Math.round((v.volume_level || 0) * 100) + '"><button class="rnd s" data-mp="mute" data-e="' + x + '">' + mdi(v.is_volume_muted ? "volume-off" : "volume-high") + '</button></div>'; }).join("");
-  return '<div class="npx"><div class="npa">' + art + '<div><b>' + esc(title) + '</b><div>' + esc(a.media_artist || "") + '</div><small>' + esc(a.media_album_name || "") + '</small></div></div>' +
+  return '<div class="npx"><div class="npa"><span data-np="media" title="Open Media" style="display:contents;cursor:pointer">' + art + '</span><div><b>' + esc(title) + '</b><div>' + esc(a.media_artist || "") + '</div><small>' + esc(a.media_album_name || "") + '</small></div></div>' +
     '<div class="npp">' + prog + '<div class="npts"><span>0:00</span><span>0:00</span></div></div>' +
     '<div class="mpt">' + bt("shuffle", mdi("shuffle-variant"), a.shuffle) + bt("prev", mdi("skip-previous")) + bt("pp", mdi(play ? "pause" : "play")) + bt("next", mdi("skip-next")) + bt("repeat", mdi(a.repeat === "one" ? "repeat-once" : a.repeat === "all" ? "repeat" : "repeat-off"), a.repeat && a.repeat !== "off") + '</div>' +
     vols + '<div class="chips npsp">' + g.mem.map(x => '<span class="chip on">' + mdi("speaker") + esc(fname(x)) + '</span>').join("") + '</div></div>';
@@ -4357,7 +4414,7 @@ function npRender() {
     const fa = $("#npfab .nfa"); fa.dataset.e = g.ctl;
     fa.onclick = e => { e.stopPropagation(); const r = fa.getBoundingClientRect(), d = Math.hypot(e.clientX - r.left - r.width / 2, e.clientY - r.top - r.height / 2);
       if (d < 15) mpDo("pp", fa.dataset.e); else { npSheet = true; npRender(); } }; }   // one tap target: centre = play / pause, the ring of artwork around it = open the player
-  mi.innerHTML = '<div class="npr" data-np="sheet"><div class="npart">' + c.art + '</div><div class="npi"><b>' + esc(c.title) + '</b><small>' + c.sub + '</small></div>' + c.pp + '</div>' + c.prog;
+  mi.innerHTML = '<div class="npr" data-np="sheet"><div class="npart" data-np="media" title="Open Media">' + c.art + '</div><div class="npi"><b>' + esc(c.title) + '</b><small>' + c.sub + '</small></div>' + c.pp + '</div>' + c.prog;
   document.body.classList.toggle("nps-open", npSheet);
   if (npSheet) {
     clearTimeout(npbT);
@@ -4389,7 +4446,7 @@ function npClick(e) {
   if (!n) return;
   const k = n.dataset.np;
   if (k === "tog") { npAnim = $("#npw").offsetHeight; npOpen = !npOpen; try { localStorage.setItem("dashNp", npOpen ? "1" : "0"); } catch (_) {} }
-  else if (k === "media") { location.hash = "#media"; return; }
+  else if (k === "media") { if (npSheet) { npSheet = false; npRender(); } location.hash = "#media"; return; }
   else if (k === "sheet") npSheet = true;
   else if (k === "close") npSheet = false;
   npRender();
@@ -4770,10 +4827,10 @@ function route() {
   $$("nav a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + p));
   document.body.classList.remove("more-open");
   { const inMore = $$("#mshe a").some(a => a.getAttribute("href") === "#" + p); $$("#btab a, #mshe a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + p)); $("#bmore").classList.toggle("on", inMore); }
-  onRooms = p === "rooms"; if (!onRooms) curRoom = null;
+  if (p !== "rooms") rEnter = true; onRooms = p === "rooms"; if (!onRooms) curRoom = null;
   stopCams(); if (p === "home") { applyLayout(); queueHome(); }
   if (p === "home" || (p === "security" && h[1] !== "detections") || p === "view") startCams();
-  if (p === "events") loadEvents();
+  if (p === "events") { if (!evWasOn) evJump = true; loadEvents(); } evWasOn = p === "events";
   if (onRooms) {
     if (h[1]) { const was = curRoom && curRoom.id === h[1]; drawRoom(h[1]); if (!was) txGo($("#rv"), 1, true);
       if (h[2] === "doors") [120, 700, 1800].forEach(ms => setTimeout(() => { if (curRoom && curRoom.id === h[1] && location.hash.split("/")[2] === "doors") { const t = $('#rv [data-sec="doors"]'); if (t) { t.scrollIntoView({ block: "center", behavior: ms > 120 ? "auto" : "smooth" }); if (ms === 120) { t.classList.add("flash"); setTimeout(() => t.classList.remove("flash"), 1800); } } } }, ms)); }   // #rooms/<room>/doors scrolls to that room's Doors & windows panel   // list -> room slides in from the right
@@ -4798,8 +4855,7 @@ function route() {
   if (p === "vehicle") drawVehicle();
   if (p === "hazards") { HZ.vb = null; HZ.slide = 0; HZ.view = HZ.view || (states["zone.home"] ? "home" : "ni"); requestAnimationFrame(drawHaz); }
   if (h[0] === "disarm") alarmLink("disarm"); else if (h[0] === "arm") alarmLink("arm_" + (h[1] || "away"));
-  if (h[0] === "notifications" || h[0] === "active" || h[0] === "batteries") { npTab = h[0] === "active" ? "active" : h[0] === "batteries" ? "batteries" : "alerts"; document.body.classList.add("np-open"); drawNotif();
-    if (h[0] === "active" && h[1]) [80, 1500].forEach(ms => setTimeout(() => { if (document.body.classList.contains("np-open")) { const t = $('#np [data-sec="' + h[1] + '"]'); if (t) t.scrollIntoView({ block: "start" }); } }, ms)); }
+  if (h[0] === "notifications" || h[0] === "active" || h[0] === "batteries") { npTab = h[0] === "active" ? "active" : h[0] === "batteries" ? "batteries" : "alerts"; npGo = h[0] === "active" && h[1] ? { s: h[1], t: Date.now() } : null; document.body.classList.add("np-open"); drawNotif(); }
 }
 // tablet battery pill: shown on the Fully Kiosk tablet only ("kiosk" = the Fully JS interface, a FullyKiosk user agent, or ?tablet=1 once; "always" / "never" override)
 const BAT_ON = (() => {
@@ -4858,7 +4914,7 @@ const mq = window.matchMedia("(max-width:760px)"); if (mq.addEventListener) mq.a
   pick();
   try { window.parent.addEventListener("hashchange", () => { if (pick()) route(); }); } catch (_) {}
 })();
-route(); drawGsum(); authReturn().then(r => { if (r !== "fail") connect(); });
+// the first route() / drawGsum() / connect() now run from 41-start.js, after every other module has loaded (see there)
 
 // ---------- keep looping animations in one shared rhythm ----------
 // Re-drawing a card (new data, re-sorting) creates its animation again, which used to restart the glow from zero (a visible "glitch").
@@ -4915,6 +4971,14 @@ function galOnState(id, s) {
   });
 }
 setInterval(() => { try { Object.keys(galCfg()).forEach(k => galStep(k, false)); } catch (e) {} }, 1000);
+// ---------- start-up: runs last, once every module above has been defined ----------
+// This used to sit at the end of 38-energy.js. A page opened from a notification link (#active/doors, #batteries ...) draws the notifications pop-up
+// straight away, and that code reaches things defined in later files (galCfg in 40-garage-alert.js): "Cannot access 'galCfg' before initialization"
+// stopped the whole script, so the pop-up stayed empty and the dashboard never connected.
+route(); drawGsum(); authReturn().then(r => { if (r !== "fail") connect(); });
+
+// the floating pills (Scenes, Irrigation, Theme, Now Playing) sit a little above the phone tab bar. Its height depends on the theme and font, so measure it (--navh, read by --dock in 13-phone-nav.css)
+(() => { const b = $("#btab"); if (!b) return; const set = () => { const h = b.offsetHeight; if (h) document.documentElement.style.setProperty("--navh", h + "px"); if (curPg() === "irrigation") irrFit(); }; set(); if (window.ResizeObserver) new ResizeObserver(set).observe(b); addEventListener("resize", set); })();
 </script>
 </body>
 </html>

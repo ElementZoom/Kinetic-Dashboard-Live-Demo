@@ -250,6 +250,12 @@
     garage: garage, garageOpen: function () { return GAR.open; },
     rain: function (on) { push("binary_sensor.demo_master_window", on ? "on" : "off"); push("binary_sensor.demo_rain_detected", on ? "on" : "off");
       push("weather.home", on ? "rainy" : "partlycloudy"); },
+    alerts: function (on) {   // the notification pop-up showcase: doors, garage, tap, leak, bins and a weather warning, all at once (off = all clear)
+      push("binary_sensor.demo_front_door_contact", on ? "on" : "off"); push("binary_sensor.demo_patio_door_contact", on ? "on" : "off");
+      push("switch.demo_backyard_tap", on ? "on" : "off"); push("input_boolean.demo_rubbish_day", on ? "on" : "off");
+      push("binary_sensor.demo_washing_machine_leak", on ? "on" : "off");
+      push("sensor.demo_weather_warnings", on ? "1" : "0", { warnings: on ? "Heavy rain watch for tonight" : [] });
+      garage(!!on); },
     dryGarden: function () { ["sensor.demo_soil_drw_1_moisture", "sensor.demo_soil_drw_2_moisture"].forEach(function (id, i) { push(id, String(17 + i * 2)); }); }
   };
 })();
