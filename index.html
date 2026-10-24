@@ -308,13 +308,16 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   function frameFit(h) { frame.style.height = (h - 34 - 20) + "px"; screen.style.setProperty("--sb", "34px"); screen.style.setProperty("--hb", "20px"); }
   setInterval(function () { var d = new Date(), c = $("clk"); if (c) c.textContent = d.getHours() + ":" + ("0" + d.getMinutes()).slice(-2); }, 1000);
   function focusStage() { if (narrow.matches) dock.scrollIntoView({ block: "start", behavior: "smooth" }); }
+  var DENS = 0.78;   // phone density: 1 = the dashboard at true phone size, lower = smaller cards and more on screen
   function size() {
     var phone = mode === "phone"; device.className = "device " + mode; place();
     if (narrow.matches) {   // real phone: the dashboard gets the real width, no scaling
       var w = Math.min(stage.clientWidth || 360, 560) - 18, h = Math.max(500, Math.min(viewH() - dock.offsetHeight - 44, 840));
-      screen.style.width = w + "px"; screen.style.height = h + "px"; frameFit(h); frame.style.width = w + "px"; frame.style.transform = "none"; return;
+      var d = Math.min(DENS, w / 400);   // denser: the dashboard lays out as on a wider phone, then is scaled down to fit (more cards, smaller type)
+      screen.style.width = w + "px"; screen.style.height = h + "px"; screen.style.setProperty("--sb", "34px"); screen.style.setProperty("--hb", "20px");
+      frame.style.width = Math.round(w / d) + "px"; frame.style.height = Math.round((h - 54) / d) + "px"; frame.style.transform = "scale(" + d + ")"; return;
     }
-    var VW = phone ? 390 : 1180, VH = phone ? 844 : 820, avail = device.parentElement.clientWidth - (phone ? 22 : 32);
+    var VW = phone ? 440 : 1180, VH = phone ? 950 : 820, avail = device.parentElement.clientWidth - (phone ? 22 : 32);
     var maxH = Math.max(560, viewH() - 90) - (phone ? 22 : 32), s = Math.min(avail / VW, maxH / VH, phone ? 1 : 0.9);
     screen.style.width = Math.round(VW * s) + "px"; screen.style.height = Math.round(VH * s) + "px";
     screen.style.setProperty("--sb", phone ? Math.round(34 * s) + "px" : "0px"); screen.style.setProperty("--hb", Math.round(20 * s) + "px");
