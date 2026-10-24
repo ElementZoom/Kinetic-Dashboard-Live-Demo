@@ -329,7 +329,7 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   function size() {
     var phone = mode === "phone"; device.className = "device " + mode; place();
     if (narrow.matches) {   // real phone: the dashboard gets the real width, no scaling
-      var w = Math.min(stage.clientWidth || 360, 560) - 18, h = Math.max(520, Math.min(viewH() - 60, 860));
+      var w = Math.min(stage.clientWidth || 360, 560) - 18, h = Math.max(460, Math.min(viewH() - (embedded ? 140 : 60), 860));   // on the website the sticky header takes ~115px, so the phone is sized to fit under it
       var d = Math.min(DENS, w / 400);   // denser: the dashboard lays out as on a wider phone, then is scaled down to fit (more cards, smaller type)
       screen.style.width = w + "px"; screen.style.height = h + "px"; screen.style.setProperty("--sb", "34px"); screen.style.setProperty("--hb", "20px");
       frame.style.width = Math.round(w / d) + "px"; frame.style.height = Math.round((h - 54) / d) + "px"; frame.style.transform = "scale(" + d + ")"; curScale = d; return;
