@@ -104,6 +104,7 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   /* real phone: the step card floats over the bottom of the phone screen, above the menu bar, so nothing needs scrolling */
   .screen>.dock.ov{position:absolute;left:8px;right:8px;bottom:var(--ovb,74px);z-index:6;gap:4px;padding:8px 8px 4px;border-radius:18px;background:var(--panel);box-shadow:0 8px 28px rgba(0,0,0,.45);max-height:55%;overflow:auto}
   .screen>.dock.ov .step > button.head{padding:4px 6px 2px}.screen>.dock.ov .body{padding:0 6px 8px}.screen>.dock.ov .body p{font-size:12.5px;margin-bottom:8px}
+  .screen>.dock.ov.top{bottom:auto;top:calc(var(--sb,34px) + 6px)}
   .screen>.dock.ov .step.on{border-color:transparent;background:none}.screen>.dock.ov .step .t{font-size:14px}.screen>.dock.ov .body p{margin-bottom:6px}
   .screen>.dock.ov .btn{padding:7px 14px}.screen>.dock.ov .mnav button{width:30px;height:30px}
 }
@@ -264,6 +265,16 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
     var st = D.createElement("style"); st.textContent = CSS; D.head.appendChild(st);
     ["ez-ring", "ez-tip"].forEach(function (id) { var d = D.createElement("div"); d.id = id; d.style.display = "none"; D.body.appendChild(d); });
   }
+  // phone: the step card sits at the bottom of the phone screen, or at the top when the thing to tap is down there (never on top of it)
+  function placeCard(r) {
+    if (!dock.classList.contains("ov")) return;
+    var H = screen.clientHeight, ch = dock.offsetHeight, ob = 74, top = dock.classList.contains("top");
+    if (!r) { if (top) dock.classList.remove("top"); return; }
+    var y0 = 34 + r.top * curScale - 40, y1 = 34 + r.bottom * curScale + 6;   // the target plus room for its yellow label
+    var hit = function (a, b) { return Math.max(0, Math.min(y1, b) - Math.max(y0, a)); };
+    var ovTop = hit(40, 40 + ch), ovBot = hit(H - ob - ch, H - ob);
+    if (top ? ovTop > 0 && ovBot < ovTop : ovBot > 0 && ovTop < ovBot) dock.classList.toggle("top", !top);
+  }
   function tick() {
     if (!D || !W || !D.body) return; overlay();
     var s = STEPS[active], ring = D.getElementById("ez-ring"), tip = D.getElementById("ez-tip"); if (!ring) return;
@@ -271,13 +282,13 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
     var target = null, label = "";
     if (!done[active]) for (var k = 0; k < s.chain.length; k++) { var el = null; try { el = s.chain[k][0](); } catch (e) {} if (el) { target = el; label = s.chain[k][1]; break; } }
     if (!target && !done[active]) { target = q(".schc") || q(".cam.fs .cx"); label = "Close this first"; }   // a sheet or full-screen camera is in the way
-    if (!target) { ring.style.display = tip.style.display = "none"; return; }
+    if (!target) { placeCard(null); ring.style.display = tip.style.display = "none"; return; }
     var r0 = target.getBoundingClientRect();   // bring a half-hidden target into view once, so the hint never points off screen
     if (r0.bottom > W.innerHeight - 4 || r0.top < 0 || r0.left < 0 || r0.right > W.innerWidth || !vis(target)) {
       var t = Date.now(); if (scrolled !== target) { scrolled = target; scrollN = 0; scrollT = 0; }
       if (scrollN < 3 && t - scrollT > 1400) { target.scrollIntoView({ block: "center", inline: "nearest", behavior: scrollN ? "auto" : "smooth" }); scrollN++; scrollT = t; } }
     if (!vis(target)) { ring.style.display = tip.style.display = "none"; return; }   // never point at something that is covered
-    var r = target.getBoundingClientRect(), pad = 4, rad = parseFloat(W.getComputedStyle(target).borderTopLeftRadius) || 12;
+    var r = target.getBoundingClientRect(); placeCard(r); var pad = 4, rad = parseFloat(W.getComputedStyle(target).borderTopLeftRadius) || 12;
     ring.style.display = tip.style.display = "block";
     ring.style.left = (r.left - pad) + "px"; ring.style.top = (r.top - pad) + "px"; ring.style.width = (r.width + pad * 2) + "px"; ring.style.height = (r.height + pad * 2) + "px";
     ring.style.borderRadius = Math.min(rad + pad, (r.height + pad * 2) / 2) + "px";
@@ -313,6 +324,7 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   function frameFit(h) { frame.style.height = (h - 34 - 20) + "px"; screen.style.setProperty("--sb", "34px"); screen.style.setProperty("--hb", "20px"); }
   setInterval(function () { var d = new Date(), c = $("clk"); if (c) c.textContent = d.getHours() + ":" + ("0" + d.getMinutes()).slice(-2); }, 1000);
   function focusStage() { if (narrow.matches) device.scrollIntoView({ block: "start", behavior: "smooth" }); }
+  var curScale = 1;
   var DENS = 0.78;   // phone density: 1 = the dashboard at true phone size, lower = smaller cards and more on screen
   function size() {
     var phone = mode === "phone"; device.className = "device " + mode; place();
@@ -320,7 +332,7 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
       var w = Math.min(stage.clientWidth || 360, 560) - 18, h = Math.max(520, Math.min(viewH() - 60, 860));
       var d = Math.min(DENS, w / 400);   // denser: the dashboard lays out as on a wider phone, then is scaled down to fit (more cards, smaller type)
       screen.style.width = w + "px"; screen.style.height = h + "px"; screen.style.setProperty("--sb", "34px"); screen.style.setProperty("--hb", "20px");
-      frame.style.width = Math.round(w / d) + "px"; frame.style.height = Math.round((h - 54) / d) + "px"; frame.style.transform = "scale(" + d + ")"; return;
+      frame.style.width = Math.round(w / d) + "px"; frame.style.height = Math.round((h - 54) / d) + "px"; frame.style.transform = "scale(" + d + ")"; curScale = d; return;
     }
     var VW = phone ? 440 : 1180, VH = phone ? 950 : 820, avail = device.parentElement.clientWidth - (phone ? 22 : 32);
     var maxH = Math.max(560, viewH() - 90) - (phone ? 22 : 32), s = Math.min(avail / VW, maxH / VH, phone ? 1 : 0.9);
