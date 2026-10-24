@@ -101,6 +101,11 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   .device.phone{border-radius:46px;padding:9px;width:100%;box-sizing:border-box;box-shadow:var(--shadow),inset 0 0 0 1px rgba(255,255,255,.08)}
   .device.phone .screen{border-radius:37px;box-shadow:none}
   .device.phone::before,.device.phone::after{display:none}
+  /* real phone: the step card floats over the bottom of the phone screen, above the menu bar, so nothing needs scrolling */
+  .screen>.dock.ov{position:absolute;left:8px;right:8px;bottom:var(--ovb,74px);z-index:6;gap:4px;padding:8px 8px 4px;border-radius:18px;background:var(--panel);box-shadow:0 8px 28px rgba(0,0,0,.45);max-height:55%;overflow:auto}
+  .screen>.dock.ov .step > button.head{padding:4px 6px 2px}.screen>.dock.ov .body{padding:0 6px 8px}.screen>.dock.ov .body p{font-size:12.5px;margin-bottom:8px}
+  .screen>.dock.ov .step.on{border-color:transparent;background:none}.screen>.dock.ov .step .t{font-size:14px}.screen>.dock.ov .body p{margin-bottom:6px}
+  .screen>.dock.ov .btn{padding:7px 14px}.screen>.dock.ov .mnav button{width:30px;height:30px}
 }
 /* ---- phone frame: bezel, status bar with island, home indicator ---- */
 .sbar,.hbar{display:none}
@@ -298,8 +303,8 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   // ---------- sizing the device ----------
   var dock = $("dock"), guide = document.querySelector(".guide"), stage = document.querySelector(".stage"), foot = document.querySelector(".foot");
   function place() {   // phones: the step card sits right above the dashboard so both fit on one screen
-    if (narrow.matches) { if (dock.parentElement !== stage) { stage.insertBefore(dock, device); stage.appendChild(foot); } }
-    else if (dock.parentElement !== guide) { guide.appendChild(dock); guide.appendChild(foot); }
+    if (narrow.matches) { if (dock.parentElement !== screen) { screen.appendChild(dock); dock.classList.add("ov"); stage.appendChild(foot); } }
+    else if (dock.parentElement !== guide) { dock.classList.remove("ov"); guide.appendChild(dock); guide.appendChild(foot); }
   }
   // inside the website's iframe our own window is as tall as the iframe, so the page tells us the real screen height
   var embedded = window.parent !== window, parentVH = 0;
@@ -307,12 +312,12 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   window.addEventListener("message", function (e) { if (e.data && e.data.ezViewport) { parentVH = +e.data.ezViewport; size(); } });
   function frameFit(h) { frame.style.height = (h - 34 - 20) + "px"; screen.style.setProperty("--sb", "34px"); screen.style.setProperty("--hb", "20px"); }
   setInterval(function () { var d = new Date(), c = $("clk"); if (c) c.textContent = d.getHours() + ":" + ("0" + d.getMinutes()).slice(-2); }, 1000);
-  function focusStage() { if (narrow.matches) dock.scrollIntoView({ block: "start", behavior: "smooth" }); }
+  function focusStage() { if (narrow.matches) device.scrollIntoView({ block: "start", behavior: "smooth" }); }
   var DENS = 0.78;   // phone density: 1 = the dashboard at true phone size, lower = smaller cards and more on screen
   function size() {
     var phone = mode === "phone"; device.className = "device " + mode; place();
     if (narrow.matches) {   // real phone: the dashboard gets the real width, no scaling
-      var w = Math.min(stage.clientWidth || 360, 560) - 18, h = Math.max(500, Math.min(viewH() - dock.offsetHeight - 44, 840));
+      var w = Math.min(stage.clientWidth || 360, 560) - 18, h = Math.max(520, Math.min(viewH() - 60, 860));
       var d = Math.min(DENS, w / 400);   // denser: the dashboard lays out as on a wider phone, then is scaled down to fit (more cards, smaller type)
       screen.style.width = w + "px"; screen.style.height = h + "px"; screen.style.setProperty("--sb", "34px"); screen.style.setProperty("--hb", "20px");
       frame.style.width = Math.round(w / d) + "px"; frame.style.height = Math.round((h - 54) / d) + "px"; frame.style.transform = "scale(" + d + ")"; return;
