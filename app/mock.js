@@ -100,6 +100,9 @@
       case "sensor.demo_hot_water_energy": return h >= 1 && h < 5 ? 0.9 : 0.05;
       case "sensor.demo_washer_energy": return h === 9 || h === 10 ? 0.45 : 0;
       case "sensor.demo_dishwasher_energy": return h === 20 ? 0.9 : 0;
+      case "sensor.demo_gas_use": return h >= 6 && h < 9 ? 0.9 : h >= 17 && h < 22 ? 1.2 : 0.15;
+      case "sensor.demo_gas_cost": return hourUse("sensor.demo_gas_use", t) * 0.128;
+      case "sensor.demo_grid_cost": return hourUse("sensor.demo_grid_import", t) * (h >= 7 && h < 21 ? 0.34 : 0.18) + 2.1 / 24;   // like a power company's statistic: the daily charge is inside
       default: return 0.35 + 0.5 * r + (h >= 17 && h < 22 ? 1.2 : 0);
     } }
   function stats(m) { var s = Date.parse(m.start_time), e = Math.min(Date.parse(m.end_time || now()), Date.now()), out = {}, step = { "5minute": 3600e3, hour: 3600e3, day: 864e5, week: 7 * 864e5, month: 0 }[m.period] || 3600e3;
@@ -216,7 +219,8 @@
         service(m); return ok({ context: { id: "c" + Date.now() } });
       case "recorder/statistics_during_period": return ok(stats(m));
       case "history/history_during_period": return ok(history(m));
-      case "energy/get_prefs": return ok({ energy_sources: [{ type: "grid", flow_from: [{ stat_energy_from: "sensor.demo_grid_import" }], flow_to: [] }], device_consumption: DEV.map(function (s) { return { stat_consumption: s }; }) });
+      case "energy/get_prefs": return ok({ energy_sources: [{ type: "grid", flow_from: [{ stat_energy_from: "sensor.demo_grid_import", stat_cost: "sensor.demo_grid_cost" }], flow_to: [] }, { type: "gas", stat_energy_from: "sensor.demo_gas_use", stat_cost: "sensor.demo_gas_cost" }], device_consumption: DEV.map(function (s) { return { stat_consumption: s }; }) });
+      case "recorder/get_statistics_metadata": return ok((m.statistic_ids || []).map(function (id) { return { statistic_id: id, unit_of_measurement: "kWh" }; }));
       case "frontend/get_user_data": return ok({ value: null });
       case "frontend/set_user_data": return ok(null);
       case "config/auth/list": return ok([{ id: "u1", name: "Alex", is_admin: true, is_active: true, system_generated: false }, { id: "u2", name: "Sam", is_admin: false, is_active: true, system_generated: false }]);

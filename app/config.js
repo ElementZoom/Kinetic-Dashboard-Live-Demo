@@ -27,13 +27,16 @@ window.DASH_CONFIG = {
   name: "Alex",                      // greeting fallback, used when Home Assistant cannot tell us who is signed in
   noNameUsers: ["kiosk"],            // HA user names that get a plain "Evening!" with no name
   tariff: {                          // electricity price (Energy page)
-    symbol: "$", daily: 2.1,
+    symbol: "$", daily: 2.1, gasDaily: 1.8,
     periods: [
       { from: 0, to: 7, rate: 0.18, name: "Off-peak (midnight – 7am)" },
       { from: 7, to: 21, rate: 0.34, name: "Day (7am – 9pm)" },
       { from: 21, to: 24, rate: 0.18, name: "Off-peak (9pm – midnight)" }
     ]
   },
+  gst: 0.15,                         // Energy total includes 15% GST
+  billing: { electricity: { day: 14 }, gas: { day: 10 } },   // the BILL tab follows the bill cycle, not the calendar month
+  seasonal: true,                    // seasonal themes switch on by themselves in their dates (Theme page > Seasonal themes)
   hapticMs: 35,
   haptics: true,
   mobileLive: true,
