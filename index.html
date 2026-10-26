@@ -71,6 +71,32 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
 .screen iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;display:block;background:#0c0d16}
 .loading{position:absolute;inset:0;display:grid;place-items:center;color:#a29fba;font:500 13px var(--body);pointer-events:none;transition:opacity .4s}
 .dock{display:flex;flex-direction:column;gap:20px;min-width:0}
+.ctl{display:flex;flex-direction:column;gap:10px;align-self:flex-start}
+.chips,.freeonly{display:none}
+.chips{flex-basis:100%;align-items:center;flex-wrap:wrap;gap:8px}
+.chips b{font-size:13px;color:var(--muted);margin-right:4px}
+.foot .chip,.chip{all:unset;display:inline-flex;align-items:center;box-sizing:border-box;text-decoration:none;font:600 13px/1 var(--body);border-radius:999px;padding:13px 16px;min-height:44px;box-sizing:border-box;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--fg)}
+.foot .chip[aria-pressed="true"],.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.chip:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.freeonly.btn{display:none;text-decoration:none}
+/* Free play: no steps, the device gets the whole width, hint dots and season chips appear */
+body.free .demo{grid-template-columns:minmax(0,1fr) auto;row-gap:20px}
+body.free .guide{display:contents}
+body.free .guide>div:first-child{grid-column:1;grid-row:1}
+body.free .ctl{grid-column:2;grid-row:1;align-self:end;align-items:flex-end}
+body.free .stage{grid-column:1/-1;grid-row:2;position:static}
+body.free .foot{grid-column:1/-1;grid-row:3;font-size:13px}
+body.free .dock{display:none}
+body.free .chips{display:flex}
+body.free .freeonly{display:inline-block}
+body.free .device.tablet{width:auto;max-width:none}
+@media (max-width:900px){
+  body.free .demo{grid-template-columns:minmax(0,1fr)}
+  body.free .guide>div:first-child,body.free .ctl,body.free .stage,body.free .foot{grid-column:1}
+  body.free .ctl{grid-row:2;align-self:stretch;align-items:stretch}
+  body.free .stage{grid-row:3}body.free .foot{grid-row:4}
+  .mseg{display:flex;align-self:stretch}.mseg button{flex:1;min-height:44px}
+}
 .dockhead{display:none}
 
 /* ---- phones and small tablets ---- */
@@ -78,7 +104,7 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   .demo{grid-template-columns:minmax(0,1fr);gap:14px;padding-block:14px}
   .guide{gap:12px}
   h1{font-size:25px;margin:8px 0 4px}
-  .lede,.seg{display:none}
+  .lede,.seg:not(.mseg){display:none}
   .steps .step:not(.on){display:none}
   .step.on{box-shadow:none}
   .step > button.head{cursor:default;padding:12px 14px 6px}
@@ -131,8 +157,13 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
       <h1>Try the app your home runs on</h1>
       <p class="lede">This is the real ElementZoom dashboard, running on a pretend house. Follow the steps, or tap around on your own.</p>
     </div>
+    <div class="ctl">
+    <div class="seg mseg" role="group" aria-label="How to explore">
+      <button id="m-tour" aria-pressed="true">Guided tour</button><button id="m-free" aria-pressed="false">Free play</button>
+    </div>
     <div class="seg" role="group" aria-label="Screen size">
       <button id="v-tablet" aria-pressed="true">Wall tablet</button><button id="v-phone" aria-pressed="false">Phone</button>
+    </div>
     </div>
     <div class="dock" id="dock">
     <div class="dockhead"><div class="bar" id="bar" aria-hidden="true"></div><span class="mnav"><button id="prev" aria-label="Previous step">‹</button><button id="next" aria-label="Next step">›</button></span></div>
@@ -140,10 +171,10 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
     <div class="finish" id="finish" hidden>
       <h2>That's the whole house, in one app</h2>
       <p>We set this up in your home: your lights, heating, cameras, garage and garden, on a wall tablet and every phone in the family.</p>
-      <div class="acts"><a class="btn primary" href="https://wa.me/64225294960" target="_blank" rel="noopener">Book a free consultation</a><a class="btn" href="https://elementzoom.co.nz/our-packages/" target="_blank" rel="noopener">See packages</a></div>
+      <div class="acts"><a class="btn primary" href="https://wa.me/64225294960" target="_blank" rel="noopener">Book a free consultation</a><button class="btn" id="keep">Keep exploring</button><a class="btn" href="https://elementzoom.co.nz/our-packages/" target="_blank" rel="noopener">See packages</a></div>
     </div>
     </div>
-    <div class="foot"><button id="reset">Reset demo</button><span>Pretend devices only. Nothing here controls a real home.</span></div>
+    <div class="foot"><div class="chips" id="chips" role="group" aria-label="Try a season"></div><button id="reset">Reset demo</button><span>Pretend devices only. Nothing here controls a real home.</span><a class="btn primary freeonly" href="https://wa.me/64225294960" target="_blank" rel="noopener">Book a free consultation</a></div>
   </section>
   <section class="stage" aria-label="Dashboard">
     <div class="device tablet" id="device">
@@ -163,7 +194,7 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   var frame = $("dash"), screen = $("screen"), device = $("device");
   var narrow = matchMedia("(max-width:900px)");
   var mode = narrow.matches ? "phone" : "tablet";
-  var D = null, W = null, active = 0, done = {}, armed = {}, scrolled = null, scrollN = 0, scrollT = 0;
+  var free = /[?&]mode=free\b/.test(location.search), gone = {}, D = null, W = null, active = 0, done = {}, armed = {}, scrolled = null, scrollN = 0, scrollT = 0;
 
   // ---------- looking inside the dashboard ----------
   function vis(el) {
@@ -260,12 +291,28 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
     "@keyframes ezp{50%{box-shadow:0 0 0 2px #fff,0 0 0 8px rgba(255,190,90,.55),0 0 38px 14px rgba(255,190,90,.3)}}" +
     "#ez-tip{position:fixed;z-index:2147483647;pointer-events:none;background:#ffbe5a;color:#221500;font:700 13px/1 'Plus Jakarta Sans',system-ui,sans-serif;" +
     "padding:8px 12px;border-radius:999px;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.4);transition:left .25s,top .25s}" +
-    "@media (prefers-reduced-motion:reduce){#ez-ring{animation:none}}";
+    ".ez-h{position:fixed;z-index:2147483645;width:14px;height:14px;border-radius:50%;background:#ffbe5a;pointer-events:none;display:none;animation:ezh 1.8s infinite}" +
+    "@keyframes ezh{0%{box-shadow:0 0 0 0 rgba(255,190,90,.75)}70%{box-shadow:0 0 0 12px rgba(255,190,90,0)}100%{box-shadow:0 0 0 0 rgba(255,190,90,0)}}" +
+    "@media (prefers-reduced-motion:reduce){#ez-ring,.ez-h{animation:none}}";
   function overlay() {
     if (!D || D.getElementById("ez-ring")) return;
     var st = D.createElement("style"); st.textContent = CSS; D.head.appendChild(st);
     ["ez-ring", "ez-tip"].forEach(function (id) { var d = D.createElement("div"); d.id = id; d.style.display = "none"; D.body.appendChild(d); });
+    HINTS.forEach(function (h) { var d = D.createElement("div"); d.id = "ez-h-" + h[0]; d.className = "ez-h"; D.body.appendChild(d); });
   }
+  // Free play: pulsing dots on the best parts of the dashboard, each gone once its page has been opened
+  var HINTS = [["energy", "#energy"], ["theme", "#theme"], ["cameras", "#security"]];
+  function hints() {
+    var cur = (W.location.hash || "").split("/")[0];
+    HINTS.forEach(function (h) {
+      var d = D.getElementById("ez-h-" + h[0]); if (!d) return;
+      if (cur === h[1]) gone[h[0]] = 1;
+      var a = gone[h[0]] ? null : q('a[href="' + h[1] + '"]');
+      if (!a) { d.style.display = "none"; return; }
+      var r = a.getBoundingClientRect(); d.style.display = "block"; d.style.left = Math.round(r.right - 16) + "px"; d.style.top = Math.round(r.top + 4) + "px";
+    });
+  }
+  function hideHints() { HINTS.forEach(function (h) { var d = D && D.getElementById("ez-h-" + h[0]); if (d) d.style.display = "none"; }); }
   // phone: the step card sits at the bottom of the phone screen, or at the top when the thing to tap is down there (never on top of it)
   function placeCard(r) {
     if (!dock.classList.contains("ov")) return;
@@ -278,6 +325,8 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   }
   function tick() {
     if (!D || !W || !D.body) return; overlay();
+    if (free) { var rg = D.getElementById("ez-ring"), tp = D.getElementById("ez-tip"); if (rg) rg.style.display = tp.style.display = "none"; hints(); return; }
+    hideHints();
     var s = STEPS[active], ring = D.getElementById("ez-ring"), tip = D.getElementById("ez-tip"); if (!ring) return;
     if (s.check && !done[active] && s.check()) complete(active);
     var target = null, label = "";
@@ -302,15 +351,16 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
 
   // ---------- wiring the dashboard up ----------
   frame.addEventListener("load", function () {
+    if (free) setTimeout(function () { window.scrollTo(0, 0); }, 50);
     try { W = frame.contentWindow; D = frame.contentDocument; } catch (e) { return; }
     var tries = 0, wait = setInterval(function () {
       if (W.DEMO || ++tries > 50) { clearInterval(wait); if (!W.DEMO) return;
         W.DEMO.on(function (e) { if (armed[4] === true && e.kind === "service" && hit(e, "switch.demo_garage_opener")) armed[4] = "closing"; STEPS.forEach(function (s, i) { if (s.when && s.when(e)) complete(i); }); });
         $("loading").style.opacity = 0; }
     }, 100);
-    D.addEventListener("click", function (e) { STEPS.forEach(function (s, i) { if (s.click && e.target.closest && e.target.closest(s.click)) setTimeout(function () { complete(i); }, 300); }); }, true);
+    D.addEventListener("click", function (e) { var an = e.target.closest && e.target.closest("a[href]"); if (an) HINTS.forEach(function (h) { if (an.getAttribute("href") === h[1]) gone[h[0]] = 1; }); STEPS.forEach(function (s, i) { if (s.click && e.target.closest && e.target.closest(s.click)) setTimeout(function () { complete(i); }, 300); }); }, true);
   });
-  $("reset").onclick = function () { try { W && W.localStorage.clear(); } catch (e) {} done = {}; armed = {}; active = 0; $("loading").style.opacity = 1; D = W = null; frame.src = "app/dash.html?v=1.14.0.1#home"; render(); };
+  $("reset").onclick = function () { try { W && W.localStorage.clear(); } catch (e) {} done = {}; armed = {}; gone = {}; active = 0; seasonNow = ""; paintChips(); $("loading").style.opacity = 1; D = W = null; frame.src = "app/dash.html?v=1.14.0.1#home"; render(); };
 
   // ---------- sizing the device ----------
   var dock = $("dock"), guide = document.querySelector(".guide"), stage = document.querySelector(".stage"), foot = document.querySelector(".foot");
@@ -337,7 +387,7 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
       frame.style.width = Math.round(w / d) + "px"; frame.style.height = Math.round((h - 54) / d) + "px"; frame.style.transform = "scale(" + d + ")"; curScale = d; return;
     }
     var VW = phone ? 440 : 1180, VH = phone ? 950 : 820, avail = device.parentElement.clientWidth - (phone ? 22 : 32);
-    var maxH = Math.max(560, viewH() - 90) - (phone ? 22 : 32), s = Math.min(avail / VW, maxH / VH, phone ? 1 : 0.9);
+    var maxH = Math.max(560, viewH() - (free ? 250 : 90)) - (phone ? 22 : 32), s = Math.min(avail / VW, maxH / VH, phone ? 1 : free ? 1 : 0.9);
     screen.style.width = Math.round(VW * s) + "px"; screen.style.height = Math.round(VH * s) + "px";
     screen.style.setProperty("--sb", phone ? Math.round(34 * s) + "px" : "0px"); screen.style.setProperty("--hb", Math.round(20 * s) + "px");
     frame.style.width = VW + "px"; frame.style.height = phone ? Math.round(VH - (34 + 20) / s) + "px" : VH + "px"; frame.style.transform = "scale(" + s + ")";
@@ -348,6 +398,40 @@ h1{font:600 clamp(28px,3.1vw,38px)/1.08 var(--display);letter-spacing:-.01em;mar
   narrow.addEventListener("change", function () { setMode(narrow.matches ? "phone" : "tablet"); });
   window.addEventListener("resize", size);
   setMode(mode); render();
+
+  // ---------- Guided tour / Free play ----------
+  function setPlay(f) {
+    free = f; document.body.classList.toggle("free", f);
+    $("m-tour").setAttribute("aria-pressed", !f); $("m-free").setAttribute("aria-pressed", f);
+    try { var u = new URL(location.href); if (f) u.searchParams.set("mode", "free"); else u.searchParams.delete("mode"); history.replaceState(null, "", u); } catch (e) {}
+    size(); render();
+  }
+  $("m-tour").onclick = function () { setPlay(false); };
+  $("m-free").onclick = function () { setPlay(true); };
+  $("keep").onclick = function () { setPlay(true); };
+  // season chips drive the dashboard's own Theme page: open it, press the season, come back to where the visitor was
+  var SEAS = [["off", "Off"], ["christmas", "Christmas"], ["halloween", "Halloween"], ["matariki", "Matariki"], ["diwali", "Diwali"]], seasonNow = "";
+  function season(id) {
+    seasonNow = id; if (!W) { paintChips(); return; }
+    var back = W.location.hash || "#home"; go("#theme"); var n = 0;
+    var t = setInterval(function () {
+      var ready = D && D.querySelector("button[data-szn]");
+      if (ready) {
+        clearInterval(t);
+        var on = D.querySelector("button[data-szn].on");
+        if (id === "off") { if (on) on.click(); var off = D.querySelector('button[data-sznm="off"]'); if (off) off.click(); }
+        else { var pick = D.querySelector('button[data-szn="' + id + '"]'); if (pick && pick !== on) pick.click(); }
+        setTimeout(function () { go(back); }, 200);
+      } else if (++n > 25) { clearInterval(t); go(back); }
+    }, 80);
+    paintChips();
+  }
+  function paintChips() { Array.prototype.forEach.call($("chips").querySelectorAll("button"), function (b) { b.setAttribute("aria-pressed", b.dataset.s === seasonNow); }); }
+  (function () {
+    var c = $("chips"), l = document.createElement("b"); l.textContent = "Try a season"; c.appendChild(l);
+    SEAS.forEach(function (x) { var b = document.createElement("button"); b.className = "chip"; b.dataset.s = x[0]; b.textContent = x[1]; b.onclick = function () { season(x[0]); }; c.appendChild(b); });
+    paintChips(); if (free) setPlay(true);
+  })();
 
   // tell a parent page (the website) how tall this page is, so its iframe can fit it
   if (embedded) { var lastH = 0; setInterval(function () { var h = document.documentElement.scrollHeight; if (h !== lastH) { lastH = h; window.parent.postMessage({ ezDemoHeight: h }, "*"); } }, 400); }
