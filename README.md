@@ -8,6 +8,8 @@ Everything runs in the visitor's browser; it never connects to a real Home Assis
 - `app/mock.js` — the pretend Home Assistant (states, services, cameras)
 - `app/config.js` — the showcase config from the Kinetic repo
 
+Two ways to explore: **Guided tour** (default) and **Free play** (no steps, hint dots, season chips). Open straight into Free play with `?mode=free`, or from a parent page with `postMessage({ ezMode: "free" })` (`"tour"` switches back).
+
 Embedding on the website: see `embed-snippet.html`.
 
 Live: https://elementzoom.github.io/Kinetic-Dashboard-Live-Demo/

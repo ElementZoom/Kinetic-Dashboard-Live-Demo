@@ -372,7 +372,7 @@ body.free .device.tablet{width:auto;max-width:none}
   var embedded = window.parent !== window, parentVH = 0;
   function viewH() { return embedded ? (parentVH || 760) : window.innerHeight; }
   var parentFull = false;   // the website put the demo over the whole screen: no header to leave room for
-  window.addEventListener("message", function (e) { if (e.data && e.data.ezViewport) { parentVH = +e.data.ezViewport; parentFull = !!e.data.ezFull; document.body.classList.toggle("pfull", parentFull); size(); } });
+  window.addEventListener("message", function (e) { if (e.data && (e.data.ezMode === "free" || e.data.ezMode === "tour")) setPlay(e.data.ezMode === "free"); if (e.data && e.data.ezViewport) { parentVH = +e.data.ezViewport; parentFull = !!e.data.ezFull; document.body.classList.toggle("pfull", parentFull); size(); } });
   function frameFit(h) { frame.style.height = (h - 34 - 20) + "px"; screen.style.setProperty("--sb", "34px"); screen.style.setProperty("--hb", "20px"); }
   setInterval(function () { var d = new Date(), c = $("clk"); if (c) c.textContent = d.getHours() + ":" + ("0" + d.getMinutes()).slice(-2); }, 1000);
   function focusStage() { if (narrow.matches) device.scrollIntoView({ block: "start", behavior: "smooth" }); }
