@@ -450,17 +450,22 @@ button,input,select,textarea{font-family:inherit}
 .wch svg{width:1.2em;height:1.2em;fill:currentColor;vertical-align:-.22em}
 .enc{font-weight:500;opacity:.75;margin-left:2px}.enb{display:flex;flex-direction:column;gap:10px;margin-top:14px}.enr{display:flex;align-items:center;gap:12px;font-size:14px}.enr .enn{flex:0 0 190px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.enr b{margin-left:auto;font-weight:500;min-width:84px;text-align:right}.enbar{flex:1;height:12px;border-radius:6px;background:rgba(var(--w),.08);overflow:hidden}.enbar i{display:block;height:100%;border-radius:6px}
 @media(max-width:760px){
-#energy .ensl{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:12px;align-items:flex-start}#energy .ensl::-webkit-scrollbar{display:none}
-#energy .ensl>.pn{flex:0 0 100%;scroll-snap-align:start;box-sizing:border-box;min-width:0;margin:0;padding:16px 16px 14px}
+#energy .ensl{display:flex;flex-direction:column;gap:12px}
+#energy .ensl>.pn{box-sizing:border-box;min-width:0;margin:0;padding:16px 16px 14px}
+#energy .ensl[data-t="e"]>[data-k="g"],#energy .ensl[data-t="g"]>[data-k="e"]{display:none}
 #energy .ensl .h2{font-size:30px;font-weight:300;line-height:1.1;overflow-wrap:anywhere}#energy .ensl .lbl{font-size:12px}
 #energy .ensub{margin-left:0!important;text-align:left!important;flex:1 0 100%;margin-top:2px}
-#energy .enb{gap:11px;margin-top:12px}#energy .enr{flex-wrap:wrap;font-size:15px;row-gap:4px;gap:8px}#energy .enr .enn{flex:1 1 0;white-space:normal;overflow:visible}#energy .enr b{min-width:0;font-size:15px;order:2}#energy .enr>.lbl{order:3;flex:1 0 100%;padding-left:20px;font-size:12px;margin-top:-2px}#energy .enr .enbar{order:3;flex:1 0 100%;height:11px;border-radius:6px}#energy .enr .enbar i{border-radius:6px}
+#energy .enb{gap:11px;margin-top:12px}#energy .enr{flex-wrap:wrap;font-size:15px;row-gap:2px;gap:8px}#energy .enr .enn{flex:1 1 0;white-space:normal;overflow:visible}#energy .enr b{min-width:0;font-size:15px;order:2}#energy .enr>.lbl{order:1;flex:0 1 auto;padding:0;font-size:11px;margin:0;text-align:right;min-width:0}#energy .ensrc{overflow-wrap:anywhere}#energy .enr .end{order:0}#energy .enr .enn{order:0}#energy .ensrc{display:none}#energy .enr .enbar{order:3;flex:1 0 100%;height:11px;border-radius:6px}#energy .enr .enbar i{border-radius:6px}
 #energy .enp{flex-direction:column;align-items:stretch;gap:12px;margin-top:8px}#energy .enp svg{width:100%;max-width:190px;height:auto;margin:0 auto}
-#energy .endots{margin-top:8px}
+#energy .eni{grid-template-columns:1fr 1fr;gap:10px}#energy .eil{padding:11px 12px}#energy .eiv{font-size:22px}
 }
-@media(min-width:761px){#energy .ensl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}#energy .ensl>.pn{margin:0;min-width:0}#energy .ensl .enr .enn{flex-basis:150px}}
+.ensw{display:none}.enseg{display:flex;height:10px;border-radius:6px;overflow:hidden;gap:2px;margin-top:14px}.enseg i{display:block;min-width:3px}.enavg{margin-top:12px}
+@media(max-width:760px){.ensw{display:flex;background:rgba(var(--w),.06);border-radius:14px;padding:3px;margin-bottom:12px}.ensw button{flex:1;padding:10px 6px;border:0;border-radius:11px;background:none;color:var(--ink);opacity:.7;font:inherit;font-size:12px;letter-spacing:.1em}.ensw button.on{background:rgba(var(--w),.16);opacity:1}}
+@media(min-width:761px){#energy .ensl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}#energy .ensl[data-n="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}#energy .ensl>.pn{margin:0;min-width:0}#energy .ensl .enr .enn{flex-basis:70px}#energy .ensl .enr{flex-wrap:wrap;row-gap:0}#energy .ensl .enr>.lbl{font-size:11px;text-align:right;flex:0 1 auto;min-width:0;margin-left:auto}#energy .ensl .enr b{margin-left:0}#energy .ensl .enn{flex:1 1 70px}#energy .ensl .enr{font-size:13px;gap:8px}#energy .ensl .enr b{min-width:56px}#energy .ensl .h2{font-size:26px}#energy .ensub{margin-left:0!important;text-align:left!important;flex:1 0 100%;font-size:10px;margin-top:2px}#energy .ensl .eh{flex-wrap:wrap}#energy .ensrc{overflow-wrap:anywhere;margin:6px 0 10px!important}}
+@media(min-width:761px) and (max-width:1280px){#energy .ensl:not([data-n="2"]){grid-template-columns:repeat(2,minmax(0,1fr))}#energy .ensl>.entot{grid-column:1/-1}.enins .eni{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+.ensd{margin:-6px 0 0 24px;opacity:.7;text-transform:none;letter-spacing:0}
 .eni{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}.eil{padding:12px 14px;border-radius:14px;background:rgba(var(--w),.05);border:1px solid var(--line)}.eiv{font-size:26px;font-weight:300;margin-top:2px;line-height:1.15}.eic{font-size:13px;opacity:.7;line-height:1.4;margin-top:4px}
-@media(min-width:761px){#energy .ensl>.enins{grid-column:1/-1}.enins .eni{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
+@media(min-width:761px){#energy .ensl>.enins{grid-column:1/-1}.enins .eni{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}}
 .end{width:12px;height:12px;border-radius:50%;flex:none}.enr .end+.enn{flex:1}.enp{display:flex;align-items:center;gap:24px;margin-top:14px;flex-wrap:wrap}
 #energy .eb.on{background:var(--mint);color:var(--onmint,#07241a);border-color:var(--mint)}
 @media(max-width:760px){.enr .enn{flex-basis:110px}}
@@ -560,6 +565,9 @@ nav a.nset{margin-top:auto}
 #rv .bl,#np .bl{gap:8px}#rv .bl .bd,#np .bl .bd{flex:1 1 calc(50% - 4px);min-width:0;padding-right:10px}#rv .bd[data-k] .nm,#np .bd[data-k] .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}#rv .bd[data-k] span.st{display:none}
 }
 
+
+@keyframes enold{to{opacity:.4}}#energy .enold{animation:enold .25s ease forwards;pointer-events:none}@media(prefers-reduced-motion:reduce){#energy .enold{animation:none;opacity:.4}}
+@keyframes enin{from{opacity:.4;transform:translate(var(--tx,0px),var(--ty,10px))}}#energy .enin{animation:enin .5s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--i,0)*60ms)}@media(prefers-reduced-motion:reduce){#energy .enin{animation:none}}
 /* touch: no blue tap box, no text selection on the UI */
 *{-webkit-tap-highlight-color:transparent}
 a,button,.tl,.rc,.cam,.chip,.eb,.card,.bd,.sc,.pbi,[data-e],[data-k]{-webkit-touch-callout:none;touch-action:manipulation}
@@ -1746,6 +1754,27 @@ body.ly-open .mlay.hasly .ar{flex:1;max-height:none;min-height:0}
 .ai-nm{display:inline-flex;align-items:center;gap:2px;max-width:100%;margin:2px 0;padding:3px 4px 3px 10px;border:0;border-radius:99px;background:rgba(var(--w),.12);color:inherit;font:inherit;text-align:left;cursor:pointer}.ai-nm svg{width:16px;height:16px;fill:currentColor;flex:none}
 #npbody .npdl{display:flex;justify-content:center;gap:22px;padding-top:8px;font:600 10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}#npbody .npdl span{cursor:pointer}#npbody .npdl span.on{color:var(--mint)}
 @media(max-width:760px){.lyh .lyx{margin-left:auto;flex:none}}
+/* seasonal themes (40-seasons.js): the decorations sit in one layer above the page and below pop-ups and full-screen cameras. They never take a tap.
+   The falling / floating bits (.fx) are switched off while any camera is live and under reduced motion; the rest stands still then. */
+#szn{position:fixed;inset:0;z-index:20;pointer-events:none;overflow:hidden}
+#szn[hidden]{display:none}
+#szn i,#szn svg{position:absolute;display:block;pointer-events:none}
+#szn i{font-style:normal}
+html.camlive #szn .fx,#szn.cams .fx{display:none}
+html.camlive #szn *{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){#szn .fx{display:none}#szn *{animation:none!important}}
+@keyframes sznFall{from{transform:translate3d(0,-8vh,0) rotate(0)}to{transform:translate3d(var(--dx,0px),112vh,0) rotate(var(--r,0deg))}}
+@keyframes sznRise{from{transform:translate3d(0,0,0)}to{transform:translate3d(var(--dx,0px),-118vh,0)}}
+@keyframes sznTw{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes sznSway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes sznDrift{from{transform:translate3d(-14vw,0,0)}to{transform:translate3d(114vw,var(--dy,0px),0)}}
+@keyframes sznFlap{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.45)}}
+@keyframes sznBurst{0%{transform:scale(.15);opacity:0}10%{opacity:1}55%{opacity:.95}100%{transform:scale(1.2);opacity:0}}
+@keyframes sznShoot{0%,86%{transform:translate3d(0,0,0) rotate(28deg);opacity:0}88%{opacity:1}100%{transform:translate3d(46vw,26vw,0) rotate(28deg);opacity:0}}
+@keyframes sznFog{0%,100%{transform:translateX(-4vw)}50%{transform:translateX(4vw)}}
+#szn .sway{transform-origin:50% 0;animation:sznSway 4.5s ease-in-out infinite}
+#szn .tw{animation:sznTw 2.6s ease-in-out infinite}
+#szn .fx.dot{border-radius:50%}
 </style>
 </head>
 <body>
@@ -1810,14 +1839,14 @@ body.ly-open .mlay.hasly .ar{flex:1;max-height:none;min-height:0}
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
 <script src="brand-logo.js?v=1"></script>
-<script src="mock.js?v=1.12.0"></script>
+<script src="mock.js?v=1.14.0"></script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "1.12.0";   // the one place to change the version
+window.DASH_VER = "1.14.0";   // the one place to change the version
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -1922,6 +1951,7 @@ const GEN = (h, s, la) => ({ dark: C([hsl(h, 8 * s, 9), hsl(h, 42 * s, 17), hsl(
 Object.assign(PAL_PRE, { Magenta: GEN(315, 1), Plum: GEN(290, .8), Lavender: GEN(268, .75), Mint: GEN(152, 1, 27), Sage: GEN(125, .45), Gold: GEN(48, 1, 27), Sand: GEN(38, .5), Rose: GEN(350, .7), Slate: GEN(212, .35), Graphite: GEN(0, 0) });
 const PAL_DEF = { mode: "dark", dark: Object.assign({}, PAL_PRE.Violet.dark), light: Object.assign({}, PAL_PRE.Violet.light), temp: ["#ccc2dc", "#a8c7fa", "#9ed6f0", "#b6ddb8", "#f9de8e", "#ffb88c", "#f2a09b"] };
 let PAL = JSON.parse(JSON.stringify(PAL_DEF));
+let SEASON = null;   // the seasonal theme that is on right now (see 40-seasons.js): its colours replace the palette while it lasts
 try {
   const o = JSON.parse(localStorage.getItem("dashPal") || "{}");
   if (o.bg) { const d = {}; Object.keys(PAL_DEF.dark).forEach(k => { if (o[k]) d[k] = o[k]; }); o.dark = d; }
@@ -1941,7 +1971,7 @@ function palMode() {
 }
 const rgbOf = h => [1, 3, 5].map(i => parseInt(h.substr(i, 2), 16)).join(",");
 function applyPal() {
-  const m = palMode(), r = document.documentElement, p = PAL[m], v = (k, x) => r.style.setProperty(k, x), c = rgbOf(p.nav1).split(",").map(Number);
+  const m = palMode(), r = document.documentElement, p = (SEASON && SEASON.pal[m]) || PAL[m], v = (k, x) => r.style.setProperty(k, x), c = rgbOf(p.nav1).split(",").map(Number);
   r.setAttribute("data-mode", m); r.style.colorScheme = m; v("--w", m === "light" ? "0,0,0" : "255,255,255");
   v("--bg", p.bg); v("--bg2", p.glow); v("--ink", p.ink); v("--ink-rgb", rgbOf(p.ink)); v("--mint", p.accent); { const ac = rgbOf(p.accent).split(",").map(Number); v("--onmint", (0.299 * ac[0] + 0.587 * ac[1] + 0.114 * ac[2]) / 255 > 0.6 ? "#07241a" : "#ffffff"); } v("--mint-rgb", rgbOf(p.accent));
   v("--heat", p.heat); v("--heat-rgb", rgbOf(p.heat)); v("--cool", p.cool); v("--cool-rgb", rgbOf(p.cool)); v("--lit-rgb", rgbOf(p.lit));
@@ -1956,6 +1986,11 @@ let FONT = "jakarta"; try { FONT = localStorage.getItem("dashFont") || "jakarta"
 const FONTS = [["jakarta", "Plus Jakarta Sans", "Modern, friendly", '"Plus Jakarta Sans",Inter,system-ui,sans-serif'], ["google", "Google (Roboto Flex)", "Clean, Android feel", '"Roboto Flex",Roboto,system-ui,sans-serif'], ["googlemono", "Google + mono labels", "Roboto Flex with Roboto Mono labels", '"Roboto Flex",Roboto,system-ui,sans-serif'], ["outfit", "Outfit", "Geometric, rounded", '"Outfit",Inter,system-ui,sans-serif'], ["manrope", "Manrope", "Soft and neutral", '"Manrope",Inter,system-ui,sans-serif'], ["default", "Classic", "Your previous look", 'Inter,"Segoe UI",Roboto,system-ui,sans-serif']];
 const applyFont = () => document.documentElement.setAttribute("data-font", FONTS.some(x => x[0] === FONT) ? FONT : "jakarta");
 applyFont();
+// 12- or 24-hour times: Theme page -> "Clock" (this device), else config.js clock: "12" | "24", else "auto" (the device's language decides)
+let CLOCK = ""; try { CLOCK = localStorage.getItem("dashClock") || ""; } catch (_) {}
+if (!/^(auto|12|24)$/.test(CLOCK)) CLOCK = /^(12|24)$/.test(String(CONFIG.clock)) ? String(CONFIG.clock) : "auto";
+const CLK12 = () => CLOCK === "12" || (CLOCK !== "24" && !!new Intl.DateTimeFormat([], { hour: "numeric" }).resolvedOptions().hour12);
+const tmo = o => Object.assign(o, CLK12() ? { hour12: true } : { hourCycle: "h23" });   // add to the options of any toLocale*String that shows an hour
 applyPal();
 let PAL_SEEN = palMode(); const palTick = () => { if (PAL.mode !== "sun" && PAL.mode !== "time") return; const m = palMode(); if (m !== PAL_SEEN) { PAL_SEEN = m; themeFx(applyPal); if (curPg() === "theme") drawPalette(); } };
 setInterval(palTick, 20000); document.addEventListener("visibilitychange", () => { if (!document.hidden) palTick(); });
@@ -2363,6 +2398,14 @@ function drawFc() { $("#fc").innerHTML = fc.length ? fcCols(fc.slice(0, 10)) : "
 const EVPAL = ["#ff6b6b", "#ff9f7a", "#f0d36b", "#8ff0c4", "#4fd1c5", "#6bb8ff", "#8d7bff", "#c79bff", "#ff8fc7", "#b8c0cc"];
 let EVCOL = (() => { try { return JSON.parse(localStorage.dashEvCol || "{}") || {}; } catch (e) { return {}; } })(), evColSynced = false;
 const evKey = (cal, t) => cal + "|" + (t || "").trim().toLowerCase();
+const evUk = (c, v) => v && v.uid ? "u|" + c + "|" + v.uid : "";   // a colour belongs to the event itself (its id), not to its title; older title colours still apply to events that have none of their own
+let EVPEND = null;
+function evColOf(c, v) { const u = evUk(c, v); if (u && EVCOL[u] !== undefined) return EVCOL[u] === "-" ? "" : EVCOL[u]; return EVCOL[evKey(c, v.summary)] || ""; }
+function evPend(c, v) {   // a colour picked for an event that had no id yet: claim it as soon as the calendar lists that event
+  const p = EVPEND, u = evUk(c, v); if (!p || !u || p.cal !== c || (v.summary || "").trim().toLowerCase() !== p.t) return;
+  const ad = !v.start.dateTime, st = pd(v.start); if (ad ? ymd(st) !== p.start : st.getTime() !== new Date(p.start).getTime()) return;
+  EVCOL[u] = p.col; EVPEND = null; evColSave();
+}
 function evColSave() { try { localStorage.dashEvCol = JSON.stringify(EVCOL); } catch (e) {} send({ type: "frontend/set_user_data", key: "dash_evcol", value: EVCOL }); }
 function evColSync() { if (evColSynced) return; evColSynced = true; send({ type: "frontend/get_user_data", key: "dash_evcol" }, (r, m) => { const v = r && r.value; if (v && typeof v === "object") { EVCOL = Object.assign({}, v, EVCOL); try { localStorage.dashEvCol = JSON.stringify(EVCOL); } catch (e) {} loadEvents(); } }); }
 const CALCOL = ["#6bb8ff", "#ff9f7a", "#8ff0c4", "#f0d36b", "#c79bff", "#ff7a6b"];
@@ -2379,11 +2422,11 @@ function loadEvents() {
   const mk = cy + "-" + cm; if (evLast.k === mk) drawEvents(evLast.gs, evLast.map); else drawEvents(gs, map);   // same month: keep what is on screen until the new answer is in (no blink)
   Promise.all(CONFIG.calendars.map((c, i) => getToken().then(tk => fetch(CONFIG.url + "/api/calendars/" + c + q, { headers: { Authorization: "Bearer " + tk } }))
     .then(r => r.text().then(t => { let j = null; try { j = JSON.parse(t); } catch (x) {} if (!Array.isArray(j)) { const st = states[c]; throw new Error(r.status === 404 || !t ? (st ? "HTTP " + r.status + " (HA sent no events: the calendar may be unavailable or still loading)" : "no calendar with this id exists in Home Assistant") : (j && (j.message || j.error)) || ("HTTP " + r.status)); } return j; })).then(l => l.forEach(v => { try {
-      const s = pd(v.start), e = pd(v.end), ad = !v.start.dateTime;
+      evPend(c, v); const s = pd(v.start), e = pd(v.end), ad = !v.start.dateTime;
       const last = ad ? new Date(e.getFullYear(), e.getMonth(), e.getDate() - 1) : new Date(e.getFullYear(), e.getMonth(), e.getDate());
       let d = new Date(s.getFullYear(), s.getMonth(), s.getDate());
       for (let n = 0; n < 42 && d <= last; n++, d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1))
-        (map[dk(d)] = map[dk(d)] || []).push({ t: s, ad: ad, s: v.summary, c: EVCOL[evKey(c, v.summary)] || CALCOL[i % CALCOL.length], i: EVS.push({ v: v, cal: c, ci: i }) - 1 });
+        (map[dk(d)] = map[dk(d)] || []).push({ t: s, ad: ad, s: v.summary, c: evColOf(c, v) || CALCOL[i % CALCOL.length], i: EVS.push({ v: v, cal: c, ci: i }) - 1 });
     } catch (x) { evErr.push(calName(c) + ": skipped \"" + (v && v.summary || "?") + "\" (" + x.message + ")"); } })).catch(x => { evErr.push(calName(c) + ": " + x.message); }))).then(() => { if (tok === evTok) { evLast = { k: mk, gs: gs, map: map }; drawEvents(gs, map, true); const el = $("#eerr"); if (el) el.textContent = evErr.length ? evErr.join(" · ") + "  |  Calendars HA has: " + Object.keys(states).filter(k => k.indexOf("calendar.") === 0).join(", ") : ""; } });
 }
 function drawEvents(gs, map, fin) {
@@ -2392,7 +2435,7 @@ function drawEvents(gs, map, fin) {
   if (!$("#eerr")) { const e = document.createElement("div"); e.id = "eerr"; e.style.cssText = "color:var(--heat);font-size:12px;margin:6px 2px;empty-cells:hide"; $("#elg").after(e); }
   $("#elg").innerHTML = CONFIG.calendars.map((c, i) => '<span><i style="--c:' + CALCOL[i % CALCOL.length] + '"></i>' + esc(calName(c)) + '</span>').join("");
   const today = dk(new Date()), rows = mrows(), g = $("#cg");
-  const tm = v => v.t.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }).replace(" ", "").toLowerCase();
+  const tm = v => v.t.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })).replace(" ", "").toLowerCase();
   const srt = l => l.sort((a, b) => (b.ad - a.ad) || (a.t - b.t));
   let h = "";
   if (isMobile()) {   // phones: agenda list instead of a month grid
@@ -2415,6 +2458,7 @@ function drawEvents(gs, map, fin) {
   g.className = "cg"; g.style.setProperty("--rows", rows); g.innerHTML = h;
 }
 // ----- add / edit / delete events (Home Assistant calendar websocket API) -----
+const evSig = s => JSON.stringify([s.cal, s.title.trim(), s.ad, s.sd, s.ad ? "" : s.st, s.ed, s.ad ? "" : s.et, s.loc.trim(), s.note.trim(), s.rep, s.n, s.unit, s.days, s.until]);
 const evCanUpdate = c => { const x = states[c]; return !!x && ((+x.attributes.supported_features || 0) & 4) > 0; };
 const evWritable = () => CONFIG.calendars.filter(c => { const s = states[c]; return s && ((+s.attributes.supported_features || 0) & 1); });
 const p2 = n => ("0" + n).slice(-2), ymd = d => d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()), hm = d => p2(d.getHours()) + ":" + p2(d.getMinutes());
@@ -2438,12 +2482,12 @@ function evOpen(o) {   // o: {ev} to edit, or {date} to add
   let st = { edit: !!e, cal: e ? e.cal : (wr[0] || ""), title: "", ad: false, sd: o.date || ymd(new Date()), st: "09:00", ed: "", et: "10:00", loc: "", note: "", col: "", rep: "", n: 2, unit: "weekly", days: [], until: "", scope: "all", msg: "" };
   if (e) {
     const s0 = pd(v.start), e0 = pd(v.end), ad = !v.start.dateTime;
-    st.title = v.summary || ""; st.col = EVCOL[evKey(e.cal, v.summary)] || ""; st.key0 = evKey(e.cal, v.summary); st.ad = ad; st.sd = ymd(s0); st.loc = v.location || ""; st.note = v.description || "";
+    st.title = v.summary || ""; st.col = evColOf(e.cal, v); st.ad = ad; st.sd = ymd(s0); st.loc = v.location || ""; st.note = v.description || "";
     if (ad) st.ed = addDays(ymd(e0), -1); else { st.st = hm(s0); st.ed = ymd(e0); st.et = hm(e0); }
     const r = v.rrule || ""; if (r) { const f = (/FREQ=(\w+)/.exec(r) || [])[1]; st.rep = f ? f.toLowerCase() : ""; const iv = +(/INTERVAL=(\d+)/.exec(r) || [])[1] || 1; if (iv > 1 && st.rep) { st.unit = st.rep; st.n = iv; st.rep = "custom"; } const b = (/BYDAY=([A-Z,]+)/.exec(r) || [])[1]; if (b) st.days = b.split(","); const u = (/UNTIL=(\d{4})(\d{2})(\d{2})/.exec(r)); if (u) st.until = u[1] + "-" + u[2] + "-" + u[3]; }
     st.recur = !!(v.rrule || v.recurrence_id); st.noUid = !v.uid; st.src = e; if (st.recur && !evCanUpdate(st.cal)) st.scope = "following";
   } else { st.ed = st.sd; }
-  evS = st; evDraw(); document.body.classList.add("ev-open");
+  st.sig0 = evSig(st); evS = st; evDraw(); document.body.classList.add("ev-open");
 }
 function evClose() { $("#evq").classList.remove("on"); document.body.classList.remove("ev-open"); evS = null; }
 function evFreq(s) { return s.rep === "custom" ? s.unit : s.rep; }
@@ -2473,7 +2517,12 @@ function evRead() {   // keep what was typed when the sheet redraws
   if (g("evlc") != null) s.loc = g("evlc"); if (g("evnt") != null) s.note = g("evnt"); if (g("evun") != null) s.until = g("evun"); if (g("evn") != null) s.n = Math.max(1, Math.min(99, parseInt(g("evn"), 10) || 1)); if (g("evun2")) s.unit = g("evun2");
 }
 function evSave() {
-  evRead(); const fin = () => { const k = evKey(evS.cal, evS.title); if (evS.key0 && evS.key0 !== k) delete EVCOL[evS.key0]; if (evS.col) EVCOL[k] = evS.col; else delete EVCOL[k]; evColSave(); }; const s = evS, m = t => { s.msg = t; $("#evmsg").textContent = t; };
+  evRead(); const fin = (ev, again) => {   // colour: kept for this one event (by its id); a re-created event (new, or on a calendar that cannot update in place) gets it once the calendar lists it
+    const s = evS, t = s.title.trim(), tk = evKey(s.cal, t), old = evUk(s.cal, (s.src || {}).v);
+    if (again) { if (old) delete EVCOL[old]; EVPEND = s.col && ev ? { cal: s.cal, t: t.toLowerCase(), start: ev.dtstart, col: s.col } : null; }
+    else if (old) { if (s.col) EVCOL[old] = s.col; else if (EVCOL[tk]) EVCOL[old] = "-"; else delete EVCOL[old]; }
+    evColSave(); }; const s = evS, m = t => { s.msg = t; $("#evmsg").textContent = t; };
+  if (s.edit && s.sig0 === evSig(s)) { fin(null, false); evClose(); loadEvents(); return; }   // only the colour changed: the colour lives on this device (and in your Home Assistant user data), so the calendar is not touched
   if (!s.title.trim()) return m("Add a title first.");
   if (!s.sd || !s.ed) return m("Pick the dates.");
   const ev = { summary: s.title.trim() };
@@ -2495,14 +2544,14 @@ function evSave() {
       if (m2 && m2.success === false) { reset(); return m((m2.error && m2.error.message) || "Couldn't save."); }
       send(Object.assign({ type: "calendar/event/delete", entity_id: s.cal }, evTarget()), (r2, m3) => {
         if (m3 && m3.success === false) { evClose(); loadEvents(); alert("The updated event was added, but the old one couldn't be removed. Please delete the old copy."); return; }
-        fin(); evClose(); loadEvents(); setTimeout(loadEvents, 3000);
+        fin(ev, true); evClose(); loadEvents(); setTimeout(loadEvents, 3000);
       });
     });
   }
   const msg = { type: "calendar/event/" + (s.edit ? "update" : "create"), entity_id: s.cal, event: ev };
   if (s.edit) Object.assign(msg, evTarget());
   b.disabled = true; b.textContent = "Saving…";
-  send(msg, (r, m2) => { if (m2 && m2.success === false) { b.disabled = false; b.textContent = s.edit ? "Save" : "Add event"; return m((m2.error && m2.error.message) || "Couldn't save."); } fin(); evClose(); loadEvents(); setTimeout(loadEvents, 3000); });
+  send(msg, (r, m2) => { if (m2 && m2.success === false) { b.disabled = false; b.textContent = s.edit ? "Save" : "Add event"; return m((m2.error && m2.error.message) || "Couldn't save."); } fin(ev, !s.edit); evClose(); loadEvents(); setTimeout(loadEvents, 3000); });
 }
 function evTarget() {
   const s = evS, v = (s.src || {}).v || {}, o = { uid: v.uid };
@@ -2537,7 +2586,7 @@ $("#evp").addEventListener("click", e => {
   else if (sc) { evS.scope = sc.dataset.sc; evDraw(); }
   else if (x) { const k = x.dataset.x; if (k === "close") evClose(); else if (k === "save") evSave(); else if (k === "del") evDelete(); else if (k === "dup") evDup(); }
 });
-$("#evp").addEventListener("change", e => { if (!evS) return; if (e.target.id === "evrp") { evRead(); evS.rep = e.target.value; if (evFreq(evS) === "weekly" && !evS.days.length) evS.days = [WD[(new Date(evS.sd + "T00:00").getDay() + 6) % 7]]; evDraw(); } else if (e.target.id === "evun2") { evRead(); if (evFreq(evS) === "weekly" && !evS.days.length) evS.days = [WD[(new Date(evS.sd + "T00:00").getDay() + 6) % 7]]; evDraw(); } else if (e.target.id === "evsd") { evRead(); if (evS.ed < evS.sd) evS.ed = evS.sd; evDraw(); } });
+$("#evp").addEventListener("change", e => { if (!evS) return; if (e.target.id === "evrp") { evRead(); evS.rep = e.target.value; if (evFreq(evS) === "weekly" && !evS.days.length) evS.days = [WD[(new Date(evS.sd + "T00:00").getDay() + 6) % 7]]; evDraw(); } else if (e.target.id === "evun2") { evRead(); if (evFreq(evS) === "weekly" && !evS.days.length) evS.days = [WD[(new Date(evS.sd + "T00:00").getDay() + 6) % 7]]; evDraw(); } else if (e.target.id === "evst") { const o = new Date(evS.sd + "T" + evS.st), d = evS.edit ? new Date(evS.ed + "T" + evS.et) - o : 0; evRead(); const n = new Date(new Date(evS.sd + "T" + evS.st).getTime() + (d > 0 ? d : 30 * 60000)); evS.ed = ymd(n); evS.et = hm(n); evDraw(); } else if (e.target.id === "evsd") { evRead(); if (evS.ed < evS.sd) evS.ed = evS.sd; evDraw(); } });
 $("#evb").onclick = evClose; document.addEventListener("keydown", e => { if (e.key === "Escape" && evS) evClose(); });
 $("#eadd").onclick = () => evOpen({});
 setInterval(evBtn, 2500);
@@ -3087,7 +3136,7 @@ let infT = 0;
 function lsInfo(id, el) {
   const s = states[id]; if (!s) return; const t = Date.parse(s.last_changed || s.last_updated || ""); if (!t) return;
   let b = $("#linf"); if (!b) { document.body.insertAdjacentHTML("beforeend", '<div id="linf"></div>'); b = $("#linf"); b.onclick = () => b.classList.remove("show"); }
-  const dt = new Date(t), p2 = n => ("0" + n).slice(-2), when = p2(dt.getDate()) + "/" + p2(dt.getMonth() + 1) + "/" + dt.getFullYear() + " " + p2(dt.getHours()) + ":" + p2(dt.getMinutes());
+  const dt = new Date(t), p2 = n => ("0" + n).slice(-2), when = p2(dt.getDate()) + "/" + p2(dt.getMonth() + 1) + "/" + dt.getFullYear() + " " + dt.toLocaleTimeString([], tmo({ hour: CLK12() ? "numeric" : "2-digit", minute: "2-digit" }));
   b.innerHTML = '<b>' + esc(s.attributes.friendly_name || fname(id)) + '</b><span>' + lastVerb(id, el) + " " + agoFull(Date.now() - t) + '</span><small>' + when + '</small>';
   b.classList.add("show"); clearTimeout(infT); infT = setTimeout(() => b.classList.remove("show"), 6000);
 }
@@ -3272,7 +3321,7 @@ function loadFcH() {
 }
 const CARD = d => ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"][Math.round(d / 22.5) % 16];
 // ----- summary lines worked out from the hourly forecast (replaces the template sensors) -----
-const wxWhen = x => { const t = new Date(x.datetime), td = t.toDateString() === new Date().toDateString(); return (td ? "today" : t.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" })) + " at " + t.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }).replace(" ", " ").replace(/ /, " "); };
+const wxWhen = x => { const t = new Date(x.datetime), td = t.toDateString() === new Date().toDateString(); return (td ? "today" : t.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" })) + " at " + t.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })).replace(" ", " ").replace(/ /, " "); };
 const wxLine = t => t ? '<div class="sm" style="margin-top:6px">' + esc(t) + '</div>' : "";
 function wxBeaufort(kmh) { const T = [[1, "Calm"], [6, "Light air"], [12, "Light breeze"], [20, "Gentle breeze"], [29, "Moderate breeze"], [39, "Fresh breeze"], [50, "Strong breeze"], [62, "Near gale"], [75, "Gale"], [89, "Strong gale"], [103, "Storm"], [118, "Violent storm"]]; let r = "Hurricane"; for (let i = 0; i < T.length; i++) if (kmh < T[i][0]) { r = T[i][1]; break; } return r; }
 function wxSumWind(d, wu) {
@@ -3418,7 +3467,7 @@ function tempInner(a) {
   return L1 + st + hsw('<div class="hsc"><svg viewBox="0 0 ' + W + " " + (H + 16) + '" style="display:block;width:' + W + 'px;height:' + (H + 16) + 'px;color:var(--ink)">' + g + '</svg></div>') + '<div class="sm" style="margin-top:4px">Next ' + d.length + ' hours · scroll sideways · blue = rain</div>';
 }
 const fcStats = r => '<div class="wg" style="margin:10px 0 14px">' + r.map(x => '<div class="ws"><span class="lbl">' + x[0] + '</span><b>' + x[1] + '</b></div>').join("") + '</div>';
-const hr = x => new Date(x.datetime).toLocaleTimeString([], { hour: "numeric" }).replace(" ", "").toLowerCase();
+const hr = x => new Date(x.datetime).toLocaleTimeString([], tmo({ hour: "numeric" })).replace(" ", "").toLowerCase();
 function fcPanel(a, wu) {
   const sl = [tempInner(a), windInner(a, wu), rainInner(a), uvInner(a)];
   return '<div class="pn pg fcp">' + hsw('<div class="chips tabs fct">' + FCT.map((t, i) => '<button class="chip' + (i === fcTab ? " on" : "") + '" data-ft="' + i + '">' + mdi(t[1]) + '<span>' + t[0] + '</span></button>').join("") + '</div>') + '<div class="fcs">' + sl.map(x => '<div class="fcl">' + x + '</div>').join("") + '</div></div>';
@@ -3452,14 +3501,14 @@ function drawWeather() {
 
 function volcHtml() {
   return (CONFIG.volcanoes || []).filter(e => parseFloat(sv(e)) > 0).map(e => {
-    const v = states[e].attributes, t = v.feed_last_update ? new Date(v.feed_last_update).toLocaleString([], { day: "numeric", month: "long", hour: "numeric", minute: "2-digit" }) : "";
+    const v = states[e].attributes, t = v.feed_last_update ? new Date(v.feed_last_update).toLocaleString([], tmo({ day: "numeric", month: "long", hour: "numeric", minute: "2-digit" })) : "";
     return '<div class="alert v" data-go="#hazards" style="--qc:' + (HZ_VAL[Math.max(0, Math.min(5, Math.round(parseFloat(sv(e)) || 0)))] || HZ_VAL[1])[1] + '"><div class="lbl">' + mdi("volcano") + ' ' + esc(v.friendly_name || e) + '</div><b>' + esc(v.activity || "No warnings") + '</b><div>' + t + ' · GeoNet</div></div>';
   });
 }
 function quakeHtml() {   // Weather page + notifications: real quakes within hazards.alertKm (default 100 km) in the last 24 h; the rest live on the Hazards page
   const km = +((CONFIG.hazards || {}).alertKm) || hzFocus(), mn = hzMin();
   const q = Object.keys(states).map(k => states[k]).filter(x => x.entity_id.indexOf("geo_location.") === 0 && x.attributes.source === "geonetnz_quakes" && x.attributes.quality !== "deleted" && parseFloat(x.state) <= km && (+x.attributes.magnitude || 0) >= mn && x.attributes.time && Date.now() - new Date(x.attributes.time).getTime() < 864e5).sort((x, y) => new Date(y.attributes.time) - new Date(x.attributes.time));
-  return q.slice(0, 2).map(x => { const a = x.attributes, M = hzMag(+a.magnitude || 0); return '<div class="alert q" data-go="#hazards" style="--qc:' + M[1] + '"><div class="lbl">' + mdi("alert-circle") + ' Earthquake · ' + M[2] + '</div><b>Magnitude ' + f1(a.magnitude) + ' · ' + Math.round(parseFloat(x.state)) + ' km away</b><div>' + esc(a.locality || "") + (a.mmi != null && a.mmi !== "" ? " · MMI " + a.mmi + " " + hzMMI(+a.mmi).toLowerCase() + " shaking" : "") + ' · ' + new Date(a.time).toLocaleString([], { weekday: "short", hour: "numeric", minute: "2-digit" }) + '</div></div>'; }).join("");
+  return q.slice(0, 2).map(x => { const a = x.attributes, M = hzMag(+a.magnitude || 0); return '<div class="alert q" data-go="#hazards" style="--qc:' + M[1] + '"><div class="lbl">' + mdi("alert-circle") + ' Earthquake · ' + M[2] + '</div><b>Magnitude ' + f1(a.magnitude) + ' · ' + Math.round(parseFloat(x.state)) + ' km away</b><div>' + esc(a.locality || "") + (a.mmi != null && a.mmi !== "" ? " · MMI " + a.mmi + " " + hzMMI(+a.mmi).toLowerCase() + " shaking" : "") + ' · ' + new Date(a.time).toLocaleString([], tmo({ weekday: "short", hour: "numeric", minute: "2-digit" })) + '</div></div>'; }).join("");
 }
 
 // ---------- irrigation ----------
@@ -3847,7 +3896,7 @@ function pbList(c) {
   txGo(l, pb.tx || 0, true); pb.tx = 0;   // same slide / fade the rest of the dashboard uses
   pbThumbs(c);
 }
-const pbClock = t => { const p = t.split(":").map(Number), h = p[0] % 12 || 12; return h + ":" + ("0" + p[1]).slice(-2) + (p.length > 2 ? ":" + ("0" + p[2]).slice(-2) : "") + " " + (p[0] < 12 ? "am" : "pm"); };
+const pbClock = t => { const p = t.split(":").map(Number), h = p[0] % 12 || 12; if (!CLK12()) return p.map(n => ("0" + n).slice(-2)).join(":"); return h + ":" + ("0" + p[1]).slice(-2) + (p.length > 2 ? ":" + ("0" + p[2]).slice(-2) : "") + " " + (p[0] < 12 ? "am" : "pm"); };
 const pbDay = t => { const m = /(\d{4})[\/.-](\d{1,2})[\/.-](\d{1,2})/.exec(String(t)); if (!m) return pbT(t); const d = new Date(+m[1], +m[2] - 1, +m[3]), n = new Date(), a = new Date(n.getFullYear(), n.getMonth(), n.getDate()), df = Math.round((a - d) / 864e5); return (df === 0 ? "Today · " : df === 1 ? "Yesterday · " : "") + d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short", year: "numeric" }); };
 // preview pictures: use HA's thumbnail when it sends one, otherwise grab one frame from each clip as it scrolls into view (one at a time, remembered until the page is reloaded)
 function pbThumbs(c) {
@@ -3951,7 +4000,7 @@ function dtItems() {
   });
   return out.sort((a, b) => b.ts - a.ts);
 }
-const dtWhen = ts => { const d = new Date(ts), n = new Date(), df = Math.round((new Date(n.getFullYear(), n.getMonth(), n.getDate()) - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 864e5), tm = d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }).replace(" ", "").toLowerCase(); return (df === 0 ? "Today" : df === 1 ? "Yesterday" : d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" })) + " · " + tm; };
+const dtWhen = ts => { const d = new Date(ts), n = new Date(), df = Math.round((new Date(n.getFullYear(), n.getMonth(), n.getDate()) - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 864e5), tm = d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })).replace(" ", "").toLowerCase(); return (df === 0 ? "Today" : df === 1 ? "Yesterday" : d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" })) + " · " + tm; };
 function dtDraw(soft) {
   const P = $("#dtp"); if (!P) return; if (!dtCams().length || CONFIG.detections === false) { P.style.display = "none"; return; } P.style.display = "";
   const all = dtItems(), tyOn = k => DT.types[k], vis = all.filter(x => (DT.cam === "all" || x.cam === DT.cam) && x.p.tags.some(t => tyOn(t)));
@@ -4040,7 +4089,7 @@ const hzRad = () => +((CONFIG.hazards || {}).radius) || 200;   // the GeoNet fee
 const hzFocus = () => Math.min(hzRad(), +((CONFIG.hazards || {}).focusKm) || 100);   // what the page prioritises (inner ring, full colour, alerts)
 const hzMin = () => +((CONFIG.hazards || {}).minMag) || 0;   // quakes below this magnitude are left out
 const hzAgo = t => { const s = (Date.now() - t) / 1000, p = (n, u) => n + " " + u + (n === 1 ? "" : "s") + " ago"; return !t ? "" : s < 90 ? "just now" : s < 3600 ? p(Math.round(s / 60), "min") : s < 86400 ? p(Math.round(s / 3600), "hour") : p(Math.round(s / 86400), "day"); };
-const hzWhen = t => t ? new Date(t).toLocaleString([], { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }) : "--";
+const hzWhen = t => t ? new Date(t).toLocaleString([], tmo({ weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })) : "--";
 function hzData() {
   const S = Object.keys(states).map(k => states[k]);
   const q = S.filter(x => x.entity_id.indexOf("geo_location.") === 0 && x.attributes.source === "geonetnz_quakes" && x.attributes.latitude != null).map(x => { const a = x.attributes; return { id: x.entity_id, k: "q", lat: +a.latitude, lon: +a.longitude, m: +a.magnitude || 0, mmi: a.mmi != null && a.mmi !== "" ? +a.mmi : null, depth: a.depth, dist: parseFloat(x.state), t: a.time ? new Date(a.time).getTime() : 0, name: a.locality || a.friendly_name || "Earthquake", ext: a.external_id || "", del: a.quality === "deleted", ql: a.quality || "" }; }).filter(q => q.m >= hzMin()).sort((a, b) => b.t - a.t);
@@ -4181,6 +4230,8 @@ function drawPalette() {
     sec("Font", '<div class="stg">' + FONTS.map(x => '<button class="eb fnb' + (FONT === x[0] ? " sel" : "") + '" data-font="' + x[0] + '" style="font-family:' + x[3] + '"><b>22.5°</b><span>' + x[1] + '</span><small>' + x[2] + '</small></button>').join("") + '</div>') +
     sec("Mode", '<div class="seg" style="margin-top:12px;flex-wrap:wrap">' + [["dark", "DARK"], ["light", "LIGHT"], ["auto", "FOLLOW DEVICE"], ["sun", "FOLLOW SUN"], ["time", "SCHEDULE"]].map(x => '<button class="eb' + (PAL.mode === x[0] ? " on" : "") + '" data-mode="' + x[0] + '">' + x[1] + '</button>').join("") + '</div>' +
       (PAL.mode === "time" ? '<div class="lbl" style="margin-top:12px;text-transform:none;letter-spacing:0;display:flex;gap:10px;align-items:center;flex-wrap:wrap">Dark from <input type="time" data-tm="from" value="' + esc(PAL.from || "18:00") + '"> until <input type="time" data-tm="to" value="' + esc(PAL.to || "06:00") + '"></div>' : "") + (PAL.mode === "sun" ? '<div class="lbl" style="margin-top:12px;text-transform:none;letter-spacing:0">Dark from sunset to sunrise, from <b>sun.sun</b> in Home Assistant' + (states["sun.sun"] ? "" : " (not found, using 6am–7pm)") + '. Saved on this device only.</div>' : "")) +
+    sznSec(sec) +
+    sec("Clock", '<div class="seg" style="margin-top:12px">' + [["auto", "DEVICE"], ["12", "12-HOUR"], ["24", "24-HOUR"]].map(x => '<button class="eb' + (CLOCK === x[0] ? " on" : "") + '" data-clock="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">How times are shown on this dashboard. DEVICE follows the language of this phone or tablet. Saved on this device only.</div>') +
     (brandOn() ? sec("Start-up logo", '<div class="seg" style="margin-top:12px">' + [["on", "LOGO + INTRO"], ["load", "WHILE LOADING ONLY"], ["off", "OFF"]].map(x => '<button class="eb' + (logoPref() === x[0] ? " on" : "") + '" data-logo="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">Applies the next time the dashboard starts. Saved on this device only.</div>') : "") +
     (ME.admin ? accSec(sec) : "") +
     (AUTH && !AUTH.borrowed && !CONFIG.token ? sec("Account", '<div style="margin-top:12px"><button class="eb" data-signout="1">SIGN OUT OF THIS DEVICE</button><span class="lbl" style="margin-left:14px">Signed in on this device only</span></div>') : "") +
@@ -4200,6 +4251,9 @@ $("#theme").onclick = e => {
   const ac = e.target.closest("[data-acc]"); if (ac) { accClick(ac); return; }
   if (fn) { themeDip(() => { FONT = fn.dataset.font; try { localStorage.setItem("dashFont", FONT); } catch (_) {} applyFont(); drawPalette(); }); return; }
   if (sy) { themeDip(() => { STYLE = sy.dataset.style; try { localStorage.setItem("dashStyle", STYLE); } catch (_) {} applyStyle(); drawPalette(); }); return; }
+  if (sznClick(e)) return;
+  const ck = e.target.closest("button[data-clock]");
+  if (ck) { CLOCK = ck.dataset.clock; try { localStorage.setItem("dashClock", CLOCK); } catch (_) {} tick(); drawPalette(); queueHome(); return; }
   const lg = e.target.closest("button[data-logo]");
   if (lg) { try { localStorage.setItem("dashLogo", lg.dataset.logo); } catch (_) {} drawPalette(); return; }
   const so = e.target.closest("[data-signout]");
@@ -5275,7 +5329,7 @@ function pbStrip(P, items, filter) {
   const L = []; items.forEach((x, i) => { const p = P[i]; if (!p || x.can_expand || (filter !== "all" && p.tags.indexOf(filter) < 0)) return; const t = p.time.split(":").map(Number); L.push({ i: i, s: t[0] * 3600 + t[1] * 60 + (t[2] || 0), len: p.secs, tags: p.tags }); });
   if (L.length < 2) return "";
   let lo = Math.floor(Math.min.apply(0, L.map(x => x.s)) / 3600) * 3600, hi = Math.ceil(Math.max.apply(0, L.map(x => x.s + x.len)) / 3600) * 3600; if (hi - lo < 4 * 3600) hi = Math.min(86400, lo + 4 * 3600); if (hi - lo < 4 * 3600) lo = hi - 4 * 3600;
-  const hr = s => { const h = Math.round(s / 3600) % 24; return (h % 12 || 12) + (h < 12 ? "am" : "pm"); }, ty = a => a.indexOf("Person") > -1 && a.indexOf("Vehicle") > -1 ? "pv" : a.indexOf("Person") > -1 ? "person" : a.indexOf("Vehicle") > -1 ? "vehicle" : a.indexOf("Animal") > -1 ? "animal" : "motion", used = {};
+  const hr = s => { const h = Math.round(s / 3600) % 24; return CLK12() ? (h % 12 || 12) + (h < 12 ? "am" : "pm") : ("0" + h).slice(-2) + ":00"; }, ty = a => a.indexOf("Person") > -1 && a.indexOf("Vehicle") > -1 ? "pv" : a.indexOf("Person") > -1 ? "person" : a.indexOf("Vehicle") > -1 ? "vehicle" : a.indexOf("Animal") > -1 ? "animal" : "motion", used = {};
   const segs = L.map(x => { const k = ty(x.tags); used[k] = 1; return '<i class="pbs ' + k + '" data-si="' + x.i + '" style="left:' + ((x.s - lo) / (hi - lo) * 100).toFixed(2) + '%;width:' + Math.max(1.2, x.len / (hi - lo) * 100).toFixed(2) + '%" title="' + esc(pbClock(Math.floor(x.s / 3600) + ":" + ("0" + Math.floor(x.s % 3600 / 60)).slice(-2))) + '"></i>'; }).join("");
   const lg = [["person", "Person"], ["vehicle", "Car"], ["animal", "Animal"], ["motion", "Other"]].filter(a => used[a[0]] || (a[0] === "person" && used.pv) || (a[0] === "vehicle" && used.pv)).map(a => '<span class="' + a[0] + '">' + a[1] + '</span>').join("");
   return '<div class="pbtl"><div class="pbtr">' + segs + '</div><div class="pbax"><span>' + hr(lo) + '</span><span>' + hr((lo + hi) / 2) + '</span><span>' + hr(hi) + '</span></div><div class="pblg">' + lg + '</div></div>';
@@ -5283,41 +5337,57 @@ function pbStrip(P, items, filter) {
 // ---------- energy ----------
 const EN_COL = ["#6bb8ff", "#8ff0c4", "#ffd166", "#ef476f", "#cdb4db", "#f78c6b", "#06d6a0", "#a2d2ff", "#ffafcc", "#b8f2e6"];
 let en = { r: "day", o: 0, prefs: null, data: null, mode: "bar", err: "", busy: false };
-function enSpan(oo) {  if (oo == null) oo = en.o;
+// billing cycles (config.js billing): a cycle starts on this day of the month, or on the exact dates listed in starts (a meter reading can move it)
+function enCyc(kind, oo, at) {
+  const B = (CONFIG.billing || {})[kind]; if (!B) return null;
+  const pdt = x => { const a = String(x).split("-"); return new Date(+a[0], +a[1] - 1, +a[2]); }, ov = {}; (B.starts || []).forEach(x => { const d = pdt(x); ov[d.getFullYear() + "-" + d.getMonth()] = d; });
+  const n = at || new Date(), t = new Date(n.getFullYear(), n.getMonth(), n.getDate()), L = [];
+  for (let y = n.getFullYear() - 4; y <= n.getFullYear() + 1; y++) for (let m = 0; m < 12; m++) L.push(ov[y + "-" + m] || new Date(y, m, B.day || 1));
+  L.sort((a, b) => a - b); let i = 0; while (i + 1 < L.length && L[i + 1] <= t) i++; i += oo;
+  return i >= 0 && i + 1 < L.length ? { s: L[i], e: L[i + 1] } : null;
+}
+function enSpan(oo, kind) {  if (oo == null) oo = en.o;
   const n = new Date(), s = new Date(n.getFullYear(), n.getMonth(), n.getDate()); let e, per, lab;
   if (en.r === "day") { s.setDate(s.getDate() + oo); e = new Date(s); e.setDate(e.getDate() + 1); per = "hour"; lab = s.toLocaleDateString([], { weekday: "long", day: "numeric", month: "long" }); }
   else if (en.r === "week") { s.setDate(s.getDate() - ((s.getDay() + 6) % 7) + oo * 7); e = new Date(s); e.setDate(e.getDate() + 7); per = "day"; const l = new Date(e - 864e5); lab = s.toLocaleDateString([], { day: "numeric", month: "short" }) + " – " + l.toLocaleDateString([], { day: "numeric", month: "short" }); }
+  else if (en.r === "month" && enCyc(kind || "electricity", oo)) { const c = enCyc(kind || "electricity", oo), l = new Date(+c.e - 864e5); per = "day"; lab = c.s.toLocaleDateString([], { day: "numeric", month: "short" }) + " – " + l.toLocaleDateString([], { day: "numeric", month: "short" }); return { s: c.s, e: c.e, per: per, lab: lab }; }
   else if (en.r === "month") { s.setDate(1); s.setMonth(s.getMonth() + oo); e = new Date(s); e.setMonth(e.getMonth() + 1); per = "day"; lab = s.toLocaleDateString([], { month: "long", year: "numeric" }); }
   else { s.setMonth(0, 1); s.setFullYear(s.getFullYear() + oo); e = new Date(s); e.setFullYear(e.getFullYear() + 1); per = "month"; lab = String(s.getFullYear()); }
   return { s: s, e: e, per: per, lab: lab };
 }
+const enSum = g => { const m = {}; Object.keys(g || {}).forEach(k => g[k].forEach(x => { const t = +new Date(x.start); m[t] = (m[t] || 0) + (x.change || 0); })); return m; };
+// the real prices and gas that Home Assistant's Energy settings know about (for example from a power company's statistics)
+function enSrc() { const o = { gc: [], gu: [], gk: [] }; ((en.prefs || {}).energy_sources || []).forEach(x => { if (x.type === "grid") (x.flow_from || []).forEach(f => { if (f.stat_cost) o.gc.push(f.stat_cost); }); else if (x.type === "gas" && x.stat_energy_from) { o.gu.push(x.stat_energy_from); if (x.stat_cost) o.gk.push(x.stat_cost); } }); return o; }
+function enExtra(sp) {
+  const o = enSrc(), gsp = enSpan(en.o, "gas"), tk = en.tok = (en.tok || 0) + 1; en.gridCost = o.gc.length ? undefined : null; en.gas = o.gu.length ? undefined : null; en.gasCost = o.gk.length ? undefined : null;
+  const q = (ids, set, w) => { w = w || sp; if (ids.length) send({ type: "recorder/statistics_during_period", start_time: w.s.toISOString(), end_time: w.e.toISOString(), statistic_ids: ids, period: "hour", types: ["change"] }, g => { if (tk !== en.tok) return; set(g ? enSum(g) : null); drawEnergy(); }); };
+  if (o.gc.length) setTimeout(() => { if (tk === en.tok && en.gridCost === undefined) { en.gridCost = null; drawEnergy(); } }, 12000);   // no answer: fall back to the tariff
+  q(o.gc, m => { en.gridCost = m; }); q(o.gu, m => { en.gas = m; }, gsp); q(o.gk, m => { en.gasCost = m; }, gsp);
+  if (o.gu.length && !en.gasUnit) send({ type: "recorder/get_statistics_metadata", statistic_ids: o.gu }, r => { const m = r && r[0]; en.gasUnit = (m && (m.display_unit_of_measurement || m.statistics_unit_of_measurement || m.unit_of_measurement)) || "kWh"; drawEnergy(); });
+}
+function enBars(bk, sp, vals, col, FS, mob, fm) {
+  const mx = Math.max.apply(null, bk.map(b => vals[b] || 0).concat([0.001])), W = mob ? 420 : 360, H = mob ? 150 : 140, L = mob ? 50 : 42, B = mob ? 28 : 26, bw = (W - L) / bk.length; let g = "";
+  for (let i = 0; i <= 2; i++) { const y = 8 + (H - B - 8) * (1 - i / 2); g += '<line x1="' + L + '" x2="' + W + '" y1="' + y + '" y2="' + y + '" stroke="currentColor" opacity=".12"/><text x="' + (L - 6) + '" y="' + (y + 4) + '" text-anchor="end" font-size="' + FS + '" fill="currentColor" opacity=".6">' + fm(mx * i / 2) + '</text>'; }
+  bk.forEach((b, i) => { const v = vals[b] || 0, hh = v / mx * (H - B - 8), d = new Date(b); if (hh > 0.3) g += '<rect x="' + (L + i * bw + bw * 0.12).toFixed(1) + '" y="' + (H - B - hh).toFixed(1) + '" width="' + (bw * 0.76).toFixed(1) + '" height="' + hh.toFixed(1) + '" rx="2" fill="' + col + '"><title>' + fm(v) + '</title></rect>';
+    g += '<text x="' + (L + i * bw + bw / 2).toFixed(1) + '" y="' + (H - 7) + '" text-anchor="middle" font-size="' + FS + '" fill="currentColor" opacity=".6">' + (en.r === "day" ? (i % 3 === 0 ? d.getHours() : "") : en.r === "week" ? d.toLocaleDateString([], { weekday: "short" }) : en.r === "month" ? (i % 2 === 0 ? d.getDate() : "") : d.toLocaleDateString([], { month: "short" })) + '</text>'; });
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;margin-top:8px;display:block">' + g + '</svg>';
+}
+// every grid import statistic Home Assistant's Energy settings know about (looked for in the whole grid source, so older and newer layouts both work)
+function enGridIds(P) { const o = []; const walk = (x, d) => { if (!x || typeof x !== "object" || d > 4) return; Object.keys(x).forEach(k => { if (k === "stat_energy_from" && typeof x[k] === "string" && x[k]) o.push(x[k]); else walk(x[k], d + 1); }); }; ((P || {}).energy_sources || []).forEach(x => { if (x.type === "grid") walk(x, 0); }); return o.filter((v, i) => o.indexOf(v) === i); }
 function loadEnergy() {
   if (en.busy || !ws || ws.readyState !== 1) return; en.busy = true; setTimeout(() => { en.busy = false; }, 15000);
-  const go = () => {
-    const sp = enSpan(), ids = en.prefs.device_consumption.map(d => d.stat_consumption);
-    if (!ids.length) { en.busy = false; en.data = {}; en.err = "No individual devices are set up in Home Assistant’s Energy settings."; drawEnergy(); return; }
-    send({ type: "recorder/statistics_during_period", start_time: sp.s.toISOString(), end_time: sp.e.toISOString(), statistic_ids: ids, period: sp.per, types: ["change"] }, (r, raw) => {
-      en.err = r ? "" : "Could not load statistics: " + (raw && raw.error ? raw.error.message : "no response"); en.data = r || {}; en.key = en.r + en.o;
-      const gs = (en.prefs.energy_sources || []).filter(x => x.type === "grid"); let gid = [];
-      gs.forEach(g => (g.flow_from || []).forEach(f => { if (f.stat_energy_from) gid.push(f.stat_energy_from); }));
-      en.gridSrc = gid.length ? "grid" : "devices"; if (!gid.length) gid = ids.slice();   // no grid meter in HA's Energy settings: price the tracked devices instead
-      en.grid = undefined;
-      en.devH = undefined; en.prev = undefined;
-      if (!gid.length || en.err) { en.busy = false; en.grid = null; drawEnergy(); return; }
-      { const ps = enSpan(en.o - 1), nw = Date.now(); let pe = ps.e; if (sp.e > nw) pe = new Date(+ps.s + (nw - sp.s));
-        send({ type: "recorder/statistics_during_period", start_time: ps.s.toISOString(), end_time: ps.e.toISOString(), statistic_ids: gid, period: "hour", types: ["change"] }, g => { const m = {}; Object.keys(g || {}).forEach(k => g[k].forEach(x => { const t = +new Date(x.start); if (t <= +pe) m[t] = (m[t] || 0) + (x.change || 0); })); en.prev = g ? m : null; drawEnergy(); }); }
-      drawEnergy();
-      const sumH = g => { const m = {}; Object.keys(g || {}).forEach(k => g[k].forEach(x => { const t = +new Date(x.start); m[t] = (m[t] || 0) + (x.change || 0); })); return m; };
-      // hourly per-device usage: needed to price each device and each bar (the rate depends on the hour)
-      send({ type: "recorder/statistics_during_period", start_time: sp.s.toISOString(), end_time: sp.e.toISOString(), statistic_ids: ids, period: "hour", types: ["change"] }, h => {
-        en.devH = h || null;
-        if (en.gridSrc === "devices") { en.busy = false; en.grid = h ? sumH(h) : null; drawEnergy(); return; }
-        drawEnergy();
-        send({ type: "recorder/statistics_during_period", start_time: sp.s.toISOString(), end_time: sp.e.toISOString(), statistic_ids: gid, period: "hour", types: ["change"] }, g => { en.busy = false; en.grid = g ? sumH(g) : null; drawEnergy(); });
-      });
-    });
-  };
-  if (en.prefs) go(); else send({ type: "energy/get_prefs" }, (r, raw) => { if (!r) { en.busy = false; en.err = "Energy isn’t configured: " + (raw && raw.error ? raw.error.message : "no response"); en.data = {}; drawEnergy(); return; } en.prefs = r; go(); });
+  const lt = en.lt = (en.lt || 0) + 1;   // a newer request (date changed again) makes the older answers stale
+  send({ type: "energy/get_prefs" }, (P, raw) => {
+    if (lt !== en.lt) return;   // read every time, so a source added in Home Assistant shows up without reloading
+    if (!P) { en.busy = false; en.err = "Energy isn’t configured: " + (raw && raw.error ? raw.error.message : "no response"); en.data = {}; drawEnergy(); return; }
+    en.prefs = P; en.err = ""; en.data = {}; en.key = en.r + en.o; en.prev = undefined;
+    const sp = enSpan(), gid = enGridIds(P); en.gridIds = gid; enExtra(sp);
+    if (!gid.length) { en.busy = false; en.grid = null; en.err = "Home Assistant’s Energy settings have no grid electricity set up (Settings > Dashboards > Energy > Electricity grid)."; drawEnergy(); return; }
+    en.grid = undefined; drawEnergy();
+    { const ps = enSpan(en.o - 1), nw = Date.now(); let pe = ps.e; if (sp.e > nw) pe = new Date(+ps.s + (nw - sp.s));
+      send({ type: "recorder/statistics_during_period", start_time: ps.s.toISOString(), end_time: ps.e.toISOString(), statistic_ids: gid, period: "hour", types: ["change"] }, g => { if (lt !== en.lt) return; const m = {}; Object.keys(g || {}).forEach(k => g[k].forEach(x => { const t = +new Date(x.start); if (t <= +pe) m[t] = (m[t] || 0) + (x.change || 0); })); en.prev = g ? m : null; drawEnergy(); }); }
+    send({ type: "recorder/statistics_during_period", start_time: sp.s.toISOString(), end_time: sp.e.toISOString(), statistic_ids: gid, period: "hour", types: ["change"] }, g => { if (lt !== en.lt) return; en.busy = false; en.grid = g ? enSum(g) : null; drawEnergy(); });
+  });
 }
 function enBuckets(sp) {
   const o = [], d = new Date(sp.s);
@@ -5327,77 +5397,90 @@ function enBuckets(sp) {
 const TARIFF_DEF = { symbol: "$", daily: 2.687, periods: [{ from: 0, to: 21, rate: 0.364, name: "Charged (midnight – 9pm)" }, { from: 21, to: 24, rate: 0, name: "Free (9pm – midnight)" }] };   // used when CONFIG.tariff is missing
 const enRate = h => { const T = CONFIG.tariff || TARIFF_DEF, k = T.periods.filter(p => h >= p.from && h < p.to)[0]; return k ? k.rate : 0; };
 function enBk(sp, t) { const d = new Date(t); return sp.per === "hour" ? +d : sp.per === "day" ? +new Date(d.getFullYear(), d.getMonth(), d.getDate()) : +new Date(d.getFullYear(), d.getMonth(), 1); }
-function enCost(sp) {   // grid import split into the tariff periods + daily charge
-  const T = CONFIG.tariff || TARIFF_DEF, m = en.grid; if (!T || !m) return null;
+function enCost(sp) {   // grid import split into the tariff periods + daily charge (prices from the power company's statistics when Home Assistant has them)
+  const T = CONFIG.tariff || TARIFF_DEF, m = en.grid; if (!T || !m || en.gridCost === undefined) return null;
   const per = T.periods.map(p => ({ p: p, kwh: 0, cost: 0 })), cols = {};
-  Object.keys(m).forEach(t => { const d = new Date(+t), h = d.getHours(), k = per.filter(x => h >= x.p.from && h < x.p.to)[0]; if (!k) return; k.kwh += m[t]; k.cost += m[t] * k.p.rate; const b = sp.per === "hour" ? +d : sp.per === "day" ? +new Date(d.getFullYear(), d.getMonth(), d.getDate()) : +new Date(d.getFullYear(), d.getMonth(), 1); (cols[b] = cols[b] || per.map(() => 0))[per.indexOf(k)] += m[t]; });
+  let est = 0; Object.keys(m).forEach(t => { const d = new Date(+t), h = d.getHours(), k = per.filter(x => h >= x.p.from && h < x.p.to)[0]; if (!k) return; const real = en.gridCost && en.gridCost[t] != null && m[t] > 0.0005; if (!real && m[t] > 0.0005) est++; k.kwh += m[t]; k.cost += real ? en.gridCost[t] : m[t] * k.p.rate; const b = sp.per === "hour" ? +d : sp.per === "day" ? +new Date(d.getFullYear(), d.getMonth(), d.getDate()) : +new Date(d.getFullYear(), d.getMonth(), 1); (cols[b] = cols[b] || per.map(() => 0))[per.indexOf(k)] += m[t]; });
   let days = 0; const now = Date.now(); for (const d = new Date(sp.s); d < sp.e; d.setDate(d.getDate() + 1)) if (+d <= now) days++;
-  const use = per.reduce((s, x) => s + x.cost, 0), fixed = days * T.daily;
-  return { per: per, use: use, fixed: fixed, days: days, total: use + fixed, kwh: per.reduce((s, x) => s + x.kwh, 0), cols: cols };
+  let use = per.reduce((s, x) => s + x.cost, 0), fixed = days * T.daily, total = use + fixed;
+  if (en.gridCost) {   // the power company's cost already holds the daily charge: show it as its own line, as the bill does, and the rest as usage on the paid hours
+    const seen = {}; Object.keys(m).forEach(t => { if (m[t] > 0.0005 || en.gridCost[t]) seen[ymd(new Date(+t))] = 1; }); days = Object.keys(seen).length;
+    total = use; fixed = Math.min(days * T.daily, total); const paid = per.filter(x => x.p.rate > 0), pk = paid.reduce((a, x) => a + x.kwh, 0);
+    per.forEach(x => { x.cost = x.p.rate > 0 && pk > 0 ? (total - fixed) * x.kwh / pk : 0; }); use = total - fixed;
+  }
+  return { per: per, use: use, fixed: fixed, days: days, total: total, kwh: per.reduce((s, x) => s + x.kwh, 0), cols: cols, est: est, real: !!en.gridCost };
 }
-function drawEnergy() { enDraw(); const pg = $("#energy"); if (pg && pg.classList.contains("hold") && (en.data || en.err)) pgEnter(pg); }
+function drawEnergy() { if (en.anim && Date.now() < en.anim) { clearTimeout(en.at); en.at = setTimeout(drawEnergy, en.anim - Date.now() + 30); return; }   // late answers wait until the slide-in has finished, so they do not cut it off
+  enDraw(); const pg = $("#energy"); if (pg && pg.classList.contains("hold") && (en.data || en.err)) pgEnter(pg); }
 function enDraw() {
-  const mob = isMobile(), FS = mob ? 15 : 12, sp = enSpan(), pg = $("#energy"), P = en.prefs, nm = id => { const d = P && P.device_consumption.filter(x => x.stat_consumption === id)[0]; return (d && d.name) || fname(id).replace(/ (energy|consumption|total)$/i, ""); };
-  let h = '<div class="eh ehc" style="margin-bottom:14px"><div class="chips tabs">' + [["day", "DAY"], ["week", "WEEK"], ["month", "MONTH"], ["year", "YEAR"]].map(x => '<button class="chip' + (en.r === x[0] ? " on" : "") + '" data-er="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="seg" style="margin-left:auto"><button class="eb" data-eo="-1">' + mdi("chevron-left") + '</button><button class="eb" data-eo="0" style="min-width:210px">' + esc(sp.lab) + '</button><button class="eb" data-eo="1">' + mdi("chevron-right") + '</button></div></div>';
+  const mob = isMobile(), FS = mob ? 15 : 12, sp = enSpan(), pg = $("#energy"), P = en.prefs;
+  let h = '<div class="eh ehc" style="margin-bottom:14px"><div class="chips tabs">' + [["day", "DAY"], ["week", "WEEK"], ["month", CONFIG.billing ? "BILL" : "MONTH"], ["year", "YEAR"]].map(x => '<button class="chip' + (en.r === x[0] ? " on" : "") + '" data-er="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="seg" style="margin-left:auto"><button class="eb" data-eo="-1">' + mdi("chevron-left") + '</button><button class="eb" data-eo="0" style="min-width:210px">' + esc(sp.lab) + '</button><button class="eb" data-eo="1">' + mdi("chevron-right") + '</button></div></div>';
   if (en.err) h += '<div class="pn lbl">' + esc(en.err) + '</div>';
-  else if (!en.data || !P) h += '<div class="pn lbl">Loading…</div>';
+  else if (!en.data || !P || en.grid === undefined || en.gridCost === undefined || en.gas === undefined || en.gasCost === undefined) h += en.body ? '<div class="enold">' + en.body + '</div>' : '<div class="pn lbl">' + (!en.data || !P ? "Loading…" : "Calculating cost…") + '</div>';   // the last page stays (dimmed) until the new one is ready, so changing the date does not blink
   else {
-    const h0 = h.length, bk = enBuckets(sp), dev = P.device_consumption.map(d => { const id = d.stat_consumption, rows = en.data[id] || [], m = {}; rows.forEach(x => { m[+new Date(x.start)] = x.change || 0; }); return { id: id, n: nm(id), m: m, tot: rows.reduce((s, x) => s + (x.change || 0), 0) }; }).filter(x => x.tot > 0.0005).sort((a, b) => b.tot - a.tot);
-    dev.forEach((x, i) => { x.c = i < 9 ? EN_COL[i] : "#8a94a6"; x.cm = {}; x.cost = null; if (en.devH) { x.cost = 0; (en.devH[x.id] || []).forEach(r => { const t = +new Date(r.start), v = (r.change || 0) * enRate(new Date(t).getHours()); x.cost += v; const b = enBk(sp, t); x.cm[b] = (x.cm[b] || 0) + v; }); } });
-    const TC = CONFIG.tariff || TARIFF_DEF, mc = v => TC.symbol + v.toFixed(2), cst = x => x.cost == null ? "" : ' <span class="enc">· ' + mc(x.cost) + '</span>', cu = en.unit === "cost" && !!en.devH, val = (x, b) => cu ? (x.cm[b] || 0) : (x.m[b] || 0);
-    const total = dev.reduce((s, x) => s + x.tot, 0), mx = dev.length ? dev[0].tot : 1, fm = v => v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2);
-    let ov;
-    if (!dev.length) ov = '<div class="lbl" style="margin-top:12px">No consumption recorded in this period</div>';
-    else if (en.mode === "bar") ov = '<div class="enb">' + dev.map(x => '<div class="enr"><span class="enn">' + esc(x.n) + '</span><div class="enbar"><i style="width:' + Math.max(1.5, x.tot / mx * 100) + '%;background:' + x.c + '"></i></div><b>' + fm(x.tot) + ' kWh' + cst(x) + '</b></div>').join("") + '</div>';
-    else { let a0 = -Math.PI / 2, arcs = ""; dev.forEach(x => { const a1 = a0 + x.tot / total * 6.28318, big = a1 - a0 > Math.PI ? 1 : 0, R = 90, r0 = 56, c = (r, a) => (110 + r * Math.cos(a)).toFixed(2) + " " + (110 + r * Math.sin(a)).toFixed(2); arcs += dev.length === 1 ? '<circle cx="110" cy="110" r="73" fill="none" stroke="' + x.c + '" stroke-width="34"/>' : '<path d="M' + c(R, a0) + 'A' + R + ' ' + R + ' 0 ' + big + ' 1 ' + c(R, a1 - 0.0001) + 'L' + c(r0, a1 - 0.0001) + 'A' + r0 + ' ' + r0 + ' 0 ' + big + ' 0 ' + c(r0, a0) + 'Z" fill="' + x.c + '"><title>' + esc(x.n) + ' ' + fm(x.tot) + ' kWh</title></path>'; a0 = a1; });
-      ov = '<div class="enp"><svg viewBox="0 0 220 220" width="220" height="220">' + arcs + '<text x="110" y="108" text-anchor="middle" fill="currentColor" font-size="26" font-weight="300">' + fm(total) + '</text><text x="110" y="128" text-anchor="middle" fill="currentColor" opacity=".6" font-size="' + FS + '">kWh</text></svg><div class="enb" style="flex:1">' + dev.map(x => '<div class="enr"><i class="end" style="background:' + x.c + '"></i><span class="enn">' + esc(x.n) + '</span><b>' + fm(x.tot) + ' kWh' + cst(x) + '</b></div>').join("") + '</div></div>'; }
+    const h0 = h.length, bk = enBuckets(sp), fm = v => v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2);
     const CS = enCost(sp), TT = CONFIG.tariff || TARIFF_DEF, mny = v => TT.symbol + v.toFixed(2);
+    const GU = en.gasUnit || "kWh", sm = o => o ? Object.keys(o).reduce((a, k) => a + o[k], 0) : 0, gT = sm(en.gas), gC = en.gasCost ? sm(en.gasCost) : null, hasGas = en.gas && (gT > 0.0005 || gC > 0.005);
+    // gas readings can arrive in lumps, so its daily charge counts the days that have passed, as the bill does
+    const gsp = enSpan(en.o, "gas"), gbk = enBuckets(gsp), gdays = (() => { let n = 0; const now = Date.now(); for (const d = new Date(gsp.s); d < gsp.e; d.setDate(d.getDate() + 1)) if (+d <= now) n++; return n; })(), gD = (TT.gasDaily || 0) * gdays, gTot = (gC || 0) + gD, gdates = en.r === "month" && CONFIG.billing && CONFIG.billing.gas ? gsp.lab : "";
+    let hgas = "", htot = "";
+    const GR = +CONFIG.gst || 0, subT = CS ? Math.round((CS.total + (hasGas ? gTot : 0)) * 100) / 100 : 0, gstA = Math.round(subT * GR * 100) / 100, gx = GR ? "excl. GST" : "";   // gst: 0.15 in config.js adds GST to the total (the power company's figures are excl. GST)
+    if (CS) htot = '<div class="pn pg entot" data-k="t"><div class="eh"><div><div class="lbl">Total energy cost</div><div class="h2" style="margin-top:4px">' + mny(subT + gstA) + '</div></div><div class="lbl ensub" style="margin-left:auto;text-align:right">' + (GR ? "incl. GST" : "") + '</div></div>' + (subT > 0 ? '<div class="enseg"><i style="flex:' + CS.total + ';background:#6bb8ff"></i>' + (hasGas && gTot > 0 ? '<i style="flex:' + gTot + ';background:#f78c6b"></i>' : '') + (gstA > 0 ? '<i style="flex:' + gstA + ';background:#8a94a6"></i>' : '') + '</div>' : '') + '<div class="enb">' +
+      '<div class="enr"><i class="end" style="background:#6bb8ff"></i><span class="enn">Electricity</span><span class="lbl">' + fm(CS.kwh) + ' kWh</span><b>' + mny(CS.total) + '</b></div>' + (en.r === "month" && CONFIG.billing && CONFIG.billing.electricity ? '<div class="lbl ensd">' + esc(sp.lab) + '</div>' : '') +
+      (hasGas ? '<div class="enr"><i class="end" style="background:#f78c6b"></i><span class="enn">Gas</span><span class="lbl">' + fm(gT) + ' ' + esc(GU) + '</span><b>' + (gC != null ? mny(gTot) : "—") + '</b></div>' + (gdates ? '<div class="lbl ensd">' + esc(gdates) + '</div>' : '') : '') +
+      (GR ? '<div class="enr"><i class="end" style="background:#8a94a6"></i><span class="enn">GST</span><span class="lbl">' + (GR * 100).toFixed(GR * 100 % 1 ? 1 : 0) + '% of ' + mny(subT) + '</span><b>' + mny(gstA) + '</b></div>' : '') + '</div>' + (en.r !== "day" && subT > 0 ? '<div class="lbl enavg">Average per day ' + mny((subT + gstA) / Math.max(1, Math.ceil((Math.min(sp.e, Date.now()) - sp.s) / 864e5))) + '</div>' : '') + '</div>';
+    if (hasGas) {
+      hgas = '<div class="pn pg" data-k="g"><div class="eh"><div><div class="lbl">Gas cost' + (gdates ? ' · ' + esc(gdates) : '') + '</div><div class="h2" style="margin-top:4px">' + (gC != null ? mny(gTot) : "—") + '</div></div><div class="lbl ensub" style="margin-left:auto;text-align:right">' + fm(gT) + ' ' + esc(GU) + (GR ? ' · excl. GST' : '') + '</div></div><div class="enb">' +
+        (gD > 0 ? '<div class="enr"><i class="end" style="background:#8a94a6"></i><span class="enn">Daily charge</span><span class="lbl">' + gdays + ' day' + (gdays === 1 ? "" : "s") + ' × ' + TT.symbol + TT.gasDaily.toFixed(3) + '</span><b>' + mny(gD) + '</b></div>' : '') +
+        '<div class="enr"><i class="end" style="background:#f78c6b"></i><span class="enn">Usage</span><span class="lbl">' + fm(gT) + ' ' + esc(GU) + (gC != null && gT > 0.001 ? ' × ' + (gC / gT * 100).toFixed(1) + 'c' : '') + '</span><b>' + (gC != null ? mny(gC) : "—") + '</b></div></div>' +
+        (en.r === "day" ? '<div class="lbl" style="margin:12px 0 -6px;text-transform:none;letter-spacing:0;opacity:.7">Gas readings arrive in lumps, so a single day\u2019s bars are approximate.</div>' : '') + '<div class="lbl" style="margin-top:14px">Usage · ' + esc(GU) + '</div>' + enBars(gbk, gsp, (() => { const v = {}; Object.keys(en.gas).forEach(t => { const b = enBk(gsp, +t); v[b] = (v[b] || 0) + en.gas[t]; }); return v; })(), "#f78c6b", FS, mob, fm) + '</div>';
+    }
     if (CS) {
+      h += htot;
       const PC = ["#6bb8ff", "#8ff0c4", "#ffd166", "#ef476f"];
-      h += '<div class="pn pg"><div class="eh"><div><div class="lbl">Electricity cost</div><div class="h2" style="margin-top:4px">' + mny(CS.total) + '</div></div><div class="lbl ensub" style="margin-left:auto;text-align:right">' + fm(CS.kwh) + ' kWh ' + (en.gridSrc === "devices" ? "from tracked devices" : "from the grid") + '</div></div><div class="enb">' +
-        CS.per.map((x, i) => '<div class="enr"><i class="end" style="background:' + PC[i % 4] + '"></i><span class="enn">' + esc(x.p.name || "") + '</span><span class="lbl">' + fm(x.kwh) + ' kWh × ' + (x.p.rate * 100).toFixed(1) + 'c</span><b>' + mny(x.cost) + '</b></div>').join("") +
-        '<div class="enr"><i class="end" style="background:#8a94a6"></i><span class="enn">Daily charge</span><span class="lbl">' + CS.days + ' day' + (CS.days === 1 ? "" : "s") + ' × ' + TT.symbol + TT.daily.toFixed(3) + '</span><b>' + mny(CS.fixed) + '</b></div></div>';
-      const ks = Object.keys(CS.cols).map(Number), cm = Math.max.apply(null, bk.map(b => (CS.cols[b] || [0]).reduce((a, c) => a + c, 0)).concat([0.001])), W2 = mob ? 420 : 700, H2 = mob ? 150 : 170, L2 = mob ? 50 : 46, B2 = mob ? 28 : 26, bw2 = (W2 - L2) / bk.length; let g2 = '';
+      h += '<div class="pn pg" data-k="e"><div class="eh"><div><div class="lbl">Electricity cost</div><div class="h2" style="margin-top:4px">' + mny(CS.total) + '</div></div><div class="lbl ensub" style="margin-left:auto;text-align:right">' + fm(CS.kwh) + ' kWh ' + (en.gridSrc === "devices" ? "from tracked devices" : "from the grid") + (CS.real && CS.est ? ' · ' + CS.est + ' h estimated' : '') + (GR ? ' · excl. GST' : '') + '</div></div><div class="lbl ensrc" style="margin:-4px 0 10px;text-transform:none;letter-spacing:0;opacity:.7">' + (en.gridSrc === "devices" ? "Home Assistant\u2019s Energy settings have no grid usage, so this is the tracked devices only." : "Source: " + esc((en.gridIds || []).join(", ")) + " \u00b7 " + Object.keys(en.grid || {}).length + " hours of data") + '</div><div class="enb">' +
+        CS.per.map((x, i) => '<div class="enr"><i class="end" style="background:' + PC[i % 4] + '"></i><span class="enn">' + esc(x.p.name || "") + '</span><span class="lbl">' + fm(x.kwh) + ' kWh × ' + ((CS.real && x.kwh > 0.001 ? x.cost / x.kwh : x.p.rate) * 100).toFixed(1) + 'c</span><b>' + mny(x.cost) + '</b></div>').join("") +
+        ('<div class="enr"><i class="end" style="background:#8a94a6"></i><span class="enn">Daily charge</span><span class="lbl">' + CS.days + ' day' + (CS.days === 1 ? "" : "s") + ' × ' + TT.symbol + TT.daily.toFixed(3) + '</span><b>' + mny(CS.fixed) + '</b></div></div>');
+      const ks = Object.keys(CS.cols).map(Number), cm = Math.max.apply(null, bk.map(b => (CS.cols[b] || [0]).reduce((a, c) => a + c, 0)).concat([0.001])), W2 = mob ? 420 : 360, H2 = mob ? 150 : 140, L2 = mob ? 50 : 42, B2 = mob ? 28 : 26, bw2 = (W2 - L2) / bk.length; let g2 = '';
       for (let i = 0; i <= 2; i++) { const y = 8 + (H2 - B2 - 8) * (1 - i / 2); g2 += '<line x1="' + L2 + '" x2="' + W2 + '" y1="' + y + '" y2="' + y + '" stroke="currentColor" opacity=".12"/><text x="' + (L2 - 6) + '" y="' + (y + 4) + '" text-anchor="end" font-size="' + FS + '" fill="currentColor" opacity=".6">' + fm(cm * i / 2) + '</text>'; }
       bk.forEach((b, i) => { let y = H2 - B2; (CS.cols[b] || []).forEach((v, j) => { const hh = v / cm * (H2 - B2 - 8); if (hh > 0.3) g2 += '<rect x="' + (L2 + i * bw2 + bw2 * 0.12).toFixed(1) + '" y="' + (y - hh).toFixed(1) + '" width="' + (bw2 * 0.76).toFixed(1) + '" height="' + hh.toFixed(1) + '" rx="2" fill="' + PC[j % 4] + '"><title>' + esc(CS.per[j].p.name || "") + ' ' + fm(v) + ' kWh</title></rect>'; y -= hh; }); const d = new Date(b); g2 += '<text x="' + (L2 + i * bw2 + bw2 / 2).toFixed(1) + '" y="' + (H2 - 7) + '" text-anchor="middle" font-size="' + FS + '" fill="currentColor" opacity=".6">' + (en.r === "day" ? (i % 3 === 0 ? d.getHours() : "") : en.r === "week" ? d.toLocaleDateString([], { weekday: "short" }) : en.r === "month" ? (i % 2 === 0 ? d.getDate() : "") : d.toLocaleDateString([], { month: "short" })) + '</text>'; });
       h += '<div class="lbl" style="margin-top:14px">Usage · kWh</div><svg viewBox="0 0 ' + W2 + ' ' + H2 + '" style="width:100%;margin-top:8px;display:block">' + g2 + '</svg></div>';
-    } else h += '<div class="pn lbl">' + (en.grid === undefined ? "Calculating cost…" : "Electricity cost unavailable: no usage data came back for " + (en.gridSrc === "devices" ? "your tracked devices" : "the grid meter") + " in this period.") + '</div>';
-    h += '<div class="pn pg"><div class="eh"><div><div class="lbl">Consumption overview</div><div class="h2" style="margin-top:4px">' + fm(total) + ' kWh' + (en.devH ? ' <span class="enc">· ' + mc(dev.reduce((a, x) => a + (x.cost || 0), 0)) + '</span>' : '') + '</div></div><div class="seg" style="margin-left:auto"><button class="eb' + (en.mode === "bar" ? " on" : "") + '" data-em="bar">' + mdi("chart-bar") + '</button><button class="eb' + (en.mode === "pie" ? " on" : "") + '" data-em="pie">' + mdi("chart-pie") + '</button></div></div>' + ov + '</div>';
+    } else h += '<div class="pn lbl">' + (en.grid === undefined || en.gridCost === undefined ? "Calculating cost…" : "Electricity cost unavailable: no usage data came back for " + (en.gridSrc === "devices" ? "your tracked devices" : "the grid meter") + " in this period.") + '</div>';
+    h += hgas;
 
     if (CS) {
-      const hf = x => { const f = k => (k % 12 || 12) + (k % 24 < 12 ? "am" : "pm"); return f(x) + "–" + f(x + 1); }, rows = [], pn = ({ day: "yesterday", week: "last week", month: "last month", year: "last year" })[en.r], pl = en.o === 0 ? pn : "the previous " + en.r, part = sp.e > Date.now() && en.o === 0 ? " so far" : "";
+      const hf = x => { const f = k => CLK12() ? (k % 12 || 12) + (k % 24 < 12 ? "am" : "pm") : ("0" + k % 24).slice(-2) + ":00"; return f(x) + "–" + f(x + 1); }, rows = [], pn = ({ day: "yesterday", week: "last week", month: "last month", year: "last year" })[en.r], pl = en.o === 0 ? pn : "the previous " + en.r, part = sp.e > Date.now() && en.o === 0 ? " so far" : "";
       if (en.prev === undefined) rows.push(["Vs " + pl, "…", "Calculating…", ""]);
       else if (en.prev) {
         let pk = 0, pc = 0; Object.keys(en.prev).forEach(t => { const v = en.prev[t]; pk += v; pc += v * enRate(new Date(+t).getHours()); });
-        const useC = pc > 0.005, cur = useC ? CS.use : CS.kwh, prv = useC ? pc : pk, f2 = v => useC ? mny(v) : fm(v) + " kWh";
-        if (prv > 0.005) { const d = cur - prv, pc2 = d / prv * 100, up = d > 0.0005; rows.push(["Vs " + pl, (Math.abs(pc2) < 0.5 ? "≈ same" : (up ? "↑ " : "↓ ") + Math.abs(pc2).toFixed(0) + "%"), f2(cur) + " now vs " + f2(prv) + " at this point" + (part ? "" : "") + " · usage only", Math.abs(pc2) < 0.5 ? "" : up ? "var(--heat)" : "var(--mint)"]); }
+        const useC = !CS.real && pc > 0.005, cur = useC ? CS.use : CS.kwh, prv = useC ? pc : pk, f2 = v => useC ? mny(v) : fm(v) + " kWh";
+        if (prv > 0.005) { const d = cur - prv, pc2 = d / prv * 100, up = d > 0.0005; rows.push(["Vs " + pl, (Math.abs(pc2) < 0.5 ? "≈ same" : (up ? "↑ " : "↓ ") + Math.abs(pc2).toFixed(0) + "%"), f2(cur) + " now vs " + f2(prv) + " at this point" + (part ? "" : "") + (CS.real ? "" : " · usage only"), Math.abs(pc2) < 0.5 ? "" : up ? "var(--heat)" : "var(--mint)"]); }
         else rows.push(["Vs " + pl, "—", "No usage recorded in " + pl, ""]);
       }
       const hr = {}; Object.keys(en.grid || {}).forEach(t => { const k = new Date(+t).getHours(); hr[k] = (hr[k] || 0) + en.grid[t]; });
-      const pk = Object.keys(hr).sort((a, b) => hr[b] - hr[a])[0], tp = dev.length ? dev.slice().sort((a, b) => (b.cost || 0) - (a.cost || 0) || b.tot - a.tot)[0] : null, sumC = dev.reduce((a, x) => a + (x.cost || 0), 0);
-      if (pk != null && hr[pk] > 0.001) rows.push([en.r === "day" ? "Peak hour" : "Busiest hour of day", hf(+pk), fm(hr[pk]) + " kWh" + (en.r === "day" ? "" : " in total") + (tp ? " · biggest spender: " + tp.n + " (" + (sumC > 0.005 && tp.cost != null ? Math.round(tp.cost / sumC * 100) + "% of cost" : Math.round(tp.tot / total * 100) + "% of kWh") + ")" : ""), ""]);
+      const pk = Object.keys(hr).sort((a, b) => hr[b] - hr[a])[0];
+      if (pk != null && hr[pk] > 0.001) rows.push([en.r === "day" ? "Peak hour" : "Busiest hour of day", hf(+pk), fm(hr[pk]) + " kWh" + (en.r === "day" ? "" : " in total") + "", ""]);
       const fr = CS.per.filter(x => x.p.rate === 0), pd = CS.per.filter(x => x.p.rate > 0);
       if (fr.length && pd.length && CS.kwh > 0.001) {
-        const fk = fr.reduce((a, x) => a + x.kwh, 0), pt = dev.filter(x => x.cost > 0.005).sort((a, b) => b.cost - a.cost)[0], fn = fr.map(x => x.p.name || "").join("").replace(/^.*\((.*)\).*$/, "$1") || "free hours";
-        rows.push(["Free hours", Math.round(fk / CS.kwh * 100) + "% free", fm(fk) + " kWh used " + (fn === "free hours" ? fn : fn.replace(/–/, "to")) + (pt ? " · running " + pt.n + " there instead could save up to " + mny(pt.cost) : ""), "var(--mint)"]);
+        const fk = fr.reduce((a, x) => a + x.kwh, 0), fn = fr.map(x => x.p.name || "").join("").replace(/^.*\((.*)\).*$/, "$1") || "free hours";
+        rows.push(["Free hours", Math.round(fk / CS.kwh * 100) + "% free", fm(fk) + " kWh used " + (fn === "free hours" ? fn : fn.replace(/–/, "to")) + "", "var(--mint)"]);
       }
+      if (CS.real && pd.length) { const pkw = pd.reduce((a, x) => a + x.kwh, 0), pcost = CS.total - CS.fixed; if (pkw > 0.001 && pcost > 0) rows.push(["Average rate", (pcost / pkw * 100).toFixed(1) + "c", "per kWh on charged hours", ""]); }
       if (rows.length) h += '<div class="pn pg enins"><div class="lbl">Insights</div><div class="eni">' + rows.map(r => '<div class="eil"><div class="lbl">' + esc(r[0]) + '</div><div class="eiv"' + (r[3] ? ' style="color:' + r[3] + '"' : '') + '>' + esc(r[1]) + '</div><div class="eic">' + esc(r[2]) + '</div></div>').join("") + '</div></div>';
     }
-    const nc = (h.slice(h0).match(/<div class="pn/g) || []).length;
-    h = h.slice(0, h0) + '<div class="ensl">' + h.slice(h0) + '</div><div class="dots irdots endots">' + Array.from({ length: nc }, (_, i) => '<i data-ei="' + i + '"' + (i === (en.si || 0) ? ' class="on"' : "") + '></i>').join("") + '</div>';
+    const et = hasGas && CS ? (en.tab === "g" ? "g" : "e") : "e";
+    h = h.slice(0, h0) + (hasGas && CS ? '<div class="ensw"><button class="' + (et === "e" ? "on" : "") + '" data-et="e">ELECTRICITY</button><button class="' + (et === "g" ? "on" : "") + '" data-et="g">GAS</button></div>' : "") + '<div class="ensl" data-t="' + et + '" data-n="' + (hasGas && CS ? 3 : 2) + '">' + h.slice(h0) + '</div>'; en.body = h.slice(h0);
   }
   pg.innerHTML = h;
-  { const sl = $(".ensl", pg); if (sl && en.si && isMobile()) sl.scrollLeft = en.si * (sl.clientWidth + 12); }
-  if (en.tx != null && en.data) { const d = en.tx; en.tx = null; Array.prototype.slice.call(pg.children, 1).forEach((c, k) => { txGo(c, d, false); c.style.setProperty("--tx", d * 56 + "px"); c.style.setProperty("--ty", d ? "10px" : "22px"); c.style.animationDuration = ".9s"; c.style.animationDelay = k * 110 + "ms"; }); }
+  if (en.tx != null && en.data && !pg.querySelector(".enold") && pg.querySelector(".ensl")) { const d = en.tx, els = pg.querySelectorAll(".ensw,.ensl>.pn"); en.tx = null; if (!(window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches)) { els.forEach((c, k) => { c.style.setProperty("--tx", d * 30 + "px"); c.style.setProperty("--ty", d ? "6px" : "14px"); c.style.setProperty("--i", k); c.classList.add("enin"); }); en.anim = Date.now() + 700; setTimeout(() => els.forEach(c => c.classList.remove("enin")), 800); } }
 }
-$("#energy").addEventListener("scroll", e => { const g = e.target; if (!g.classList || !g.classList.contains("ensl") || !g.clientWidth) return; en.si = Math.round(g.scrollLeft / (g.clientWidth + 12)); $$("#energy .endots i").forEach((d, k) => d.classList.toggle("on", k === en.si)); }, true);
 $("#energy").onclick = e => {
-  const dt = e.target.closest("[data-ei]"); if (dt) { const g = $("#energy .ensl"); if (g) g.scrollTo({ left: +dt.dataset.ei * (g.clientWidth + 12), behavior: "smooth" }); return; }
+  const dt = e.target.closest("[data-et]"); if (dt) { en.tab = dt.dataset.et; en.anim = 0; drawEnergy(); return; }
   const r = e.target.closest("[data-er]"), o = e.target.closest("[data-eo]"), m = e.target.closest("[data-em]"), u = e.target.closest("[data-eu]");
-  if (u) { en.unit = u.dataset.eu; drawEnergy(); }
-  else if (r) { const ord = ["day", "week", "month", "year"]; en.tx = ord.indexOf(r.dataset.er) > ord.indexOf(en.r) ? 1 : -1; en.r = r.dataset.er; en.o = 0; en.data = null; drawEnergy(); loadEnergy(); }
-  else if (o) { en.tx = +o.dataset.eo === 0 ? 0 : (+o.dataset.eo > 0 ? 1 : -1); en.o = +o.dataset.eo === 0 ? 0 : en.o + +o.dataset.eo; en.data = null; drawEnergy(); loadEnergy(); }
-  else if (m) { en.mode = m.dataset.em; drawEnergy(); }
+  if (u) { en.unit = u.dataset.eu; en.anim = 0; drawEnergy(); }
+  else if (r) { const ord = ["day", "week", "month", "year"]; en.tx = ord.indexOf(r.dataset.er) > ord.indexOf(en.r) ? 1 : -1; en.r = r.dataset.er; en.o = 0; en.data = null; en.anim = 0; en.busy = false; drawEnergy(); loadEnergy(); }
+  else if (o) { en.tx = +o.dataset.eo === 0 ? 0 : (+o.dataset.eo > 0 ? 1 : -1); en.o = +o.dataset.eo === 0 ? 0 : en.o + +o.dataset.eo; en.data = null; en.anim = 0; en.busy = false; drawEnergy(); loadEnergy(); }
+  else if (m) { en.mode = m.dataset.em; en.anim = 0; drawEnergy(); }
 };
 setInterval(() => { if (curPg() === "energy") loadEnergy(); }, 5 * 60000);
 
@@ -5490,7 +5573,7 @@ function batTick() {
 }
 function tick() {
   const n = new Date(), h = n.getHours();
-  $("#clk").textContent = n.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false });
+  $("#clk").textContent = n.toLocaleTimeString([], tmo({ hour: CLK12() ? "numeric" : "2-digit", minute: "2-digit" }));
   batTick();
   $("#dt").textContent = n.toLocaleDateString([], { weekday: "long", day: "numeric", month: "long" });
   $("#gr").textContent = (h < 12 ? "Morning" : h < 18 ? "Afternoon" : "Evening") + (userName ? ", " + userName : userKnown ? "" : CONFIG.name ? ", " + CONFIG.name : "") + "!";
@@ -5584,6 +5667,131 @@ function galOnState(id, s) {
   });
 }
 setInterval(() => { try { Object.keys(galCfg()).forEach(k => galStep(k, false)); } catch (e) {} }, 1000);
+// ---------- seasonal themes ----------
+// Eight seasons, each with its own colours and decorations: Christmas, New Year, Halloween, Valentine's, Matariki, Easter, Diwali, Chinese New Year.
+// Theme page -> "Seasonal themes" (this device) or config.js seasonal: true (every device that has not chosen). Dates can be changed in config.js: seasons: { christmas: ["12-01", "12-26"], matariki: false, diwali: { 2031: "11-14" } }
+// A season only replaces the colours (dark or light, as chosen), puts a light decoration layer over the page, and ends by itself. The layer is hidden on the camera pages, the falling bits stop while a camera is live (27-seasons.css).
+const sznR = s => () => (s = s * 16807 % 2147483647) / 2147483647;
+const sznN = (n, f) => Array.from({ length: n }, (_, i) => f(i)).join("");
+const sznY = (m, y) => { const o = {}; Object.keys(m).forEach(k => { o[k] = m[k]; }); return o[y]; };
+const SZN_MATARIKI = { 2026: "07-10", 2027: "06-25", 2028: "07-14", 2029: "07-06", 2030: "06-21", 2031: "07-11", 2032: "07-02", 2033: "06-24", 2034: "07-07", 2035: "06-29", 2036: "07-18", 2037: "07-10", 2038: "06-25", 2039: "07-15", 2040: "07-06", 2041: "07-19", 2042: "07-11", 2043: "07-03", 2044: "06-24", 2045: "07-07", 2046: "06-29", 2047: "07-19", 2048: "07-03", 2049: "06-25", 2050: "07-15", 2051: "06-30", 2052: "06-21" };   // the public holiday, set by law
+const SZN_CNY = { 2026: "02-17", 2027: "02-06", 2028: "01-26", 2029: "02-13", 2030: "02-03", 2031: "01-23", 2032: "02-11", 2033: "01-31", 2034: "02-19", 2035: "02-08", 2036: "01-28" };
+const SZN_DIWALI = { 2026: "11-08", 2027: "10-29", 2028: "10-17", 2029: "11-05", 2030: "10-26" };   // the main day (Lakshmi Puja); later years: config.js seasons: { diwali: { 2031: "MM-DD" } }
+function sznEaster(y) { const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451), mo = Math.floor((h + l - 7 * m + 114) / 31), dy = (h + l - 7 * m + 114) % 31 + 1; return new Date(y, mo - 1, dy); }
+const sznDate = (y, md) => { const a = String(md).split("-"); return new Date(y, (+a[0] || 1) - 1, +a[1] || 1); };
+const sznC = a => ({ bg: a[0], glow: a[1], ink: a[2], accent: a[3], heat: a[4], cool: a[5], lit: a[6], nav1: a[7], nav2: a[8] });
+// win(y) -> [first day, last day] for the season that starts in year y; days around a moving festival come from the table (or config)
+const SZN = [
+  { id: "cny", name: "Chinese New Year", note: "around the festival", day: y => SZN_CNY[y], around: [-3, 4], build: sznCny,
+    pal: { dark: sznC(["#180c0c", "#4d1111", "#f2e6e0", "#ffcc4d", "#ff8a80", "#a8c7fa", "#ffdf6b", "#f06a5a", "#c9372b"]), light: sznC(["#fff6f2", "#ffdcd6", "#2a1210", "#b3261e", "#b3261e", "#0b57d0", "#e3a600", "#ffb4a8", "#ff8a7a"]) } },
+  { id: "diwali", name: "Diwali", note: "around the main day", day: y => SZN_DIWALI[y], around: [-2, 2], build: sznDiwali,
+    pal: { dark: sznC(["#170b10", "#4a1030", "#f0e4dc", "#ffb347", "#ff8a65", "#a8c7fa", "#ffd86b", "#f4a259", "#d9823a"]), light: sznC(["#fffaf2", "#ffe3bf", "#2a1410", "#b35a00", "#b3261e", "#0b57d0", "#e3a600", "#ffd9a8", "#ffbd6e"]) } },
+  { id: "matariki", name: "Matariki", note: "around the public holiday", day: y => SZN_MATARIKI[y], around: [-3, 3], build: sznMatariki,
+    pal: { dark: sznC(["#0b0e1a", "#1a2350", "#e6e8f2", "#c8d4ff", "#f2b8b5", "#a8c7fa", "#f9de8e", "#9fb2ee", "#7f93d6"]), light: sznC(["#f7f8ff", "#dfe5ff", "#14172a", "#3b4aa8", "#b3261e", "#0b57d0", "#e3a600", "#c9d3fb", "#a6b6f2"]) } },
+  { id: "easter", name: "Easter", note: "Holy Week to Easter Monday", day: y => { const d = sznEaster(y); return (d.getMonth() + 1) + "-" + d.getDate(); }, around: [-7, 1], build: sznEaster2,
+    pal: { dark: sznC(["#12150f", "#2d3a1c", "#e8ecdf", "#d4f06a", "#f2b8b5", "#a8c7fa", "#f9de8e", "#e1c8ff", "#c7a6f2"]), light: sznC(["#fbfdf3", "#eaf5c4", "#1a1d14", "#4c7a00", "#b3261e", "#0b57d0", "#e3a600", "#e8d6ff", "#d2b4fb"]) } },
+  { id: "newyear", name: "New Year", note: "27 Dec - 2 Jan", fixed: ["12-27", "01-02"], build: sznNewYear,
+    pal: { dark: sznC(["#0e0d12", "#2a2146", "#ece6da", "#ffd166", "#f2b8b5", "#a8c7fa", "#f9de8e", "#e9d9a6", "#c9b57a"]), light: sznC(["#fffcf5", "#fbefc9", "#1d1b16", "#7a5a00", "#b3261e", "#0b57d0", "#e3a600", "#f4e2a0", "#e6c85e"]) } },
+  { id: "christmas", name: "Christmas", note: "1 - 26 Dec", fixed: ["12-01", "12-26"], build: sznXmas,
+    pal: { dark: sznC(["#0f1511", "#1d3a28", "#e6ebe4", "#ff7b72", "#ffb4a9", "#9ecaff", "#f9de8e", "#9fd8a6", "#7fb88a"]), light: sznC(["#fbfdf8", "#dbefd9", "#171d18", "#b3261e", "#ba1a1a", "#1565c0", "#e3a600", "#bfe5c0", "#8fcf96"]) } },
+  { id: "valentines", name: "Valentine's", note: "12 - 14 Feb", fixed: ["02-12", "02-14"], build: sznValentines,
+    pal: { dark: sznC(["#1a1114", "#4a1228", "#f0dfe3", "#ff7aa2", "#f2b8b5", "#a8c7fa", "#f9de8e", "#f2b3c6", "#d98aa3"]), light: sznC(["#fff8fa", "#ffdfe8", "#201418", "#c2185b", "#b3261e", "#0b57d0", "#e3a600", "#ffc2d4", "#ff9db9"]) } },
+  { id: "halloween", name: "Halloween", note: "25 - 31 Oct", fixed: ["10-25", "10-31"], build: sznHalloween,
+    pal: { dark: sznC(["#140f18", "#34154a", "#eadff0", "#ff9a3c", "#f2b8b5", "#a8c7fa", "#f9de8e", "#c9a6e8", "#a583c9"]), light: sznC(["#fffaf5", "#ffe6cf", "#1f1620", "#b34700", "#b3261e", "#0b57d0", "#e3a600", "#ffd2a8", "#ffb06b"]) } }
+];
+// the first day and the last day of a season that starts in year y (or null)
+function sznWin(s, y) {
+  const o = (CONFIG.seasons || {})[s.id]; if (o === false) return null;
+  if (Array.isArray(o) && o.length > 1) { const a = sznDate(y, o[0]), b = sznDate(y, o[1]); if (b < a) b.setFullYear(y + 1); return [a, b]; }
+  if (s.fixed) { const a = sznDate(y, s.fixed[0]), b = sznDate(y, s.fixed[1]); if (b < a) b.setFullYear(y + 1); return [a, b]; }
+  const md = (o && typeof o === "object" && o[y]) || s.day(y); if (!md) return null; const d = sznDate(y, md);
+  return [new Date(y, d.getMonth(), d.getDate() + s.around[0]), new Date(y, d.getMonth(), d.getDate() + s.around[1])];
+}
+function sznFind(now) {   // which season the date falls in (the first in the list wins when two overlap)
+  const t = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  for (const s of SZN) for (const y of [now.getFullYear(), now.getFullYear() - 1]) { const w = sznWin(s, y); if (w && t >= w[0].getTime() && t <= w[1].getTime()) return { s: s, end: w[1] }; }
+  return null;
+}
+const sznPref = () => { let v = ""; try { v = localStorage.getItem("dashSeason") || ""; } catch (_) {} return v === "on" || v === "off" ? v : CONFIG.seasonal === true ? "on" : "off"; };
+let SZN_PREV = ((/[?&#]season=([a-z]+)/.exec(location.search + location.hash) || [])[1]) || "", SZN_CUR = "", SZN_END = null;
+function sznWhich() { if (SZN_PREV) { const p = SZN.filter(s => s.id === SZN_PREV)[0]; SZN_END = null; return p || null; } if (sznPref() !== "on") { SZN_END = null; return null; } const f = sznFind(new Date()); SZN_END = f ? f.end : null; return f ? f.s : null; }
+function sznApply() {
+  const s = sznWhich(), id = s ? s.id : ""; if (id === SZN_CUR) return; SZN_CUR = id; SEASON = s; applyPal();
+  const old = $("#szn"); if (old) old.remove(); if (s) { const l = document.createElement("div"); l.id = "szn"; l.innerHTML = s.build(innerWidth, innerHeight); document.body.appendChild(l); sznVis(); }
+  sznBrand();
+  if (curPg() === "theme") drawPalette();
+}
+const sznVis = () => { const l = $("#szn"); if (l) { l.hidden = onView(); l.classList.toggle("cams", onSec() || onHome()); } };   // full-screen camera pages: nothing. Home and Security (cameras always running): only the still parts (web, spider, lights, lanterns), no moving bits
+let sznRs = 0; addEventListener("resize", () => { clearTimeout(sznRs); sznRs = setTimeout(() => { const c = SZN_CUR; SZN_CUR = "\0"; sznApply(); SZN_CUR = c; }, 300); });
+addEventListener("hashchange", sznVis); document.addEventListener("visibilitychange", () => { if (!document.hidden) sznApply(); });
+// ---- Theme page: Seasonal themes
+const sznFmt = d => d.toLocaleDateString([], { day: "numeric", month: "short" });
+function sznSec(sec) {
+  const on = sznPref() === "on", s = SEASON, nm = s ? s.name : "", st = SZN_PREV ? "Previewing " + nm + ". Tap it again to stop." : on ? (s ? nm + " is on" + (SZN_END ? ", until " + sznFmt(SZN_END) : "") + "." : "On. Nothing is in season today.") : "Off.";
+  return sec("Seasonal themes", '<div class="seg" style="margin-top:12px">' + [["on", "ON"], ["off", "OFF"]].map(x => '<button class="eb' + (sznPref() === x[0] ? " on" : "") + '" data-sznm="' + x[0] + '">' + x[1] + '</button>').join("") + '</div>' +
+    '<div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">' + esc(st) + ' A season changes the colours and adds a light decoration; it stops by itself. Falling bits stop while a camera is live.</div>' +
+    '<div class="pg4" style="margin-top:12px">' + SZN.map(z => '<button class="pre2' + (SZN_PREV === z.id ? " on" : "") + '" data-szn="' + z.id + '"><i style="background:' + z.pal[palMode()].accent + '"></i><b>' + esc(z.name) + '</b><small class="lbl" style="text-transform:none;letter-spacing:0">' + esc(z.note) + '</small></button>').join("") + '</div>');
+}
+function sznClick(e) {
+  const m = e.target.closest("button[data-sznm]"), p = e.target.closest("button[data-szn]");
+  if (m) { try { localStorage.setItem("dashSeason", m.dataset.sznm); } catch (_) {} sznApply(); drawPalette(); return true; }
+  if (p) { SZN_PREV = SZN_PREV === p.dataset.szn ? "" : p.dataset.szn; SZN_CUR = "\0"; sznApply(); drawPalette(); return true; }
+  return false;
+}
+// ---- decorations (one function per season: returns the layer's markup for a screen W x H)
+const sznWire = (W, n, d, fn) => {   // a sagging wire along the top with n things hanging from it; fn(x, y, i) draws one
+  const seg = Math.max(2, Math.round(W / 320)); let o = '<svg width="' + W + '" height="' + (d + 40) + '" style="left:0;top:0"><path d="M-10 4 ' + sznN(seg, k => 'Q' + (W / seg * (k + .5)) + ' ' + (d + 12) + ' ' + (W / seg * (k + 1)) + ' 6') + '" stroke="rgba(var(--w),.28)" stroke-width="1.6" fill="none"/>';
+  for (let i = 0; i < n; i++) { const t = (i + .5) / n * seg, k = Math.min(seg - 1, Math.floor(t)), u = t - k, x0 = W / seg * k, x1 = W / seg * (k + 1), cx = W / seg * (k + .5), y0 = 6, y1 = 6, cy = d + 12, x = (1 - u) * (1 - u) * x0 + 2 * (1 - u) * u * cx + u * u * x1, y = (1 - u) * (1 - u) * y0 + 2 * (1 - u) * u * cy + u * u * y1; o += fn(x, y, i); }
+  return o + '</svg>';
+};
+const sznFlake = (r, n, o) => sznN(n, i => { const z = o.min + r() * (o.max - o.min), dur = o.d0 + r() * o.d1; return '<i class="fx dot" style="left:' + (r() * 100).toFixed(1) + '%;top:0;width:' + z.toFixed(1) + 'px;height:' + z.toFixed(1) + 'px;background:' + o.col(i) + ';opacity:' + (.3 + r() * .55).toFixed(2) + ';--dx:' + Math.round((r() - .5) * 90) + 'px;animation:sznFall ' + dur.toFixed(1) + 's linear -' + (r() * dur).toFixed(1) + 's infinite"></i>'; });
+function sznXmas(W) { const r = sznR(11), cols = ["#ff5a52", "#52d273", "#ffd35c", "#5aaeff"];
+  return sznWire(W, Math.max(10, Math.round(W / 46)), 50, (x, y, i) => { const c = cols[i % 4]; return '<circle cx="' + x.toFixed(1) + '" cy="' + (y + 12).toFixed(1) + '" r="13" fill="' + c + '" opacity=".14" class="tw" style="animation-delay:-' + (i * .37).toFixed(2) + 's"/><rect x="' + (x - 3).toFixed(1) + '" y="' + y.toFixed(1) + '" width="6" height="5" fill="#2c4a35"/><ellipse cx="' + x.toFixed(1) + '" cy="' + (y + 12).toFixed(1) + '" rx="4.4" ry="7" fill="' + c + '" class="tw" style="animation-delay:-' + (i * .37).toFixed(2) + 's"/>'; }) + sznFlake(r, 36, { min: 2.5, max: 7, d0: 12, d1: 12, col: () => "#fff" }); }
+function sznNewYear(W, H) { const r = sznR(23), hs = [42, 330, 200, 280, 120];
+  const burst = (x, y, R, h, dl) => { let c = ""; for (let i = 0; i < 26; i++) { const a = i / 26 * Math.PI * 2, q = R * (.6 + r() * .4); for (let k = 0; k < 4; k++) c += '<circle cx="' + (R + Math.cos(a) * q * (1 - k * .06)).toFixed(1) + '" cy="' + (R + Math.sin(a) * q * (1 - k * .06) + k * 1.4).toFixed(1) + '" r="' + (2.4 - k * .45).toFixed(2) + '" fill="hsl(' + (h + r() * 24) + ',100%,' + (66 + k * 6) + '%)" opacity="' + (1 - k * .22) + '"/>'; }
+    return '<svg class="fx" width="' + R * 2 + '" height="' + R * 2 + '" style="left:' + (x - R) + 'px;top:' + (y - R) + 'px;animation:sznBurst 5.5s ease-out ' + dl + 's infinite">' + c + '</svg>'; };
+  const spark = (x, y, s) => '<svg class="tw" width="' + s + '" height="' + s + '" viewBox="0 0 10 10" style="left:' + x + 'px;top:' + y + 'px;animation-delay:-' + (x % 7) * .3 + 's"><path d="M5 0 L6 4 L10 5 L6 6 L5 10 L4 6 L0 5 L4 4Z" fill="#ffd166"/></svg>';
+  return burst(W * .2, H * .2, 70, hs[0], -1) + burst(W * .76, H * .17, 90, hs[1], -2.8) + burst(W * .5, H * .1, 60, hs[2], -4.2) + burst(W * .9, H * .42, 58, hs[3], -.3) + spark(14, 10, 14) + spark(W - 36, 12, 16) + spark(W * .42, 6, 11) + spark(W * .66, 8, 12) +
+    sznN(26, i => { const c = ["#ffd166", "#ff7aa2", "#a8c7fa", "#fff"][i % 4], dur = 9 + r() * 9; return '<i class="fx" style="left:' + (r() * 100).toFixed(1) + '%;top:0;width:' + (4 + r() * 4).toFixed(1) + 'px;height:' + (8 + r() * 5).toFixed(1) + 'px;background:' + c + ';opacity:.6;--dx:' + Math.round((r() - .5) * 120) + 'px;--r:' + Math.round(360 + r() * 360) + 'deg;animation:sznFall ' + dur.toFixed(1) + 's linear -' + (r() * dur).toFixed(1) + 's infinite"></i>'; }); }
+function sznHalloween(W, H) { const r = sznR(31);
+  const bat = (top, dur, dl, s, dy) => '<i class="fx" style="left:0;top:' + top + '%;--dy:' + dy + 'px;animation:sznDrift ' + dur + 's linear ' + dl + 's infinite"><svg width="' + 56 * s + '" height="' + 26 * s + '" viewBox="0 -12 64 30" style="position:static;transform-origin:50% 50%;animation:sznFlap .5s ease-in-out infinite"><path d="M30 -2 C26 -10 18 -12 8 -8 C14 -4 12 0 6 4 C14 2 18 4 22 10 C24 6 27 4 30 8 C33 4 36 6 38 10 C42 4 46 2 54 4 C48 0 46 -4 52 -8 C42 -12 34 -10 30 -2Z" fill="#05020a" stroke="rgba(200,160,255,.35)" stroke-width=".8"/></svg></i>';
+  return '<svg width="200" height="200" viewBox="0 0 200 200" style="left:0;top:0" stroke="rgba(var(--w),.42)" fill="none" stroke-width="1.2"><path d="M0 0 L200 0 M0 0 L178 42 M0 0 L126 104 M0 0 L62 168 M0 0 L0 200 M0 0 L32 184"/>' + [44, 84, 126, 168].map(q => '<path d="M' + q + ' 0 Q' + q * .62 + ' ' + q * .62 + ' 0 ' + q + '"/>').join("") + '</svg>' +
+    '<svg class="sway" width="34" height="86" viewBox="0 0 34 86" style="left:' + Math.round(W * .8) + 'px;top:0;transform-origin:17px 0"><path d="M17 0 V46" stroke="rgba(var(--w),.5)" stroke-width="1"/><ellipse cx="17" cy="58" rx="9" ry="8" fill="#0a0410"/><circle cx="17" cy="47" r="5" fill="#0a0410"/><circle cx="15" cy="46" r="1.2" fill="#ff9a3c"/><circle cx="19.5" cy="46" r="1.2" fill="#ff9a3c"/><path d="M8 54 L1 66 M9 60 L2 74 M26 54 L33 66 M25 60 L32 74" stroke="#0a0410" stroke-width="1.6"/></svg>' +
+    bat(8, 30, -4, 1.1, 40) + bat(18, 38, -17, .8, -30) + bat(28, 33, -26, 1.4, 20) + bat(12, 44, -33, .7, 60) +
+    '<i class="fx" style="left:-10vw;bottom:-60px;width:60vw;height:220px;background:radial-gradient(closest-side,rgba(200,160,240,.22),transparent);filter:blur(14px);animation:sznFog 20s ease-in-out infinite"></i><i class="fx" style="right:-10vw;bottom:-70px;width:60vw;height:200px;background:radial-gradient(closest-side,rgba(255,154,60,.14),transparent);filter:blur(14px);animation:sznFog 26s ease-in-out -9s infinite"></i>'; }
+function sznValentines(W) { const r = sznR(41), cs = ["#ff7aa2", "#ff9db9", "#ffc2d4", "#e8456f"], heart = (s, c) => '<path transform="scale(' + s + ')" d="M15 27 C3 17 0 11 0 7.5 C0 3 3.4 0 7.4 0 C10.6 0 13.4 1.8 15 4.6 C16.6 1.8 19.4 0 22.6 0 C26.6 0 30 3 30 7.5 C30 11 27 17 15 27Z" fill="' + c + '"/>';
+  return sznWire(W, Math.max(8, Math.round(W / 70)), 36, (x, y, i) => '<g transform="translate(' + (x - 8).toFixed(1) + ' ' + (y + 1).toFixed(1) + ')">' + heart(.55, cs[i % 4]) + '</g>') +
+    sznN(16, i => { const z = .5 + r() * 1.1, dur = 16 + r() * 16; return '<i class="fx" style="left:' + (r() * 100).toFixed(1) + '%;top:100vh;opacity:' + (.25 + r() * .35).toFixed(2) + ';--dx:' + Math.round((r() - .5) * 120) + 'px;animation:sznRise ' + dur.toFixed(1) + 's linear -' + (r() * dur).toFixed(1) + 's infinite"><svg width="' + 30 * z + '" height="' + 28 * z + '" viewBox="0 0 30 28" style="position:static;filter:blur(' + (z > 1.1 ? 1 : 0) + 'px)">' + heart(1, cs[i % 4]) + '</svg></i>'; }); }
+function sznMatariki(W) { const r = sznR(53), x0 = Math.round(W * .62), st = [[0, 4, 4], [15, 10, 3.2], [30, 2, 3], [44, 12, 3.4], [58, 6, 2.8], [24, 22, 3], [40, 26, 2.6], [8, 28, 2.8], [52, 28, 2.6]];
+  return '<svg width="80" height="48" style="left:' + x0 + 'px;top:2px" viewBox="0 0 80 48">' + st.map((q, i) => '<circle cx="' + (q[0] + 8) + '" cy="' + (q[1] + 8) + '" r="' + q[2] * 3.2 + '" fill="#c8d4ff" opacity=".12" class="tw" style="animation-delay:-' + i * .5 + 's"/><circle cx="' + (q[0] + 8) + '" cy="' + (q[1] + 8) + '" r="' + q[2] * .62 + '" fill="#fff" class="tw" style="animation-delay:-' + i * .5 + 's"/>').join("") + '</svg>' +
+    sznN(30, i => '<i class="fx dot tw" style="left:' + (r() * 100).toFixed(1) + '%;top:' + (r() * 100).toFixed(1) + '%;width:' + (1.6 + r() * 1.8).toFixed(1) + 'px;height:' + (1.6 + r() * 1.8).toFixed(1) + 'px;background:#e6ecff;animation-duration:' + (2 + r() * 4).toFixed(1) + 's;animation-delay:-' + (r() * 5).toFixed(1) + 's"></i>') +
+    '<i class="fx" style="left:12%;top:4%;width:110px;height:2px;background:linear-gradient(90deg,transparent,#fff);transform-origin:0 50%;animation:sznShoot 15s linear -3s infinite"></i><i class="fx" style="left:48%;top:2%;width:90px;height:2px;background:linear-gradient(90deg,transparent,#e6ecff);transform-origin:0 50%;animation:sznShoot 21s linear -12s infinite"></i>'; }
+function sznEaster2(W) { const r = sznR(61), cs = [["#ffb3d1", "#fff"], ["#b8e6ff", "#ffe27a"], ["#c9f0a8", "#fff"], ["#e1c8ff", "#ffb3d1"], ["#ffe27a", "#b8e6ff"]], n = Math.max(6, Math.round(W / 120));
+  return sznN(n, i => { const x = W * .14 + (i + .5) / n * W * .86 + (r() - .5) * 30, len = 14 + r() * 34, c = cs[i % 5]; return '<svg class="sway" width="30" height="' + (len + 34) + '" viewBox="0 0 30 ' + (len + 34) + '" style="left:' + (x - 15).toFixed(0) + 'px;top:0;animation-delay:-' + (i * .8).toFixed(1) + 's"><path d="M15 0 V' + len + '" stroke="rgba(var(--w),.4)" stroke-width="1"/><ellipse cx="15" cy="' + (len + 16) + '" rx="10" ry="14" fill="' + c[0] + '"/><path d="M5.4 ' + (len + 12) + ' L9 ' + (len + 8) + ' L12.5 ' + (len + 12) + ' L16 ' + (len + 8) + ' L19.5 ' + (len + 12) + ' L23 ' + (len + 8) + ' L24.6 ' + (len + 12) + '" stroke="' + c[1] + '" stroke-width="2.2" fill="none"/><circle cx="11" cy="' + (len + 22) + '" r="1.8" fill="' + c[1] + '"/><circle cx="19" cy="' + (len + 22) + '" r="1.8" fill="' + c[1] + '"/></svg>'; }) +
+    sznN(22, i => { const dur = 12 + r() * 12, z = 6 + r() * 5; return '<i class="fx" style="left:' + (r() * 100).toFixed(1) + '%;top:0;width:' + z.toFixed(1) + 'px;height:' + (z * 1.4).toFixed(1) + 'px;border-radius:60% 40% 60% 40%;background:' + ["#ffd1e3", "#fff", "#ffe9a8"][i % 3] + ';opacity:.7;--dx:' + Math.round((r() - .5) * 140) + 'px;--r:' + Math.round(300 + r() * 300) + 'deg;animation:sznFall ' + dur.toFixed(1) + 's linear -' + (r() * dur).toFixed(1) + 's infinite"></i>'; }); }
+function sznDiwali(W) { const r = sznR(71);
+  return sznWire(W, Math.max(12, Math.round(W / 38)), 40, (x, y, i) => i % 3 === 2 ? '<circle cx="' + x.toFixed(1) + '" cy="' + (y + 9).toFixed(1) + '" r="11" fill="#fff2b3" opacity=".2" class="tw" style="animation-delay:-' + (i * .31).toFixed(2) + 's"/><circle cx="' + x.toFixed(1) + '" cy="' + (y + 9).toFixed(1) + '" r="3.2" fill="#fff6c9" class="tw" style="animation-delay:-' + (i * .31).toFixed(2) + 's"/>' : '<circle cx="' + x.toFixed(1) + '" cy="' + (y + 8).toFixed(1) + '" r="8" fill="' + (i % 3 ? "#ff9f1c" : "#ffcf4a") + '"/><circle cx="' + x.toFixed(1) + '" cy="' + (y + 8).toFixed(1) + '" r="4.2" fill="' + (i % 3 ? "#ffcf4a" : "#ff9f1c") + '"/>') +
+    sznN(26, i => { const z = 2.5 + r() * 3.5, dur = 14 + r() * 14; return '<i class="fx dot" style="left:' + (r() * 100).toFixed(1) + '%;top:100vh;width:' + z.toFixed(1) + 'px;height:' + z.toFixed(1) + 'px;background:' + (i % 2 ? "#ffb347" : "#ffe08a") + ';box-shadow:0 0 ' + (z * 3).toFixed(0) + 'px ' + (z * .8).toFixed(0) + 'px rgba(255,170,60,.55);opacity:' + (.5 + r() * .45).toFixed(2) + ';--dx:' + Math.round((r() - .5) * 100) + 'px;animation:sznRise ' + dur.toFixed(1) + 's linear -' + (r() * dur).toFixed(1) + 's infinite"></i>'; }); }
+function sznCny(W) { const r = sznR(83), xs = [.3, .5, .74, .93];
+  const lantern = (x, len, dl) => '<svg class="sway" width="46" height="' + (len + 78) + '" viewBox="0 0 46 ' + (len + 78) + '" style="left:' + (x - 23).toFixed(0) + 'px;top:0;animation-delay:-' + dl + 's"><path d="M23 0 V' + len + '" stroke="#ffcc4d" stroke-width="1.4"/><rect x="14" y="' + len + '" width="18" height="5" rx="2" fill="#ffcc4d"/><ellipse cx="23" cy="' + (len + 27) + '" rx="21" ry="22" fill="#d92b1f"/><ellipse cx="23" cy="' + (len + 27) + '" rx="11" ry="22" fill="#f04a3a"/><path d="M23 ' + (len + 5) + ' V' + (len + 49) + '" stroke="#b3170c" stroke-width="1"/><rect x="14" y="' + (len + 48) + '" width="18" height="5" rx="2" fill="#ffcc4d"/><path d="M23 ' + (len + 53) + ' V' + (len + 70) + ' M19 ' + (len + 53) + ' V' + (len + 66) + ' M27 ' + (len + 53) + ' V' + (len + 66) + '" stroke="#ffcc4d" stroke-width="1.6"/></svg>';
+  return xs.map((x, i) => lantern(W * x, 12 + (i % 2) * 22, i * 1.1)).join("") +
+    sznN(18, i => { const z = 5 + r() * 4, dur = 14 + r() * 12; return '<i class="fx dot" style="left:' + (r() * 100).toFixed(1) + '%;top:0;width:' + z.toFixed(1) + 'px;height:' + z.toFixed(1) + 'px;background:radial-gradient(circle at 35% 35%,#ffe58a,#e0a21a);box-shadow:inset 0 0 0 1.5px rgba(120,70,0,.5);opacity:.75;--dx:' + Math.round((r() - .5) * 90) + 'px;--r:' + Math.round(200 + r() * 200) + 'deg;animation:sznFall ' + dur.toFixed(1) + 's linear -' + (r() * dur).toFixed(1) + 's infinite"></i>'; }) +
+    sznN(10, i => '<i class="fx tw" style="left:' + (r() * 100).toFixed(1) + '%;top:' + (r() * 60).toFixed(1) + '%;width:10px;height:10px;background:#ffe58a;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);animation-delay:-' + (r() * 3).toFixed(1) + 's"></i>'); }
+// ---- the logo: a small seasonal touch on the brand logo (start-up screen and sign-in), placed by the logo's own size so any logo works
+// [viewBox, drawing, width, x, y, rotation]; width, x and y in percent of the logo's viewBox
+const SZB = {"christmas":[["0 0 60 56","<path d=\"M6 50 C8 22 24 4 46 8 C40 18 44 34 54 46Z\" fill=\"#e8403a\"/><rect x=\"2\" y=\"44\" width=\"56\" height=\"12\" rx=\"6\" fill=\"#fff\"/><circle cx=\"48\" cy=\"8\" r=\"7\" fill=\"#fff\"/>",19,74,-10,14]],"newyear":[["0 0 50 60","<path d=\"M4 56 L25 4 L46 56Z\" fill=\"#ffd166\"/><path d=\"M12 40 H38 M17 28 H33\" stroke=\"#0e0d12\" stroke-width=\"3\" opacity=\".5\"/><circle cx=\"25\" cy=\"4\" r=\"5\" fill=\"#ff7aa2\"/>",17,76,-10,12],["0 0 10 10","<path d=\"M5 0 L6 4 L10 5 L6 6 L5 10 L4 6 L0 5 L4 4Z\" fill=\"#ffd166\"/>",7,12,5,0],["0 0 10 10","<path d=\"M5 0 L6 4 L10 5 L6 6 L5 10 L4 6 L0 5 L4 4Z\" fill=\"#fff\"/>",5,18,12,0],["0 0 10 10","<path d=\"M5 0 L6 4 L10 5 L6 6 L5 10 L4 6 L0 5 L4 4Z\" fill=\"#ffd166\"/>",5,90,22,0]],"halloween":[["0 0 60 60","<path d=\"M4 52 L30 4 L56 52Z\" fill=\"#1a0b2a\"/><rect x=\"0\" y=\"48\" width=\"60\" height=\"9\" rx=\"4\" fill=\"#1a0b2a\"/><rect x=\"18\" y=\"38\" width=\"24\" height=\"7\" fill=\"#ff9a3c\"/>",19,72,-12,14],["0 -12 64 30","<path d=\"M30 -2 C26 -10 18 -12 8 -8 C14 -4 12 0 6 4 C14 2 18 4 22 10 C24 6 27 4 30 8 C33 4 36 6 38 10 C42 4 46 2 54 4 C48 0 46 -4 52 -8 C42 -12 34 -10 30 -2Z\" fill=\"#05020a\" stroke=\"rgba(200,160,255,.55)\"/>",12,9,2,0]],"valentines":[["0 0 30 28","<path d=\"M15 27 C3 17 0 11 0 7.5 C0 3 3.4 0 7.4 0 C10.6 0 13.4 1.8 15 4.6 C16.6 1.8 19.4 0 22.6 0 C26.6 0 30 3 30 7.5 C30 11 27 17 15 27Z\" fill=\"#ff7aa2\"/>",15,76,-9,14],["0 0 30 28","<path d=\"M15 27 C3 17 0 11 0 7.5 C0 3 3.4 0 7.4 0 C10.6 0 13.4 1.8 15 4.6 C16.6 1.8 19.4 0 22.6 0 C26.6 0 30 3 30 7.5 C30 11 27 17 15 27Z\" fill=\"#ff9db9\" opacity=\".75\"/>",7,12,4,0]],"matariki":[["0 0 80 48","<circle cx=\"8\" cy=\"12\" r=\"12.8\" fill=\"#c8d4ff\" opacity=\".2\"/><circle cx=\"8\" cy=\"12\" r=\"2.8\" fill=\"#fff\"/><circle cx=\"23\" cy=\"18\" r=\"10.2\" fill=\"#c8d4ff\" opacity=\".2\"/><circle cx=\"23\" cy=\"18\" r=\"2.2\" fill=\"#fff\"/><circle cx=\"38\" cy=\"10\" r=\"9.6\" fill=\"#c8d4ff\" opacity=\".2\"/><circle cx=\"38\" cy=\"10\" r=\"2.1\" fill=\"#fff\"/><circle cx=\"52\" cy=\"20\" r=\"10.9\" fill=\"#c8d4ff\" opacity=\".2\"/><circle cx=\"52\" cy=\"20\" r=\"2.4\" fill=\"#fff\"/><circle cx=\"66\" cy=\"14\" r=\"9.0\" fill=\"#c8d4ff\" opacity=\".2\"/><circle cx=\"66\" cy=\"14\" r=\"2.0\" fill=\"#fff\"/><circle cx=\"32\" cy=\"30\" r=\"9.6\" fill=\"#c8d4ff\" opacity=\".2\"/><circle cx=\"32\" cy=\"30\" r=\"2.1\" fill=\"#fff\"/><circle cx=\"48\" cy=\"34\" r=\"8.3\" fill=\"#c8d4ff\" opacity=\".2\"/><circle cx=\"48\" cy=\"34\" r=\"1.8\" fill=\"#fff\"/>",24,68,-12,0]],"easter":[["0 0 40 70","<ellipse cx=\"13\" cy=\"16\" rx=\"6\" ry=\"15\" fill=\"#fff\"/><ellipse cx=\"13\" cy=\"17\" rx=\"2.6\" ry=\"10\" fill=\"#ffb3d1\"/><ellipse cx=\"27\" cy=\"16\" rx=\"6\" ry=\"15\" fill=\"#fff\" transform=\"rotate(14 27 16)\"/><ellipse cx=\"27.5\" cy=\"17\" rx=\"2.6\" ry=\"10\" fill=\"#ffb3d1\" transform=\"rotate(14 27 16)\"/><ellipse cx=\"20\" cy=\"46\" rx=\"14\" ry=\"16\" fill=\"#fff\"/>",14,76,-24,12],["0 0 30 40","<ellipse cx=\"15\" cy=\"21\" rx=\"10\" ry=\"14\" fill=\"#b8e6ff\"/><path d=\"M5.4 18 L9 14 L12.5 18 L16 14 L19.5 18 L23 14 L24.6 18\" stroke=\"#fff\" stroke-width=\"2.2\" fill=\"none\"/>",6,12,6,0]],"diwali":[["0 0 60 50","<path d=\"M4 28 Q30 62 56 28 Q30 38 4 28Z\" fill=\"#b5651d\"/><path d=\"M30 4 Q40 18 30 28 Q20 18 30 4Z\" fill=\"#ffcf4a\"/><path d=\"M30 12 Q35 19 30 25 Q25 19 30 12Z\" fill=\"#ff7a1c\"/><circle cx=\"30\" cy=\"20\" r=\"18\" fill=\"#ffb347\" opacity=\".18\"/>",19,73,-12,0]],"cny":[["0 0 46 90","<path d=\"M23 0 V14\" stroke=\"#ffcc4d\" stroke-width=\"1.6\"/><rect x=\"14\" y=\"14\" width=\"18\" height=\"5\" rx=\"2\" fill=\"#ffcc4d\"/><ellipse cx=\"23\" cy=\"40\" rx=\"21\" ry=\"22\" fill=\"#d92b1f\"/><ellipse cx=\"23\" cy=\"40\" rx=\"11\" ry=\"22\" fill=\"#f04a3a\"/><rect x=\"14\" y=\"60\" width=\"18\" height=\"5\" rx=\"2\" fill=\"#ffcc4d\"/><path d=\"M23 65 V84 M19 65 V78 M27 65 V78\" stroke=\"#ffcc4d\" stroke-width=\"1.6\"/>",12,78,-26,0]]};
+function sznLogo(str) {
+  const a = SEASON && SZB[SEASON.id], m = /viewBox=["']([-\d.\s]+)["']/.exec(str), k = str.lastIndexOf("</svg>");
+  if (!a || !m || k < 0) return str;
+  const v = m[1].trim().split(/\s+/).map(Number), w = v[2], h = v[3];
+  return str.slice(0, k) + a.map(z => { const b = z[0].split(" ").map(Number), ww = z[2] * w / 100, hh = ww * b[3] / b[2], x = v[0] + z[3] * w / 100, y = v[1] + z[4] * h / 100;
+    return '<g class="szb" transform="rotate(' + z[5] + " " + (x + ww / 2).toFixed(1) + " " + (y + hh / 2).toFixed(1) + ')"><svg x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + ww.toFixed(1) + '" height="' + hh.toFixed(1) + '" viewBox="' + z[0] + '" overflow="visible">' + z[1] + "</svg></g>"; }).join("") + str.slice(k);
+}
+function sznBrand() {   // logos already on screen (start-up screen, sign-in): swap the touch
+  document.querySelectorAll(".bl svg,.lgb svg").forEach(sv => { sv.querySelectorAll(".szb").forEach(n => n.remove()); const t = sznLogo(sv.outerHTML), k = t.indexOf('<g class="szb"'); if (k > 0) sv.insertAdjacentHTML("beforeend", t.slice(k, t.lastIndexOf("</svg>"))); });
+}
+if (window.brandMark) { const bm = window.brandMark; window.brandMark = x => sznLogo(bm(x)); }
+setInterval(sznApply, 60000); sznApply();   // last, so every decoration above exists
 // ---------- start-up: runs last, once every module above has been defined ----------
 // This used to sit at the end of 38-energy.js. A page opened from a notification link (#active/doors, #batteries ...) draws the notifications pop-up
 // straight away, and that code reaches things defined in later files (galCfg in 40-garage-alert.js): "Cannot access 'galCfg' before initialization"
