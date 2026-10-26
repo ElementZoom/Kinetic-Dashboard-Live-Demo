@@ -242,6 +242,7 @@
       var E = { "calendar.alex": [ev(0, 9, 1, "Dentist"), ev(2, 18, 2, "Soccer training")], "calendar.sam": [ev(1, 10, 1, "Yoga"), ev(3, 13, 1, "Lunch with Mia")], "calendar.household": [ev(1, 7, 1, "Bins out"), ev(4, 9, 2, "Lawn mowing")], "calendar.public_holidays": [] };
       return J(E[cal] || []);
     }
+    if (/wikipedia\.org/.test(s)) return J(/Coastline/i.test(decodeURIComponent(s)) ? { query: { pages: { 1: { index: 1, title: "Coastline", extract: "Coastline is an invented indie pop duo from a made-up seaside town, formed in 2014. Their warm, hazy sound mixes soft synths with live drums, and their second album Evenings made them a staple of summer playlists.", fullurl: "https://en.wikipedia.org/wiki/Special:Search?search=Coastline", thumbnail: { source: new URL("artist.jpg", location.href).href } } } } } : {});   // artist info: an invented band, answered here
     if (/lrclib/.test(s)) return J({ id: 1, trackName: "Golden Hour", artistName: "Coastline", duration: 214, syncedLyrics:
       "[00:52.00] Porch light humming, the evening's on slow\n[00:57.00] Shadows get longer wherever we go\n[01:02.00] Turn the dial down, let the day fall away\n[01:07.00] Golden hour, stay a little, stay\n[01:12.00] Kettle's still warm and the windows are wide\n[01:17.00] Sun on the hills on the Waikato side\n[01:22.00] Nothing to fix and nowhere to be\n[01:27.00] Golden hour, just you and me\n[01:32.00] Ooh, golden hour\n[01:37.00] Ooh, stay a while" });
     if (/geonet|\/auth\//.test(s)) return J({ features: [] });
