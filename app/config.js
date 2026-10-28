@@ -145,6 +145,9 @@ window.DASH_CONFIG = {
   rainSkipMm: 2,
   // Irrigation zones. `zone` is the name your "start sprinkler" script expects (hyphens are sent as underscores).
   // `timer` = the Timer helper for that zone: its countdown shows on the Irrigation page and on the tap's tile in the notifications pop-up.
+  // Pollen (Google Pollen through Home Assistant's "pollenlevels" integration). Only risk is needed; alertFrom is the level where the
+  // strip beside the clock and the Alerts list start to show it ("low" ... "very high", false = never).
+  pollen: { risk: "sensor.demo_pollen_risk", top: "sensor.demo_pollen_top", plants: "sensor.demo_pollen_plants", grass: "sensor.demo_pollen_grass", alertFrom: "moderate" },
   irrigation: [
     { name: "Driveway", zone: "driveway", switch: "switch.demo_driveway_tap", flow: "sensor.demo_driveway_tap_flow", timer: "timer.demo_driveway_timer", moist: "sensor.average_driveway_soil_moisture", stemp: "sensor.average_driveway_soil_temperature" },
     { name: "Walkway", zone: "walkway", switch: "switch.demo_walkway_tap", flow: "sensor.demo_walkway_tap_flow", timer: "timer.demo_walkway_timer" },

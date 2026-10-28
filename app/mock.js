@@ -22,7 +22,8 @@
   function mk(id) {
     var p = id.split("."), d = p[0], o = p[1], st = "off", a = { friendly_name: nm(id) };
     if (d === "sensor") {
-      if (/temperature/.test(o)) { var k = key(o, TEMPS); st = String(/soil/.test(o) ? (o.indexOf("bky") > -1 ? 14.2 : 13.6) : (k ? TEMPS[k] : 20)); a.unit_of_measurement = "°C"; a.device_class = "temperature"; a.state_class = "measurement"; }
+      if (/pollen_risk/.test(o)) st = "Moderate"; else if (/pollen_top/.test(o)) st = "Grass"; else if (/pollen_plants/.test(o)) st = "Grasses"; else if (/pollen_grass/.test(o)) st = "2";   // pretend pollen sensors
+      else if (/temperature/.test(o)) { var k = key(o, TEMPS); st = String(/soil/.test(o) ? (o.indexOf("bky") > -1 ? 14.2 : 13.6) : (k ? TEMPS[k] : 20)); a.unit_of_measurement = "°C"; a.device_class = "temperature"; a.state_class = "measurement"; }
       else if (/humidity/.test(o)) { var h = key(o, HUMS); st = String(h ? HUMS[h] : 54); a.unit_of_measurement = "%"; a.device_class = "humidity"; }
       else if (/moisture/.test(o)) { st = o.indexOf("drw") > -1 ? (o.indexOf("_1_") > -1 ? "17" : "19") : (o.indexOf("_1_") > -1 ? "37" : "41"); a.unit_of_measurement = "%"; a.device_class = "moisture"; }
       else if (/flow/.test(o)) { st = "0"; a.unit_of_measurement = "L/min"; }
@@ -59,7 +60,7 @@
     else if (d === "input_text") { st = ""; a.max = 255; }
     else if (d === "person") { st = "home"; a.user_id = o === "alex" ? "u1" : "u2"; a.friendly_name = o === "alex" ? "Alex" : "Sam"; }
     else if (d === "zone") { st = "2"; Object.assign(a, { latitude: -37.787, longitude: 175.279, radius: 100, friendly_name: "Home" }); }
-    else if (d === "sun") { var hr = new Date().getHours(), up = hr >= 7 && hr < 19; st = up ? "above_horizon" : "below_horizon"; a.next_rising = new Date(Date.now() + 9 * 3600e3).toISOString(); a.next_setting = new Date(Date.now() + 5 * 3600e3).toISOString(); }
+    else if (d === "sun") { var hr = new Date().getHours(), up = hr >= 7 && hr < 19; st = up ? "above_horizon" : "below_horizon"; var nx = function (h, m) { var d = new Date(); d.setHours(h, m, 0, 0); if (d <= new Date()) d = new Date(+d + 864e5); return d.toISOString(); }; a.next_rising = nx(6, 15); a.next_setting = nx(19, 40); }
     Object.keys(a).forEach(function (k) { if (a[k] === undefined) delete a[k]; });
     return { entity_id: id, state: st, attributes: a, last_changed: now(), last_updated: now(), context: { id: "c" + Math.random().toString(36).slice(2) } };
   }
@@ -239,9 +240,10 @@
       if (/\/api\/calendars(\?|$)/.test(s)) return J(Object.keys(S).filter(function (i) { return i.indexOf("calendar.") === 0; }).map(function (i) { return { entity_id: i, name: nm(i) }; }));
       var cal = s.split("/api/calendars/")[1].split("?")[0], d0 = new Date(); d0.setHours(0, 0, 0, 0);
       var ev = function (dd, h, len, t) { var st = new Date(+d0 + dd * 864e5 + h * 3600e3); return { summary: t, start: { dateTime: st.toISOString() }, end: { dateTime: new Date(+st + len * 3600e3).toISOString() } }; };
-      var E = { "calendar.alex": [ev(0, 9, 1, "Dentist"), ev(2, 18, 2, "Soccer training")], "calendar.sam": [ev(1, 10, 1, "Yoga"), ev(3, 13, 1, "Lunch with Mia")], "calendar.household": [ev(1, 7, 1, "Bins out"), ev(4, 9, 2, "Lawn mowing")], "calendar.public_holidays": [] };
+      var E = { "calendar.alex": [ev(0, 9, 1, "Dentist"), ev(2, 18, 2, "Soccer training")], "calendar.sam": [ev(0, 6.75, 1.5, "Day Shift"), ev(0, 15.5, 0.5, "School pickup"), ev(1, 10, 1, "Yoga"), ev(3, 13, 1, "Lunch with Mia")], "calendar.household": [ev(1, 7, 1, "Bins out"), ev(4, 9, 2, "Lawn mowing")], "calendar.public_holidays": [] };
       return J(E[cal] || []);
     }
+    if (/\/api\/history\//.test(s)) return J([[{ state: "partlycloudy", attributes: { pressure: 1015.4 }, last_changed: new Date(Date.now() - 3 * 3600e3).toISOString() }]]);
     if (/wikipedia\.org/.test(s)) return J(/Coastline/i.test(decodeURIComponent(s)) ? { query: { pages: { 1: { index: 1, title: "Coastline", extract: "Coastline is an invented indie pop duo from a made-up seaside town, formed in 2014. Their warm, hazy sound mixes soft synths with live drums, and their second album Evenings made them a staple of summer playlists.", fullurl: "https://en.wikipedia.org/wiki/Special:Search?search=Coastline", thumbnail: { source: new URL("artist.jpg", location.href).href } } } } } : {});   // artist info: an invented band, answered here
     if (/lrclib/.test(s)) return J({ id: 1, trackName: "Golden Hour", artistName: "Coastline", duration: 214, syncedLyrics:
       "[00:52.00] Porch light humming, the evening's on slow\n[00:57.00] Shadows get longer wherever we go\n[01:02.00] Turn the dial down, let the day fall away\n[01:07.00] Golden hour, stay a little, stay\n[01:12.00] Kettle's still warm and the windows are wide\n[01:17.00] Sun on the hills on the Waikato side\n[01:22.00] Nothing to fix and nowhere to be\n[01:27.00] Golden hour, just you and me\n[01:32.00] Ooh, golden hour\n[01:37.00] Ooh, stay a while" });
