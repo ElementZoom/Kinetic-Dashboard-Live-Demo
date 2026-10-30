@@ -271,6 +271,8 @@
       push("sensor.demo_weather_warnings", on ? "1" : "0", { warnings: on ? "Heavy rain watch for tonight" : [] });
       push("weather.home", on ? "windy" : "partlycloudy", { wind_speed: on ? 64 : 12, wind_gust_speed: on ? 80 : 20 });   // Strong wind: the Weather card in Alerts
       garage(!!on); },
+    leaving: function (on) {   // heading out: the patio door is open and the alarm is off (off = locked up and armed)
+      push("binary_sensor.demo_patio_door_contact", on ? "on" : "off"); push("alarm_control_panel.demo_alarm", on ? "disarmed" : "armed_home"); },
     dryGarden: function () { ["sensor.demo_soil_drw_1_moisture", "sensor.demo_soil_drw_2_moisture"].forEach(function (id, i) { push(id, String(17 + i * 2)); }); }
   };
 })();

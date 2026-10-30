@@ -182,7 +182,7 @@ body.free .device.tablet{width:auto;max-width:none}
         <div class="sbar" aria-hidden="true"><span id="clk">9:41</span><span class="isl"></span><span class="ic"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="4.5" y="5" width="3" height="6" rx=".8"/><rect x="9" y="2.5" width="3" height="8.5" rx=".8"/><rect x="13.5" y="0" width="3" height="11" rx=".8"/></svg><svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 2.2c2.2 0 4.2.9 5.7 2.3l1-1.1A9.6 9.6 0 0 0 8 .7 9.6 9.6 0 0 0 1.300 3.400l1 1.100A8 8 0 0 1 8 2.200zm0 3.300c1.300 0 2.500.5 3.400 1.300l1-1.100A6.500 6.500 0 0 0 8 4a6.500 6.500 0 0 0-4.400 1.700l1 1.100C5.500 6 6.700 5.500 8 5.500zm0 3.200c.6 0 1.200.2 1.600.6L8 11 6.400 9.300c.4-.4 1-.6 1.600-.6z"/></svg><svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.500" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.500" y="4" width="2" height="4" rx="1" opacity=".5"/></svg></span></div>
         <div class="hbar" aria-hidden="true"><i></i></div>
         <div class="loading" id="loading">Loading the dashboard…</div>
-        <iframe id="dash" title="ElementZoom dashboard, live demo" src="app/dash.html?v=1.14.6#home"></iframe>
+        <iframe id="dash" title="ElementZoom dashboard, live demo" src="app/dash.html?v=1.14.6.2#home"></iframe>
       </div>
     </div>
   </section>
@@ -250,6 +250,21 @@ body.free .device.tablet{width:auto;max-width:none}
       action: ["Create some alerts", function () { W.DEMO.alerts(true); go("#home"); }],
       chain: [[function () { return armed[6] && !D.body.classList.contains("np-open") ? q("#hc") : null; }, "Open the alerts"]],
       check: function () { return armed[6] && D.body.classList.contains("np-open"); } },
+    { title: "Before you leave", text: "Heading out? Create a few loose ends, then open the Leaving card on Home. It lists the lights still on, open doors and the alarm. Switch the lights off and arm the alarm in two taps.",
+      ok: "It only offers what is actually left, so most days it is not there at all.",
+      action: ["Get ready to leave", function () { W.DEMO.leaving(true); go("#home"); }],
+      chain: [[function () { return armed[7] ? q("#lvbody [data-lv=off]") : null; }, "Turn the lights off"],
+              [function () { return armed[7] ? q("#lvbody [data-lv=arm]") : null; }, "Arm the alarm"],
+              [function () { return armed[7] && !D.body.classList.contains("lv-open") ? q("#lvc") : null; }, "Tap to see what's left"]],
+      when: function (e) { return armed[7] && e.kind === "service" && e.domain === "alarm_control_panel" && /arm_away/.test(e.service); } },
+    { title: "Check the weather", text: "Open Weather and tap More on the Now card for wind, pressure and UV, then try the forecast tabs.",
+      ok: "Warnings, rain alerts and pollen show up here too when your area has them.", go: "#weather",
+      chain: [[function () { return qd("[data-wnmore]"); }, "Tap for more"], [function () { return qd("[data-ft]:not(.on)"); }, "Try a forecast"], [function () { return q('a[href="#weather"]'); }, "Open Weather"], [function () { return q("#bmore"); }, "Tap More"]],
+      click: "[data-wnmore],[data-ft]" },
+    { title: "Choose how pages move", text: "On the Theme page, pick how the dashboard changes between pages: rise, slide, fade or none. Then tap another page to feel it.",
+      ok: "Your choice is remembered on that device.", go: "#theme",
+      chain: [[function () { return qd("button[data-pgfx]:not(.on)"); }, "Pick a transition"], [function () { return q('a[href="#theme"]'); }, "Open Theme"], [function () { return q("#bmore"); }, "Tap More"]],
+      click: "button[data-pgfx]" },
     { title: "Pick a look", text: "Same dashboard, four styles. Choose one on the Theme page and the whole app changes.",
       ok: "We match the look to your home when we install it.", go: "#theme",
       chain: [[function () { return qd("button.eb.sty:not(.sel)"); }, "Pick a style"], [function () { return q('a[href="#theme"]'); }, "Open Theme"], [function () { return q("#bmore"); }, "Tap More"]],
@@ -301,13 +316,13 @@ body.free .device.tablet{width:auto;max-width:none}
     HINTS.forEach(function (h) { var d = D.createElement("div"); d.id = "ez-h-" + h[0]; d.className = "ez-h"; D.body.appendChild(d); });
   }
   // Free play: pulsing dots on the best parts of the dashboard, each gone once its page has been opened
-  var HINTS = [["energy", "#energy"], ["theme", "#theme"], ["cameras", "#security"]];
+  var HINTS = [["energy", "#energy"], ["theme", "#theme"], ["cameras", "#security"], ["weather", "#weather"], ["hazards", "#hazards"], ["events", "#events"], ["leaving", "", "#lvc"], ["alerts", "", "#hc"]];
   function hints() {
     var cur = (W.location.hash || "").split("/")[0];
     HINTS.forEach(function (h) {
       var d = D.getElementById("ez-h-" + h[0]); if (!d) return;
-      if (cur === h[1]) gone[h[0]] = 1;
-      var a = gone[h[0]] ? null : q('a[href="' + h[1] + '"]');
+      if (h[1] && cur === h[1]) gone[h[0]] = 1;
+      var a = gone[h[0]] ? null : h[2] ? q(h[2]) : q('a[href="' + h[1] + '"]');
       if (!a) { d.style.display = "none"; return; }
       var r = a.getBoundingClientRect(); d.style.display = "block"; d.style.left = Math.round(r.right - 16) + "px"; d.style.top = Math.round(r.top + 4) + "px";
     });
@@ -358,9 +373,9 @@ body.free .device.tablet{width:auto;max-width:none}
         W.DEMO.on(function (e) { if (armed[4] === true && e.kind === "service" && hit(e, "switch.demo_garage_opener")) armed[4] = "closing"; STEPS.forEach(function (s, i) { if (s.when && s.when(e)) complete(i); }); });
         $("loading").style.opacity = 0; }
     }, 100);
-    D.addEventListener("click", function (e) { var an = e.target.closest && e.target.closest("a[href]"); if (an) HINTS.forEach(function (h) { if (an.getAttribute("href") === h[1]) gone[h[0]] = 1; }); STEPS.forEach(function (s, i) { if (s.click && e.target.closest && e.target.closest(s.click)) setTimeout(function () { complete(i); }, 300); }); }, true);
+    D.addEventListener("click", function (e) { var an = e.target.closest && e.target.closest("a[href]"); if (an) HINTS.forEach(function (h) { if (h[1] && an.getAttribute("href") === h[1]) gone[h[0]] = 1; }); HINTS.forEach(function (h) { if (h[2] && e.target.closest && e.target.closest(h[2])) gone[h[0]] = 1; }); STEPS.forEach(function (s, i) { if (s.click && e.target.closest && e.target.closest(s.click)) setTimeout(function () { complete(i); }, 300); }); }, true);
   });
-  $("reset").onclick = function () { try { W && W.localStorage.clear(); } catch (e) {} done = {}; armed = {}; gone = {}; active = 0; seasonNow = ""; paintChips(); $("loading").style.opacity = 1; D = W = null; frame.src = "app/dash.html?v=1.14.6#home"; render(); };
+  $("reset").onclick = function () { try { W && W.localStorage.clear(); } catch (e) {} done = {}; armed = {}; gone = {}; active = 0; seasonNow = ""; paintChips(); $("loading").style.opacity = 1; D = W = null; frame.src = "app/dash.html?v=1.14.6.2#home"; render(); };
 
   // ---------- sizing the device ----------
   var dock = $("dock"), guide = document.querySelector(".guide"), stage = document.querySelector(".stage"), foot = document.querySelector(".foot");
