@@ -113,7 +113,7 @@
       out[id] = L; }); return out; }
   function history(m) { var s = Date.parse(m.start_time), e = Date.parse(m.end_time || now()), out = {};
     (m.entity_ids || []).forEach(function (id) { var base = parseFloat((S[id] || {}).state) || 30, L = [];
-      for (var t = s; t < e; t += 1800e3) L.push({ s: String(Math.round((base + 6 * Math.sin((t - s) / 864e5 * Math.PI * 2) - 3 * (t - s) / (e - s)) * 10) / 10), lu: t / 1000 });
+      for (var t = s; t < e; t += 1800e3) { var v = Math.round((base + 6 * Math.sin((t - s) / 864e5 * Math.PI * 2) - 3 * (t - s) / (e - s)) * 10) / 10, pt = { s: String(v), lu: t / 1000 }; if (/^climate\./.test(id)) { pt.s = "heat"; pt.a = { current_temperature: Math.round((19 + 2 * Math.sin((t - s) / 864e5 * Math.PI * 2 + (id.length % 5))) * 10) / 10 }; } L.push(pt); }
       out[id] = L; }); return out; }
 
   // ---------- state changes ----------
