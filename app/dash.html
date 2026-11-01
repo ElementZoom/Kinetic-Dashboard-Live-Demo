@@ -1442,8 +1442,10 @@ body.ly-open .mlay.hasly .ly{font-size:20px;padding:8px 10px}body.ly-open .mlay.
 .npx{display:flex;flex-direction:column;gap:12px;margin-top:14px}
 .npa{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}.npa img,.npa .ph{width:min(170px,58%);aspect-ratio:1;border-radius:16px;object-fit:cover;background:rgba(var(--w),.08)}.npa b{font-size:18px;font-weight:500;display:block}.npa div,.npa small{color:var(--mut);font-size:14px}
 .npp .mpb{height:5px}.npts{display:flex;justify-content:space-between;font:11px var(--mono);color:var(--mut);margin-top:4px}
-.npx .mpt .rnd{width:46px;height:46px}.npx .mv span{width:90px}
-.npsp{display:flex;flex-wrap:wrap;gap:6px}.npsp .chip{cursor:default;display:inline-flex;align-items:center;gap:6px}.npsp .chip svg{width:16px;height:16px;fill:currentColor}
+.npx .mpt .rnd{width:46px;height:46px}
+.nsl{display:flex;flex-direction:column;gap:2px;margin-top:6px;border-top:1px solid var(--line);padding-top:8px}
+.nsr{display:flex;align-items:center;gap:12px;padding:8px 0}.nsr:not(.on) b{color:var(--mut);font-weight:500}.nsm{flex:1;min-width:0}.nsm b{display:block;font-size:15px;font-weight:600}.nsm small{color:var(--mut);font-size:12px}
+.nsv{display:flex;align-items:center;gap:8px;margin-top:4px}.nsv input{flex:1;min-width:0;accent-color:var(--mint)}.nsv em{font:12px var(--mono);font-style:normal;min-width:24px;text-align:right;color:var(--mut)}.nsv .rnd.s{width:32px;height:32px;background:none;border:0;box-shadow:none}
 #npmini,#npsheet{display:none}
 @media(max-width:760px){
 body.np-on:not(.np-home):not(.np-media) #npmini{display:block;position:fixed;left:10px;right:10px;bottom:var(--dock);z-index:44;padding:9px 12px;border-radius:18px;background:rgba(var(--w),.08);background-color:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.08);border:1px solid var(--line)}
@@ -1479,6 +1481,7 @@ html[data-style] #npmini{background-color:var(--bg)}
 
 #npbody .lbl .npq{margin-left:auto;margin-right:10px;flex:none}#npbody .lbl .npq.on{background:var(--mint);color:var(--bg)}#npbody .lbl .npq.on svg{fill:currentColor}
 #npbody .lbl .npq.off{opacity:.35}
+.nst{flex:1;min-width:0;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* phone, Theme + Scenes: closed = the same card as the floating Now Playing bar; open = the same bottom sheet as the Now Playing player */
 .schx{display:none}
 @keyframes shUp{from{transform:translateY(102%)}to{transform:none}}@keyframes shDn{from{transform:none}to{transform:translateY(102%)}}
@@ -2231,8 +2234,8 @@ html[data-style=minimal] .cbar i{box-shadow:0 1px 3px rgba(0,0,0,.4)}
 #grid>.card.main2 .czg{flex:1;display:flex;flex-direction:column;min-height:96px;max-height:460px}#grid>.card.main2 .czg svg{flex:1;height:auto;min-height:84px}
 .czm{flex-direction:column;align-items:flex-start;gap:6px}
 .czs{align-items:flex-start;text-align:left;padding-bottom:0}.czt,.czh .cout,#grid>.card.main2 .fanb{justify-content:flex-start}
-#grid>.card.rm{grid-column:2;display:grid;grid-template-columns:minmax(100px,140px) minmax(90px,1fr) auto auto 14px;grid-template-areas:"nm bar tp rw cv" "md bar tp rw cv" "ch ch ch ch ch" "fn fn fn fn fn" "tr tr tr tr tr";align-items:center;column-gap:18px;row-gap:2px;padding:14px 20px;border-radius:18px}
-#grid>.card.rm .lbl.il{grid-area:nm}#grid>.card.rm .md{grid-area:md}#grid>.card.rm .cbar{grid-area:bar}
+#grid>.card.rm{grid-column:2;display:grid;grid-template-columns:minmax(100px,140px) minmax(90px,1fr) auto auto 14px;grid-template-areas:"nm bar tp rw cv" "md bar tp rw cv" "ch ch ch ch ch" "fn fn fn fn fn" "tr tr tr tr tr";align-items:center;column-gap:18px;row-gap:0;padding:17px 20px;border-radius:18px}   /* row-gap 0: the empty rows under the room (chips, fan, trigger) used to add 6px of gap at the bottom and pushed everything above the middle */
+#grid>.card.rm .lbl.il{grid-area:nm}#grid>.card.rm .md{grid-area:md;margin-top:2px}#grid>.card.rm .cbar{grid-area:bar}
 #grid>.card.rm .temp{grid-area:tp;font-size:32px;text-align:right}#grid>.card.rm .temp small{font-size:13px}
 #grid>.card.rm .row{grid-area:rw;gap:6px}#grid>.card.rm .rnd{width:38px;height:38px;font-size:18px}
 #grid>.card.rm .tg{display:none}
@@ -2281,6 +2284,9 @@ body.cl-sheet #clbk{display:block;animation:thIn .2s ease}
 #grid>.card.main2 .czg{flex:none;min-height:0;max-height:none}#grid>.card.main2 .czg svg{flex:none;height:120px;min-height:0}
 #grid>.card.rm{grid-column:1;grid-template-columns:minmax(120px,178px) minmax(90px,1fr) 90px auto 14px;column-gap:14px}   /* room names get room, so "Master bedroom" stays on one line */
 }
+#grid>.rmph{visibility:hidden;pointer-events:none;flex:none}
+
+body.cl-sheet.cl-out #clbk{animation:thOut .24s ease both}@keyframes thOut{from{opacity:1}to{opacity:0}}
 /* Events: view switch, tablet week + list, phone week + month */
 .evvw{gap:0;padding:4px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--w),.05)}
 .evvw .eb{padding:9px 16px;border:0;background:transparent;border-radius:999px;font-size:12px}
@@ -2575,14 +2581,14 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=1.14.6.32"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=1.14.6.33"></script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "1.14.6.32";   // the one place to change the version
+window.DASH_VER = "1.14.6.33";   // the one place to change the version
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -2726,7 +2732,7 @@ applyStyle();
 // page transition: how a page appears when you move between tabs (Theme page; per device, config pageTransition sets the default)
 const PGFXS = [["rise", "RISE", "Fade, then the cards rise in (default)"], ["slide", "SLIDE", "Pages slide in the direction you moved"], ["fade", "FADE", "A plain, quick fade"], ["zoom", "ZOOM", "The page grows in from slightly smaller"], ["flip", "FLIP", "The page turns in like a card, in the direction you moved"], ["blur", "BLUR", "The page comes into focus"], ["tilt", "TILT", "The page tips up from below"], ["off", "OFF", "No animation between pages"]];
 let PGFX = "rise"; try { PGFX = localStorage.getItem("dashPgFx") || CONFIG.pageTransition || "rise"; } catch (_) {}
-const PGSPS = [["fast", "FAST", .6], ["normal", "NORMAL", 1], ["slow", "SLOW", 1.6]];   // how long the page transition takes: a multiplier on every duration (--pgs)
+const PGSPS = [["fast", "FAST", .8], ["normal", "NORMAL", 1], ["slow", "SLOW", 1.6]];   // how long the page transition takes: a multiplier on every duration (--pgs). Normal is about Apple's own page push (~0.35 s), Fast a little quicker, Slow clearly slower
 let PGSP = "normal"; try { PGSP = localStorage.getItem("dashPgSp") || CONFIG.pageTransitionSpeed || "normal"; } catch (_) {}
 const pgScale = () => (PGSPS.filter(x => x[0] === PGSP)[0] || PGSPS[1])[2];
 const applyPgFx = () => { document.documentElement.setAttribute("data-pgfx", PGFXS.some(x => x[0] === PGFX) ? PGFX : "rise"); document.documentElement.style.setProperty("--pgs", pgScale()); };
@@ -3637,14 +3643,26 @@ let gI = 0;
 $("#gdots").innerHTML = CONFIG.rooms.map((r, i) => '<i data-i="' + i + '" title="' + esc(r.name || "") + '"' + (i ? "" : ' class="on"') + '></i>').join("");
 $("#grid").addEventListener("scroll", () => { const g = $("#grid"); if (!g.clientWidth) return; gI = Math.round(g.scrollLeft / (g.clientWidth + 14)); $$("#gdots i").forEach((d, k) => d.classList.toggle("on", k === gI)); });
 // a room opens on tap: inline under its row on a tablet, as a bottom sheet on a phone (closed by x, the dimmed background, Escape or swiping down)
-function clClose() { $$("#grid .card[data-open]").forEach(c => { delete c.dataset.open; }); clSync(); }
-function clSync() { document.body.classList.toggle("cl-sheet", isMobile() && !!$("#grid .card[data-open]")); }
+function clClose(now) {   // now === true: no animation (another room is opening, or the page is changing)
+  const L = $$("#grid .card[data-open]"); if (!L.length) { clSync(); return; }
+  if (now === true || !L[0].animate || matchMedia("(prefers-reduced-motion:reduce)").matches) { L.forEach(c => { delete c.dataset.open; }); clSync(); return; }
+  if (isMobile()) {   // the sheet slides down and the dimmed background fades out, then the room is put back
+    if (L[0]._cl) return; L.forEach(c => { c._cl = 1; c.style.animation = "shDn .24s cubic-bezier(.4,0,.8,.2) both"; }); document.body.classList.add("cl-out");
+    setTimeout(() => { L.forEach(c => { delete c.dataset.open; c.style.animation = ""; delete c._cl; }); document.body.classList.remove("cl-out"); clSync(); }, 240); return; }
+  L.forEach(c => clFlip(c, () => { delete c.dataset.open; })); clSync();   // tablet: the row shrinks back
+}
+function clFlip(c, change) {   // the room grows / shrinks inline: its height is animated from before to after the change
+  const h0 = c.offsetHeight; change(); const h1 = c.offsetHeight; if (!c.animate || Math.abs(h1 - h0) < 4 || matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+  const ov = c.style.overflow; c.style.overflow = "hidden"; const an = c.animate([{ height: h0 + "px" }, { height: h1 + "px" }], { duration: 300, easing: "cubic-bezier(.2,.8,.2,1)" }); an.onfinish = an.oncancel = () => { c.style.overflow = ov; };
+}
+function clSync() { const o = isMobile() && !!$("#grid .card[data-open]"); document.body.classList.toggle("cl-sheet", o); if (!o) $$("#grid .rmph").forEach(x => x.remove()); }
 $("#grid").addEventListener("click", e => {
   const c = e.target.closest(".card.rm"); if (!c) return;
   if (e.target.closest(".shx")) { clClose(); return; }
   if (c.dataset.open) { if (e.target.closest(".lbl.il") && !isMobile()) clClose(); return; }
   if (e.target.closest("button,.cbar,.ctr,.chips,.fanb,input")) return;
-  clClose(); c.style.setProperty("--cy", Math.round(c.offsetHeight / 2) + "px"); c.dataset.open = "1"; clSync();   // --cy: the middle of the closed row, so a tablet's chevron stays where it was when the room opens
+  clClose(true); if (isMobile()) { const ph = document.createElement("div"); ph.className = "rmph"; ph.style.height = c.offsetHeight + "px"; c.before(ph); }   // the sheet leaves the list, so a spacer of the same height keeps the other rooms where they are
+  c.style.setProperty("--cy", Math.round(c.offsetHeight / 2) + "px"); if (isMobile()) { c.dataset.open = "1"; clSync(); } else { clFlip(c, () => { c.dataset.open = "1"; }); clSync(); }   // --cy: the middle of the closed row, so a tablet's chevron stays where it was when the room opens
 });
 $("#clbk").onclick = clClose; document.addEventListener("keydown", e => { if (e.key === "Escape" && $("#grid .card[data-open]")) clClose(); }); addEventListener("resize", clSync);
 { let y0 = 0; $("#grid").addEventListener("touchstart", e => { y0 = e.touches[0].clientY; }, { passive: true });   // swipe a sheet down to close it
@@ -6241,11 +6259,12 @@ function npPlay(g, big) {
   const bt = (m, i, on) => '<button class="rnd' + (on ? " on" : "") + '" data-mp="' + m + '" data-e="' + g.ctl + '">' + i + '</button>';
   const prog = '<div class="mpb" ' + mpData(g.ctl) + '><i></i></div>';
   if (!big) return { art: art, title: title, sub: (a.media_artist ? esc(a.media_artist) + " · " : "") + esc(spk), pp: bt("pp", mdi(play ? "pause" : "play")), prog: mpPos(g.ctl).dur > 0 ? prog : "" };   // no bar (and no empty strip under the row) for a stream without a length, so the row sits in the middle of the card
-  const vols = g.mem.map(x => { const v = states[x] ? states[x].attributes : {}; return '<div class="mv"><span>' + esc(fname(x)) + '</span><input type="range" min="0" max="100" data-vol="' + x + '" value="' + Math.round((v.volume_level || 0) * 100) + '"><button class="rnd s" data-mp="mute" data-e="' + x + '">' + mdi(v.is_volume_muted ? "volume-off" : "volume-high") + '</button></div>'; }).join("");
+  const rows = g.mem.map(x => { const v = (states[x] || {}).attributes || {}, vl = Math.round((v.volume_level || 0) * 100);
+    return '<div class="nsr"><div class="nsm"><b>' + esc(fname(x)) + '</b><div class="nsv"><button class="rnd s" data-mp="mute" data-e="' + x + '" aria-label="Mute or unmute ' + esc(fname(x)) + '">' + mdi(v.is_volume_muted ? "volume-off" : "volume-high") + '</button><input type="range" min="0" max="100" data-vol="' + x + '" value="' + vl + '"><em>' + vl + '</em></div></div></div>'; }).join("");   // one row per speaker: mute / unmute and its own volume
   return '<div class="npx"><div class="npa"><span data-np="media" title="Open Media" style="display:contents;cursor:pointer">' + art + '</span><div><b>' + esc(title) + '</b><div>' + aiLink(a.media_artist) + '</div><small>' + esc(a.media_album_name || "") + '</small></div></div>' +
     '<div class="npp">' + prog + '<div class="npts"><span>0:00</span><span>0:00</span></div></div>' +
     '<div class="mpt">' + bt("shuffle", mdi("shuffle-variant"), a.shuffle) + bt("prev", mdi("skip-previous")) + bt("pp", mdi(play ? "pause" : "play")) + bt("next", mdi("skip-next")) + bt("repeat", mdi(a.repeat === "one" ? "repeat-once" : a.repeat === "all" ? "repeat" : "repeat-off"), a.repeat && a.repeat !== "off") + '</div>' +
-    vols + '<div class="chips npsp">' + g.mem.map(x => '<span class="chip on">' + mdi("speaker") + esc(fname(x)) + '</span>').join("") + '</div></div>';
+    '<div class="nsl">' + rows + '</div></div>';
 }
 function npRender() {
   if (!CONFIG.media || !CONFIG.media.length) return;
@@ -6304,7 +6323,7 @@ function npRender() {
 let npbT = 0, npq = 0; const queueNp = () => { if (!npq) npq = requestAnimationFrame(() => { npq = 0; try { npRender(); } catch (e) {} }); };
 function npClick(e) {
   const n = e.target.closest("[data-np]"), b = e.target.closest("[data-mp]");
-  if (b) { e.stopPropagation(); mpDo(b.dataset.mp, b.dataset.e); return; }
+  if (b) { e.stopPropagation(); mpDo(b.dataset.mp, b.dataset.e, b.dataset.c); return; }
   const dg = e.target.closest("[data-npg]"); if (dg) { const sl = $(dg.closest("#npbody") ? "#npbody .nps" : "#npw .nps"); if (sl) sl.scrollTo({ left: +dg.dataset.npg * npPw(sl), behavior: "smooth" }); return; }
   if (!n) return;
   const k = n.dataset.np;
@@ -6326,7 +6345,9 @@ $("#hnp").onchange = e => {   // header slider = group volume: scale every speak
   const ids = t.dataset.hvol.split(","), cur = ids.map(x => ((states[x] || {}).attributes || {}).volume_level || 0), av = cur.reduce((x, y) => x + y, 0) / cur.length, nv = +t.value / 100;
   ids.forEach((x, i) => call("media_player", "volume_set", x, { volume_level: Math.max(0, Math.min(1, av > 0 ? cur[i] * nv / av : nv)) }));
 };
-$("#npw").onchange = $("#npsheet").onchange = e => { const t = e.target; if (t.dataset.vol) call("media_player", "volume_set", t.dataset.vol, { volume_level: +t.value / 100 }); };
+$("#npw").oninput = $("#npsheet").oninput = e => { const t = e.target; if (t.dataset && t.dataset.vol && t.nextElementSibling && t.nextElementSibling.tagName === "EM") t.nextElementSibling.textContent = t.value; };
+$("#npw").onchange = $("#npsheet").onchange = e => { const t = e.target;
+  if (t.dataset.vol) call("media_player", "volume_set", t.dataset.vol, { volume_level: +t.value / 100 }); };
 
 // ---------- Artist info (Media page "Artist" tab · Now Playing sheet "Artist" page) · Wikipedia, fetched by this browser ----------
 // Needs no key. Home Assistant only knows the artist's name, so the bio and photo come from Wikipedia's public API (the name is sent there, the same way lyrics are looked up on lrclib.net).
@@ -6565,7 +6586,7 @@ function mpDo(m, id) {
   else return false;
   return true;
 }
-$("#media").onclick = e => { const lo = e.target.closest('[data-ly="open"]'); if (lo) { lyOpen(lo.dataset.e); return; } const b = e.target.closest("[data-mp]"); if (b) mpDo(b.dataset.mp, b.dataset.e); };
+$("#media").onclick = e => { const lo = e.target.closest('[data-ly="open"]'); if (lo) { lyOpen(lo.dataset.e); return; } const b = e.target.closest("[data-mp]"); if (b) mpDo(b.dataset.mp, b.dataset.e, b.dataset.c); };
 $("#media").onchange = e => { const t = e.target; if (t.dataset.vol) call("media_player", "volume_set", t.dataset.vol, { volume_level: +t.value / 100 }); };
 
 // ---------- weather animation (greeting card) ----------
@@ -7123,7 +7144,7 @@ function enDraw() {
       const ks = Object.keys(CS.cols).map(Number), cm = Math.max.apply(null, bk.map(b => (CS.cols[b] || [0]).reduce((a, c) => a + c, 0)).concat([0.001])), W2 = mob ? 420 : 360, H2 = mob ? 150 : 140, L2 = mob ? 50 : 42, B2 = mob ? 28 : 26, bw2 = (W2 - L2) / bk.length; let g2 = '';
       for (let i = 0; i <= 2; i++) { const y = 8 + (H2 - B2 - 8) * (1 - i / 2); g2 += '<line x1="' + L2 + '" x2="' + W2 + '" y1="' + y + '" y2="' + y + '" stroke="currentColor" opacity=".12"/><text x="' + (L2 - 6) + '" y="' + (y + 4) + '" text-anchor="end" font-size="' + FS + '" fill="currentColor" opacity=".6">' + fm(cm * i / 2) + '</text>'; }
       bk.forEach((b, i) => { let y = H2 - B2; (CS.cols[b] || []).forEach((v, j) => { const hh = v / cm * (H2 - B2 - 8); if (hh > 0.3) g2 += '<rect x="' + (L2 + i * bw2 + bw2 * 0.12).toFixed(1) + '" y="' + (y - hh).toFixed(1) + '" width="' + (bw2 * 0.76).toFixed(1) + '" height="' + hh.toFixed(1) + '" rx="2" fill="' + PC[j % 4] + '"><title>' + esc(CS.per[j].p.name || "") + ' ' + fm(v) + ' kWh</title></rect>'; y -= hh; }); const d = new Date(b); g2 += '<text x="' + (L2 + i * bw2 + bw2 / 2).toFixed(1) + '" y="' + (H2 - 7) + '" text-anchor="middle" font-size="' + FS + '" fill="currentColor" opacity=".6">' + (en.r === "day" ? (i % 3 === 0 ? d.getHours() : "") : en.r === "week" ? d.toLocaleDateString([], { weekday: "short" }) : en.r === "month" ? (i % 2 === 0 ? d.getDate() : "") : d.toLocaleDateString([], { month: "short" })) + '</text>'; });
-      h += '<div class="lbl" style="margin-top:14px">Usage · kWh</div><svg' + chartReadout("en-cost", bk.map((b, i) => { const cs = CS.cols[b] || [], tot = cs.reduce((a, c) => a + c, 0); return { x: L2 + i * bw2 + bw2 / 2, w: bw2, t: enWhen(sp.per, b), r: cs.map((v, j) => [CS.per[j].p.name || "Usage", fm(v) + " kWh", PC[j % 4]]).concat(cs.length > 1 ? [["Total", fm(tot) + " kWh"]] : []) }; })) + ' viewBox="0 0 ' + W2 + ' ' + H2 + '" style="width:100%;margin-top:8px;display:block">' + g2 + '</svg></div>';
+      h += '<div class="lbl" style="margin-top:14px">Usage · kWh</div><svg' + chartReadout("en-cost", bk.map((b, i) => { const cs = CS.cols[b] || [], tot = cs.reduce((a, c) => a + c, 0); return { x: L2 + i * bw2 + bw2 / 2, w: bw2, t: enWhen(sp.per, b), r: cs.map((v, j) => [CS.per[j].p.name || "Usage", fm(v) + " kWh", PC[j % 4]]).concat(cs.length > 1 ? [["Total", fm(tot) + " kWh"]] : []) }; }), { inside: 1 }) + ' viewBox="0 0 ' + W2 + ' ' + H2 + '" style="width:100%;margin-top:8px;display:block">' + g2 + '</svg></div>';
     } else h += '<div class="pn lbl">' + (en.grid === undefined || en.gridCost === undefined ? "Calculating cost…" : "Electricity cost unavailable: no usage data came back for " + (en.gridSrc === "devices" ? "your tracked devices" : "the grid meter") + " in this period.") + '</div>';
     h += hgas;
 
@@ -7210,7 +7231,7 @@ function route() {
   stopCams(); if (p === "home") { applyLayout(); queueHome(); schLoad(); schDraw(); }
   if (p === "home" || (p === "security" && h[1] !== "detections") || p === "view") startCams();
   if (p === "events") { if (!evWasOn) evJump = true; loadEvents(); } evWasOn = p === "events";
-  if (p === "climate") hzLoad(); else if (typeof clClose === "function") clClose();
+  if (p === "climate") hzLoad(); else if (typeof clClose === "function") clClose(true);
   if (onRooms) {
     if (h[1]) { const was = curRoom && curRoom.id === h[1]; if (h[2] === "doors") SECP.want = { page: "roomspg", q: '[data-sec="doors"]' }; drawRoom(h[1]); if (!was) txGo($("#rv"), 1, true);
       if (h[2] === "doors") [120, 700, 1800].forEach(ms => setTimeout(() => { if (curRoom && curRoom.id === h[1] && location.hash.split("/")[2] === "doors") { const t = $('#rv [data-sec="doors"]'); if (t) { t.scrollIntoView({ block: "center", behavior: ms > 120 ? "auto" : "smooth" }); if (ms === 120) { t.classList.add("flash"); setTimeout(() => t.classList.remove("flash"), 1800); } } } }, ms)); }   // #rooms/<room>/doors scrolls to that room's Doors & windows panel   // list -> room slides in from the right
@@ -7344,8 +7365,13 @@ function crShow(svg, q, ev) {
   const t = crTip(); t.innerHTML = '<div class="crh">' + esc(q.t || "") + '</div>' + (q.r || []).map(r => '<div class="crr">' + (r[2] ? '<i style="background:' + r[2] + '"></i>' : "<i></i>") + '<span>' + esc(r[0]) + '</span><b>' + esc(r[1]) + '</b></div>').join("");
   t.hidden = false;
   const m = svg.getScreenCTM(), p = svg.createSVGPoint(); p.x = q.x; p.y = 0; const ax = m ? p.matrixTransform(m).x : (ev ? ev.clientX : 0), rc = svg.getBoundingClientRect(), tw = t.offsetWidth, th = t.offsetHeight;
+  if (d.o.inside) {   // a chart with a legend / figures right above it: the card stays on the chart, beside the pointed-at bar, so it never covers them
+    const right = ax + 14 + tw <= innerWidth - 8; t.style.left = Math.max(8, right ? ax + 14 : ax - tw - 14) + "px";
+    t.style.top = Math.max(8, Math.min(innerHeight - th - 8, rc.top + 6)) + "px";
+  } else {
   t.style.left = Math.max(8, Math.min(innerWidth - tw - 8, ax - tw / 2)) + "px";
   t.style.top = (rc.top - th - 8 < 8 ? Math.min(innerHeight - th - 8, rc.top + 8) : rc.top - th - 8) + "px";   // above the chart, or on it when there is no room above
+  }
   crOn = { n: svg.dataset.cr, x: q.x }; clearInterval(crTm);
   crTm = setInterval(() => {   // the chart was redrawn (Home Assistant sent news): show the same place on the new one, or close
     if (!crOn) return crHide(); const cur = $('svg[data-cr="' + crOn.n + '"]'); if (cur && cur.isConnected && $(".crg", cur)) return;
