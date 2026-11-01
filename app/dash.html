@@ -229,7 +229,7 @@ html.camlive .cam[data-det]::after,html.camlive .snap[data-det]::after{animation
 .sc span{position:absolute;left:8px;bottom:6px;font:600 11px var(--mono);color:#fff;text-shadow:0 1px 3px #000}
 @media(max-width:1100px){.wcols{grid-template-columns:1fr}.scl{grid-template-columns:1fr}.sct{position:static;max-height:none;order:-1}}
 
-/* Header: the alarm is a coloured cap on the left end of the card, glowing softly (same colours as the Security page: grey disarmed, green armed, yellow arming, red and blinking pending / triggered). #al stays as the invisible tap area on that edge and opens Security. */
+/* Header: the alarm is a coloured cap on the left end of the card, glowing softly (same colours as the Security page: grey disarmed, green armed, yellow arming, red and blinking pending / triggered). The pill / round button (#hal on phones, #al on tablets) and the banner (#alb) are in 41-alarm-header.css. */
 header{--alc:rgba(var(--w),.2)}
 header::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;box-shadow:inset 5px 0 0 0 var(--alc);transition:box-shadow .4s}
 header[data-al=on]{--alc:var(--mint)}header[data-al=wn]{--alc:#ffe599}header[data-al=al]{--alc:var(--heat)}
@@ -239,8 +239,6 @@ header[data-al=wn]::after{animation-duration:2.2s}
 header[data-al=al]::after{animation:bl 1s infinite}
 html[data-mode=light] header[data-al=wn]{--alc:#d9a100}html[data-mode=light] header[data-al=al]{--alc:#c42a1f}
 .hr>#hc{position:relative;z-index:2}
-#al,#al.al{position:absolute;left:0;top:0;bottom:0;width:26px;right:auto;height:auto;padding:0;margin:0;border:0;border-radius:0;background:transparent;opacity:0;animation:none;cursor:pointer;z-index:2}
-#al svg,#al .at{display:none!important}
 @media(prefers-reduced-motion:reduce){header[data-al=on]::after,header[data-al=wn]::after,header[data-al=al]::after{animation:none}}
 /* Stop scenes: no state label; red outline always, and it glows while a scene is running so it reads as "stop this" */
 #scenes .sr.stp{--sx:229,72,77;border:1px dashed rgba(var(--sx),.5);background:rgba(var(--sx),.06)}
@@ -890,6 +888,11 @@ html:not(#x) #alp .chip.ag[data-ag=al]{animation:agPulse .55s ease-in-out infini
 html:not(#x) .tl.wt,html:not(#x) .tl.wt.on{background:rgba(var(--w),.07);border-color:rgba(54,169,226,.6);box-shadow:none}
 html:not(#x)[data-mode=light] .tl.wt,html:not(#x)[data-mode=light] .tl.wt.on{background:#fff}
 .tl .tmr{margin-top:2px}.tl .zb{margin-top:4px;height:8px}
+/* a tablet held upright: the page is only about 600px wide, so the rain and soil cards and each zone take a full row instead of sharing one */
+@media(min-width:761px) and (orientation:portrait){
+.irc{grid-template-columns:minmax(0,1fr)}
+#irrigation .zg{grid-template-columns:minmax(0,1fr)}
+}
 /* landscape button + rotated fallback */
 .fsb{display:none;position:absolute;right:68px;top:46px;z-index:3;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(0,0,0,.55);cursor:pointer;padding:0}.fsb svg{width:20px;height:20px;fill:#fff;margin:auto;display:block}
 @media(max-width:760px){.cam.fs .fsb{display:block}.cam.fs .px{right:120px}.cam.vf .cx{display:block}.vwx{display:none}}
@@ -2085,6 +2088,13 @@ html[data-mode=light] .wxa{background:rgba(0,0,0,.04)}html[data-mode=light] .wxa
 .wch.wnd{color:var(--wc);font-weight:500;padding:2px 11px;border-radius:99px;border:1px solid color-mix(in srgb,var(--wc) 45%,transparent);background:color-mix(in srgb,var(--wc) 15%,transparent)}
 .wch.wnd.wt3{animation:bl 2s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){.wch.wnd.wt3{animation:none}}
+/* several alerts in one card: a heading, a line each, and a switch for the full cards */
+.wxa-h{display:flex;align-items:center;gap:10px;padding:13px 18px;background:rgba(var(--w),.05);border-bottom:1px solid var(--line)}.wxa-h>svg{width:22px;height:22px;fill:var(--wc);flex:none}.wxa-h b{font-weight:600}
+.wxa-h .pill{margin-left:auto;font:700 11px var(--mono);letter-spacing:.04em;padding:3px 9px;border-radius:99px;background:var(--wc);color:#10161c;white-space:nowrap}
+.wxa-c{display:flex;align-items:center;gap:12px;padding:11px 18px}.wxa-c>svg:first-child{width:24px;height:24px;fill:var(--wc);flex:none}.wxa-c>div{flex:1;min-width:0}.wxa-c b{display:block;font-weight:500}.wxa-c small{display:block;font-size:13px;color:var(--mut);margin-top:1px}
+.wxa-c em{font-style:normal;font-size:20px;font-weight:500;color:var(--wc)}.wxa-c>svg:last-child{width:20px;height:20px;fill:var(--mut);flex:none}
+.wxa-tg{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:12px;color:var(--mut);padding:9px 18px;border-top:1px solid var(--line);cursor:pointer}.wxa-tg span:last-child{display:inline-flex;align-items:center;gap:4px;color:var(--ink);white-space:nowrap}.wxa-tg svg{width:16px;height:16px;fill:currentColor}
+html[data-mode=light] .wxa-h{background:rgba(0,0,0,.04)}
 /* page transition (Theme > Page transition): variants of the .page.enter entrance, set by html[data-pgfx]. "rise" is the original look. */
 @keyframes pgSlide{from{opacity:0;transform:translateX(var(--pgdx,36px))}}
 html[data-pgfx=slide] .page.enter{animation:pgSlide calc(.36s*var(--pgs,1)) cubic-bezier(.2,.8,.2,1) backwards}
@@ -2264,6 +2274,13 @@ body.cl-sheet #clbk{display:block;animation:thIn .2s ease}
 #grid>.card.rm[data-open] .chips{margin-top:4px}
 #grid>.card.rm[data-open] .chip{padding:12px 4px;font-size:12px}
 }
+/* a tablet held upright: House across the top, the rooms as full-width rows below (a House column and a room row do not fit side by side) */
+@media(min-width:761px) and (orientation:portrait){
+#grid{grid-template-columns:minmax(0,1fr);gap:12px}
+#grid>.card.main2{grid-column:1;grid-row:auto;align-self:start}
+#grid>.card.main2 .czg{flex:none;min-height:0;max-height:none}#grid>.card.main2 .czg svg{flex:none;height:120px;min-height:0}
+#grid>.card.rm{grid-column:1;grid-template-columns:minmax(120px,178px) minmax(90px,1fr) 90px auto 14px;column-gap:14px}   /* room names get room, so "Master bedroom" stays on one line */
+}
 /* Events: view switch, tablet week + list, phone week + month */
 .evvw{gap:0;padding:4px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--w),.05)}
 .evvw .eb{padding:9px 16px;border:0;background:transparent;border-radius:999px;font-size:12px}
@@ -2395,6 +2412,100 @@ html:not(#x) #mini .chip{padding:7px 0}
 /* Climate: the trigger options only matter while Auto climate runs */
 .ctr .cl{flex:1;min-width:0}.ctr .cl span{display:flex;align-items:center;gap:6px}.ctr .cl .wm{color:var(--heat,#ff9a62)}.ctr .cl .cl2{color:var(--cool)}.ctr .cl small{display:block;margin-top:2px;font-size:12px;line-height:1.4;color:var(--mut)}.ctr .cl svg{width:16px;height:16px;flex:none;fill:currentColor}.ctr .ct:has(.cl){align-items:center}.ctr .ct:has(.cl):first-of-type{margin-top:0}
 body.ca-off .ctr,body.ca-off .cbar .mk{display:none!important}
+/* Chart readout: the box that follows a mouse or finger on a chart (svg elements ignore pointers by default, charts opt in) */
+svg[data-cr]{pointer-events:auto;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+svg[data-crs]{touch-action:pan-y}
+#crtip{position:fixed;z-index:9999;pointer-events:none;min-width:120px;max-width:240px;padding:9px 12px 10px;border-radius:12px;background:var(--bg2,#222);color:var(--ink);border:1px solid var(--line,rgba(255,255,255,.14));box-shadow:0 8px 28px rgba(0,0,0,.35);font-size:13px;line-height:1.35;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#crtip[hidden]{display:none}
+#crtip .crh{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:4px;white-space:nowrap}
+#crtip .crr{display:flex;align-items:center;gap:7px;padding:1px 0}
+#crtip .crr i{width:8px;height:8px;border-radius:50%;flex:none;background:transparent}
+#crtip .crr span{flex:1;color:var(--mut);white-space:nowrap}
+#crtip .crr b{font-weight:600;white-space:nowrap;padding-left:8px}
+/* Alarm in the header: a labelled pill beside the page title on phones (#hal), a round icon-only button next to the music button on tablets (#al), and a banner (#alb) while arming / pending / triggered. Tap opens Security. */
+#al,#hal{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0;margin:0;cursor:pointer;flex:none;position:relative}
+#al svg,#hal svg{width:18px;height:18px;fill:currentColor;pointer-events:none}
+#al{width:36px;height:36px;border-radius:50%}
+#al .at{display:none}
+#hal{height:28px;padding:0 11px 0 8px;font-size:11px;letter-spacing:.06em;margin-left:10px}
+#hal svg{width:15px;height:15px}
+#hal .at{display:inline;text-transform:uppercase}
+@media(max-width:760px){#al{display:none}header h1{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}header .hr{margin-left:auto}}
+@media(min-width:761px){#hal{display:none}}
+.al.s-wn{animation:alp 1.6s ease-in-out infinite}
+@keyframes alp{50%{opacity:.55}}
+html[data-mode=light] .al.s-wn{background:rgba(176,112,0,.14);color:#7a4b00;border-color:rgba(176,112,0,.5)}
+#alb{display:flex;align-items:center;gap:10px;margin:0 0 10px;padding:10px 14px;border-radius:14px;font-size:13px;border:1px solid var(--line);cursor:pointer}
+#alb[hidden]{display:none}
+#alb svg{width:20px;height:20px;fill:currentColor;flex:none}
+#alb b{flex:1;min-width:0;font:600 12px var(--mono);letter-spacing:.08em}
+#alb b span{font-weight:500;letter-spacing:.02em;opacity:.9}
+#alb button{flex:none;border:1px solid currentColor;background:transparent;color:inherit;border-radius:99px;padding:7px 16px;font:600 12px var(--mono);letter-spacing:.06em;cursor:pointer}
+#alb.bw{background:rgba(255,229,153,.14);color:#ffe599;border-color:rgba(255,229,153,.4)}
+#alb.ba{background:rgba(var(--heat-rgb),.18);color:var(--heat);border-color:var(--heat);animation:bl 1s infinite}
+html[data-mode=light] #alb.bw{background:rgba(176,112,0,.12);color:#7a4b00;border-color:rgba(176,112,0,.5)}
+html[data-mode=light] #alb.ba{color:#a3211a}
+/* Energy scene: the house picture with the totals pinned on it (config.js energyScene). On a phone the labels sit in a row under the picture. */
+#energy .ensc{position:relative;margin:0 0 16px;padding:14px 14px 14px;overflow:hidden;background:radial-gradient(120% 90% at 50% 38%,rgba(var(--w),.07),transparent 70%),var(--card,rgba(var(--w),.04))}
+.ensb{position:absolute;left:14px;top:12px;z-index:3;font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:var(--mut)}
+.ensi{position:relative;max-width:900px;margin:30px auto 0}
+.ensi img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
+.ensf{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.ensf path{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:1 9;vector-effect:non-scaling-stroke;opacity:.9}
+.enck{position:absolute;inset:0;pointer-events:none}
+.enc{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);display:flex;align-items:center;gap:9px;padding:7px 15px 7px 8px;border-radius:99px;white-space:nowrap;background:color-mix(in srgb,var(--bg2,#2a2522) 92%,transparent);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.enc i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex:none;background:#7a6a5a}
+.enc.eng i{background:#3b82d6}.enc.enx i{background:#e0693f}
+.enc svg{width:17px;height:17px;fill:#fff}
+.enc b{display:block;font-size:16px;line-height:1.15;font-weight:600}.enc small{display:block;font-size:11px;color:var(--mut);line-height:1.2}
+@media(max-width:760px){
+  #energy .ensc{padding:12px}.ensi{margin-top:34px}.ensf{display:none}
+  .enck{position:static;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .enc{position:static;transform:none;border-radius:16px;padding:9px;flex-direction:column;align-items:flex-start;gap:6px;box-shadow:none;white-space:normal}
+  .enc.enh{grid-column:1/-1;flex-direction:row;align-items:center;gap:9px}
+}
+/* Header chips (weather alert, pollen, leak ...): the glow is a soft halo around the pill that breathes, not a fading, fuzzy-edged copy of the whole chip. The text and border stay steady. */
+@media(min-width:761px){
+#nacc[data-k] .nai,html[data-mode] #nacc[data-k] .nai{position:relative;animation:none;filter:none;opacity:1}
+#nacc[data-k] .nai::before{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;box-shadow:0 0 10px 0 color-mix(in srgb,var(--nk) 70%,transparent),0 0 26px 3px color-mix(in srgb,var(--nk) 38%,transparent);opacity:.25;animation:nkhalo 2.6s ease-in-out infinite}
+html[data-mode=light] #nacc[data-k] .nai::before{box-shadow:0 0 9px 0 color-mix(in srgb,var(--nk) 55%,transparent),0 0 22px 2px color-mix(in srgb,var(--nk) 28%,transparent)}
+@keyframes nkhalo{0%,100%{opacity:.2}50%{opacity:.95}}
+}
+@media(min-width:761px) and (prefers-reduced-motion:reduce){#nacc[data-k] .nai::before{animation:none;opacity:.7}}
+/* Phone held sideways (up to 760 px wide, short): the tab bar becomes a slim rail down the left, the header and the music bar get thin, so the page keeps most of the height. */
+@media(max-width:760px) and (max-height:520px) and (orientation:landscape){
+:root{--dock:16px}
+.main,body.m-tabs .main{padding-bottom:0;padding-left:72px}
+body.np-on:not(.np-home):not(.np-media) .main{padding-bottom:50px}
+header{padding:4px 12px;min-height:0}header h1{font-size:17px}#clk{font-size:17px}
+#btab{top:10px;bottom:10px;left:10px;right:auto;width:58px;flex-direction:column;padding:5px;gap:3px;border-radius:22px}
+html:not([data-style=material]) #btab a,html:not([data-style=material]) #btab button,html[data-style=material] #btab a,html[data-style=material] #btab button,html:not([data-style=material]) #btab a.on,html:not([data-style=material]) #btab button.on{flex:1;min-height:0;padding:0;justify-content:center;border-radius:16px}
+#btab a span,#btab button span,html:not([data-style=material]) #btab a.on span,html:not([data-style=material]) #btab button.on span{display:none}
+html[data-style=material] #btab{padding:5px;border-radius:22px}
+#mshe{left:76px;right:10px;top:10px;bottom:10px;grid-template-columns:repeat(4,1fr);align-content:center;overflow:auto;padding:10px}
+body.np-on:not(.np-home):not(.np-media) #npmini{left:76px;right:10px;bottom:8px;padding:5px 10px;border-radius:14px}
+#npmini .npart{width:28px;height:28px}#npmini .mpb{display:none}#npmini .npr{gap:10px}
+.hm{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
+.hm>*,.hm .side>*{grid-column:auto;grid-row:auto}
+.hm .camcol,.hm #rooms,.hm .cams{grid-column:1/-1}
+.hs{padding:10px 120px 10px 14px}.hs::after{right:12px}
+/* the floating pills (Theme, Scenes, Irrigation) start right of the rail */
+html:not(#x) .thr:not(.open),html:not(#x) .thr.open,html:not(#x) #scenes .sct,html:not(#x) #scenes .sct.col,html:not(#x) #irrigation .zsx,html:not(#x) #irrigation .zsx.col{left:76px}
+body:has(#theme.on) .main,body:has(#scenes.on) .main,body:has(#irrigation.on) .main{padding-bottom:78px}
+}
+/* A bigger phone held sideways (761 to 960 px wide, short) gets the tablet layout: its menu column would not fit the height, so it scrolls and is more compact */
+@media(min-width:761px) and (max-width:960px) and (max-height:520px) and (orientation:landscape){
+nav{width:132px;padding:10px 8px;gap:4px;overflow-y:auto;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+nav .t{font-size:20px;padding:2px 0 6px}
+nav a{padding:8px 10px;font-size:11px;flex:none}
+}
+/* Temperature bars use the same seven colours as the forecast and the room cards (Theme page > temperature colours, --tp0 to --tp6), blended from one to the next.
+   Each colour sits in the middle of its band (below 13, 13-16, 16-19, 19-22, 22-24, 24-27, above 27). */
+:root{--tp0:#ccc2dc;--tp1:#a8c7fa;--tp2:#9ed6f0;--tp3:#b6ddb8;--tp4:#f9de8e;--tp5:#ffb88c;--tp6:#f2a09b}
+/* room comfort bar (Climate page and room cards): 14° to 30° across */
+.cbar{background:linear-gradient(90deg,var(--tp0) 0,var(--tp1) 3%,var(--tp2) 22%,var(--tp3) 41%,var(--tp4) 56%,var(--tp5) 72%,var(--tp6) 87.5%,var(--tp6) 100%)}
+/* heat pump card on Home: 10° to 30° across */
+#mini .mbar{background:linear-gradient(90deg,var(--tp0) 0,var(--tp0) 10%,var(--tp1) 22.5%,var(--tp2) 37.5%,var(--tp3) 52.5%,var(--tp4) 65%,var(--tp5) 77.5%,var(--tp6) 90%,var(--tp6) 100%)}
 </style>
 </head>
 <body>
@@ -2410,7 +2521,8 @@ body.ca-off .ctr,body.ca-off .cbar .mk{display:none!important}
 <div id="npsheet"><div class="npbk" data-np="close"></div><div class="pn npb" id="npbody"></div></div>
 <div id="mshe"><a href="#climate" data-i2="n-climate"><span>Climate</span></a><a href="#weather" data-i2="n-weather"><span>Weather</span></a><a href="#energy" data-i2="n-energy"><span>Energy</span></a><a href="#irrigation" data-i2="n-irr"><span>Irrigation</span></a><a href="#media" data-i2="music-note"><span>Media</span></a><a href="#events" data-i2="n-events"><span>Events</span></a><a href="#vehicle" data-i2="v-car"><span>Vehicle</span></a><a href="#hazards" data-i2="volcano"><span>Hazards</span></a><a href="#theme" data-i2="n-palette"><span>Theme</span></a><a href="#admin" data-i2="n-admin"><span>Admin</span></a><a href="/config/dashboard" id="navset2" data-i2="n-set"><span>Settings</span></a></div>
 <div class="main">
-  <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><div id="hnp" class="npoff"></div><div class="hr"><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header>
+  <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><button id="hal" class="al s-x" aria-label="Alarm"></button><div id="hnp" class="npoff"></div><div class="hr"><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header>
+  <div id="alb" hidden></div>
 
   <div id="home" class="page on">
     <div class="pn hs"><canvas id="wfx"></canvas><b id="gr"></b><span id="dt" class="lbl"></span><span id="wchip" class="wch">--</span><span id="wwind" class="wch"></span><span id="whl" class="lbl">--</span></div>
@@ -2463,14 +2575,14 @@ body.ca-off .ctr,body.ca-off .cbar .mk{display:none!important}
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=1.14.6.23"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=1.14.6.32"></script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "1.14.6.23";   // the one place to change the version
+window.DASH_VER = "1.14.6.32";   // the one place to change the version
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -2537,7 +2649,7 @@ function ruApply(o) {   // hides what this person may not use; the engine also s
     off.forEach(p => { css += 'nav a[href="#' + p + '"],#btab a[href="#' + p + '"],#mshe a[href="#' + p + '"]{display:none!important}'; });
     try { if (Array.isArray(RU.rooms)) { hideT = 0; css += "#grid{--nr:" + Math.max(1, CONFIG.rooms.filter(r => !r.main && !entHidden(r.id)).length) + "}"; CONFIG.rooms.forEach((r, i) => { if (!r.main && entHidden(r.id)) css += '#grid>.card[data-cl="' + r.id + '"]{display:none!important}#gdots i[data-i="' + i + '"]{display:none}'; }); } } catch (_) {}   // a room hidden from this person has no climate control either (not ready yet on the very first call: ruRefresh applies again)
     css += "#navset,#navset2,#outs,#hnp{display:none!important}#hc{pointer-events:none}#nacc{display:none!important}";   // no Settings link, no notification pop-up (it holds the "all off" switches and admin toggles)
-    if (!PAGE_ON("security") || !ruSec("alarm")) css += "#al{display:none!important}";
+    if (!PAGE_ON("security") || !ruSec("alarm")) css += "#al,#hal,#alb{display:none!important}";
     if (!["climate", "weather", "energy", "irrigation", "media", "events", "vehicle", "hazards", "theme"].some(PAGE_ON)) css += "#bmore{display:none!important}";
     if (off.indexOf("media") > -1) css += "#npmini,#npfab,#npsheet,#hnote{display:none!important}";
     if (left <= 1 || RU.header === false) css += "#hb{display:none!important}";
@@ -2604,6 +2716,7 @@ function applyPal() {
   v("--bg", p.bg); v("--bg2", p.glow); v("--ink", p.ink); v("--ink-rgb", rgbOf(p.ink)); v("--mint", p.accent); { const ac = rgbOf(p.accent).split(",").map(Number); v("--onmint", (0.299 * ac[0] + 0.587 * ac[1] + 0.114 * ac[2]) / 255 > 0.6 ? "#07241a" : "#ffffff"); } v("--mint-rgb", rgbOf(p.accent));
   v("--heat", p.heat); v("--heat-rgb", rgbOf(p.heat)); v("--cool", p.cool); v("--cool-rgb", rgbOf(p.cool)); v("--lit-rgb", rgbOf(p.lit));
   { const d = PAL.dark; v("--d-bg", d.bg); v("--d-bg2", d.glow); v("--d-ink", d.ink); v("--d-ink-rgb", rgbOf(d.ink)); }   // camera views stay dark in both modes (like iOS / Android media viewers)
+  PAL.temp.forEach((x, i) => v("--tp" + i, x));   // the seven temperature colours (Theme page), for the bars that run from cold to warm
   v("--nav1", p.nav1); v("--nav2", p.nav2); v("--navink", (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) / 255 > 0.55 ? "#06182b" : "#f2f7fb");
 }
 let STYLE = "default"; try { STYLE = localStorage.getItem("dashStyle") || "default"; } catch (_) {}
@@ -2684,6 +2797,8 @@ Object.assign(MDI, {"plus":"M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"});
 
 Object.assign(MDI, {"lyrics":"M4,5H14V7H4V5M4,9H14V11H4V9M4,13H10V15H4V13M18,3V12.6A3,3 0 1,0 20,15.4V6H22V3H18Z"});
 MDI["battery-low"] = "M9,2H15V4H16.5A1.5,1.5 0 0,1 18,5.5V20.5A1.5,1.5 0 0,1 16.5,22H7.5A1.5,1.5 0 0,1 6,20.5V5.5A1.5,1.5 0 0,1 7.5,4H9V2M8,6V20H16V6H8M9,14H15V18H9V14Z";
+MDI["lock"] = "M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,2A5,5 0 0,1 17,6V8H18M12,4A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,4Z";
+MDI["lock-open-variant"] = "M18,1C15.24,1 13,3.24 13,6V8H4A2,2 0 0,0 2,10V20A2,2 0 0,0 4,22H16A2,2 0 0,0 18,20V10A2,2 0 0,0 16,8H15V6C15,4.34 16.34,3 18,3C19.66,3 21,4.34 21,6V8H23V6C23,3.24 20.76,1 18,1M10,13A2,2 0 0,1 12,15A2,2 0 0,1 10,17A2,2 0 0,1 8,15A2,2 0 0,1 10,13Z";
 const isMobile = () => window.matchMedia("(max-width:760px)").matches;
 const MAIN = CONFIG.rooms.filter(r => r.main)[0].id, W = CONFIG.weather;
 const MODE = { heat_cool: "AUTO", fan_only: "FAN", off: "OFF", heat: "HEAT", cool: "COOL", dry: "DRY", auto: "AUTO" };
@@ -4078,6 +4193,8 @@ $("#rl").className = "rooms rooms2"; $("#rv").onclick = tapH; $("#cpp").onclick 
 // ---------- alarm (Alarmo) ----------
 const ALS = { disarmed: ["DISARMED", ""], armed_away: ["ARMED AWAY", "on"], armed_home: ["ARMED HOME", "on"], armed_night: ["ARMED NIGHT", "on"], arming: ["ARMING", "wn"], disarming: ["DISARMING", "wn"], pending: ["PENDING", "al"], triggered: ["TRIGGERED", "al"] };
 const ALI = { disarmed: "shield-off", armed_away: "shield-lock", armed_home: "shield-lock", armed_night: "shield-lock", arming: "shield-outline", pending: "shield-outline", disarming: "shield-outline", triggered: "shield-alert" };
+// header pill: short label and lock icon per state (the long names above stay on the Security page)
+const ALH = { disarmed: ["Off", "lock-open-variant"], armed_away: ["Away", "lock"], armed_home: ["Home", "lock"], armed_night: ["Night", "lock"], arming: ["Arming", "lock"], disarming: ["Disarming", "lock-open-variant"], pending: ["Pending", "shield-alert"], triggered: ["Alarm", "shield-alert"] };
 const curPg = () => location.hash.slice(1).split("/")[0] || "home";
 // ---------- whole-house groups, built here instead of in HA (a real HA group with the same name still wins) ----------
 function vGroups() {
@@ -4122,7 +4239,10 @@ const title = v => String(v || "").replace(/_/g, " ").replace(/\b\w/g, c => c.to
 function drawAlarm() {
   const s = states[CONFIG.alarm]; if (!s) return;
   const m = ALS[s.state] || [String(s.state).toUpperCase(), ""], f = s.attributes.supported_features || 0, c = "s-" + (m[1] || "x");
-  $("#al").innerHTML = mdi(ALI[s.state] || "shield-outline") + '<span class="at"> ' + m[0] + '</span>'; $("#al").className = "al " + c; $("#al").title = m[0]; $("#al").setAttribute("aria-label", "Alarm: " + m[0]); document.querySelector("header").dataset.al = m[1] || "x";   // the header card shows the state as a coloured strip on its right edge (see 04-alarm-weather-irrigation-scenes.css)
+  const h = ALH[s.state] || [m[0], "shield-outline"], cap = x => x.charAt(0) + x.slice(1).toLowerCase();
+  [$("#al"), $("#hal")].forEach(el => { if (!el) return; el.innerHTML = mdi(h[1]) + '<span class="at">' + h[0] + '</span>'; el.className = "al " + c; el.title = cap(m[0]); el.setAttribute("aria-label", "Alarm: " + cap(m[0])); });
+  document.querySelector("header").dataset.al = m[1] || "x";   // the header card also shows the state as a coloured strip on its left edge (see 04-alarm-weather-irrigation-scenes.css)
+  drawAlb();
   const p = $("#alp"); if (!p || !onSec()) return;
   const arm = [[1, "arm_home", "HOME"], [2, "arm_away", "AWAY"], [4, "arm_night", "NIGHT"]].filter(x => (f & x[0]) || (!f && x[1] === "arm_away"));
   p.innerHTML = '<div class="lbl">Alarm</div><div class="astate ' + c + '">' + m[0] + '</div><div class="chips">' +
@@ -4130,6 +4250,22 @@ function drawAlarm() {
     '</div><div class="tg3" style="margin-top:12px">' + CONFIG.alarmTiles.map(tileHtml).join("") + '</div>';
   updTiles();
 }
+// banner under the header while the alarm is arming (leave now), pending (someone has to disarm) or triggered; counts down when the alarm reports its delay
+function drawAlb() {
+  const b = $("#alb"), s = states[CONFIG.alarm], st = s && s.state; if (!b) return;
+  if (!s || !{ arming: 1, pending: 1, triggered: 1 }[st]) { if (!b.hidden) { b.hidden = true; b.className = ""; b.innerHTML = ""; } return; }
+  const a = s.attributes || {}, d = +a.delay, t0 = Date.parse(s.last_changed || ""), left = d > 0 && t0 ? Math.max(0, Math.ceil((t0 + d * 1000 - Date.now()) / 1000)) : null;
+  const os = Array.isArray(a.open_sensors) ? a.open_sensors : a.open_sensors && typeof a.open_sensors === "object" ? Object.keys(a.open_sensors) : [];
+  const why = os.length ? os.slice(0, 2).map(fname).join(", ") + (os.length > 2 ? " +" + (os.length - 2) : "") : "";
+  const txt = st === "arming" ? "ARMING<span> · Leave now" + (left != null ? " · " + left + " s left" : "") + "</span>"
+    : st === "pending" ? "PENDING<span> · " + (left != null ? left + " s to disarm" : "Disarm now") + (why ? " · " + esc(why) : "") + "</span>"
+    : "ALARM TRIGGERED" + (why ? "<span> · " + esc(why) + "</span>" : "");
+  const html = mdi(st === "arming" ? "lock" : "shield-alert") + "<b>" + txt + '</b><button data-m="disarm">' + (st === "arming" ? "Cancel" : "Disarm") + "</button>";
+  b.className = st === "arming" ? "bw" : "ba";
+  if (b.innerHTML !== html) b.innerHTML = html;
+  b.hidden = false;
+}
+setInterval(() => { if (!document.hidden && $("#alb") && !$("#alb").hidden) drawAlb(); }, 1000);
 function alarmDo(m) {
   const s = states[CONFIG.alarm], a = s ? s.attributes : {}, d = {};
   if (a.code_format && (m === "disarm" || a.code_arm_required !== false)) {
@@ -4168,6 +4304,8 @@ document.addEventListener("keydown", e => { if (!kp) return; if (/^\d$/.test(e.k
 $("#kp").onclick = e => { const b = e.target.closest("[data-k]"); if (b) kpKey(b.dataset.k); else if (e.target.id === "kp") kpClose(); };
 $("#alp").onclick = e => { const b = e.target.closest("[data-m]"); if (b) alarmDo(b.dataset.m); else tapH(e); };
 $("#al").onclick = () => { location.hash = "#security"; };
+$("#hal").onclick = () => { location.hash = "#security"; };
+$("#alb").onclick = e => { if (e.target.closest("[data-m]")) alarmDo("disarm"); else location.hash = "#security"; };
 
 // ---------- pollen: Google Pollen data, read from the sensors of Home Assistant's "pollenlevels" integration ----------
 // config: pollen: { risk: "sensor.…_overall_pollen_risk_today", top: "sensor.…_top_pollen_types_today", plants: "sensor.…_plants_in_season_today", grass: "sensor.…_grass", alertFrom: "moderate" }
@@ -4321,7 +4459,7 @@ function hcAxis(d, X, step, bot, icons) {
   });
   return g;
 }
-function hcWrap(head, d, W, H, g, foot) { return head + hsw('<div class="hsc"><svg viewBox="0 0 ' + W + " " + H + '" style="display:block;width:' + W + 'px;height:' + H + 'px;color:var(--ink)">' + g + '</svg></div>') + '<div class="sm" style="margin-top:4px">' + foot + '</div>'; }
+function hcWrap(head, d, W, H, g, foot, cr) { return head + hsw('<div class="hsc"><svg' + (cr || "") + ' viewBox="0 0 ' + W + " " + H + '" style="display:block;width:' + W + 'px;height:' + H + 'px;color:var(--ink)">' + g + '</svg></div>') + '<div class="sm" style="margin-top:4px">' + foot + '</div>'; }
 function windInner(a, wu) {
   const d = hcNow().filter(x => x.wind_speed != null), L1 = '<div class="lbl">' + mdi("weather-windy") + ' Hourly wind · ' + wu + '</div>';
   const cur = fcStats([["Now", a.wind_speed != null ? Math.round(a.wind_speed) + " " + wu + (a.wind_gust_speed != null ? " · gusts " + Math.round(a.wind_gust_speed) : "") : "--"]].concat((() => { const w24 = d.slice(0, 24); if (!w24.length) return []; const hiW = w24.reduce((p, x) => x.wind_speed > p.wind_speed ? x : p, w24[0]), loW = w24.reduce((p, x) => x.wind_speed < p.wind_speed ? x : p, w24[0]); return [["High", Math.round(hiW.wind_speed) + " " + wu + " · " + hr(hiW)], ["Low", Math.round(loW.wind_speed) + " " + wu + " · " + hr(loW)]]; })()));
@@ -4342,7 +4480,7 @@ function windInner(a, wu) {
   });
   g += hcAxis(d, X, step, bot, false);
   const pk = d.reduce((p, x) => x.wind_speed > p.wind_speed ? x : p, d[0]);
-  return hcWrap(L1 + sub + cur, d, W, H, g, "Peak " + Math.round(pk.wind_speed) + " " + wu + " around " + hr(pk) + " · arrows show where the wind is heading · dotted = gusts");
+  return hcWrap(L1 + sub + cur, d, W, H, g, "Peak " + Math.round(pk.wind_speed) + " " + wu + " around " + hr(pk) + " · arrows show where the wind is heading · dotted = gusts", chartReadout("wx-wind", d.map((x, i) => ({ x: X(i), y: pts[i][1], t: crWhen(x), r: [["Wind", Math.round(x.wind_speed) + " " + wu, col(x.wind_speed)]].concat(x.wind_gust_speed != null ? [["Gusts", Math.round(x.wind_gust_speed) + " " + wu, "#ff7a6b"]] : [], x.wind_bearing != null ? [["From", CARD(x.wind_bearing)]] : []) })), { dot: true }));
 }
 function rainInner(a) {
   const d = hcNow(), L1 = '<div class="lbl">' + mdi("weather-rainy") + ' Hourly rain</div>';
@@ -4360,7 +4498,7 @@ function rainInner(a) {
     const p = +x.precipitation_probability || 0; if (p) g += '<text x="' + X(i) + '" y="' + (bot + 92) + '" text-anchor="middle" font-size="11" fill="#6ab7ff">' + Math.round(p) + '%</text>';
   });
   g += hcAxis(d, X, step, bot, true);
-  return hcWrap(L1 + sm + st, d, W, H, g, "Bars = rain (mm) · blue % = chance of rain · scroll sideways");
+  return hcWrap(L1 + sm + st, d, W, H, g, "Bars = rain (mm) · blue % = chance of rain · scroll sideways", chartReadout("wx-rain", d.map((x, i) => { const v = +x.precipitation || 0, p = +x.precipitation_probability || 0; return { x: X(i), t: crWhen(x), r: [["Rain", (v < 10 ? v.toFixed(1) : Math.round(v)) + " mm", col(v)]].concat(p ? [["Chance", Math.round(p) + "%", "#6ab7ff"]] : []) }; })));
 }
 function uvInner(a) {
   const d = hcNow(), L1 = '<div class="lbl">' + mdi("weather-sunny-alert") + ' Hourly UV &amp; cloud</div>', sm = wxSumUv(d).map(wxLine).join("");
@@ -4382,7 +4520,7 @@ function uvInner(a) {
     if (x.cloud_coverage != null) g += '<text x="' + X(i) + '" y="' + (bot + 92) + '" text-anchor="middle" font-size="11" fill="#90CAF9">' + Math.round(x.cloud_coverage) + '%</text>';
   });
   g += hcAxis(d, X, step, bot, true);
-  return hcWrap(L1 + sm + st, d, W, H, g, "Coloured line = UV index · blue shading and % = cloud cover · scroll sideways");
+  return hcWrap(L1 + sm + st, d, W, H, g, "Coloured line = UV index · blue shading and % = cloud cover · scroll sideways", chartReadout("wx-uv", d.map((x, i) => { const u = +x.uv_index || 0; return { x: X(i), y: pts[i][1], t: crWhen(x), r: [["UV", f1(u) + " · " + UL(u), UC(u)]].concat(x.cloud_coverage != null ? [["Cloud", Math.round(x.cloud_coverage) + "%", "#90CAF9"]] : []) }; }), { dot: true }));
 }
 // forecast carousel: wind / rain / UV & cloud
 let fcTab = 0;
@@ -4420,7 +4558,7 @@ function tempInner(a) {
   });
   const d24 = d.slice(0, 24), hiX = d24.reduce((p, x) => +x.temperature > +p.temperature ? x : p, d24[0]), loX = d24.reduce((p, x) => +x.temperature < +p.temperature ? x : p, d24[0]), otS = sv(E("outdoorTemp")), nowT = otS != null && !isNaN(parseFloat(otS)) ? parseFloat(otS) : (a.temperature != null ? +a.temperature : +d[0].temperature);
   const st = fcStats([["Temp now", f1(nowT) + "°"], ["High", Math.round(hiX.temperature) + "° · " + hr(hiX)], ["Low", Math.round(loX.temperature) + "° · " + hr(loX)]]);
-  return L1 + st + hsw('<div class="hsc"><svg viewBox="0 0 ' + W + " " + (H + 16) + '" style="display:block;width:' + W + 'px;height:' + (H + 16) + 'px;color:var(--ink)">' + g + '</svg></div>') + '<div class="sm" style="margin-top:4px">Next ' + d.length + ' hours · scroll sideways · blue = rain</div>';
+  return L1 + st + hsw('<div class="hsc"><svg' + chartReadout("wx-temp", d.map((x, i) => { const pr = +x.precipitation || 0, pp = +x.precipitation_probability || 0; return { x: X(i), y: pts[i][1], t: crWhen(x), r: [["Temperature", f1(T[i]) + "°", tcol(T[i])]].concat(pr > 0 ? [["Rain", (pr < 10 ? pr.toFixed(1) : Math.round(pr)) + " mm", "#6ab7ff"]] : [], pp ? [["Chance", Math.round(pp) + "%"]] : []) }; }), { dot: true }) + ' viewBox="0 0 ' + W + " " + (H + 16) + '" style="display:block;width:' + W + 'px;height:' + (H + 16) + 'px;color:var(--ink)">' + g + '</svg></div>') + '<div class="sm" style="margin-top:4px">Next ' + d.length + ' hours · scroll sideways · blue = rain</div>';
 }
 const fcStats = r => '<div class="wg" style="margin:10px 0 14px">' + r.map(x => '<div class="ws"><span class="lbl">' + x[0] + '</span><b>' + x[1] + '</b></div>').join("") + '</div>';
 const hr = x => new Date(x.datetime).toLocaleTimeString([], tmo({ hour: "numeric" })).replace(" ", "").toLowerCase();
@@ -4574,7 +4712,7 @@ function irrMoist() {
   const t0 = Math.floor(Date.now() / 600000) * 600000 - 72 * 3600000, ticks = [];   // 10-minute steps, so a redraw with nothing new gives identical markup
   for (let t = Math.ceil(t0 / 86400000 / 1) * 86400000 - 13 * 3600000; t < Date.now(); t += 86400000) if (t > t0 + 3600000) ticks.push(t);
   const lx = t => (PD + (t - t0) / (72 * 3600000) * (W - 2 * PD));
-  const svg = '<svg width="' + W + '" height="' + (H + 24) + '"><rect y="0" width="' + W + '" height="' + y(45) + '" fill="#2b8fd6" opacity=".07"/><rect y="' + y(45) + '" width="' + W + '" height="' + (y(25) - y(45)) + '" fill="#3fb6b8" opacity=".12"/><rect y="' + y(25) + '" width="' + W + '" height="' + (H - y(25)) + '" fill="#e0a21f" opacity=".1"/>' +
+  const svg = '<svg' + chartReadout("irr-moist", null, { at: x => { const k = Math.max(0, Math.min(n - 1, Math.round((x - PD) / (W - 2 * PD) * (n - 1)))); return { x: PD + k / (n - 1) * (W - 2 * PD), t: crWhen(t0 + k / (n - 1) * 72 * 3600000), r: Z.map((z, i) => [z.name, Math.round(IH.d[z.moist][k]) + "%", PC[i % 4]]) }; } }) + ' width="' + W + '" height="' + (H + 24) + '"><rect y="0" width="' + W + '" height="' + y(45) + '" fill="#2b8fd6" opacity=".07"/><rect y="' + y(45) + '" width="' + W + '" height="' + (y(25) - y(45)) + '" fill="#3fb6b8" opacity=".12"/><rect y="' + y(25) + '" width="' + W + '" height="' + (H - y(25)) + '" fill="#e0a21f" opacity=".1"/>' +
     [25, 45].map(v => '<line x1="0" x2="' + W + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="currentColor" stroke-opacity=".14" stroke-dasharray="3 4"/>').join("") +
     ticks.map(t => '<line x1="' + lx(t) + '" x2="' + lx(t) + '" y1="0" y2="' + H + '" stroke="currentColor" stroke-opacity=".08"/><text x="' + (lx(t) + 4) + '" y="' + (H + 17) + '" fill="currentColor" opacity=".55" font-size="11" font-family="monospace">' + new Date(t).toLocaleDateString([], { weekday: "short" }).toUpperCase() + '</text>').join("") +
     Z.map((z, i) => '<path d="' + path(IH.d[z.moist]) + '" fill="none" stroke="' + PC[i % 4] + '" stroke-width="2.4" stroke-linejoin="round"/><circle cx="' + (W - PD) + '" cy="' + y(now[i]) + '" r="4" fill="' + PC[i % 4] + '"/>').join("") + '</svg>';
@@ -4615,7 +4753,7 @@ function irrZone(z) {
       '<div class="zf' + (on ? " on" : "") + '" data-t="' + z.switch + '" style="--fc:' + FLOWC(fl) + '">' + irrWave(z.zone, on, fl) + '<span class="bi">' + mdi("water") + '</span><div><b class="h2">' + f1(fl) + ' m³/h</b><div class="lbl">' + (on ? (fl < .1 ? "minimal flow" : fl < .3 ? "low flow" : fl < .6 ? "moderate flow" : "high flow") : "off · tap to start") + '</div></div></div>' +
       (act ? '<div><div class="lbl tmr" data-fin="' + fin + '">--</div><div class="zb"><i data-dur="' + dur + '"></i></div></div>' : "") +
       '<div class="zd">' + [["5 m", "00:05:00"], ["15 m", "00:15:00"], ["30 m", "00:30:00"], ["1 hr", "01:00:00"], ["2 hr", "02:00:00"]].map(x => '<button class="chip" data-d="' + x[1] + '">' + x[0] + '</button>').join("") + '</div>' +
-      (isNaN(mo) ? "" : '<div class="wg"><div class="ws"><span class="lbl">Soil moisture</span><b style="color:' + mc + '">' + f1(mo) + '%</b><span class="lbl">' + (mo < 15 ? "very dry" : mo < 25 ? "dry" : mo < 45 ? "moist" : "wet") + '</span></div>' + (isNaN(tp) ? "" : '<div class="ws"><span class="lbl">Soil temp</span><b>' + f1(tp) + '°</b></div>') + '</div>') + '</div>';
+      (isNaN(mo) ? "" : '<div class="wg"><div class="ws"><span class="lbl">Soil moisture</span><b style="color:' + mc + '">' + f1(mo) + '%</b><span class="lbl">' + (mo < 15 ? "very dry" : mo < 25 ? "dry" : mo < 45 ? "moist" : "wet") + '</span></div>' + (isNaN(tp) ? "" : '<div class="ws"><span class="lbl">Soil temp</span><b style="color:' + tcol(tp) + '">' + f1(tp) + '°</b></div>') + '</div>') + '</div>';
     return h;
 }
 let zSheet = false, zTab = 0;   // phone: the zones live in a floating bar that opens into a sheet (like Scenes)
@@ -5379,19 +5517,23 @@ $("#admin").addEventListener("click", e => { const ac = e.target.closest("[data-
 // ---------- Home weather shortcuts ----------
 [[".hs", "#weather/now"], ["#fcp", "#weather/week"]].forEach(q => { const x = $(q[0]); x.style.cursor = "pointer"; x.onclick = () => { location.hash = q[1]; }; });   // the greeting opens the Now card, the Forecast card opens Next 7 days
 
-// ---------- weather alerts: wind now, wind and rain coming up (Notifications > Alerts card, and the header strip chips) ----------
-// Same tiers as a Home Assistant weather-alert automation: wind 30 / 62 / 89 km/h, rain 0.5 / 2 / 5 mm per hour over the next 6 hours.
-// config weatherAlerts: false = off, or { wind: true, rain: true, windTiers: [30, 62, 89], rainTiers: [0.5, 2, 5], hours: 6, stripWind: 1, stripRain: 1 }
-// stripWind / stripRain = the tier (1 to 3) from which the header strip shows a chip (1 = any wind or rain from the first tier, 3 = only Severe wind / Heavy rain); the Alerts card always shows from tier 1.
+// ---------- weather alerts: wind now, wind, rain and UV coming up (Notifications > Alerts card, and the header strip chips) ----------
+// Same tiers as a Home Assistant weather-alert automation: wind 30 / 62 / 89 km/h, rain 0.5 / 2 / 5 mm per hour over the next 6 hours, UV index 3 / 6 / 8 (Moderate / High / Very high; 11 and over reads Extreme).
+// config weatherAlerts: false = off, or { wind: true, rain: true, uv: true, windTiers: [30, 62, 89], rainTiers: [0.5, 2, 5], uvTiers: [3, 6, 8], hours: 6, stripWind: 1, stripRain: 1, stripUv: 2 }
+// stripWind / stripRain / stripUv = the tier (1 to 3) from which the header strip shows a chip (1 = any wind or rain from the first tier, 3 = only Severe wind / Heavy rain / Very high UV); the Alerts card always shows from tier 1.
+// stripUv defaults to 2 (High UV): Moderate UV is most summer days and would leave a chip up all day. Two or more weather alerts share one card (a line each, a switch for the full cards) and, in the strip, one chip.
 const wxaCfg = () => {
   const c = CONFIG.weatherAlerts; if (c === false) return null;
   const o = c && typeof c === "object" ? c : {}, tiers = (a, d) => Array.isArray(a) && a.length === 3 && a.every(x => isFinite(x)) ? a.map(Number) : d;
-  return { wind: o.wind !== false, rain: o.rain !== false, wt: tiers(o.windTiers, [30, 62, 89]), rt: tiers(o.rainTiers, [0.5, 2, 5]), hours: +o.hours > 0 ? +o.hours : 6, sw: +o.stripWind || 1, sr: +o.stripRain || 1 };
+  return { wind: o.wind !== false, rain: o.rain !== false, uv: o.uv !== false, wt: tiers(o.windTiers, [30, 62, 89]), rt: tiers(o.rainTiers, [0.5, 2, 5]), ut: tiers(o.uvTiers, [3, 6, 8]), hours: +o.hours > 0 ? +o.hours : 6, sw: +o.stripWind || 1, sr: +o.stripRain || 1, su: +o.stripUv || 2 };
 };
 const wxaTier = (v, t) => v == null || isNaN(v) ? 0 : v > t[2] ? 3 : v > t[1] ? 2 : v > t[0] ? 1 : 0;
+const wxaTierGE = (v, t) => v == null || isNaN(v) ? 0 : v >= t[2] ? 3 : v >= t[1] ? 2 : v >= t[0] ? 1 : 0;   // UV: the index is 3 or more, not over 3
+let WXA_FULL = false;   // several alerts: false = one line each, true = each as its full card (the switch at the bottom of the card)
 const WXA_COL = ["", "#e6c84f", "#f2a33a", "#ff6b5e"];
-const wxaCol = k => { const w = wxaNow(); const t = w ? (k === "wind" ? (w.wind || {}).tier : (w.rain || {}).tier) : 0; return WXA_COL[t || 1]; };
-const wxaTime = ts => { const d = new Date(ts), td = d.toDateString() === new Date().toDateString(); return (td ? "" : d.toLocaleDateString([], { weekday: "short" }) + " ") + d.toLocaleTimeString([], tmo({ hour: "numeric" })).replace(/\s?([AP])M/i, " $1M"); };
+const wxaCol = k => { const w = wxaNow(); let t = 0; if (w) t = k === "wx" ? Math.max.apply(null, wxaStrip().map(x => w[x.k].tier).concat(0)) : (w[k] || {}).tier || 0; return WXA_COL[t || 1]; };
+// wxaTime: "12 pm", "12pm" or "12 p.m." (New Zealand and Australian locales) all read "12 PM"
+const wxaTime = ts => { const d = new Date(ts), td = d.toDateString() === new Date().toDateString(); return (td ? "" : d.toLocaleDateString([], { weekday: "short" }) + " ") + d.toLocaleTimeString([], tmo({ hour: "numeric" })).replace(/\s?([ap])\.?m\.?/i, (m, c) => " " + c.toUpperCase() + "M"); };
 // the tier (0 to 3) of the wind blowing now, by the same limits as the Alerts card: the greeting's wind readout takes its colour from it
 function wxaLive() {
   const c = wxaCfg(), a = (states[W] || {}).attributes; if (!c || !c.wind || !a || a.wind_speed == null) return 0;
@@ -5411,30 +5553,58 @@ function wxaNow() {
     const mm = x => +x.precipitation || 0, band = fc.filter(x => mm(x) > c.rt[0]), mx = band.reduce((p, x) => Math.max(p, mm(x)), 0), tier = wxaTier(mx, c.rt);
     if (tier) { const s = Date.parse(band[0].datetime), e = Date.parse(band[band.length - 1].datetime) + 3600000; out.rain = { tier: tier, max: mx, from: s, to: e, now: s <= now, n: band.length }; }
   }
-  return out.wind || out.rain ? Object.assign(out, { cfg: c }) : null;
+  if (c.uv) {
+    const h0 = fcH[0] || {}, live = a.uv_index != null ? +a.uv_index : parseFloat(h0.uv_index), ut = c.ut, uvOf = x => +x.uv_index;
+    const hrs = fc.filter(x => x.uv_index != null && !isNaN(uvOf(x))), pk = hrs.reduce((p, x) => !p || uvOf(x) > uvOf(p) ? x : p, null), fmax = pk ? uvOf(pk) : null;
+    const lt = wxaTierGE(isNaN(live) ? null : live, ut), ft = wxaTierGE(fmax, ut), tier = Math.max(lt, ft), isNow = lt >= ft && lt > 0;
+    if (tier) {
+      const all = fcH.filter(x => x.uv_index != null && !isNaN(uvOf(x))), i = isNow ? Math.max(0, all.findIndex(x => Date.parse(x.datetime) >= now - 3600000)) : all.indexOf(pk);   // when UV 3 or more starts and ends: the run of hours around now (or around the peak)
+      let a0 = i, a1 = i, win = null;
+      if (all[i] && uvOf(all[i]) >= ut[0]) { while (a0 > 0 && uvOf(all[a0 - 1]) >= ut[0]) a0--; while (a1 < all.length - 1 && uvOf(all[a1 + 1]) >= ut[0]) a1++; win = { s: a0 > 0 ? Date.parse(all[a0].datetime) : 0, e: a1 < all.length - 1 ? Date.parse(all[a1].datetime) + 3600000 : 0 }; }
+      const first = hrs.find(x => uvOf(x) >= ut[tier - 1]);
+      out.uv = { tier: tier, now: isNow, v: isNow ? live : fmax, fmax: fmax, fat: pk ? Date.parse(pk.datetime) : 0, from: first ? Date.parse(first.datetime) : 0, win: win, t: ut };
+    }
+  }
+  return out.wind || out.rain || out.uv ? Object.assign(out, { cfg: c }) : null;
 }
-const WXA_W = ["", "Moderate", "Strong", "Severe"], WXA_R = ["", "Light rain", "Moderate rain", "Heavy rain"];
+const WXA_W = ["", "Moderate", "Strong", "Severe"], WXA_R = ["", "Light rain", "Moderate rain", "Heavy rain"], WXA_U = ["", "Moderate", "High", "Very high"];
+const wxaUvName = x => x.tier === 3 && x.v >= 11 ? "Extreme" : WXA_U[x.tier];
+const WXA_NAME = { wind: x => WXA_W[x.tier] + " wind", rain: x => WXA_R[x.tier], uv: x => wxaUvName(x) + " UV" };
+const wxaWin = x => { const w = x.win; if (!w) return ""; const t = x.t[0]; return w.s && w.e ? "UV " + t + " or more from " + wxaTime(w.s) + " to " + wxaTime(w.e) : w.e ? "UV " + t + " or more until " + wxaTime(w.e) : w.s ? "UV " + t + " or more from " + wxaTime(w.s) : ""; };
+const wxaWindSub = x => { const sub = []; if (x.now && x.gust != null && x.gust > x.v + 1) sub.push("Gusts " + Math.round(x.gust) + " km/h"); if (x.now && x.fmax != null && x.fmax > x.v + 1) sub.push("Up to " + Math.round(x.fmax) + " km/h around " + wxaTime(x.fat)); if (!x.now) sub.push("Around " + wxaTime(x.fat)); return sub; };
+const wxaRainWhen = r => r.now ? "now, until " + wxaTime(r.to) : r.n === 1 ? "at " + wxaTime(r.from) : "from " + wxaTime(r.from);
+const wxaUvSub = x => { const sub = []; if (x.fmax != null && (!x.now || x.fmax > x.v + 0.5)) sub.push((x.now ? "Peak " : "Up to ") + Math.round(x.fmax) + (x.fat ? " around " + wxaTime(x.fat) : "")); const w = wxaWin(x); if (w) sub.push(w); return sub; };
+const wxaGauge = (v, mx, ticks) => { const pc = t => Math.min(100, t / mx * 100).toFixed(1); return '<div class="wxa-g"><i style="width:' + pc(v) + '%"></i>' + ticks.map(t => '<u style="left:' + pc(t) + '%"></u>').join("") + '</div><div class="wxa-k">' + ticks.map(t => '<span style="left:' + pc(t) + '%">' + t + '</span>').join("") + '</div>'; };
+const wxaIc = { wind: x => x.tier === 3 ? "weather-hurricane" : x.tier === 2 ? "weather-windy-variant" : "weather-windy", rain: x => x.tier === 3 ? "weather-pouring" : x.tier === 2 ? "weather-rainy" : "weather-partly-rainy", uv: () => "weather-sunny-alert" };
+// one alert as its full card: the wind and UV-now ones have a gauge, the rain and UV-coming-up ones a line
+function wxaFull(k, x) {
+  if (k === "rain") return '<div class="wxa-s wxa-r wt' + x.tier + '" data-wxa="rain">' + mdi(wxaIc.rain(x)) + '<div><b>' + WXA_R[x.tier] + ' ' + esc(wxaRainWhen(x)) + '</b><small>Up to ' + (+x.max.toFixed(1)) + ' mm/h</small></div></div>';
+  if (k === "uv" && !x.now) return '<div class="wxa-s wxa-r wt' + x.tier + '" data-wxa="uv">' + mdi("weather-sunny-alert") + '<div><b>' + wxaUvName(x) + ' UV from ' + esc(wxaTime(x.from || x.fat)) + '</b><small>' + esc(wxaUvSub(x).join(" · ")) + '</small></div></div>';
+  const wind = k === "wind", sub = wind ? wxaWindSub(x) : wxaUvSub(x), lbl = wind ? (x.now ? "WIND NOW" : "WIND FORECAST") + " · " + WXA_W[x.tier].toUpperCase() : "UV NOW · " + wxaUvName(x).toUpperCase();
+  return '<div class="wxa-s wt' + x.tier + '" data-wxa="' + k + '"><div class="lbl wxa-l">' + mdi(wxaIc[k](x)) + ' ' + lbl + '</div>' +
+    '<div class="wxa-v">' + Math.round(x.v) + '<small>' + (wind ? "km/h" : "UV index") + '</small></div>' +
+    (wind ? wxaGauge(x.v, x.t[2] * 1.1, x.t) : wxaGauge(x.v, 12, x.t.concat(11))) +
+    (sub.length ? '<div class="wxa-n">' + esc(sub.join(" · ")) + '</div>' : "") + '</div>';
+}
+// one alert as a line of the combined card
+function wxaRow(k, x) {
+  const title = k === "rain" ? WXA_R[x.tier] + " " + wxaRainWhen(x) : k === "wind" ? WXA_NAME.wind(x) + (x.now ? " now" : " around " + wxaTime(x.fat)) : WXA_NAME.uv(x) + (x.now ? " now" : " from " + wxaTime(x.from || x.fat)),
+    sub = k === "rain" ? "Up to " + (+x.max.toFixed(1)) + " mm/h" : (k === "wind" ? wxaWindSub(x) : wxaUvSub(x)).join(" · "), val = k === "rain" ? +x.max.toFixed(1) : Math.round(x.v);
+  return '<div class="wxa-s wxa-c wt' + x.tier + '" data-wxa="' + k + '">' + mdi(wxaIc[k](x)) + '<div><b>' + esc(title) + '</b><small>' + esc(sub) + '</small></div><em>' + val + '</em>' + mdi("chevron-right") + '</div>';
+}
 function wxaHtml(w) {
-  let h = "";
-  const x = w.wind, r = w.rain;
-  if (x) {
-    const mx = x.t[2] * 1.1, pc = v => Math.min(100, v / mx * 100).toFixed(1), lbl = (x.now ? "WIND NOW" : "WIND FORECAST") + " · " + WXA_W[x.tier].toUpperCase();
-    const sub = []; if (x.now && x.gust != null && x.gust > x.v + 1) sub.push("Gusts " + Math.round(x.gust) + " km/h"); if (x.now && x.fmax != null && x.fmax > x.v + 1) sub.push("Up to " + Math.round(x.fmax) + " km/h around " + wxaTime(x.fat)); if (!x.now) sub.push("Around " + wxaTime(x.fat));
-    h += '<div class="wxa-s wt' + x.tier + '" data-wxa="wind"><div class="lbl wxa-l">' + mdi(x.tier === 3 ? "weather-hurricane" : x.tier === 2 ? "weather-windy-variant" : "weather-windy") + ' ' + lbl + '</div>' +
-      '<div class="wxa-v">' + Math.round(x.v) + '<small>km/h</small></div>' +
-      '<div class="wxa-g"><i style="width:' + pc(x.v) + '%"></i>' + x.t.map(t => '<u style="left:' + pc(t) + '%"></u>').join("") + '</div>' +
-      '<div class="wxa-k">' + x.t.map(t => '<span style="left:' + pc(t) + '%">' + t + '</span>').join("") + '</div>' +
-      (sub.length ? '<div class="wxa-n">' + esc(sub.join(" · ")) + '</div>' : "") + '</div>';
-  }
-  if (r) {
-    const when = r.now ? "now, until " + wxaTime(r.to) : r.n === 1 ? "at " + wxaTime(r.from) : "from " + wxaTime(r.from);
-    h += '<div class="wxa-s wxa-r wt' + r.tier + '" data-wxa="rain">' + mdi(r.tier === 3 ? "weather-pouring" : r.tier === 2 ? "weather-rainy" : "weather-partly-rainy") + '<div><b>' + WXA_R[r.tier] + ' ' + esc(when) + '</b><small>Up to ' + (+r.max.toFixed(1)) + ' mm/h</small></div></div>';
-  }
-  return '<div class="wxa">' + h + '</div>';
+  const ks = ["wind", "rain", "uv"].filter(k => w[k]);
+  if (ks.length === 1) return '<div class="wxa">' + wxaFull(ks[0], w[ks[0]]) + '</div>';
+  if (WXA_FULL) return '<div class="wxa">' + ks.map(k => wxaFull(k, w[k])).join("") + '<div class="wxa-tg" data-wxatg="1"><span></span><span>Show summary' + mdi("chevron-up") + '</span></div></div>';
+  const top = ks.reduce((p, k) => !p || w[k].tier > w[p].tier ? k : p, null);
+  return '<div class="wxa"><div class="wxa-h wt' + w[top].tier + '">' + mdi("weather-partly-lightning") + '<b>' + ks.length + ' weather alerts</b><span class="pill">' + esc(WXA_NAME[top](w[top]).toUpperCase()) + '</span></div>' +
+    ks.map(k => wxaRow(k, w[k])).join("") + '<div class="wxa-tg" data-wxatg="1"><span>Tap a line for its forecast chart</span><span>Show full cards' + mdi("chevron-down") + '</span></div></div>';
 }
-// the header strip: Strong / Severe wind and Heavy rain are urgent (hi = true), the lower tiers are not (see NSK in 32-notifications-popup.js). Each shows from its own first tier (stripWind / stripRain).
-const wxaChip = (k, hi) => { const w = wxaNow(), x = w && w[k]; if (!x || x.tier < (k === "wind" ? w.cfg.sw : w.cfg.sr)) return false; return (k === "wind" ? x.tier >= 2 : x.tier >= 3) === hi; };
-const wxaName = k => () => { const x = (wxaNow() || {})[k]; return x ? (k === "wind" ? WXA_W[x.tier] + " wind" : WXA_R[x.tier]) + (x.now ? "" : " soon") : (k === "wind" ? "Wind" : "Rain"); };
+// the header strip: Strong / Severe wind, Heavy rain and Very high UV are urgent (hi = true), the lower tiers are not (see NSK in 32-notifications-popup.js). Each shows from its own first tier (stripWind / stripRain / stripUv).
+// Two or more weather chips become one chip ("wx": "3 weather alerts", coloured by the worst), which is urgent when any of them is.
+const wxaStrip = () => { const w = wxaNow(); if (!w) return []; return ["wind", "rain", "uv"].filter(k => w[k] && w[k].tier >= (k === "wind" ? w.cfg.sw : k === "rain" ? w.cfg.sr : w.cfg.su)).map(k => ({ k: k, hi: k === "wind" ? w[k].tier >= 2 : w[k].tier >= 3 })); };
+const wxaChip = (k, hi) => { const l = wxaStrip(); if (k === "wx") return l.length > 1 && l.some(x => x.hi) === hi; const m = l.find(x => x.k === k); return !!m && l.length < 2 && m.hi === hi; };
+const wxaName = k => () => { if (k === "wx") return wxaStrip().length + " weather alerts"; const x = (wxaNow() || {})[k]; return x ? WXA_NAME[k](x) + (x.now ? "" : " soon") : (k === "wind" ? "Wind" : k === "rain" ? "Rain" : "UV"); };
 // ---------- notifications popup ----------
 const fname = id => (states[id] && states[id].attributes.friendly_name) || id.split(".")[1].replace(/_/g, " ");
 const NREL = rxj(/(^group\.|^timer\.|battery)/, (CONFIG.relevance || {}).notif);
@@ -5482,12 +5652,16 @@ const NSK = [
   ["garage", "garage-open-variant", "Garage door open", () => Object.keys(galCfg()).some(k => { const c = galCfg()[k], s = c && c.sensor && states[c.sensor]; return !!s && (s.state === "on") !== !!c.invert; })],
   ["wind", "weather-windy", wxaName("wind"), () => wxaChip("wind", true)],   // Strong or Severe wind: right after the garage
   ["rain", "weather-rainy", wxaName("rain"), () => wxaChip("rain", true)],   // Heavy rain
+  ["uv", "weather-sunny-alert", wxaName("uv"), () => wxaChip("uv", true)],   // Very high UV
+  ["wx", "weather-partly-lightning", wxaName("wx"), () => wxaChip("wx", true)],   // two or more weather alerts, one of them urgent: one chip instead of several
   ["door", "door-open", "Door open", () => !!doorsOpen()],
   ["water", "m3-water-drop", "Water on", () => Object.keys(states).some(k => /^switch\..*water_tap$/.test(k) && states[k].state === "on") || (CONFIG.irrigation || []).some(z => z.switch && states[z.switch] && states[z.switch].state === "on")],
   ["bins", "recycle", "Bins out", binsWaiting],   // a bin is due and not out yet (config bins)
   ["battery", "battery-low", "Low battery", () => lowBattChip().length > 0],   // under 20 % by default (derived.batteryAlertBelow)
   ["wind", "weather-windy", wxaName("wind"), () => wxaChip("wind", false)],   // Moderate wind: weatherAlerts.stripWind sets the first tier shown; the lower tiers sit below the battery chip so they never crowd out a door or a tap
   ["rain", "weather-rainy", wxaName("rain"), () => wxaChip("rain", false)],   // Light or Moderate rain (weatherAlerts.stripRain)
+  ["uv", "weather-sunny-alert", wxaName("uv"), () => wxaChip("uv", false)],   // High UV (weatherAlerts.stripUv)
+  ["wx", "weather-partly-lightning", wxaName("wx"), () => wxaChip("wx", false)],   // two or more weather alerts, none urgent
   ["pollen", "pollen", "Pollen", polOn],   // below a leak, a warning, the garage, a door and water on; the chip adds the level
   ["laundry", "washing-machine", "Laundry running", laundryOn],
   ["towel", "radiator", "Towel heating on", towelsOn]
@@ -5572,7 +5746,7 @@ function drawNotif() {
   const r = notif(open);
   const ks = NSK.filter(k => k[3]()), top = ks[0], nacc = $("#nacc");   // the strip turns into the icon of the most urgent condition
   // each condition is a .nai (icon + name): a phone shows just the top icon, a tablet shows the name as a chip, and a wide screen shows the two most urgent chips
-  const pn = polNow(), nkc = k => k[0] === "pollen" ? (pn ? pn.col : "") : k[0] === "wind" || k[0] === "rain" ? wxaCol(k[0]) : "", nsn = k => typeof k[2] === "function" ? k[2]() : k[2], nai = (k, c) => '<span class="nai' + c + '" data-k="' + k[0] + '"' + (nkc(k) ? ' style="--nk:' + nkc(k) + '"' : "") + '>' + (k[0] === "laundry" ? DRUM : mdi(k[1])) + '<b class="nal">' + esc(k[0] === "pollen" && pn ? "Pollen · " + pn.name : k[0] === "battery" && lowBattChip().length > 1 ? lowBattChip().length + " low batteries" : nsn(k)) + '</b></span>';
+  const pn = polNow(), nkc = k => k[0] === "pollen" ? (pn ? pn.col : "") : k[0] === "wind" || k[0] === "rain" || k[0] === "uv" || k[0] === "wx" ? wxaCol(k[0]) : "", nsn = k => typeof k[2] === "function" ? k[2]() : k[2], nai = (k, c) => '<span class="nai' + c + '" data-k="' + k[0] + '"' + (nkc(k) ? ' style="--nk:' + nkc(k) + '"' : "") + '>' + (k[0] === "laundry" ? DRUM : mdi(k[1])) + '<b class="nal">' + esc(k[0] === "pollen" && pn ? "Pollen · " + pn.name : k[0] === "battery" && lowBattChip().length > 1 ? lowBattChip().length + " low batteries" : nsn(k)) + '</b></span>';
   const sig = ks.slice(0, 2).map((k, i) => nai(k, i ? " nai2" : "")).join("");
   if ((nacc.dataset.k || "") !== (top ? top[0] : "") || nacc._sig !== sig) { nacc._sig = sig; if (top) nacc.dataset.k = top[0]; else nacc.removeAttribute("data-k"); nacc.innerHTML = sig; if (top && nkc(top)) nacc.style.setProperty("--nk", nkc(top)); else nacc.style.removeProperty("--nk"); }
   nacc.dataset.n = ks.length;   // 3+ conditions: one chip + "+N" (see 28-pollen.css)
@@ -5603,6 +5777,7 @@ $("#np").onclick = e => {
   if (e.target.closest("[data-close]")) { npClose(); return; }
   const tb = e.target.closest("[data-npt]"); if (tb) { const ord = ["alerts", "attention", "active"], was = npTab; npTab = tb.dataset.npt; drawNotif(); if (was !== npTab) txGo($("#npc"), ord.indexOf(npTab) > ord.indexOf(was) ? 1 : -1, true); return; }
   const of = e.target.closest("[data-off]"); if (of) { const ids = actList()[+of.dataset.off].ids; const cl = actList()[+of.dataset.off].c[3] === "close"; if (ids.length) { if (!cl) npDismiss(ids); call(cl ? "cover" : "homeassistant", cl ? "close_cover" : "turn_off", ids); } return; }
+  if (e.target.closest("[data-wxatg]")) { WXA_FULL = !WXA_FULL; drawNotif(); return; }   // the combined weather card: one line each, or each as its full card
   const wa = e.target.closest("[data-wxa]"); if (wa) { npClose(); location.hash = "#weather/" + wa.dataset.wxa; return; }   // the weather card opens that forecast chart
   const bn = e.target.closest("[data-bn]"); if (bn) { binsTap(bn.dataset.bn); return; }
   const vw = e.target.closest("[data-vw]"); if (vw) { VW.back = /^#(view|camera|notifications|active|batteries)/.test(location.hash) ? "#home" : (location.hash || "#home"); location.hash = "#view/" + vw.dataset.vw; return; }
@@ -5892,7 +6067,7 @@ function hzLoad(force) {
   if ((CHZ.busy && Date.now() - CHZ.busy < 20000) || (!force && CHZ.pts && Date.now() - CHZ.t < 600000)) return;
   CHZ.busy = Date.now(); const end = new Date(), st = new Date(end.getTime() - 24 * 3600000);
   send({ type: "history/history_during_period", start_time: st.toISOString(), end_time: end.toISOString(), entity_ids: ids, minimal_response: false, no_attributes: false, significant_changes_only: false }, r => {
-    CHZ.busy = 0; if (!r) return; const t0 = st.getTime(), step = 1800000, n = 48, all = [];
+    CHZ.busy = 0; if (!r) return; const t0 = CHZ.t0 = st.getTime(), step = 1800000, n = 48, all = [];
     ids.forEach(id => {
       const a = (r[id] || []).map(x => { const at = x.a || x.attributes || {}; return [(x.lu != null ? x.lu * 1000 : Date.parse(x.last_updated || x.last_changed)), parseFloat(at.current_temperature)]; }).filter(x => !isNaN(x[0]) && !isNaN(x[1])).sort((p, q) => p[0] - q[0]);
       if (!a.length) return; const pts = []; let k = 0, cur = a[0][1];
@@ -5911,6 +6086,7 @@ function hzDraw() {
   const cs = [12, 14.5, 17.5, 20.5, 23, 25.5, 28], pc = PAL.temp.map(x => rgbOf(x).split(",").map(Number));   // the room cards' temperature colours, blended between their bands so the line shifts hue smoothly
   const col = t => { if (t <= cs[0]) return pc[0]; if (t >= cs[6]) return pc[6]; let k = 0; while (t > cs[k + 1]) k++; const f = (t - cs[k]) / (cs[k + 1] - cs[k]); return pc[k].map((v, n) => Math.round(v + (pc[k + 1][n] - v) * f)); };
   const stops = p.map((v, i) => '<stop offset="' + (i / (p.length - 1)).toFixed(3) + '" stop-color="rgb(' + col(v).join(",") + ')"/>').join("");
+  $("svg", g).setAttribute("data-cr", "clz-house"); $("svg", g).setAttribute("data-crs", "1"); chartReadout("clz-house", p.map((v, i) => ({ x: X(i), t: crWhen((CHZ.t0 || Date.now() - 24 * 3600000) + i * 1800000), r: [["House average", f1(v) + "°", "rgb(" + col(v).join(",") + ")"]] })), { scrub: true });
   $("svg", g).innerHTML = '<defs><linearGradient id="hzh" x1="0" y1="0" x2="1" y2="0">' + stops + '</linearGradient><linearGradient id="hzv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="hzk" maskUnits="userSpaceOnUse" x="0" y="0" width="' + W + '" height="' + H + '"><rect width="' + W + '" height="' + H + '" fill="url(#hzv)"/></mask></defs><path d="' + d + ' L' + W + " " + H + " L0 " + H + ' Z" fill="url(#hzh)" mask="url(#hzk)"/><path d="' + d + '" fill="none" stroke="url(#hzh)" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round"/>';
   $("small", g).textContent = "LAST 24 HOURS · " + f1(mn) + "–" + f1(mx) + "°"; g.hidden = false;
 }
@@ -6846,12 +7022,13 @@ function enExtra(sp) {
   q(o.gc, m => { en.gridCost = m; }); q(o.gu, m => { en.gas = m; }, gsp); q(o.gk, m => { en.gasCost = m; }, gsp);
   if (o.gu.length && !en.gasUnit) send({ type: "recorder/get_statistics_metadata", statistic_ids: o.gu }, r => { const m = r && r[0]; en.gasUnit = (m && (m.display_unit_of_measurement || m.statistics_unit_of_measurement || m.unit_of_measurement)) || "kWh"; drawEnergy(); });
 }
-function enBars(bk, sp, vals, col, FS, mob, fm) {
+const enWhen = (per, b) => { const d = new Date(b); return per === "hour" ? d.toLocaleDateString([], { weekday: "short" }) + " " + crWhen(d, false) : per === "day" ? d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }) : d.toLocaleDateString([], { month: "long", year: "numeric" }); };
+function enBars(bk, sp, vals, col, FS, mob, fm, nm, unit) {
   const mx = Math.max.apply(null, bk.map(b => vals[b] || 0).concat([0.001])), W = mob ? 420 : 360, H = mob ? 150 : 140, L = mob ? 50 : 42, B = mob ? 28 : 26, bw = (W - L) / bk.length; let g = "";
   for (let i = 0; i <= 2; i++) { const y = 8 + (H - B - 8) * (1 - i / 2); g += '<line x1="' + L + '" x2="' + W + '" y1="' + y + '" y2="' + y + '" stroke="currentColor" opacity=".12"/><text x="' + (L - 6) + '" y="' + (y + 4) + '" text-anchor="end" font-size="' + FS + '" fill="currentColor" opacity=".6">' + fm(mx * i / 2) + '</text>'; }
   bk.forEach((b, i) => { const v = vals[b] || 0, hh = v / mx * (H - B - 8), d = new Date(b); if (hh > 0.3) g += '<rect x="' + (L + i * bw + bw * 0.12).toFixed(1) + '" y="' + (H - B - hh).toFixed(1) + '" width="' + (bw * 0.76).toFixed(1) + '" height="' + hh.toFixed(1) + '" rx="2" fill="' + col + '"><title>' + fm(v) + '</title></rect>';
     g += '<text x="' + (L + i * bw + bw / 2).toFixed(1) + '" y="' + (H - 7) + '" text-anchor="middle" font-size="' + FS + '" fill="currentColor" opacity=".6">' + (en.r === "day" ? (i % 3 === 0 ? d.getHours() : "") : en.r === "week" ? d.toLocaleDateString([], { weekday: "short" }) : en.r === "month" ? (i % 2 === 0 ? d.getDate() : "") : d.toLocaleDateString([], { month: "short" })) + '</text>'; });
-  return '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;margin-top:8px;display:block">' + g + '</svg>';
+  return '<svg' + chartReadout(nm || "en-bars", bk.map((b, i) => ({ x: L + i * bw + bw / 2, w: bw, t: enWhen(sp.per, b), r: [[nm ? nm.replace(/^en-/, "").replace(/^./, c => c.toUpperCase()) : "Usage", fm(vals[b] || 0) + (unit ? " " + unit : ""), col]] }))) + ' viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;margin-top:8px;display:block">' + g + '</svg>';
 }
 // every grid import statistic Home Assistant's Energy settings know about (looked for in the whole grid source, so older and newer layouts both work)
 function enGridIds(P) { const o = []; const walk = (x, d) => { if (!x || typeof x !== "object" || d > 4) return; Object.keys(x).forEach(k => { if (k === "stat_energy_from" && typeof x[k] === "string" && x[k]) o.push(x[k]); else walk(x[k], d + 1); }); }; ((P || {}).energy_sources || []).forEach(x => { if (x.type === "grid") walk(x, 0); }); return o.filter((v, i) => o.indexOf(v) === i); }
@@ -6901,6 +7078,19 @@ function enCheapLine(T) {   // tariff hint: which hours are cheapest, and whethe
   const rt = v => v === 0 ? "free" : T.symbol + v.toFixed(3) + "/kWh";
   return '<div class="lbl enchp' + (inNow ? ' on' : '') + '" style="margin-top:10px;text-transform:none;letter-spacing:0">Cheapest: <b>' + cheap.map(p => hr(p.from) + " – " + hr(p.to)).join(", ") + '</b> (' + rt(lo) + ') · ' + (inNow ? "cheap rate now, until " + hr(cur.to) : "next at " + hr(nx % 24)) + '</div>';
 }
+// ---------- energy scene: your own house picture with the totals for the chosen period pinned on it (config.js energyScene; no picture, no scene) ----------
+// The numbers are the same ones as the cards below (the power company's data arrives days late and gas monthly), so the scene follows DAY / WEEK / BILL / YEAR and says up to when the data goes.
+function enScene(o) {
+  const S = CONFIG.energyScene; if (!S || !S.image) return "";
+  const pt = (k, d) => Object.assign({}, d, S[k] || {}), H = pt("house", { x: 50, y: 10 }), G = pt("grid", { x: 30, y: 86 }), X = pt("gas", { x: 84, y: 64 }), GT = pt("gridTo", { x: 36, y: 50 }), XT = pt("gasTo", { x: 72, y: 56 });
+  const chip = (c, ic, cls, big, sm) => '<div class="enc ' + cls + '" style="--x:' + c.x + '%;--y:' + c.y + '%"><i>' + mdi(ic) + '</i><div><b>' + esc(big) + '</b><small>' + esc(sm) + '</small></div></div>';
+  const line = (a, b, col) => '<path d="M' + a.x + " " + a.y + " Q" + ((a.x + b.x) / 2) + " " + (Math.min(a.y, b.y) - 4) + " " + b.x + " " + b.y + '" stroke="' + col + '"/>';
+  let up = 0; Object.keys(en.grid || {}).forEach(t => { if (en.grid[t] > 0 && +t > up) up = +t; });
+  const upTo = up ? new Date(up + 36e5).toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }) : "";
+  return '<div class="pn ensc"><div class="ensb">' + (upTo ? "Data to " + esc(upTo) : "Waiting for data") + '</div><div class="ensi"><img src="' + esc(S.image) + '" alt="' + esc(S.alt || "Your home") + '" onerror="this.closest(\'.ensc\').remove()">' +
+    '<svg class="ensf" viewBox="0 0 100 100" preserveAspectRatio="none">' + line(G, GT, "#6bb8ff") + (o.gas ? line(X, XT, "#f78c6b") : "") + '</svg>' +
+    '<div class="enck">' + chip(H, "home-roof", "enh", o.total, "Total · " + o.lab) + chip(G, "lightning-bolt", "eng", o.kwh + " kWh", o.cost + " · grid") + (o.gas ? chip(X, "fire", "enx", o.gas, o.gasCost + " · gas") : "") + '</div></div></div>';
+}
 function enDraw() {
   const mob = isMobile(), FS = mob ? 15 : 12, sp = enSpan(), pg = $("#energy"), P = en.prefs;
   let h = '<div class="eh ehc" style="margin-bottom:14px"><div class="chips tabs">' + [["day", "DAY"], ["week", "WEEK"], ["month", CONFIG.billing ? "BILL" : "MONTH"], ["year", "YEAR"]].map(x => '<button class="chip' + (en.r === x[0] ? " on" : "") + '" data-er="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="seg" style="margin-left:auto"><button class="eb" data-eo="-1">' + mdi("chevron-left") + '</button><button class="eb" data-eo="0" style="min-width:210px">' + esc(sp.lab) + '</button><button class="eb" data-eo="1">' + mdi("chevron-right") + '</button></div></div>';
@@ -6922,7 +7112,7 @@ function enDraw() {
       hgas = '<div class="pn pg" data-k="g"><div class="eh"><div><div class="lbl">Gas cost' + (gdates ? ' · ' + esc(gdates) : '') + '</div><div class="h2" style="margin-top:4px">' + (gC != null ? mny(gTot) : "-") + '</div></div><div class="lbl ensub" style="margin-left:auto;text-align:right">' + fm(gT) + ' ' + esc(GU) + (GR ? ' · excl. GST' : '') + '</div></div><div class="enb">' +
         (gD > 0 ? '<div class="enr"><i class="end" style="background:#8a94a6"></i><span class="enn">Daily charge</span><span class="lbl">' + gdays + ' day' + (gdays === 1 ? "" : "s") + ' × ' + TT.symbol + TT.gasDaily.toFixed(3) + '</span><b>' + mny(gD) + '</b></div>' : '') +
         '<div class="enr"><i class="end" style="background:#f78c6b"></i><span class="enn">Usage</span><span class="lbl">' + fm(gT) + ' ' + esc(GU) + (gC != null && gT > 0.001 ? ' × ' + (gC / gT * 100).toFixed(1) + 'c' : '') + '</span><b>' + (gC != null ? mny(gC) : "-") + '</b></div></div>' +
-        (en.r === "day" ? '<div class="lbl" style="margin:12px 0 -6px;text-transform:none;letter-spacing:0;opacity:.7">Gas readings arrive in lumps, so a single day\u2019s bars are approximate.</div>' : '') + '<div class="lbl" style="margin-top:14px">Usage · ' + esc(GU) + '</div>' + enBars(gbk, gsp, (() => { const v = {}; Object.keys(en.gas).forEach(t => { const b = enBk(gsp, +t); v[b] = (v[b] || 0) + en.gas[t]; }); return v; })(), "#f78c6b", FS, mob, fm) + '</div>';
+        (en.r === "day" ? '<div class="lbl" style="margin:12px 0 -6px;text-transform:none;letter-spacing:0;opacity:.7">Gas readings arrive in lumps, so a single day\u2019s bars are approximate.</div>' : '') + '<div class="lbl" style="margin-top:14px">Usage · ' + esc(GU) + '</div>' + enBars(gbk, gsp, (() => { const v = {}; Object.keys(en.gas).forEach(t => { const b = enBk(gsp, +t); v[b] = (v[b] || 0) + en.gas[t]; }); return v; })(), "#f78c6b", FS, mob, fm, "en-gas", GU) + '</div>';
     }
     if (CS) {
       h += htot;
@@ -6933,7 +7123,7 @@ function enDraw() {
       const ks = Object.keys(CS.cols).map(Number), cm = Math.max.apply(null, bk.map(b => (CS.cols[b] || [0]).reduce((a, c) => a + c, 0)).concat([0.001])), W2 = mob ? 420 : 360, H2 = mob ? 150 : 140, L2 = mob ? 50 : 42, B2 = mob ? 28 : 26, bw2 = (W2 - L2) / bk.length; let g2 = '';
       for (let i = 0; i <= 2; i++) { const y = 8 + (H2 - B2 - 8) * (1 - i / 2); g2 += '<line x1="' + L2 + '" x2="' + W2 + '" y1="' + y + '" y2="' + y + '" stroke="currentColor" opacity=".12"/><text x="' + (L2 - 6) + '" y="' + (y + 4) + '" text-anchor="end" font-size="' + FS + '" fill="currentColor" opacity=".6">' + fm(cm * i / 2) + '</text>'; }
       bk.forEach((b, i) => { let y = H2 - B2; (CS.cols[b] || []).forEach((v, j) => { const hh = v / cm * (H2 - B2 - 8); if (hh > 0.3) g2 += '<rect x="' + (L2 + i * bw2 + bw2 * 0.12).toFixed(1) + '" y="' + (y - hh).toFixed(1) + '" width="' + (bw2 * 0.76).toFixed(1) + '" height="' + hh.toFixed(1) + '" rx="2" fill="' + PC[j % 4] + '"><title>' + esc(CS.per[j].p.name || "") + ' ' + fm(v) + ' kWh</title></rect>'; y -= hh; }); const d = new Date(b); g2 += '<text x="' + (L2 + i * bw2 + bw2 / 2).toFixed(1) + '" y="' + (H2 - 7) + '" text-anchor="middle" font-size="' + FS + '" fill="currentColor" opacity=".6">' + (en.r === "day" ? (i % 3 === 0 ? d.getHours() : "") : en.r === "week" ? d.toLocaleDateString([], { weekday: "short" }) : en.r === "month" ? (i % 2 === 0 ? d.getDate() : "") : d.toLocaleDateString([], { month: "short" })) + '</text>'; });
-      h += '<div class="lbl" style="margin-top:14px">Usage · kWh</div><svg viewBox="0 0 ' + W2 + ' ' + H2 + '" style="width:100%;margin-top:8px;display:block">' + g2 + '</svg></div>';
+      h += '<div class="lbl" style="margin-top:14px">Usage · kWh</div><svg' + chartReadout("en-cost", bk.map((b, i) => { const cs = CS.cols[b] || [], tot = cs.reduce((a, c) => a + c, 0); return { x: L2 + i * bw2 + bw2 / 2, w: bw2, t: enWhen(sp.per, b), r: cs.map((v, j) => [CS.per[j].p.name || "Usage", fm(v) + " kWh", PC[j % 4]]).concat(cs.length > 1 ? [["Total", fm(tot) + " kWh"]] : []) }; })) + ' viewBox="0 0 ' + W2 + ' ' + H2 + '" style="width:100%;margin-top:8px;display:block">' + g2 + '</svg></div>';
     } else h += '<div class="pn lbl">' + (en.grid === undefined || en.gridCost === undefined ? "Calculating cost…" : "Electricity cost unavailable: no usage data came back for " + (en.gridSrc === "devices" ? "your tracked devices" : "the grid meter") + " in this period.") + '</div>';
     h += hgas;
 
@@ -6958,7 +7148,7 @@ function enDraw() {
       if (rows.length) h += '<div class="pn pg enins"><div class="lbl">Insights</div><div class="eni">' + rows.map(r => '<div class="eil"><div class="lbl">' + esc(r[0]) + '</div><div class="eiv"' + (r[3] ? ' style="color:' + r[3] + '"' : '') + '>' + esc(r[1]) + '</div><div class="eic">' + esc(r[2]) + '</div></div>').join("") + '</div></div>';
     }
     const et = hasGas && CS ? (en.tab === "g" ? "g" : "e") : "e";
-    h = h.slice(0, h0) + (hasGas && CS ? '<div class="ensw"><button class="' + (et === "e" ? "on" : "") + '" data-et="e">ELECTRICITY</button><button class="' + (et === "g" ? "on" : "") + '" data-et="g">GAS</button></div>' : "") + '<div class="ensl" data-t="' + et + '" data-n="' + (hasGas && CS ? 3 : 2) + '">' + h.slice(h0) + '</div>'; en.body = h.slice(h0);
+    h = h.slice(0, h0) + (CS ? enScene({ total: mny(subT + gstA), lab: sp.lab, kwh: fm(CS.kwh), cost: mny(CS.total), gas: hasGas ? fm(gT) + " " + GU : "", gasCost: gC != null ? mny(gTot) : "-" }) : "") + (hasGas && CS ? '<div class="ensw"><button class="' + (et === "e" ? "on" : "") + '" data-et="e">ELECTRICITY</button><button class="' + (et === "g" ? "on" : "") + '" data-et="g">GAS</button></div>' : "") + '<div class="ensl" data-t="' + et + '" data-n="' + (hasGas && CS ? 3 : 2) + '">' + h.slice(h0) + '</div>'; en.body = h.slice(h0);
   }
   pg.innerHTML = h;
   if (en.tx != null && en.data && !pg.querySelector(".enold") && pg.querySelector(".ensl")) { const d = en.tx, els = pg.querySelectorAll(".ensw,.ensl>.pn"); en.tx = null; if (!(window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches)) { els.forEach((c, k) => { c.style.setProperty("--tx", d * 30 + "px"); c.style.setProperty("--ty", d ? "6px" : "14px"); c.style.setProperty("--i", k); c.classList.add("enin"); }); en.anim = Date.now() + 700; setTimeout(() => els.forEach(c => c.classList.remove("enin")), 800); } }
@@ -7123,6 +7313,65 @@ const mq = window.matchMedia("(max-width:760px)"); if (mq.addEventListener) mq.a
   new MutationObserver(sched).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["style", "class"] });
   sched();
 })();
+// ---------- Chart readout: point at a chart (mouse) or tap / drag on it (touch) and it shows the values there ----------
+// A chart's <svg> carries data-cr="<name>" and the chart registers what it shows:  chartReadout("name", points, options)  returns that attribute.
+//   points: [{ x, w, y, t, r }]   x (and w, the width of a bar, and y, the height of the line) are in the svg's own units;
+//           t is the heading ("Sun 3pm"); r is the rows: [["Temperature", "18°", "#ff9a4d"], ...] (name, value, optional colour)
+//   options: { dot: draw a dot on the line at y, scrub: a finger dragged along the chart reads along it (only for charts that do not scroll sideways),
+//              at: x => point  instead of a list, for a chart with a lot of points }
+// Everything is looked up when you point, so a chart that is redrawn keeps working, and a readout open on a redrawn chart reopens on the new one.
+const CRD = {}; let crOn = null, crDn = null, crTm = 0;
+function chartReadout(name, pts, o) { CRD[name] = { p: pts || [], o: o || {} }; return ' data-cr="' + name + '"' + (o && o.scrub ? ' data-crs="1"' : ""); }
+const crWhen = (x, day) => { const d = new Date(x.datetime || x); return (day === false ? "" : d.toLocaleDateString([], { weekday: "short" }) + " ") + d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })).replace(" ", "").toLowerCase(); };
+function crX(svg, ev) { const m = svg.getScreenCTM(); if (!m) return null; const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY; return p.matrixTransform(m.inverse()).x; }
+function crPick(d, x) {
+  if (d.o.at) return d.o.at(x);
+  let b = null, bd = 1e9; d.p.forEach(q => { const dd = q.w && Math.abs(x - q.x) <= q.w / 2 ? 0 : Math.abs(x - q.x); if (dd < bd) { bd = dd; b = q; } });
+  return b;
+}
+function crTip() {
+  let t = $("#crtip"); if (t) return t;
+  document.body.insertAdjacentHTML("beforeend", '<div id="crtip" hidden></div>'); return $("#crtip");
+}
+function crHide() { clearInterval(crTm); crTm = 0; document.querySelectorAll("svg .crg").forEach(g => g.remove()); const t = $("#crtip"); if (t) t.hidden = true; crOn = null; }
+function crShow(svg, q, ev) {
+  const d = CRD[svg.dataset.cr]; if (!d || !q) return;
+  const vb = svg.viewBox && svg.viewBox.baseVal, H = vb && vb.height ? vb.height : parseFloat(svg.getAttribute("height")) || svg.getBoundingClientRect().height;
+  let g = $(".crg", svg); if (!g) { g = document.createElementNS("http://www.w3.org/2000/svg", "g"); g.setAttribute("class", "crg"); g.setAttribute("pointer-events", "none"); svg.appendChild(g); }
+  g.innerHTML = q.w ? '<rect x="' + (q.x - q.w / 2) + '" y="0" width="' + q.w + '" height="' + H + '" rx="3" fill="currentColor" opacity=".1"/>'
+    : '<line x1="' + q.x + '" x2="' + q.x + '" y1="0" y2="' + H + '" stroke="currentColor" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>' +
+      (d.o.dot && q.y != null ? '<circle cx="' + q.x + '" cy="' + q.y + '" r="6" fill="var(--bg2,#222)" stroke="currentColor" stroke-width="2.5"/>' : "");
+  const t = crTip(); t.innerHTML = '<div class="crh">' + esc(q.t || "") + '</div>' + (q.r || []).map(r => '<div class="crr">' + (r[2] ? '<i style="background:' + r[2] + '"></i>' : "<i></i>") + '<span>' + esc(r[0]) + '</span><b>' + esc(r[1]) + '</b></div>').join("");
+  t.hidden = false;
+  const m = svg.getScreenCTM(), p = svg.createSVGPoint(); p.x = q.x; p.y = 0; const ax = m ? p.matrixTransform(m).x : (ev ? ev.clientX : 0), rc = svg.getBoundingClientRect(), tw = t.offsetWidth, th = t.offsetHeight;
+  t.style.left = Math.max(8, Math.min(innerWidth - tw - 8, ax - tw / 2)) + "px";
+  t.style.top = (rc.top - th - 8 < 8 ? Math.min(innerHeight - th - 8, rc.top + 8) : rc.top - th - 8) + "px";   // above the chart, or on it when there is no room above
+  crOn = { n: svg.dataset.cr, x: q.x }; clearInterval(crTm);
+  crTm = setInterval(() => {   // the chart was redrawn (Home Assistant sent news): show the same place on the new one, or close
+    if (!crOn) return crHide(); const cur = $('svg[data-cr="' + crOn.n + '"]'); if (cur && cur.isConnected && $(".crg", cur)) return;
+    if (!cur) return crHide(); const nd = CRD[crOn.n], nq = nd && crPick(nd, crOn.x); if (nq) crShow(cur, nq); else crHide();
+  }, 500);
+}
+const crSvg = e => e.target && e.target.closest ? e.target.closest("svg[data-cr]") : null;
+function crPoint(svg, e) { const d = CRD[svg.dataset.cr], x = crX(svg, e); return d && x != null ? crPick(d, x) : null; }
+document.addEventListener("pointermove", e => {
+  const s = crSvg(e);
+  if (e.pointerType === "touch") { if (s && crDn && crDn.s === s && crDn.scrub) { const q = crPoint(s, e); if (q) crShow(s, q, e); } return; }
+  if (s) { const q = crPoint(s, e); if (q) crShow(s, q, e); } else if (crOn) crHide();
+}, { passive: true });
+document.addEventListener("pointerdown", e => {
+  const s = crSvg(e); if (!s) { crDn = null; if (crOn) crHide(); return; }
+  const d = CRD[s.dataset.cr]; crDn = { s: s, x: e.clientX, y: e.clientY, scrub: !!(d && d.o.scrub) };
+  if (e.pointerType !== "touch" || crDn.scrub) { const q = crPoint(s, e); if (q) crShow(s, q, e); }
+}, { passive: true });
+document.addEventListener("pointerup", e => {
+  const dn = crDn; crDn = null; if (!dn || e.pointerType !== "touch" || dn.scrub) return;
+  if (Math.hypot(e.clientX - dn.x, e.clientY - dn.y) > 10) return;   // it was a swipe along a chart that scrolls sideways, not a tap
+  const q = crPoint(dn.s, e); if (q) crShow(dn.s, q, e);
+}, { passive: true });
+document.addEventListener("pointercancel", () => { crDn = null; }, { passive: true });
+document.addEventListener("scroll", () => { if (crOn && !crDn) crHide(); }, { capture: true, passive: true });
+document.documentElement.addEventListener("mouseleave", () => { if (crOn) crHide(); });
 // ---------- garage door alert: red frame + band on the garage camera while the door is open, amber while it moves ----------
 // config.js -> garageAlert: { "camera.garage": { sensor: "binary_sensor.garage_door_contact", opener: "switch.garage_opener", travel: 15, invert: false } }
 // sensor = the door contact (on = open; invert:true if yours is the other way round). opener (optional) = the switch / button / cover that moves the door.
