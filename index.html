@@ -158,6 +158,27 @@ body.free .device.tablet{width:auto;max-width:none}
 .dlg p{margin:0 0 10px;color:var(--muted);font-size:14.5px}
 .dlg .acts{display:flex;flex-direction:column;gap:8px;margin-top:16px}
 .dlg .btn{width:100%;text-align:center}
+.try{display:none}
+body.free .try{display:block;grid-column:1/-1;grid-row:2}
+body.free .stage{grid-row:3}body.free .foot{grid-row:4}
+.try .trh{display:flex;align-items:center;gap:14px;margin-bottom:10px;flex-wrap:wrap}.try .trh b{font:600 15px var(--display)}.try .trh span{color:var(--muted);font-size:12.5px}
+.try .bar{flex:0 0 120px;height:5px;border-radius:5px;background:var(--line);overflow:hidden}.try .bar i{display:block;height:100%;background:var(--accent);transition:width .4s}
+.try .tri{display:flex;flex-wrap:wrap;gap:8px}
+.try .it{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:8px;padding:8px 14px 8px 9px;border-radius:999px;border:1px solid var(--line);background:var(--panel);font:600 13px var(--body);color:var(--fg);cursor:pointer}
+.try .it:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.try .it .c{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:10px;flex:none}
+.try .it.done{color:var(--muted)}.try .it.done .c{background:var(--ok);border-color:var(--ok);color:#06241a}
+.try .it.next{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}.try .it.next .c{border-color:var(--hint)}.try .it small{color:var(--hint);font:700 10.5px var(--body);letter-spacing:.04em;text-transform:uppercase}
+.try .fin{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.try .fin h2{font:600 18px/1.2 var(--display);margin:0}.try .fin p{margin:0;color:var(--muted);flex:1 1 260px}
+.try .fin .btn{display:inline-block;text-decoration:none}
+@media (max-width:900px){
+  .screen>.try.ov{display:block;position:absolute;left:8px;right:8px;bottom:var(--ovb,74px);z-index:6;padding:10px 12px;border-radius:18px;background:var(--panel);box-shadow:0 8px 28px rgba(0,0,0,.45);max-height:60%;overflow:auto}
+  body:not(.free) .screen>.try.ov{display:none}
+  .try .pn{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px}.try .pn button{all:unset;margin-left:auto;color:var(--muted);font:600 11.5px var(--body);cursor:pointer;padding:4px 2px}
+  .try .pd{margin:4px 0 8px;color:var(--muted);font-size:12.5px}
+  .try .tri{flex-direction:column;gap:2px;margin-top:6px}.try .it{border:0;background:none;padding:7px 4px;border-radius:10px;width:100%}.try .it.next{background:rgba(196,180,255,.12);box-shadow:none}.try .it small{margin-left:auto}
+  .try .bar{flex:1 1 60px}
+}
 </style>
 
 <div class="demo" id="demo">
@@ -176,6 +197,7 @@ body.free .device.tablet{width:auto;max-width:none}
       <button id="v-tablet" aria-pressed="true">Wall tablet</button><button id="v-phone" aria-pressed="false">Phone</button>
     </div>
     </div>
+    <div class="try" id="try" aria-label="Things to try"></div>
     <div class="dock" id="dock">
     <div class="dockhead"><div class="bar" id="bar" aria-hidden="true"></div><span class="mnav"><button id="prev" aria-label="Previous step">‹</button><button id="next" aria-label="Next step">›</button></span></div>
     <ol class="steps" id="steps"></ol>
@@ -351,17 +373,42 @@ body.free .device.tablet{width:auto;max-width:none}
     HINTS.forEach(function (h) { var d = D.createElement("div"); d.id = "ez-h-" + h[0]; d.className = "ez-h"; D.body.appendChild(d); });
   }
   // Free play: pulsing dots on the best parts of the dashboard, each gone once its page has been opened
-  var HINTS = [["energy", "#energy"], ["theme", "#theme"], ["cameras", "#security"], ["weather", "#weather"], ["hazards", "#hazards"], ["events", "#events"], ["leaving", "", "#lvc"], ["alerts", "", "#hc"]];
-  function hints() {
-    var cur = (W.location.hash || "").split("/")[0];
+  var HINTS = [["cameras", "#security"], ["weather", "#weather"], ["energy", "#energy"], ["theme", "#theme"], ["alerts", "", "#hc"], ["leaving", "", "#lvc"]];
+  var TRY = [["cameras", "Cameras", "See every camera, live and recorded.", function () { go("#security"); }],
+             ["weather", "Weather", "Forecast, warnings and rain alerts.", function () { go("#weather"); }],
+             ["energy", "Energy", "What the house uses and what it costs.", function () { go("#energy"); }],
+             ["theme", "Themes", "Four looks, many colours and animations.", function () { go("#theme"); }],
+             ["alerts", "Alerts", "Everything that needs a look, in one place.", function () { if (W && W.DEMO) W.DEMO.alerts(true); go("#home"); }],
+             ["leaving", "Before you leave", "Lights, doors and the alarm in two taps.", function () { if (W && W.DEMO) W.DEMO.leaving(true); go("#home"); }]], tryOpen = false, trySig = "";
+  function nextTry() { for (var i = 0; i < TRY.length; i++) if (!gone[TRY[i][0]]) return TRY[i]; return null; }
+  function hints() {   // free play: one yellow dot, on the next thing not tried yet (the list in #try says what it is)
+    var cur = (W.location.hash || "").split("/")[0], nx = null, tip = D.getElementById("ez-tip");
+    HINTS.forEach(function (h) { if (h[1] && cur === h[1]) gone[h[0]] = 1; });
+    nx = nextTry();
     HINTS.forEach(function (h) {
       var d = D.getElementById("ez-h-" + h[0]); if (!d) return;
-      if (h[1] && cur === h[1]) gone[h[0]] = 1;
-      var a = gone[h[0]] ? null : h[2] ? q(h[2]) : q('a[href="' + h[1] + '"]');
+      var a = !nx || nx[0] !== h[0] ? null : h[2] ? q(h[2]) : (q('a[href="' + h[1] + '"]') || q("#bmore"));
       if (!a) { d.style.display = "none"; return; }
       var r = a.getBoundingClientRect(); d.style.display = "block"; d.style.left = Math.round(r.right - 16) + "px"; d.style.top = Math.round(r.top + 4) + "px";
+      if (tip) { var t = nx[1] + " · try this next"; if (tip.textContent !== t) tip.textContent = t; tip.style.display = "block"; var tw = tip.offsetWidth, th = tip.offsetHeight, tx = Math.min(Math.max(r.left + r.width / 2 - tw / 2, 8), W.innerWidth - tw - 8), ty = r.top - th - 12; if (ty < 8) ty = Math.min(r.bottom + 12, W.innerHeight - th - 8); tip.style.left = tx + "px"; tip.style.top = ty + "px"; }
     });
+    if (!nx && tip) tip.style.display = "none";
+    if (tip && nx && !HINTS.some(function (h) { var d = D.getElementById("ez-h-" + h[0]); return d && d.style.display === "block"; })) tip.style.display = "none";
   }
+  function drawTry() {   // the "Things to try" list: a strip under the intro on a laptop / tablet, one card over the phone
+    var el = $("try"), nx = nextTry(), n = TRY.filter(function (t) { return gone[t[0]]; }).length, ph = narrow.matches, sig = [n, nx && nx[0], ph, tryOpen, TRY.map(function (t) { return gone[t[0]] ? 1 : 0; }).join("")].join("|");
+    if (sig === trySig) return; trySig = sig;
+    var list = '<div class="tri">' + TRY.map(function (t) { var d = gone[t[0]], isN = nx && nx[0] === t[0]; return '<button class="it' + (d ? " done" : "") + (isN ? " next" : "") + '" data-t="' + t[0] + '"><span class="c">' + (d ? "✓" : "") + '</span>' + t[1] + (isN ? "<small>Next</small>" : "") + '</button>'; }).join("") + '</div>';
+    var bar = '<div class="bar"><i style="width:' + Math.round(n / TRY.length * 100) + '%"></i></div>';
+    if (!nx) { el.innerHTML = '<div class="fin"><h2>That is the whole house, in one app</h2><p>We set this up in your home, on a wall tablet and every phone in the family.</p><a class="btn primary" href="https://wa.me/64225294960" target="_blank" rel="noopener">Book a free consultation</a><a class="btn" href="https://elementzoom.co.nz/our-packages/" target="_blank" rel="noopener">See packages</a></div>'; return; }
+    if (!ph) { el.innerHTML = '<div class="trh"><b>Things to try</b><span>' + n + ' of ' + TRY.length + ' explored</span>' + bar + '</div>' + list; return; }
+    el.innerHTML = '<div class="pn">Try next: ' + nx[1] + '<button data-tx="1">' + n + ' of ' + TRY.length + (tryOpen ? " ˅" : " ›") + '</button></div><div class="pd">' + nx[2] + '</div>' + (tryOpen ? bar + list : '<button class="btn primary" data-t="' + nx[0] + '">Take me there</button>');
+  }
+  $("try").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-t]"), x = e.target.closest("[data-tx]");
+    if (x) { tryOpen = !tryOpen; trySig = ""; drawTry(); return; }
+    if (b && W) { TRY.forEach(function (t) { if (t[0] === b.dataset.t) t[3](); }); if (narrow.matches && tryOpen) { tryOpen = false; trySig = ""; drawTry(); } }
+  });
   function hideHints() { HINTS.forEach(function (h) { var d = D && D.getElementById("ez-h-" + h[0]); if (d) d.style.display = "none"; }); }
   // phone: the step card sits at the bottom of the phone screen, or at the top when the thing to tap is down there (never on top of it)
   function placeCard(r) {
@@ -375,7 +422,7 @@ body.free .device.tablet{width:auto;max-width:none}
   }
   function tick() {
     if (!D || !W || !D.body) return; overlay();
-    if (free) { var rg = D.getElementById("ez-ring"), tp = D.getElementById("ez-tip"); if (rg) rg.style.display = tp.style.display = "none"; hints(); return; }
+    if (free) { var rg = D.getElementById("ez-ring"), tp = D.getElementById("ez-tip"); if (rg) rg.style.display = "none"; hints(); drawTry(); return; }
     hideHints();
     var s = STEPS[active], ring = D.getElementById("ez-ring"), tip = D.getElementById("ez-tip"); if (!ring) return;
     if (s.check && !done[active] && s.check()) complete(active);
@@ -415,6 +462,7 @@ body.free .device.tablet{width:auto;max-width:none}
   // ---------- sizing the device ----------
   var dock = $("dock"), guide = document.querySelector(".guide"), stage = document.querySelector(".stage"), foot = document.querySelector(".foot");
   function place() {   // phones: the step card sits right above the dashboard so both fit on one screen
+    var tr = $("try"); if (narrow.matches) { if (tr.parentElement !== screen) { screen.appendChild(tr); tr.classList.add("ov"); trySig = ""; } } else if (tr.parentElement !== guide) { tr.classList.remove("ov"); guide.insertBefore(tr, dock); trySig = ""; }
     if (narrow.matches) { if (dock.parentElement !== screen) { screen.appendChild(dock); dock.classList.add("ov"); stage.appendChild(foot); } }
     else if (dock.parentElement !== guide) { dock.classList.remove("ov"); guide.appendChild(dock); guide.appendChild(foot); }
   }
