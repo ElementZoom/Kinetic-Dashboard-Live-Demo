@@ -400,8 +400,9 @@ body.free .stage{grid-row:3}body.free .foot{grid-row:4}
     if (sig === trySig) return; trySig = sig;
     var list = '<div class="tri">' + TRY.map(function (t) { var d = gone[t[0]], isN = nx && nx[0] === t[0]; return '<button class="it' + (d ? " done" : "") + (isN ? " next" : "") + '" data-t="' + t[0] + '"><span class="c">' + (d ? "✓" : "") + '</span>' + t[1] + (isN ? "<small>Next</small>" : "") + '</button>'; }).join("") + '</div>';
     var bar = '<div class="bar"><i style="width:' + Math.round(n / TRY.length * 100) + '%"></i></div>';
-    if (!nx) { el.innerHTML = '<div class="fin"><h2>That is the whole house, in one app</h2><p>We set this up in your home, on a wall tablet and every phone in the family.</p><a class="btn primary" href="https://wa.me/64225294960" target="_blank" rel="noopener">Book a free consultation</a><a class="btn" href="https://elementzoom.co.nz/our-packages/" target="_blank" rel="noopener">See packages</a></div>'; return; }
+    el.style.display = ""; if (!nx) { el.innerHTML = '<div class="fin"><h2>That is the whole house, in one app</h2><p>We set this up in your home, on a wall tablet and every phone in the family.</p><a class="btn primary" href="https://wa.me/64225294960" target="_blank" rel="noopener">Book a free consultation</a><a class="btn" href="https://elementzoom.co.nz/our-packages/" target="_blank" rel="noopener">See packages</a></div>'; return; }
     if (!ph) { el.innerHTML = '<div class="trh"><b>Things to try</b><span>' + n + ' of ' + TRY.length + ' explored</span>' + bar + '</div>' + list; return; }
+    if (nx) { el.innerHTML = ""; el.style.display = "none"; return; }   // phone: no card over the buttons, the yellow dot and its label say what to tap
     el.innerHTML = '<div class="pn">Try next: ' + nx[1] + '<button data-tx="1">' + n + ' of ' + TRY.length + (tryOpen ? " ˅" : " ›") + '</button></div><div class="pd">' + nx[2] + '</div>' + (tryOpen ? bar + list : '<button class="btn primary" data-t="' + nx[0] + '">Take me there</button>');
   }
   $("try").addEventListener("click", function (e) {
