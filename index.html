@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ElementZoom Live Demo</title>
+<script>if(/[?&]lang=zh\b/.test(location.search)){document.write('<script src="app/zh-dict.js?v=1"><\/script><script src="app/zh-tour.js?v=1"><\/script><script src="app/zh.js?v=1"><\/script>');document.title="ElementZoom 在线演示"}</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 body{margin:0}
@@ -215,7 +216,7 @@ body.free .stage{grid-row:3}body.free .foot{grid-row:4}
         <div class="sbar" aria-hidden="true"><span id="clk">9:41</span><span class="isl"></span><span class="ic"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="4.5" y="5" width="3" height="6" rx=".8"/><rect x="9" y="2.5" width="3" height="8.5" rx=".8"/><rect x="13.5" y="0" width="3" height="11" rx=".8"/></svg><svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 2.2c2.2 0 4.2.9 5.7 2.3l1-1.1A9.6 9.6 0 0 0 8 .7 9.6 9.6 0 0 0 1.300 3.400l1 1.100A8 8 0 0 1 8 2.200zm0 3.300c1.300 0 2.500.5 3.400 1.300l1-1.100A6.500 6.500 0 0 0 8 4a6.500 6.500 0 0 0-4.400 1.700l1 1.100C5.500 6 6.700 5.500 8 5.500zm0 3.200c.6 0 1.200.2 1.600.6L8 11 6.400 9.300c.4-.4 1-.6 1.600-.6z"/></svg><svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.500" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.500" y="4" width="2" height="4" rx="1" opacity=".5"/></svg></span></div>
         <div class="hbar" aria-hidden="true"><i></i></div>
         <div class="loading" id="loading">Loading the dashboard…</div>
-        <iframe id="dash" title="ElementZoom dashboard, live demo" src="app/dash.html?v=1.14.6.36#home"></iframe>
+        <iframe id="dash" title="ElementZoom dashboard, live demo" src="app/dash.html?v=1.14.6.36#home"></iframe><script>if(/[?&]lang=zh\b/.test(location.search))document.getElementById("dash").src="app/dash.html?v=1.14.6.36&lang=zh#home"</script>
       </div>
     </div>
   </section>
@@ -235,6 +236,9 @@ body.free .stage{grid-row:3}body.free .foot{grid-row:4}
   var $ = function (id) { return document.getElementById(id); };
   var frame = $("dash"), screen = $("screen"), device = $("device");
   var narrow = matchMedia("(max-width:900px)");
+  var ZH = /[?&]lang=zh\b/.test(location.search), DASH = "app/dash.html?v=1.14.6.36" + (ZH ? "&lang=zh" : "") + "#home";
+  var PK = ZH ? "https://elementzoom.co.nz/zh/taocan/" : "https://elementzoom.co.nz/our-packages/"; Array.prototype.forEach.call(document.querySelectorAll('a[href*="our-packages"]'), function (a) { a.href = PK; });
+  var L = function (t) { return ZH && window.__zhTr ? window.__zhTr(t) : t; };   // Chinese text for strings written into the dashboard's own page
   var mode = narrow.matches ? "phone" : "tablet";
   var free = /[?&]mode=free\b/.test(location.search), gone = {}, D = null, W = null, active = 0, done = {}, armed = {}, scrolled = null, scrollN = 0, scrollT = 0;
 
@@ -269,6 +273,7 @@ body.free .stage{grid-row:3}body.free .foot{grid-row:4}
   function hit(e, id) { var t = e.target && e.target.entity_id || e.data && e.data.entity_id; return [].concat(t || []).indexOf(id) > -1; }
   function go(hash) { if (W) W.location.hash = hash; }
 
+  var MB = "Master bedroom|主卧";
   // ---------- the tour ----------
   var STEPS = [
     { title: "Switch a light", text: "Tap the Living Lights tile to switch it off and on. Press and hold it to dim it or change the colour.",
@@ -278,24 +283,24 @@ body.free .stage{grid-row:3}body.free .foot{grid-row:4}
       when: function (e) { return e.kind === "service" && hit(e, "light.demo_living_lights"); } },
     { title: "Warm up the bedroom", text: "Turn on heating in the Master bedroom, or press + to raise the target. Watch the room temperature start to climb.",
       ok: "Heating can also come on by itself before bedtime.", go: "#climate",
-      after: function () { var c = card("Master bedroom"); if (c) c.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" }); },
-      chain: [[function () { var c = card("Master bedroom"); if (!c) return null; if (!shown(c)) return null; return [c.querySelector('button[data-m="heat"]:not(.on)'), c.querySelector('button[data-d="1"]')].find(shown) || null; }, "Turn up the heat"],
+      after: function () { var c = card(MB); if (c) c.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" }); },
+      chain: [[function () { var c = card(MB); if (!c) return null; if (!shown(c)) return null; return [c.querySelector('button[data-m="heat"]:not(.on)'), c.querySelector('button[data-d="1"]')].find(shown) || null; }, "Turn up the heat"],
               [function () { return q('a[href="#climate"]'); }, "Open Climate"], [function () { return q("#bmore"); }, "Tap More"]],
       when: function (e) { return e.kind === "service" && e.domain === "climate" && hit(e, "climate.demo_master"); } },
     { title: "Close the curtains", text: "In the Master bedroom, tap Close all and watch both curtains move. Most clients have this happen on its own at sunset.",
       ok: "Curtains, blinds and shades all work like this.", go: "#rooms/master",
-      chain: [[function () { return qd("button.eb", "^\\s*close all\\s*$"); }, "Close all"], [function () { var cb = W.location.hash === "#rooms/master" && D.querySelector('#rv [data-rcv="close"]'), pn = cb && cb.closest("[data-pi]"); return pn && !shown(cb) ? q('#roomspg button.chip[data-i="' + pn.dataset.pi + '"]') : null; }, "Show the curtains"], [function () { return q('a[href="#rooms/master"]'); }, "Open Master bedroom"], [function () { return q("button.chip", "^\\s*main\\s*$"); }, "Show the main rooms"], [function () { return q('a[href="#rooms"]'); }, "Open Rooms"]],
+      chain: [[function () { return qd("button.eb", "^\\s*(close all|全部关闭)\\s*$"); }, "Close all"], [function () { var cb = W.location.hash === "#rooms/master" && D.querySelector('#rv [data-rcv="close"]'), pn = cb && cb.closest("[data-pi]"); return pn && !shown(cb) ? q('#roomspg button.chip[data-i="' + pn.dataset.pi + '"]') : null; }, "Show the curtains"], [function () { return q('a[href="#rooms/master"]'); }, "Open Master bedroom"], [function () { return q("button.chip", "^\\s*(main|主要)\\s*$"); }, "Show the main rooms"], [function () { return q('a[href="#rooms"]'); }, "Open Rooms"]],
       when: function (e) { return e.kind === "service" && e.domain === "cover" && /master_curtain/.test(JSON.stringify(e.target || e.data)); } },
     { title: "Someone's on the driveway", text: "Send a visitor up the driveway. The camera tags them as a person straight away. Then tap the camera to see it full screen.",
       ok: "On a real install your phone gets the alert with a snapshot, even when you're out.",
       action: ["Send a visitor", function () { W.DEMO.person(true); go(mode === "phone" ? "#security" : "#home"); }],
-      chain: [[function () { return armed[3] && !D.querySelector(".cam.fs") ? cam("driveway") : null; }, "Tap to watch"]],
+      chain: [[function () { return armed[3] && !D.querySelector(".cam.fs") ? cam("driveway|车道") : null; }, "Tap to watch"]],
       check: function () { return armed[3] && D.querySelector(".cam.fs"); } },
     { title: "The garage was left open", text: "Leave the garage door open and see the camera turn red. Then close it from the Garage room: tap the door tile twice to confirm.",
       ok: "On a real install the door can also close itself after a set time.",
       action: ["Leave it open", function () { var x = D.querySelector(".cam.fs .cx"); if (x) x.click(); W.DEMO.garage(true); go(mode === "phone" ? "#security" : "#home"); }],
       chain: [[function () { return armed[4] === true ? qd('[data-e="switch.demo_garage_opener"]') : null; }, "Tap twice to close"],
-              [function () { return armed[4] === true ? q('a[href="#rooms/garage"]') : null; }, "Open Garage"], [function () { return armed[4] === true ? q("button.chip", "^\\s*utility\\s*$") : null; }, "Show utility rooms"], [function () { return armed[4] === true ? q('a[href="#rooms"]') : null; }, "Open Rooms"]],
+              [function () { return armed[4] === true ? q('a[href="#rooms/garage"]') : null; }, "Open Garage"], [function () { return armed[4] === true ? q("button.chip", "^\\s*(utility|功能区)\\s*$") : null; }, "Show utility rooms"], [function () { return armed[4] === true ? q('a[href="#rooms"]') : null; }, "Open Rooms"]],
       when: function (e) { return armed[4] && e.kind === "state" && e.id === "binary_sensor.demo_garage_door_contact" && e.state === "off"; } },
     { title: "Water the garden", text: "The driveway soil is dry. Open Irrigation, pick a zone and start a 15-minute timer.",
       ok: "The tap turns itself off when the timer ends, and skips watering when rain is coming.", go: "#irrigation",
@@ -320,7 +325,7 @@ body.free .stage{grid-row:3}body.free .foot{grid-row:4}
       click: "[data-wnmore],[data-ft]" },
     { title: "Choose how pages move", text: "On the Theme page, pick how the dashboard changes between pages: rise, slide, fade or none. Then tap another page to feel it.",
       ok: "Your choice is remembered on that device.", go: "#theme",
-      chain: [[function () { return qd("button[data-pgfx]:not(.on)"); }, "Pick a transition"], [function () { return W.location.hash === "#theme" && !qd("button[data-pgfx]") ? qd("#theme button.chip", "^\\s*page transition") : null; }, "Show page transitions"], [function () { return q('a[href="#theme"]'); }, "Open Theme"], [function () { return q("#bmore"); }, "Tap More"]],
+      chain: [[function () { return qd("button[data-pgfx]:not(.on)"); }, "Pick a transition"], [function () { return W.location.hash === "#theme" && !qd("button[data-pgfx]") ? qd("#theme button.chip", "^\\s*(page transition|页面切换效果)") : null; }, "Show page transitions"], [function () { return q('a[href="#theme"]'); }, "Open Theme"], [function () { return q("#bmore"); }, "Tap More"]],
       click: "button[data-pgfx]" },
     { title: "Pick a look", text: "Same dashboard, four styles. Choose one on the Theme page and the whole app changes.",
       ok: "We match the look to your home when we install it.", go: "#theme",
@@ -390,7 +395,7 @@ body.free .stage{grid-row:3}body.free .foot{grid-row:4}
       var a = !nx || nx[0] !== h[0] ? null : h[2] ? q(h[2]) : (q('a[href="' + h[1] + '"]') || q("#bmore"));
       if (!a) { d.style.display = "none"; return; }
       var r = a.getBoundingClientRect(); d.style.display = "block"; d.style.left = Math.round(r.right - 16) + "px"; d.style.top = Math.round(r.top + 4) + "px";
-      if (tip) { var t = nx[1] + " · try this next"; if (tip.textContent !== t) tip.textContent = t; tip.style.display = "block"; var tw = tip.offsetWidth, th = tip.offsetHeight, tx = Math.min(Math.max(r.left + r.width / 2 - tw / 2, 8), W.innerWidth - tw - 8), ty = r.top - th - 12; if (ty < 8) ty = Math.min(r.bottom + 12, W.innerHeight - th - 8); tip.style.left = tx + "px"; tip.style.top = ty + "px"; }
+      if (tip) { var t = L(nx[1] + " · try this next"); if (tip.textContent !== t) tip.textContent = t; tip.style.display = "block"; var tw = tip.offsetWidth, th = tip.offsetHeight, tx = Math.min(Math.max(r.left + r.width / 2 - tw / 2, 8), W.innerWidth - tw - 8), ty = r.top - th - 12; if (ty < 8) ty = Math.min(r.bottom + 12, W.innerHeight - th - 8); tip.style.left = tx + "px"; tip.style.top = ty + "px"; }
     });
     if (!nx && tip) tip.style.display = "none";
     if (tip && nx && !HINTS.some(function (h) { var d = D.getElementById("ez-h-" + h[0]); return d && d.style.display === "block"; })) tip.style.display = "none";
@@ -400,7 +405,7 @@ body.free .stage{grid-row:3}body.free .foot{grid-row:4}
     if (sig === trySig) return; trySig = sig;
     var list = '<div class="tri">' + TRY.map(function (t) { var d = gone[t[0]], isN = nx && nx[0] === t[0]; return '<button class="it' + (d ? " done" : "") + (isN ? " next" : "") + '" data-t="' + t[0] + '"><span class="c">' + (d ? "✓" : "") + '</span>' + t[1] + (isN ? "<small>Next</small>" : "") + '</button>'; }).join("") + '</div>';
     var bar = '<div class="bar"><i style="width:' + Math.round(n / TRY.length * 100) + '%"></i></div>';
-    el.style.display = ""; if (!nx) { el.innerHTML = '<div class="fin"><h2>That is the whole house, in one app</h2><p>We set this up in your home, on a wall tablet and every phone in the family.</p><a class="btn primary" href="https://wa.me/64225294960" target="_blank" rel="noopener">Book a free consultation</a><a class="btn" href="https://elementzoom.co.nz/our-packages/" target="_blank" rel="noopener">See packages</a></div>'; return; }
+    el.style.display = ""; if (!nx) { el.innerHTML = '<div class="fin"><h2>That is the whole house, in one app</h2><p>We set this up in your home, on a wall tablet and every phone in the family.</p><a class="btn primary" href="https://wa.me/64225294960" target="_blank" rel="noopener">Book a free consultation</a><a class="btn" href="' + PK + '" target="_blank" rel="noopener">See packages</a></div>'; return; }
     if (!ph) { el.innerHTML = '<div class="trh"><b>Things to try</b><span>' + n + ' of ' + TRY.length + ' explored</span>' + bar + '</div>' + list; return; }
     if (nx) { el.innerHTML = ""; el.style.display = "none"; return; }   // phone: no card over the buttons, the yellow dot and its label say what to tap
     el.innerHTML = '<div class="pn">Try next: ' + nx[1] + '<button data-tx="1">' + n + ' of ' + TRY.length + (tryOpen ? " ˅" : " ›") + '</button></div><div class="pd">' + nx[2] + '</div>' + (tryOpen ? bar + list : '<button class="btn primary" data-t="' + nx[0] + '">Take me there</button>');
@@ -440,7 +445,7 @@ body.free .stage{grid-row:3}body.free .foot{grid-row:4}
     ring.style.display = tip.style.display = "block";
     ring.style.left = (r.left - pad) + "px"; ring.style.top = (r.top - pad) + "px"; ring.style.width = (r.width + pad * 2) + "px"; ring.style.height = (r.height + pad * 2) + "px";
     ring.style.borderRadius = Math.min(rad + pad, (r.height + pad * 2) / 2) + "px";
-    if (tip.textContent !== label) tip.textContent = label;
+    label = L(label); if (tip.textContent !== label) tip.textContent = label;
     var tw = tip.offsetWidth, th = tip.offsetHeight, tx = Math.min(Math.max(r.left + r.width / 2 - tw / 2, 8), W.innerWidth - tw - 8);
     var ty = r.top - th - 12; if (ty < 8) ty = Math.min(r.bottom + 12, W.innerHeight - th - 8);
     tip.style.left = tx + "px"; tip.style.top = ty + "px";
@@ -458,7 +463,7 @@ body.free .stage{grid-row:3}body.free .foot{grid-row:4}
     }, 100);
     D.addEventListener("click", function (e) { var an = e.target.closest && e.target.closest("a[href]"); if (an) HINTS.forEach(function (h) { if (h[1] && an.getAttribute("href") === h[1]) gone[h[0]] = 1; }); HINTS.forEach(function (h) { if (h[2] && e.target.closest && e.target.closest(h[2])) gone[h[0]] = 1; }); STEPS.forEach(function (s, i) { if (s.click && e.target.closest && e.target.closest(s.click)) setTimeout(function () { complete(i); }, 300); }); }, true);
   });
-  $("reset").onclick = function () { try { W && W.localStorage.clear(); } catch (e) {} done = {}; armed = {}; gone = {}; active = 0; seasonNow = ""; paintChips(); $("loading").style.opacity = 1; D = W = null; frame.src = "app/dash.html?v=1.14.6.36#home"; render(); };
+  $("reset").onclick = function () { try { W && W.localStorage.clear(); } catch (e) {} done = {}; armed = {}; gone = {}; active = 0; seasonNow = ""; paintChips(); $("loading").style.opacity = 1; D = W = null; frame.src = DASH; render(); };
 
   // ---------- sizing the device ----------
   var dock = $("dock"), guide = document.querySelector(".guide"), stage = document.querySelector(".stage"), foot = document.querySelector(".foot");

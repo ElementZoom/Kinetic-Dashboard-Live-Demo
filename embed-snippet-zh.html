@@ -1,0 +1,10 @@
+<!-- ElementZoom live demo (Chinese): paste into a WordPress "Custom HTML" block. Same demo as embed-snippet.html, opened with ?lang=zh. -->
+<iframe id="ez-demo" src="https://elementzoom.github.io/Kinetic-Dashboard-Live-Demo/?lang=zh" title="ElementZoom 在线演示" loading="lazy" style="display:block;width:100%;height:900px;border:0;overflow:hidden"></iframe>
+<script>
+(function () {
+  var f = document.getElementById("ez-demo");
+  function vp() { try { f.contentWindow.postMessage({ ezViewport: window.innerHeight }, "*"); } catch (e) {} }
+  window.addEventListener("message", function (e) { if (e.source === f.contentWindow && e.data && e.data.ezDemoHeight) f.style.height = e.data.ezDemoHeight + "px"; });
+  f.addEventListener("load", vp); window.addEventListener("resize", vp);
+})();
+</script>
