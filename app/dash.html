@@ -2166,12 +2166,13 @@ html[data-style=material] .lvb{background:var(--bg2)!important}
    The colour follows the heat pump (data-hm) through --hzc; nothing on this page animates on its own. */
 .card[data-hm=heat]{--hzc:var(--heat)}.card[data-hm=cool]{--hzc:var(--cool)}.card[data-hm=auto]{--hzc:var(--mint)}.card[data-hm=fan]{--hzc:var(--mut)}
 /* comfort bar (rooms) */
-.cbar{pointer-events:none;position:relative;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--cool),#ffd27a 50%,var(--heat));margin:6px 6px 4px;transition:opacity .3s}
+.cbar{pointer-events:none;position:relative;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--cool),#ffd27a 50%,var(--heat));margin:6px 6px 20px;transition:opacity .3s}
 .cbar i{position:absolute;top:-7px;width:24px;height:24px;margin-left:-12px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4),0 0 12px var(--kc,transparent);transition:left .5s}
-.cbar u{position:absolute;top:-4px;width:2px;height:18px;margin-left:-1px;background:var(--ink);opacity:.8;border-radius:1px;transition:left .3s}
-.cbar .mk{position:absolute;top:20px;width:0;height:0;margin-left:-5px;border:5px solid transparent;border-top:0;border-bottom:7px solid var(--heat)}
+.cbar u{position:absolute;top:23px;width:7px;height:7px;margin-left:-3.5px;background:var(--ink);border-radius:50%;transition:left .3s}
+.cbar .g{position:absolute;top:25px;height:3px;margin-top:-.5px;background:var(--ink);opacity:.8;border-radius:2px;transition:left .3s,width .3s}
+.cbar .mk{position:absolute;top:33px;width:0;height:0;margin-left:-5px;border:5px solid transparent;border-top:0;border-bottom:7px solid var(--heat)}
 .cbar .mk.c{border-bottom-color:var(--cool)}.cbar .mk[hidden]{display:none}
-.card.rm.hasmk .cbar{margin-bottom:18px}   /* the trigger triangles sit below the round knob, not under it */
+.card.rm.hasmk .cbar{margin-bottom:32px}   /* the trigger triangles sit below the round knob, not under it */
 .card.rm.coff .cbar{opacity:.35}
 html[data-style=minimal] .cbar i{box-shadow:0 1px 3px rgba(0,0,0,.4)}
 /* House card */
@@ -2226,7 +2227,7 @@ html[data-style=minimal] .cbar i{box-shadow:0 1px 3px rgba(0,0,0,.4)}
 .ct .csw i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.35);transition:transform .2s}
 .ct .csw[aria-checked=true]{background:var(--mint)}.ct .csw[aria-checked=true] i{transform:translateX(22px)}
 .card.rm.slp .md::before{content:"☾ "}
-@media(prefers-reduced-motion:reduce){.cbar i,.cbar u,.ct .csw,.ct .csw i{transition:none}}
+@media(prefers-reduced-motion:reduce){.cbar i,.cbar u,.cbar .g,.ct .csw,.ct .csw i{transition:none}}
 /* tablet: House on the left, rooms as rows on the right */
 @media(min-width:761px){
 #grid{grid-template-columns:360px minmax(0,1fr);gap:12px 22px;align-items:start}
@@ -2257,7 +2258,7 @@ html[data-style=minimal] .cbar i{box-shadow:0 1px 3px rgba(0,0,0,.4)}
 #grid>.card.rm .temp{grid-area:tp;font-size:24px;white-space:nowrap}#grid>.card.rm .temp small{font-size:12px}
 #grid>.card.rm .row{grid-area:rw;gap:6px}#grid>.card.rm .rnd{width:30px;height:30px;font-size:16px}
 #grid>.card.rm .tg{display:none}
-#grid>.card.rm .cbar{grid-area:bar;margin-top:9px;margin-bottom:2px}#grid>.card.rm.hasmk .cbar{margin-bottom:16px}
+#grid>.card.rm .cbar{grid-area:bar;margin-top:9px;margin-bottom:18px}#grid>.card.rm.hasmk .cbar{margin-bottom:30px}
 #grid>.card.rm .chips{grid-area:ch}#grid>.card.rm .fanb{grid-area:fn}
 #clbk{display:none;position:fixed;inset:0;z-index:69;background:rgba(0,0,0,.5)}
 body.cl-sheet #clbk{display:block;animation:thIn .2s ease}
@@ -2270,7 +2271,7 @@ body.cl-sheet #clbk{display:block;animation:thIn .2s ease}
 #grid>.card.rm[data-open] .md{font-size:12px;letter-spacing:.14em}#grid>.card.rm[data-open] .md::after{content:none}
 #grid>.card.rm[data-open] .temp{font-size:88px;font-weight:200;line-height:1;letter-spacing:-.04em;justify-self:start}#grid>.card.rm[data-open] .temp small{font-size:22px;margin-left:4px}
 #grid>.card.rm[data-open] .sub{display:block;grid-area:sb;font-size:14px;color:var(--mut)}
-#grid>.card.rm[data-open] .cbar{margin:16px 8px 10px}#grid>.card.rm[data-open].hasmk .cbar{margin-bottom:22px}
+#grid>.card.rm[data-open] .cbar{margin:16px 8px 22px}#grid>.card.rm[data-open].hasmk .cbar{margin-bottom:36px}
 #grid>.card.rm[data-open] .row{justify-content:center;gap:22px;margin:6px 0}
 #grid>.card.rm[data-open] .rnd{width:52px;height:52px;font-size:22px}
 #grid>.card.rm[data-open] .tg{display:block;text-align:center;align-self:center}#grid>.card.rm[data-open] .tg b{font-size:24px;font-weight:300;color:var(--ink)}
@@ -2346,7 +2347,7 @@ body.cl-sheet.cl-out #clbk{animation:thOut .24s ease both}@keyframes thOut{from{
 @media(min-width:761px){#events .eh{gap:10px}#events .eh .eb{padding:12px 18px}#events .eh .evvw .eb{padding:9px 14px}#events .eh h2{min-width:0;flex:0 1 auto}}
 @media(max-width:760px){.evmg button{padding:4px 0 3px}.evmg b{font-size:15px}}
 /* Weather > Now (phone): as tall as the Sun and moon card, the 7-day strip sits at the bottom instead of leaving a gap under the card */
-@media(max-width:760px){#weather .wnow{min-height:430px;box-sizing:border-box;display:flex;flex-direction:column}#weather .wnow>.wn7{margin-top:auto}}
+@media(max-width:760px){#weather .wnow{min-height:430px;box-sizing:border-box;display:flex;flex-direction:column}#weather .wnow>.wn7{margin-top:auto}#weather .wnow>.wnm{margin-bottom:16px}#weather .wnow .wnh{margin:14px 0 14px}#weather .wnow .big2{font-size:92px}#weather .wnow .wns{font-size:17px;margin-top:10px}#weather .wnow .wbig{font-size:84px}#weather .wnow .wnh~.wnb{margin-top:14px}}
 /* Home heat pump card: big indoor number, target stepper, a cool-to-warm bar with outside / inside / target, mode icons */
 #mini[data-hm=heat]{--hzc:var(--heat)}#mini[data-hm=cool]{--hzc:var(--cool)}#mini[data-hm=auto]{--hzc:var(--mint)}#mini[data-hm=fan]{--hzc:var(--mut)}
 html:not(#x) #mini{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:18px 20px 16px;overflow:hidden;isolation:isolate}
@@ -2359,16 +2360,17 @@ html:not(#x) #mini{display:flex;flex-direction:column;align-items:stretch;gap:12
 html:not(#x) #mini .mtop>.row{display:flex;flex-direction:row;align-items:center;gap:6px;margin:0!important;padding-bottom:6px;min-width:0}
 #mini .mtop .big{font-size:17px;font-weight:600;min-width:46px;text-align:center}
 html:not(#x) #mini .rnd{width:32px;height:32px;border-radius:50%;font-size:16px;padding:0;display:inline-flex;align-items:center;justify-content:center;line-height:1}
-#mini .mbar{position:relative;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--cool),#ffd27a 50%,var(--heat));margin:12px 8px 2px;pointer-events:none}
+#mini .mbar{position:relative;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--cool),#ffd27a 50%,var(--heat));margin:12px 8px 20px;pointer-events:none}
 #mini .mbar>*{position:absolute;display:block}
 #mini .mbar .n{top:-7px;width:24px;height:24px;margin-left:-12px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4),0 0 12px var(--kc,transparent);transition:left .5s}
-#mini .mbar .t{top:-4px;width:2px;height:18px;margin-left:-1px;background:var(--ink);opacity:.85;border-radius:1px;transition:left .3s}
+#mini .mbar .t{top:23px;width:7px;height:7px;margin-left:-3.5px;background:var(--ink);border-radius:50%;transition:left .3s}
+#mini .mbar .g{top:25px;height:3px;margin-top:-.5px;background:var(--ink);opacity:.8;border-radius:2px;transition:left .3s,width .3s}
 #mini .mbar .o{top:-3px;width:10px;height:10px;margin-left:-5px;border-radius:50%;border:2px solid var(--cool);background:var(--bg);box-sizing:content-box;transition:left .5s}
 #mini .mleg{display:flex;justify-content:space-between;gap:6px;font-size:12px;color:var(--mut);white-space:nowrap}
 #mini .mleg b{color:var(--ink);font-weight:600;font-size:12px;margin:0;display:inline}
 #mini .mleg span{display:inline-flex;align-items:center;gap:5px;min-width:0}
 #mini .dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none}
-#mini .dot.o{border:2px solid var(--cool);box-sizing:border-box}#mini .dot.n{background:var(--ink)}#mini .dot.t{width:2px;height:10px;border-radius:1px;background:var(--ink)}
+#mini .dot.o{border:2px solid var(--cool);box-sizing:border-box}#mini .dot.n{background:var(--ink)}#mini .dot.t{width:6px;height:6px;border-radius:50%;background:var(--ink)}
 html:not(#x) #mini .chips{display:flex;flex-wrap:nowrap;gap:0;padding:4px;border-radius:999px;background:rgba(var(--w),.07);border:1px solid var(--line)}
 html:not(#x) #mini .chip{flex:1 1 0;min-width:0;padding:10px 0;border:0;background:transparent;border-radius:999px;box-shadow:none;display:flex;align-items:center;justify-content:center}
 html:not(#x) #mini .chip.on{background:var(--hzc,var(--ink));color:var(--onmint,#07241a);box-shadow:0 2px 12px color-mix(in srgb,var(--hzc,transparent) 45%,transparent)}
@@ -2404,7 +2406,7 @@ html:not(#x) #mini{gap:6px;padding:14px 18px 14px}
 html:not(#x) #mini .mtop>.row{padding-bottom:2px}
 html:not(#x) #mini .rnd{width:28px;height:28px;font-size:15px}
 #mini .mtop .big{font-size:15px;min-width:42px}
-#mini .mbar{margin:8px 8px 0}
+#mini .mbar{margin:8px 8px 20px}
 #mini .mleg{font-size:11px}#mini .mleg b{font-size:11px}
 #mini .mleg>span:last-child{display:none}
 html:not(#x) #mini .chips{padding:3px}
@@ -2512,6 +2514,23 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 .cbar{background:linear-gradient(90deg,var(--tp0) 0,var(--tp1) 3%,var(--tp2) 22%,var(--tp3) 41%,var(--tp4) 56%,var(--tp5) 72%,var(--tp6) 87.5%,var(--tp6) 100%)}
 /* heat pump card on Home: 10° to 30° across */
 #mini .mbar{background:linear-gradient(90deg,var(--tp0) 0,var(--tp0) 10%,var(--tp1) 22.5%,var(--tp2) 37.5%,var(--tp3) 52.5%,var(--tp4) 65%,var(--tp5) 77.5%,var(--tp6) 90%,var(--tp6) 100%)}
+/* Alignment: icons and text inside buttons sit on the true centre.  :where() keeps specificity at zero so every sized/placed rule above still wins. */
+:where(.rnd,.eb,.chip){display:inline-flex;align-items:center;justify-content:center;gap:6px;line-height:1.15;box-sizing:border-box}
+:where(.rnd){padding:0;line-height:1}
+:where(.rnd,.eb,.chip) svg{flex:none;display:block;margin:0;vertical-align:baseline}
+.rnd svg:only-child{margin:0}
+/* stepper +/- are SVG now: the same optical size in every stepper */
+.rnd[data-d] svg{width:1.05em;height:1.05em}
+/* Auto climate icon: the SVG had no fill, so it drew black on the dark card */
+#cauto .cai svg{fill:currentColor;display:block}
+#cauto .cai{color:var(--ink)}#cauto.on .cai{color:var(--mint)}
+/* Now Playing sheet header: lyrics + close share one size and one centre line */
+#npbody .lbl{align-items:center;min-height:44px}
+#npbody .lbl .rnd.s{width:44px;height:44px;min-width:44px;padding:0;margin-top:0;margin-bottom:0;align-self:center;flex:none}
+#npbody .lbl .rnd.s svg{width:22px;height:22px}
+.hzzb button{display:flex;align-items:center;justify-content:center;padding:0;line-height:1}.hzzb button svg{width:20px;height:20px;fill:currentColor;display:block}
+.lyo .chip svg{width:16px;height:16px;fill:currentColor}
+#eadd svg{width:20px;height:20px;fill:currentColor}
 </style>
 </head>
 <body>
@@ -2537,8 +2556,8 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
       <div class="left"><div class="camcol"><div class="cams" id="cams"></div><div class="pn sch" id="sch" hidden></div></div><div class="rooms" id="rooms"></div></div>
       <div class="side">
         <div class="pn" id="mini"><div class="lbl">Heat pump</div>
-          <div class="mtop"><div class="mbg"><b id="mbg">--</b><small>°</small></div><div class="row"><button class="rnd" data-d="-1">−</button><b id="mt" class="big">--</b><button class="rnd" data-d="1">+</button></div></div>
-          <div class="mbar" id="mbar"><b class="o"></b><i class="n"></i><u class="t"></u></div>
+          <div class="mtop"><div class="mbg"><b id="mbg">--</b><small>°</small></div><div class="row"><button class="rnd" data-d="-1"><svg viewBox="0 0 24 24"><path d="M19,13H5V11H19V13Z"/></svg></button><b id="mt" class="big">--</b><button class="rnd" data-d="1"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/></svg></button></div></div>
+          <div class="mbar" id="mbar"><b class="o"></b><s class="g"></s><i class="n"></i><u class="t"></u></div>
           <div class="mleg"><span id="mod"><em class="dot o"></em>Outside <b id="mo">--</b></span><span id="mid"><em class="dot n"></em>Inside <b id="mi">--</b></span><span><em class="dot t"></em>Target <b id="mtg">--</b></span></div>
           <div class="chips" id="mm"><button class="chip" data-m="heat" id="i-heat" data-i="fire"></button><button class="chip" data-m="cool" id="i-cool" data-i="snowflake"></button><button class="chip" data-m="fan_only" id="i-fan" data-i="fan"></button><button class="chip" data-m="pwr" id="i-pwr" data-i="power"></button></div></div>
         <div class="pn npw npoff" id="npw"></div>
@@ -2569,7 +2588,7 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
   <div id="climate" class="page"><div id="gsum" class="pn"></div><div id="grid"></div><div class="dots" id="gdots"></div></div>
 
   <div id="events" class="page">
-    <div class="eh"><button class="eb" id="ep" data-i="chevron-left"></button><h2 id="et"></h2><button class="eb" id="en" data-i="chevron-right"></button><div class="seg evvw" id="evsw" role="tablist" aria-label="Events view"></div><button class="eb" id="etd">TODAY</button><button class="eb" id="esrch" aria-label="Search events" data-i="magnify"></button><input type="search" id="esq" class="esq" placeholder="Search all events" autocomplete="off" aria-label="Search all events"><button class="eb" id="eadd" aria-label="Add event" style="display:none">+</button><div class="lg" id="elg"></div></div>
+    <div class="eh"><button class="eb" id="ep" data-i="chevron-left"></button><h2 id="et"></h2><button class="eb" id="en" data-i="chevron-right"></button><div class="seg evvw" id="evsw" role="tablist" aria-label="Events view"></div><button class="eb" id="etd">TODAY</button><button class="eb" id="esrch" aria-label="Search events" data-i="magnify"></button><input type="search" id="esq" class="esq" placeholder="Search all events" autocomplete="off" aria-label="Search all events"><button class="eb" id="eadd" aria-label="Add event" style="display:none"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/></svg></button><div class="lg" id="elg"></div></div>
     <div class="cg" id="cg"></div>
   </div>
 </div>
@@ -2581,14 +2600,14 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=1.14.6.34"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=1.14.6.35"></script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "1.14.6.33";   // the one place to change the version
+window.DASH_VER = "1.14.6.34";   // the one place to change the version
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -2805,6 +2824,7 @@ Object.assign(MDI, {"lyrics":"M4,5H14V7H4V5M4,9H14V11H4V9M4,13H10V15H4V13M18,3V1
 MDI["battery-low"] = "M9,2H15V4H16.5A1.5,1.5 0 0,1 18,5.5V20.5A1.5,1.5 0 0,1 16.5,22H7.5A1.5,1.5 0 0,1 6,20.5V5.5A1.5,1.5 0 0,1 7.5,4H9V2M8,6V20H16V6H8M9,14H15V18H9V14Z";
 MDI["lock"] = "M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,2A5,5 0 0,1 17,6V8H18M12,4A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,4Z";
 MDI["lock-open-variant"] = "M18,1C15.24,1 13,3.24 13,6V8H4A2,2 0 0,0 2,10V20A2,2 0 0,0 4,22H16A2,2 0 0,0 18,20V10A2,2 0 0,0 16,8H15V6C15,4.34 16.34,3 18,3C19.66,3 21,4.34 21,6V8H23V6C23,3.24 20.76,1 18,1M10,13A2,2 0 0,1 12,15A2,2 0 0,1 10,17A2,2 0 0,1 8,15A2,2 0 0,1 10,13Z";
+Object.assign(MDI, {"minus":"M19,13H5V11H19V13Z"});
 const isMobile = () => window.matchMedia("(max-width:760px)").matches;
 const MAIN = CONFIG.rooms.filter(r => r.main)[0].id, W = CONFIG.weather;
 const MODE = { heat_cool: "AUTO", fan_only: "FAN", off: "OFF", heat: "HEAT", cool: "COOL", dry: "DRY", auto: "AUTO" };
@@ -3089,6 +3109,7 @@ function cbar(id) {   // the room's comfort bar: dot = the room now, tick = the 
   const dot = $(".cbar i", c.el), tick = $(".cbar u", c.el); if (!dot) return;
   dot.style.left = isNaN(ct) ? "50%" : cbPos(ct) + "%"; dot.style.setProperty("--kc", isNaN(ct) ? "transparent" : tempColor(ct));
   tick.style.display = tv == null || isNaN(parseFloat(tv)) ? "none" : ""; if (tv != null) tick.style.left = cbPos(tv) + "%";
+  const gap = $(".cbar .g", c.el); if (gap) { const ok = !isNaN(ct) && tv != null && !isNaN(parseFloat(tv)) && Math.abs(parseFloat(tv) - ct) >= .3; gap.style.display = ok ? "" : "none"; if (ok) { gap.style.left = Math.min(cbPos(ct), cbPos(tv)) + "%"; gap.style.width = Math.abs(cbPos(tv) - cbPos(ct)) + "%"; } }   // a thin line from the room to its target: how far it has to go (none when it is on target)
 }
 function tint(r, s) {
   if (r.main) return cls[s.state] || "";
@@ -3100,13 +3121,13 @@ function build(r) {
   el.className = "card" + (r.main ? " main2 czh" : " rm"); el.dataset.cl = r.id;
   if (r.main) el.innerHTML = '<div class="lbl il">House</div>' +
     '<div class="czm"><div class="temp"><span class="cur">--</span><small>°</small></div>' +
-    '<div class="czs"><div class="czt"><span class="md">--</span><div class="row"><button class="rnd" data-d="-1" aria-label="Lower">−</button><div class="tg"><span>TARGET</span><b class="tgt">--</b></div><button class="rnd" data-d="1" aria-label="Raise">+</button></div></div>' +
+    '<div class="czs"><div class="czt"><span class="md">--</span><div class="row"><button class="rnd" data-d="-1" aria-label="Lower">' + mdi("minus") + '</button><div class="tg"><span>TARGET</span><b class="tgt">--</b></div><button class="rnd" data-d="1" aria-label="Raise">' + mdi("plus") + '</button></div></div>' +
     '<div class="cout"><span>Outside</span><b>--</b></div><button class="fanb"><span>Fan</span><b>--</b></button></div></div>' +
     '<div class="chips"></div><div class="czg" hidden><svg viewBox="0 0 300 84" preserveAspectRatio="none" aria-hidden="true"></svg><small>LAST 24 HOURS</small></div>';
   else el.innerHTML = '<div class="lbl il">' + (r.icon ? mdi(r.icon) : "") + esc(r.name) + '</div><button class="shx" aria-label="Close">' + mdi("close") + '</button><div class="md">--</div>' +
     '<div class="temp"><span class="cur">--</span><small>°C</small></div><div class="sub"></div>' +
-    '<div class="row"><button class="rnd" data-d="-1" aria-label="Lower">−</button><div class="tg"><span>TARGET</span><b class="tgt">--</b></div><button class="rnd" data-d="1" aria-label="Raise">+</button></div>' +
-    '<div class="chips"></div><button class="fanb"><span>FAN</span><b>--</b></button><div class="cbar"><u></u><i></i><b class="mk h" hidden></b><b class="mk c" hidden></b></div>';
+    '<div class="row"><button class="rnd" data-d="-1" aria-label="Lower">' + mdi("minus") + '</button><div class="tg"><span>TARGET</span><b class="tgt">--</b></div><button class="rnd" data-d="1" aria-label="Raise">' + mdi("plus") + '</button></div>' +
+    '<div class="chips"></div><button class="fanb"><span>FAN</span><b>--</b></button><div class="cbar"><s class="g"></s><u></u><i></i><b class="mk h" hidden></b><b class="mk c" hidden></b></div>';
   cards[r.id] = { el: el, r: r, key: "" };
   $$(".rnd", el).forEach(b => b.onclick = () => bump(r.id, +b.dataset.d));
   $(".chips", el).onclick = e => { const m = e.target.dataset.m; if (m) call("climate", "set_hvac_mode", r.id, { hvac_mode: m }); };
@@ -3148,6 +3169,7 @@ function mbSet(tv) {
   const pos = x => isNaN(x) || x == null ? null : Math.max(0, Math.min(100, (x - 10) / 20 * 100)) + "%";   // 10° to 30° across the bar
   [["o", mbOut], ["n", mbIn], ["t", parseFloat(tv)]].forEach(([c, x]) => { const el = bar.querySelector("." + c), p = pos(x); el.style.display = p ? "" : "none"; if (p) el.style.left = p; });
   const n = bar.querySelector(".n"); if (!isNaN(mbIn)) n.style.setProperty("--kc", tempColor(mbIn));
+  { const g = bar.querySelector(".g"), tt = parseFloat(tv), ok = !isNaN(mbIn) && !isNaN(tt) && Math.abs(tt - mbIn) >= .3; if (g) { g.style.display = ok ? "" : "none"; if (ok) { const a = Math.max(0, Math.min(100, (mbIn - 10) / 20 * 100)), b = Math.max(0, Math.min(100, (tt - 10) / 20 * 100)); g.style.left = Math.min(a, b) + "%"; g.style.width = Math.abs(a - b) + "%"; } } }   // a thin line from the room to its target
   $("#mtg").textContent = tv != null && !isNaN(parseFloat(tv)) ? f1(parseFloat(tv)) + "°" : "--";
 }
 function home() {
@@ -3488,6 +3510,8 @@ const camMem = {   // one small still per camera kept on this device (localStora
 function camSnap(c) {   // phones: cameras scrolled out of view aren't fetched until they come into view
   if (isMobile() && c.o.el._vis === false) return;
   const s = states[camEnt(c)], p = s && s.attributes.entity_picture; if (!p) return;
+  if (!c._sn) c._sn = Date.now() + 5000;   // the still this device kept from the stream stays on screen while the stream connects: the camera's own snapshot can be framed differently, which made the tile jump (zoom) when the live picture arrived
+  if (c.o.img.src.indexOf("data:") === 0 && Date.now() < c._sn) { clearTimeout(c._snT); c._snT = setTimeout(() => { if (!c.live) camSnap(c); }, c._sn - Date.now() + 50); return; }
   const im = new Image(); im.onload = () => { c.o.img.src = im.src; };
   im.src = CONFIG.url + p + (p.indexOf("?") > -1 ? "&" : "?") + "t=" + Date.now();
 }
@@ -3961,7 +3985,7 @@ function tmrSync(el, e, on) {
   else if (act) { const fin = Date.parse(t.attributes.finishes_at || "") || 0; if (+cur.dataset.fin !== fin) cur.dataset.fin = fin; }
 }
 function tmrHtml(id) { const t = states[id].attributes, fin = Date.parse(t.finishes_at || "") || 0, dur = (t.duration || "0:00:00").split(":").reduce((p, q) => p * 60 + +q, 0) * 1000; return '<div class="lbl tmr" data-fin="' + fin + '">--</div><div class="zb"><i data-dur="' + dur + '"></i></div>'; }
-const climHtml = id => '<div class="tl cl" data-c="' + id + '"><div class="tn">' + mdi("thermometer") + ' <span class="nm"></span></div><div class="ts2">--</div><div class="row"><button class="rnd s" data-d="-1">−</button><b data-tgt="' + id + '">--</b><button class="rnd s" data-d="1">+</button><button class="rnd s" data-p="1">' + mdi("power") + '</button></div></div>';
+const climHtml = id => '<div class="tl cl" data-c="' + id + '"><div class="tn">' + mdi("thermometer") + ' <span class="nm"></span></div><div class="ts2">--</div><div class="row"><button class="rnd s" data-d="-1">' + mdi("minus") + '</button><b data-tgt="' + id + '">--</b><button class="rnd s" data-d="1">' + mdi("plus") + '</button><button class="rnd s" data-p="1">' + mdi("power") + '</button></div></div>';
 // room AUTOMATIONS pop-up: tabs Occupancy / Adaptive lighting / Others (only when a room has more than one kind)
 const CPT = {}, CPN = ["Occupancy", "Adaptive lighting", "Others"];
 const cpCat = t => { const e = (t.dataset.e || "") + " " + (t.dataset.sc || ""); return /(_presence_|room_presence|outdoor_presence|rear_presence|presence_active|toggle_presence)/.test(e) ? 0 : /adaptive_lighting/.test(e) ? 1 : 2; };
@@ -5280,7 +5304,7 @@ function drawHaz() {
   const ql = (qN.length ? qN.map(qrow).join("") : '<p class="hzempty">' + mdi("check-circle-outline") + ' Nothing within ' + fk + ' km' + (hzMin() ? ' (M' + hzMin() + '+)' : '') + '.</p>') + (qF.length ? '<div class="hzsub">' + fk + '–' + hzRad() + ' km</div>' + qF.map(qrow).join("") : "");
   const vl = d.v.length ? d.v.map(v => { const L = HZ_VAL[v.lvl || 0]; return '<button class="hzrow' + (HZ.sel === v.id ? " on" : "") + (v.lvl > 0 ? "" : " q") + '" data-hz="s" data-v="' + v.id + '"><i class="hzb hztri">' + hzTri(L[1], v.lvl == null ? "?" : v.lvl) + '</i><span><b>' + esc(v.name) + '</b><small>' + esc(v.lvl > 0 ? (v.act || L[0]) : L[0]) + (hzOn(v) ? "" : " · off the map") + '</small></span>' + (v.lvl > 0 ? '<em style="--c:' + L[1] + '">Level ' + v.lvl + '</em>' : "") + '</button>'; }).join("") : '<p class="hzempty">No GeoNet volcano sensors found.</p>';
   pg.innerHTML = '<div class="hsw hztw"><div class="chips tabs hztabs">' + [["map", "MAP"], ["quake", "EARTHQUAKES"], ["volc", "VOLCANOES"]].map(t => '<button class="chip' + (HZ.tab === t[0] ? " on" : "") + '" data-hz="tab" data-v="' + t[0] + '">' + t[1] + '</button>').join("") + '</div><span class="hsm l" aria-hidden="true">' + mdi("chevron-left") + '</span><span class="hsm r" aria-hidden="true">' + mdi("chevron-right") + '</span></div><div class="hzg" data-tab="' + HZ.tab + '"><div class="pn hzm' + (HZ.sel ? " dop" : "") + '"><div class="hzh"><div><span class="lbl">' + mdi("pulse") + ' GeoNet · live</span><b class="hzs">' + esc(sum) + '</b></div><div class="chips tabs hzseg">' + chip("nz", "NZ") + chip("ni", "NORTH ISLAND") + (d.home ? chip("home", fk + " KM") : "") + '</div></div>' +
-    '<div class="hzmap"><svg id="hzsvg" viewBox="' + HZ.vb.join(" ") + '" preserveAspectRatio="xMidYMid meet"><path class="hzl" d="' + NZP + '"/>' + hzMarks(d) + '</svg><div class="hzzb"><button data-hz="in" aria-label="Zoom in">+</button><button data-hz="out" aria-label="Zoom out">−</button><button class="hzlb" data-hz="pg" data-v="1" aria-label="Lists">' + mdi("format-list-bulleted") + '</button></div><div class="hzd' + (HZ.sel ? " on" : "") + '" id="hzd">' + hzDetail(d) + '</div></div>' + leg + '</div>' +
+    '<div class="hzmap"><svg id="hzsvg" viewBox="' + HZ.vb.join(" ") + '" preserveAspectRatio="xMidYMid meet"><path class="hzl" d="' + NZP + '"/>' + hzMarks(d) + '</svg><div class="hzzb"><button data-hz="in" aria-label="Zoom in">' + mdi("plus") + '</button><button data-hz="out" aria-label="Zoom out">' + mdi("minus") + '</button><button class="hzlb" data-hz="pg" data-v="1" aria-label="Lists">' + mdi("format-list-bulleted") + '</button></div><div class="hzd' + (HZ.sel ? " on" : "") + '" id="hzd">' + hzDetail(d) + '</div></div>' + leg + '</div>' +
     '<div class="hzside"><div class="pn"><div class="hzlh"><span class="lbl">' + mdi("pulse") + ' Earthquakes</span><small>' + (hzMin() ? "M" + hzMin() + "+ · " : "") + 'within ' + hzRad() + ' km</small></div>' + ql + '</div><div class="pn"><div class="hzlh"><span class="lbl">' + mdi("volcano") + ' Volcanoes</span><small>' + (act.length ? act.length + " above level 0" : "all at level 0") + '</small></div>' + vl + '</div></div></div><div class="dots hzdots"><i data-hz="pg" data-v="0" class="on"></i><i data-hz="pg" data-v="1"></i></div>';
   hzFit(); setTimeout(hzFit, 500); 
   hzBind($("#hzsvg")); hzApply();
@@ -5966,7 +5990,7 @@ function ctDraw() {
     c.el.classList.toggle("slp", !!acOn);
     box.hidden = !rows.length && !ac; if (!rows.length && !ac) { box.innerHTML = ""; return; }
     box.innerHTML = (ac ? '<div class="ct"><span>' + esc(r.autoLabel || "Sleeping here tonight") + '</span><button class="csw" role="switch" aria-checked="' + acOn + '" data-cb="' + esc(ac) + '" aria-label="' + esc(r.autoLabel || "Sleeping here tonight") + '"><i></i></button></div>' : "") + rows.map(x => { const e = o[x[0]], v = CTV[e] != null ? CTV[e] : parseFloat(states[e].state);
-      return '<div class="ct"><div class="cl"><span class="' + x[3] + '">' + mdi(x[2]) + x[1] + '</span><small>' + x[4] + '</small></div><button class="rnd" data-ct="' + esc(e) + '" data-d="-1" aria-label="Lower ' + x[1] + '">−</button><b>' + (isNaN(v) ? "--" : f1(v) + "°") + '</b><button class="rnd" data-ct="' + esc(e) + '" data-d="1" aria-label="Raise ' + x[1] + '">+</button></div>'; }).join("");
+      return '<div class="ct"><div class="cl"><span class="' + x[3] + '">' + mdi(x[2]) + x[1] + '</span><small>' + x[4] + '</small></div><button class="rnd" data-ct="' + esc(e) + '" data-d="-1" aria-label="Lower ' + x[1] + '">' + mdi("minus") + '</button><b>' + (isNaN(v) ? "--" : f1(v) + "°") + '</b><button class="rnd" data-ct="' + esc(e) + '" data-d="1" aria-label="Raise ' + x[1] + '">' + mdi("plus") + '</button></div>'; }).join("");
   });
 }
 function ctBump(e, d) {
@@ -6512,7 +6536,7 @@ function lyrDraw(tr) {
   const msg = { load: "Looking for lyrics…", none: "No lyrics found for this song.", inst: "Instrumental.", err: "Couldn’t get lyrics: the lyrics service did not answer, or the device is offline. Details below.", "": "" }[LY.st] || "";
   const body = !LY.open ? "" : LY.st === "sync" ? '<div class="lyb">' + LY.lines.map((l, i) => '<div class="ly" data-t="' + l.t + '" data-i="' + i + '">' + (esc(l.s) || "♪") + '</div>').join("") + '</div>'
     : LY.st === "plain" ? '<div class="lyb plain">' + esc(LY.plain) + '</div>' : '<div class="sm" style="margin-top:12px">' + msg + '</div><div class="sm lyd">' + esc((LY.key || "").replace(/\|/g, " · ") + (LY.dbg ? "  →  " + LY.dbg : "")) + '</div><button class="eb" style="margin-top:10px" data-ly="retry">TRY AGAIN</button>';
-  el.innerHTML = '<div class="lbl lyh" data-ly="tog">' + (aiOn() ? '<span class="chips aitabs"><button class="chip' + (aiT ? "" : " on") + '" data-ly="tab" data-t="lyrics">Lyrics</button><button class="chip' + (aiT ? " on" : "") + '" data-ly="tab" data-t="artist">Artist</button></span>' : mdi("music-note") + ' Lyrics' + (LY.st === "sync" ? ' · synced' : "")) + (!aiT && LY.st === "sync" && LY.open ? '<span class="lyo" title="Lyrics running late? press +. Too early? press −"><button class="chip" data-ly="off-">−</button><b>' + (LY.off > 0 ? "+" : "") + LY.off.toFixed(1) + 's</b><button class="chip" data-ly="off+">+</button></span>' : "") + '<span class="npch">' + mdi(LY.open ? "chevron-up" : "chevron-down") + '</span><button class="chip lyx" data-ly="close" aria-label="Close">' + mdi("close") + '</button></div>' +
+  el.innerHTML = '<div class="lbl lyh" data-ly="tog">' + (aiOn() ? '<span class="chips aitabs"><button class="chip' + (aiT ? "" : " on") + '" data-ly="tab" data-t="lyrics">Lyrics</button><button class="chip' + (aiT ? " on" : "") + '" data-ly="tab" data-t="artist">Artist</button></span>' : mdi("music-note") + ' Lyrics' + (LY.st === "sync" ? ' · synced' : "")) + (!aiT && LY.st === "sync" && LY.open ? '<span class="lyo" title="Lyrics running late? press +. Too early? press −"><button class="chip" data-ly="off-">' + mdi("minus") + '</button><b>' + (LY.off > 0 ? "+" : "") + LY.off.toFixed(1) + 's</b><button class="chip" data-ly="off+">' + mdi("plus") + '</button></span>' : "") + '<span class="npch">' + mdi(LY.open ? "chevron-up" : "chevron-down") + '</span><button class="chip lyx" data-ly="close" aria-label="Close">' + mdi("close") + '</button></div>' +
     (LY.open && LY.tabs.length ? '<div class="chips tabs lyt">' + LY.tabs.map(t => '<button class="chip' + (t[0] === LY.sel ? " on" : "") + '" data-ly="sel" data-c="' + t[0] + '">' + mdi("speaker") + esc(t[1]) + '</button>').join("") + '</div>' : "") + (!LY.open ? "" : aiT ? aiHtml(LY.ctl) : body) + lyFoot();
   LY.cur = -1; lyrTick(true);
 }
