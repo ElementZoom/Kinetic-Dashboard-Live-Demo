@@ -2461,25 +2461,6 @@ html[data-mode=light] .al.s-wn{background:rgba(176,112,0,.14);color:#7a4b00;bord
 #alb.ba{background:rgba(var(--heat-rgb),.18);color:var(--heat);border-color:var(--heat);animation:bl 1s infinite}
 html[data-mode=light] #alb.bw{background:rgba(176,112,0,.12);color:#7a4b00;border-color:rgba(176,112,0,.5)}
 html[data-mode=light] #alb.ba{color:#a3211a}
-/* Energy scene: the house picture with the totals pinned on it (config.js energyScene). On a phone the labels sit in a row under the picture. */
-#energy .ensc{position:relative;margin:0 0 16px;padding:14px 14px 14px;overflow:hidden;background:radial-gradient(120% 90% at 50% 38%,rgba(var(--w),.07),transparent 70%),var(--card,rgba(var(--w),.04))}
-.ensb{position:absolute;left:14px;top:12px;z-index:3;font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:var(--mut)}
-.ensi{position:relative;max-width:900px;margin:30px auto 0}
-.ensi img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
-.ensf{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.ensf path{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:1 9;vector-effect:non-scaling-stroke;opacity:.9}
-.enck{position:absolute;inset:0;pointer-events:none}
-.enc{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);display:flex;align-items:center;gap:9px;padding:7px 15px 7px 8px;border-radius:99px;white-space:nowrap;background:color-mix(in srgb,var(--bg2,#2a2522) 92%,transparent);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.enc i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex:none;background:#7a6a5a}
-.enc.eng i{background:#3b82d6}.enc.enx i{background:#e0693f}
-.enc svg{width:17px;height:17px;fill:#fff}
-.enc b{display:block;font-size:16px;line-height:1.15;font-weight:600}.enc small{display:block;font-size:11px;color:var(--mut);line-height:1.2}
-@media(max-width:760px){
-  #energy .ensc{padding:12px}.ensi{margin-top:34px}.ensf{display:none}
-  .enck{position:static;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-  .enc{position:static;transform:none;border-radius:16px;padding:9px;flex-direction:column;align-items:flex-start;gap:6px;box-shadow:none;white-space:normal}
-  .enc.enh{grid-column:1/-1;flex-direction:row;align-items:center;gap:9px}
-}
 /* Header chips (weather alert, pollen, leak ...): the glow is a soft halo around the pill that breathes, not a fading, fuzzy-edged copy of the whole chip. The text and border stay steady. */
 @media(min-width:761px){
 #nacc[data-k] .nai,html[data-mode] #nacc[data-k] .nai{position:relative;animation:none;filter:none;opacity:1}
@@ -2539,6 +2520,34 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 .hzzb button{display:flex;align-items:center;justify-content:center;padding:0;line-height:1}.hzzb button svg{width:20px;height:20px;fill:currentColor;display:block}
 .lyo .chip svg{width:16px;height:16px;fill:currentColor}
 #eadd svg{width:20px;height:20px;fill:currentColor}
+/* Admin page: Config editor */
+.ce-s{margin-top:12px;border:1px solid var(--line);border-radius:14px;background:rgba(var(--w),.04);padding:0 14px}
+.ce-s>summary{cursor:pointer;padding:14px 0;font-weight:600;font-size:15px;display:flex;align-items:center;gap:10px;list-style:none}
+.ce-s>summary::-webkit-details-marker{display:none}
+.ce-s[open]>summary{border-bottom:1px solid var(--line);margin-bottom:6px}
+.ce-d{font:600 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mint);font-style:normal;margin-left:auto}
+.ce-n{text-transform:none;letter-spacing:0;margin:8px 0}
+.ce-card{margin:10px 0;padding:12px;border-radius:12px;border:1px solid var(--line);background:rgba(var(--w),.05);display:flex;flex-direction:column;gap:10px}
+.ce-h{display:flex;align-items:flex-end;gap:10px}.ce-h>.ce-f{flex:1}
+.ce-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.ce-f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.ce-f>small{color:var(--mut);font:600 10px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.ce-f input,.ce-f select,.ce-a input{width:100%;box-sizing:border-box;min-height:40px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:rgba(var(--w),.06);color:var(--ink);font:500 14px var(--mono);min-width:0}
+.ce-f em{font-style:normal;font-size:11px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ce-f em.bad,.ce-e.bad b{color:var(--heat)}
+.ce-c{display:flex;flex-wrap:wrap;gap:6px}
+.ce-e{display:inline-flex;align-items:center;gap:6px;padding:4px 4px 4px 10px;border-radius:10px;background:rgba(var(--w),.08);max-width:100%;min-width:0}
+.ce-e b{font:600 12px var(--mono);overflow:hidden;text-overflow:ellipsis}.ce-e small{color:var(--mut);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px}
+.ce-e button,.ce-m button{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--mut);cursor:pointer}
+.ce-e button:hover,.ce-m button:hover:not(:disabled){background:rgba(var(--w),.1);color:var(--ink)}.ce-m button:disabled{opacity:.3;cursor:default}
+.ce-e svg,.ce-m svg{width:18px;height:18px;fill:currentColor}
+.ce-m{display:flex;gap:2px;flex:none}
+.ce-a{display:flex;gap:8px;align-items:center}.ce-add{margin-top:10px;margin-bottom:10px}
+.ce-k{display:flex;align-items:center;gap:8px;font-size:13px}.ce-k input{width:18px;height:18px;margin:0}
+.ce-ch{margin:0}
+.ce-sv{position:sticky;bottom:12px;z-index:3;padding:10px;border-radius:14px;background:var(--bg,rgba(20,20,20,.9));border:1px solid var(--line)}
+.ce-go:not(:disabled){border-color:rgba(var(--mint-rgb),.5);color:var(--mint)}
+.ce-sv .eb:disabled,.ce-s .eb:disabled{opacity:.4;cursor:default}
+.ce-msg{min-height:1em}
 </style>
 </head>
 <body>
@@ -2608,14 +2617,14 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=1.14.6.36"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.0.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "1.14.6.34";   // the one place to change the version
+window.DASH_VER = "2.0.0";   // the one place to change the version
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -2636,6 +2645,7 @@ window.onerror = function (m, u, l) { if (/ResizeObserver loop/i.test(String(m))
 
 // ===== CONFIG: lives in config.js (one per house). The engine only fills in safe defaults. =====
 const ENGINE_VERSION = window.DASH_VER;
+const CFG_OV_KEYS = ["house", "roomTabs", "tiles", "rooms", "cameras", "media", "alarmTiles", "security"], CFG_BASE = {}, CFG_APPLIED = {};   // the parts of config.js the Admin page can edit
 const CONFIG = (() => {
   const u = window.DASH_CONFIG;
   if (!u || typeof u !== "object") {
@@ -2644,7 +2654,11 @@ const CONFIG = (() => {
   }
   const d = { url: location.origin, token: "", name: "", noNameUsers: [], tariff: null, hapticMs: 35, haptics: true, mobileLive: true, layout: { tablet: ["status", "cams", "rooms", "heatpump", "forecast"], mobile: ["status", "nowplaying", "heatpump", "forecast"] }, icons: {}, settingsPath: "/config/dashboard", weatherFx: { speed: 0.5 }, mobileNav: "drawer", tileStyle: "line", calNames: {}, outside: "", weather: "weather.home", calendars: [], cameras: [], security: [], camControls: {}, view: {}, indoor: "", derived: { houseTemps: [], soil: {}, groups: {} }, lyricsFrom: [], media: [], playback: {}, alarm: "", alarmTiles: [], rainSkipMm: 2, irrigation: [], scenes: { groups: [], ri: [], rc: [], preset: [], gradient: [], rooms: [], lights: [] }, rooms: [], countIfNotOff: [], roomsByPresence: true, roomTabs: [], tiles: [], house: [], users: {} };
   d.entities = {}; d.volcanoes = []; d.siren = {}; d.alerts = []; d.quickAll = []; d.adminToggles = []; d.relevance = {}; d.vehicle = d.vehicle || null; d.batteryDisplay = "kiosk";
-  return Object.assign(d, u);
+  const o = Object.assign(d, u);
+  CFG_OV_KEYS.forEach(k => { CFG_BASE[k] = JSON.parse(JSON.stringify(o[k] === undefined ? null : o[k])); });   // what config.js says, kept for the Admin page's Config editor (Reset)
+  try { const ov = JSON.parse(localStorage.getItem("dashCfgOv") || "null"); if (ov && typeof ov === "object") CFG_OV_KEYS.forEach(k => { if (ov[k] != null) o[k] = ov[k]; }); } catch (_) {}   // edits saved from the Config editor (kept on the Home Assistant host, cached here so the page starts with them)
+  CFG_OV_KEYS.forEach(k => { CFG_APPLIED[k] = JSON.parse(JSON.stringify(o[k] === undefined ? null : o[k])); });   // config.js plus saved edits, before init adjusts anything: the editor starts from this
+  return o;
 })();
 let hideC = null, hideT = 0;   // entities of the rooms hidden from this person (see hideSet in 13-rooms.js)
 let RU = null;   // the signed-in person's restrictions (CONFIG.users[<person id or HA name>]), or null = unrestricted
@@ -3041,7 +3055,7 @@ function openWs(tk) {
     else if (m.type === "auth_ok") {
       setStatus(true); hideLogin();
       send({ type: "get_states" }, list => { list.forEach(setState); palTick(); schLoad(); vGroups(); buildDep(); drawGsum(); if (cards[MAIN]) render(MAIN); if (!identDone) identify(); batTick(); tick(); bootMark("s"); LV.t = null; lvQ(); queueNotif(); setTimeout(bootGo, 1400); if (camPage()) startCams(); if (onRooms) { if (curRoom) drawRoom(curRoom.id); else updRooms(); } });
-      send({ type: "subscribe_events", event_type: "state_changed" });
+      send({ type: "subscribe_events", event_type: "state_changed" }); cfgFetch();
       loadFc(); loadFcH(); evBtn(); if (curPg() === "energy") { en.busy = false; loadEnergy(); }
     } else if (m.type === "result" && pending[m.id]) { try { pending[m.id](m.result, m); } catch (x) {} delete pending[m.id]; }
     else if (m.type === "event") { if (m.event && m.event.event_type === "state_changed") skewSample(Date.now() - Date.parse(m.event.time_fired)); if (subs[m.id]) subs[m.id](m.event); else if (m.event.data && m.event.data.new_state) setState(m.event.data.new_state); }
@@ -5561,9 +5575,128 @@ function drawAdmin() {
   const sec = (t, inner) => '<div class="pn pg"><div class="lbl">' + t + '</div>' + inner + '</div>';
   const n = Object.keys(states).length, who = ME.name ? esc(ME.name) : (CONFIG.token ? "long-lived token" : "-");
   const about = sec("This dashboard", '<div class="adm-f"><div><small>Kinetic</small><b>' + esc(ENGINE_VERSION) + '</b></div><div><small>Signed in as</small><b>' + who + '</b></div><div><small>Entities loaded</small><b>' + n + '</b></div></div>');
-  el.innerHTML = '<div class="thg"><div class="thl">' + accSec(sec) + sckSection(sec) + about + '</div></div>';
+  el.innerHTML = '<div class="thg"><div class="thl">' + accSec(sec) + ceSec(sec) + sckSection(sec) + about + '</div></div>';
 }
 $("#admin").addEventListener("click", e => { const ac = e.target.closest("[data-acc]"); if (ac) accClick(ac); });
+// ---------- Config editor (Admin page): edit rooms, tiles, climate rooms, cameras, media and alarm tiles; kept on the Home Assistant host by the kinetic_config component ----------
+// config.js stays the base. What is saved here only replaces the listed parts of it (CFG_OV_KEYS); "Reset" puts a part back to what config.js says. Saving never switches a device.
+const CE = { draft: null, avail: null, busy: false, msg: "", open: {}, fresh: "" };
+const ceClone = v => JSON.parse(JSON.stringify(v));
+const ceNorm = (k, v) => v == null ? [] : v;
+const ceSaved = () => { try { return JSON.parse(localStorage.getItem("dashCfgOv") || "{}") || {}; } catch (_) { return {}; } };
+function ceInit() { if (!CE.draft) { CE.draft = {}; CFG_OV_KEYS.forEach(k => { CE.draft[k] = ceClone(ceNorm(k, CFG_APPLIED[k])); }); } }
+const ceDirty = () => !!CE.draft && CFG_OV_KEYS.some(k => JSON.stringify(CE.draft[k]) !== JSON.stringify(ceNorm(k, CFG_APPLIED[k])));
+// after sign-in: ask Home Assistant for the saved edits; if they differ from what this page started with, keep them and reload once
+function cfgFetch() {
+  send({ type: "kinetic_config/get" }, (r, m) => {
+    if (m && m.success === false) { CE.avail = false; if (curPg() === "admin") drawAdmin(); return; }
+    CE.avail = true; const sig = JSON.stringify((r && r.config) || {}), now = JSON.stringify(ceSaved());
+    if (sig === now || ceDirty()) return;
+    let g = ""; try { g = sessionStorage.getItem("dashCfgRl") || ""; } catch (_) {}
+    if (g === sig) return;   // already reloaded once for this version: never loop
+    try { localStorage.setItem("dashCfgOv", sig); sessionStorage.setItem("dashCfgRl", sig); } catch (_) { return; }
+    location.reload();
+  });
+}
+const cePath = p => p.split(".").map(x => /^\d+$/.test(x) ? +x : x);
+function ceGet(p) { return cePath(p).reduce((o, k) => o == null ? o : o[k], CE.draft); }
+function ceSet(p, v) { const a = cePath(p), last = a.pop(), o = a.reduce((x, k) => x[k], CE.draft); if (v === "" && last !== "name") delete o[last]; else o[last] = v; }
+const ceSlug = (s, used) => { let b = String(s || "room").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "") || "room", id = b, n = 2; while (used.indexOf(id) > -1) id = b + "_" + n++; return id; };
+const ceRooms = () => CE.draft.house;
+const ceF = (p, label, ph, dom) => { const v = ceGet(p), st = dom && v && states[v];
+  return '<label class="ce-f"><small>' + label + '</small><input data-ce="in" data-p="' + p + '" value="' + esc(v == null ? "" : v) + '" placeholder="' + esc(ph || "") + '" autocomplete="off" spellcheck="false"' + (dom ? ' list="ce-dl-' + dom + '"' : "") + '>' +
+    (dom && v ? '<em class="' + (st ? "" : "bad") + '">' + (st ? esc(st.attributes.friendly_name || v) + " · " + esc(st.state) : "Not found in Home Assistant") + '</em>' : "") + '</label>'; };
+const ceList = (p, label, dom) => { const a = ceGet(p) || [];
+  return '<div class="ce-f ce-l"><small>' + label + '</small><div class="ce-c">' + a.map((e, i) => { const st = states[e]; return '<span class="ce-e' + (st ? "" : " bad") + '" title="' + esc(st ? (st.attributes.friendly_name || e) : "Not found in Home Assistant") + '"><b>' + esc(e) + '</b>' + (st && st.attributes.friendly_name ? '<small>' + esc(st.attributes.friendly_name) + '</small>' : "") + '<button data-ce="del" data-p="' + p + '" data-i="' + i + '" aria-label="Remove ' + esc(e) + '">' + mdi("close") + '</button></span>'; }).join("") + '</div>' +
+    '<div class="ce-a"><input data-ce="addin" data-p="' + p + '" list="ce-dl-' + dom + '" placeholder="' + dom + '.…" autocomplete="off" spellcheck="false"><button class="eb" data-ce="add" data-p="' + p + '">ADD</button></div></div>'; };
+const ceBar = (p, i, n) => '<span class="ce-m"><button data-ce="up" data-p="' + p + '" data-i="' + i + '"' + (i ? "" : " disabled") + ' aria-label="Move up">' + mdi("chevron-up") + '</button><button data-ce="dn" data-p="' + p + '" data-i="' + i + '"' + (i < n - 1 ? "" : " disabled") + ' aria-label="Move down">' + mdi("chevron-down") + '</button><button data-ce="rm" data-p="' + p + '" data-i="' + i + '" aria-label="Delete">' + mdi("close") + '</button></span>';
+function ceSection(key, title, note, body) {
+  const diff = JSON.stringify(CE.draft[key]) !== JSON.stringify(ceNorm(key, CFG_BASE[key])), op = !!CE.open[key];
+  return '<details class="ce-s" data-k="' + key + '"' + (op ? " open" : "") + '><summary>' + title + (diff ? '<i class="ce-d">differs from config.js</i>' : "") + '</summary><div class="lbl ce-n">' + note + '</div>' + body +
+    '<div class="sck-a"><button class="eb" data-ce="reset" data-k="' + key + '"' + (diff ? "" : " disabled") + '>RESET TO CONFIG.JS</button></div></details>';
+}
+function ceDL() {   // suggestions for the entity boxes (type to filter; no need to know the exact id)
+  const by = {}; Object.keys(states).forEach(k => { const d = k.split(".")[0]; (by[d] = by[d] || []).push(k); });
+  const mk = (id, doms) => '<datalist id="ce-dl-' + id + '">' + [].concat.apply([], doms.map(d => (by[d] || []).sort())).map(e => '<option value="' + esc(e) + '">' + esc(states[e].attributes.friendly_name || "") + '</option>').join("") + '</datalist>';
+  return mk("sensor", ["sensor"]) + mk("light", ["light"]) + mk("switch", ["switch"]) + mk("binary_sensor", ["binary_sensor"]) + mk("cover", ["cover"]) + mk("fan", ["fan"]) + mk("camera", ["camera"]) + mk("media_player", ["media_player"]) + mk("climate", ["climate"]) + mk("any", ["input_boolean", "switch", "binary_sensor", "script"]) + mk("script", ["script"]) + mk("input_boolean", ["input_boolean", "switch"]);
+}
+function ceBody() {
+  const D = CE.draft, hs = D.house, ids = hs.map(r => r.id), card = (head, inner, bar) => '<div class="ce-card"><div class="ce-h">' + head + bar + '</div>' + inner + '</div>';
+  const rooms = hs.map((r, i) => card(ceF("house." + i + ".name", "Room name", "Living"), '<div class="ce-g">' + ceF("house." + i + ".icon", "Icon (MDI name)", "sofa") + ceF("house." + i + ".temp", "Temperature sensor", "sensor.…", "sensor") + ceF("house." + i + ".hum", "Humidity sensor", "sensor.…", "sensor") + '</div>' +
+    ceList("house." + i + ".occ", "Occupancy / motion", "binary_sensor") + ceList("house." + i + ".lights", "Lights", "light") + ceList("house." + i + ".lightSwitches", "Light switches", "switch") + ceList("house." + i + ".windows", "Windows", "binary_sensor") + ceList("house." + i + ".doors", "Doors", "binary_sensor") + ceList("house." + i + ".covers", "Blinds / covers", "cover") + ceList("house." + i + ".fans", "Fans", "fan") + '<div class="lbl ce-n">Id: <b>' + esc(r.id) + '</b> (fixed, other settings point at it)</div>', ceBar("house", i, hs.length))).join("") +
+    '<div class="ce-a ce-add"><input data-ce="newin" data-p="house" placeholder="New room name" autocomplete="off"><button class="eb" data-ce="addroom">ADD ROOM</button></div>';
+  const tiles = D.tiles.map((t, i) => card(ceF("tiles." + i + ".name", "Tile name", "Garage"), '<div class="ce-g"><label class="ce-f"><small>Opens room</small><select data-ce="in" data-p="tiles.' + i + '.room"><option value="">(none)</option>' + hs.map(r => '<option value="' + esc(r.id) + '"' + (r.id === t.room ? " selected" : "") + '>' + esc(r.name) + '</option>').join("") + (t.room && ids.indexOf(t.room) < 0 ? '<option value="' + esc(t.room) + '" selected>' + esc(t.room) + ' (missing)</option>' : "") + '</select></label>' + ceF("tiles." + i + ".icon", "Icon (MDI name)", "garage-variant") + ceF("tiles." + i + ".temp", "Temperature sensor", "sensor.…", "sensor") + ceF("tiles." + i + ".hum", "Humidity sensor", "sensor.…", "sensor") + '</div>', ceBar("tiles", i, D.tiles.length))).join("") +
+    '<div class="ce-a ce-add"><input data-ce="newin" data-p="tiles" placeholder="New tile name" autocomplete="off"><button class="eb" data-ce="addtile">ADD TILE</button></div>';
+  const tabs = D.roomTabs.map((t, i) => card('<label class="ce-f"><small>Tab name</small><input data-ce="in" data-p="roomTabs.' + i + '.0" value="' + esc(t[0]) + '"></label>', '<div class="chips ce-ch">' + hs.map(r => '<button class="chip' + (t[1].indexOf(r.id) > -1 ? " on" : "") + '" data-ce="tab" data-i="' + i + '" data-v="' + esc(r.id) + '">' + esc(r.name).toUpperCase() + '</button>').join("") + '</div>', ceBar("roomTabs", i, D.roomTabs.length))).join("") +
+    '<div class="ce-a ce-add"><input data-ce="newin" data-p="roomTabs" placeholder="New tab name" autocomplete="off"><button class="eb" data-ce="addtab">ADD TAB</button></div>';
+  const clim = D.rooms.map((r, i) => card(ceF("rooms." + i + ".name", "Name", "Living"), '<div class="ce-g"><label class="ce-f"><small>Room id</small><input data-ce="in" data-p="rooms.' + i + '.id" value="' + esc(r.id || "") + '"></label>' + ceF("rooms." + i + ".icon", "Icon (MDI name)", "sofa") + ceF("rooms." + i + ".autoClimate", "Auto-climate switch", "input_boolean.…", "input_boolean") + ceF("rooms." + i + ".autoLabel", "Auto label", "Auto") + '<label class="ce-f"><small>Heat below (°C)</small><input data-ce="num" data-p="rooms.' + i + '.heatBelow" value="' + (r.heatBelow == null ? "" : r.heatBelow) + '" inputmode="decimal"></label><label class="ce-f"><small>Cool above (°C)</small><input data-ce="num" data-p="rooms.' + i + '.coolAbove" value="' + (r.coolAbove == null ? "" : r.coolAbove) + '" inputmode="decimal"></label></div>' +
+    '<label class="ce-k"><input type="checkbox" data-ce="chk" data-p="rooms.' + i + '.main"' + (r.main ? " checked" : "") + '> Main unit (the heat pump, full modes)</label>', ceBar("rooms", i, D.rooms.length))).join("") +
+    '<div class="ce-a ce-add"><input data-ce="newin" data-p="rooms" placeholder="New climate room name" autocomplete="off"><button class="eb" data-ce="addclim">ADD</button></div>';
+  const camCards = (k, add, ph) => D[k].map((c, i) => card(ceF(k + "." + i + ".name", "Camera name", "Driveway"), ceF(k + "." + i + ".id", "Camera entity", "camera.…", "camera"), ceBar(k, i, D[k].length))).join("") +
+    '<div class="ce-a ce-add"><input data-ce="newin" data-p="' + k + '" placeholder="' + ph + '" autocomplete="off"><button class="eb" data-ce="' + add + '">ADD CAMERA</button></div>';
+  const cams = camCards("cameras", "addcam", "New camera name"), secs = camCards("security", "addsec", "New camera name");
+  const med = ceList("media", "Media players (Now Playing)", "media_player");
+  const alm = D.alarmTiles.map((a, i) => card(ceF("alarmTiles." + i + ".name", "Name", "Siren"), '<div class="ce-g">' + ceF("alarmTiles." + i + ".icon", "Icon (MDI name)", "alarm-light") + ceF("alarmTiles." + i + ".entity", "Entity", "input_boolean.…", "any") + '<label class="ce-f"><small>Script (id, no “script.”)</small><input data-ce="in" data-p="alarmTiles.' + i + '.script" value="' + esc(a.script || "") + '"></label><label class="ce-f"><small>Siren mode</small><input data-ce="in" data-p="alarmTiles.' + i + '.siren" value="' + esc(a.siren || "") + '" placeholder="toggle"></label></div>', ceBar("alarmTiles", i, D.alarmTiles.length))).join("") +
+    '<div class="ce-a ce-add"><input data-ce="newin" data-p="alarmTiles" placeholder="New alarm tile name" autocomplete="off"><button class="eb" data-ce="addalm">ADD</button></div>';
+  return ceSection("house", "Rooms", "The rooms of the house: names, sensors and the lights, doors and windows in each. Order is the order shown. Anything not listed here (sections, counts) stays as config.js has it.", rooms) +
+    ceSection("tiles", "Home page room tiles", "The room tiles on the Home page. Tapping one opens that room.", tiles) +
+    ceSection("roomTabs", "Rooms page tabs", "Group the rooms into tabs. A room in no tab goes in the last group automatically.", tabs) +
+    ceSection("rooms", "Climate rooms", "Rooms on the Climate page. “Main unit” is the heat pump; the others are zones.", clim) +
+    ceSection("cameras", "Cameras (Home page)", "The cameras on the Home page, in order, mapped to their Home Assistant camera entities.", cams) +
+    ceSection("security", "Cameras (Security page)", "The cameras on the Security page. This is a separate list from the Home page, so rename a camera in both places to change it everywhere.", secs) +
+    ceSection("media", "Media players", "Players shown on the Now Playing card.", med) +
+    ceSection("alarmTiles", "Alarm tiles", "Siren and similar controls under the alarm buttons.", alm);
+}
+function ceSec(sec) {
+  ceInit();
+  let h;
+  if (CE.avail === false) h = '<div class="acc-n acc-w">The <b>kinetic_config</b> component is not installed on Home Assistant, so edits cannot be kept there. Copy <b>custom_components/kinetic_config</b> into your Home Assistant config folder, add <b>kinetic_config:</b> to configuration.yaml and restart Home Assistant. Until then config.js is used as it is.</div>';
+  else h = '<div class="lbl acc-h">Change rooms, tiles, climate rooms, cameras, media players and alarm tiles from here. Saved on Home Assistant, so every device gets the same setup. Saving never switches a device. config.js stays as the starting point; <b>Reset</b> goes back to it.</div>' + ceDL() + ceBody() +
+    '<div class="sck-a ce-sv"><button class="eb ce-go" data-ce="save"' + (ceDirty() && !CE.busy ? "" : " disabled") + '>' + (CE.busy ? "SAVING…" : "SAVE TO HOME ASSISTANT") + '</button><button class="eb" data-ce="discard"' + (ceDirty() ? "" : " disabled") + '>DISCARD CHANGES</button></div><div class="lbl sck-h ce-msg" role="status">' + esc(CE.msg || (ceDirty() ? "Unsaved changes." : "")) + '</div>';
+  return sec("Config editor", h);
+}
+function ceDraw() { if (curPg() === "admin") { const y = window.scrollY, ae = document.activeElement; drawAdmin(); window.scrollTo(0, y); } }
+function ceSave() {
+  if (CE.busy || !ceDirty()) return;
+  const out = {}; CFG_OV_KEYS.forEach(k => { if (JSON.stringify(CE.draft[k]) !== JSON.stringify(ceNorm(k, CFG_BASE[k]))) out[k] = CE.draft[k]; });
+  CE.busy = true; CE.msg = ""; ceDraw();
+  send({ type: "kinetic_config/set", config: out }, (r, m) => {
+    CE.busy = false;
+    if (m && m.success === false) { CE.msg = "Could not save: " + ((m.error && m.error.message) || "Home Assistant refused (are you an admin, and is kinetic_config installed?)"); ceDraw(); return; } const sig = JSON.stringify((r && r.config) || out);
+    try { localStorage.setItem("dashCfgOv", sig); sessionStorage.setItem("dashCfgRl", sig); } catch (_) {}
+    CE.msg = "Saved. Reloading…"; ceDraw(); setTimeout(() => location.reload(), 500);
+  });
+}
+function ceClick(b) {
+  const a = b.dataset.ce, p = b.dataset.p, i = +b.dataset.i, arr = p && ceGet(p), nm = () => { const x = b.parentElement.querySelector('[data-ce="newin"]'); const v = x ? x.value.trim() : ""; return v; };
+  if (a === "save") return ceSave();
+  if (a === "discard") { CE.draft = null; CE.msg = ""; return ceDraw(); }
+  if (a === "reset") { CE.draft[b.dataset.k] = ceClone(ceNorm(b.dataset.k, CFG_BASE[b.dataset.k])); return ceDraw(); }
+  if (a === "up" || a === "dn") { const j = a === "up" ? i - 1 : i + 1; if (j < 0 || j >= arr.length) return; const t = arr[i]; arr[i] = arr[j]; arr[j] = t; return ceDraw(); }
+  if (a === "rm") { const gone = arr[i]; arr.splice(i, 1); if (p === "house" && gone) CE.draft.roomTabs.forEach(t => { t[1] = t[1].filter(x => x !== gone.id); }); return ceDraw(); }
+  if (a === "del") { arr.splice(i, 1); return ceDraw(); }
+  if (a === "add") { const x = b.parentElement.querySelector('[data-ce="addin"]'), v = x.value.trim(); if (!v || v.indexOf(".") < 1) { x.focus(); return; } if (!ceGet(p)) ceSet(p, []); if (ceGet(p).indexOf(v) < 0) ceGet(p).push(v); return ceDraw(); }
+  if (a === "tab") { const t = CE.draft.roomTabs[i][1], v = b.dataset.v, j = t.indexOf(v); if (j > -1) t.splice(j, 1); else t.push(v); return ceDraw(); }
+  const n = nm(); if (!n) { const x = b.parentElement.querySelector('[data-ce="newin"]'); if (x) x.focus(); return; }
+  if (a === "addroom") CE.draft.house.push({ id: ceSlug(n, CE.draft.house.map(r => r.id)), name: n, icon: "home", lights: [], windows: [], doors: [] });
+  else if (a === "addtile") CE.draft.tiles.push({ name: n, icon: "home", room: "" });
+  else if (a === "addtab") CE.draft.roomTabs.push([n, []]);
+  else if (a === "addclim") CE.draft.rooms.push({ id: ceSlug(n, CE.draft.rooms.map(r => r.id)), name: n, icon: "home" });
+  else if (a === "addsec") CE.draft.security.push({ id: "", name: n });
+  else if (a === "addcam") CE.draft.cameras.push({ id: "", name: n });
+  else if (a === "addalm") CE.draft.alarmTiles.push({ entity: "", script: "", siren: "toggle", name: n, icon: "alarm-light" });
+  CE.open[(b.closest(".ce-s") || {dataset: {}}).dataset.k] = true; ceDraw();
+}
+$("#admin").addEventListener("click", e => { const b = e.target.closest("[data-ce]"); if (b && b.tagName === "BUTTON") ceClick(b); });
+$("#admin").addEventListener("change", e => {
+  const x = e.target; if (!x.dataset || !x.dataset.ce || !CE.draft) return; const k = x.dataset.ce, p = x.dataset.p;
+  if (k === "in") ceSet(p, x.value.trim());
+  else if (k === "num") { const v = parseFloat(x.value); ceSet(p, isNaN(v) ? "" : v); }
+  else if (k === "chk") { if (x.checked) ceSet(p, true); else ceSet(p, ""); }
+  else return;
+  CE.msg = ""; ceDraw();
+});
+$("#admin").addEventListener("toggle", e => { const d = e.target; if (d.classList && d.classList.contains("ce-s")) CE.open[d.dataset.k] = d.open; }, true);
 // ---------- Home weather shortcuts ----------
 [[".hs", "#weather/now"], ["#fcp", "#weather/week"]].forEach(q => { const x = $(q[0]); x.style.cursor = "pointer"; x.onclick = () => { location.hash = q[1]; }; });   // the greeting opens the Now card, the Forecast card opens Next 7 days
 
@@ -7131,19 +7264,6 @@ function enCheapLine(T) {   // tariff hint: which hours are cheapest, and whethe
   const rt = v => v === 0 ? "free" : T.symbol + v.toFixed(3) + "/kWh";
   return '<div class="lbl enchp' + (inNow ? ' on' : '') + '" style="margin-top:10px;text-transform:none;letter-spacing:0">Cheapest: <b>' + cheap.map(p => hr(p.from) + " – " + hr(p.to)).join(", ") + '</b> (' + rt(lo) + ') · ' + (inNow ? "cheap rate now, until " + hr(cur.to) : "next at " + hr(nx % 24)) + '</div>';
 }
-// ---------- energy scene: your own house picture with the totals for the chosen period pinned on it (config.js energyScene; no picture, no scene) ----------
-// The numbers are the same ones as the cards below (the power company's data arrives days late and gas monthly), so the scene follows DAY / WEEK / BILL / YEAR and says up to when the data goes.
-function enScene(o) {
-  const S = CONFIG.energyScene; if (!S || !S.image) return "";
-  const pt = (k, d) => Object.assign({}, d, S[k] || {}), H = pt("house", { x: 50, y: 10 }), G = pt("grid", { x: 30, y: 86 }), X = pt("gas", { x: 84, y: 64 }), GT = pt("gridTo", { x: 36, y: 50 }), XT = pt("gasTo", { x: 72, y: 56 });
-  const chip = (c, ic, cls, big, sm) => '<div class="enc ' + cls + '" style="--x:' + c.x + '%;--y:' + c.y + '%"><i>' + mdi(ic) + '</i><div><b>' + esc(big) + '</b><small>' + esc(sm) + '</small></div></div>';
-  const line = (a, b, col) => '<path d="M' + a.x + " " + a.y + " Q" + ((a.x + b.x) / 2) + " " + (Math.min(a.y, b.y) - 4) + " " + b.x + " " + b.y + '" stroke="' + col + '"/>';
-  let up = 0; Object.keys(en.grid || {}).forEach(t => { if (en.grid[t] > 0 && +t > up) up = +t; });
-  const upTo = up ? new Date(up + 36e5).toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }) : "";
-  return '<div class="pn ensc"><div class="ensb">' + (upTo ? "Data to " + esc(upTo) : "Waiting for data") + '</div><div class="ensi"><img src="' + esc(S.image) + '" alt="' + esc(S.alt || "Your home") + '" onerror="this.closest(\'.ensc\').remove()">' +
-    '<svg class="ensf" viewBox="0 0 100 100" preserveAspectRatio="none">' + line(G, GT, "#6bb8ff") + (o.gas ? line(X, XT, "#f78c6b") : "") + '</svg>' +
-    '<div class="enck">' + chip(H, "home-roof", "enh", o.total, "Total · " + o.lab) + chip(G, "lightning-bolt", "eng", o.kwh + " kWh", o.cost + " · grid") + (o.gas ? chip(X, "fire", "enx", o.gas, o.gasCost + " · gas") : "") + '</div></div></div>';
-}
 function enDraw() {
   const mob = isMobile(), FS = mob ? 15 : 12, sp = enSpan(), pg = $("#energy"), P = en.prefs;
   let h = '<div class="eh ehc" style="margin-bottom:14px"><div class="chips tabs">' + [["day", "DAY"], ["week", "WEEK"], ["month", CONFIG.billing ? "BILL" : "MONTH"], ["year", "YEAR"]].map(x => '<button class="chip' + (en.r === x[0] ? " on" : "") + '" data-er="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="seg" style="margin-left:auto"><button class="eb" data-eo="-1">' + mdi("chevron-left") + '</button><button class="eb" data-eo="0" style="min-width:210px">' + esc(sp.lab) + '</button><button class="eb" data-eo="1">' + mdi("chevron-right") + '</button></div></div>';
@@ -7201,7 +7321,7 @@ function enDraw() {
       if (rows.length) h += '<div class="pn pg enins"><div class="lbl">Insights</div><div class="eni">' + rows.map(r => '<div class="eil"><div class="lbl">' + esc(r[0]) + '</div><div class="eiv"' + (r[3] ? ' style="color:' + r[3] + '"' : '') + '>' + esc(r[1]) + '</div><div class="eic">' + esc(r[2]) + '</div></div>').join("") + '</div></div>';
     }
     const et = hasGas && CS ? (en.tab === "g" ? "g" : "e") : "e";
-    h = h.slice(0, h0) + (CS ? enScene({ total: mny(subT + gstA), lab: sp.lab, kwh: fm(CS.kwh), cost: mny(CS.total), gas: hasGas ? fm(gT) + " " + GU : "", gasCost: gC != null ? mny(gTot) : "-" }) : "") + (hasGas && CS ? '<div class="ensw"><button class="' + (et === "e" ? "on" : "") + '" data-et="e">ELECTRICITY</button><button class="' + (et === "g" ? "on" : "") + '" data-et="g">GAS</button></div>' : "") + '<div class="ensl" data-t="' + et + '" data-n="' + (hasGas && CS ? 3 : 2) + '">' + h.slice(h0) + '</div>'; en.body = h.slice(h0);
+    h = h.slice(0, h0) + (hasGas && CS ? '<div class="ensw"><button class="' + (et === "e" ? "on" : "") + '" data-et="e">ELECTRICITY</button><button class="' + (et === "g" ? "on" : "") + '" data-et="g">GAS</button></div>' : "") + '<div class="ensl" data-t="' + et + '" data-n="' + (hasGas && CS ? 3 : 2) + '">' + h.slice(h0) + '</div>'; en.body = h.slice(h0);
   }
   pg.innerHTML = h;
   if (en.tx != null && en.data && !pg.querySelector(".enold") && pg.querySelector(".ensl")) { const d = en.tx, els = pg.querySelectorAll(".ensw,.ensl>.pn"); en.tx = null; if (!(window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches)) { els.forEach((c, k) => { c.style.setProperty("--tx", d * 30 + "px"); c.style.setProperty("--ty", d ? "6px" : "14px"); c.style.setProperty("--i", k); c.classList.add("enin"); }); en.anim = Date.now() + 700; setTimeout(() => els.forEach(c => c.classList.remove("enin")), 800); } }
