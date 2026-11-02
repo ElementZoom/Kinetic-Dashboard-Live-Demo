@@ -2412,10 +2412,18 @@ html:not(#x) #mini .rnd{width:28px;height:28px;font-size:15px}
 html:not(#x) #mini .chips{padding:3px}
 html:not(#x) #mini .chip{padding:7px 0}
 }
-/* tablet: the camera tiles stretch to the height of the heat pump + forecast column, so the bottoms line up */
-@media(min-width:1101px){
-.hm:has(#cams>*) .camcol .cams{align-content:stretch}
-.hm:has(#cams>*) .camcol .cams>.cam{align-self:stretch}
+/* tablet: the camera tiles keep their own 16:9 size (a stretched tile crops the picture and jumped when the live picture arrived). On a wide screen the heat pump + forecast column takes the height of the cameras instead and its forecast card gives way; on a narrower one the column simply sets its own height and the cameras stay 16:9 above it */
+@media(min-width:1240px){
+.hm .side{contain:size;align-self:stretch;min-height:0}
+.hm .side #fcp{min-height:0;flex:1 1 0;container-type:size}.hm .side #fcp #fc,.hm .side #fcp .fcc{min-height:0}
+.hm .side .fcc>div{padding:8px 2px;gap:4px;min-height:0}
+.hm .side .fcc .th{height:auto;flex:1 1 20px;min-height:14px;max-height:52px}
+@container (max-height:185px){.fcc .th{display:none}}
+@container (max-height:165px){.fcc em{display:none}.fcc .wi svg{width:22px;height:22px}}
+@container (max-height:135px){.fcc small{display:none}}
+}
+@media(min-width:1101px) and (max-width:1239px){
+.hm .side .fcc>div{padding:8px 2px;gap:4px}
 }
 /* Climate: the trigger options only matter while Auto climate runs */
 .ctr .cl{flex:1;min-width:0}.ctr .cl span{display:flex;align-items:center;gap:6px}.ctr .cl .wm{color:var(--heat,#ff9a62)}.ctr .cl .cl2{color:var(--cool)}.ctr .cl small{display:block;margin-top:2px;font-size:12px;line-height:1.4;color:var(--mut)}.ctr .cl svg{width:16px;height:16px;flex:none;fill:currentColor}.ctr .ct:has(.cl){align-items:center}.ctr .ct:has(.cl):first-of-type{margin-top:0}
@@ -2600,7 +2608,7 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=1.14.6.35"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=1.14.6.36"></script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
