@@ -2582,6 +2582,26 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 .lsr svg{flex:none;width:18px;height:18px;fill:currentColor;margin-top:-1px}
 .lsr.y svg{color:#4cc38a}.lsr.n svg{color:#ef6a5e}
 .lsr:last-child{font-weight:600;padding-top:6px;border-top:1px solid var(--line)}.lss .lsr:only-child{border-top:0;padding-top:0}
+/* Notifications > Active: groups fold, doors and windows are slim rows, and a chip row jumps to one group */
+#np .npf{cursor:pointer;-webkit-tap-highlight-color:transparent}
+#np .npfr{margin-left:auto;display:flex;align-items:center;gap:8px}
+#np .npfr .eb{margin-left:0}
+#np .npch{display:flex;align-items:center;justify-content:center;width:28px;height:28px;color:var(--mut)}
+#np .npch svg{width:20px;height:20px;margin:0;vertical-align:0;transition:transform .2s;transform:rotate(-90deg)}
+#np .npch.open svg{transform:none}
+#np .npsum{margin:-4px 0 4px 30px;font:12px var(--mono);letter-spacing:.04em;color:var(--mut);line-height:1.4}
+#np .npchips{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 0}
+#np .npchips .chip{padding:6px 12px;font-size:12px;min-height:0}
+/* slim rows for doors and windows: in the Active list and on a room page */
+html:not(#x) :is(#np,#rv) .bl{flex-direction:column;flex-wrap:nowrap;gap:0}
+html:not(#x) :is(#np,#rv) .bl .bd[data-k]{flex:none;width:100%;min-height:0;padding:9px 62px 9px 38px;border:0;border-top:1px solid var(--line);border-radius:0;background:none;box-shadow:none;display:flex;align-items:center}
+html:not(#x) :is(#np,#rv) .bl .bd[data-k]:first-child{border-top:0}
+html:not(#x) :is(#np,#rv) .bl .bd[data-k] i{left:6px;width:22px;height:22px}
+html:not(#x) :is(#np,#rv) .bl .bd[data-k] i svg{width:22px;height:22px}
+html:not(#x) :is(#np,#rv) .bl .bd[data-k].on i{color:var(--ac)}
+html:not(#x) :is(#np,#rv) .bl .bd[data-k] .nm{font-size:14px;font-weight:400}
+html:not(#x) :is(#np,#rv) .bl .bd[data-k] span.st{display:block;position:absolute;right:6px;top:50%;margin:0;transform:translateY(-50%);font-size:10px}
+html:not(#x) :is(#np,#rv) .bl .bd[data-k].on span.st{color:var(--ac)}
 </style>
 </head>
 <body>
@@ -2651,14 +2671,14 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.1.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.2.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.1.0";   // the one place to change the version
+window.DASH_VER = "2.2.0";   // the one place to change the version
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -5921,6 +5941,7 @@ const NSK = [
   ["towel", "radiator", "Towel heating on", towelsOn]
 ];
 const nskRel = id => attnRel(id) || polRel(id) || binsIds().includes(id) || /^sensor\..*battery_plus$/.test(id) || LEAKS().some(x => x[0] === id) || id === E("weatherWarnings") || id === W || id === E("doorsGroup") || id === E("laundryState") || id === E("laundryRemaining") || id === E("towelGroup") || members(E("towelGroup")).includes(id) || members(E("doorsGroup")).includes(id) || /^switch\..*water_tap$/.test(id) || Object.keys(galCfg()).some(k => (galCfg()[k] || {}).sensor === id) || (CONFIG.irrigation || []).some(z => z.switch === id);
+const NPF = {};   // Active groups the person folded or opened by hand (key -> true = open); doors and windows start folded, the rest open
 let npTab = "alerts", npOnly = "";   // npOnly = an Active group key (e.g. "towel-heating"): the strip opened the pop-up for that one condition, so Active lists just that group until SHOW ALL
 const ACTC = CONFIG.quickAll || [];
 
@@ -5933,7 +5954,7 @@ function npGoRun() {
   const sec = npGo.s, t0 = Date.now(); npGo = null;
   [80, 1500].forEach(ms => setTimeout(() => { if (npUser > t0 || !document.body.classList.contains("np-open")) return; const t = $('#np [data-sec="' + sec + '"]'); if (t) t.scrollIntoView({ block: "start" }); }, ms));   // the second pass catches rows that arrive just after; it never fights a finger already scrolling
 }
-const npOnlyBar = A => { const g = A.filter(x => x.c[0].toLowerCase().replace(/\s+/g, "-") === npOnly)[0]; return '<div class="lbl np2 il">' + esc(g ? g.c[0] : "Nothing running") + ' only<button class="eb" data-npall="1">SHOW ALL ACTIVE</button></div>'; };
+const npChips = A => { const g = A.filter(x => x.ids.length); if (g.length < 2) return ""; const sl = x => x.c[0].toLowerCase().replace(/\s+/g, "-"); return '<div class="npchips">' + [["", "All " + g.reduce((n, x) => n + x.ids.length, 0)]].concat(g.map(x => [sl(x), x.c[0] + " " + x.ids.length])).map(c => '<button type="button" class="chip' + (npOnly === c[0] ? " on" : "") + '" data-npchip="' + c[0] + '">' + esc(c[1]) + '</button>').join("") + '</div>'; };
 const npLoading = () => !Object.keys(states).length;   // nothing from Home Assistant yet: say so instead of "Nothing is on or open" / "All clear"
 const NPOFF = {}; let npHold = 0, npht = 0;   // tiles switched off from the Active list vanish at once (a slow light transition would keep them "on" for seconds)
 const npGone = x => { const t = NPOFF[x]; if (!t) return false; if (!isOn(x) || Date.now() - t > 12000) { delete NPOFF[x]; return false; } return true; };
@@ -5964,8 +5985,13 @@ const npRoomMap = () => { const m = {}, order = []; HOUSE().forEach(r => { order
 function actHtml(A) {
   const t = A.filter(x => x.ids.length); if (!t.length) return '<div class="lbl" style="margin:14px 0">Nothing is on or open</div>';
   const RM = CONFIG.notifRoomHeadings === false ? null : npRoomMap(), tile = (x, e) => x.c[3] === "ld" ? ldTile() : tileHtml(x.c[0] === "Water taps" ? npItem(e, { icon: "m3-water-drop" }) : x.c[3] === 1 ? { entity: e, kind: x.c[0] === "Doors" ? "door" : "window" } : npItem(e, x.c[3] === "tw" ? { timer: states["timer.heated_towel_rails"] ? "timer.heated_towel_rails" : tileTimer(e) } : null));
+  const slug = x => x.c[0].toLowerCase().replace(/\s+/g, "-");
   return t.map(x => {
-    const cls = x.c[3] === 1 ? "bl" : "tg3 act-" + x.c[0].toLowerCase().replace(/\s+/g, "-"), head = '<div class="lbl np2 il" data-sec="' + x.c[0].toLowerCase().replace(/\s+/g, "-") + '">' + mdi(x.c[2]) + x.c[0] + ' · ' + x.ids.length + (x.c[3] === 1 || x.c[3] === "ld" ? "" : '<button class="eb" data-off="' + A.indexOf(x) + '">' + (x.c[3] === "close" ? "CLOSE ALL" : "ALL OFF") + '</button>') + '</div>';
+    const sec = slug(x), slim = x.c[3] === 1, open = npOnly ? npOnly === sec : NPF[sec] != null ? NPF[sec] : !slim, cls = slim ? "bl" : "tg3 act-" + sec;
+    const rooms = {}; x.ids.forEach(e => { const r = RM ? RM.m[e] || "Other" : ""; rooms[r] = (rooms[r] || 0) + 1; });
+    const sum = open ? "" : '<div class="npsum">' + esc(Object.keys(rooms).filter(Boolean).sort((a, b) => RM.order.indexOf(a) - RM.order.indexOf(b)).map(r => r + " " + rooms[r]).join(" · ")) + '</div>';
+    const head = '<div class="lbl np2 il npf" data-sec="' + sec + '" data-npf="' + sec + '" role="button" tabindex="0" aria-expanded="' + open + '">' + mdi(x.c[2]) + x.c[0] + ' · ' + x.ids.length + '<span class="npfr">' + (slim || x.c[3] === "ld" ? "" : '<button class="eb" data-off="' + A.indexOf(x) + '">' + (x.c[3] === "close" ? "CLOSE ALL" : "ALL OFF") + '</button>') + '<span class="npch' + (open ? " open" : "") + '">' + mdi("chevron-down") + '</span></span></div>' + sum;
+    if (!open) return head;
     if (!RM || x.c[3] === "ld" || !x.ids.some(e => RM.m[e])) return head + '<div class="' + cls + '">' + x.ids.map(e => tile(x, e)).join("") + '</div>';   // no room info for this group: as before
     const g = {}; x.ids.forEach(e => { const r = RM.m[e] || "Other"; (g[r] = g[r] || []).push(e); });
     return head + Object.keys(g).sort((a, b) => (a === "Other") - (b === "Other") || RM.order.indexOf(a) - RM.order.indexOf(b)).map(r => '<div class="np-rm">' + esc(r) + '</div><div class="' + cls + '">' + g[r].map(e => tile(x, e)).join("") + '</div>').join("");
@@ -6015,7 +6041,7 @@ function drawNotif() {
   const np = $("#np"), tb = [["alerts", "ALERTS", r.n], ["attention", "ATTENTION", r.na], ["active", "ACTIVE", tot]]; let tc = false;
   if (!np.querySelector(".nptabs")) { tc = true; np.innerHTML = '<div class="nh"><div><div class="lbl">Home</div><h3>Notifications</h3></div><button class="eb" data-close="1">DONE</button></div>' + hsw('<div class="chips tabs nptabs">' + tb.map(t => '<button class="chip" data-npt="' + t[0] + '"></button>').join("") + '</div>') + '<div id="npc"></div>'; }
   np.querySelectorAll(".nptabs .chip").forEach((c, k) => { const tx = tb[k][1] + (tb[k][2] ? " · " + tb[k][2] : ""); if (c.textContent !== tx) { c.textContent = tx; tc = true; } c.classList.toggle("on", c.dataset.npt === npTab); });
-  const body = npLoading() ? '<div class="lbl" style="margin:14px 0">Loading…</div>' : npTab === "active" ? (npOnly ? npOnlyBar(A) + actHtml(A.filter(x => x.c[0].toLowerCase().replace(/\s+/g, "-") === npOnly)) : actHtml(A)) : npTab === "attention" ? (r.na ? r.ah : '<div class="lbl" style="margin:14px 0">Nothing needs attention</div>') : (r.n ? "" : '<div class="lbl" style="margin:14px 0">All clear</div>') + r.html, nc = $("#npc"), key = npTab + "|" + body.replace(/<em class="ldr">[^<]*<\/em>/g, '<em class="ldr"></em>');   // the remaining time is filled in below, so the minute ticking over does not redraw the list (and restart the drum)
+  const body = npLoading() ? '<div class="lbl" style="margin:14px 0">Loading…</div>' : npTab === "active" ? npChips(A) + (npOnly ? actHtml(A.filter(x => x.c[0].toLowerCase().replace(/\s+/g, "-") === npOnly)) : actHtml(A)) : npTab === "attention" ? (r.na ? r.ah : '<div class="lbl" style="margin:14px 0">Nothing needs attention</div>') : (r.n ? "" : '<div class="lbl" style="margin:14px 0">All clear</div>') + r.html, nc = $("#npc"), key = npTab + "|" + body.replace(/<em class="ldr">[^<]*<\/em>/g, '<em class="ldr"></em>');   // the remaining time is filled in below, so the minute ticking over does not redraw the list (and restart the drum)
   if (nc._k !== key) { nc._k = key; nc.innerHTML = body; }
   npGoRun(); npCamMount();
   $$("#npc .ldr").forEach(el => { const t = ldTime(); if (el.textContent !== t) el.textContent = t; });
@@ -6037,7 +6063,8 @@ const npClose = () => { npOnly = ""; document.body.classList.remove("np-open"); 
 $("#nbd").onclick = npClose;
 $("#np").onclick = e => {
   if (e.target.closest("[data-close]")) { npClose(); return; }
-  if (e.target.closest("[data-npall]")) { npOnly = ""; drawNotif(); return; }
+  const ch = e.target.closest("[data-npchip]"); if (ch) { npOnly = ch.dataset.npchip; drawNotif(); return; }
+  const fo = e.target.closest("[data-npf]"); if (fo && !e.target.closest(".eb")) { const k = fo.dataset.npf, was = fo.getAttribute("aria-expanded") === "true"; if (!npOnly) { NPF[k] = !was; drawNotif(); } return; }   // while one group is picked with a chip it stays open
   const tb = e.target.closest("[data-npt]"); if (tb) { npOnly = ""; const ord = ["alerts", "attention", "active"], was = npTab; npTab = tb.dataset.npt; drawNotif(); if (was !== npTab) txGo($("#npc"), ord.indexOf(npTab) > ord.indexOf(was) ? 1 : -1, true); return; }
   const of = e.target.closest("[data-off]"); if (of) { const ids = actList()[+of.dataset.off].ids; const cl = actList()[+of.dataset.off].c[3] === "close"; if (ids.length) { if (!cl) npDismiss(ids); call(cl ? "cover" : "homeassistant", cl ? "close_cover" : "turn_off", ids); } return; }
   if (e.target.closest("[data-wxatg]")) { WXA_FULL = !WXA_FULL; drawNotif(); return; }   // the combined weather card: one line each, or each as its full card
