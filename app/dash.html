@@ -2591,17 +2591,17 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 #np .npch.open svg{transform:none}
 #np .npsum{margin:-4px 0 4px 30px;font:12px var(--mono);letter-spacing:.04em;color:var(--mut);line-height:1.4}
 #np .npchips{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 0}
-#np .npchips .chip{padding:6px 12px;font-size:12px;min-height:0}
-/* slim rows for doors and windows: in the Active list and on a room page */
-html:not(#x) :is(#np,#rv) .bl{flex-direction:column;flex-wrap:nowrap;gap:0}
-html:not(#x) :is(#np,#rv) .bl .bd[data-k]{flex:none;width:100%;min-height:0;padding:9px 62px 9px 38px;border:0;border-top:1px solid var(--line);border-radius:0;background:none;box-shadow:none;display:flex;align-items:center}
-html:not(#x) :is(#np,#rv) .bl .bd[data-k]:first-child{border-top:0}
-html:not(#x) :is(#np,#rv) .bl .bd[data-k] i{left:6px;width:22px;height:22px}
-html:not(#x) :is(#np,#rv) .bl .bd[data-k] i svg{width:22px;height:22px}
-html:not(#x) :is(#np,#rv) .bl .bd[data-k].on i{color:var(--ac)}
-html:not(#x) :is(#np,#rv) .bl .bd[data-k] .nm{font-size:14px;font-weight:400}
-html:not(#x) :is(#np,#rv) .bl .bd[data-k] span.st{display:block;position:absolute;right:6px;top:50%;margin:0;transform:translateY(-50%);font-size:10px}
-html:not(#x) :is(#np,#rv) .bl .bd[data-k].on span.st{color:var(--ac)}
+#np .npchips .chip{flex:0 0 auto;padding:6px 12px;font-size:12px;min-height:0;white-space:nowrap}
+/* slim rows for doors and windows: in the Active list and on a room page. html:not(#x):not(#y) outranks the light and dark colour rules for an open door / window */
+html:not(#x):not(#y) :is(#np,#rv) .bl{flex-direction:column;flex-wrap:nowrap;gap:0}
+html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k]{flex:none;width:100%;min-height:0;padding:9px 6px 9px 38px;border:0;border-top:1px solid var(--line);border-radius:0;background:none;box-shadow:none;display:flex;align-items:center;gap:8px}
+html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k]:first-child{border-top:0}
+html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] i{left:6px;width:22px;height:22px}
+html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] i svg{width:22px;height:22px}
+html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] .nm{display:block;flex:1 1 auto;min-width:0;margin:0;font-size:14px;font-weight:400}
+html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] span.rm{display:block;margin:0 0 0 auto;font:400 12px var(--sans,inherit);color:var(--mut);white-space:nowrap;max-width:45%;overflow:hidden;text-overflow:ellipsis}
+html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] span.st{display:block;position:static;transform:none;margin:0;min-width:48px;text-align:right;font:600 10px var(--mono);letter-spacing:.08em}
+html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] span.rm+span.st{margin-left:0}
 </style>
 </head>
 <body>
@@ -2671,14 +2671,14 @@ html:not(#x) :is(#np,#rv) .bl .bd[data-k].on span.st{color:var(--ac)}
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.2.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.2.1"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.2.0";   // the one place to change the version
+window.DASH_VER = "2.2.1";   // the one place to change the version
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -2749,7 +2749,7 @@ function ruApply(o) {   // hides what this person may not use; the engine also s
   if (RU) {
     off.forEach(p => { css += 'nav a[href="#' + p + '"],#btab a[href="#' + p + '"],#mshe a[href="#' + p + '"]{display:none!important}'; });
     try { if (Array.isArray(RU.rooms)) { hideT = 0; css += "#grid{--nr:" + Math.max(1, CONFIG.rooms.filter(r => !r.main && !entHidden(r.id)).length) + "}"; CONFIG.rooms.forEach((r, i) => { if (!r.main && entHidden(r.id)) css += '#grid>.card[data-cl="' + r.id + '"]{display:none!important}#gdots i[data-i="' + i + '"]{display:none}'; }); } } catch (_) {}   // a room hidden from this person has no climate control either (not ready yet on the very first call: ruRefresh applies again)
-    css += "#navset,#navset2,#outs,#hnp{display:none!important}#hc{pointer-events:none}#nacc{display:none!important}";   // no Settings link, no notification pop-up (it holds the "all off" switches and admin toggles)
+    css += "#outs,#hnp{display:none!important}#hc{pointer-events:none}#nacc{display:none!important}";   // no notification pop-up (it holds the "all off" switches and admin toggles); the Settings link stays, Home Assistant itself decides what a non-admin may open
     if (!PAGE_ON("security") || !ruSec("alarm")) css += "#al,#hal,#alb{display:none!important}";
     if (!["climate", "weather", "energy", "irrigation", "media", "events", "vehicle", "hazards", "theme"].some(PAGE_ON)) css += "#bmore{display:none!important}";
     if (off.indexOf("media") > -1) css += "#npmini,#npfab,#npsheet,#hnote{display:none!important}";
@@ -2760,6 +2760,7 @@ function ruApply(o) {   // hides what this person may not use; the engine also s
   }
   st.textContent = css; b.classList.toggle("adm", ADMIN_ON()); b.classList.toggle("ru", !!RU); b.classList.toggle("ru1", !!RU && left <= 1);
   try { localStorage.setItem("dashRuO", RU ? JSON.stringify(RU) : "-"); } catch (_) {}
+  try { setLinks(); } catch (_) {}   // the Settings link points at Settings for an admin and at the profile page for everyone else (38-energy.js; not defined yet on the very first call)
 }
 function ruRefresh() { if (!identDone) return; const o = ruResolve(); if (JSON.stringify(o) !== JSON.stringify(RU)) { ruApply(o); route(); if (curPg() === "theme") drawPalette(); if (curPg() === "admin") drawAdmin(); } else ruApply(o); }
 let userName = "", userKnown = false; try { const c = localStorage.getItem("dashUser"); if (c != null) { userKnown = true; userName = c === "-" ? "" : c; } } catch (_) {}
@@ -3760,7 +3761,9 @@ function clSync() { const o = isMobile() && !!$("#grid .card[data-open]"); docum
 $("#grid").addEventListener("click", e => {
   const c = e.target.closest(".card.rm"); if (!c) return;
   if (e.target.closest(".shx")) { clClose(); return; }
-  if (c.dataset.open) { if (e.target.closest(".lbl.il") && !isMobile()) clClose(); return; }
+  if (c.dataset.open) {   // tablet: the label, or the chevron in the top right corner of the card (it is drawn over the row, so a tap on it lands on the row), shrinks the room back
+    const r = c.getBoundingClientRect(), chev = e.clientX > r.right - 44 && e.clientY < r.top + 44 && !e.target.closest("button,input,.ctr,.chips,.fanb");
+    if ((e.target.closest(".lbl.il") || chev) && !isMobile()) clClose(); return; }
   if (e.target.closest("button,.cbar,.ctr,.chips,.fanb,input")) return;
   clClose(true); if (isMobile()) { const ph = document.createElement("div"); ph.className = "rmph"; ph.style.height = c.offsetHeight + "px"; c.before(ph); }   // the sheet leaves the list, so a spacer of the same height keeps the other rooms where they are
   c.style.setProperty("--cy", Math.round(c.offsetHeight / 2) + "px"); if (isMobile()) { c.dataset.open = "1"; clSync(); } else { clFlip(c, () => { c.dataset.open = "1"; }); clSync(); }   // --cy: the middle of the closed row, so a tablet's chevron stays where it was when the room opens
@@ -4458,8 +4461,16 @@ function kpKey(k) {
 document.addEventListener("keydown", e => { if (!kp) return; if (/^\d$/.test(e.key)) kpKey(e.key); else if (e.key === "Backspace") kpKey("bk"); else if (e.key === "Enter") kpKey("ok"); else if (e.key === "Escape") kpKey("x"); });
 $("#kp").onclick = e => { const b = e.target.closest("[data-k]"); if (b) kpKey(b.dataset.k); else if (e.target.id === "kp") kpClose(); };
 $("#alp").onclick = e => { const b = e.target.closest("[data-m]"); if (b) alarmDo(b.dataset.m); else tapH(e); };
-$("#al").onclick = () => { location.hash = "#security"; };
-$("#hal").onclick = () => { location.hash = "#security"; };
+// the alarm button in the header arms (Away if the panel has it) or disarms straight away, opening the keypad when the panel wants a code; with no alarm state to go on it still opens the Security page
+function alarmTap() {
+  const s = states[CONFIG.alarm], st = s && s.state;
+  if (!s || st === "unavailable" || st === "unknown") { location.hash = "#security"; return; }
+  if (st !== "disarmed") { alarmDo("disarm"); return; }
+  const f = s.attributes.supported_features || 0;
+  alarmDo(!f || (f & 2) ? "arm_away" : (f & 1) ? "arm_home" : "arm_night");
+}
+$("#al").onclick = alarmTap;
+$("#hal").onclick = alarmTap;
 $("#alb").onclick = e => { if (e.target.closest("[data-m]")) alarmDo("disarm"); else location.hash = "#security"; };
 
 // ---------- pollen: Google Pollen data, read from the sensors of Home Assistant's "pollenlevels" integration ----------
@@ -5992,6 +6003,9 @@ function actHtml(A) {
     const sum = open ? "" : '<div class="npsum">' + esc(Object.keys(rooms).filter(Boolean).sort((a, b) => RM.order.indexOf(a) - RM.order.indexOf(b)).map(r => r + " " + rooms[r]).join(" · ")) + '</div>';
     const head = '<div class="lbl np2 il npf" data-sec="' + sec + '" data-npf="' + sec + '" role="button" tabindex="0" aria-expanded="' + open + '">' + mdi(x.c[2]) + x.c[0] + ' · ' + x.ids.length + '<span class="npfr">' + (slim || x.c[3] === "ld" ? "" : '<button class="eb" data-off="' + A.indexOf(x) + '">' + (x.c[3] === "close" ? "CLOSE ALL" : "ALL OFF") + '</button>') + '<span class="npch' + (open ? " open" : "") + '">' + mdi("chevron-down") + '</span></span></div>' + sum;
     if (!open) return head;
+    if (slim && RM) {   // doors and windows: one list of slim rows, the room named on each row (open ones are all that is listed)
+      const ord = x.ids.slice().sort((a, b) => { const ra = RM.m[a] || "Other", rb = RM.m[b] || "Other"; return (ra === "Other") - (rb === "Other") || RM.order.indexOf(ra) - RM.order.indexOf(rb); });
+      return head + '<div class="bl">' + ord.map(e => tile(x, e).replace('<span class="st">', '<span class="rm">' + esc(RM.m[e] || "") + '</span><span class="st">')).join("") + '</div>'; }
     if (!RM || x.c[3] === "ld" || !x.ids.some(e => RM.m[e])) return head + '<div class="' + cls + '">' + x.ids.map(e => tile(x, e)).join("") + '</div>';   // no room info for this group: as before
     const g = {}; x.ids.forEach(e => { const r = RM.m[e] || "Other"; (g[r] = g[r] || []).push(e); });
     return head + Object.keys(g).sort((a, b) => (a === "Other") - (b === "Other") || RM.order.indexOf(a) - RM.order.indexOf(b)).map(r => '<div class="np-rm">' + esc(r) + '</div><div class="' + cls + '">' + g[r].map(e => tile(x, e)).join("") + '</div>').join("");
@@ -6042,7 +6056,10 @@ function drawNotif() {
   if (!np.querySelector(".nptabs")) { tc = true; np.innerHTML = '<div class="nh"><div><div class="lbl">Home</div><h3>Notifications</h3></div><button class="eb" data-close="1">DONE</button></div>' + hsw('<div class="chips tabs nptabs">' + tb.map(t => '<button class="chip" data-npt="' + t[0] + '"></button>').join("") + '</div>') + '<div id="npc"></div>'; }
   np.querySelectorAll(".nptabs .chip").forEach((c, k) => { const tx = tb[k][1] + (tb[k][2] ? " · " + tb[k][2] : ""); if (c.textContent !== tx) { c.textContent = tx; tc = true; } c.classList.toggle("on", c.dataset.npt === npTab); });
   const body = npLoading() ? '<div class="lbl" style="margin:14px 0">Loading…</div>' : npTab === "active" ? npChips(A) + (npOnly ? actHtml(A.filter(x => x.c[0].toLowerCase().replace(/\s+/g, "-") === npOnly)) : actHtml(A)) : npTab === "attention" ? (r.na ? r.ah : '<div class="lbl" style="margin:14px 0">Nothing needs attention</div>') : (r.n ? "" : '<div class="lbl" style="margin:14px 0">All clear</div>') + r.html, nc = $("#npc"), key = npTab + "|" + body.replace(/<em class="ldr">[^<]*<\/em>/g, '<em class="ldr"></em>');   // the remaining time is filled in below, so the minute ticking over does not redraw the list (and restart the drum)
-  if (nc._k !== key) { nc._k = key; nc.innerHTML = body; }
+  if (nc._k !== key) {
+    const at = npTab + "|" + npOnly;
+    if (nc._t === at) { nc.classList.remove("tx", "txc"); clearTimeout(nc._tx); }   // a list that redraws on the tab it is already showing (a state changed) must not replay the tab's fade-in, or it blinks
+    nc._t = at; nc._k = key; nc.innerHTML = body; }
   npGoRun(); npCamMount();
   $$("#npc .ldr").forEach(el => { const t = ldTime(); if (el.textContent !== t) el.textContent = t; });
   if (tc) requestAnimationFrame(hsAll);
@@ -7554,10 +7571,11 @@ tick(); setInterval(tick, 10000); setInterval(batTick, 1500);
 setInterval(() => { try { localStorage.setItem("dashSeen", Date.now()); } catch (_) {} }, 60000);   // "page is open" marker: the brand intro only plays after the page was closed for a while
 setInterval(cams, 8000); setInterval(loadFc, 30 * 60000); setInterval(loadFcH, 30 * 60000); setInterval(() => { if (curPg() === "irrigation" || curRoom || document.body.classList.contains("np-open")) tickIrr(); if (curPg() === "media" || document.body.classList.contains("np-on")) tickMedia(); }, 1000); setInterval(queueNp, 30000); setInterval(() => { if (location.hash === "#events") loadEvents(); }, 15 * 60000);
 document.body.classList.add("m-" + (CONFIG.mobileNav === "tabs" ? "tabs" : "drawer"));
-const setPath = () => CONFIG.settingsPath || "/config/dashboard";
-$("#navset").href = CONFIG.url + setPath();
+// An admin goes to Home Assistant's Settings; anyone else would hit a page Home Assistant will not open for them (the tap did nothing), so they go to their own profile page, which every user can open
+const setPath = () => ME.id && !ADMIN_ON() ? CONFIG.profilePath || "/profile" : CONFIG.settingsPath || "/config/dashboard";
+function setLinks() { $("#navset").href = $("#navset2").href = CONFIG.url + setPath(); }   // run again when the person is known (ruApply)
+setLinks();
 // inside the Lovelace iframe card a normal link would load Home Assistant *inside* the iframe, so navigate the parent page instead
-$("#navset2").href = CONFIG.url + setPath();
 $("#navset").onclick = $("#navset2").onclick = e => {
   e.preventDefault();
   try { if (window.top !== window.parent || window.parent === window) throw 0; const w = window.parent; w.history.pushState(null, "", setPath()); w.dispatchEvent(new CustomEvent("location-changed", { detail: { replace: false } })); }
