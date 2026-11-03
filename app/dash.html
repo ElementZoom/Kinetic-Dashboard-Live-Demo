@@ -2548,6 +2548,40 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 .ce-go:not(:disabled){border-color:rgba(var(--mint-rgb),.5);color:var(--mint)}
 .ce-sv .eb:disabled,.ce-s .eb:disabled{opacity:.4;cursor:default}
 .ce-msg{min-height:1em}
+/* Lights schedule: a summary under a presence tile in the Automations pop-up, and the card it opens */
+#cpp .cpl>.tl{flex:none}   /* rows keep their height (the list scrolls) instead of squashing when the pop-up is short */
+#cpp .cpl .tl[data-ls]{--rh:64px;flex-wrap:wrap;align-content:flex-start;overflow:visible;row-gap:0}
+/* the first row is the toggle row: the round tick sits in the middle of it, and the summary and card stack under it */
+#cpp .cpl .tl[data-ls]>.tn{min-height:calc(var(--rh) - 26px);padding-left:44px;padding-right:34px;box-sizing:border-box}
+#cpp .cpl .tl[data-ls]::after{position:absolute;left:16px;top:calc((var(--rh) - 32px) / 2)}
+#cpp .cpl .tl[data-ls]::before{top:calc(var(--rh) / 2 - 9px)}
+#cpp .cpl .tl .lsm{flex:0 0 100%;order:5;display:flex;align-items:center;gap:8px;margin:2px 0 0;padding:10px 2px 2px;border-top:1px solid var(--line);font:500 12px var(--sans,inherit);color:var(--mut);cursor:pointer;min-width:0;min-height:24px;position:static}
+#cpp .cpl .tl .lsm[hidden],#cpp .cpl .tl .lsc[hidden]{display:none}
+#cpp .cpl .tl .lsm svg{width:16px;height:16px;fill:currentColor;flex:none}
+/* the chevron is a button at the top right of the card, like the other cards, and opens / closes the schedule */
+#cpp .cpl .tl .lsv{position:absolute;right:8px;top:calc(var(--rh) / 2 - 19px);width:36px;height:36px;display:flex;align-items:center;justify-content:center;padding:0;margin:0;border:0;border-radius:50%;background:transparent;color:var(--mut);cursor:pointer;z-index:2}
+#cpp .cpl .tl .lsv[hidden]{display:none}
+#cpp .cpl .tl .lsv svg{width:22px;height:22px;fill:currentColor;transition:transform .2s}
+#cpp .cpl .tl .lsv.open svg{transform:rotate(180deg)}
+#cpp .cpl .tl .lsm>span.y,#cpp .cpl .tl .lsm>span.n{display:inline-flex;align-items:center;gap:3px;font-weight:600;flex:none}
+#cpp .cpl .tl .lsm>span.y{color:#4cc38a}#cpp .cpl .tl .lsm>span.n{color:#ef6a5e}
+#cpp .cpl .tl .lsm .lsx{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+#cpp .cpl .tl .lsc{flex:0 0 100%;order:6;cursor:default;box-sizing:border-box;margin:10px 0 0}
+@media(min-width:761px){#cpp .cpl .tl[data-ls]{--rh:76px}}
+.lsc{padding:12px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--w),.05)}.lsc>.lbl{margin-bottom:8px}
+.lsw{display:flex;gap:12px;flex-wrap:wrap}
+.lsf{display:flex;flex-direction:column;gap:4px;flex:1;min-width:120px}
+.lsf>small{color:var(--mut);font:600 10px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.lsf input{box-sizing:border-box;width:100%;min-height:44px;padding:8px;border-radius:12px;border:1px solid var(--line);background:rgba(var(--w),.06);color:var(--ink);font:600 16px var(--mono);color-scheme:dark light}
+.lsf input:disabled{opacity:.45}
+.lsn{margin-top:8px;text-transform:none;letter-spacing:0}
+.lsc[hidden]{display:none}
+.lsc .lsw+.lsw{margin-top:10px}
+.lss{margin-top:10px;display:flex;flex-direction:column;gap:6px}.lss:empty{display:none}
+.lsr{display:flex;align-items:flex-start;gap:8px;font-size:13px;line-height:1.3}
+.lsr svg{flex:none;width:18px;height:18px;fill:currentColor;margin-top:-1px}
+.lsr.y svg{color:#4cc38a}.lsr.n svg{color:#ef6a5e}
+.lsr:last-child{font-weight:600;padding-top:6px;border-top:1px solid var(--line)}.lss .lsr:only-child{border-top:0;padding-top:0}
 </style>
 </head>
 <body>
@@ -2617,14 +2651,14 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.0.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.1.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.0.0";   // the one place to change the version
+window.DASH_VER = "2.1.0";   // the one place to change the version
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -2716,6 +2750,7 @@ const $ = (s, e) => (e || document).querySelector(s);
 const $$ = (s, e) => Array.prototype.slice.call((e || document).querySelectorAll(s));
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const f1 = v => (v == null || isNaN(v)) ? "--" : Number(v).toFixed(1);
+const hmLeft = min => { min = Math.max(0, Math.ceil(min)); return min < 1 ? "under 1 min" : min < 60 ? min + " min" : Math.floor(min / 60) + " h" + (min % 60 ? " " + min % 60 + " min" : ""); };   // a timer's time left as hours and minutes: 2 h 57 min, 45 min
 const C = a => ({ bg: a[0], glow: a[1], ink: a[2], accent: a[3], heat: a[4], cool: a[5], lit: a[6], nav1: a[7], nav2: a[8] });
 const PAL_PRE = {
   Violet: { dark: C(["#141218", "#2e2540", "#e6e0e9", "#d0bcff", "#f2b8b5", "#a8c7fa", "#f9de8e", "#ccc2dc", "#b0a3c9"]), light: C(["#fef7ff", "#e8def8", "#1d1b20", "#6750a4", "#b3261e", "#0b57d0", "#e3a600", "#d0bcff", "#b69df8"]) },
@@ -3996,7 +4031,7 @@ function tileHtml(x) {
   const fx0 = it.fx || (CONFIG.tileFx || {})[e], fx = fx0 === "none" ? "" : fx0 || (/^fan\./.test(e) ? "air" : ""), fxm = fx === "heat" ? '<div class="hz"><i></i><i></i><i></i></div>' : fx === "charge" ? '<div class="bt"><b></b><b></b><b></b><b></b></div>' : fx === "air" ? '<div class="ar">' + AIRW + AIRW + AIRW + '</div>' : "";   // tileFx: { "switch.towel": "heat", "switch.charger": "charge", "fan.x": "air" }: a heated / charging / airflow look while the tile is on
   const pre = d === "light" ? '<i class="fill"></i>' : it.water ? irrWave(e, isOn(e), typeof it.water === "string" ? parseFloat(sv(it.water)) || 0 : 0) : "";   // water: rolling water in the tile while a tap runs (same effect as the Irrigation flow tile)
   if (d === "cover") ctrl = '<div class="cb"><button data-a="open_cover">' + mdi("chevron-up") + '</button><button data-a="stop_cover">' + mdi("stop") + '</button><button data-a="close_cover">' + mdi("chevron-down") + '</button></div><input type="range" min="0" max="100">';
-  return '<div class="tl' + (fx ? " fx fx-" + fx : "") + (it.water ? " wt" : "") + (it.sensor ? " dr" : "") + (it.siren ? " sir" : "") + '" data-e="' + e + '"' + (it.siren ? ' data-sir="' + it.siren + '"' : "") + (it.script ? ' data-sc="' + it.script + '"' : "") + (it.sensor ? ' data-s="' + it.sensor + '"' : "") + (it.confirm ? ' data-cf="1"' : "") + (it.name ? ' data-n="1"' : "") + (it.nameFrom ? ' data-nf="' + it.nameFrom + '"' : "") + (it.stateIcons ? ' data-si="' + esc(JSON.stringify(it.stateIcons)) + '"' : "") + (it.sub ? ' data-sub="' + esc(it.sub) + '"' : "") + (it.timer ? ' data-tm="' + it.timer + '"' : "") + '>' + pre + '<div class="tn">' + (it.sensor ? mdi("garage-variant") : entIcon(e, it.icon)) + " " + nm + '</div><div class="ts2">--</div>' + fxm + (it.timer && states[it.timer] && states[it.timer].state === "active" ? tmrHtml(it.timer) : "") + ctrl + '</div>';   // timer: countdown + bar while the entity's timer runs
+  return '<div class="tl' + (fx ? " fx fx-" + fx : "") + (it.water ? " wt" : "") + (it.sensor ? " dr" : "") + (it.siren ? " sir" : "") + '" data-e="' + e + '"' + (it.siren ? ' data-sir="' + it.siren + '"' : "") + (it.script ? ' data-sc="' + it.script + '"' : "") + (it.sensor ? ' data-s="' + it.sensor + '"' : "") + (it.confirm ? ' data-cf="1"' : "") + (it.name ? ' data-n="1"' : "") + (it.nameFrom ? ' data-nf="' + it.nameFrom + '"' : "") + (it.stateIcons ? ' data-si="' + esc(JSON.stringify(it.stateIcons)) + '"' : "") + (it.sub ? ' data-sub="' + esc(it.sub) + '"' : "") + (it.timer ? ' data-tm="' + it.timer + '"' : "") + (it.schedule ? ' data-ls="' + esc(JSON.stringify(it.schedule)) + '"' : "") + '>' + pre + '<div class="tn">' + (it.sensor ? mdi("garage-variant") : entIcon(e, it.icon)) + " " + nm + '</div><div class="ts2">--</div>' + fxm + (it.timer && states[it.timer] && states[it.timer].state === "active" ? tmrHtml(it.timer) : "") + ctrl + (it.schedule ? lsHtml(it.schedule) : "") + '</div>';   // timer: countdown + bar while the entity's timer runs
 }
 // a tile shows its timer's countdown while the entity is on and the timer runs (config tileTimers: { "fan.x": "timer.y" }); it is added and removed as the timer starts and ends
 function tmrSync(el, e, on) {
@@ -4020,6 +4055,38 @@ function cpTabs(rid) {
   L.dataset.rid = rid; cpShow(rid);
 }
 function cpShow(rid) { const c = CPT[rid]; $$("#cpp .cpl > *").forEach(t => { t.style.display = +t.dataset.ct === c ? "" : "none"; }); $$("#cpp [data-cpt]").forEach(b => b.classList.toggle("on", +b.dataset.cpt === c)); }
+// Lights schedule on a presence tile in the room's AUTOMATIONS pop-up. A Controls item that is a room's lighting automation can carry
+//   schedule: { from, until, dark, bright, lux }   from / until: input_datetime (time only), the window in which the lights may turn on by themselves
+//                                                 dark / bright: input_number, the "dark below" and "bright above" lux; lux: the room's illuminance sensor
+// A one-line summary shows under the tile's name ("On now · 08:00 – 22:00 · under 20 lx"); tapping it opens a card with the two times, the two lux values and the checks.
+// The automation (room_presence_lighting blueprint) reads the helpers, so nothing is edited in Home Assistant. While the automation is OFF the summary and card are hidden.
+const LTV = {};   // value just chosen, shown until HA echoes it
+const lsHtml = c => { const tb = (k, l) => c[k] ? '<label class="lsf"><small>' + l + '</small><input type="time" step="60" data-lt="' + esc(c[k]) + '" disabled></label>' : "", nb = (k, l) => c[k] ? '<label class="lsf"><small>' + l + '</small><input type="number" inputmode="decimal" data-ln="' + esc(c[k]) + '" disabled></label>' : "";
+  return '<div class="lsm" role="button" tabindex="0" aria-expanded="false" hidden></div><button type="button" class="lsv" aria-label="Lights schedule" aria-expanded="false" hidden>' + mdi("chevron-down") + '</button><div class="lsc" hidden><div class="lbl">Lights schedule</div>' + (c.from || c.until ? '<div class="lsw">' + tb("from", "From") + tb("until", "Until") + '</div>' : "") + (c.dark || c.bright ? '<div class="lsw">' + nb("dark", "Dark below (lux)") + nb("bright", "Bright above (lux)") + '</div>' : "") + '<div class="lss"></div><div class="lbl lsn">Lights may switch on by themselves when the time and light level pass and someone is in the room</div></div>'; };
+const lsT = e => { const s = states[e]; return LTV[e] || (s && /^\d\d:\d\d/.test(s.state) ? s.state.slice(0, 5) : ""); };
+const lsN = e => { const s = states[e], v = LTV[e] != null ? LTV[e] : s ? parseFloat(s.state) : NaN; return v; };
+function lsSch() {
+  $$("#cpp [data-ls]").forEach(tl => {
+    const c = tl._ls || (tl._ls = JSON.parse(tl.dataset.ls)), au = states[tl.dataset.e], off = !!au && au.state === "off", sm = $(".lsm", tl), cd = $(".lsc", tl), cv = $(".lsv", tl);
+    sm.hidden = off; cv.hidden = off; if (off) { cd.hidden = true; sm.classList.remove("open"); cv.classList.remove("open"); sm.setAttribute("aria-expanded", "false"); cv.setAttribute("aria-expanded", "false"); }   // the automation is off: nothing to schedule
+    $$("[data-lt]", tl).forEach(i => { const st = states[i.dataset.lt]; i.disabled = !st || st.state === "unavailable"; if (document.activeElement !== i) i.value = lsT(i.dataset.lt); });
+    $$("[data-ln]", tl).forEach(i => { const e = i.dataset.ln, st = states[e], a = st ? st.attributes || {} : {}; i.disabled = !st || st.state === "unavailable"; i.step = a.step || 1; if (a.min != null) i.min = a.min; if (a.max != null) i.max = a.max; if (document.activeElement !== i) { const v = lsN(e); i.value = isNaN(v) ? "" : v; } });
+    const ok = (y, t) => '<div class="lsr ' + (y ? "y" : "n") + '">' + mdi(y ? "check" : "close") + '<span>' + t + '</span></div>', rows = [], res = [];
+    const f = c.from ? lsT(c.from) : "", u = c.until ? lsT(c.until) : "", all = f && u && f === u, win = f && u ? (all ? "all day" : f + " – " + u) : "";
+    if (f && u) { const d = new Date(), n = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2), w = all ? true : f < u ? n >= f && n < u : n >= f || n < u; res.push(w); rows.push(ok(w, all ? "No time limit (all day)" : (w ? "Inside the time window" : "Outside the time window") + " (" + win + ")")); }
+    const lx = c.lux && states[c.lux] ? parseFloat(states[c.lux].state) : NaN, dk = c.dark ? lsN(c.dark) : NaN, br = c.bright ? lsN(c.bright) : NaN;
+    if (!isNaN(lx) && !isNaN(dk)) { const dd = lx < dk; res.push(dd); rows.push(ok(dd, (dd ? "Dark enough" : "Too bright") + ": " + Math.round(lx) + " lux now, comes on below " + dk + (!isNaN(br) ? ", off above " + br : ""))); }
+    const go = res.every(Boolean); if (res.length) rows.push(ok(go, go ? "Lights will turn on when someone is in the room" : "Lights won't turn on right now"));
+    $(".lss", cd).innerHTML = rows.join("");
+    sm.innerHTML = (res.length ? '<span class="' + (go ? "y" : "n") + '">' + mdi(go ? "check" : "close") + (go ? "On now" : "Not now") + '</span>' : "") + '<span class="lsx">' + [win, !isNaN(dk) ? "under " + dk + " lx" : ""].filter(Boolean).join(" · ") + '</span>';
+  });
+}
+setInterval(() => { if (curRoom) lsSch(); }, 30000);   // the time window moves on without any state change
+$("#cpp").addEventListener("change", e => { const i = e.target.closest("[data-lt],[data-ln]"); if (!i) return;
+  const tm = i.dataset.lt, ent = tm || i.dataset.ln; let v;
+  if (tm) { if (!/^\d\d:\d\d$/.test(i.value)) return; v = i.value; call("input_datetime", "set_datetime", ent, { time: v + ":00" }); }
+  else { const a = (states[ent] || {}).attributes || {}; v = parseFloat(i.value); if (isNaN(v)) { lsSch(); return; } if (a.min != null) v = Math.max(+a.min, v); if (a.max != null) v = Math.min(+a.max, v); call("input_number", "set_value", ent, { value: v }); }
+  LTV[ent] = v; setTimeout(() => { delete LTV[ent]; if (curRoom) lsSch(); }, 4000); lsSch(); });
 function drawRoom(id) {
   const r = ROOM(id); if (!r) { location.hash = "#rooms"; return; }
   curRoom = r; $("#rl").style.display = "none"; $("#rtabs").style.display = "none"; const v = $("#rv"); v.style.display = "";
@@ -4083,6 +4150,7 @@ function updTiles() {
       const allOpen = m.ids.every(x => { const e = states[x]; return e && e.state === "open" && (e.attributes.current_position == null || e.attributes.current_position >= 99); });
       const bo = $('[data-rcv="open"]', pn), bc = $('[data-rcv="close"]', pn); if (bo) bo.style.display = allOpen ? "none" : ""; if (bc) bc.style.display = c ? "" : "none"; }
   });
+  lsSch();
   { const cb = $("#rv .cpn"); if (cb) { const n = $$("#cpp .tl.on").length; cb.textContent = n; cb.classList.toggle("z", !n); cb.parentNode.classList.toggle("on", !!n); } }
   if (LS.id) lsUpd();
   $$("#rv .bl").forEach(l => { const k = Array.prototype.slice.call(l.children), o = k.slice().sort((a, b) => b.classList.contains("on") - a.classList.contains("on")); if (o.some((x, i) => x !== k[i])) o.forEach(x => l.appendChild(x)); });
@@ -4122,6 +4190,8 @@ function tapH(e) {
     else if (t.dataset.p) call("climate", "set_hvac_mode", id, { hvac_mode: s && s.state !== "off" ? "off" : (m.indexOf("heat_cool") > -1 ? "heat_cool" : "heat") });
     return;
   }
+  const lsm = t.closest(".lsm, .lsv"); if (lsm) { const tl = lsm.parentNode, cd = $(".lsc", tl), op = cd.hidden; cd.hidden = !op; ["lsm", "lsv"].forEach(k => { const b = $("." + k, tl); b.classList.toggle("open", op); b.setAttribute("aria-expanded", op ? "true" : "false"); }); return; }
+  if (t.closest(".lsc")) return;   // the Lights schedule card: its boxes are not the tile
   const el = t.closest("[data-e]"); if (!el) return;
   const id = el.dataset.e, d = id.split(".")[0];
   if (el.dataset.cf && !t.dataset.a) {   // confirm-before-acting tiles (garage door)
@@ -4205,7 +4275,7 @@ document.addEventListener("pointerdown", e => {
     else if (ct) { ct._d = Infinity; ct.setPointerCapture(e.pointerId); const c = lsCtK(e); ct._k = c.k; $("i", ct).style.display = ""; $("i", ct).style.left = c.f * 100 + "%"; }
     return;
   }
-  const el = e.target.closest('.tl[data-e], .bd[data-e]'); if (!el || (e.pointerType === "mouse" && e.button !== 0) || e.target.closest("button, input, a")) return;
+  const el = e.target.closest('.tl[data-e], .bd[data-e]'); if (!el || (e.pointerType === "mouse" && e.button !== 0) || e.target.closest("button, input, a, .lsm, .lsc")) return;
   const a = (states[el.dataset.e] || { attributes: {} }).attributes, b0 = a.brightness != null ? Math.round(a.brightness / 2.55) : 0;
   LP = { el: el, id: el.dataset.e, x: e.clientX, y: e.clientY, v0: b0, w: el.offsetWidth || 160, drag: false, lp: false, can: !el.closest(".hsc,.cpanel,.cps,.cpl"), t: 0 };
   LP.t = setTimeout(() => { if (!LP || LP.drag) return; const id = LP.id, st = states[id]; if (!st) return; LP.lp = true; el._nc = 1; if (navigator.vibrate) try { navigator.vibrate(12); } catch (_) {}
@@ -4248,7 +4318,8 @@ $("#lsh").addEventListener("click", e => {
 document.addEventListener("keydown", e => { if (e.key === "Escape" && LS.id) lsClose(); });
 function chgH(e) {
   const t = e.target; if (t.tagName !== "INPUT") return;
-  const id = t.closest("[data-e]").dataset.e, d = id.split(".")[0];
+  const w = t.closest("[data-e]"); if (!w) return;   // other inputs in the page (the lights schedule time boxes) have their own handler
+  const id = w.dataset.e, d = id.split(".")[0];
   if (d === "light") call("light", "turn_on", id, { brightness_pct: +t.value });
   else if (d === "cover") { const cur = (states[id] && states[id].attributes.current_position) || 0; call("cover", "set_cover_position", id, { position: +t.value }); if (+t.value !== cur) covMark(id, +t.value > cur ? "opening" : "closing"); }
 };
@@ -4826,7 +4897,7 @@ function irrBar() {
   zTab = Math.min(zTab, Z.length - 1);
   const st = Z.map(z => { const sw = states[z.switch], on = !!sw && sw.state === "on", t = states[z.timer], fin = t && t.state === "active" && t.attributes.finishes_at ? Date.parse(t.attributes.finishes_at) : 0, left = fin ? Math.max(0, Math.ceil((fin - Date.now()) / 60000)) : 0; return { z: z, on: on, left: left, fl: parseFloat(sv(z.flow)) || 0 }; }),
     act = st.filter(x => x.on), col = !zSheet;
-  const title = act.length ? act.map(x => x.z.name).join(" + ") : "All zones off", sum = act.length ? act.map(x => x.z.name + (x.left ? " · " + x.left + " min left" : " · " + f1(x.fl) + " m³/h")).join("  |  ") : Z.length + " zones · tap to water";
+  const title = act.length ? act.map(x => x.z.name).join(" + ") : "All zones off", sum = act.length ? act.map(x => x.z.name + (x.left ? " · " + hmLeft(x.left) + " left" : " · " + f1(x.fl) + " m³/h")).join("  |  ") : Z.length + " zones · tap to water";
   return '<div class="zbk" data-zsh="1"></div><div class="pn zsx' + (col ? " col" : "") + '"><div class="sch" data-zsh="1"><i class="schi' + (act.length ? " on" : "") + '">' + mdi("sprinkler-variant") + '</i><div class="sck"><span class="lbl">Irrigation</span><b class="h3">' + esc(title) + '</b><div class="sm">Pick a zone, then start it or set a timer</div><div class="sm scsm">' + esc(sum) + '</div></div><span class="schc">' + mdi("chevron-down") + '<i class="schx">' + mdi("close") + '</i></span></div>' +
     '<div class="scb">' + hsw('<div class="chips tabs sctb">' + Z.map((z, i) => '<button class="chip' + (i === zTab ? " on" : "") + '" data-zt="' + i + '">' + mdi("sprinkler-variant") + '<span>' + esc(z.name) + '</span></button>').join("") + '</div>') + '<div class="zsb">' + irrZone(Z[zTab]) + '</div></div></div>';
 }
@@ -4861,7 +4932,7 @@ function irrSync(o, n) {
 function tickIrr() {
   $$(".tmr").forEach(el => {
     const ms = Math.max(0, +el.dataset.fin - Date.now()), b = $(".zb > i", el.parentNode) || $("i", el.parentNode);
-    el.textContent = Math.floor(ms / 60000) + ":" + ("0" + Math.floor(ms % 60000 / 1000)).slice(-2) + " remaining";
+    el.textContent = hmLeft(ms / 60000) + " remaining";
     if (b && +b.dataset.dur) b.style.width = Math.min(100, ms / +b.dataset.dur * 100) + "%";
   });
 }
@@ -5850,7 +5921,7 @@ const NSK = [
   ["towel", "radiator", "Towel heating on", towelsOn]
 ];
 const nskRel = id => attnRel(id) || polRel(id) || binsIds().includes(id) || /^sensor\..*battery_plus$/.test(id) || LEAKS().some(x => x[0] === id) || id === E("weatherWarnings") || id === W || id === E("doorsGroup") || id === E("laundryState") || id === E("laundryRemaining") || id === E("towelGroup") || members(E("towelGroup")).includes(id) || members(E("doorsGroup")).includes(id) || /^switch\..*water_tap$/.test(id) || Object.keys(galCfg()).some(k => (galCfg()[k] || {}).sensor === id) || (CONFIG.irrigation || []).some(z => z.switch === id);
-let npTab = "alerts";
+let npTab = "alerts", npOnly = "";   // npOnly = an Active group key (e.g. "towel-heating"): the strip opened the pop-up for that one condition, so Active lists just that group until SHOW ALL
 const ACTC = CONFIG.quickAll || [];
 
 let npGo = null, npUser = 0;   // npGo = { s: section, t: time }: #active/<section> from a notification link. Scrolls there as soon as that section is on screen (the states can still be loading when the pop-up opens)
@@ -5862,6 +5933,7 @@ function npGoRun() {
   const sec = npGo.s, t0 = Date.now(); npGo = null;
   [80, 1500].forEach(ms => setTimeout(() => { if (npUser > t0 || !document.body.classList.contains("np-open")) return; const t = $('#np [data-sec="' + sec + '"]'); if (t) t.scrollIntoView({ block: "start" }); }, ms));   // the second pass catches rows that arrive just after; it never fights a finger already scrolling
 }
+const npOnlyBar = A => { const g = A.filter(x => x.c[0].toLowerCase().replace(/\s+/g, "-") === npOnly)[0]; return '<div class="lbl np2 il">' + esc(g ? g.c[0] : "Nothing running") + ' only<button class="eb" data-npall="1">SHOW ALL ACTIVE</button></div>'; };
 const npLoading = () => !Object.keys(states).length;   // nothing from Home Assistant yet: say so instead of "Nothing is on or open" / "All clear"
 const NPOFF = {}; let npHold = 0, npht = 0;   // tiles switched off from the Active list vanish at once (a slow light transition would keep them "on" for seconds)
 const npGone = x => { const t = NPOFF[x]; if (!t) return false; if (!isOn(x) || Date.now() - t > 12000) { delete NPOFF[x]; return false; } return true; };
@@ -5943,7 +6015,7 @@ function drawNotif() {
   const np = $("#np"), tb = [["alerts", "ALERTS", r.n], ["attention", "ATTENTION", r.na], ["active", "ACTIVE", tot]]; let tc = false;
   if (!np.querySelector(".nptabs")) { tc = true; np.innerHTML = '<div class="nh"><div><div class="lbl">Home</div><h3>Notifications</h3></div><button class="eb" data-close="1">DONE</button></div>' + hsw('<div class="chips tabs nptabs">' + tb.map(t => '<button class="chip" data-npt="' + t[0] + '"></button>').join("") + '</div>') + '<div id="npc"></div>'; }
   np.querySelectorAll(".nptabs .chip").forEach((c, k) => { const tx = tb[k][1] + (tb[k][2] ? " · " + tb[k][2] : ""); if (c.textContent !== tx) { c.textContent = tx; tc = true; } c.classList.toggle("on", c.dataset.npt === npTab); });
-  const body = npLoading() ? '<div class="lbl" style="margin:14px 0">Loading…</div>' : npTab === "active" ? actHtml(A) : npTab === "attention" ? (r.na ? r.ah : '<div class="lbl" style="margin:14px 0">Nothing needs attention</div>') : (r.n ? "" : '<div class="lbl" style="margin:14px 0">All clear</div>') + r.html, nc = $("#npc"), key = npTab + "|" + body.replace(/<em class="ldr">[^<]*<\/em>/g, '<em class="ldr"></em>');   // the remaining time is filled in below, so the minute ticking over does not redraw the list (and restart the drum)
+  const body = npLoading() ? '<div class="lbl" style="margin:14px 0">Loading…</div>' : npTab === "active" ? (npOnly ? npOnlyBar(A) + actHtml(A.filter(x => x.c[0].toLowerCase().replace(/\s+/g, "-") === npOnly)) : actHtml(A)) : npTab === "attention" ? (r.na ? r.ah : '<div class="lbl" style="margin:14px 0">Nothing needs attention</div>') : (r.n ? "" : '<div class="lbl" style="margin:14px 0">All clear</div>') + r.html, nc = $("#npc"), key = npTab + "|" + body.replace(/<em class="ldr">[^<]*<\/em>/g, '<em class="ldr"></em>');   // the remaining time is filled in below, so the minute ticking over does not redraw the list (and restart the drum)
   if (nc._k !== key) { nc._k = key; nc.innerHTML = body; }
   npGoRun(); npCamMount();
   $$("#npc .ldr").forEach(el => { const t = ldTime(); if (el.textContent !== t) el.textContent = t; });
@@ -5952,13 +6024,21 @@ function drawNotif() {
 }
 let nq = 0;
 function queueNotif() { if (!nq) nq = requestAnimationFrame(() => { nq = 0; drawNotif(); }); }
-$("#hc").onclick = () => { document.body.classList.toggle("np-open"); drawNotif(); };
+// Tapping the strip while exactly one condition shows opens the tab (and Active section) that holds it: Bins out / Low battery -> Attention, Laundry / Towel heating / Water on -> Active at that group, the rest -> Alerts.
+// With two or more conditions (or none) the pop-up opens on the tab it was last on, as before.
+const NPK = { bins: ["attention"], battery: ["attention"], laundry: ["active", "laundry"], towel: ["active", "towel-heating"], water: ["active", "water-taps"] };
+$("#hc").onclick = () => {
+  const open = document.body.classList.contains("np-open");
+  if (!open) { const ks = NSK.filter(k => k[3]()), m = ks.length === 1 ? NPK[ks[0][0]] || ["alerts"] : null; if (m) { npTab = m[0]; npOnly = m[1] || ""; npGo = null; } }
+  document.body.classList.toggle("np-open"); drawNotif();
+};
 $("#nclk").onclick = () => $("#hc").click();   // tablet: the clock at the top of the side menu opens the notifications too
-const npClose = () => { document.body.classList.remove("np-open"); npCamStop(); if (/^#(notifications|attention|active|batteries)/.test(location.hash)) location.hash = "#home"; };
+const npClose = () => { npOnly = ""; document.body.classList.remove("np-open"); npCamStop(); if (/^#(notifications|attention|active|batteries)/.test(location.hash)) location.hash = "#home"; };
 $("#nbd").onclick = npClose;
 $("#np").onclick = e => {
   if (e.target.closest("[data-close]")) { npClose(); return; }
-  const tb = e.target.closest("[data-npt]"); if (tb) { const ord = ["alerts", "attention", "active"], was = npTab; npTab = tb.dataset.npt; drawNotif(); if (was !== npTab) txGo($("#npc"), ord.indexOf(npTab) > ord.indexOf(was) ? 1 : -1, true); return; }
+  if (e.target.closest("[data-npall]")) { npOnly = ""; drawNotif(); return; }
+  const tb = e.target.closest("[data-npt]"); if (tb) { npOnly = ""; const ord = ["alerts", "attention", "active"], was = npTab; npTab = tb.dataset.npt; drawNotif(); if (was !== npTab) txGo($("#npc"), ord.indexOf(npTab) > ord.indexOf(was) ? 1 : -1, true); return; }
   const of = e.target.closest("[data-off]"); if (of) { const ids = actList()[+of.dataset.off].ids; const cl = actList()[+of.dataset.off].c[3] === "close"; if (ids.length) { if (!cl) npDismiss(ids); call(cl ? "cover" : "homeassistant", cl ? "close_cover" : "turn_off", ids); } return; }
   if (e.target.closest("[data-wxatg]")) { WXA_FULL = !WXA_FULL; drawNotif(); return; }   // the combined weather card: one line each, or each as its full card
   const wa = e.target.closest("[data-wxa]"); if (wa) { npClose(); location.hash = "#weather/" + wa.dataset.wxa; return; }   // the weather card opens that forecast chart
@@ -7414,7 +7494,8 @@ function route() {
   if (p === "hazards") { HZ.vb = null; HZ.tab = { earthquakes: "quake", quakes: "quake", volcanoes: "volc", volcano: "volc" }[h[1]] || "map"; HZ.view = HZ.view || (states["zone.home"] ? "home" : "ni"); requestAnimationFrame(drawHaz); }
   if (h[0] === "disarm") alarmLink("disarm"); else if (h[0] === "arm") alarmLink("arm_" + (h[1] || "away"));
   if (h[0] === "notifications" || h[0] === "attention" || h[0] === "active" || h[0] === "batteries") { npTab = h[0] === "active" ? "active" : h[0] === "attention" || h[0] === "batteries" ? "attention" : "alerts";   // #batteries (old links) now opens Attention, which lists the low batteries
-  npGo = h[0] === "active" && h[1] ? { s: h[1], t: Date.now() } : null; document.body.classList.add("np-open"); drawNotif(); }
+  npOnly = h[0] === "active" && h[1] ? h[1] : ""; npGo = null;   // #active/water-taps: Active with just that group (SHOW ALL ACTIVE for the rest); plain #active lists everything
+   document.body.classList.add("np-open"); drawNotif(); }
 }
 // tablet battery pill: shown on the Fully Kiosk tablet only ("kiosk" = the Fully JS interface, a FullyKiosk user agent, or ?tablet=1 once; "always" / "never" override)
 const BAT_ON = (() => {
