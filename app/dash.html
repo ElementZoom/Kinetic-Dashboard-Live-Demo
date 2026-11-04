@@ -2018,6 +2018,13 @@ body:not(.adm) a[href="#admin"]{display:none!important}
 .adm-f{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:12px}
 .adm-f>div{padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--w),.05);display:flex;flex-direction:column;gap:4px;min-width:0}
 .adm-f small{color:var(--mut);font:600 10px var(--mono);letter-spacing:.1em;text-transform:uppercase}.adm-f b{font-weight:500;font-size:18px;overflow:hidden;text-overflow:ellipsis}
+
+/* Admin > System status: one tile per entity (config.js systemStatus) */
+.sys-st .ok{border-color:rgba(74,222,128,.4);background:rgba(74,222,128,.1)}.sys-st .ok b{color:#4ade80}
+.sys-st .bad{border-color:rgba(var(--heat-rgb),.45);background:rgba(var(--heat-rgb),.1)}.sys-st .bad b{color:var(--heat)}
+.sys-st .syw{border-color:rgba(242,163,58,.5);background:rgba(242,163,58,.1)}.sys-st .syw b{color:#f2a33a}
+.sys-st .sy{text-transform:none;letter-spacing:0;font-weight:500;font-size:12px}
+html[data-mode=light] .sys-st .ok b{color:#17703d}html[data-mode=light] .sys-st .bad b{color:#a3211a}html[data-mode=light] .sys-st .syw b{color:#b86a00}
 /* One motion language for pop-ups and sheets: from the bottom = slide up, from the side = slide in, from the middle = fade in.
    Sheets move by transform only (no blur, scale or fade) so they stay smooth on phones. */
 :root{--sheet-ease:cubic-bezier(.2,.85,.3,1)}
@@ -2169,7 +2176,7 @@ html[data-style=material] .lvb{background:var(--bg2)!important}
 .cbar{pointer-events:none;position:relative;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--cool),#ffd27a 50%,var(--heat));margin:6px 6px 20px;transition:opacity .3s}
 .cbar i{position:absolute;top:-7px;width:24px;height:24px;margin-left:-12px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4),0 0 12px var(--kc,transparent);transition:left .5s}
 .cbar u{position:absolute;top:23px;width:7px;height:7px;margin-left:-3.5px;background:var(--ink);border-radius:50%;transition:left .3s}
-.cbar .g{position:absolute;top:25px;height:3px;margin-top:-.5px;background:var(--ink);opacity:.8;border-radius:2px;transition:left .3s,width .3s}
+.cbar .g{position:absolute;top:25px;height:3px;background:var(--ink);opacity:.8;border-radius:2px;transition:left .3s,width .3s}
 .cbar .mk{position:absolute;top:33px;width:0;height:0;margin-left:-5px;border:5px solid transparent;border-top:0;border-bottom:7px solid var(--heat)}
 .cbar .mk.c{border-bottom-color:var(--cool)}.cbar .mk[hidden]{display:none}
 .card.rm.hasmk .cbar{margin-bottom:32px}   /* the trigger triangles sit below the round knob, not under it */
@@ -2671,14 +2678,14 @@ html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] span.rm+span.st{margin-left:0}
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.2.1"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.3.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.2.1";   // the one place to change the version
+window.DASH_VER = "2.3.0";   // the one place to change the version
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -5045,10 +5052,11 @@ const REL = {
   scenes: rxj(/(dynamic_scene|gradient_scene)/, (CONFIG.relevance || {}).scenes),
   media: /^media_player\./,
   vehicle: new RegExp(((CONFIG.vehicle || {}).prefix || "\\u0000nomatch")),
-  hazards: /^(geo_location\.|sensor\.volcano_|zone\.home$)/
+  hazards: /^(geo_location\.|sensor\.volcano_|zone\.home$)/,
+  admin: (() => { const ids = (CONFIG.systemStatus || []).map(x => typeof x === "string" ? x : x && x.id).filter(Boolean); return ids.length ? new RegExp("^(" + ids.map(i => i.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")$") : /^\u0000$/; })()   // the System status tiles on the Admin page
 };
 let pq = 0;
-function queuePg() { if (!pq) pq = requestAnimationFrame(() => { pq = 0; const p = curPg(); if (p === "weather") drawWeather(); else if (p === "irrigation") drawIrr(); else if (p === "scenes") updScenes(); else if (p === "media") drawMedia(); else if (p === "vehicle") drawVehicle(); else if (p === "hazards") drawHaz(); }); }
+function queuePg() { if (!pq) pq = requestAnimationFrame(() => { pq = 0; const p = curPg(); if (p === "weather") drawWeather(); else if (p === "irrigation") drawIrr(); else if (p === "scenes") updScenes(); else if (p === "media") drawMedia(); else if (p === "vehicle") drawVehicle(); else if (p === "hazards") drawHaz(); else if (p === "admin") sysUpd(); }); }
 
 
 // Skip re-writing a container when its markup has not changed. The pages below are redrawn on every related sensor update; rebuilding them
@@ -5672,12 +5680,25 @@ function secPills(page, host, anchor, min) {
 })();
 // ---------- Admin page: for Home Assistant admins only (nav link hidden for everyone else, and #admin sends other people home) ----------
 // Holds what used to sit at the bottom of the Theme page: who can see which pages (Access), plus the setup check, and a few facts about this dashboard.
+// config.js: systemStatus: [{ id: "binary_sensor.zigbee2mqtt_bridge_connection_state", name: "Zigbee2MQTT" }, ...]  adds a "System status" block at the top of this page: one tile per
+// entity, green when it is on / online / connected, red when it is off / offline / disconnected, amber when unavailable, unknown or missing. Name is optional (the entity's own name is used).
+const sysCfg = () => (CONFIG.systemStatus || []).map(x => typeof x === "string" ? { id: x } : x).filter(x => x && x.id);
+const SYSW = { on: ["ok", "Connected"], online: ["ok", "Online"], connected: ["ok", "Connected"], off: ["bad", "Disconnected"], offline: ["bad", "Offline"], disconnected: ["bad", "Disconnected"] };
+function sysHtml() {
+  return sysCfg().map(x => {
+    const s = states[x.id], st = s ? String(s.state) : "", w = s ? SYSW[st] : null, k = w ? w[0] : "syw", t = !s ? "Not found" : w ? w[1] : st ? st.charAt(0).toUpperCase() + st.slice(1) : "Unknown";
+    const ms = s ? Date.now() - Date.parse(s.last_changed || "") : NaN, nm = x.name || (s && s.attributes && s.attributes.friendly_name) || x.id;
+    return '<div class="' + k + '"><small>' + esc(nm) + '</small><b>' + esc(t) + '</b>' + (isNaN(ms) ? "" : '<small class="sy">changed ' + attnAgo(ms) + ' ago</small>') + '</div>';
+  }).join("");
+}
+function sysSec(sec) { return sysCfg().length ? sec("System status", '<div class="adm-f sys-st">' + sysHtml() + '</div>') : ""; }
+function sysUpd() { const b = $("#admin .sys-st"); if (b) { const h = sysHtml(); if (b.innerHTML !== h) b.innerHTML = h; } }   // only the tiles are redrawn, so the rest of the page (access list, config editor) is left alone
 function drawAdmin() {
   const el = $("#admin"); if (!el || !ADMIN_ON()) return;
   const sec = (t, inner) => '<div class="pn pg"><div class="lbl">' + t + '</div>' + inner + '</div>';
   const n = Object.keys(states).length, who = ME.name ? esc(ME.name) : (CONFIG.token ? "long-lived token" : "-");
   const about = sec("This dashboard", '<div class="adm-f"><div><small>Kinetic</small><b>' + esc(ENGINE_VERSION) + '</b></div><div><small>Signed in as</small><b>' + who + '</b></div><div><small>Entities loaded</small><b>' + n + '</b></div></div>');
-  el.innerHTML = '<div class="thg"><div class="thl">' + accSec(sec) + ceSec(sec) + sckSection(sec) + about + '</div></div>';
+  el.innerHTML = '<div class="thg"><div class="thl">' + sysSec(sec) + accSec(sec) + ceSec(sec) + sckSection(sec) + about + '</div></div>';
 }
 $("#admin").addEventListener("click", e => { const ac = e.target.closest("[data-acc]"); if (ac) accClick(ac); });
 // ---------- Config editor (Admin page): edit rooms, tiles, climate rooms, cameras, media and alarm tiles; kept on the Home Assistant host by the kinetic_config component ----------
@@ -6137,7 +6158,7 @@ function attnItems() {
   if (c.soil) Object.keys(CONFIG.derived.soil || {}).sort((a, b) => parseFloat(sv("sensor.average_" + a + "_soil_moisture")) - parseFloat(sv("sensor.average_" + b + "_soil_moisture"))).forEach(z => { const m = parseFloat(sv("sensor.average_" + z + "_soil_moisture")); if (m < (+c.soilBelow || 25)) out.push({ k: "soil", icon: "water-percent", t: title(z) + " soil", sub: (m < 15 ? "Very dry" : m < 25 ? "Dry" : "Moist") + " · " + f1(m) + "%", tone: m < 15 ? "bad" : m < 25 ? "warn" : "", m: m, z: title(z) }); });
   if (c.offline) {
     const rx = [].concat(c.ignore || []).map(x => { try { return new RegExp(x); } catch (e) { return null; } }).filter(Boolean), min = (+c.offlineMinutes || 0) * 6e4, now = Date.now(), w = c.watch || [];
-    Object.keys(states).filter(id => states[id].state === "unavailable" && (ATD.test(id) || w.includes(id)) && !rx.some(r => r.test(id))).sort().forEach(id => { const ms = now - (Date.parse(states[id].last_changed || "") || now); if (ms >= min) out.push({ k: "off", icon: "access-point-network", t: fname(id), sub: "Offline for " + attnAgo(ms), tone: "warn" }); });
+    Object.keys(states).filter(id => states[id].state === "unavailable" && (ATD.test(id) || w.includes(id)) && !rx.some(r => r.test(id))).sort().forEach(id => { const ms = now - (Date.parse(states[id].last_changed || "") || now); if (ms >= min) out.push({ k: "off", icon: "access-point-network", t: fname(id), sub: "Offline for " + attnAgo(ms) + " · " + id, tone: "warn" }); });
   }
   if (c.updates) Object.keys(states).filter(id => /^update\./.test(id) && states[id].state === "on").sort().forEach(id => { const a = states[id].attributes || {}; out.push({ k: "upd", icon: "autorenew", t: a.title || a.friendly_name || fname(id), sub: a.in_progress ? "Installing…" : (a.installed_version ? a.installed_version + " → " : "") + (a.latest_version || "new version") }); });
   if (c.batteries) { const th = +c.batteryBelow || 26; Object.keys(states).filter(k => /^sensor\..*battery_plus$/.test(k) && parseFloat(states[k].state) < th).sort((x, y) => parseFloat(states[x].state) - parseFloat(states[y].state)).forEach(k => { const v = Math.round(parseFloat(states[k].state)); out.push({ k: "bat", icon: "battery-low", t: fname(k).replace(/\s+battery(\s+plus|\+)$/i, ""), sub: v + "%", tone: v <= 15 ? "bad" : "warn" }); }); }   // Battery Notes "Battery+" sensors under 26 %
