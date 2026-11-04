@@ -1475,6 +1475,26 @@ html[data-style] #npmini{background-color:var(--bg)}
 :is(.dots,.npdt) i.on,html:not(#x) .wdots i.on{width:22px;background:var(--mint)}
 
 #mpgrp[hidden]{display:none}
+/* Group speakers (same logic as the custom Sonos card): tick = join the main speaker's group, untick = that speaker leaves; untick the main speaker and the music carries on in the others */
+.gck{flex:none;width:30px;height:30px;padding:0;border-radius:50%;border:2px solid rgba(var(--w),.4);background:transparent;color:var(--onmint,#07241a);display:grid;place-items:center;cursor:pointer;align-self:flex-start;margin-top:2px;transition:background .2s,border-color .2s}
+.gck svg{width:18px;height:18px;fill:currentColor;opacity:0;transition:opacity .2s}.gck.on{background:var(--mint);border-color:var(--mint)}.gck.on svg{opacity:1}
+.gck:disabled{opacity:.5;cursor:default}.nsr.gpd .gck{animation:gckp 1s ease-in-out infinite}@keyframes gckp{50%{opacity:.4}}
+.mpc .mpsl{margin-top:0}
+.nsm small.grt{display:block;margin-top:1px}
+.grm{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:99px;font:600 10px var(--mono);font-style:normal;letter-spacing:.08em;vertical-align:2px;background:rgba(var(--mint-rgb),.16);color:var(--mint)}
+.nsr.gx .nsv{opacity:.55}
+#grp{position:fixed;inset:0;z-index:96;display:none;align-items:center;justify-content:center;padding:14px;background:rgba(0,0,0,.55)}
+#grp.on{display:flex;animation:fdIn .25s ease both}
+#grpw{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.42);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);touch-action:none}
+#grpw.on{display:flex;animation:fdIn .2s ease both}
+#grpw .gwc{display:flex;align-items:center;gap:14px;max-width:340px;padding:18px 20px;border-radius:20px;background:linear-gradient(160deg,var(--bg2),var(--bg));border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#grpw .gws{flex:none;width:30px;height:30px;border-radius:50%;border:3px solid rgba(var(--w),.18);border-top-color:var(--mint,#7fe3c0);animation:gwsp .9s linear infinite}@keyframes gwsp{to{transform:rotate(360deg)}}
+#grpw b{display:block;font-size:15px}#grpw small{display:block;opacity:.65;font-size:12.5px;margin-top:3px}
+.grx{width:min(480px,100%);max-height:100%;overflow:auto;box-sizing:border-box;padding:16px 18px 20px;border-radius:24px;background:linear-gradient(160deg,var(--bg2),var(--bg));border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.6)}
+.grx .grh{display:flex;align-items:center;justify-content:space-between;gap:10px}.grx h3{font-size:22px;font-weight:400;margin:4px 0 2px}
+.grx .grs{color:var(--mut);font-size:13px;margin-bottom:8px}.grx .chips{margin:4px 0 10px}.grx .nsl{border-top:0;margin-top:0;padding-top:0}
+.grx .gra{display:flex;gap:10px;margin-top:12px}.grx .gra .eb{flex:1;padding:12px 10px}
+@media(max-width:760px){#grp{align-items:flex-end;padding:0}.grx{border-radius:24px 24px 0 0;max-height:88dvh;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));animation:shUp .36s var(--sheet-ease,ease) both}}
 .mph{display:flex;gap:10px;align-items:center;margin-left:auto}
 .eb.ic{display:inline-flex;align-items:center;gap:8px;text-decoration:none}
 @media(max-width:760px){.eb.ic span{display:none}.eb.ic{width:44px;height:44px;padding:0;justify-content:center;border-radius:50%}.eb.ic svg{width:22px;height:22px}}
@@ -2609,6 +2629,40 @@ html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] .nm{display:block;flex:1 1 aut
 html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] span.rm{display:block;margin:0 0 0 auto;font:400 12px var(--sans,inherit);color:var(--mut);white-space:nowrap;max-width:45%;overflow:hidden;text-overflow:ellipsis}
 html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] span.st{display:block;position:static;transform:none;margin:0;min-width:48px;text-align:right;font:600 10px var(--mono);letter-spacing:.08em}
 html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] span.rm+span.st{margin-left:0}
+/* Update card: tap an Update row in Notifications > Attention (33-update-card.js), and the progress bar on the row itself */
+#upc{position:fixed;inset:0;z-index:96;display:none;align-items:center;justify-content:center;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+#upc.on{display:flex;animation:fdIn .25s ease both}
+@media(max-width:760px){#upc{align-items:flex-end}}
+.upx{width:min(460px,100%);max-height:100%;overflow:auto;box-sizing:border-box;padding:16px 18px 18px;border-radius:24px;background:linear-gradient(160deg,var(--bg2),var(--bg));border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.6)}
+.upx .uph2{display:flex;align-items:center;justify-content:space-between}
+.upx h3{font-size:22px;font-weight:400;margin:4px 0 2px;overflow-wrap:anywhere}
+.upx .upid{font:12px var(--mono);color:var(--mut);overflow-wrap:anywhere}
+.upx .upv{display:flex;align-items:center;gap:10px;margin:16px 0 12px;font-size:16px;flex-wrap:wrap}.upx .upv span{color:var(--mut)}.upx .upv b{font-weight:500}.upx .upv svg{width:20px;height:20px;fill:var(--mint);flex:none}
+.upx .upv.ok{color:var(--ink)}.upx .upv.ok span{color:var(--ink)}
+.upx .ups{font-size:14px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;max-height:9em;overflow:auto;padding:10px 12px;border-radius:14px;background:rgba(var(--w),.06);border:1px solid var(--line)}
+.upx .upl,.upx .upo{display:inline-flex;align-items:center;gap:6px;color:var(--cool);font-size:14px;text-decoration:none;margin-top:10px}.upx .upl svg{width:16px;height:16px;fill:currentColor}
+.upx .upo{display:flex;justify-content:center;margin-top:14px;color:var(--mut);font-size:13px}
+.upx .upm{font-size:13px;color:var(--mut);margin-top:8px;line-height:1.45}
+.upx .upe{margin-top:10px;padding:10px 12px;border-radius:12px;font-size:13px;color:var(--heat);background:rgba(var(--heat-rgb),.12)}
+.upx .upk{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:16px 2px 4px;font-size:15px}
+.upx .csw{flex:none;position:relative;width:52px;height:30px;border-radius:15px;border:0;padding:0;background:rgba(var(--w),.18);transition:background .2s;cursor:pointer}
+.upx .csw i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.35);transition:transform .2s}
+.upx .csw[aria-checked=true]{background:var(--mint)}.upx .csw[aria-checked=true] i{transform:translateX(22px)}
+.upx .upa{display:flex;gap:10px;margin-top:14px}.upx .upa .eb{flex:1;padding:14px 12px;text-align:center}
+.upx .up1{background:var(--mint);color:var(--onmint,#07241a);border-color:var(--mint)}
+.upx .upc2{margin-top:14px;padding:14px;border-radius:16px;background:rgba(var(--w),.06);border:1px solid var(--line)}.upx .upc2>b{font-weight:500;font-size:16px}
+.upx .upp{margin-top:6px}.upx .uph{display:flex;justify-content:space-between;font-size:15px;margin-bottom:8px}.upx .uph b{font-weight:500}
+.upb,.at-pb{display:block;position:relative;height:8px;border-radius:4px;background:rgba(var(--w),.12);overflow:hidden}.at-pb{height:4px;border-radius:2px;margin-top:8px}
+.upb i,.at-pb i{display:block;height:100%;border-radius:inherit;background:var(--mint);transition:width .6s ease}
+.upb.ind i,.at-pb.ind i{position:absolute;left:0;animation:upInd 1.4s ease-in-out infinite;transition:none}
+@keyframes upInd{0%{left:-40%}100%{left:100%}}
+.nrow.at-r[data-up]{cursor:pointer}.nrow.at-r[data-up]:focus-visible{outline:2px solid var(--cool);outline-offset:2px}
+html[data-mode=light] .upx .upv svg{fill:#17703d}html[data-mode=light] .upx .upe{color:#a3211a}html[data-mode=light] .upx .upl{color:#2d6aa3}
+@media(prefers-reduced-motion:reduce){.upb.ind i,.at-pb.ind i{animation:none;left:0}.upb i,.at-pb i,.upx .csw,.upx .csw i{transition:none}}
+/* a strip chip opened the pop-up on one item: "Only Doors" with SHOW ALL for the rest of the tab */
+#np .npfoc{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 0 2px;padding:8px 8px 8px 14px;border-radius:14px;background:rgba(var(--w),.06);border:1px solid var(--line)}
+#np .npfoc span{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+#np .npfoc .eb{padding:8px 12px;font-size:11px}
 </style>
 </head>
 <body>
@@ -2656,7 +2710,7 @@ html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] span.rm+span.st{margin-left:0}
 
   <div id="scenes" class="page"></div>
 
-  <div id="media" class="page"><div class="eh" style="margin-bottom:14px"><b class="pt">Speakers</b><span class="mph"><a class="eb ic" id="mpsp" href="spotify://home" aria-label="Open Spotify" data-i2="spotify"><span>OPEN SPOTIFY</span></a><button class="eb ic" id="mpgrp" data-mp="join" aria-label="Group speakers" data-i2="speaker-multiple" hidden><span>GROUP SPEAKERS</span></button></span></div><div class="mlay"><div id="mp"></div><div id="lyr" class="pn" style="display:none"></div></div><div class="mdt"><i class="on" data-pg="0"></i><i data-pg="1"></i></div></div>
+  <div id="media" class="page"><div class="eh" style="margin-bottom:14px"><b class="pt">Speakers</b><span class="mph"><a class="eb ic" id="mpsp" href="spotify://home" aria-label="Open Spotify" data-i2="spotify"><span>OPEN SPOTIFY</span></a></span></div><div class="mlay"><div id="mp"></div><div id="lyr" class="pn" style="display:none"></div></div><div class="mdt"><i class="on" data-pg="0"></i><i data-pg="1"></i></div></div>
 
   <div id="theme" class="page"></div>
   <div id="admin" class="page"></div>
@@ -2674,18 +2728,20 @@ html:not(#x):not(#y) :is(#np,#rv) .bl .bd[data-k] span.rm+span.st{margin-left:0}
 <div id="clbk"></div>
 <div id="evm"><div id="evb"></div><div id="evp"></div><div id="evq" role="alertdialog" aria-modal="true"><div class="evqc"></div></div></div>
 <div id="npop"><div id="nbd"></div><aside id="np"></aside></div>
+<div id="upc" aria-hidden="true"></div>
+<div id="grp" aria-hidden="true"></div><div id="grpw" role="alertdialog" aria-live="polite" aria-hidden="true"></div>
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.3.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.4.6"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.3.0";   // the one place to change the version
+window.DASH_VER = "2.4.6";   // the one place to change the version
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -3152,11 +3208,12 @@ function setState(s) {
   if (id === CONFIG.alarm) drawAlarm();
   if (onView()) applyView(); else if (CONFIG.view.popup && s.state === "on" && (CONFIG.view.driveway.trig.concat(CONFIG.view.garage.trig)).indexOf(id) > -1 && VW) { VW.back = location.hash || "#home"; location.hash = "#view/auto"; }
   const rx = REL[curPg()]; if (rx && rx.test(id)) queuePg();
+  if (UPC.e === id) upcDraw();   // an open update card follows its entity (progress, done)
   if (NREL.test(id) || nskRel(id)) queueNotif();
   if (lvRel(id)) lvQ();
   if (curRoom && id.indexOf("timer.") === 0) queueRoom();   // a tile's countdown starts or ends
   if (onRooms && !curRoom && CONFIG.roomsByPresence !== false && /^(binary_sensor|input_boolean)\./.test(id) && CONFIG.house.some(r => occOf(r).indexOf(id) > -1)) queueRl();
-  if (id.indexOf("media_player.") === 0 && CONFIG.media && CONFIG.media.indexOf(id) > -1) queueNp();
+  if (id.indexOf("media_player.") === 0 && CONFIG.media && CONFIG.media.indexOf(id) > -1) { GRP.chg = Date.now(); queueNp(); if (GRP.open) grpDraw(); }
   if ({ light: 1, switch: 1, binary_sensor: 1, group: 1, cover: 1 }[id.split(".")[0]]) queueHome();
 }
 
@@ -5923,27 +5980,32 @@ const npItem = (e, o) => { const z = tapZone(e), tap = /^switch\..*water_tap$/.t
 const gar = x => /garage/i.test(x + " " + fname(x)) || Object.keys(galCfg()).some(k => (galCfg()[k] || {}).sensor === x);   // the garage door has its own alert, so it is not listed with the doors
 // open doors from the external-doors group (garage excluded): a list of ids, [] when the group says "on" but cannot say which one, or null when all are shut
 const doorsOpen = () => { const g = E("doorsGroup"), all = members(g).filter(x => x !== g && isOn(x)), d0 = all.filter(x => !entHidden(x)); if (all.length && !d0.length) return null; const d = d0.filter(x => !gar(x)); return d.length || (isOn(g) && !d0.length) ? d : null; };   // doors of a room hidden from this person are left out
-function notif(full) {
+// Each thing lives in one tab, by how urgent it is. Alerts: leaks, open outside doors, the garage, weather and hazards, cameras, Controls.
+// Active: whatever is switched on or running (lights, fans, taps, curtains, windows, appliances, laundry, towels). Attention: bins, soil, offline, updates, batteries, pollen.
+// So an alert from config alerts that is also in an Active group, the doors list or the Bins card is left out of Alerts, and the doors group is left out of Active.
+const npFocus = (k, f) => !f || [].concat(k).indexOf(f) > -1;   // f = npOnly on the Alerts / Attention tab: show only that section (a strip chip opened it)
+function notif(full, f) {
   let n = 0, h = "";
-  const sec = (t, b) => { if (full && b) h += '<div class="lbl np2">' + t + '</div>' + b; };
+  const sec = (t, b, k) => { if (full && b && npFocus(k, f)) h += '<div class="lbl np2">' + t + '</div>' + b; };
   const grid = a => a.length ? '<div class="tg3">' + a.map(tileHtml).join("") + '</div>' : "";
-  const al = volcHtml().concat(quakeHtml() || []), pa = polAlert(); if (pa) al.push(pa); n += al.length; sec("Alerts", al.join(""));
+  const al = volcHtml().concat(quakeHtml() || []), pa = !attnCfg() && polAlert(); if (pa) al.push(pa); n += al.length; sec("Alerts", al.join(""), "haz");
   const dr = doorsOpen();
-  if (dr) { n++; sec("Doors", '<div class="alert q"><b>' + (dr.length || 1) + ' open</b><div>' + dr.map(x => esc(fname(x))).join(" · ") + '</div></div>'); }
-  const LK = LEAKS().filter(x => isOn(x[0])), W2 = (CONFIG.alerts || []).filter(x => isOn(x[0]) && !entHidden(x[0]));   // leak sensors first, as red cards
-  n += LK.length + W2.length; sec("Warnings", LK.map(x => '<div class="alert q"><div class="lbl">' + mdi("water-alert") + ' WATER LEAK</div><b>' + esc(x[1]) + '</b><div>' + esc(x[2]) + '</div></div>').join("") + grid(W2.map(x => npItem(x[0], { name: x[1], sub: x[2], confirm: /rubbish|recycle/.test(x[0]) }))));
+  if (dr) { n++; sec("Doors", '<div class="alert q"><b>' + (dr.length || 1) + ' open</b><div>' + dr.map(x => esc(fname(x))).join(" · ") + '</div></div>', "door"); }
+  const LK = LEAKS().filter(x => isOn(x[0])), dup = npDupIds(), W2 = (CONFIG.alerts || []).filter(x => isOn(x[0]) && !entHidden(x[0]) && !dup[x[0]]);   // leak sensors first, as red cards
+  n += LK.length + W2.length; if (f === "leak") sec("Water leak", LK.map(x => '<div class="alert q"><div class="lbl">' + mdi("water-alert") + ' WATER LEAK</div><b>' + esc(x[1]) + '</b><div>' + esc(x[2]) + '</div></div>').join(""), "leak");
+  sec("Warnings", LK.map(x => '<div class="alert q"><div class="lbl">' + mdi("water-alert") + ' WATER LEAK</div><b>' + esc(x[1]) + '</b><div>' + esc(x[2]) + '</div></div>').join("") + grid(W2.map(x => npItem(x[0], { name: x[1], sub: x[2], confirm: /rubbish|recycle/.test(x[0]) }))), "warnings");
   const wr = states[E("weatherWarnings")];
-  if (wr && sv(E("weatherWarnings")) && wr.attributes.warnings) { n++; sec("Weather warning", '<div class="alert w">' + esc(wr.attributes.warnings) + '</div>'); }
-  const wxa = wxaNow(); if (wxa) { n++; sec("Weather", wxaHtml(wxa)); }   // 31-weather-alerts.js: wind now / coming up, and rain in the next hours
+  if (wr && sv(E("weatherWarnings")) && wr.attributes.warnings) { n++; sec("Weather warning", '<div class="alert w">' + esc(wr.attributes.warnings) + '</div>', "warn"); }
+  const wxa = wxaNow(); if (wxa) { n++; sec("Weather", wxaHtml(wxa), "wx"); }   // 31-weather-alerts.js: wind now / coming up, and rain in the next hours
   // Cameras: live pictures (the same WebRTC streams as the Security page), mounted into these slots after the list is drawn. An alert's 4th value names the camera to show while it is on:
   // "driveway", "garage", or any camera by its name as shown on the Security page ("road", "right-walkway"). The garage also shows while its door sensor says it is opening / open.
-  if (full) sec("Cameras", npCams().map(x => '<div class="snap npcam" data-vw="' + esc(x.key) + '" data-npc="' + esc(x.id) + '" data-name="' + esc(x.name) + '"></div>').join(""));
+  if (full) sec("Cameras", npCams().filter(x => f !== "garage" || x.key === "garage").map(x => '<div class="snap npcam" data-vw="' + esc(x.key) + '" data-npc="' + esc(x.id) + '" data-name="' + esc(x.name) + '"></div>').join(""), ["cam", "garage"]);
   const tm = (CONFIG.notifTimers || []).filter(x => states[x] && states[x].state === "active");   // optional Timers card: config notifTimers ["timer.x", ...] (none by default; tiles show their own countdown, see tileTimers)
   n += tm.length;
   sec("Timers", tm.map(x => { const t = states[x].attributes, fin = Date.parse(t.finishes_at || "") || 0, dur = (t.duration || "0:00:00").split(":").reduce((p, q) => p * 60 + +q, 0) * 1000; return '<div class="ws" style="margin-bottom:8px"><span class="lbl">' + esc(fname(x)) + '</span><div class="lbl tmr" data-fin="' + fin + '">--</div><div class="zb"><i data-dur="' + dur + '"></i></div></div>'; }).join(""));
   sec("Controls", TOG.map(g => { const c = parseInt(sv(g[1])) || 0, sub = c === 0 ? "All " + g[2] + "s active" : c + " " + g[2] + (c > 1 ? "s" : "") + " disabled"; return '<div class="ws" style="margin-bottom:10px"><span class="lbl">' + g[0] + '</span><div style="margin:6px 0 10px;color:var(--mut)">' + sub + '</div><div class="chips cscr">' + g[3].map(x => '<button class="chip' + (isOn(x[0]) ? " on" : "") + '" data-nt="' + x[0] + '"' + (x[2] ? ' data-sc="' + x[2] + '"' : "") + '>' + x[1] + '</button>').join("") + '</div></div>'; }).join(""));
-  const ai = attnItems();   // 33-attention.js: bins, dry soil, offline devices, updates, low batteries
-  return { n: n, all: n + ai.length, html: h, na: ai.length, ah: full ? attnHtml(ai) : "", ai: ai };
+  const ai = attnItems();   // 33-attention.js: bins, dry soil, offline devices, updates, low batteries, pollen
+  return { n: n, all: n + ai.length, html: h, na: ai.length, ah: full ? attnHtml(f ? ai.filter(x => x.k === f) : ai) : "", ai: ai };
 }
 // header strip: normally a glowing bar while something is waiting; it turns into an icon for the conditions below. Priority when several are true:
 // water leak, then weather warning, then garage door open, then a door open, then water on, then bins not out yet, then pollen (from the level set by pollen.alertFrom), then laundry running, then towel heating. The top one shows and a small "+n" says how many more there are.
@@ -5991,7 +6053,7 @@ const npLoading = () => !Object.keys(states).length;   // nothing from Home Assi
 const NPOFF = {}; let npHold = 0, npht = 0;   // tiles switched off from the Active list vanish at once (a slow light transition would keep them "on" for seconds)
 const npGone = x => { const t = NPOFF[x]; if (!t) return false; if (!isOn(x) || Date.now() - t > 12000) { delete NPOFF[x]; return false; } return true; };
 const actList = () => {
-  const A = ACTC.map(c => ({ c: c, ids: members(c[1]).filter(x => x !== c[1] && !/^group\./.test(x) && isOn(x) && !npGone(x) && !entHidden(x)) })), seen = {};
+  const dg = E("doorsGroup"), A = ACTC.filter(c => !dg || c[1] !== dg).map(c => ({ c: c, ids: members(c[1]).filter(x => x !== c[1] && !/^group\./.test(x) && isOn(x) && !npGone(x) && !entHidden(x)) })), seen = {};
   A.forEach(x => x.ids.forEach(e => { seen[e] = 1; }));
   const ap = (CONFIG.activeAppliances || []).filter(e => isOn(e) && !npGone(e) && !seen[e] && !entHidden(e));   // config activeAppliances: ["switch.rice_cooker", ...] get their own "Appliances" group here
   if ((CONFIG.activeAppliances || []).length) A.push({ c: ["Appliances", "", "m3-plug-connect", "app"], ids: ap });
@@ -6001,6 +6063,10 @@ const actList = () => {
   if (tw.length) A.push({ c: ["Towel heating", "", "radiator", "tw"], ids: tw });
   return A;
 };
+const npDupIds = () => { const d = {}, add = e => { d[e] = 1; };   // what Active, the Doors card or the Bins card already lists
+  ACTC.forEach(c => members(c[1]).forEach(add)); (CONFIG.activeAppliances || []).forEach(add); if (E("towelGroup")) members(E("towelGroup")).forEach(add);
+  if (E("doorsGroup")) members(E("doorsGroup")).forEach(add); binsIds().forEach(add); return d; };
+const NPFN = { leak: "Water leak", door: "Doors", garage: "Garage", warn: "Weather warning", wx: "Weather", bins: "Bins", bat: "Batteries", pol: "Pollen" };
 function npDismiss(ids) {
   ids = [].concat(ids); const now = Date.now(); let any = false;
   ids.forEach(x => { NPOFF[x] = now; $$('#np [data-e="' + x + '"]').forEach(t => { t.classList.add("gone"); any = true; }); });
@@ -6059,7 +6125,8 @@ function drawNotif() {
   const open = document.body.classList.contains("np-open");
   if (open && Date.now() < npHold) { clearTimeout(npht); npht = setTimeout(drawNotif, npHold - Date.now() + 10); return; }
   if (open && $$("#np input[type=range], #np .tl").some(r => r._d && r._d > Date.now())) { clearTimeout(npht); npht = setTimeout(drawNotif, 400); return; }
-  const r = notif(open);
+  let r = notif(open, open && npTab !== "active" ? npOnly : "");
+  if (open && npTab !== "active" && npOnly && !npLoading() && !(npTab === "attention" ? r.ah : r.html)) { npOnly = ""; r = notif(open); }   // nothing left under that chip: show the whole tab
   const ks = NSK.filter(k => k[3]()), top = ks[0], nacc = $("#nacc");   // the strip turns into the icon of the most urgent condition
   // each condition is a .nai (icon + name): a phone shows just the top icon, a tablet shows the name as a chip, and a wide screen shows the two most urgent chips
   const pn = polNow(), nkc = k => k[0] === "pollen" ? (pn ? pn.col : "") : k[0] === "wind" || k[0] === "rain" || k[0] === "uv" || k[0] === "wx" ? wxaCol(k[0]) : "", nsn = k => typeof k[2] === "function" ? k[2]() : k[2], nai = (k, c) => '<span class="nai' + c + '" data-k="' + k[0] + '"' + (nkc(k) ? ' style="--nk:' + nkc(k) + '"' : "") + '>' + (k[0] === "laundry" ? DRUM : mdi(k[1])) + '<b class="nal">' + esc(k[0] === "pollen" && pn ? "Pollen · " + pn.name : k[0] === "battery" && lowBattChip().length > 1 ? lowBattChip().length + " low batteries" : nsn(k)) + '</b></span>';
@@ -6076,7 +6143,7 @@ function drawNotif() {
   const np = $("#np"), tb = [["alerts", "ALERTS", r.n], ["attention", "ATTENTION", r.na], ["active", "ACTIVE", tot]]; let tc = false;
   if (!np.querySelector(".nptabs")) { tc = true; np.innerHTML = '<div class="nh"><div><div class="lbl">Home</div><h3>Notifications</h3></div><button class="eb" data-close="1">DONE</button></div>' + hsw('<div class="chips tabs nptabs">' + tb.map(t => '<button class="chip" data-npt="' + t[0] + '"></button>').join("") + '</div>') + '<div id="npc"></div>'; }
   np.querySelectorAll(".nptabs .chip").forEach((c, k) => { const tx = tb[k][1] + (tb[k][2] ? " · " + tb[k][2] : ""); if (c.textContent !== tx) { c.textContent = tx; tc = true; } c.classList.toggle("on", c.dataset.npt === npTab); });
-  const body = npLoading() ? '<div class="lbl" style="margin:14px 0">Loading…</div>' : npTab === "active" ? npChips(A) + (npOnly ? actHtml(A.filter(x => x.c[0].toLowerCase().replace(/\s+/g, "-") === npOnly)) : actHtml(A)) : npTab === "attention" ? (r.na ? r.ah : '<div class="lbl" style="margin:14px 0">Nothing needs attention</div>') : (r.n ? "" : '<div class="lbl" style="margin:14px 0">All clear</div>') + r.html, nc = $("#npc"), key = npTab + "|" + body.replace(/<em class="ldr">[^<]*<\/em>/g, '<em class="ldr"></em>');   // the remaining time is filled in below, so the minute ticking over does not redraw the list (and restart the drum)
+  const body = npLoading() ? '<div class="lbl" style="margin:14px 0">Loading…</div>' : npTab === "active" ? npChips(A) + (npOnly ? actHtml(A.filter(x => x.c[0].toLowerCase().replace(/\s+/g, "-") === npOnly)) : actHtml(A)) : (npOnly ? '<div class="npfoc"><span>Only ' + esc(NPFN[npOnly] || npOnly) + '</span><button class="eb" data-npall="1">SHOW ALL</button></div>' : "") + (npTab === "attention" ? (r.na ? r.ah : '<div class="lbl" style="margin:14px 0">Nothing needs attention</div>') : (r.n ? "" : '<div class="lbl" style="margin:14px 0">All clear</div>') + r.html), nc = $("#npc"), key = npTab + "|" + body.replace(/<em class="ldr">[^<]*<\/em>/g, '<em class="ldr"></em>');   // the remaining time is filled in below, so the minute ticking over does not redraw the list (and restart the drum)
   if (nc._k !== key) {
     const at = npTab + "|" + npOnly;
     if (nc._t === at) { nc.classList.remove("tx", "txc"); clearTimeout(nc._tx); }   // a list that redraws on the tab it is already showing (a state changed) must not replay the tab's fade-in, or it blinks
@@ -6090,23 +6157,28 @@ let nq = 0;
 function queueNotif() { if (!nq) nq = requestAnimationFrame(() => { nq = 0; drawNotif(); }); }
 // Tapping the strip while exactly one condition shows opens the tab (and Active section) that holds it: Bins out / Low battery -> Attention, Laundry / Towel heating / Water on -> Active at that group, the rest -> Alerts.
 // With two or more conditions (or none) the pop-up opens on the tab it was last on, as before.
-const NPK = { bins: ["attention"], battery: ["attention"], laundry: ["active", "laundry"], towel: ["active", "towel-heating"], water: ["active", "water-taps"] };
-$("#hc").onclick = () => {
+// Tapping one of the chips (or the only one) opens just that item, with SHOW ALL to see the rest of the tab.
+const NPK = { leak: ["alerts", "leak"], warn: ["alerts", "warn"], garage: ["alerts", "garage"], wind: ["alerts", "wx"], rain: ["alerts", "wx"], uv: ["alerts", "wx"], wx: ["alerts", "wx"], door: ["alerts", "door"],
+  water: ["active", "water-taps"], bins: ["attention", "bins"], battery: ["attention", "bat"], pollen: ["attention", "pol"], laundry: ["active", "laundry"], towel: ["active", "towel-heating"] };
+$("#hc").onclick = e => {
   const open = document.body.classList.contains("np-open");
-  if (!open) { const ks = NSK.filter(k => k[3]()), m = ks.length === 1 ? NPK[ks[0][0]] || ["alerts"] : null; if (m) { npTab = m[0]; npOnly = m[1] || ""; npGo = null; } }
+  if (!open) { const ks = NSK.filter(k => k[3]()), ch = e && e.target.closest && e.target.closest(".nai[data-k]"), m = ch ? NPK[ch.dataset.k] : ks.length === 1 ? NPK[ks[0][0]] || ["alerts"] : null; if (m) { npTab = m[0]; npOnly = m[1] || ""; npGo = null; } }
   document.body.classList.toggle("np-open"); drawNotif();
 };
 $("#nclk").onclick = () => $("#hc").click();   // tablet: the clock at the top of the side menu opens the notifications too
 const npClose = () => { npOnly = ""; document.body.classList.remove("np-open"); npCamStop(); if (/^#(notifications|attention|active|batteries)/.test(location.hash)) location.hash = "#home"; };
 $("#nbd").onclick = npClose;
+$("#np").addEventListener("keydown", e => { const r = e.target.closest && e.target.closest("[data-up]"); if (r && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); upcOpen(r.dataset.up); } });
 $("#np").onclick = e => {
   if (e.target.closest("[data-close]")) { npClose(); return; }
+  if (e.target.closest("[data-npall]")) { npOnly = ""; drawNotif(); return; }
   const ch = e.target.closest("[data-npchip]"); if (ch) { npOnly = ch.dataset.npchip; drawNotif(); return; }
   const fo = e.target.closest("[data-npf]"); if (fo && !e.target.closest(".eb")) { const k = fo.dataset.npf, was = fo.getAttribute("aria-expanded") === "true"; if (!npOnly) { NPF[k] = !was; drawNotif(); } return; }   // while one group is picked with a chip it stays open
   const tb = e.target.closest("[data-npt]"); if (tb) { npOnly = ""; const ord = ["alerts", "attention", "active"], was = npTab; npTab = tb.dataset.npt; drawNotif(); if (was !== npTab) txGo($("#npc"), ord.indexOf(npTab) > ord.indexOf(was) ? 1 : -1, true); return; }
   const of = e.target.closest("[data-off]"); if (of) { const ids = actList()[+of.dataset.off].ids; const cl = actList()[+of.dataset.off].c[3] === "close"; if (ids.length) { if (!cl) npDismiss(ids); call(cl ? "cover" : "homeassistant", cl ? "close_cover" : "turn_off", ids); } return; }
   if (e.target.closest("[data-wxatg]")) { WXA_FULL = !WXA_FULL; drawNotif(); return; }   // the combined weather card: one line each, or each as its full card
   const wa = e.target.closest("[data-wxa]"); if (wa) { npClose(); location.hash = "#weather/" + wa.dataset.wxa; return; }   // the weather card opens that forecast chart
+  const up = e.target.closest("[data-up]"); if (up) { upcOpen(up.dataset.up); return; }   // 33-update-card.js
   const bn = e.target.closest("[data-bn]"); if (bn) { binsTap(bn.dataset.bn); return; }
   const vw = e.target.closest("[data-vw]"); if (vw) { VW.back = /^#(view|camera|notifications|active|batteries)/.test(location.hash) ? "#home" : (location.hash || "#home"); location.hash = "#view/" + vw.dataset.vw; return; }
   const c = e.target.closest("[data-nt]");
@@ -6155,20 +6227,22 @@ const attnAgo = ms => ms < 36e5 ? Math.max(1, Math.round(ms / 6e4)) + " min" : m
 function attnItems() {
   const c = attnCfg(), out = []; if (!c) return out;
   if (binsCfg() && binsDue().length) { const due = binsDue().map(x => x[1]), o = binsOut(), e = binsEvening(); out.push({ k: "bins", icon: "recycle", t: o ? "Bins are out" : e ? "Bins out tonight" : "Bring the bins out", sub: due.join(", ") }); }
+  if (polAlert()) out.push({ k: "pol", icon: "pollen", t: "Pollen" });   // 19-pollen.js: from the level set by pollen.alertFrom (it used to be under Alerts)
   if (c.soil) Object.keys(CONFIG.derived.soil || {}).sort((a, b) => parseFloat(sv("sensor.average_" + a + "_soil_moisture")) - parseFloat(sv("sensor.average_" + b + "_soil_moisture"))).forEach(z => { const m = parseFloat(sv("sensor.average_" + z + "_soil_moisture")); if (m < (+c.soilBelow || 25)) out.push({ k: "soil", icon: "water-percent", t: title(z) + " soil", sub: (m < 15 ? "Very dry" : m < 25 ? "Dry" : "Moist") + " · " + f1(m) + "%", tone: m < 15 ? "bad" : m < 25 ? "warn" : "", m: m, z: title(z) }); });
   if (c.offline) {
     const rx = [].concat(c.ignore || []).map(x => { try { return new RegExp(x); } catch (e) { return null; } }).filter(Boolean), min = (+c.offlineMinutes || 0) * 6e4, now = Date.now(), w = c.watch || [];
     Object.keys(states).filter(id => states[id].state === "unavailable" && (ATD.test(id) || w.includes(id)) && !rx.some(r => r.test(id))).sort().forEach(id => { const ms = now - (Date.parse(states[id].last_changed || "") || now); if (ms >= min) out.push({ k: "off", icon: "access-point-network", t: fname(id), sub: "Offline for " + attnAgo(ms) + " · " + id, tone: "warn" }); });
   }
-  if (c.updates) Object.keys(states).filter(id => /^update\./.test(id) && states[id].state === "on").sort().forEach(id => { const a = states[id].attributes || {}; out.push({ k: "upd", icon: "autorenew", t: a.title || a.friendly_name || fname(id), sub: a.in_progress ? "Installing…" : (a.installed_version ? a.installed_version + " → " : "") + (a.latest_version || "new version") }); });
+  if (c.updates) Object.keys(states).filter(id => /^update\./.test(id) && states[id].state === "on").sort().forEach(id => { const a = states[id].attributes || {}; const ip = upcBusy(a), pc = upcPct(a); out.push({ k: "upd", icon: "autorenew", e: id, t: a.title || a.friendly_name || fname(id), sub: ip ? "Installing…" + (pc != null ? " " + pc + "%" : "") : (a.installed_version ? a.installed_version + " → " : "") + (a.latest_version || "new version"), prog: ip ? (pc != null ? pc : -1) : null }); });
   if (c.batteries) { const th = +c.batteryBelow || 26; Object.keys(states).filter(k => /^sensor\..*battery_plus$/.test(k) && parseFloat(states[k].state) < th).sort((x, y) => parseFloat(states[x].state) - parseFloat(states[y].state)).forEach(k => { const v = Math.round(parseFloat(states[k].state)); out.push({ k: "bat", icon: "battery-low", t: fname(k).replace(/\s+battery(\s+plus|\+)$/i, ""), sub: v + "%", tone: v <= 15 ? "bad" : "warn" }); }); }   // Battery Notes "Battery+" sensors under 26 %
   return out;
 }
 function attnHtml(it) {
   if (!it.length) return "";
-  const head = (ic, t, n) => '<div class="lbl np2 il">' + mdi(ic) + t + (n ? " · " + n : "") + '</div>', row = x => '<div class="nrow ' + (x.tone || "") + ' at-r"' + "" + '><span class="at-i">' + mdi(x.icon) + '</span><span class="nbn"><b>' + esc(x.t) + '</b><small>' + esc(x.sub) + '</small></span>' + '</div>';
+  const head = (ic, t, n) => '<div class="lbl np2 il">' + mdi(ic) + t + (n ? " · " + n : "") + '</div>', row = x => '<div class="nrow ' + (x.tone || "") + ' at-r"' + (x.e ? ' data-up="' + esc(x.e) + '" role="button" tabindex="0"' : "") + '><span class="at-i">' + mdi(x.icon) + '</span><span class="nbn"><b>' + esc(x.t) + '</b><small>' + esc(x.sub) + '</small>' + (x.prog != null ? '<span class="at-pb' + (x.prog < 0 ? " ind" : "") + '"><i style="width:' + (x.prog < 0 ? 40 : Math.max(2, x.prog)) + '%"></i></span>' : "") + '</span>' + (x.e ? '<span class="at-c">' + mdi("chevron-right") + '</span>' : "") + '</div>';
   const by = k => it.filter(x => x.k === k); let h = "";
   if (by("bins").length) h += head("recycle", "Bins") + binsCard();   // 32-bins-card.js
+  if (by("pol").length) h += head("pollen", "Pollen") + polAlert();
   const so = by("soil"); if (so.length) h += head("water-percent", "Chores") + '<div class="wg">' + so.map(x => '<div class="ws"><span class="lbl">' + x.z + ' soil</span><b style="color:var(' + (x.m < 15 ? "--sd0" : x.m < 25 ? "--sd1" : "--sd2") + ')">' + (x.m < 15 ? "Very dry" : x.m < 25 ? "Dry" : "Moist") + '</b>' + f1(x.m) + '%</div>').join("") + '</div>';
   const of = by("off"); if (of.length) h += head("access-point-network", "Offline", of.length) + of.slice(0, 8).map(row).join("") + (of.length > 8 ? '<div class="lbl at-more">+' + (of.length - 8) + ' more</div>' : "");
   const up = by("upd"); if (up.length) h += head("autorenew", "Updates", up.length) + up.map(row).join("");
@@ -6176,6 +6250,58 @@ function attnHtml(it) {
   return h;
 }
 setInterval(() => queueNotif(), 60000);   // "offline for N min" needs a clock, not only state changes
+// ---------- Update card: tap an Update row in Notifications > Attention ----------
+// Opens a card for that update entity: versions, the release summary, a link to the release notes, Install (with one confirm tap, and a "Back up first" switch when the update supports a backup), Skip,
+// and a live progress bar while it installs. Install / Skip are for Home Assistant admins only (ADMIN_ON); everyone else sees the card and the progress. Nothing to configure: the Updates list in
+// Attention (config attention: { updates: true }) is what opens it.
+Object.assign(MDI, { "arrow-right": "M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z", "open-in-new": "M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" });
+const UPC = { e: "", confirm: false, backup: true, sent: 0, err: "" };
+const upcBusy = a => !!(a && a.in_progress);   // HA: true, or a percentage on older versions
+const upcPct = a => { if (!a) return null; if (a.update_percentage != null && !isNaN(+a.update_percentage)) return Math.round(+a.update_percentage); const p = a.in_progress; return typeof p === "number" && p > 0 && p <= 100 ? Math.round(p) : null; };
+function upcOpen(e) { UPC.e = e; UPC.confirm = false; UPC.sent = 0; UPC.err = ""; UPC.backup = true; upcDraw(); }
+function upcClose() { UPC.e = ""; UPC.confirm = false; upcDraw(); }
+function upcDraw() {
+  const el = $("#upc"); if (!el) return; const e = UPC.e;
+  if (!e) { el.classList.remove("on"); el.setAttribute("aria-hidden", "true"); el.innerHTML = ""; el._k = ""; return; }
+  const s = states[e], a = s ? s.attributes || {} : {}, on = !!s && s.state === "on", sf = +a.supported_features || 0, adm = ADMIN_ON(), can = adm && !!(sf & 1);
+  const name = a.title || a.friendly_name || fname(e), from = a.installed_version, to = a.latest_version, pct = upcPct(a);
+  const starting = on && !upcBusy(a) && UPC.sent && Date.now() - UPC.sent < 15000, busy = on && upcBusy(a);
+  if (busy) UPC.sent = 0;
+  let b = "";
+  if (!s || s.state === "unavailable") b = '<div class="upm">This update isn’t available right now.</div>';
+  else if (!on) b = '<div class="upv ok">' + mdi("check-circle") + '<span>Up to date' + (from ? " · " + esc(from) : "") + '</span></div>';
+  else {
+    b += '<div class="upv"><span>' + esc(from || "installed") + '</span>' + mdi("arrow-right") + '<b>' + esc(to || "new version") + '</b></div>';
+    if (busy || starting) b += '<div class="upp"><div class="uph"><span>' + (busy ? "Installing…" : "Starting…") + '</span>' + (busy && pct != null ? '<b>' + pct + '%</b>' : "") + '</div><div class="upb' + (busy && pct != null ? "" : " ind") + '"><i style="width:' + (busy && pct != null ? Math.max(2, pct) : 40) + '%"></i></div><div class="upm">You can close this. The update keeps running, and the list shows its progress.</div></div>';
+    else {
+      if (a.release_summary) b += '<div class="ups">' + esc(String(a.release_summary)) + '</div>';
+      if (/^https?:\/\//i.test(a.release_url || "")) b += '<a class="upl" href="' + esc(a.release_url) + '" target="_blank" rel="noopener noreferrer">' + mdi("open-in-new") + 'Release notes</a>';
+      if (UPC.err) b += '<div class="upe">' + esc(UPC.err) + '</div>';
+      if (can && UPC.confirm) b += '<div class="upc2"><b>Install ' + esc(to || "this update") + '?</b><div class="upm">Things connected to it may be unavailable for a few minutes while it updates.</div><div class="upa"><button class="eb up1" data-upa="go">YES, INSTALL</button><button class="eb" data-upa="no">CANCEL</button></div></div>';
+      else if (can) b += (sf & 8 ? '<div class="upk"><span>Back up first</span><button class="csw" role="switch" aria-checked="' + UPC.backup + '" data-upa="bk" aria-label="Back up first"><i></i></button></div>' : "") + '<div class="upa"><button class="eb up1" data-upa="ask">INSTALL</button><button class="eb" data-upa="skip">SKIP</button></div>';
+      else b += '<div class="upm">Only Home Assistant admins can install updates from here.</div>';
+    }
+    if (adm) b += '<a class="upo" href="' + esc(CONFIG.url) + '/config/updates" target="_blank" rel="noopener">Open in Home Assistant</a>';
+  }
+  const html = '<div class="upx" role="dialog" aria-modal="true" aria-label="Update"><div class="uph2"><span class="lbl">UPDATE</span><button class="evx" data-upa="close" aria-label="Close">' + mdi("close") + '</button></div><h3>' + esc(name) + '</h3><div class="upid">' + esc(e) + '</div>' + b + '</div>';
+  if (el._k !== html) { el._k = html; el.innerHTML = html; }   // only rewritten when it changed, so a progress tick does not flash the card
+  el.classList.add("on"); el.setAttribute("aria-hidden", "false");
+}
+$("#upc").addEventListener("click", ev => {
+  const t = ev.target.closest("[data-upa]"), e = UPC.e;
+  if (!t) { if (ev.target.id === "upc") upcClose(); return; }
+  const k = t.dataset.upa, s = states[e], sf = s ? +(s.attributes || {}).supported_features || 0 : 0;
+  if (k === "close") upcClose();
+  else if (k === "ask") { UPC.confirm = true; UPC.err = ""; upcDraw(); }
+  else if (k === "no") { UPC.confirm = false; upcDraw(); }
+  else if (k === "bk") { UPC.backup = !UPC.backup; upcDraw(); }
+  else if (k === "skip") { if (ADMIN_ON()) { call("update", "skip", e); upcClose(); } }
+  else if (k === "go" && ADMIN_ON()) {
+    UPC.confirm = false; UPC.err = ""; UPC.sent = Date.now(); setTimeout(upcDraw, 15500); upcDraw();
+    send({ type: "call_service", domain: "update", service: "install", service_data: sf & 8 ? { backup: UPC.backup } : {}, target: { entity_id: e } }, (r, m) => { if (m && m.success === false) { UPC.sent = 0; UPC.err = "Couldn’t start the update. " + ((m.error && m.error.message) || "Home Assistant refused the request."); upcDraw(); } });
+  }
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape" && UPC.e) { e.stopPropagation(); upcClose(); } });
 // ---------- Leaving: what is still on or open before you go ----------
 // The card on Home (it took the place of the old Attention card; Attention lives on in Notifications) lists lights left on, the garage door, open doors and a disarmed alarm. Tap it for the list, with Lights off and Arm away.
 // Config: leaving: false | { lights: true, garage: true, doors: true, alarm: true, lightEntities: [], ignore: ["light.hall_lamp"] } (see config.example.js). Lights default to the lights of the rooms on the Rooms page.
@@ -6481,7 +6607,7 @@ function mpCard(mem, ctl) {
   return '<div class="pn mpc' + (/^(playing|paused)$/.test(s.state) ? "" : " idle") + (play ? " pl" : "") + (mpVo ? " vo" : "") + '" data-c="' + ctl + '"' + (mg ? ' style="--mgc:rgb(' + mg + ')"' : "") + '>' + (/^(playing|paused)$/.test(s.state) && mt ? '<button class="rnd on mly" data-ly="open" data-e="' + ctl + '" aria-label="Lyrics">' + mdi("lyrics") + '</button>' : "") + '<div class="lbl">' + esc(title) + ' · ' + esc(s.state) + (a.source ? " · " + esc(a.source) : "") + '</div><div class="mpa">' + art + '<div>' + info + '</div></div>' +
     '<div class="mpb" ' + mpData(ctl) + '><i></i></div>' +
     '<div class="mpt">' + bt("shuffle", mdi("shuffle-variant"), a.shuffle) + bt("prev", mdi("skip-previous")) + bt("pp", mdi(play ? "pause" : "play")) + bt("next", mdi("skip-next")) + bt("repeat", mdi(a.repeat === "one" ? "repeat-once" : a.repeat === "all" ? "repeat" : "repeat-off"), a.repeat && a.repeat !== "off") + '<button class="rnd mvt' + (mpVo ? " on" : "") + '" data-mp="voltog">' + mdi("volume-high") + '</button></div>' +
-    '<div class="mvs">' + vols + '</div></div>';
+    ((CONFIG.media || []).length > 1 ? '<div class="mvs"><div class="nsl mpsl">' + grpRows(ctl, true) + '</div></div></div>' : '<div class="mvs">' + vols + '</div></div>');   // several speakers: the same tick list as Now Playing (tick to bring a speaker into this card's music, untick to take it out)
 }
 function mpGroups() {   // Sonos lists the group coordinator first
   const ids = CONFIG.media || [], seen = {}, out = [];
@@ -6504,16 +6630,15 @@ function drawMedia() {
     const t = document.createElement("template"); t.innerHTML = mpCard(g.mem, g.ctl); const n = t.content.firstElementChild, o = have[g.ctl], pic = (states[g.ctl] || { attributes: {} }).attributes.entity_picture;
     if (!o) return n;
     if (!artReady(pic)) return o;
-    const st = n.outerHTML.replace(/ data-(pos|upd)="[^"]*"/g, "").replace(/(<input[^>]*data-vol[^>]*?) value="[^"]*"/g, "$1").replace(/ style="[^"]*"/, "");
+    const st = n.outerHTML.replace(/ data-(pos|upd)="[^"]*"/g, "").replace(/(<input[^>]*data-vol[^>]*?) value="[^"]*"/g, "$1").replace(/(data-vol="[^"]*"[^>]*>)<em>\d+<\/em>/g, "$1<em></em>").replace(/ style="[^"]*"/, "");
     if (o._s !== st) { o._s = st; o.className = n.className; o.innerHTML = n.innerHTML; }
-    else { const nb = n.querySelectorAll(".mpb"), ob = o.querySelectorAll(".mpb"); nb.forEach((b, i) => { if (ob[i]) Object.assign(ob[i].dataset, b.dataset); }); n.querySelectorAll("input[data-vol]").forEach((r, i) => { const x = o.querySelectorAll("input[data-vol]")[i]; if (x && x.value !== r.value && document.activeElement !== x) x.value = r.value; }); }
+    else { const nb = n.querySelectorAll(".mpb"), ob = o.querySelectorAll(".mpb"); nb.forEach((b, i) => { if (ob[i]) Object.assign(ob[i].dataset, b.dataset); }); n.querySelectorAll("input[data-vol]").forEach((r, i) => { const x = o.querySelectorAll("input[data-vol]")[i]; if (x && x.value !== r.value && document.activeElement !== x) { x.value = r.value; const m = x.nextElementSibling; if (m && m.tagName === "EM") m.textContent = r.value; } }); }
     const c = n.style.getPropertyValue("--mgc"); if (c) { if (o.style.getPropertyValue("--mgc") !== c) o.style.setProperty("--mgc", c); } else o.style.removeProperty("--mgc");
     return o;
   });
-  els.forEach((e, i) => { if (!e._s) e._s = e.outerHTML.replace(/ data-(pos|upd)="[^"]*"/g, "").replace(/(<input[^>]*data-vol[^>]*?) value="[^"]*"/g, "$1").replace(/ style="[^"]*"/, ""); if (root.children[i] !== e) root.insertBefore(e, root.children[i] || null); });
+  els.forEach((e, i) => { if (!e._s) e._s = e.outerHTML.replace(/ data-(pos|upd)="[^"]*"/g, "").replace(/(<input[^>]*data-vol[^>]*?) value="[^"]*"/g, "$1").replace(/(data-vol="[^"]*"[^>]*>)<em>\d+<\/em>/g, "$1<em></em>").replace(/ style="[^"]*"/, ""); if (root.children[i] !== e) root.insertBefore(e, root.children[i] || null); });
   while (root.children.length > els.length) root.removeChild(root.lastElementChild);
   const cards = els;
-  const gb = $("#mpgrp"); if (gb) { gb.hidden = ids.length < 2; gb.dataset.mp = cards.length > 1 ? "join" : "unjoin"; const t = cards.length > 1 ? "GROUP SPEAKERS" : "UNGROUP"; gb.setAttribute("aria-label", t.toLowerCase()); gb.querySelector("span").textContent = t; if (gb._t !== t) { gb._t = t; gb.querySelector("svg").outerHTML = mdi(cards.length > 1 ? "speaker-multiple" : "link-variant"); } }
   tickMedia(); lyrUpdate();
 }
 function tickMedia() {
@@ -6557,10 +6682,11 @@ function npActive() {   // groups that are playing, or paused for under 5 minute
   const now = Date.now();
   return mpGroups().filter(g => {
     const st = (states[g.ctl] || {}).state;
-    if (st === "playing") { npSeen[g.ctl] = now; return true; }
+    if (st === "playing") { g.mem.forEach(m => { npSeen[m] = now; }); npSeen[g.ctl] = now; return true; }
     if (st === "paused" && npSeen[g.ctl] && now - npSeen[g.ctl] < 300000) return true;
     return false;
-  });
+  }).map((g, i) => ({ g: g, k: (GRP.hand && GRP.hand.to === g.ctl ? 0 : 2) + ((states[g.ctl] || {}).state === "playing" ? 0 : 1), i: i }))
+    .sort((a, b) => a.k - b.k || a.i - b.i).map(x => x.g);   // the playing group first, so the speaker that kept the song (not the one that just left, now paused) is the one on screen
 }
 function npPlay(g, big) {
   const s = states[g.ctl] || { state: "idle", attributes: {} }, a = s.attributes, play = s.state === "playing", pic = a.entity_picture;
@@ -6569,8 +6695,7 @@ function npPlay(g, big) {
   const bt = (m, i, on) => '<button class="rnd' + (on ? " on" : "") + '" data-mp="' + m + '" data-e="' + g.ctl + '">' + i + '</button>';
   const prog = '<div class="mpb" ' + mpData(g.ctl) + '><i></i></div>';
   if (!big) return { art: art, title: title, sub: (a.media_artist ? esc(a.media_artist) + " · " : "") + esc(spk), pp: bt("pp", mdi(play ? "pause" : "play")), prog: mpPos(g.ctl).dur > 0 ? prog : "" };   // no bar (and no empty strip under the row) for a stream without a length, so the row sits in the middle of the card
-  const rows = g.mem.map(x => { const v = (states[x] || {}).attributes || {}, vl = Math.round((v.volume_level || 0) * 100);
-    return '<div class="nsr"><div class="nsm"><b>' + esc(fname(x)) + '</b><div class="nsv"><button class="rnd s" data-mp="mute" data-e="' + x + '" aria-label="Mute or unmute ' + esc(fname(x)) + '">' + mdi(v.is_volume_muted ? "volume-off" : "volume-high") + '</button><input type="range" min="0" max="100" data-vol="' + x + '" value="' + vl + '"><em>' + vl + '</em></div></div></div>'; }).join("");   // one row per speaker: mute / unmute and its own volume
+  const rows = grpRows(g.ctl);   // every speaker: tick to add it to this group or take it out, plus its own mute and volume
   return '<div class="npx"><div class="npa"><span data-np="media" title="Open Media" style="display:contents;cursor:pointer">' + art + '</span><div><b>' + esc(title) + '</b><div>' + aiLink(a.media_artist) + '</div><small>' + esc(a.media_album_name || "") + '</small></div></div>' +
     '<div class="npp">' + prog + '<div class="npts"><span>0:00</span><span>0:00</span></div></div>' +
     '<div class="mpt">' + bt("shuffle", mdi("shuffle-variant"), a.shuffle) + bt("prev", mdi("skip-previous")) + bt("pp", mdi(play ? "pause" : "play")) + bt("next", mdi("skip-next")) + bt("repeat", mdi(a.repeat === "one" ? "repeat-once" : a.repeat === "all" ? "repeat" : "repeat-off"), a.repeat && a.repeat !== "off") + '</div>' +
@@ -6585,6 +6710,7 @@ function npRender() {
   document.body.classList.toggle("np-fab", !!act.length && isMobile() && ["scenes", "irrigation"].indexOf(curPg()) > -1);   // pages with a floating pill: the music bar becomes a round button beside it
   document.body.classList.toggle("np-home", onHome() && !isMobile()); document.body.classList.toggle("np-media", onMed); document.body.classList.remove("np-hdr");   // phones: no Now playing card on Home, the floating player bar is used instead
   w.classList.toggle("npoff", !act.length); mi.classList.toggle("npoff", !act.length || onMed); hn0.classList.add("npoff");
+  if (!act.length && GRP.busy) { setTimeout(queueNp, 500); return; }   // speakers are regrouping: keep the Now Playing sheet where it is
   if (!act.length) { npSheet = false; document.body.classList.remove("nps-open"); w.innerHTML = mi.innerHTML = hn0.innerHTML = ""; return; }
   if (dragging) return;
   if (Date.now() < npHoldT) { setTimeout(queueNp, npHoldT - Date.now() + 30); return; }   // not while a swipe is in progress
@@ -6881,6 +7007,108 @@ function mpPos(id) {
 const mpData = id => { const q = mpPos(id); return 'data-pos="' + q.pos.toFixed(2) + '" data-upd="' + new Date(srvNow()).toISOString() + '" data-dur="' + q.dur + '" data-play="' + (q.play ? 1 : 0) + '"'; };
 const mpSeek = id => { (MPK[id] = MPK[id] || {}).seek = srvNow(); };
 const MPT = {};   // last play / pause tap per speaker: a second tap within 350 ms is ignored (a double fire would pause then resume at once)
+// ---------- Group speakers (works like the custom Sonos card's Grouping section) ----------
+// The group is built around a main speaker (the one playing). Tick a speaker: media_player.join adds it to the main speaker's group.
+// Untick a speaker: media_player.unjoin takes only that speaker out; the rest keep playing. Untick the main speaker itself and Sonos hands
+// the music to a speaker that is still ticked, which becomes the new main one. The last ticked speaker cannot be unticked.
+const GRP = { pend: {}, main: "", open: false, hand: null, busy: null, chg: 0 };   // hand: { from, to, t } while the main speaker leaves and the music moves on to "to"
+const grpMem = m => { const gm = ((states[m] || {}).attributes || {}).group_members; return Array.isArray(gm) && gm.length ? gm : [m]; };
+function grpMainNow(pref) {   // the main speaker to group around: the one asked for (or its group's main one), else the group that is playing, else the first speaker
+  const ids = CONFIG.media || [], coord = x => grpMem(x)[0], H = GRP.hand;
+  if (H && (!states[H.to] || (states[H.from] || {}).state === "playing" && coord(H.from) === H.from && Date.now() - H.t > 15000)) GRP.hand = null;   // ends when the old main speaker is given its own music again
+  const h = GRP.hand;
+  if (h && (!pref || [h.to, h.from].indexOf(pref) > -1 || [h.to, h.from].indexOf(coord(pref)) > -1)) return coord(h.to) === h.from ? h.to : coord(h.to);   // the main speaker left: the song stays with the speaker that kept it, and that one is Main from now on (the old one sits paused and must never become Main again by itself)
+  if (pref && states[pref]) { const c = coord(pref); if (ids.indexOf(c) > -1) return c; }
+  const L = mpGroups(), pl = L.filter(g => (states[g.ctl] || {}).state === "playing")[0] || L.filter(g => (states[g.ctl] || {}).state === "paused")[0] || L[0];
+  return pl ? pl.ctl : ids[0];
+}
+function grpSel(main) {   // which speakers show as ticked: what Home Assistant says, or the tap just made while Sonos catches up
+  const gm = grpMem(main), now = Date.now(), o = {};
+  (CONFIG.media || []).forEach(x => { const real = x === main || gm.indexOf(x) > -1, p = GRP.pend[x];
+    if (x === main) { delete GRP.pend[x]; o[x] = { on: true }; return; }
+    if (p && now - p.t < 12000 && real !== p.want) o[x] = { on: p.want, pend: true }; else { delete GRP.pend[x]; o[x] = { on: real }; } });
+  return o;
+}
+function grpRows(main, exact) {
+  if (!exact) main = grpMainNow(main); const S = grpSel(main), ids = (CONFIG.media || []).slice(), n = ids.filter(x => S[x].on).length;
+  ids.sort((a, b) => (b === main) - (a === main) || S[b].on - S[a].on);   // main speaker first, then the ones in the group
+  return ids.map(x => { const v = (states[x] || {}).attributes || {}, vl = Math.round((v.volume_level || 0) * 100), on = S[x].on, last = on && n === 1;
+    return '<div class="nsr' + (on ? " on" : " gx") + (S[x].pend ? " gpd" : "") + '"><button class="gck' + (on ? " on" : "") + '" data-grp="' + x + '" data-m="' + main + '"' + (exact ? ' data-x="1"' : "") + '' + (last ? ' disabled title="At least one speaker has to stay in the group"' : "") + ' aria-pressed="' + on + '" aria-label="' + (on ? "Take " : "Add ") + esc(fname(x)) + (on ? " out of the group" : " to the group") + '">' + mdi("check") + '</button>' +
+      '<div class="nsm"><b>' + esc(fname(x)) + (x === main ? '<i class="grm">MAIN</i>' : "") + '</b><small class="grt">' + esc(grpWhat(x, main, on)) + '</small><div class="nsv"><button class="rnd s" data-mp="mute" data-e="' + x + '" aria-label="Mute or unmute ' + esc(fname(x)) + '">' + mdi(v.is_volume_muted ? "volume-off" : "volume-high") + '</button><input type="range" min="0" max="100" data-vol="' + x + '" value="' + vl + '"><em>' + vl + '</em></div></div></div>'; }).join("");
+}
+function grpWhat(x, main, on) {   // what each speaker is doing, under its name
+  const st = (states[x] || {}).state, c = grpMem(x)[0], a = (states[c] || {}).attributes || {}, song = mpTitle(a, (states[c] || {}).state);
+  if (x === main) return st === "playing" ? "Playing" + (song ? " · " + song : "") : st === "paused" ? "Paused" + (song ? " · " + song : "") : "Not playing";
+  if (on) return "In this group · plays the same song";
+  if (c !== x && c) return "In " + fname(c) + "'s group";
+  return st === "playing" ? "Playing its own" + (song ? " · " + song : "") + " · tick to bring it here" : "Not playing · tick to join";
+}
+function grpToggle(x, main, exact) {
+  if (!exact) main = grpMainNow(main); const S = grpSel(main), sel = (CONFIG.media || []).filter(y => S[y].on), now = Date.now();
+  if (S[x].on) {
+    if (sel.length < 2) return;   // the last speaker stays
+    if (x === main) { const nx = sel.filter(y => y !== x)[0]; GRP.main = nx; GRP.hand = { from: x, to: nx, t: now, pl: (states[x] || {}).state === "playing" }; grpBusy("Moving the music to " + fname(nx), fname(x) + " is leaving the group"); }
+    else GRP.quick = true, grpBusy("Taking " + fname(x) + " out", fname(main) + " keeps playing");   // the main speaker leaves: Sonos keeps the queue playing on the speakers still in the group, and that speaker becomes Main
+    call("media_player", "unjoin", x); GRP.pend[x] = { want: false, t: now };
+  } else if (x !== main) { call("media_player", "join", main, { group_members: [x] }); GRP.pend[x] = { want: true, t: now }; GRP.main = main; GRP.quick = true; grpBusy("Adding " + fname(x), "Joining " + fname(main) + "'s music"); }
+  grpRedraw(); setTimeout(grpRedraw, 12100);
+}
+// While Sonos regroups (about 5 s) the speakers report half-way states, so a "please wait" card covers the screen until things settle:
+// at least 2 s, the speakers have caught up with the taps, the song is playing where it should, and nothing has changed for 1.5 s (12 s at most).
+function grpBusy(msg, sub) {
+  GRP.busy = { t: Date.now(), msg: msg, sub: sub || "Sonos is regrouping the speakers", q: !!GRP.quick }; GRP.quick = false; GRP.chg = Date.now(); grpBusyDraw();
+  clearInterval(GRP.bt); GRP.bt = setInterval(grpBusyDraw, 150);
+}
+function grpBusyOn() {
+  const B = GRP.busy; if (!B) return false;
+  const now = Date.now(), el = now - B.t; if (el > (B.q ? 6000 : 12000)) return false;
+  if (B.q ? el < 600 || now - GRP.chg < 350 : el < 2000 || now - GRP.chg < 1500) return true;   // adding / taking out a speaker settles fast; moving the music off the main speaker takes Sonos longer
+  if (Object.keys(GRP.pend).some(x => { const p = GRP.pend[x], m = grpMainNow(GRP.main); return now - p.t < 12000 && (x === m || grpMem(m).indexOf(x) > -1) !== p.want; })) return true;
+  const H = GRP.hand; if (H && now - H.t < 12000 && (grpMem(H.to)[0] === H.from || H.pl && (states[H.to] || {}).state !== "playing")) return true;
+  return false;
+}
+function grpBusyDraw() {
+  const el = $("#grpw"); if (!el) return;
+  if (!grpBusyOn()) { if (GRP.busy) { GRP.busy = null; clearInterval(GRP.bt); el.classList.remove("on"); el.setAttribute("aria-hidden", "true"); el.innerHTML = ""; grpRedraw(); } return; }
+  const B = GRP.busy, h = '<div class="gwc"><span class="gws"></span><div><b>' + esc(B.msg) + '</b><small>' + esc(B.sub) + ' · one moment</small></div></div>';
+  if (el._k !== h) { el._k = h; el.innerHTML = h; }
+  if (!el.classList.contains("on")) { el.classList.add("on"); el.setAttribute("aria-hidden", "false"); if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); }
+}
+["click", "pointerdown", "touchstart", "input", "change"].forEach(ev => $("#grpw").addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); }, { passive: false }));   // taps on the cover do nothing
+function grpAll(on, main) {   // GROUP ALL: every speaker joins the main one. UNGROUP: everyone but the main speaker leaves (it keeps playing)
+  main = grpMainNow(main); const ids = CONFIG.media || [], S = grpSel(main), now = Date.now();
+  if (on) { const add = ids.filter(x => !S[x].on); if (!add.length) return; call("media_player", "join", main, { group_members: add }); add.forEach(x => { GRP.pend[x] = { want: true, t: now }; }); grpBusy("Grouping all speakers", "Joining " + fname(main) + "'s music"); }
+  else { const out = ids.filter(x => x !== main && S[x].on); if (!out.length) return; out.forEach(x => { call("media_player", "unjoin", x); GRP.pend[x] = { want: false, t: now }; }); grpBusy("Ungrouping", fname(main) + " keeps playing"); }
+  GRP.main = main; grpRedraw(); setTimeout(grpRedraw, 12100);
+}
+function grpDraw() {
+  const el = $("#grp"); if (!el) return;
+  if (!GRP.open) { el.classList.remove("on"); el.setAttribute("aria-hidden", "true"); el.innerHTML = ""; el._k = ""; return; }
+  if (document.activeElement && document.activeElement.type === "range" && el.contains(document.activeElement)) return;   // not while a volume slider is being dragged
+  const main = GRP.main = grpMainNow(GRP.main), s = states[main] || { attributes: {} }, a = s.attributes, S = grpSel(main), ids = CONFIG.media || [], n = ids.filter(x => S[x].on).length;
+  const L = mpGroups(), pick = L.length > 1 ? '<div class="lbl" style="margin:6px 0 2px">Group around</div><div class="chips tabs">' + L.map(g => { const gs = (states[g.ctl] || {}).state; return '<button class="chip' + (g.ctl === main ? " on" : "") + '" data-grpm="' + g.ctl + '">' + esc(fname(g.ctl)) + (g.mem.length > 1 ? " +" + (g.mem.length - 1) : "") + (gs === "playing" ? " · ▶" : "") + '</button>'; }).join("") + '</div>' : "";
+  const what = a.media_title ? "Playing " + (mpTitle(a, s.state) || "") + (a.media_artist ? " · " + a.media_artist : "") : "Nothing playing";
+  const h = '<div class="grx" role="dialog" aria-modal="true" aria-label="Group speakers"><div class="grh"><span class="lbl">SPEAKERS</span><button class="evx" data-grpx="1" aria-label="Close">' + mdi("close") + '</button></div><h3>Group speakers</h3><div class="grs">' + esc(what) + '</div>' + pick +
+    '<div class="nsl">' + grpRows(main) + '</div><div class="gra"><button class="eb" data-grpa="1"' + (n === ids.length ? " disabled" : "") + '>GROUP ALL</button><button class="eb" data-grpa="0"' + (n < 2 ? " disabled" : "") + '>UNGROUP</button></div></div>';
+  if (el._k !== h) { el._k = h; el.innerHTML = h; }
+  el.classList.add("on"); el.setAttribute("aria-hidden", "false");
+}
+function grpOpen(from) { GRP.open = true; GRP.hand = null; GRP.main = grpMainNow(from || ""); grpDraw(); }
+function grpClose() { GRP.open = false; grpDraw(); }
+function grpRedraw() { grpDraw(); try { queueNp(); } catch (_) {} }
+$("#grp").addEventListener("click", e => {
+  const t = e.target, ck = t.closest("[data-grp]"), mm = t.closest("[data-grpm]"), aa = t.closest("[data-grpa]"), mb = t.closest("[data-mp]");
+  if (ck) grpToggle(ck.dataset.grp, ck.dataset.m);
+  else if (mm) { GRP.main = mm.dataset.grpm; GRP.hand = null; grpDraw(); }
+  else if (aa) grpAll(aa.dataset.grpa === "1", GRP.main);
+  else if (mb) mpDo(mb.dataset.mp, mb.dataset.e);
+  else if (t.closest("[data-grpx]") || t.id === "grp") grpClose();
+});
+$("#grp").addEventListener("input", e => { const t = e.target; if (t.dataset.vol && t.nextElementSibling) t.nextElementSibling.textContent = t.value; });
+$("#grp").addEventListener("change", e => { const t = e.target; if (t.dataset.vol) call("media_player", "volume_set", t.dataset.vol, { volume_level: +t.value / 100 }); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && GRP.open) grpClose(); });
+// the Now Playing sheet uses the same tick buttons
+$("#npsheet").addEventListener("click", e => { const ck = e.target.closest("[data-grp]"); if (ck) { e.stopPropagation(); grpToggle(ck.dataset.grp, ck.dataset.m); } }, true);
 function mpDo(m, id) {
   if (m === "prev" || m === "next") mpSeek(id);
   const a = (states[id] || {}).attributes || {}, ids = CONFIG.media, tg = id, ta = (states[tg] || {}).attributes || a;
@@ -6890,13 +7118,15 @@ function mpDo(m, id) {
   else if (m === "shuffle") call("media_player", "shuffle_set", tg, { shuffle: !ta.shuffle });
   else if (m === "repeat") call("media_player", "repeat_set", tg, { repeat: !ta.repeat || ta.repeat === "off" ? "all" : ta.repeat === "all" ? "one" : "off" });
   else if (m === "mute") call("media_player", "volume_mute", id, { is_volume_muted: !a.is_volume_muted });
+  else if (m === "grp") grpOpen(id);
   else if (m === "join") { const c = ids.filter(x => states[x] && states[x].state === "playing")[0] || ids[0]; call("media_player", "join", c, { group_members: ids.filter(x => x !== c) }); }
   else if (m === "unjoin") ids.forEach(x => call("media_player", "unjoin", x));
   else if (m === "voltog") { mpVo = !mpVo; drawMedia(); }
   else return false;
   return true;
 }
-$("#media").onclick = e => { const lo = e.target.closest('[data-ly="open"]'); if (lo) { lyOpen(lo.dataset.e); return; } const b = e.target.closest("[data-mp]"); if (b) mpDo(b.dataset.mp, b.dataset.e, b.dataset.c); };
+$("#media").onclick = e => { const ck = e.target.closest("[data-grp]"); if (ck) { grpToggle(ck.dataset.grp, ck.dataset.m, ck.dataset.x === "1"); return; } const lo = e.target.closest('[data-ly="open"]'); if (lo) { lyOpen(lo.dataset.e); return; } const b = e.target.closest("[data-mp]"); if (b) mpDo(b.dataset.mp, b.dataset.e, b.dataset.c); };
+$("#media").oninput = e => { const t = e.target; if (t.dataset.vol && t.nextElementSibling && t.nextElementSibling.tagName === "EM") t.nextElementSibling.textContent = t.value; };
 $("#media").onchange = e => { const t = e.target; if (t.dataset.vol) call("media_player", "volume_set", t.dataset.vol, { volume_level: +t.value / 100 }); };
 
 // ---------- weather animation (greeting card) ----------
@@ -7559,7 +7789,8 @@ function route() {
   if (p === "hazards") { HZ.vb = null; HZ.tab = { earthquakes: "quake", quakes: "quake", volcanoes: "volc", volcano: "volc" }[h[1]] || "map"; HZ.view = HZ.view || (states["zone.home"] ? "home" : "ni"); requestAnimationFrame(drawHaz); }
   if (h[0] === "disarm") alarmLink("disarm"); else if (h[0] === "arm") alarmLink("arm_" + (h[1] || "away"));
   if (h[0] === "notifications" || h[0] === "attention" || h[0] === "active" || h[0] === "batteries") { npTab = h[0] === "active" ? "active" : h[0] === "attention" || h[0] === "batteries" ? "attention" : "alerts";   // #batteries (old links) now opens Attention, which lists the low batteries
-  npOnly = h[0] === "active" && h[1] ? h[1] : ""; npGo = null;   // #active/water-taps: Active with just that group (SHOW ALL ACTIVE for the rest); plain #active lists everything
+  npOnly = h[0] === "active" && h[1] ? h[1] : ""; npGo = null;
+  if (h[0] === "active" && h[1] === "doors") { npTab = "alerts"; npOnly = "door"; }   // open doors are an alert now (not listed in Active): old #active/doors links show just the Doors card   // #active/water-taps: Active with just that group (SHOW ALL ACTIVE for the rest); plain #active lists everything
    document.body.classList.add("np-open"); drawNotif(); }
 }
 // tablet battery pill: shown on the Fully Kiosk tablet only ("kiosk" = the Fully JS interface, a FullyKiosk user agent, or ?tablet=1 once; "always" / "never" override)

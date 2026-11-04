@@ -153,8 +153,13 @@
     listeners.forEach(function (f) { try { f({ kind: "service", domain: d, service: sv, data: sd, target: m.target }); } catch (e) {} });
     if (d === "script" && sv === "start_sprinkler_timer") { tapOn(sd.zone, mins(sd.duration)); return; }
     if (d === "script" && sv === "turn_on" && /siren/.test(JSON.stringify(m))) return;
-    if (sv === "join") { var mem = [].concat((m.target && m.target.entity_id) || [], sd.group_members || []); mem.forEach(function (id) { if (S[id]) push(id, null, { group_members: mem }); }); return; }
-    if (sv === "unjoin") { [].concat((m.target && m.target.entity_id) || sd.entity_id || []).forEach(function (id) { if (S[id]) push(id, null, { group_members: [id] }); }); return; }
+    // speaker groups behave like Sonos: joined speakers play the main one's music; when the main one leaves, the rest keep playing and it pauses
+    if (sv === "join") { var c0 = [].concat((m.target && m.target.entity_id) || [])[0]; if (!S[c0]) return;
+      setTimeout(function () { var cs = S[c0], mem = [c0]; [].concat(cs.attributes.group_members || [], sd.group_members || []).forEach(function (id) { if (S[id] && mem.indexOf(id) < 0) mem.push(id); });
+        var md = {}; ["media_title", "media_artist", "media_album_name", "entity_picture", "media_duration", "media_position", "media_position_updated_at", "source", "shuffle", "repeat", "media_content_type"].forEach(function (k) { if (k in cs.attributes) md[k] = cs.attributes[k]; });
+        mem.forEach(function (id) { push(id, id === c0 ? null : cs.state, Object.assign(id === c0 ? {} : md, { group_members: mem })); }); }, 500); return; }
+    if (sv === "unjoin") { [].concat((m.target && m.target.entity_id) || sd.entity_id || []).forEach(function (id) { if (!S[id]) return; var g = S[id].attributes.group_members || [id], rest = g.filter(function (x) { return x !== id && S[x]; }), main = g[0] === id;
+      setTimeout(function () { rest.forEach(function (x) { push(x, null, { group_members: rest }); }); push(id, rest.length ? (main ? "paused" : "idle") : null, { group_members: [id] }); }, main && rest.length ? 2500 : 500); }); return; }
     var tg = (m.target && m.target.entity_id) || sd.entity_id, L = [].concat(tg || []);
     L.forEach(function (id) { var s = S[id]; if (!s) s = S[id] = mk(id);
       if (id === "switch.demo_garage_opener" && /turn_on|toggle/.test(sv)) { garage(GAR.t ? GAR.to === 0 : !GAR.open); return; }
