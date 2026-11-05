@@ -14,7 +14,7 @@ window.DASH_CONFIG = {
     intro: false,                     // short intro on a cold start only. false = logo while loading only
     introAfter: 30,                  // minutes the page must have been closed before the intro plays again
     introMs: 3000,
-    // placeholder logo: swap the paths for the client's mark. Keep the class names r1 / r2 / sw (the intro animates them).
+    // placeholder logo: swap the paths for your own mark. Keep the class names r1 / r2 / sw (the intro animates them).
     mark: '<svg viewBox="0 0 440 140" role="img" aria-label="Your Brand"><defs>' +
       '<linearGradient id="ezb" gradientUnits="userSpaceOnUse" x1="60" y1="0" x2="240" y2="0"><stop offset="0" stop-color="#9fb4cc"/><stop offset="1" stop-color="#6b4dff"/></linearGradient>' +
       '<linearGradient id="ezs" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>' +
@@ -153,7 +153,7 @@ window.DASH_CONFIG = {
     { name: "Walkway", zone: "walkway", switch: "switch.demo_walkway_tap", flow: "sensor.demo_walkway_tap_flow", timer: "timer.demo_walkway_timer" },
     { name: "Backyard", zone: "backyard", switch: "switch.demo_backyard_tap", flow: "sensor.demo_backyard_tap_flow", timer: "timer.demo_backyard_timer", moist: "sensor.average_backyard_soil_moisture", stemp: "sensor.average_backyard_soil_temperature" }
   ],
-  // Scenes page: not set up in this sample (it needs the client's own light scenes). Leave "scenes" out and remove "scenes" from CONFIG.pages if you list pages.
+  // Scenes page: not set up in this sample (it needs the house's own light scenes). Leave "scenes" out and remove "scenes" from CONFIG.pages if you list pages.
   pages: ["home", "rooms", "climate", "security", "weather", "energy", "irrigation", "media", "events", "vehicle", "hazards", "theme", "view"],
 
   rooms: [   // Climate page. main:true = the heat pump (full modes); others are zones

@@ -37,7 +37,7 @@
     "turn on heating in the master bedroom, or press + to raise the target. watch the room temperature start to climb.": "打开主卧的制热，或者按 + 提高目标温度。看着房间温度开始上升。",
     "heating can also come on by itself before bedtime.": "睡前暖气也可以自动开启。",
     "close the curtains": "关上窗帘",
-    "in the master bedroom, tap close all and watch both curtains move. most clients have this happen on its own at sunset.": "在主卧里点击“全部关闭”，看两扇窗帘一起移动。大多数客户都设置成日落时自动完成。",
+    "in the master bedroom, tap close all and watch both curtains move. most homes have this happen on its own at sunset.": "在主卧里点击“全部关闭”，看两扇窗帘一起移动。大多数客户都设置成日落时自动完成。",
     "curtains, blinds and shades all work like this.": "窗帘、百叶窗和遮阳帘都是这样操作。",
     "someone's on the driveway": "车道上有人",
     "send a visitor up the driveway. the camera tags them as a person straight away. then tap the camera to see it full screen.": "让一位访客走上车道。摄像头会立刻把他标记为“人员”。然后点击摄像头查看全屏画面。",

@@ -1972,7 +1972,7 @@ html:not(#x) .cam.fs:not(.ls) :is(.fsb,.cx,.aud button),html:not(#x) #vw .cam.vf
 /* tablet: the greeting strip sits in the header while no music plays (41-start.js moves it) */
 header.hmerge>.hs{flex:1 1 0;min-width:0;margin:0 0 0 6px;padding:0 14px;min-height:0;display:grid;grid-auto-flow:column;grid-auto-columns:max-content;justify-content:start;align-items:baseline;align-content:center;border:0;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;flex-wrap:nowrap;white-space:nowrap;gap:6px 18px;align-self:stretch;border-radius:14px}
 header.hmerge>.hs::before{display:none}header.hmerge>.hs::after{display:none}
-header.hs1 #whl,header.hs2 #whl,header.hs2 #wwind,header.hs3 #whl,header.hs3 #wwind,header.hs3 #dt{display:none}
+header.hs1 .wpl.t,header.hs2 .wpl.t,header.hs2 #wwind,header.hs3 .wpl.t,header.hs3 #wwind,header.hs3 #dt{display:none}
 /* the weather animation stays on in the merged header: the canvas spreads over the whole header card, behind the text */
 header.hmerge{isolation:isolate}header.hmerge>.hs{position:static}
 header.hmerge>.hs #wfx{position:absolute;inset:0;width:100%;height:100%;border-radius:19px;z-index:-1;-webkit-mask-image:linear-gradient(90deg,#000 var(--wm,80%),rgba(0,0,0,.25) calc(var(--wm,80%) + 14%)),linear-gradient(180deg,#000 calc(100% - 16px),transparent);mask-image:linear-gradient(90deg,#000 var(--wm,80%),rgba(0,0,0,.25) calc(var(--wm,80%) + 14%)),linear-gradient(180deg,#000 calc(100% - 16px),transparent);-webkit-mask-composite:source-in;mask-composite:intersect;clip-path:inset(0 round 19px)}   /* fades toward the chips and the clock so the sun never sits behind the time; fades out above the bottom edge so cut-off rain streaks and clouds never draw a line there (the alarm outline lives on that edge) */
@@ -2045,6 +2045,19 @@ body:not(.adm) a[href="#admin"]{display:none!important}
 .sys-st .syw{border-color:rgba(242,163,58,.5);background:rgba(242,163,58,.1)}.sys-st .syw b{color:#f2a33a}
 .sys-st .sy{text-transform:none;letter-spacing:0;font-weight:500;font-size:12px}
 html[data-mode=light] .sys-st .ok b{color:#17703d}html[data-mode=light] .sys-st .bad b{color:#a3211a}html[data-mode=light] .sys-st .syw b{color:#b86a00}
+/* Admin > System status groups (Network / Hardware) and the device cards (Proxmox node, VM, disk) */
+.sysw .sysg{display:flex;align-items:center;gap:8px;margin:16px 0 0;font-size:11px}.sysw .sysg svg{width:16px;height:16px;fill:currentColor}
+.sysw .sysg+.adm-f{margin-top:10px}
+.syd{margin-top:10px;padding:12px 14px 14px;border-radius:16px;border:1px solid var(--line);background:rgba(var(--w),.04)}
+.sydh{display:flex;align-items:center;justify-content:space-between;gap:10px}.sydh b{font-weight:600;font-size:15px;min-width:0}.sydh small{display:block;color:var(--mut);font-size:12px;font-weight:400;margin-top:1px}
+.syp{flex:none;font:600 10.5px var(--mono);letter-spacing:.08em;padding:5px 9px;border-radius:999px;color:#4ade80;background:rgba(74,222,128,.12)}
+.syp.bad{color:var(--heat);background:rgba(var(--heat-rgb),.12)}.syp.w{color:#f2a33a;background:rgba(242,163,58,.12)}
+.sym{display:grid;grid-template-columns:74px 1fr 58px;align-items:center;gap:10px;margin-top:9px;font-size:13px}.sym span{color:var(--mut)}.sym em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
+.syb{height:6px;border-radius:3px;background:rgba(var(--w),.12);overflow:hidden}.syb i{display:block;height:100%;border-radius:3px;background:var(--mint);transition:width .6s ease}
+.syb i.w{background:#f2a33a}.syb i.bad{background:var(--heat)}.sym em.w{color:#f2a33a}.sym em.bad{color:var(--heat)}
+.syf{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:10px;font-size:12.5px;color:var(--mut)}.syf b{color:var(--ink);font-weight:500}.syf .w b{color:#f2a33a}.syf .bad b{color:var(--heat)}
+html[data-mode=light] .syp{color:#17703d;background:rgba(23,112,61,.1)}html[data-mode=light] .syp.bad{color:#a3211a}html[data-mode=light] .syp.w,html[data-mode=light] .sym em.w,html[data-mode=light] .syf .w b{color:#b86a00}
+@media(max-width:760px){.sym{grid-template-columns:64px 1fr 50px}}
 /* One motion language for pop-ups and sheets: from the bottom = slide up, from the side = slide in, from the middle = fade in.
    Sheets move by transform only (no blur, scale or fade) so they stay smooth on phones. */
 :root{--sheet-ease:cubic-bezier(.2,.85,.3,1)}
@@ -2125,6 +2138,61 @@ html[data-mode=light] .wxa{background:rgba(0,0,0,.04)}html[data-mode=light] .wxa
 .wxa-c em{font-style:normal;font-size:20px;font-weight:500;color:var(--wc)}.wxa-c>svg:last-child{width:20px;height:20px;fill:var(--mut);flex:none}
 .wxa-tg{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:12px;color:var(--mut);padding:9px 18px;border-top:1px solid var(--line);cursor:pointer}.wxa-tg span:last-child{display:inline-flex;align-items:center;gap:4px;color:var(--ink);white-space:nowrap}.wxa-tg svg{width:16px;height:16px;fill:currentColor}
 html[data-mode=light] .wxa-h{background:rgba(0,0,0,.04)}
+/* 2.5.0 the living weather card: the weather plays inside it, the next hours as bars under it (31-weather-alerts.js wxaCard) */
+.wxs{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.wxl{--k:#6bb8ff;position:relative;overflow:hidden;isolation:isolate;border-radius:18px;padding:14px 16px 12px;cursor:pointer;background:rgba(var(--w),.06);border:1px solid var(--line);animation:wxIn .5s cubic-bezier(.2,.8,.2,1) both}
+.wxl-rain{--k:#6bb8ff}.wxl-wind{--k:#5fc4ad}.wxl-uv{--k:#f2a33a}
+html[data-mode=light] .wxl{background:rgba(0,0,0,.035)}html[data-mode=light] .wxl-rain{--k:#2f7fc0}html[data-mode=light] .wxl-wind{--k:#3f8a78}html[data-mode=light] .wxl-uv{--k:#c27a12}
+.wxl+.wxl{animation-delay:.08s}.wxl+.wxl+.wxl{animation-delay:.16s}
+@keyframes wxIn{from{opacity:0;transform:translateY(10px)}}
+.wxf{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.wxl-rain .wxf{background:linear-gradient(180deg,color-mix(in srgb,var(--k) 18%,transparent),transparent 72%)}
+.wxl-wind .wxf{background:linear-gradient(90deg,color-mix(in srgb,var(--k) 16%,transparent),transparent)}
+.wxl-uv .wxf{background:radial-gradient(circle at 94% 8%,color-mix(in srgb,var(--k) 38%,transparent),transparent 58%)}
+.wxd{position:absolute;top:-20px;width:1.5px;height:14px;border-radius:2px;background:linear-gradient(transparent,color-mix(in srgb,var(--k) 80%,transparent));animation:wxFall linear infinite}
+@keyframes wxFall{to{transform:translate(-14px,190px)}}
+.wxg{position:absolute;left:0;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--k) 70%,transparent),transparent);animation:wxGust ease-in-out infinite}
+@keyframes wxGust{0%{transform:translateX(-120%);opacity:0}30%{opacity:1}100%{transform:translateX(420%);opacity:0}}
+.wxsun{position:absolute;right:-52px;top:-52px;width:110px;height:110px;border-radius:50%;background:repeating-conic-gradient(color-mix(in srgb,var(--k) 32%,transparent) 0 6deg,transparent 6deg 18deg);-webkit-mask:radial-gradient(circle,transparent 26px,#000 27px);mask:radial-gradient(circle,transparent 26px,#000 27px);animation:wxSpin 18s linear infinite}
+.wt3 .wxsun{animation-duration:9s}
+.wxsun::after{content:"";position:absolute;inset:36px;border-radius:50%;background:color-mix(in srgb,var(--k) 60%,transparent)}
+.wxl.sm .wxsun{width:80px;height:80px;right:-38px;top:-38px}.wxl.sm .wxsun::after{inset:26px}
+@keyframes wxSpin{to{transform:rotate(360deg)}}
+.wxt{display:flex;align-items:center;gap:7px;font:600 10.5px var(--mono);letter-spacing:.1em;color:var(--k);margin-bottom:6px}
+.wxt i{flex:none;width:7px;height:7px;border-radius:50%;background:var(--wc,var(--k));animation:wxDot 1.6s ease-in-out infinite}
+@keyframes wxDot{50%{opacity:.25;transform:scale(.6)}}
+.wxr{display:flex;align-items:center;gap:12px}.wxm{flex:1;min-width:0}.wxm b{display:block;font-weight:500;font-size:17px}.wxm small{display:block;color:var(--mut);font-size:13px;margin-top:2px}
+.wxv{flex:none;text-align:right}.wxv em{display:block;font-style:normal;font-size:26px;font-weight:500;line-height:1;color:var(--k)}.wxv small{color:var(--mut);font-size:11px}
+.wxl-uv:not(.sm) .wxv{margin-right:40px}.wxl-uv.sm .wxv{margin-right:30px}
+.wxb{display:flex;align-items:flex-end;gap:4px;height:34px;margin-top:12px}
+.wxb span{flex:1;position:relative;border-radius:4px 4px 2px 2px;background:rgba(var(--w),.12);transform-origin:bottom;animation:wxGrow .9s cubic-bezier(.2,.8,.2,1) both}
+html[data-mode=light] .wxb span{background:rgba(0,0,0,.08)}
+.wxb span.on{background:var(--k)}
+.wxb span.now::after{content:"";position:absolute;left:50%;top:-7px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--ink)}
+@keyframes wxGrow{from{transform:scaleY(0)}}
+.wxk{display:flex;justify-content:space-between;font:11px var(--mono);color:var(--mut);margin-top:4px}
+.wxl.sm{padding:10px 16px}.wxl.sm .wxt{margin:0 0 2px}.wxl.sm .wxm b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wxl.sm .wxb{flex:none;width:84px;height:22px;margin:0;gap:3px}.wxl.sm .wxv em{font-size:20px}
+@media(max-width:400px){.wxl.sm .wxb{width:56px}}
+@media(prefers-reduced-motion:reduce){.wxl,.wxd,.wxg,.wxsun,.wxt i,.wxb span{animation:none!important}.wxd,.wxg{display:none}}
+/* 2.5.0 the greeting: the rain coming up and today's high / low as two small pills after the weather (10-home-page.js); each opens its chart */
+#wpls{display:none}
+#wpls:not(:empty){display:inline-flex;align-items:center;gap:6px}
+.wpl{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;line-height:1.2;padding:4px 10px;border-radius:999px;cursor:pointer;white-space:nowrap;background:rgba(var(--w),.08);color:var(--ink)}
+.wpl svg{width:15px;height:15px;fill:currentColor}
+.hs .wpl b,.hs .wpl i{font:inherit;font-weight:600;font-style:normal;margin:0;letter-spacing:0}
+.wpl.r{background:rgba(107,184,255,.16);color:#6bb8ff}.wpl.t b{color:#ff8a5c}.wpl.t i{color:#6bb8ff}
+html[data-mode=light] .wpl.r{background:rgba(47,127,192,.12);color:#2f7fc0}html[data-mode=light] .wpl.t{background:rgba(0,0,0,.05)}html[data-mode=light] .wpl.t b{color:#c0582a}html[data-mode=light] .wpl.t i{color:#2f7fc0}
+@media(max-width:760px){#wpls:not(:empty){display:flex;flex-wrap:wrap;flex-basis:100%;margin-top:2px}}   /* phones: on their own line under the weather */
+/* tablets: the date sits under the clock in the side menu, so the greeting bar leaves it out */
+#nclk .ncd{display:block;font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:inherit;opacity:.65;margin-top:2px}
+header.hmerge #wpls{align-self:center}
+@media(min-width:761px){.hs #dt{display:none}}
+/* the tablet greeting bar: every item (greeting, weather, wind, the pills) on one centre line, nothing riding high or low */
+header.hmerge>.hs{align-items:center}
+header.hmerge>.hs>#gr,header.hmerge>.hs>.wch{display:inline-flex;align-items:center;gap:6px;line-height:1.2}
+header.hmerge>.hs>.wch svg{vertical-align:0;flex:none}
+header.hmerge #wpls .wpl{line-height:1.2}
 /* page transition (Theme > Page transition): variants of the .page.enter entrance, set by html[data-pgfx]. "rise" is the original look. */
 @keyframes pgSlide{from{opacity:0;transform:translateX(var(--pgdx,36px))}}
 html[data-pgfx=slide] .page.enter{animation:pgSlide calc(.36s*var(--pgs,1)) cubic-bezier(.2,.8,.2,1) backwards}
@@ -2609,6 +2677,47 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 .lsr svg{flex:none;width:18px;height:18px;fill:currentColor;margin-top:-1px}
 .lsr.y svg{color:#4cc38a}.lsr.n svg{color:#ef6a5e}
 .lsr:last-child{font-weight:600;padding-top:6px;border-top:1px solid var(--line)}.lss .lsr:only-child{border-top:0;padding-top:0}
+/* 2.5.0 the Scene card on a room page (24-room-scenes.js): the picked scene, this room's zones as chips, brightness / interval, stop this room / stop all */
+.rsc .rsh{display:flex;align-items:center;gap:12px;margin:10px 0 12px}
+.rsc .rsth{flex:none;width:52px;height:52px;border-radius:14px;overflow:hidden;display:grid;place-items:center;background:rgba(var(--w),.08)}.rsc .rsth svg{width:24px;height:24px;fill:var(--mut)}.rsc .rsth img{width:100%;height:100%;object-fit:cover}
+.rsc .rsn{flex:1;min-width:0}.rsc .rsn b{display:block;font-size:17px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rsc .rsn small{color:var(--mut);font-size:12.5px}
+.rsc .rsz{display:flex;flex-wrap:wrap;gap:8px}
+.rsc .rzc{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--w),.05);color:var(--ink);font:500 14px var(--sans,inherit);cursor:pointer}
+.rsc .rzc small{font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.rsc .rzc.on{background:color-mix(in srgb,var(--lit,#f6bd60) 22%,transparent);border-color:color-mix(in srgb,var(--lit,#f6bd60) 70%,transparent)}.rsc .rzc.on small{color:var(--ink)}
+.rsc .rsv{margin-top:12px}.rsc .rsv span{display:inline-flex;align-items:center;gap:6px;min-width:110px}.rsc .rsv span svg{width:16px;height:16px;fill:currentColor}.rsc .rsv .nbv{min-width:34px;text-align:right;font-weight:500}
+.rsc .rss{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.rsc .rss .eb{display:inline-flex;align-items:center;gap:6px}.rsc .rss svg{width:16px;height:16px;fill:currentColor}
+.rsc .rsst{color:var(--heat);border-color:rgba(var(--heat-rgb),.45)}.rsc .rsst:disabled{opacity:.45;cursor:default}
+html[data-mode=light] .rsc .rsst{color:#a3211a}
+#rsp{position:fixed;inset:0;z-index:96;display:none;align-items:center;justify-content:center;padding:14px;background:rgba(0,0,0,.55)}#rsp.on{display:flex;animation:fdIn .25s ease both}
+#rsp .rspx{width:min(760px,100%);max-height:100%;overflow:auto;box-sizing:border-box;padding:16px 18px 20px;border-radius:24px;background:linear-gradient(160deg,var(--bg2),var(--bg));border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.6)}
+#rsp .rsph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}#rsp h3{font-size:22px;font-weight:400;margin:4px 0 0}
+#rsp .gal{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}#rsp .sc.on{outline:3px solid var(--mint);outline-offset:-3px}
+@media(max-width:760px){#rsp{align-items:flex-end;padding:0}#rsp .rspx{border-radius:24px 24px 0 0;max-height:88dvh;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));animation:shUp .36s var(--sheet-ease,ease) both}#rsp .gal{grid-template-columns:repeat(2,1fr)}}
+/* a gradient light that does not have the picked scene (24-scenes.js scOpt): greyed, says NOT FOR THIS LIGHT */
+#scenes .sr.scna,.rsc .rzc.scna{opacity:.5;cursor:not-allowed}
+/* the two picture sets: ALL tag on a scene every light can play, a colour tile for an LED scene with no picture, the counts in the set chips */
+.sc .scall{position:absolute;right:6px;top:6px;z-index:2;font:700 9.5px var(--mono);letter-spacing:.06em;font-style:normal;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.88);color:#3a332b}
+.sc.scgen{background:linear-gradient(150deg,hsl(var(--h1) 75% 66%),hsl(var(--h2) 60% 38%))}
+#scenes [data-md] small,#rsp [data-rsm] small{opacity:.7;margin-left:4px;font-size:.9em}
+.rsc .rsno,#scenes .scnone{margin:6px 2px;text-transform:none;letter-spacing:0;font-size:13px}
+/* 2.5.0 one scene library: where a scene plays (bulb = room lights, tube = LED lights) */
+.sc .sctg{position:absolute;left:6px;top:6px;z-index:2;display:flex;gap:3px;font-style:normal}.sc .sctg svg{width:18px;height:18px;padding:3px;border-radius:6px;background:rgba(255,255,255,.88);fill:#5a4a36}
+.sctags{display:flex;gap:6px;margin:4px 0 2px}.sctags:empty{display:none}
+.sctag{display:inline-flex;align-items:center;gap:4px;font:600 10.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:3px 8px 3px 6px;border-radius:99px;background:color-mix(in srgb,var(--lit,#f6bd60) 22%,transparent);color:var(--ink)}.sctag svg{width:13px;height:13px;fill:currentColor}
+.sctag.no{background:rgba(var(--w),.06);color:var(--mut);text-decoration:line-through;opacity:.7}
+.sclt{font:700 9px var(--mono);font-style:normal;letter-spacing:.08em;padding:1px 5px;margin-left:7px;border-radius:5px;border:1px solid color-mix(in srgb,var(--lit,#f6bd60) 60%,var(--line));color:var(--mut);vertical-align:2px}
+.rsc .rzc .sclt{margin-left:-2px}
+.scf .chip svg{width:14px;height:14px;fill:currentColor;margin-right:4px;vertical-align:-2px}
+#scenes .sr.scna .ts2,.rsc .rzc.scna small{text-transform:none;letter-spacing:.02em}
+.sr b.scnb{display:flex!important;align-items:center;min-width:0}.sr b.scnb span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.sr b.scnb .sclt{flex:none}
+@media(max-width:760px){#scenes .sct .sr .sclt{display:none}}
+#scenes .scfh{margin-bottom:14px}
+/* smaller, quieter tags on the pictures */
+.sc .sctg{left:5px;top:5px;gap:2px}.sc .sctg svg{width:16px;height:16px;padding:2.5px;border-radius:5px;background:rgba(20,16,24,.55);fill:#fff;backdrop-filter:blur(4px)}
+@media(max-width:760px){.sc .sctg svg{width:15px;height:15px}}
+/* the collapsed scene pill on a phone has room for the name only */
+#scenes .sct.col .sctags,#scenes .sct.col .sck>.sm:not(.scsm){display:none}
 /* Notifications > Active: groups fold, doors and windows are slim rows, and a chip row jumps to one group */
 #np .npf{cursor:pointer;-webkit-tap-highlight-color:transparent}
 #np .npfr{margin-left:auto;display:flex;align-items:center;gap:8px}
@@ -2663,6 +2772,36 @@ html[data-mode=light] .upx .upv svg{fill:#17703d}html[data-mode=light] .upx .upe
 #np .npfoc{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 0 2px;padding:8px 8px 8px 14px;border-radius:14px;background:rgba(var(--w),.06);border:1px solid var(--line)}
 #np .npfoc span{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
 #np .npfoc .eb{padding:8px 12px;font-size:11px}
+/* Security page: the detection alert switches (config adminToggles) as a slim strip above the cameras; an off one is red and says OFF */
+#security[data-tab=det] #sectog{display:none}
+#sectog:empty{display:none}
+#sectog .sectg{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px 10px 18px;margin-bottom:14px;border-radius:18px}
+#sectog .sectg>.lbl{flex:1;min-width:0;margin:0}
+#sectog .sectc{display:flex;gap:8px;flex-wrap:wrap}
+#sectog .chip{margin:0;white-space:nowrap}
+#sectog .chip.off{background:rgba(var(--heat-rgb),.16);border-color:rgba(var(--heat-rgb),.45);color:var(--heat)}
+html[data-mode=light] #sectog .chip.off{color:#a3211a}
+/* Attention: "Person alerts are off" with a TURN ON pill */
+#np .nrow[data-togon]{cursor:pointer}
+#np .at-on{flex:none;margin-left:auto;font:600 11px var(--mono);letter-spacing:.1em;padding:6px 10px;border-radius:10px;background:var(--mint);color:var(--onmint,#07241a)}
+/* 2.5.0 phones: a full-screen camera keeps its garage door / light tiles folded away behind a CONTROLS pill at the bottom (12-init.js mkCam), so the picture is clear */
+.ctb{display:none}
+@media(max-width:760px),(max-height:520px){
+  html:not(#x) .cam.fs.hasc:not(.pb) .ctb,html:not(#x) #vw .cam.vf.hasc:not(.pb) .ctb{display:inline-flex;align-items:center;gap:6px;position:absolute;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:4;height:40px;padding:0 16px 0 12px;border-radius:20px;border:1px solid rgba(255,255,255,.22);background:rgba(18,18,24,.6);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;font:600 11.5px var(--mono);letter-spacing:.1em;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+  html:not(#x) .cam .ctb svg{width:18px;height:18px;fill:currentColor}
+  html:not(#x) .cam.fs.hasc:not(.cpo) .cpanel,html:not(#x) #vw .cam.vf.hasc:not(.cpo) .cpanel{display:none}
+  /* the tiles keep one size (the garage door used to stretch across the whole screen) */
+  html:not(#x) .cam.hasc .cpanel .tg3{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(150px,190px);justify-content:start}
+  html:not(#x) .cam.hasc .cpanel .tl.dr{grid-column:auto;padding:12px 12px 12px 54px;white-space:normal}
+  html:not(#x) .cam.hasc .cpanel .tl.dr .tn svg{left:12px;width:30px;height:30px}
+  html:not(#x) .cam.hasc .cpanel .tl.dr .ts2::after{content:""}
+  html:not(#x) .cam.fs.cpo .cpanel,
+html:not(#x) #vw .cam.vf.cpo .cpanel{padding-bottom:calc(66px + env(safe-area-inset-bottom,0px));animation:ctbUp .28s cubic-bezier(.2,.8,.2,1) both}
+}
+@keyframes ctbUp{from{opacity:0;transform:translateY(24px)}}
+@media(prefers-reduced-motion:reduce){.cam .cpanel{animation:none!important}}
+/* the CONTROLS pill sits above the garage hazard band (24-garage-alert.css) */
+@media(max-width:760px),(max-height:520px){html:not(#x) .cam.fs[data-gal] .ctb,html:not(#x) #vw .cam.vf[data-gal] .ctb{bottom:calc(var(--galh) + 10px + env(safe-area-inset-bottom,0px))}}
 </style>
 </head>
 <body>
@@ -2682,7 +2821,7 @@ html[data-mode=light] .upx .upv svg{fill:#17703d}html[data-mode=light] .upx .upe
   <div id="alb" hidden></div>
 
   <div id="home" class="page on">
-    <div class="pn hs"><canvas id="wfx"></canvas><b id="gr"></b><span id="dt" class="lbl"></span><span id="wchip" class="wch">--</span><span id="wwind" class="wch"></span><span id="whl" class="lbl">--</span></div>
+    <div class="pn hs"><canvas id="wfx"></canvas><b id="gr"></b><span id="dt" class="lbl"></span><span id="wchip" class="wch">--</span><span id="wwind" class="wch"></span><span id="wpls"></span></div>
     <div id="hstrip" hidden><div class="pn" id="lvc" hidden></div></div>
     <div class="hm">
       <div class="left"><div class="camcol"><div class="cams" id="cams"></div><div class="pn sch" id="sch" hidden></div></div><div class="rooms" id="rooms"></div></div>
@@ -2700,7 +2839,7 @@ html[data-mode=light] .upx .upv svg{fill:#17703d}html[data-mode=light] .upx .upe
 
   <div id="roomspg" class="page"><div class="chips tabs" id="rtabs"></div><div id="rl"></div><div id="rv" style="display:none"></div></div>
 
-  <div id="security" class="page" data-tab="live"><div class="chips tabs" id="stabs" style="display:none"></div><div class="pn pg" id="alp"></div><div class="cams cams3" id="scams"></div><div class="pn pg" id="dtp" style="display:none"></div></div>
+  <div id="security" class="page" data-tab="live"><div class="chips tabs" id="stabs" style="display:none"></div><div class="pn pg" id="alp"></div><div id="sectog"></div><div class="cams cams3" id="scams"></div><div class="pn pg" id="dtp" style="display:none"></div></div>
 <div id="dtm"><div class="dtc"><div class="dth"><b class="dtt"></b><button class="evx" data-dt="close" aria-label="Close"></button></div><div class="dtv"><video controls playsinline></video><div class="dte"></div></div></div></div>
 
   <div id="weather" class="page"><div id="wx"></div></div>
@@ -2734,14 +2873,14 @@ html[data-mode=light] .upx .upv svg{fill:#17703d}html[data-mode=light] .upx .upe
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
 <script src="config.js?v=1"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.4.6"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.4.6";   // the one place to change the version
+window.DASH_VER = "2.5.0";   // the one place to change the version
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -3213,6 +3352,8 @@ function setState(s) {
   if (lvRel(id)) lvQ();
   if (curRoom && id.indexOf("timer.") === 0) queueRoom();   // a tile's countdown starts or ends
   if (onRooms && !curRoom && CONFIG.roomsByPresence !== false && /^(binary_sensor|input_boolean)\./.test(id) && CONFIG.house.some(r => occOf(r).indexOf(id) > -1)) queueRl();
+  if (curRoom && CONFIG.scenes && rsIds().indexOf(id) > -1) rsUpd();   // the Scene card on a room page follows the Scenes page's helpers
+  if (TOG.length && togIds().indexOf(id) > -1) { secTogDraw(); queueNotif(); }   // the detection alert switches on the Security page and their Attention reminder
   if (id.indexOf("media_player.") === 0 && CONFIG.media && CONFIG.media.indexOf(id) > -1) { GRP.chg = Date.now(); queueNp(); if (GRP.open) grpDraw(); }
   if ({ light: 1, switch: 1, binary_sensor: 1, group: 1, cover: 1 }[id.split(".")[0]]) queueHome();
 }
@@ -3318,11 +3459,14 @@ function home() {
   const w = states[W], a = w ? w.attributes : {}, hp = states[MAIN], ha = hp ? hp.attributes : {};
   const cd = w ? (COND[w.state] || ["", title(w.state)]) : ["", ""], ot = sv(E("outdoorTemp")), rd = states[E("rainDetected")], raining = !!rd && rd.state === "on", dry = !!rd && rd.state === "off";
   const ic = "", unit = a.temperature_unit || "°C", wsp = null;   // icon and wind come straight from the weather entity
+  // 2.5.0: when rain is coming in the alert window (the same forecast and limits as the rain alert, 31-weather-alerts.js) and today's high and low sit after the weather
+  // as two small pills, "Rain at 6 PM" and "↑23° ↓16°"; each opens its chart (they had a "HIGH 23° / LOW 16°" item of their own)
+  const wr = !raining && typeof wxaNow === "function" ? (wxaNow() || {}).rain : null;
   $("#wchip").innerHTML = w ? (raining ? mdi("weather-pouring") : MDI[ic] ? mdi(ic) : wic(w.state)) + " " + f1(ot != null ? ot : a.temperature) + " " + unit + ", " + (dry ? "Dry" : cd[1]) : "--";
+  { const p = (wr && !wr.now ? '<span class="wpl r" data-go="#weather/rain">' + mdi("weather-rainy") + 'Rain ' + esc(wxaRainWhen(wr)) + '</span>' : "") + (fc[0] ? '<span class="wpl t" data-go="#weather/temp"><b>↑' + Math.round(fc[0].temperature) + '°</b><i>↓' + Math.round(fc[0].templow != null ? fc[0].templow : fc[0].temperature) + '°</i></span>' : ""), el = $("#wpls"); if (el._h !== p) { el._h = p; el.innerHTML = p; } }
   $("#wwind").innerHTML = w ? mdi("weather-windy") + " " + (wsp != null ? wsp : a.wind_speed != null ? Math.round(a.wind_speed) : "--") + " " + (a.wind_speed_unit || "km/h") : "";
   { const wt = typeof wxaLive === "function" ? wxaLive() : 0, el = $("#wwind"); el.className = "wch" + (wt ? " wnd wt" + wt : ""); el.title = wt ? WXA_W[wt] + " wind" : ""; }   // Moderate / Strong / Severe wind: coloured like the Alerts card
   wfxSet(w ? w.state : "", raining, parseFloat(wsp != null ? wsp : a.wind_speed) || 0);
-  if (fc[0]) $("#whl").textContent = "High " + Math.round(fc[0].temperature) + "° / Low " + Math.round(fc[0].templow != null ? fc[0].templow : fc[0].temperature) + "°";
   if (!CONFIG.outside && w) $("#outs").textContent = f1(a.temperature) + "°C";
   $("#mi").textContent = f1(sv(CONFIG.indoor) != null ? sv(CONFIG.indoor) : ha.current_temperature) + "°";
   $("#mbg").textContent = f1(sv(CONFIG.indoor) != null ? sv(CONFIG.indoor) : ha.current_temperature);
@@ -3955,16 +4099,21 @@ function mkCam(c, host) {
   { const ar = m => { const w = m.videoWidth || m.naturalWidth, h = m.videoHeight || m.naturalHeight; if (w > 0 && h > 0) el.style.setProperty("--ar", w + " / " + h); };   // the two-feed landscape view sizes each picture from this
     o.img.addEventListener("load", () => { if (!c.live) ar(o.img); }); o.vid.addEventListener("loadedmetadata", () => ar(o.vid)); o.vid.addEventListener("resize", () => ar(o.vid)); }
   const cp = $(".cpanel", el); cp.onclick = tapH; cp.onchange = chgH;
+  // phones: the garage door / light tiles under a full-screen camera stay folded away (they covered the bottom of the picture); this pill brings them up and puts them away
+  const ctb = document.createElement("button"); ctb.className = "ctb"; ctb.setAttribute("aria-expanded", "false"); ctb.innerHTML = mdi("chevron-up") + "<span>CONTROLS</span>"; el.appendChild(ctb);
+  el._ctb = () => { const o = !el.classList.contains("cpo"); el.classList.toggle("cpo", o); ctb.setAttribute("aria-expanded", o); ctb.innerHTML = mdi(o ? "chevron-down" : "chevron-up") + "<span>" + (o ? "HIDE" : "CONTROLS") + "</span>"; };
   if (host.id === "vw") {   // the camera view's top controls share one wrapper, so the layout can put them in one row (tablets) or two (phones)
     const vh = document.createElement("div"); vh.className = "vh"; ["lbl", "dl", "lv", "aud", "px", "cx", "fsb"].forEach(k => { const n = el.querySelector("." + k); if (n) vh.appendChild(n); }); el.appendChild(vh); el.dataset.k = c.k;
   }
-  if (host.id === "vw") { el.classList.add("vf"); setTimeout(() => pbPre(c), 600); const ctl = camCtl(c.id); if (ctl) { cp.innerHTML = '<div class="tg3">' + ctl.map(tileHtml).join("") + '</div>'; cp.dataset.b = 1; } el.onclick = e => { if (e.target.closest(".fsb")) camLand(el); else if (e.target.closest(".cx")) vwClose(); }; host.appendChild(el); return el; }   // phones: the card has the same X as a Security camera (the tablet keeps the round X above the pictures)
+  if (host.id === "vw") { el.classList.add("vf"); setTimeout(() => pbPre(c), 600); const ctl = camCtl(c.id); if (ctl) { cp.innerHTML = '<div class="tg3">' + ctl.map(tileHtml).join("") + '</div>'; cp.dataset.b = 1; } if (ctl) el.classList.add("hasc"); el.onclick = e => { if (e.target.closest(".ctb")) el._ctb(); else if (e.target.closest(".fsb")) camLand(el); else if (e.target.closest(".cx")) vwClose(); }; host.appendChild(el); return el; }   // phones: the card has the same X as a Security camera (the tablet keeps the round X above the pictures)
   el.onclick = e => {
     if (e.target.closest(".cpanel, .pbk, .px")) return;
+    if (e.target.closest(".ctb")) { el._ctb(); return; }
     if (e.target.closest(".fsb")) { camLand(el); return; }
-    if (el.classList.contains("fs")) {   // close
+    if (el.classList.contains("fs")) {   // close: only with the X (a tap on the picture does nothing, so a stray touch never leaves the camera)
+      if (!e.target.closest(".cx")) return;
       mkLiveOff(el); closePb(c, false); c.snd = false; micOff(c); snd.classList.remove("on"); snd.innerHTML = AUD.off; o.vid.muted = true;
-      camClose(el, () => { el.classList.remove("fs"); if (el._ph) { el._ph.remove(); el._ph = null; } if (isMobile() && CONFIG.mobileLive === false) { clearTimeout(c.rt); stopCam(c); } else liveCam(c, true); });
+      camClose(el, () => { el.classList.remove("fs"); if (el.classList.contains("cpo")) el._ctb(); if (el._ph) { el._ph.remove(); el._ph = null; } if (isMobile() && CONFIG.mobileLive === false) { clearTimeout(c.rt); stopCam(c); } else liveCam(c, true); });
       return;
     }
     if (!el._ph && el.parentNode && el.parentNode.id !== "vw") { const cs = getComputedStyle(el), ph = document.createElement("div"); ph.className = "camph"; ph.style.height = el.offsetHeight + "px"; ph.style.gridColumn = cs.gridColumnStart + " / " + cs.gridColumnEnd; ph.style.margin = cs.margin; el.parentNode.insertBefore(ph, el); el._ph = ph; }   // the card leaves the page layout while full screen: this holds its place so the page behind does not jump during the fade
@@ -3972,6 +4121,7 @@ function mkCam(c, host) {
     if (isMobile()) camNative(el);   // phones: straight to real full screen
     const ctl = camCtl(c.id);
     if (ctl && !cp.dataset.b) { cp.innerHTML = '<div class="tg3">' + ctl.map(tileHtml).join("") + '</div>'; cp.dataset.b = 1; }
+    el.classList.toggle("hasc", !!ctl);
     updTiles(); liveCam(c, true); mkLiveOn(el); };
   host.appendChild(el);
 }
@@ -4187,6 +4337,7 @@ function drawRoom(id) {
     return [x.name, grid(x.items, /^controls?$/i.test(x.name)), { k: "on", ids: sw || !lt.length ? ids.filter(onable) : lt, off: sw ? [] : lt }]; });
   const isCt = x => /^controls?$/i.test(x[0]), CT = P.filter(isCt); P.splice(0, P.length, ...P.filter(x => !isCt(x)));
   const cv = members(r.covers), fn = members(r.fans), dwl = members(r.doors).concat(members(r.windows)), dw = members(r.doors).map(e => ({ entity: e, kind: "door" })).concat(members(r.windows).map(e => ({ entity: e, kind: "window" }))), cl = [].concat(r.climate || []);
+  { const sh = typeof rsHtml === "function" ? rsHtml(r) : ""; if (sh) P.push(["Scene", sh, { k: "scene", ids: [], off: [] }]); }   // the Scenes page's zones for this room (24-room-scenes.js)
   if (cv.length) P.push(["Curtains", grid(cv), { k: "open", ids: cv, off: [], cv: 1 }]);
   if (fn.length) P.push(["Fans", grid(fn), { k: "on", ids: fn, off: [] }]);
   if (dw.length) P.push(["Doors & windows", '<div class="bl">' + dw.map(tileHtml).join("") + '</div>', { k: "open", ids: dwl, off: [] }]);
@@ -4197,7 +4348,7 @@ function drawRoom(id) {
     (P.length ? P.map((p, i) => '<div class="pn pg" data-pi="' + i + '"' + (p[0] === "Doors & windows" ? ' data-sec="doors"' : "") + (p[2].off.length ? ' data-grp="lt"' : "") + '><div class="lbl hd">' + esc(p[0]) + '<span class="rcnt"></span>' + (p[2].cv ? '<span class="rcv"><button class="eb" data-rcv="open">OPEN ALL</button><button class="eb" data-rcv="close">CLOSE ALL</button></span>' : "") + (p[2].off.length ? '<button class="eb roff" data-roff="' + i + '">ALL OFF</button>' : "") + '</div>' + p[1] + '</div>').join("") : CT.length ? "" : '<div class="pn lbl">No devices configured</div>');
   $("#cpp").innerHTML = CT.length ? '<div class="cpsh"><div class="cph"><div><div class="lbl">' + esc(r.name) + '</div><h3>Automations</h3></div><button class="eb" data-cpc="1">DONE</button></div><div class="cpl">' + CT.map(x => x[1].replace(/^<div class="tg3[^"]*">/, "").replace(/<\/div>$/, "")).join("") + '</div><div class="cpft"><button class="eb" data-cpall="on">ALL ON</button><button class="eb" data-cpall="off">ALL OFF</button></div></div>' : "";   // .cpft (all on / all off for the open tab) only shows in the wide-screen side panel
   $("#cpp").classList.remove("on"); cpTabs(r.id);
-  updTiles(); lazyIn($("#rooms"));
+  updTiles(); rsUpd(); lazyIn($("#rooms"));
 }
 function updTiles() {
   if (curRoom) { const r = curRoom, hv = roomHum(r); $("#rvt").textContent = f1(roomTemp(r)) + "°C" + (hv != null ? "  ·  " + f1(hv) + "% RH" : ""); }
@@ -4228,7 +4379,7 @@ function updTiles() {
     if (!(el._d && el._d > Date.now()) && !(d === "cover" && rg && !idle)) $(".ts2", el).textContent = el.dataset.sub || t;   // a curtain slider being dragged keeps showing the dragged value, not the positions HA reports on the way
   });
   if (curRoom) $$("#rv .pg[data-pi]").forEach(pn => {   // per-panel counts, and ALL OFF only while something in that light section is on
-    const m = curPanels[+pn.dataset.pi]; if (!m) return;
+    const m = curPanels[+pn.dataset.pi]; if (!m || m.k === "scene") return;   // the Scene card counts its own zones (rsUpd)
     const q = x => { const e = states[x]; if (e && (CONFIG.countIfNotOff || []).indexOf(x) > -1) return !/^(off|unavailable|unknown|none)?$/i.test(e.state); return !!e && (/^climate\./.test(x) ? e.state !== "off" && e.state !== "unavailable" : isOn(x) && !npGone(x)); };
     const c = m.ids.filter(q).length, o = m.k === "open" || m.k === "door";
     $(".rcnt", pn).textContent = m.k === "door" && m.ids.length === 1 ? (c ? "· OPEN" : "· CLOSED") : c ? "· " + c + " of " + m.ids.length + (o ? " open" : " on") : "· " + (o ? "all closed" : "all off");
@@ -4282,8 +4433,9 @@ function tapH(e) {
   const el = t.closest("[data-e]"); if (!el) return;
   const id = el.dataset.e, d = id.split(".")[0];
   if (el.dataset.cf && !t.dataset.a) {   // confirm-before-acting tiles (garage door)
+    // (the small tiles under a phone's full-screen camera say just TAP AGAIN, so the tile keeps its size)
     if (!el.dataset.arm) {   // first tap: the tile turns amber, pulses and counts down 3 s (CSS [data-arm]); a second tap inside that time acts
-      el.dataset.arm = 1; const w = "TAP AGAIN TO " + (el.dataset.s ? (isOn(el.dataset.s) ? "CLOSE" : "OPEN") : (isOn(id) ? "TURN OFF" : "TURN ON")); let n = 3; $(".ts2", el).textContent = w + " · " + n;
+      el.dataset.arm = 1; const w = el.closest(".cam.hasc") && matchMedia("(max-width:760px),(max-height:520px)").matches ? "TAP AGAIN" : "TAP AGAIN TO " + (el.dataset.s ? (isOn(el.dataset.s) ? "CLOSE" : "OPEN") : (isOn(id) ? "TURN OFF" : "TURN ON")); let n = 3; $(".ts2", el).textContent = w + " · " + n;
       clearInterval(el._ai); clearTimeout(el._at); el._ai = setInterval(() => { n--; if (n > 0 && el.dataset.arm) $(".ts2", el).textContent = w + " · " + n; }, 1000);
       el._at = setTimeout(() => { clearInterval(el._ai); delete el.dataset.arm; updTiles(); }, 3000); return; }
     clearInterval(el._ai); clearTimeout(el._at); delete el.dataset.arm;
@@ -4410,7 +4562,10 @@ function chgH(e) {
   if (d === "light") call("light", "turn_on", id, { brightness_pct: +t.value });
   else if (d === "cover") { const cur = (states[id] && states[id].attributes.current_position) || 0; call("cover", "set_cover_position", id, { position: +t.value }); if (+t.value !== cur) covMark(id, +t.value > cur ? "opening" : "closing"); }
 };
-$("#rl").className = "rooms rooms2"; $("#rv").onclick = tapH; $("#cpp").onclick = e => { const al = e.target.closest("[data-cpall]"); if (al) { $$("#cpp .cpl > *").filter(t => t.style.display !== "none" && /^(input_boolean|switch|light|fan|automation)\./.test(t.dataset.e || "")).forEach(t => { const id = t.dataset.e; if (isOn(id) !== (al.dataset.cpall === "on")) call(id.split(".")[0], "turn_" + al.dataset.cpall, id); }); return; } if (e.target.id === "cpp" || e.target.closest("[data-cpc]")) { $("#cpp").classList.remove("on"); return; } const ct = e.target.closest("[data-cpt]"); if (ct) { const L = $("#cpp .cpl"), was = CPT[L.dataset.rid]; CPT[L.dataset.rid] = +ct.dataset.cpt; cpShow(L.dataset.rid); if (was !== CPT[L.dataset.rid]) txGo(L, CPT[L.dataset.rid] > was ? 1 : -1, true); return; } tapH(e); }; $("#rv").onchange = chgH;
+$("#rl").className = "rooms rooms2"; $("#rv").onclick = e => { if (typeof rsClick === "function" && rsClick(e)) return; tapH(e); };   // the Scene card (24-room-scenes.js) first, then the tiles
+$("#rv").addEventListener("input", e => { const r = e.target; if (r.dataset && r.dataset.nb && r.closest(".rsc")) $(".nbv", r.parentNode).textContent = Math.round(r.value); });
+// (the Scene card's sliders set an input_number (brightness, interval) or a number (a gradient light's effect speed))
+$("#rv").addEventListener("change", e => { const r = e.target; if (r.dataset && r.dataset.nb && r.closest(".rsc")) call(r.dataset.nb.split(".")[0], "set_value", r.dataset.nb, { value: +r.value }); }); $("#cpp").onclick = e => { const al = e.target.closest("[data-cpall]"); if (al) { $$("#cpp .cpl > *").filter(t => t.style.display !== "none" && /^(input_boolean|switch|light|fan|automation)\./.test(t.dataset.e || "")).forEach(t => { const id = t.dataset.e; if (isOn(id) !== (al.dataset.cpall === "on")) call(id.split(".")[0], "turn_" + al.dataset.cpall, id); }); return; } if (e.target.id === "cpp" || e.target.closest("[data-cpc]")) { $("#cpp").classList.remove("on"); return; } const ct = e.target.closest("[data-cpt]"); if (ct) { const L = $("#cpp .cpl"), was = CPT[L.dataset.rid]; CPT[L.dataset.rid] = +ct.dataset.cpt; cpShow(L.dataset.rid); if (was !== CPT[L.dataset.rid]) txGo(L, CPT[L.dataset.rid] > was ? 1 : -1, true); return; } tapH(e); }; $("#rv").onchange = chgH;
 
 // ---------- alarm (Alarmo) ----------
 const ALS = { disarmed: ["DISARMED", ""], armed_away: ["ARMED AWAY", "on"], armed_home: ["ARMED HOME", "on"], armed_night: ["ARMED NIGHT", "on"], arming: ["ARMING", "wn"], disarming: ["DISARMING", "wn"], pending: ["PENDING", "al"], triggered: ["TRIGGERED", "al"] };
@@ -4641,7 +4796,7 @@ function wxSunCard() {
 let fcH = [];
 function loadFcH() {
   send({ type: "call_service", domain: "weather", service: "get_forecasts", service_data: { type: "hourly" }, target: { entity_id: W }, return_response: true },
-    r => { fcH = r.response[W].forecast || []; queueNotif(); if (curPg() === "weather") drawWeather(); else if (curPg() === "irrigation") drawIrr(); });
+    r => { fcH = r.response[W].forecast || []; queueNotif(); queueHome(); if (curPg() === "weather") drawWeather(); else if (curPg() === "irrigation") drawIrr(); });
 }
 const CARD = d => ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"][Math.round(d / 22.5) % 16];
 // ----- summary lines worked out from the hourly forecast (replaces the template sensors) -----
@@ -5053,55 +5208,301 @@ $("#irrigation").onclick = e => {
 };
 
 // ---------- scenes ----------
-let scMode = "preset";
+let scFilter = "all";   // the picture library: all / room / led
 let scSheet = false; let scTab = 0, scCol = false; try { scCol = localStorage.getItem("dashScCol") === "1"; } catch (_) {}
-function scPanel(g) {
-  const S = CONFIG.scenes, G = S.groups; let body;
-  if (g) body = hsw('<div class="chips tabs sctb">' + G.map((x, i) => '<button class="chip' + (i === scTab ? " on" : "") + '" data-st="' + i + '">' + mdi(x[1]) + '<span>' + esc(x[0]) + '</span></button>').join("") + '</div>') + '<div class="srl">' + G[scTab][2].map(i => '<div class="sr" data-r="' + i + '" style="--rc:' + S.rc[i] + '"><i class="sbd">' + mdi(S.ri[i]) + '</i><b>' + esc(S.rooms[i].n) + '</b><span class="ts2">--</span></div>').join("") + '</div>';
-  else body = '<div class="srl">' + S.lights.map((l, i) => '<div class="sr" data-g="' + i + '" style="--rc:var(--lit,#f6bd60)"><i class="sbd">' + mdi("lightbulb") + '</i><b>' + esc(l.n) + '</b><span class="ts2">--</span></div>').join("") + '</div>';
-  const ctl = '<div class="lbl np2">Scenes control</div>' + [[E("dynBrightness"), "Brightness", "brightness-6"], [E("dynInterval"), "Interval", "timer"]].map(x => '<div class="mv"><span>' + mdi(x[2]) + ' ' + x[1] + '</span><input type="range" data-nb="' + x[0] + '"><b class="nbv"></b></div>').join("") +
+// 2.5.0: every light takes both kinds of scene, so the panel is the same in both modes: room tabs, each with its zones and its gradient lights (scenes.lights).
+// A gradient light goes to the tab its room's zones are in (24-room-scenes.js works out the room); "tab": "<tab name>" on the light places it yourself;
+// a light whose room has no tab (the office table light) gets a tab of its own named after the room. The PRESETS / GRADIENT switch only changes the pictures.
+// A gradient light can only play the scenes its "gradient scene" select offers (attributes.options), and a few are spelt differently there
+// (artic_aurora, savanna_sunset, runy_glow, colour_burst, "blood moon"). scOpt finds the option for the picked scene: the same name, the same name without
+// spaces / underscores / capitals, or a known spelling; "" when the light does not have that scene. scenes.optionAliases in config.js adds more spellings.
+const SC_ALIAS = { arcticaurora: "articaurora", savannahsunset: "savannasunset", rubyglow: "runyglow", colorburst: "colourburst" };
+const scNorm = v => String(v || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+function scOpt(i, v) {
+  const S = CONFIG.scenes, l = (S.lights || [])[i], o = l && states[l.s] && states[l.s].attributes.options; v = v == null ? sv(E("dynSelected")) || "" : v;
+  if (!v) return ""; if (!Array.isArray(o)) return v;   // the select is not known yet: send the name as it is
+  if (o.indexOf(v) > -1) return v;
+  const A = Object.assign({}, SC_ALIAS), x = S.optionAliases || {}; Object.keys(x).forEach(k => { A[scNorm(k)] = scNorm(x[k]); });
+  const n = scNorm(v), want = [n, A[n]].filter(Boolean); return o.find(q => want.indexOf(scNorm(q)) > -1) || "";
+}
+// ---------- one picture library (2.5.0): every scene once, tagged with where it plays: room lights (the zones run the scenes in scenes.preset) and / or
+// LED lights (what the LED lights' own selects offer, read live). A scene in both uses the room-light spelling; each LED gets its own spelling (scOpt).
+// The ALL / ROOMS / LEDS chips filter it. An LED scene with no picture in scenes.preset / scenes.gradient gets a colour tile made from its name.
+const scImg = (dir, f) => CONFIG.url + (CONFIG.scenes.imageDir || "/local/hue/") + dir + f + ".webp";
+function scLedOpts() { const o = []; (CONFIG.scenes.lights || []).forEach(l => { const a = states[l.s] && states[l.s].attributes.options; if (Array.isArray(a)) a.forEach(x => { if (o.indexOf(x) < 0) o.push(x); }); }); return o; }
+const scSame = (a, b) => { const n = scNorm(a), m = scNorm(b), A = SC_ALIAS; return n === m || A[n] === m || A[m] === n; };
+const scRoomHas = v => (CONFIG.scenes.preset || []).some(c => c[1].some(x => scSame(x[1], v)));
+function scLedHas(v) { const O = scLedOpts(); return O.length ? O.some(o => scSame(o, v)) : (CONFIG.scenes.gradient || []).some(c => c[1].some(x => scSame(x[1], v))); }
+function scLibAll() {   // [[category, [{ v, img, room, led }]]]
+  const S = CONFIG.scenes, O = scLedOpts(), used = {}, out = [], hasLed = (S.lights || []).length > 0;
+  (S.preset || []).forEach(c => out.push([c[0], c[1].map(x => { O.forEach(o => { if (scSame(o, x[1])) used[o] = 1; }); return { v: x[1], img: scImg("raw/", x[0]), room: true, led: hasLed && scLedHas(x[1]) }; })]));
+  if (hasLed) (S.gradient || []).forEach(c => { const L = []; c[1].forEach(x => { if (scRoomHas(x[1])) return; if (O.length) { const o = O.find(q => !used[q] && scSame(q, x[1])); if (!o) return; used[o] = 1; } L.push({ v: x[1], img: scImg("multi_color/", x[0]), room: false, led: true }); }); if (L.length) out.push([c[0], L]); });
+  const rest = O.filter(o => !used[o]).map(o => ({ v: o, img: "", room: false, led: true })); if (rest.length) out.push(["More for LED lights", rest]);
+  return out;
+}
+function scLib(f) { return scLibAll().map(c => [c[0], c[1].filter(x => !f || f === "all" || x[f])]).filter(c => c[1].length); }
+const scCount = f => scLib(f).reduce((n, c) => n + c[1].length, 0);
+function scPicFor(v) { let fn = ""; scLibAll().forEach(c => c[1].forEach(x => { if (!fn && v && scSame(x.v, v)) fn = x.img; })); return fn; }   // the same picture everywhere for a scene
+// the filter chips (Scenes page and the room page's CHANGE sheet): only when there are both kinds of light
+function scChips(f, attr) { if (!(CONFIG.scenes.lights || []).length || !(CONFIG.scenes.rooms || []).length) return "";
+  return '<div class="chips tabs scf">' + [["all", "ALL", ""], ["room", "ROOMS", "lightbulb"], ["led", "LEDS", "led-strip"]].map(x => '<button class="chip' + (f === x[0] ? " on" : "") + '" ' + attr + '="' + x[0] + '">' + (x[2] ? mdi(x[2]) : "") + x[1] + ' <small>' + scCount(x[0]) + '</small></button>').join("") + '</div>'; }
+// where a scene plays, as two small tags (under the scene name, and on each picture)
+function scTags(v, full) { const both = (CONFIG.scenes.lights || []).length && (CONFIG.scenes.rooms || []).length; if (!both || !v) return "";
+  const r = scRoomHas(v), l = scLedHas(v);
+  if (!full) return '<i class="sctg">' + (r ? mdi("lightbulb") : "") + (l ? mdi("led-strip") : "") + '</i>';
+  return '<span class="sctag' + (r ? "" : " no") + '">' + mdi("lightbulb") + 'Rooms</span><span class="sctag' + (l ? "" : " no") + '">' + mdi("led-strip") + 'LEDs</span>'; }
+function scTile(x) {   // one picture (or a colour tile from the name when there is no picture)
+  let h = 0; for (const ch of x.v) h = (h * 31 + ch.charCodeAt(0)) % 360;
+  const both = (CONFIG.scenes.lights || []).length && (CONFIG.scenes.rooms || []).length;
+  return '<div class="sc' + (x.img ? "" : " scgen") + '" data-v="' + esc(x.v) + '"' + (x.img ? "" : ' style="--h1:' + h + ';--h2:' + ((h + 70) % 360) + '"') + '>' + (x.img ? '<img loading="lazy" alt="" src="' + x.img + '">' : "") + (both ? '<i class="sctg">' + (x.room ? mdi("lightbulb") : "") + (x.led ? mdi("led-strip") : "") + '</i>' : "") + '<span>' + esc(title(x.v)) + '</span></div>';
+}
+const scZoneCan = v => !v || scRoomHas(v);   // a room zone can play the picked scene
+const scLedCan = (i, v) => { v = v == null ? sv(E("dynSelected")) || "" : v; return !v || !!scOpt(i, v); };
+function scGradTap(i) {   // a gradient light tapped on the Scenes page or a room's Scene card
+  const x = CONFIG.scenes.lights[i], op = scOpt(i);
+  if (!op && !isOn(x.l)) return false;   // this light does not have the picked scene (an on light can still be tapped to turn it off)
+  if (scDirect()) { scdLedTap(i); return true; }
+  send({ type: "call_service", domain: "script", service: "toggle_or_apply_gradient_scene", service_data: Object.assign({ select_entity: x.s, light_entity: x.l, speed_entity: x.v }, op ? { option: op } : {}) }); return true;
+}
+// the state line of a gradient light: its scene while on; greyed with "Not on this LED" when it cannot play the picked scene (it stays in the list,
+// so nothing seems to vanish; an on light can still be tapped to turn it off). The light's speed slider shows only while it is on.
+function scGradState(el, i, small) {
+  const l = CONFIG.scenes.lights[i], on = isOn(l.l), na = !on && !scLedCan(i); el.hidden = false; el.classList.toggle("scna", na);
+  el.classList.toggle("on", on); $(small, el).textContent = (isMobile() && el.matches("#scenes .sr") ? "LED · " : "") + (on ? title(sv(l.s) || "ON") : na ? "Not on this LED" : "OFF");   // on a phone the LED tag moves into the state line (the row is too narrow for both)
+  const sp = el.closest(".rsc, #scenes"); if (sp) $$('[data-spd="' + i + '"]', sp).forEach(x => { x.hidden = !on; }); return on;
+}
+function scGroups() {
+  const S = CONFIG.scenes, G = (S.groups || []).map(x => [x[0], x[1], x[2].slice(), []]); if (!(S.lights || []).length) return G;
+  const M = typeof rsMap === "function" ? rsMap() : { z: [], g: [] };
+  (S.lights || []).forEach((l, i) => {
+    let t = l.tab ? G.findIndex(x => x[0].toLowerCase() === String(l.tab).toLowerCase()) : -1;
+    const rid = M.g[i];
+    if (t < 0 && rid) { let n = 0; G.forEach((x, j) => { const k = x[2].filter(z => M.z[z] === rid).length; if (k > n) { n = k; t = j; } }); }
+    if (t < 0) { const R = rid && ROOM(rid), nm = l.tab || (R ? R.name : "Lights"); t = G.findIndex(x => x[0] === nm); if (t < 0) { G.push([nm, R && R.icon && MDI[R.icon] ? R.icon : "lightbulb", [], []]); t = G.length - 1; } }
+    G[t][3].push(i);
+  });
+  return G;
+}
+function scPanel() {   // the room tabs, each with its zones and its LED lights in one list
+  const S = CONFIG.scenes, G = scGroups().filter(x => x[2].length || x[3].length); if (scTab >= G.length) scTab = 0; const T = G[scTab] || ["", "", [], []];
+  const led = '<em class="sclt">LED</em>';
+  let body = (G.length > 1 ? hsw('<div class="chips tabs sctb">' + G.map((x, i) => '<button class="chip' + (i === scTab ? " on" : "") + '" data-st="' + i + '">' + mdi(x[1]) + '<span>' + esc(x[0]) + '</span></button>').join("") + '</div>') : "") +
+    '<div class="srl">' + T[2].map(i => '<div class="sr" data-r="' + i + '" style="--rc:' + (S.rc[i] || "var(--mint)") + '"><i class="sbd">' + mdi(S.ri[i] || "lightbulb") + '</i><b>' + esc(S.rooms[i].n) + '</b><span class="ts2">--</span></div>').join("") +
+    T[3].map(i => '<div class="sr" data-g="' + i + '" style="--rc:var(--lit,#f6bd60)"><i class="sbd">' + mdi("led-strip") + '</i><b class="scnb"><span>' + esc(S.lights[i].n) + '</span>' + led + '</b><span class="ts2">--</span></div>').join("") + '<div class="lbl scnone" hidden>No light here can play this scene: pick another one</div></div>';
+  // Brightness for every light, Interval for the zones, each LED's speed while that LED is on
+  const ctl = '<div class="lbl np2">Scenes control</div>' + [[E("dynBrightness"), "Brightness", "brightness-6", ""]].concat(T[2].length ? [[E("dynInterval"), "Interval", "timer", ""]] : []).concat(T[3].map(i => [S.lights[i].v, S.lights[i].n + " speed", "speedometer", i])).filter(x => x[0]).map(x => '<div class="mv"' + (x[3] !== "" ? ' data-spd="' + x[3] + '" hidden' : "") + '><span>' + mdi(x[2]) + ' ' + esc(x[1]) + '</span><input type="range" data-nb="' + x[0] + '"><b class="nbv"></b></div>').join("") +
     '<div class="sr stp" data-stop="1"><i class="sbd">' + mdi("stop-circle") + '</i><b>Stop scenes</b></div>';
-  const col = isMobile() ? !scSheet : scCol, dir = CONFIG.url + (S.imageDir || "/local/hue/") + (g ? "raw/" : "multi_color/");
-  body = '<div class="lbl scpk">Scene</div>' + hsw('<div class="scstp">' + (g ? S.preset : S.gradient).map(c => c[1].map(x => '<div class="sc" data-v="' + x[1] + '"><img loading="lazy" alt="" src="' + dir + x[0] + '.webp"><span>' + esc(title(x[1])) + '</span></div>').join("")).join("") + '</div>') + '<div class="lbl scpk">Apply to</div>' + body;
-  return '<div class="scbk" data-sch="1"></div><div class="pn sct' + (col ? " col" : "") + '"><div class="sch" data-sch="1"><i class="schi" id="scth">' + mdi("palette") + '</i><div class="sck"><span class="lbl">Scene</span><b class="h3" id="scn">--</b><div class="sm">' + (g ? "Select a room to apply this scene" : "Tap a light to apply the scene") + '</div><div class="sm scsm" id="scsum"></div></div><span class="schc">' + mdi("chevron-down") + '<i class="schx">' + mdi("close") + '</i></span></div><div class="scb">' + body + ctl + '</div></div>';
+  const col = isMobile() ? !scSheet : scCol;
+  body = '<div class="lbl scpk">Scene</div>' + hsw('<div class="scstp">' + scLib(scFilter).map(c => c[1].map(scTile).join("")).join("") + '</div>') + '<div class="lbl scpk">Apply to</div>' + body;
+  return '<div class="scbk" data-sch="1"></div><div class="pn sct' + (col ? " col" : "") + '"><div class="sch" data-sch="1"><i class="schi" id="scth">' + mdi("palette") + '</i><div class="sck"><span class="lbl">Scene</span><b class="h3" id="scn">--</b><div class="sctags" id="sctags"></div><div class="sm">Tap a light to play this scene</div><div class="sm scsm" id="scsum"></div></div><span class="schc">' + mdi("chevron-down") + '<i class="schx">' + mdi("close") + '</i></span></div><div class="scb">' + body + ctl + '</div></div>';
 }
 function drawScenes() {
-  const g = scMode === "preset", S = CONFIG.scenes, dir = CONFIG.url + (CONFIG.scenes.imageDir || "/local/hue/") + (g ? "raw/" : "multi_color/");
-  $("#scenes").innerHTML = '<div class="eh" style="margin-bottom:14px"><div class="chips tabs"><button class="chip" data-md="preset">PRESETS</button><button class="chip" data-md="gradient">GRADIENT</button></div><div class="lbl" id="scsel" style="margin-left:auto"></div></div>' +
-    '<div class="scl"><div>' + (g ? S.preset : S.gradient).map(c => '<div class="lbl" style="margin:6px 0 10px">' + esc(c[0]) + '</div><div class="gal" style="margin-bottom:16px">' + c[1].map(x => '<div class="sc" data-v="' + x[1] + '"><img loading="lazy" alt="" src="' + dir + x[0] + '.webp"><span>' + esc(title(x[1])) + '</span></div>').join("") + '</div>').join("") + '</div>' + scPanel(g) + '</div>';
-  updScenes();
+  // the filter chips sit over the pictures only, so the scene panel starts at the top beside them (the picked scene is in the panel, not repeated here)
+  $("#scenes").innerHTML = '<div class="scl"><div class="scll">' + (scChips(scFilter, "data-md") ? '<div class="eh scfh">' + scChips(scFilter, "data-md") + '</div>' : "") + '<div class="sclib">' + scLib(scFilter).map(c => '<div class="lbl" style="margin:6px 0 10px">' + esc(c[0]) + '</div><div class="gal" style="margin-bottom:16px">' + c[1].map(scTile).join("") + '</div>').join("") + '</div></div>' + scPanel() + '</div>';
+  updScenes(); scdLoad();
 }
 function updScenes() {
+  if (!$("#scenes .scl")) return;
   const v = sv(E("dynSelected")) || "", S = CONFIG.scenes;
-  $("#scsel").textContent = v ? "SCENE: " + title(v).toUpperCase() : "NO SCENE SELECTED";
   $("#scn").textContent = v ? title(v) : "No scene selected";
-  { const th = $("#scth"); let fn = ""; [[S.preset, "raw/"], [S.gradient, "multi_color/"]].forEach(L => L[0].forEach(c => c[1].forEach(x => { if (!fn && x[1] === v) fn = CONFIG.url + (CONFIG.scenes.imageDir || "/local/hue/") + L[1] + x[0] + ".webp"; })));
+  { const tg = $("#sctags"); if (tg) tg.innerHTML = scTags(v, true); }
+  { const th = $("#scth"), fn = scPicFor(v);
     if (th) { th.classList.toggle("has", !!v); const im = $("img", th); if (v && fn) { if (!im || im.getAttribute("src") !== fn) th.innerHTML = '<img alt="" src="' + fn + '">'; } else if (im || !$("svg", th)) th.innerHTML = mdi("palette"); } }
   $$("#scenes .sc").forEach(el => el.classList.toggle("on", el.dataset.v === v));
-  $$("#scenes [data-md]").forEach(b => b.classList.toggle("on", b.dataset.md === scMode));
-  $$("#scenes [data-r]").forEach(el => { const R = S.rooms[el.dataset.r], t = sv(R.t) || "", on = R.b && states[R.b] ? isOn(R.b) : !!t; el.classList.toggle("on", on); $(".ts2", el).textContent = on ? (t ? title(t) : "ON") : "OFF"; });   // grey until the room's boolean is on
-  $$("#scenes [data-g]").forEach(el => { const l = S.lights[el.dataset.g], on = isOn(l.l); el.classList.toggle("on", on); $(".ts2", el).textContent = on ? title(sv(l.s) || "ON") : "OFF"; });
+  $$("#scenes [data-md]").forEach(b => b.classList.toggle("on", b.dataset.md === scFilter));
+  $$("#scenes [data-r]").forEach(el => { const z0 = scZoneState(+el.dataset.r), t = z0.scene, on = z0.on; const na = !on && !scZoneCan(v); el.classList.toggle("scna", na); el.classList.toggle("on", on); $(".ts2", el).textContent = on ? (t ? title(t) : "ON") : na ? "LEDs only" : "OFF"; });
+  $$("#scenes [data-g]").forEach(el => scGradState(el, +el.dataset.g, ".ts2"));
+  { const L = $("#scenes .sct .srl"), n = L && $(".scnone", L); if (n) n.hidden = !!$$(".sr", L).filter(x => !x.classList.contains("scna")).length; }
   $$("#scenes [data-nb]").forEach(r => { const s = states[r.dataset.nb]; if (!s) return; const a = s.attributes; r.min = a.min != null ? a.min : 0; r.max = a.max != null ? a.max : 100; r.step = a.step || 1; if (document.activeElement !== r) r.value = s.state; $(".nbv", r.parentNode).textContent = Math.round(r.value); });
-  { const sm = $("#scsum"), num = k => { const x = states[E(k)], v = x ? Math.round(+x.state) : NaN; return isNaN(v) ? "" : v; }, bb = num("dynBrightness"), iv = num("dynInterval"); if (sm) sm.textContent = [scMode === "preset" ? (S.groups[scTab] || [""])[0] : "Gradient", bb !== "" ? "Brightness " + bb : "", iv !== "" ? "Interval " + iv : ""].filter(Boolean).join(" · "); }
+  { const sm = $("#scsum"), num = k => { const x = states[E(k)], v = x ? Math.round(+x.state) : NaN; return isNaN(v) ? "" : v; }, bb = num("dynBrightness"), iv = num("dynInterval"); if (sm) sm.textContent = [(scGroups().filter(x => x[2].length || x[3].length)[scTab] || [""])[0], bb !== "" ? "Brightness " + bb : "", iv !== "" ? "Interval " + iv : ""].filter(Boolean).join(" · "); }
   const st = $("#scenes [data-stop]"); if (st) { const on = isOn(E("dynStop")); st.classList.toggle("on", on); }
 }
 $("#scenes").oninput = e => { const r = e.target; if (r.dataset.nb) $(".nbv", r.parentNode).textContent = Math.round(r.value); };
-$("#scenes").onchange = e => { const r = e.target; if (r.dataset.nb) call("input_number", "set_value", r.dataset.nb, { value: +r.value }); };
+$("#scenes").onchange = e => { const r = e.target; if (r.dataset.nb) call(r.dataset.nb.split(".")[0], "set_value", r.dataset.nb, { value: +r.value }); };
 $("#scenes").onclick = e => {
   const md = e.target.closest("[data-md]"), sc = e.target.closest(".sc"), r = e.target.closest("[data-r]"), g = e.target.closest("[data-g]"), S = CONFIG.scenes;
   const stb = e.target.closest("[data-st]"), sch = e.target.closest("[data-sch]"), stp = e.target.closest("[data-stop]");
-  if (md) { const old = scMode; scMode = md.dataset.md; drawScenes(); if (scMode !== old) txGo($("#scenes .scl > div"), scMode === "gradient" ? 1 : -1, true); }
-  else if (stb) { const old = scTab; scTab = +stb.dataset.st; $("#scenes .scbk").remove(); $("#scenes .sct").outerHTML = scPanel(true); updScenes(); scStripGo(); if (scTab !== old) txGo($("#scenes .srl"), scTab > old ? 1 : -1, true); }
+  const F = ["all", "room", "led"];
+  if (md) { const old = scFilter; scFilter = md.dataset.md; drawScenes(); if (scFilter !== old) txGo($("#scenes .sclib"), F.indexOf(scFilter) > F.indexOf(old) ? 1 : -1, true); }
+  else if (stb) { const old = scTab; scTab = +stb.dataset.st; $("#scenes .scbk").remove(); $("#scenes .sct").outerHTML = scPanel(); updScenes(); scStripGo(); if (scTab !== old) txGo($("#scenes .srl"), scTab > old ? 1 : -1, true); }
   else if (sch) { const p0 = $("#scenes .sct"), c = !p0.classList.contains("col"); if (sch.classList.contains("scbk") && !c) return;
     const ap = () => { const p = $("#scenes .sct"); if (!p) return; p.classList.toggle("col", c); $("#scenes").classList.toggle("scop", !c); document.body.classList.toggle("pill-open", !c && isMobile());
       if (isMobile()) { scSheet = !c; if (c) pillIn(p); else { shIn(p, $("#scenes .scbk")); scStripGo(); } } else { scCol = c; try { localStorage.setItem("dashScCol", scCol ? "1" : "0"); } catch (_) {} } };
     if (c && isMobile()) shShut(p0, $("#scenes .scbk"), ap); else ap(); }
-  else if (stp) call("input_boolean", "toggle", E("dynStop"));
+  else if (stp) { if (scDirect()) scdStopAll(); else call("input_boolean", "toggle", E("dynStop")); }
   else if (sc) call("input_text", "set_value", E("dynSelected"), { value: sc.dataset.v });
+  else if (r && r.classList.contains("scna")) return;
+  else if (r && scDirect()) scdTap(+r.dataset.r);
   else if (r) { const x = S.rooms[r.dataset.r]; send({ type: "call_service", domain: "script", service: "toggle_or_apply_dynamic_scene", service_data: { room_lights: x.l, presence_automation: x.p, room_boolean: x.b, room_scene_tracker: x.t } }); }
-  else if (g) { const x = S.lights[g.dataset.g]; send({ type: "call_service", domain: "script", service: "toggle_or_apply_gradient_scene", service_data: { select_entity: x.s, light_entity: x.l, speed_entity: x.v } }); }
+  else if (g) scGradTap(+g.dataset.g);
 };
 
+// ---------- Scene card on each room page (2.5.0) ----------
+// The Scenes page's controls for just the lights in this room: its zones and its LED lights in one list (LEDs tagged LED), greyed when they cannot play the
+// picked scene, with Rooms / LEDs tags under the scene name saying where it plays. A zone (config scenes.rooms: { n, b, t, l, p }) belongs to the room whose lights it shares most
+// (or the room named by its "room" key); a gradient light (scenes.lights: { n, l, s, v }) to the room that has that light. Everything reads and calls the same
+// Home Assistant helpers and scripts as the Scenes page, so both pages always agree:
+//   tap a zone   -> script.toggle_or_apply_dynamic_scene (same fields as the Scenes page)    tap a gradient light -> script.toggle_or_apply_gradient_scene
+//   CHANGE       -> a sheet with the scene pictures; picking one sets the house-wide pick (entities.dynSelected), then tap the zones to paint them
+//   STOP THIS ROOM -> turns off this room's zone switches (and its gradient lights); STOP ALL -> the Scenes page's Stop scenes (entities.dynStop)
+let RSP = { open: false, f: "all" };
+Object.assign(MDI, { "led-strip": "M2,15H22V19H2V15M4,9.5A2,2 0 1,0 8,9.5A2,2 0 1,0 4,9.5M10,9.5A2,2 0 1,0 14,9.5A2,2 0 1,0 10,9.5M16,9.5A2,2 0 1,0 20,9.5A2,2 0 1,0 16,9.5Z", speedometer: "M12,16A3,3 0 0,1 9,13C9,11.88 9.61,10.9 10.5,10.39L20.21,4.77L14.68,14.35C14.18,15.33 13.17,16 12,16M12,3C13.81,3 15.5,3.5 16.97,4.32L14.87,5.53C14,5.19 13,5 12,5A8,8 0 0,0 4,13C4,15.21 4.89,17.21 6.34,18.65H6.35C6.74,19.04 6.74,19.67 6.35,20.06C5.96,20.45 5.32,20.45 4.93,20.07V20.07C3.12,18.26 2,15.76 2,13A10,10 0 0,1 12,3M22,13C22,15.76 20.88,18.26 19.07,20.07V20.07C18.68,20.45 18.05,20.45 17.66,20.06C17.27,19.67 17.27,19.04 17.66,18.65V18.65C19.11,17.2 20,15.21 20,13C20,12 19.81,11 19.46,10.1L20.67,8C21.5,9.5 22,11.18 22,13Z" });
+const rsLights = r => members(roomLights(r));
+// Which room a zone goes to: its own room: "<id>" key; else the room that has the most of its lights (light groups expanded where Home Assistant lists
+// their members; Zigbee2MQTT groups do not, so the next step is needed); else the room whose name, sections and tile names share the most words with the
+// zone's name and its switch id (input_boolean.master_bathroom_dynamic_scene -> master, bathroom). Generic words (light, lights, room, led, scene...) do not count.
+const RS_SKIP = { light: 1, lights: 1, room: 1, rooms: 1, led: 1, leds: 1, scene: 1, dynamic: 1, the: 1, and: 1, one: 1, two: 1, three: 1, four: 1, input: 1, boolean: 1, area: 1, all: 1, left: 1, right: 1, switch: 1 };
+// a light's "key": its id without the domain, the light(s)_ prefix and the one / two / three ... part, so light.light_one_outdoor_grg and the group
+// light.lights_outdoor_grg both read outdoor_grg (how the zone lights and the room's group lights are named)
+const rsKey = e => String(e || "").replace(/^light\./, "").replace(/^lights?_/, "").replace(/(^|_)(one|two|three|four|five|six|seven|eight)(?=_|$)/g, "").replace(/^_+|_+$/g, "").replace(/__+/g, "_");
+const rsWords = t => String(t || "").toLowerCase().replace(/^[a-z_]+\./, "").replace(/_dynamic_scene$/, "").split(/[^a-z0-9]+/).filter(w => w.length > 1 && !RS_SKIP[w]);
+function rsMap() {   // zone index / gradient index -> room id, worked out once per draw
+  const S = CONFIG.scenes, H = HOUSE(), L = {}, N = {}, T = {};
+  const K = {}; H.forEach(x => { L[x.id] = rsLights(x); K[x.id] = L[x.id].map(rsKey); N[x.id] = rsWords(x.name).concat(rsWords(x.id));
+    const tiles = []; (x.sections || []).forEach(sc => { tiles.push(sc.name); (sc.items || []).forEach(it => { const e = typeof it === "string" ? it : it.entity; tiles.push(typeof it === "object" && it.name ? it.name : fname(e || "")); }); });
+    members(x.lights).concat(members(x.lightSwitches || [])).forEach(e => tiles.push(fname(e))); T[x.id] = [].concat.apply([], tiles.map(rsWords)); });
+  const owner = (ls, words) => {
+    let best = "", n = 0; H.forEach(x => { const k = ls.filter(e => L[x.id].indexOf(e) > -1).length; if (k > n) { n = k; best = x.id; } }); if (best) return best;
+    H.forEach(x => { const k = ls.filter(e => K[x.id].indexOf(rsKey(e)) > -1).length; if (k > n) { n = k; best = x.id; } }); if (best) return best;   // light.light_one_outdoor_grg ~ the group light.lights_outdoor_grg
+    let sc = 0; H.forEach(x => { const k = words.reduce((a, w) => a + (N[x.id].indexOf(w) > -1 ? 3 : T[x.id].indexOf(w) > -1 ? 1 : 0), 0); if (k > sc) { sc = k; best = x.id; } }); return best;
+  };
+  return { z: (S.rooms || []).map(x => x.room || owner(members([].concat(x.l || [])), rsWords(x.n).concat(rsWords(x.b), [].concat.apply([], [].concat(x.l || []).map(rsWords))))), g: (S.lights || []).map(x => x.room || owner(members([].concat(x.l || [])), rsWords(x.n).concat(rsWords(x.l)))) };
+}
+function rsFor(r) {   // { z: [zone index], g: [gradient light index] } for a room, or null when the Scenes page is not set up
+  const S = CONFIG.scenes; if (!S || !Array.isArray(S.rooms) || !r) return null;
+  const M = rsMap(), z = M.z.map((id, i) => id === r.id ? i : -1).filter(i => i > -1), g = M.g.map((id, i) => id === r.id ? i : -1).filter(i => i > -1);
+  return z.length || g.length ? { z: z, g: g } : null;
+}
+function rsIds() { const S = CONFIG.scenes; if (!S) return []; const o = [E("dynSelected"), E("dynBrightness"), E("dynInterval"), E("dynStop")]; (S.rooms || []).forEach(x => o.push(x.b, x.t)); (S.lights || []).forEach(x => o.push(x.l, x.s, x.v)); return o.filter(Boolean); }
+const rsPic = v => scPicFor(v);
+function rsHtml(r) {   // the card's body (drawRoom puts it in a panel called "Scene")
+  scdLoad();
+  const m = rsFor(r); if (!m) return "";
+  const S = CONFIG.scenes;
+  return '<div class="rsc" data-rid="' + esc(r.id) + '"><div class="rsh"><i class="rsth">' + mdi("palette") + '</i><div class="rsn"><b>--</b><div class="sctags"></div><small>Pick a scene, then tap a light</small></div><button class="eb" data-rsp="1">CHANGE</button></div>' +
+    '<div class="rsz">' + m.z.map(i => '<button class="rzc" data-rz="' + i + '"><span>' + esc(S.rooms[i].n) + '</span><small>--</small></button>').join("") + m.g.map(i => '<button class="rzc" data-rg="' + i + '"><span>' + esc(S.lights[i].n) + '</span><em class="sclt">LED</em><small>--</small></button>').join("") + '<div class="lbl rsno" hidden>No light here can play this scene. Pick another with CHANGE.</div></div>' +
+    [[E("dynBrightness"), "Brightness", "brightness-6"]].concat(m.z.length ? [[E("dynInterval"), "Interval", "timer"]] : []).concat(m.g.map(i => [S.lights[i].v, S.lights[i].n + " speed", "speedometer", i])).filter(x => x[0] && states[x[0]]).map(x => '<div class="mv rsv"' + (x[3] !== undefined ? ' data-spd="' + x[3] + '" hidden' : "") + '><span>' + mdi(x[2]) + ' ' + esc(x[1]) + '</span><input type="range" data-nb="' + x[0] + '"><b class="nbv">--</b></div>').join("") +   // Interval paces the zones; a gradient light has its own effect speed
+    '<div class="rss"><button class="eb rsst" data-rss="1">' + mdi("stop-circle") + 'STOP THIS ROOM</button>' + (states[E("dynStop")] || scDirect() ? '<button class="eb" data-rsa="1">STOP ALL</button>' : "") + '</div></div>';
+}
+function rsUpd() {
+  const c = $("#rv .rsc"); if (!c) return;
+  const S = CONFIG.scenes, v = sv(E("dynSelected")) || "", fn = v ? rsPic(v) : "";
+  $(".rsn b", c).textContent = v ? title(v) : "No scene picked"; { const tg = $(".rsn .sctags", c); if (tg) tg.innerHTML = scTags(v, true); }
+  { const th = $(".rsth", c), im = $("img", th); if (fn) { if (!im || im.getAttribute("src") !== fn) th.innerHTML = '<img alt="" src="' + fn + '">'; } else if (im || !$("svg", th)) th.innerHTML = mdi("palette"); }
+  let on = 0, all = 0;
+  $$("[data-rz]", c).forEach(el => { const z0 = scZoneState(+el.dataset.rz), t = z0.scene, o = z0.on; all++; if (o) on++; const na = !o && !scZoneCan(v); el.classList.toggle("scna", na); el.classList.toggle("on", o); $("small", el).textContent = o ? (t ? title(t) : "ON") : na ? "LEDs only" : "OFF"; });   // a zone that cannot play the picked scene (an LED-only one) is greyed
+  $$("[data-rg]", c).forEach(el => { all++; if (scGradState(el, +el.dataset.rg, "small")) on++; });
+  { const n = $(".rsno", c); if (n) n.hidden = !!$$(".rzc", c).filter(x => !x.classList.contains("scna")).length; }
+  const lb = c.closest(".pn") && c.closest(".pn").querySelector(".lbl.hd .rcnt"); if (lb) lb.textContent = "· " + (on ? on + " of " + all + " on" : "all off");
+  $$("[data-nb]", c).forEach(r => { const s = states[r.dataset.nb]; if (!s) return; const a = s.attributes; r.min = a.min != null ? a.min : 0; r.max = a.max != null ? a.max : 100; r.step = a.step || 1; if (document.activeElement !== r) { r.value = s.state; $(".nbv", r.parentNode).textContent = Math.round(+s.state); } });
+  const st = $("[data-rss]", c); if (st) st.disabled = !on;
+}
+function rsSheet() {   // the scene pictures as a sheet, opened by CHANGE: the same library and ALL / ROOMS / LEDS chips as the Scenes page
+  let el = $("#rsp"); if (!el) { el = document.createElement("div"); el.id = "rsp"; document.body.appendChild(el); el.addEventListener("click", rsSheetClick); }
+  if (!RSP.open) { el.classList.remove("on"); el.innerHTML = ""; return; }
+  const v = sv(E("dynSelected")) || "", L = scLib(RSP.f);
+  el.innerHTML = '<div class="rspx" role="dialog" aria-modal="true" aria-label="Pick a scene"><div class="rsph"><div><span class="lbl">Pick a scene</span><h3>' + esc(curRoom ? curRoom.name : "") + '</h3></div><button class="evx" data-rspx="1" aria-label="Close">' + mdi("close") + '</button></div>' +
+    scChips(RSP.f, "data-rsm") +
+    '<div class="rspl">' + L.map(c => '<div class="lbl" style="margin:10px 0 8px">' + esc(c[0]) + '</div><div class="gal">' + c[1].map(scTile).join("") + '</div>').join("") + '</div></div>';
+  $$("#rsp .sc").forEach(x => x.classList.toggle("on", x.dataset.v === v));
+  el.classList.add("on");
+}
+function rsSheetClick(e) {
+  const t = e.target, m = t.closest("[data-rsm]"), sc = t.closest(".sc[data-v]");
+  if (m) { RSP.f = m.dataset.rsm; rsSheet(); return; }
+  if (sc) { call("input_text", "set_value", E("dynSelected"), { value: sc.dataset.v }); RSP.open = false; rsSheet(); return; }
+  if (t.closest("[data-rspx]") || t.id === "rsp") { RSP.open = false; rsSheet(); }
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape" && RSP.open) { RSP.open = false; rsSheet(); } });
+function rsClick(e) {   // clicks inside the room page's Scene card (13-rooms.js hands them over)
+  const c = e.target.closest(".rsc"); if (!c) return false;
+  const S = CONFIG.scenes, z = e.target.closest("[data-rz]"), g = e.target.closest("[data-rg]");
+  if (e.target.closest("[data-rsp]")) { const m = rsFor(curRoom) || { z: [], g: [] }; RSP.f = m.z.length && m.g.length ? "all" : m.g.length ? "led" : "room"; RSP.open = true; rsSheet(); }
+  else if (e.target.closest(".scna")) return true;
+  else if (z && scDirect()) scdTap(+z.dataset.rz);
+  else if (z) { const x = S.rooms[z.dataset.rz]; send({ type: "call_service", domain: "script", service: "toggle_or_apply_dynamic_scene", service_data: { room_lights: x.l, presence_automation: x.p, room_boolean: x.b, room_scene_tracker: x.t } }); }
+  else if (g) scGradTap(+g.dataset.rg);
+  else if (e.target.closest("[data-rss]")) { const m = rsFor(curRoom); if (m) { m.z.forEach(i => { const x = S.rooms[i]; if (scDirect()) { if (scdZone(i).on) scdStop(i); return; } if (x.b && isOn(x.b)) call("input_boolean", "turn_off", x.b); }); m.g.forEach(i => { const x = S.lights[i]; if (isOn(x.l)) call("light", "turn_off", x.l); }); } }
+  else if (e.target.closest("[data-rsa]")) { if (scDirect()) scdStopAll(); else call("input_boolean", "toggle", E("dynStop")); }
+  return true;
+}
+// ---------- Scenes without Home Assistant helpers (scenes.mode: "direct", 2.5.0) ----------
+// The dashboard runs the scenes itself through the scene_presets integration, so the per-zone toggles, the "active scene" texts, the automation and the
+// toggle / apply scripts are not needed. What it does on a tap is what that automation did:
+//   start a zone:  adaptive lighting off (zone "a", and scenes.adaptiveLed) -> presence override start for 4 h (scenes.presenceScript, zone "p")
+//                  -> scene_presets.start_dynamic_scene (the preset's id, the zone's lights "l", Brightness, Interval, transition)
+//   stop a zone:   scene_presets.stop_dynamic_scenes_for_targets -> presence override stop -> then, when the room is occupied (zone "s" on) presence
+//                  override refresh, else the zone's turn-off script ("off") or its light group ("g", else its lights) off -> adaptive lighting back on
+//   an LED light:  light on at Brightness, its select to the scene (its own spelling), its speed number set again; tapped again on the same scene: off
+// What is running comes from scene_presets.get_dynamic_scenes (read every few seconds while a scenes view is open, and right after a tap).
+// The picked scene, Brightness and Interval stay in the three shared helpers (entities dynSelected / dynBrightness / dynInterval) so every screen agrees.
+// The preset ids are built in (every scene_presets preset, by name); scenes.presetIds { name: id } adds or overrides.
+const SC_PRESETS = {adrift:"67f8677a-ba4e-45d4-9a7e-601a7bdbd04d",amberbloom:"44f70646-9f9e-4a05-9c33-a42c11004dad",amberrobin:"ae6319a6-7c4f-4f85-87b9-ade7dc8e2c26",amethystvalley:"297700b8-fcc6-4f35-88bb-900935d9da49",amongthepines:"84edbfd4-968f-4fe5-b4c6-484a0e5d4aff",arcticaurora:"940fd864-51e1-4761-95d3-75d4d68835ea",arise:"d7225176-5cb9-47f3-ab99-8ca9908866fc",autumngold:"1f0ef091-949a-4efe-a7ed-c396cea3423a",babysbreath:"320cbf0d-36fc-4356-a8f5-82028760a53f",bahrain:"ad69cf77-3068-489b-96e8-1aa6e20759a7",beginnings:"dfac784a-5df9-4d7d-8866-df77ded6182b",bloodmoon:"8d0f34db-78fd-475d-9bed-a502b787964d",blossom:"d648408d-58ab-4768-b192-47ce06dc8e61",bluelagoon:"58d2dda6-8689-46c7-931b-d3abd039f04b",blueplanet:"369f2c22-2456-45f4-a91a-33d2c03c2c11",bright:"84ebc26c-9d61-4d25-830c-41ea66f1c325",cancun:"c321d848-51a8-4d09-9ad0-5e6b44bc7f2c",cga:"9565033d-f2ea-4821-bfba-7dd9b35be20a",chinatown:"7581da02-1688-4128-9bb9-b635f3b89999",cityoflove:"1fde4a1b-2ace-4b3a-a517-f9660fc84536",coastalnights:"1f9bcaa3-82c9-4393-a571-b8de9905c0f0",colorburst:"e24e9183-747e-4d4e-a950-a746c6291c90",concentrate:"0cbec4e8-d064-4457-986a-fe6078a63f39",coolbright:"6d10a807-7330-46d1-b093-c15520ba72c0",crocus:"cf25db7e-72b6-499f-8a5d-552e723a6c6a",crystalline:"713a3f4d-2fc9-4d5e-80a5-a20a25815197",dimmed:"8f55e62a-e5f8-456a-9e8b-61f314bd4e99",disturbia:"1a379a13-fd93-4f1d-977d-f0816b4385a4",downtowndrizzle:"18482f7d-4a18-4635-88c8-83c0695aa56c",dreamydusk:"a127f9ef-0371-48dc-bc79-852e2e5b2cc3",emeraldflutter:"95048fa7-6283-4253-9ca8-ad090b33f3e7",emeraldisle:"fa2f3a7f-7648-42f1-88b7-38692f3fcb60",energize:"0eeacfc5-2d81-4035-a23d-4a9bc02af965",fairfax:"abfc5768-5c2c-4d61-bd03-2b64660e813f",fallharvest:"a2fc579f-71e5-47a1-af9d-43e8edd91c6e",festivefun:"667e4f15-4abf-4c56-8ef4-74fe1df422b8",firstlight:"2db685df-7ca9-42b6-9a09-7da9c5590398",forestadventure:"2233f218-fd5b-4fa7-a7fd-cbe81eea8e15",frostydawn:"8a896d0a-85d5-4658-86d7-8f8a10f4f1c9",fruitypopsicle:"77cf9ffd-5491-47cd-83d6-2f0e806b4cb0",fuchsiafrost:"7deef554-6a3a-4c92-b758-6a17aec25f02",galaxy:"a6ba3a6e-1e3a-41fd-84f2-f7b021935deb",glitzandglam:"2bf0e527-62ac-4203-b8a1-de06b0913fde",glowinggrins:"938da1ed-edbc-4cf0-b9ab-bdc3d7d0659f",goldenpond:"89c16361-391d-4346-b6d8-ac1eaf4de3dc",goldenstar:"a5a12d6a-430d-4324-9078-cf7a74538b52",hal:"78bbd5e7-720c-4343-9655-19602852e630",hazydays:"2d7f9e7a-5c94-4768-bd5a-6924d670dde0",hocuspocus:"00b65abf-df21-4f15-a379-c1742fb786fb",honolulu:"23ab68cc-3a82-4762-b9db-f0d1a483281d",horizon:"c137d626-522d-4717-8e12-f14c7f28034d",ibiza:"eaa0d424-ac66-4247-8342-06d2b128ac31",icyglow:"19175aca-cd4d-4e3d-b144-03f96edbf412",islandwarmth:"075aea9a-80c3-4bce-8c65-a8a3938054bd",jolly:"77d10893-7b6f-4586-a77b-694b2b78fd3a",juicywatermelon:"eebd67ce-5b73-4cb6-b926-bf4613c361b0",lakemist:"7c6e81e7-d89a-4759-ae9e-b7c41e3fc0cb",lakeplacid:"a489caa2-c7fd-4c01-b83c-2e7e87ce2cd6",lightcycles:"97648e18-758a-4382-99a4-8b657f4bb098",lily:"0834f278-ef59-4655-940c-a078650d2e86",lovebirds:"f1f5f209-ffcb-4734-8567-0819a2885214",magneto:"7fd8b7d2-7dd3-46b3-8188-23e34841eb98",majesticmorning:"a07439ee-8a0b-4d86-9378-687acf1c1954",memento:"c3058e2f-695d-445c-b859-b6567c856e4e",meriete:"bef16d30-1a75-4aac-83c0-5b9968481254",miami:"a592fa63-4ba6-4399-a120-1c0b79ac832d",midsummersun:"3529421e-fdeb-46bd-904f-3c2c2dc14aac",midwinter:"fd55a078-d6a3-4715-9176-5a4fcbf5b3e6",mistyridge:"680a54fc-3477-4909-8d99-f35a9dc87e50",moonlight:"a87a8467-82ff-43f8-aaf3-6649b57b1480",motown:"7dded6f8-a2aa-4726-b391-21e9a0f76eee",mountainbreeze:"24964f19-ad24-402d-ab79-aaec30cfa1d8",narcissa:"6b8cbab7-6090-484f-b0c2-43176e1bb044",nebula:"3c8662e5-e650-4f6a-a4b2-03b66d502f77",nightlight:"b6f58e22-677f-4670-8677-3dea4ac60383",nighttime:"cfdb43c7-ccb3-4dd1-b4c7-036e0d74aeb9",novemberhaze:"6550c445-3ed7-46b3-9d06-76f7e9ef7c4e",nutcracker:"33c32d2a-e5ad-4b26-8e6f-07090b4c6487",oceandawn:"e0b39d98-1485-446b-9324-672d3f18640d",oceanescape:"a62d217e-be67-4674-83d0-254a045793d9",orangefields:"d8436b74-84b3-4750-83ba-fead7d94144f",osaka:"5768805d-27c1-442e-b069-d20443485201",paintedsky:"467e2d6e-50e1-47eb-ac0f-ffd45d383a06",palmbeach:"e780c175-09a9-4080-978a-1d5909d8588f",pandemonium:"0cbcc8ed-5474-471c-b3c1-45b4acc555b1",pensive:"ad1b1e0d-191d-4144-aaa5-b85b2fc5dc10",phantom:"d824598f-0c09-4e67-beb2-972a8d5813e2",precious:"506abd58-b926-4786-bb35-3a52a0c0b4d4",promise:"0b8dcd68-9ad0-4722-b23f-5fddb24204ef",pumpkinpatch:"1ae2c539-9afa-4870-bb29-061c255f2177",pumpkinspice:"b592ea26-5c52-403d-9836-82140fc2b679",read:"035b6ecf-414e-4781-abc7-3911556097cb",relax:"e71b2ef3-1b15-4c4b-b036-4b3d6efe58f8",resplendent:"ce4a5344-e052-43da-904a-123d7c024bf3",rest:"e03267e7-9914-4f47-97fe-63c0bd317fe7",rio:"94fc428e-2855-4f67-877e-3d1e1dd95b7d",rollinghills:"49c61bae-d3ec-4df2-89a4-65235705f3a1",rome:"13be0e02-2004-4489-b2fa-fb05aeb3d1c4",rosysparkle:"cf50bd49-16b1-47fd-a020-b83072595f37",rubyglow:"454176dd-7d24-43de-86c4-ee73f8febbec",rubyromance:"68d97db1-eb52-4c03-8afc-eed5df30c417",sailingaway:"f2ac2635-8b9e-4d5f-a307-63bd55e60475",santorini:"b4211eac-fd8b-4025-900c-b86af13e9a55",saopaulo:"a84a9a0c-282d-4b55-8b9c-be9d85455623",savannasunset:"ea580cb0-149e-48e6-a729-2a500edfb924",scarletdream:"51960d8b-e47a-4b04-9163-28e3bbc91601",secam:"dbffbd71-7f65-428a-9ac7-0db51057d31a",shine:"ded92eba-901e-4675-8a77-2d17d95aac54",silentnight:"4760abd5-e5a6-425a-be32-8f37f6e2acfd",silverstone:"c2ba8a69-acdf-4ce1-8bb2-f1b3819f1c0f",singapore:"0e98b2b9-5643-4e2d-a2b2-13c5ae63a1c1",sleepy:"6170702c-f2fc-46fc-99ef-ac98b6c1293e",smitten:"a65a2815-52fb-4748-8e02-b607f96f70ea",snowcapped:"83cb8a6c-1290-42d2-9760-5654e8e821a5",snowsparkle:"6a794ffd-3564-493d-a9ad-a1abcec8b81c",soho:"3580a7b2-ef38-4f34-bb5b-6416dde9df81",spellbound:"0d2a6c4f-9c71-4279-950c-05f3f84b6dbd",springblossom:"2be1f2f4-4e47-4fcc-a99c-4195da6210ea",springlake:"f2661458-aad1-4467-97cf-8ccd46abec4e",stadium:"f587060a-c4a1-4885-87ff-54c247fb29e6",starlight:"a2f95aab-e80a-4aca-ae32-142cdc7ad3e0",stillwaters:"0629d5c4-ecbb-4ffd-afc3-6e6239e5e25d",storybook:"4f76cd74-28db-455b-9c11-04654be86281",summersplash:"fd02c728-e90e-4abd-b1bf-6b2f2acb0b11",sundaymorning:"2cbd7faf-f06f-4fe7-98af-80c7e7f3e437",sundown:"82c6ea11-70f9-4dab-9163-c9a94f8cff55",sunflare:"2f9ca2fb-dabb-4780-93cc-f9b169d94963",sunsetallure:"68e8b68e-8237-48a6-bf5f-f62258dd2ff3",suzuka:"8072c23c-c25e-425f-b93e-0402c169f1f3",toilandtrouble:"074338f3-f7f3-4402-9f30-46ac70e5a0e6",tokyo:"de7eda64-84bf-4ed6-a4fa-76e0ebdd1968",trickortreat:"8a363ceb-f4c2-4c7f-9cd3-a71a6181b471",tropicaltwilight:"ffbf7ff8-dc4a-4c56-b157-7a59113be7b7",tyrell:"66893c7e-4535-46d4-b9c7-fb6f5a80faa9",underthetree:"85b8bc42-c564-4661-b058-f4e5792a6a6c",unwind:"f7c2f4ce-f957-4745-b9bf-651d5b81c9a6",valetudo:"4bc4f958-b4af-46cf-8e67-636161e714f5",valleydawn:"b7529bf3-2efc-4cd2-88aa-c9afbfaec604",vaporwave:"3984c3b7-6608-482f-84be-d2ffe39dbb1a",warmembrace:"73b2c0b3-b4c5-4307-8873-eb231c83e996",winterbeauty:"f125982c-82fa-428f-b494-39f7395def73",wintermountain:"ce64b00b-efa9-45b0-ad34-9b56776fe8ba",witchinghour:"2ad04284-2f0a-40d9-b2a9-6b929a475fa1",woodlandtoadstool:"ad0fe6ac-5877-4dc7-8386-6d4e8a17ea88",zandvoort:"f85558ad-f8db-461a-8ff3-7458e9f7320f"};
+const scDirect = () => !!CONFIG.scenes && CONFIG.scenes.mode === "direct";
+const SCD = { list: [], t: 0, busy: false, tm: 0 };
+function scPresetId(v) { const x = (CONFIG.scenes.presetIds || {}), n = scNorm(String(v || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "")); const k = Object.keys(x).find(q => scNorm(q) === n); return k ? x[k] : SC_PRESETS[n] || SC_PRESETS[SC_ALIAS[n]] || ""; }
+function scPresetName(id) { const x = CONFIG.scenes.presetIds || {}; const k = Object.keys(x).find(q => x[q] === id); if (k) return k; const n = Object.keys(SC_PRESETS).find(q => SC_PRESETS[q] === id) || "";
+  const all = [].concat(...(CONFIG.scenes.preset || []).map(c => c[1].map(y => y[1]))), m = all.find(y => scNorm(y) === n || SC_ALIAS[scNorm(y)] === n); return m || n; }   // the scene's name as the Scenes page spells it
+function scdLoad(soon) {   // what scene_presets is running now
+  if (!scDirect()) return; clearTimeout(SCD.tm); if (soon) { SCD.tm = setTimeout(() => scdLoad(), soon); return; }
+  if (SCD.busy) return; SCD.busy = true;
+  send({ type: "call_service", domain: "scene_presets", service: "get_dynamic_scenes", service_data: {}, return_response: true }, (r, m) => {
+    SCD.busy = false; if (m && m.success === false) return; const L = (((r || {}).response || {}).dynamic_scenes) || [];
+    const k = JSON.stringify(L.map(x => [x.id, (x.parameters || {}).preset_id, (x.parameters || {}).light_entity_ids])); SCD.t = Date.now(); if (k === SCD.k) return; SCD.k = k; SCD.list = L;
+    if (curPg() === "scenes") updScenes(); if (curRoom) rsUpd(); });
+}
+setInterval(() => { if (scDirect() && !document.hidden && (curPg() === "scenes" || (curRoom && $("#rv .rsc")))) scdLoad(); }, 5000);
+function scdZone(i) {   // { on, scene } for a zone, from what is running
+  const z = CONFIG.scenes.rooms[i], ls = members([].concat(z.l || [])), d = SCD.list.find(x => ((x.parameters || {}).light_entity_ids || []).some(e => ls.indexOf(e) > -1));
+  return d ? { on: true, scene: scPresetName((d.parameters || {}).preset_id) } : { on: false, scene: "" };
+}
+function scZoneState(i) {   // the same answer in both modes: helpers (input_boolean + input_text) or direct
+  if (scDirect()) return scdZone(i);
+  const R = CONFIG.scenes.rooms[i], t = sv(R.t) || "", on = R.b && states[R.b] ? isOn(R.b) : !!t; return { on: on, scene: t };
+}
+const scdList = x => [].concat(x || []).filter(Boolean);
+function scdStart(i) {
+  const S = CONFIG.scenes, z = S.rooms[i], v = sv(E("dynSelected")) || "", id = scPresetId(v); if (!id) return;
+  const br = +sv(E("dynBrightness")), iv = +sv(E("dynInterval")), ps = S.presenceScript === false ? "" : (S.presenceScript || "script.presence_override").replace(/^script\./, ""), L = [];
+  // adaptive lighting off first, or it sets the lights to its own brightness as they turn on
+  scdList(z.a).forEach(a => L.push(["switch", "turn_off", a])); if (S.adaptiveLed) L.push(["automation", "turn_off", S.adaptiveLed]);
+  if (ps && scdList(z.p).length) L.push(["script", ps, undefined, { command: "start", targets: scdList(z.p), duration: S.overrideFor || "04:00:00" }]);
+  L.push(["scene_presets", "start_dynamic_scene", undefined, Object.assign({ preset_id: id, targets: { entity_id: scdList(z.l) }, transition: S.transition != null ? +S.transition : 5 }, isNaN(br) ? {} : { brightness: Math.round(br * 2.55) }, isNaN(iv) ? {} : { interval: Math.round(iv) })]);
+  scdSeq(L, () => { scdLoad(600); setTimeout(() => scdLoad(), 2500); });
+}
+// one call after another, each waiting for Home Assistant to finish the one before (as the automation and scripts did); a number is a wait in ms
+function scdSeq(L, done) { const go = () => { const n = L.shift(); if (!n) return done && done(); if (typeof n === "number") return setTimeout(go, n);
+  send(n[2] !== undefined ? { type: "call_service", domain: n[0], service: n[1], service_data: n[3] || {}, target: { entity_id: n[2] } } : { type: "call_service", domain: n[0], service: n[1], service_data: n[3] || {} }, go); }; go(); }
+function scdStop(i, restore) {
+  const S = CONFIG.scenes, z = S.rooms[i], ps = S.presenceScript === false ? "" : (S.presenceScript || "script.presence_override").replace(/^script\./, ""), P = scdList(z.p), L = [];
+  L.push(["scene_presets", "stop_dynamic_scenes_for_targets", undefined, { targets: { entity_id: scdList(z.l) } }]);
+  if (ps && P.length) L.push(["script", ps, undefined, { command: "stop", targets: P }]);
+  L.push(500);
+  const rest = [];
+  // decided after the wait, when the presence sensor is up to date: someone there -> the presence automation puts the room's normal light back
+  const pick = () => { if (z.s && isOn(z.s) && ps && P.length) rest.push(["script", ps, undefined, { command: "refresh", targets: P }]);
+    else {
+      if (z.off) rest.push(["script", z.off.replace(/^script\./, ""), undefined, {}]);
+      else rest.push(["light", "turn_off", z.g || scdList(z.l), { transition: 5 }]);
+      // nobody there: wait for the lights to fade out before adaptive lighting comes back on, or it catches them still on mid-fade and sets them
+      // back to its own brightness (the lights stayed on at the normal level); then make sure they are off (not after a turn-off script: it may keep
+      // lights shared with another room on)
+      rest.push(6000); if (!z.off) rest.push(["light", "turn_off", scdList(z.l), {}]);
+    }
+    scdList(z.a).forEach(a => rest.push(["switch", "turn_on", a])); if (restore !== false && S.adaptiveLed) rest.push(["automation", "turn_on", S.adaptiveLed]); scdSeq(rest); scdLoad(800); };
+  scdSeq(L, pick);
+}
+function scdTap(i) { const st = scdZone(i), v = sv(E("dynSelected")) || ""; if (st.on && scSame(st.scene, v)) scdStop(i); else if (v) scdStart(i); }
+function scdLedTap(i) {
+  const x = CONFIG.scenes.lights[i], op = scOpt(i), br = +sv(E("dynBrightness"));
+  if (isOn(x.l) && (!op || sv(x.s) === op)) { call("light", "turn_off", x.l); return; }
+  if (!op) return;
+  const L = [["light", "turn_on", x.l, isNaN(br) ? {} : { brightness_pct: Math.round(br) }], ["select", "select_option", x.s, { option: op }]];
+  // setting the speed again starts the effect moving
+  if (x.v && states[x.v]) L.push([x.v.split(".")[0], "set_value", x.v, { value: +states[x.v].state }]);
+  scdSeq(L);
+}
+function scdStopAll() { CONFIG.scenes.rooms.forEach((z, i) => { if (scdZone(i).on) scdStop(i); }); send({ type: "call_service", domain: "scene_presets", service: "stop_all_dynamic_scenes", service_data: {} }); }
 // ---------- live updates for the new pages ----------
 const REL = {
   weather: rxj(/^(weather\.|geo_location\.|sun\.sun$)/, [(CONFIG.relevance || {}).weather, polRx()].filter(Boolean).join("|")),
@@ -5110,7 +5511,7 @@ const REL = {
   media: /^media_player\./,
   vehicle: new RegExp(((CONFIG.vehicle || {}).prefix || "\\u0000nomatch")),
   hazards: /^(geo_location\.|sensor\.volcano_|zone\.home$)/,
-  admin: (() => { const ids = (CONFIG.systemStatus || []).map(x => typeof x === "string" ? x : x && x.id).filter(Boolean); return ids.length ? new RegExp("^(" + ids.map(i => i.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")$") : /^\u0000$/; })()   // the System status tiles on the Admin page
+  admin: { test: id => sysIds().has(id) }   // the System status tiles on the Admin page
 };
 let pq = 0;
 function queuePg() { if (!pq) pq = requestAnimationFrame(() => { pq = 0; const p = curPg(); if (p === "weather") drawWeather(); else if (p === "irrigation") drawIrr(); else if (p === "scenes") updScenes(); else if (p === "media") drawMedia(); else if (p === "vehicle") drawVehicle(); else if (p === "hazards") drawHaz(); else if (p === "admin") sysUpd(); }); }
@@ -5387,7 +5788,7 @@ function secTab(t) {   // Security page: LIVE (alarm + cameras) or DETECTIONS (l
   const pg = $("#security"), tb = $("#stabs"), has = dtCams().length && CONFIG.detections !== false && ruSec("detections"); pg.dataset.tab = has ? t : "live";
   tb.style.display = has ? "" : "none"; tb.innerHTML = has ? [["live", "LIVE", "#security"], ["det", "DETECTIONS", "#security/detections"]].map(x => '<button class="chip' + (pg.dataset.tab === x[0] ? " on" : "") + '" data-st="' + x[2] + '">' + x[1] + '</button>').join("") : "";
   if (pg.dataset.tab === "det") { stopCams(); dtInit(); } else drawAlarm();
-  if (secPrev && secPrev !== pg.dataset.tab) { const d = pg.dataset.tab === "det" ? 1 : -1; ["#alp", "#scams", "#dtp"].forEach(q => txGo($(q), d, true)); }   // same slide as the Rooms tabs
+  if (secPrev && secPrev !== pg.dataset.tab) { const d = pg.dataset.tab === "det" ? 1 : -1; ["#alp", "#sectog", "#scams", "#dtp"].forEach(q => txGo($(q), d, true)); }   // same slide as the Rooms tabs
   secPrev = pg.dataset.tab;
 }
 let secPrev = "";
@@ -5630,10 +6031,14 @@ function accSec(sec) {
   accLoad();
   const ent = states[E("access")], M = accMap(), pages = RU_ALL.filter(p => !Array.isArray(CONFIG.pages) || CONFIG.pages.indexOf(p) > -1 || p === "home");
   let h = '<div class="lbl acc-h">Choose what each person can see. Admins always see everything. Changes apply on their screen straight away.</div>';
+  // The choices are kept in the helper, so a helper Home Assistant resets loses them: one set up in YAML with an initial: value goes back to that value at every restart.
+  if (ent && (ent.attributes || {}).editable === false) { const junk = ent.state && !/=/.test(ent.state) && !/^(unknown|unavailable)$/.test(ent.state);
+    h += '<div class="acc-n acc-w">' + esc(E("access")) + ' is set up in YAML (configuration.yaml or a package)' + (junk ? ' and it holds “' + esc(ent.state) + '”, which looks like an <b>initial:</b> value' : "") + '. If its YAML has an <b>initial:</b> line, Home Assistant puts that value back at every restart and the switches below go back to off. Remove the <b>initial:</b> line and restart, or delete the YAML and create the helper in Settings → Devices &amp; services → Helpers → Text (maximum length 255).</div>'; }
   if (!ACC.users) return accWrap(h + '<div class="acc-n">Loading people…</div>');
   if (!ACC.users.length) return accWrap(h + '<div class="acc-n">No other Home Assistant users yet. Add a person with non-admin access and they will show up here.</div>');
   const id = E("access"), cfgSet = !!(CONFIG.entities && CONFIG.entities.access);
   if (!ent) h += '<div class="acc-n acc-w">' + (cfgSet ? 'The dashboard is looking for <b>' + esc(id) + '</b>, but Home Assistant has no entity with that id. Open Developer tools → States and search for it; if the id is different, put the real one in config.js (<b>entities → access</b>). Settings → Devices &amp; services → Helpers → Text, maximum length 255.' : 'config.js has no <b>access</b> line under <b>entities</b> (or this device is still using an old copy: raise <b>?v=</b> on the config.js line and hard-refresh). Then create a text helper: Settings → Devices &amp; services → Helpers → Text, name it <b>Dashboard access</b>, maximum length 255.') + ' Until then nothing can be saved.</div>';
+  if (ACC.err) h += '<div class="acc-n acc-w">' + esc(ACC.err) + '</div>';
   h += ACC.users.map(u => {
     const k = u.id.slice(0, 8), n = M[k], on = n != null, fixed = !on && ruFind(u.name, ""), cnt = on ? RU_ALL.filter((p, i) => n & (1 << i)).length : 0;
     const rms = accRooms(), nr = on ? rms.filter((r, q) => !accBit(n, 17 + q)).length : 0, rsum = on && nr < rms.length ? " · " + nr + (nr === 1 ? " room" : " rooms") : "";
@@ -5647,7 +6052,7 @@ function accSec(sec) {
   }).join("");
   return accWrap(h);
 }
-function accSave(M) { const v = accEncode(M); if (v.length > 255) return false; const id = E("access"); states[id] = Object.assign({}, states[id], { state: v }); call("input_text", "set_value", id, { value: v }); ruRefresh(); if (curPg() === "admin") drawAdmin(); else if (curPg() === "theme") drawPalette(); return true; }   // Access lives on the Admin page now: redraw that (it used to redraw the Theme page, so taps saved but the switch and chips never changed on screen)
+function accSave(M) { const v = accEncode(M); if (v.length > 255) return false; const id = E("access"); states[id] = Object.assign({}, states[id], { state: v }); ACC.err = ""; send({ type: "call_service", domain: "input_text", service: "set_value", service_data: { value: v }, target: { entity_id: id } }, (r, m) => { if (m && m.success === false) { ACC.err = "Home Assistant did not save this change" + (m.error && m.error.message ? ": " + m.error.message : "") + ". It will be gone after a reload."; if (curPg() === "admin") drawAdmin(); } }); ruRefresh(); if (curPg() === "admin") drawAdmin(); else if (curPg() === "theme") drawPalette(); return true; }   // Access lives on the Admin page now: redraw that (it used to redraw the Theme page, so taps saved but the switch and chips never changed on screen)
 function accClick(b) {
   if (b.dataset.acc === "fold") { const k = b.dataset.u, w = b.closest(".acc-u"), o = !w.classList.contains("open"); ACC.fold[k] = o; w.classList.toggle("open", o); b.setAttribute("aria-expanded", o); $(".acct", b).innerHTML = mdi(o ? "chevron-up" : "chevron-down"); return; }
   if (!states[E("access")]) return;
@@ -5737,19 +6142,75 @@ function secPills(page, host, anchor, min) {
 })();
 // ---------- Admin page: for Home Assistant admins only (nav link hidden for everyone else, and #admin sends other people home) ----------
 // Holds what used to sit at the bottom of the Theme page: who can see which pages (Access), plus the setup check, and a few facts about this dashboard.
-// config.js: systemStatus: [{ id: "binary_sensor.zigbee2mqtt_bridge_connection_state", name: "Zigbee2MQTT" }, ...]  adds a "System status" block at the top of this page: one tile per
-// entity, green when it is on / online / connected, red when it is off / offline / disconnected, amber when unavailable, unknown or missing. Name is optional (the entity's own name is used).
-const sysCfg = () => (CONFIG.systemStatus || []).map(x => typeof x === "string" ? { id: x } : x).filter(x => x && x.id);
+// config.js systemStatus adds a "System status" block at the top of this page. Two forms:
+//   systemStatus: [{ id: "binary_sensor.zigbee2mqtt_bridge_connection_state", name: "Zigbee2MQTT" }, ...]   one tile per entity (the old form; shown as one group)
+//   systemStatus: { network: [ tiles as above ], hardware: [ devices ] }   tiles under "Network", device cards under "Hardware"
+// A tile is green when it is on / online / connected, red when off / offline / disconnected, amber when unavailable, unknown or missing.
+// A device card (Proxmox node, VM, disk ...): { name: "Proxmox server", sub: "pve", prefix: "node_pve" }. With prefix, the card finds the Proxmox VE integration's entities itself:
+// binary_sensor.<prefix>_status / _health, sensor.<prefix>_cpu_used, _memory_used_percentage, _disk_used_percentage, _wearout, _temperature, _last_boot, _total_updates,
+// _virtual_machines_running, _containers_running, _memory_free, _power_on_hours, _power_cycles. Any of them can be given as an entity id instead, or false to leave it out
+// (keys: status, health, cpu, memory, disk, wear, temp, boot, updates, vms, cts, memfree, hours, cycles). Rows whose entity does not exist are skipped.
+// A card can sit under network too, for the router from the UPnP/IGD integration: { name: "Internet", sub: "Smart Modem 3", prefix: "smart_modem_3" } finds
+// binary_sensor.<prefix>_wan_status (the pill), sensor.<prefix>_external_ip, _download_speed and _upload_speed (keys wan, ip, down, up). Speeds are shown in Mbit/s whatever unit
+// the sensor uses; downMax / upMax (your plan, in Mbit/s) turn them into bars.
+// Bars turn amber from 80 % (warn) and red from 90 % (bad); temperature from 60 / 70 °C; wear from 50 / 80 %. warn / bad on a device change the bar limits.
+Object.assign(MDI, { server: "M4,1H20A1,1 0 0,1 21,2V6A1,1 0 0,1 20,7H4A1,1 0 0,1 3,6V2A1,1 0 0,1 4,1M4,9H20A1,1 0 0,1 21,10V14A1,1 0 0,1 20,15H4A1,1 0 0,1 3,14V10A1,1 0 0,1 4,9M4,17H20A1,1 0 0,1 21,18V22A1,1 0 0,1 20,23H4A1,1 0 0,1 3,22V18A1,1 0 0,1 4,17M9,5H10V3H9V5M9,13H10V11H9V13M9,21H10V19H9V21M5,3V5H7V3H5M5,11V13H7V11H5M5,19V21H7V19H5Z" });
+const SYSD = { status: "binary_sensor.@_status", health: "binary_sensor.@_health", cpu: "sensor.@_cpu_used", memory: "sensor.@_memory_used_percentage", disk: "sensor.@_disk_used_percentage", wear: "sensor.@_wearout",
+  temp: "sensor.@_temperature", wan: "binary_sensor.@_wan_status", ip: "sensor.@_external_ip", down: "sensor.@_download_speed", up: "sensor.@_upload_speed", boot: "sensor.@_last_boot", updates: "sensor.@_total_updates", vms: "sensor.@_virtual_machines_running", cts: "sensor.@_containers_running", memfree: "sensor.@_memory_free", hours: "sensor.@_power_on_hours", cycles: "sensor.@_power_cycles" };
+const sysTile = x => typeof x === "string" ? { id: x } : x;
+function sysGroups() {   // [[heading, tiles, devices], ...]
+  const c = CONFIG.systemStatus; if (!c) return [];
+  if (Array.isArray(c)) { const t = c.map(sysTile).filter(x => x && x.id); return t.length ? [["", t, []]] : []; }
+  const card = d => d && !d.id && (d.name || d.prefix), nl = (c.network || []).map(sysTile), net = nl.filter(x => x && x.id), nc = nl.filter(card), hw = (c.hardware || []).filter(card);
+  const out = []; if (net.length || nc.length) out.push(["Network", net, nc]); if (hw.length) out.push(["Hardware", [], hw]); return out;
+}
+const sysEnt = (d, k) => { const v = d[k]; if (v === false) return ""; if (typeof v === "string") return v; return d.prefix ? SYSD[k].replace("@", d.prefix) : ""; };
+function sysIds() { const ids = new Set(); sysGroups().forEach(g => { g[1].forEach(x => ids.add(x.id)); g[2].forEach(d => Object.keys(SYSD).forEach(k => { const e = sysEnt(d, k); if (e) ids.add(e); })); }); return ids; }
 const SYSW = { on: ["ok", "Connected"], online: ["ok", "Online"], connected: ["ok", "Connected"], off: ["bad", "Disconnected"], offline: ["bad", "Offline"], disconnected: ["bad", "Disconnected"] };
-function sysHtml() {
-  return sysCfg().map(x => {
+function sysTiles(tl) {
+  return tl.map(x => {
     const s = states[x.id], st = s ? String(s.state) : "", w = s ? SYSW[st] : null, k = w ? w[0] : "syw", t = !s ? "Not found" : w ? w[1] : st ? st.charAt(0).toUpperCase() + st.slice(1) : "Unknown";
     const ms = s ? Date.now() - Date.parse(s.last_changed || "") : NaN, nm = x.name || (s && s.attributes && s.attributes.friendly_name) || x.id;
     return '<div class="' + k + '"><small>' + esc(nm) + '</small><b>' + esc(t) + '</b>' + (isNaN(ms) ? "" : '<small class="sy">changed ' + attnAgo(ms) + ' ago</small>') + '</div>';
   }).join("");
 }
-function sysSec(sec) { return sysCfg().length ? sec("System status", '<div class="adm-f sys-st">' + sysHtml() + '</div>') : ""; }
-function sysUpd() { const b = $("#admin .sys-st"); if (b) { const h = sysHtml(); if (b.innerHTML !== h) b.innerHTML = h; } }   // only the tiles are redrawn, so the rest of the page (access list, config editor) is left alone
+const sysOk = e => { const s = states[e]; return !!s && !/^(unavailable|unknown)$/.test(s.state); };
+const sysNum = e => sysOk(e) ? parseFloat(states[e].state) : NaN;
+const sysFmt = (v, u) => isNaN(v) ? "" : (Math.abs(v) < 10 && v % 1 ? v.toFixed(1) : Math.round(v).toLocaleString()) + (u ? (u === "%" ? "%" : " " + u) : "");
+// network speeds in Mbit/s (the usual unit for internet speed), whatever unit the sensor reports (UPnP reports KiB/s)
+const SYSBPS = { "bit/s": 1e-6, "kbit/s": 1e-3, "Mbit/s": 1, "Gbit/s": 1e3, "B/s": 8e-6, "kB/s": 8e-3, "KB/s": 8e-3, "KiB/s": 8192e-6, "MB/s": 8, "MiB/s": 8388608e-6, "GB/s": 8e3, "GiB/s": 8589934592e-6 };
+const sysMbps = e => { const v = sysNum(e); if (isNaN(v)) return NaN; const f = SYSBPS[((states[e].attributes || {}).unit_of_measurement || "").trim()]; return f ? v * f : NaN; };
+const sysMb = v => (v < 10 ? v.toFixed(1) : Math.round(v).toLocaleString()) + " Mbit/s";
+function sysDev(d) {
+  const E2 = k => sysEnt(d, k), lim = (k, n) => { const w = d.warn != null ? +d.warn : k === "temp" ? 60 : k === "wear" ? 50 : 80, b = d.bad != null ? +d.bad : k === "temp" ? 70 : k === "wear" ? 80 : 90; return n >= b ? " bad" : n >= w ? " w" : ""; };
+  // the pill: Running / Stopped from the status entity, else the health entity (OK / Problem)
+  let pill = "";
+  const se = E2("status"), he = E2("health");
+  if (sysOk(se)) { const st = String(states[se].state).toLowerCase(), run = st === "on" || st === "running"; pill = '<span class="syp' + (run ? "" : " bad") + '">' + (run ? "RUNNING" : st === "off" ? "STOPPED" : esc(st.toUpperCase())) + '</span>'; }
+  else if (sysOk(he)) { const s = states[he], bad = (s.attributes || {}).device_class === "problem" ? s.state === "on" : s.state === "off"; pill = '<span class="syp' + (bad ? " bad" : "") + '">' + (bad ? "PROBLEM" : "HEALTH OK") + '</span>'; }
+  else if (sysOk(E2("wan"))) { const on = states[E2("wan")].state === "on" || /^connected$/i.test(states[E2("wan")].state); pill = '<span class="syp' + (on ? "" : " bad") + '">' + (on ? "CONNECTED" : "DISCONNECTED") + '</span>'; }
+  else if (se || he) pill = '<span class="syp w">' + (states[se || he] ? "UNAVAILABLE" : "NOT FOUND") + '</span>';
+  const be = E2("boot"), bt = sysOk(be) ? Date.parse(states[be].state) : NaN, up = !isNaN(bt) ? "up " + attnAgo(Date.now() - bt).replace(/ d$/, " days").replace(/^1 days$/, "1 day") : "";
+  const sub = [d.sub, up].filter(Boolean).join(" · ");
+  // download / upload: a bar against the plan speed when downMax / upMax (Mbit/s) are given, else the speed as a fact
+  const sp = [["down", "Download", d.downMax], ["up", "Upload", d.upMax]].map(q => [q[1], sysMbps(E2(q[0])), +q[2] || 0]).filter(q => !isNaN(q[1]));
+  const spb = sp.filter(q => q[2]).map(q => '<div class="sym"><span>' + q[0] + '</span><div class="syb"><i style="width:' + Math.max(1, Math.min(100, q[1] / q[2] * 100)) + '%"></i></div><em>' + sysMb(q[1]) + '</em></div>').join("");
+  const bars = spb + [["cpu", "CPU"], ["memory", "Memory"], ["disk", "Disk"], ["wear", "Wear"]].map(q => { const e = E2(q[0]), v = sysNum(e); if (isNaN(v)) return ""; const c = lim(q[0], v);
+    return '<div class="sym"><span>' + q[1] + '</span><div class="syb"><i class="' + c.trim() + '" style="width:' + Math.max(1, Math.min(100, v)) + '%"></i></div><em class="' + c.trim() + '">' + sysFmt(v, "%") + '</em></div>'; }).join("");
+  const facts = sp.filter(q => !q[2]).map(q => [q[0], sysMb(q[1]), ""]);
+  if (sysOk(E2("ip"))) facts.push(["IP", String(states[E2("ip")].state), ""]);
+  const he2 = sysOk(se) && sysOk(he) ? he : "";   // health as a fact when the pill already shows the status
+  if (he2) { const s = states[he2], bad = (s.attributes || {}).device_class === "problem" ? s.state === "on" : s.state === "off"; facts.push(["Health", bad ? "Problem" : "OK", bad ? " bad" : ""]); }
+  [["temp", "Temperature"], ["hours", "Powered on"], ["cycles", "Power cycles"], ["vms", "VMs"], ["cts", "Containers"], ["memfree", "Memory free"], ["updates", "Updates"]].forEach(q => {
+    const e = E2(q[0]), v = sysNum(e); if (isNaN(v)) return; const u = (states[e].attributes || {}).unit_of_measurement || "";
+    if (q[0] === "updates") return facts.push(["Updates", v ? sysFmt(v) + " waiting" : "up to date", v ? " w" : ""]);
+    facts.push([q[1], sysFmt(v, u), q[0] === "temp" ? lim("temp", v) : ""]); });
+  return '<div class="syd"><div class="sydh"><b>' + esc(d.name || d.prefix) + (sub ? '<small>' + esc(sub) + '</small>' : "") + '</b>' + pill + '</div>' + bars +
+    (facts.length ? '<div class="syf">' + facts.map(f => '<span class="' + f[2].trim() + '">' + f[0] + ' <b>' + esc(f[1]) + '</b></span>').join("") + '</div>' : "") + '</div>';
+}
+function sysHtml() { const G = sysGroups(); return G.map(g => (g[0] ? '<div class="lbl sysg">' + mdi(g[0] === "Network" ? "access-point-network" : "server") + g[0] + '</div>' : "") + (g[1].length ? '<div class="adm-f sys-st">' + sysTiles(g[1]) + '</div>' : "") + g[2].map(sysDev).join("")).join(""); }
+function sysSec(sec) { return sysGroups().length ? sec("System status", '<div class="sysw">' + sysHtml() + '</div>') : ""; }
+function sysUpd() { const b = $("#admin .sysw"); if (b) { const h = sysHtml(); if (b.innerHTML !== h) b.innerHTML = h; } }   // only the System status block is redrawn, so the rest of the page (access list, config editor) is left alone
 function drawAdmin() {
   const el = $("#admin"); if (!el || !ADMIN_ON()) return;
   const sec = (t, inner) => '<div class="pn pg"><div class="lbl">' + t + '</div>' + inner + '</div>';
@@ -5878,8 +6339,8 @@ $("#admin").addEventListener("change", e => {
 });
 $("#admin").addEventListener("toggle", e => { const d = e.target; if (d.classList && d.classList.contains("ce-s")) CE.open[d.dataset.k] = d.open; }, true);
 // ---------- Home weather shortcuts ----------
-[[".hs", "#weather/now"], ["#fcp", "#weather/week"]].forEach(q => { const x = $(q[0]); x.style.cursor = "pointer"; x.onclick = () => { location.hash = q[1]; }; });   // the greeting opens the Now card, the Forecast card opens Next 7 days
-
+[[".hs", "#weather/now"], ["#fcp", "#weather/week"]].forEach(q => { const x = $(q[0]); x.style.cursor = "pointer"; x.onclick = e => { const g = e.target.closest && e.target.closest("[data-go]"); if (g) { e.stopPropagation(); location.hash = g.dataset.go; return; } location.hash = q[1]; }; });   // the greeting opens the Now card, the Forecast card opens Next 7 days
+// in the greeting, "rain at 6 PM" opens the Rain forecast chart and the high / low arrows open the Temp chart (data-go, 10-home-page.js)
 // ---------- weather alerts: wind now, wind, rain and UV coming up (Notifications > Alerts card, and the header strip chips) ----------
 // Same tiers as a Home Assistant weather-alert automation: wind 30 / 62 / 89 km/h, rain 0.5 / 2 / 5 mm per hour over the next 6 hours, UV index 3 / 6 / 8 (Moderate / High / Very high; 11 and over reads Extreme).
 // config weatherAlerts: false = off, or { wind: true, rain: true, uv: true, windTiers: [30, 62, 89], rainTiers: [0.5, 2, 5], uvTiers: [3, 6, 8], hours: 6, stripWind: 1, stripRain: 1, stripUv: 2 }
@@ -5955,13 +6416,48 @@ function wxaRow(k, x) {
     sub = k === "rain" ? "Up to " + (+x.max.toFixed(1)) + " mm/h" : (k === "wind" ? wxaWindSub(x) : wxaUvSub(x)).join(" · "), val = k === "rain" ? +x.max.toFixed(1) : Math.round(x.v);
   return '<div class="wxa-s wxa-c wt' + x.tier + '" data-wxa="' + k + '">' + mdi(wxaIc[k](x)) + '<div><b>' + esc(title) + '</b><small>' + esc(sub) + '</small></div><em>' + val + '</em>' + mdi("chevron-right") + '</div>';
 }
+// ---------- the living card (2.5.0): the weather plays inside the card (rain falls, gusts sweep across, the sun turns in the corner; more of it for a higher tier)
+// and the next hours as bars under it, the hours over the first limit coloured and a dot on now. Several alerts: one card each, worst first; the others are one-line
+// strips with mini bars (tap one to open it as the big card). Tapping the big card opens that forecast chart on the Weather page.
+let WXA_OPEN = "";   // the alert shown as the big card when there are several ("" = the worst one)
+const wxaRnd = i => { const x = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); };   // the same "random" layout each time, so a redraw with the same data changes nothing
+function wxaSeries(k, x, c) {   // [{ v, t, now }] for the next hours: the live value first (wind, UV), then the hourly forecast
+  const a = (states[W] || {}).attributes || {}, now = Date.now(), end = now + c.hours * 3600000;
+  const u = a.wind_speed_unit || "km/h", kk = /mph/i.test(u) ? 1.609 : /m\/s/i.test(u) ? 3.6 : /kn|kt/i.test(u) ? 1.852 : 1;
+  const val = h => k === "wind" ? (h.wind_speed == null ? NaN : +h.wind_speed * kk) : k === "rain" ? +h.precipitation || 0 : parseFloat(h.uv_index);
+  const out = fcH.filter(h => { const t = Date.parse(h.datetime); return t > now - 1800000 && t <= end; }).map(h => ({ v: val(h), t: Date.parse(h.datetime) })).filter(h => !isNaN(h.v));
+  const live = k === "wind" && a.wind_speed != null ? +a.wind_speed * kk : k === "uv" && a.uv_index != null ? +a.uv_index : NaN;
+  if (!isNaN(live)) out.unshift({ v: live, t: now, now: 1 }); else if (out[0] && out[0].t <= now + 1800000) out[0].now = 1;
+  return out.slice(0, c.hours + 1);
+}
+function wxaBars(k, x, c, mini) {
+  const S = wxaSeries(k, x, c); if (S.length < 2) return "";
+  const t0 = x.t ? x.t[0] : c.rt[0], hi = v => k === "uv" ? v >= t0 : v > t0, mx = Math.max.apply(null, S.map(h => h.v).concat(k === "rain" ? c.rt[1] : k === "uv" ? c.ut[1] : c.wt[1]));
+  const bars = '<div class="wxb">' + S.map((h, i) => '<span class="' + (hi(h.v) ? "on" : "") + (h.now && !mini ? " now" : "") + '" style="height:' + Math.max(4, Math.round(h.v / mx * 100)) + '%;animation-delay:' + (i * 0.05).toFixed(2) + 's"></span>').join("") + '</div>';
+  if (mini) return bars;
+  const lb = [0, Math.round((S.length - 1) / 3), Math.round((S.length - 1) * 2 / 3), S.length - 1].filter((v, i, a) => a.indexOf(v) === i);
+  return bars + '<div class="wxk">' + lb.map(i => '<span>' + (S[i].now ? "now" : esc(wxaTime(S[i].t))) + '</span>').join("") + '</div>';
+}
+function wxaFx(k, tier) {   // the scene behind the card
+  if (k === "uv") return '<div class="wxf"><i class="wxsun"></i></div>';
+  if (k === "wind") return '<div class="wxf">' + Array.from({ length: 3 + tier * 3 }, (_, i) => '<i class="wxg" style="top:' + (6 + wxaRnd(i) * 86).toFixed(1) + '%;width:' + (22 + wxaRnd(i + 50) * 30).toFixed(0) + '%;animation-duration:' + ((2.6 - tier * 0.4) + wxaRnd(i + 9) * 1.1).toFixed(2) + 's;animation-delay:-' + (wxaRnd(i + 3) * 2.5).toFixed(2) + 's"></i>').join("") + '</div>';
+  return '<div class="wxf">' + Array.from({ length: 10 + tier * 14 }, (_, i) => '<i class="wxd" style="left:' + (wxaRnd(i) * 110).toFixed(1) + '%;animation-duration:' + ((1.05 - tier * 0.1) + wxaRnd(i + 7) * 0.5).toFixed(2) + 's;animation-delay:-' + (wxaRnd(i + 13) * 1.2).toFixed(2) + 's;opacity:' + (0.35 + wxaRnd(i + 21) * 0.6).toFixed(2) + '"></i>').join("") + '</div>';
+}
+function wxaParts(k, x) {   // [tag, title, sub, value, unit]
+  if (k === "rain") { const inT = !x.now && x.from > Date.now() ? (m => m >= 60 ? "in " + Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : "in " + m + " min")(Math.round((x.from - Date.now()) / 6e4)) : "";
+    return ["RAIN · " + WXA_R[x.tier].replace(/ rain$/, "").toUpperCase(), WXA_R[x.tier] + " " + wxaRainWhen(x), [inT, "up to " + (+x.max.toFixed(1)) + " mm/h"].filter(Boolean).join(" · "), +x.max.toFixed(1), "mm/h"]; }
+  if (k === "wind") return [(x.now ? "WIND NOW · " : "WIND FORECAST · ") + WXA_W[x.tier].toUpperCase(), WXA_NAME.wind(x) + (x.now ? " now" : " around " + wxaTime(x.fat)), wxaWindSub(x).filter(t => !/^Around /.test(t)).join(" · "), Math.round(x.v), "km/h"];
+  return [(x.now ? "UV NOW · " : "UV · ") + wxaUvName(x).toUpperCase(), wxaUvName(x) + " UV" + (x.now ? " now" : " from " + wxaTime(x.from || x.fat)), wxaUvSub(x).join(" · "), Math.round(x.v), "UV index"];
+}
+function wxaCard(k, x, c, small) {
+  const P = wxaParts(k, x), cls = "wxl wxl-" + k + " wt" + x.tier + (small ? " sm" : "");
+  if (small) return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, Math.min(x.tier, 1)) + '<div class="wxr"><div class="wxm"><div class="wxt"><i></i>' + esc(P[0]) + '</div><b>' + esc(P[1]) + '</b></div>' + wxaBars(k, x, c, true) + '<div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div></div>';
+  return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, x.tier) + '<div class="wxt"><i></i>' + esc(P[0]) + '</div><div class="wxr"><div class="wxm"><b>' + esc(P[1]) + '</b>' + (P[2] ? '<small>' + esc(P[2]) + '</small>' : "") + '</div><div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div>' + wxaBars(k, x, c, false) + '</div>';
+}
 function wxaHtml(w) {
-  const ks = ["wind", "rain", "uv"].filter(k => w[k]);
-  if (ks.length === 1) return '<div class="wxa">' + wxaFull(ks[0], w[ks[0]]) + '</div>';
-  if (WXA_FULL) return '<div class="wxa">' + ks.map(k => wxaFull(k, w[k])).join("") + '<div class="wxa-tg" data-wxatg="1"><span></span><span>Show summary' + mdi("chevron-up") + '</span></div></div>';
-  const top = ks.reduce((p, k) => !p || w[k].tier > w[p].tier ? k : p, null);
-  return '<div class="wxa"><div class="wxa-h wt' + w[top].tier + '">' + mdi("weather-partly-lightning") + '<b>' + ks.length + ' weather alerts</b><span class="pill">' + esc(WXA_NAME[top](w[top]).toUpperCase()) + '</span></div>' +
-    ks.map(k => wxaRow(k, w[k])).join("") + '<div class="wxa-tg" data-wxatg="1"><span>Tap a line for its forecast chart</span><span>Show full cards' + mdi("chevron-down") + '</span></div></div>';
+  const ks = ["wind", "rain", "uv"].filter(k => w[k]).sort((a, b) => w[b].tier - w[a].tier || (w[b].now ? 1 : 0) - (w[a].now ? 1 : 0));
+  const big = ks.indexOf(WXA_OPEN) > -1 ? WXA_OPEN : ks[0];
+  return '<div class="wxs">' + [big].concat(ks.filter(k => k !== big)).map(k => wxaCard(k, w[k], w.cfg, k !== big)).join("") + '</div>';
 }
 // the header strip: Strong / Severe wind, Heavy rain and Very high UV are urgent (hi = true), the lower tiers are not (see NSK in 32-notifications-popup.js). Each shows from its own first tier (stripWind / stripRain / stripUv).
 // Two or more weather chips become one chip ("wx": "3 weather alerts", coloured by the worst), which is urgent when any of them is.
@@ -6003,7 +6499,7 @@ function notif(full, f) {
   const tm = (CONFIG.notifTimers || []).filter(x => states[x] && states[x].state === "active");   // optional Timers card: config notifTimers ["timer.x", ...] (none by default; tiles show their own countdown, see tileTimers)
   n += tm.length;
   sec("Timers", tm.map(x => { const t = states[x].attributes, fin = Date.parse(t.finishes_at || "") || 0, dur = (t.duration || "0:00:00").split(":").reduce((p, q) => p * 60 + +q, 0) * 1000; return '<div class="ws" style="margin-bottom:8px"><span class="lbl">' + esc(fname(x)) + '</span><div class="lbl tmr" data-fin="' + fin + '">--</div><div class="zb"><i data-dur="' + dur + '"></i></div></div>'; }).join(""));
-  sec("Controls", TOG.map(g => { const c = parseInt(sv(g[1])) || 0, sub = c === 0 ? "All " + g[2] + "s active" : c + " " + g[2] + (c > 1 ? "s" : "") + " disabled"; return '<div class="ws" style="margin-bottom:10px"><span class="lbl">' + g[0] + '</span><div style="margin:6px 0 10px;color:var(--mut)">' + sub + '</div><div class="chips cscr">' + g[3].map(x => '<button class="chip' + (isOn(x[0]) ? " on" : "") + '" data-nt="' + x[0] + '"' + (x[2] ? ' data-sc="' + x[2] + '"' : "") + '>' + x[1] + '</button>').join("") + '</div></div>'; }).join(""));
+  // the Person / Vehicle alert switches (config adminToggles) live on the Security page now (secTog below); while one is off, Attention has a reminder
   const ai = attnItems();   // 33-attention.js: bins, dry soil, offline devices, updates, low batteries, pollen
   return { n: n, all: n + ai.length, html: h, na: ai.length, ah: full ? attnHtml(f ? ai.filter(x => x.k === f) : ai) : "", ai: ai };
 }
@@ -6066,6 +6562,16 @@ const actList = () => {
 const npDupIds = () => { const d = {}, add = e => { d[e] = 1; };   // what Active, the Doors card or the Bins card already lists
   ACTC.forEach(c => members(c[1]).forEach(add)); (CONFIG.activeAppliances || []).forEach(add); if (E("towelGroup")) members(E("towelGroup")).forEach(add);
   if (E("doorsGroup")) members(E("doorsGroup")).forEach(add); binsIds().forEach(add); return d; };
+// ---------- detection alert switches (config adminToggles): a slim strip on the Security page, above the cameras ----------
+// [label, counter, word, [[entity, name, script?], ...]]. Each chip turns that notification automation on / off (or runs its script); an off chip is red and says OFF.
+Object.assign(MDI, { "bell-off": "M20,18.69L7.84,6.14L5.27,3.49L4,4.76L6.8,7.56V7.57C6.28,8.56 6,9.73 6,11V17L4,19V20H18.73L20.73,22L22,20.73L20,18.69M12,22A2,2 0 0,0 14,20H10A2,2 0 0,0 12,22M18,14.68V11C18,7.92 16.36,5.36 13.5,4.68V4A1.5,1.5 0 0,0 12,2.5A1.5,1.5 0 0,0 10.5,4V4.68C10.27,4.73 10.05,4.8 9.84,4.87L18,13.03V14.68Z" });
+const togIds = () => TOG.reduce((a, g) => a.concat(g[3].map(x => x[0])), []);
+function secTogDraw() {
+  const el = $("#sectog"); if (!el) return;
+  const h = TOG.length && ruSec("controls") ? TOG.map(g => '<div class="pn sectg"><span class="lbl">' + esc(g[0].replace(/\s*security$/i, "")) + ' alerts</span><div class="sectc">' + g[3].map(x => { const on = isOn(x[0]); return '<button class="chip' + (on ? " on" : " off") + '" data-nt="' + x[0] + '"' + (x[2] ? ' data-sc="' + x[2] + '"' : "") + ' aria-pressed="' + on + '">' + esc(x[1]).toUpperCase() + (on ? "" : " OFF") + '</button>'; }).join("") + '</div></div>').join("") : "";
+  if (el._h !== h) { el._h = h; el.innerHTML = h; }
+}
+$("#sectog").addEventListener("click", e => { const c = e.target.closest("[data-nt]"); if (!c) return; if (c.dataset.sc) send({ type: "call_service", domain: "script", service: c.dataset.sc }); else call(c.dataset.nt.split(".")[0], "toggle", c.dataset.nt); });
 const NPFN = { leak: "Water leak", door: "Doors", garage: "Garage", warn: "Weather warning", wx: "Weather", bins: "Bins", bat: "Batteries", pol: "Pollen" };
 function npDismiss(ids) {
   ids = [].concat(ids); const now = Date.now(); let any = false;
@@ -6168,7 +6674,7 @@ $("#hc").onclick = e => {
 $("#nclk").onclick = () => $("#hc").click();   // tablet: the clock at the top of the side menu opens the notifications too
 const npClose = () => { npOnly = ""; document.body.classList.remove("np-open"); npCamStop(); if (/^#(notifications|attention|active|batteries)/.test(location.hash)) location.hash = "#home"; };
 $("#nbd").onclick = npClose;
-$("#np").addEventListener("keydown", e => { const r = e.target.closest && e.target.closest("[data-up]"); if (r && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); upcOpen(r.dataset.up); } });
+$("#np").addEventListener("keydown", e => { const wx = e.target.closest && e.target.closest(".wxl[data-wxa]"); if (wx && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); wx.click(); return; } const r = e.target.closest && e.target.closest("[data-up]"); if (r && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); upcOpen(r.dataset.up); } });
 $("#np").onclick = e => {
   if (e.target.closest("[data-close]")) { npClose(); return; }
   if (e.target.closest("[data-npall]")) { npOnly = ""; drawNotif(); return; }
@@ -6177,8 +6683,10 @@ $("#np").onclick = e => {
   const tb = e.target.closest("[data-npt]"); if (tb) { npOnly = ""; const ord = ["alerts", "attention", "active"], was = npTab; npTab = tb.dataset.npt; drawNotif(); if (was !== npTab) txGo($("#npc"), ord.indexOf(npTab) > ord.indexOf(was) ? 1 : -1, true); return; }
   const of = e.target.closest("[data-off]"); if (of) { const ids = actList()[+of.dataset.off].ids; const cl = actList()[+of.dataset.off].c[3] === "close"; if (ids.length) { if (!cl) npDismiss(ids); call(cl ? "cover" : "homeassistant", cl ? "close_cover" : "turn_off", ids); } return; }
   if (e.target.closest("[data-wxatg]")) { WXA_FULL = !WXA_FULL; drawNotif(); return; }   // the combined weather card: one line each, or each as its full card
-  const wa = e.target.closest("[data-wxa]"); if (wa) { npClose(); location.hash = "#weather/" + wa.dataset.wxa; return; }   // the weather card opens that forecast chart
-  const up = e.target.closest("[data-up]"); if (up) { upcOpen(up.dataset.up); return; }   // 33-update-card.js
+  const wa = e.target.closest("[data-wxa]"); if (wa && wa.classList.contains("sm")) { WXA_OPEN = wa.dataset.wxa; drawNotif(); return; }   // a one-line weather strip opens as the big card
+  if (wa) { npClose(); location.hash = "#weather/" + wa.dataset.wxa; return; }   // the weather card opens that forecast chart
+  const up = e.target.closest("[data-up]"); if (up) { upcOpen(up.dataset.up); return; }
+  const tg = e.target.closest("[data-togon]"); if (tg) { const id = tg.dataset.togon, g = TOG.find(g => g[3].some(x => x[0] === id)), x = g && g[3].find(x => x[0] === id); if (x && x[2]) send({ type: "call_service", domain: "script", service: x[2] }); else call(id.split(".")[0], "turn_on", id); return; }   // an "alerts are off" reminder: turn it back on   // 33-update-card.js
   const bn = e.target.closest("[data-bn]"); if (bn) { binsTap(bn.dataset.bn); return; }
   const vw = e.target.closest("[data-vw]"); if (vw) { VW.back = /^#(view|camera|notifications|active|batteries)/.test(location.hash) ? "#home" : (location.hash || "#home"); location.hash = "#view/" + vw.dataset.vw; return; }
   const c = e.target.closest("[data-nt]");
@@ -6227,6 +6735,8 @@ const attnAgo = ms => ms < 36e5 ? Math.max(1, Math.round(ms / 6e4)) + " min" : m
 function attnItems() {
   const c = attnCfg(), out = []; if (!c) return out;
   if (binsCfg() && binsDue().length) { const due = binsDue().map(x => x[1]), o = binsOut(), e = binsEvening(); out.push({ k: "bins", icon: "recycle", t: o ? "Bins are out" : e ? "Bins out tonight" : "Bring the bins out", sub: due.join(", ") }); }
+  TOG.forEach(g => g[3].forEach(x => { const s = states[x[0]]; if (!s || s.state !== "off") return; const ms = Date.now() - (Date.parse(s.last_changed || "") || Date.now());
+    out.push({ k: "tog", icon: "bell-off", id: x[0], t: x[1] + " alerts are off", sub: g[0].replace(/\s*security$/i, "") + " · off for " + attnAgo(Math.max(ms, 6e4)) }); }));   // a detection alert switched off on the Security page: a reminder, so it is not forgotten
   if (polAlert()) out.push({ k: "pol", icon: "pollen", t: "Pollen" });   // 19-pollen.js: from the level set by pollen.alertFrom (it used to be under Alerts)
   if (c.soil) Object.keys(CONFIG.derived.soil || {}).sort((a, b) => parseFloat(sv("sensor.average_" + a + "_soil_moisture")) - parseFloat(sv("sensor.average_" + b + "_soil_moisture"))).forEach(z => { const m = parseFloat(sv("sensor.average_" + z + "_soil_moisture")); if (m < (+c.soilBelow || 25)) out.push({ k: "soil", icon: "water-percent", t: title(z) + " soil", sub: (m < 15 ? "Very dry" : m < 25 ? "Dry" : "Moist") + " · " + f1(m) + "%", tone: m < 15 ? "bad" : m < 25 ? "warn" : "", m: m, z: title(z) }); });
   if (c.offline) {
@@ -6242,6 +6752,7 @@ function attnHtml(it) {
   const head = (ic, t, n) => '<div class="lbl np2 il">' + mdi(ic) + t + (n ? " · " + n : "") + '</div>', row = x => '<div class="nrow ' + (x.tone || "") + ' at-r"' + (x.e ? ' data-up="' + esc(x.e) + '" role="button" tabindex="0"' : "") + '><span class="at-i">' + mdi(x.icon) + '</span><span class="nbn"><b>' + esc(x.t) + '</b><small>' + esc(x.sub) + '</small>' + (x.prog != null ? '<span class="at-pb' + (x.prog < 0 ? " ind" : "") + '"><i style="width:' + (x.prog < 0 ? 40 : Math.max(2, x.prog)) + '%"></i></span>' : "") + '</span>' + (x.e ? '<span class="at-c">' + mdi("chevron-right") + '</span>' : "") + '</div>';
   const by = k => it.filter(x => x.k === k); let h = "";
   if (by("bins").length) h += head("recycle", "Bins") + binsCard();   // 32-bins-card.js
+  const tg = by("tog"); if (tg.length) h += head("bell-off", "Alerts off", tg.length) + tg.map(x => '<div class="nrow at-r" data-togon="' + esc(x.id) + '" role="button" tabindex="0"><span class="at-i">' + mdi(x.icon) + '</span><span class="nbn"><b>' + esc(x.t) + '</b><small>' + esc(x.sub) + '</small></span><span class="at-on">TURN ON</span></div>').join("");
   if (by("pol").length) h += head("pollen", "Pollen") + polAlert();
   const so = by("soil"); if (so.length) h += head("water-percent", "Chores") + '<div class="wg">' + so.map(x => '<div class="ws"><span class="lbl">' + x.z + ' soil</span><b style="color:var(' + (x.m < 15 ? "--sd0" : x.m < 25 ? "--sd1" : "--sd2") + ')">' + (x.m < 15 ? "Very dry" : x.m < 25 ? "Dry" : "Moist") + '</b>' + f1(x.m) + '%</div>').join("") + '</div>';
   const of = by("off"); if (of.length) h += head("access-point-network", "Offline", of.length) + of.slice(0, 8).map(row).join("") + (of.length > 8 ? '<div class="lbl at-more">+' + (of.length - 8) + ' more</div>' : "");
@@ -7765,6 +8276,7 @@ function route() {
     else { const was = !!curRoom; drawRooms(); if (was) txGo($("#rl"), -1, true); }   // room -> list slides back from the left
   }
   if (p !== "security") secPrev = "";
+  if (p === "security") secTogDraw();
   if (p === "security") secTab(h[1] === "detections" && dtCams().length && CONFIG.detections !== false && ruSec("detections") ? "det" : "live");
   if (p === "weather") {   // #weather/wind | rain | uv opens that forecast tab and scrolls to it, #weather/pollen scrolls to the Pollen card
     const ti = { temp: 0, wind: 1, rain: 2, uv: 3, cloud: 3 }[h[1]];
@@ -7813,7 +8325,9 @@ function batTick() {
 }
 function tick() {
   const n = new Date(), h = n.getHours();
-  $("#clk").textContent = $("#nclk").textContent = n.toLocaleTimeString([], tmo({ hour: CLK12() ? "numeric" : "2-digit", minute: "2-digit" }));
+  const tm = n.toLocaleTimeString([], tmo({ hour: CLK12() ? "numeric" : "2-digit", minute: "2-digit" })), ds = n.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }).replace(/,/g, "");
+  $("#clk").textContent = tm;
+  { const nc = $("#nclk"), h2 = esc(tm) + '<small class="ncd">' + esc(ds) + '</small>'; if (nc._h !== h2) { nc._h = h2; nc.innerHTML = h2; } }   // tablet: the date sits under the clock in the side menu (the greeting bar no longer shows it)
   batTick();
   $("#dt").textContent = n.toLocaleDateString([], { weekday: "long", day: "numeric", month: "long" });
   $("#gr").textContent = (h < 12 ? "Morning" : h < 18 ? "Afternoon" : "Evening") + (userName ? ", " + userName : userKnown ? "" : CONFIG.name ? ", " + CONFIG.name : "") + "!";
