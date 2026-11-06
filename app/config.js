@@ -154,7 +154,7 @@ window.DASH_CONFIG = {
     { name: "Backyard", zone: "backyard", switch: "switch.demo_backyard_tap", flow: "sensor.demo_backyard_tap_flow", timer: "timer.demo_backyard_timer", moist: "sensor.average_backyard_soil_moisture", stemp: "sensor.average_backyard_soil_temperature" }
   ],
   // Scenes page: not set up in this sample (it needs the house's own light scenes). Leave "scenes" out and remove "scenes" from CONFIG.pages if you list pages.
-  pages: ["home", "rooms", "climate", "security", "weather", "energy", "irrigation", "media", "events", "vehicle", "hazards", "theme", "view"],
+  pages: ["home", "rooms", "climate", "security", "weather", "energy", "irrigation", "insights", "media", "events", "vehicle", "hazards", "theme", "view"],
 
   rooms: [   // Climate page. main:true = the heat pump (full modes); others are zones
     { id: "climate.demo_heat_pump", name: "Heat pump", icon: "heat-pump", main: true },

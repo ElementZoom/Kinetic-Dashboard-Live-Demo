@@ -247,6 +247,20 @@ html[data-mode=light] header[data-al=wn]{--alc:#d9a100}html[data-mode=light] hea
 #scenes .sr.stp.on .sbd{color:#fff;background:rgb(var(--sx));box-shadow:0 0 14px rgba(var(--sx),.7)}
 @keyframes stpg{0%,100%{box-shadow:0 0 6px rgba(var(--sx),.25)}50%{box-shadow:0 0 22px rgba(var(--sx),.6)}}
 @media(prefers-reduced-motion:reduce){#scenes .sr.stp.on{animation:none;box-shadow:0 0 16px rgba(var(--sx),.45)}}
+
+/* weather warnings, folded: title, time pills, 2 lines, MORE / LESS */
+.ww .wwt{font-size:17px;font-weight:600;line-height:1.3;margin:4px 0 8px}
+.ww .wwp{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.ww .wwp span{padding:4px 10px;border-radius:999px;background:rgba(var(--w),.1);font-size:12px;line-height:1.4}
+html[data-mode=light] .ww .wwp span{background:rgba(160,90,20,.14)}
+.ww .wwb{white-space:pre-line}
+.ww .wwb.cl{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ww.open .wwb.cl{display:block;-webkit-line-clamp:unset;overflow:visible}
+.ww .wwm{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin-top:6px;padding:6px 0 0;border:0;background:none;color:inherit;opacity:.75;font:600 11px var(--mono);letter-spacing:.1em;cursor:pointer}
+.ww .wwm svg{width:16px;height:16px;fill:currentColor}
+/* in the notification pop-up the warning sits on its own card */
+#np .ww,.npb .ww{background:rgba(255,170,80,.14);border:1px solid rgba(232,151,58,.35);margin:6px 0 10px}
+html[data-mode=light] :is(#np,.npb) .ww{background:rgba(255,255,255,.55);border-color:rgba(165,86,12,.3)}
 /* palette + playback */
 
 .pk{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(var(--w),.04);font-size:14px}
@@ -2190,7 +2204,8 @@ html[data-mode=light] .nrow.at-r{--bc:#2d6aa3}html[data-mode=light] .nrow.warn.a
 .at-more{margin:2px 0 10px;padding-left:4px}
 #hstrip{margin-bottom:14px}#hstrip[hidden]{display:none}
 #hstrip[data-n="2"]{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr);gap:14px;align-items:stretch}
-#hstrip>#lvc,#hstrip>#sch{margin:0;min-height:46px;box-sizing:border-box}
+#hstrip>#lvc,#hstrip>#sch,#hstrip>#insc{margin:0;min-height:46px;box-sizing:border-box}
+#hstrip[data-n="3"]{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.1fr);gap:14px;align-items:stretch}
 #lvc{display:flex;align-items:center;gap:14px;padding:10px 18px;cursor:pointer;min-height:0}#lvc[hidden]{display:none}
 #lvc .at-h{flex:none;display:inline-flex;align-items:center;gap:8px;font:600 14px var(--mono);color:#f2a33a}#lvc .at-h svg{width:20px;height:20px;fill:currentColor}
 #lvc .at-l{flex:1;min-width:0;overflow:hidden;white-space:nowrap}
@@ -2600,13 +2615,13 @@ body.ca-off .ctr,body.ca-off .cbar .mk{display:none!important}
 /* Chart readout: the box that follows a mouse or finger on a chart (svg elements ignore pointers by default, charts opt in) */
 svg[data-cr]{pointer-events:auto;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
 svg[data-crs]{touch-action:pan-y}
-#crtip{position:fixed;z-index:9999;pointer-events:none;min-width:120px;max-width:240px;padding:9px 12px 10px;border-radius:12px;background:var(--bg2,#222);color:var(--ink);border:1px solid var(--line,rgba(255,255,255,.14));box-shadow:0 8px 28px rgba(0,0,0,.35);font-size:13px;line-height:1.35;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#crtip{position:fixed;z-index:9999;pointer-events:none;min-width:120px;max-width:min(340px,calc(100vw - 16px));box-sizing:border-box;padding:9px 12px 10px;border-radius:12px;background:var(--bg2,#222);color:var(--ink);border:1px solid var(--line,rgba(255,255,255,.14));box-shadow:0 8px 28px rgba(0,0,0,.35);font-size:13px;line-height:1.35;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 #crtip[hidden]{display:none}
 #crtip .crh{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:4px;white-space:nowrap}
 #crtip .crr{display:flex;align-items:center;gap:7px;padding:1px 0}
 #crtip .crr i{width:8px;height:8px;border-radius:50%;flex:none;background:transparent}
-#crtip .crr span{flex:1;color:var(--mut);white-space:nowrap}
-#crtip .crr b{font-weight:600;white-space:nowrap;padding-left:8px}
+#crtip .crr span{flex:1;min-width:0;color:var(--mut)}
+#crtip .crr b{flex:none;font-weight:600;white-space:nowrap;padding-left:8px}
 /* Alarm in the header: a labelled pill beside the page title on phones (#hal), a round icon-only button next to the music button on tablets (#al), and a banner (#alb) while arming / pending / triggered. Tap opens Security. */
 #al,#hal{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0;margin:0;cursor:pointer;flex:none;position:relative}
 #al svg,#hal svg{width:18px;height:18px;fill:currentColor;pointer-events:none}
@@ -2638,6 +2653,9 @@ html[data-mode=light] #nacc[data-k] .nai::before{box-shadow:0 0 9px 0 color-mix(
 @keyframes nkhalo{0%,100%{opacity:.2}50%{opacity:.95}}
 }
 @media(min-width:761px) and (prefers-reduced-motion:reduce){#nacc[data-k] .nai::before{animation:none;opacity:.7}}
+/* the count inside a filter chip ("ROOMS 60"), the same in every chip set */
+.chip .cn{margin-left:2px;font-size:.84em;font-weight:inherit;letter-spacing:.04em;opacity:.65}
+.chip.on .cn{opacity:.8}
 /* Phone held sideways (up to 760 px wide, short): the tab bar becomes a slim rail down the left, the header and the music bar get thin, so the page keeps most of the height. */
 @media(max-width:760px) and (max-height:520px) and (orientation:landscape){
 :root{--dock:16px}
@@ -2892,6 +2910,216 @@ html:not(#x) #vw .cam.vf.cpo .cpanel{padding-bottom:calc(66px + env(safe-area-in
 .wxmn{margin-top:2px}
 .fch{margin-bottom:10px}
 @media(max-width:760px){.wxmv{height:360px}}
+/* Insights page, the insight cards on their own pages, and the Home teaser */
+#insights .inschips{margin-bottom:12px}
+#insights .insl{margin:14px 4px 8px}
+#insights .insl.bad{color:var(--heat)}
+.ins{padding:0;overflow:hidden}
+.ins:not(:has(.insh)){padding:14px 16px}
+.insh{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:0;background:none;color:inherit;text-align:left;cursor:pointer;font:inherit}
+.insi{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(var(--w),.08)}
+.insi svg{width:20px;height:20px;fill:currentColor}
+.ins.bad .insi,#insc .insi.bad{background:rgba(var(--heat-rgb,255,120,100),.18);color:var(--heat)}
+.ins.warn .insi{background:rgba(255,170,80,.18);color:#e8973a}
+.ins.ok .insi{background:rgba(var(--mint-rgb,143,240,196),.16);color:var(--mint)}
+.inst{flex:1;min-width:0}
+.inst b{display:block;font-size:15px;font-weight:600;line-height:1.3}
+.inst small{display:block;margin-top:2px;color:var(--mut);font-size:12.5px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.insc{flex:none;display:grid;place-items:center;color:var(--mut)}
+.insc svg{width:20px;height:20px;fill:currentColor}
+.ins .insh+.insb{padding:0 14px 14px}
+.insb{display:flex;flex-direction:column;gap:10px}
+.inx{border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.45;background:rgba(var(--w),.06)}
+.inx small{display:block;margin-top:3px;color:var(--mut);font-size:12.5px}
+.inx.ok{background:rgba(var(--mint-rgb,143,240,196),.12)}.inx.ok b{color:var(--mint)}
+.inx.warn{background:rgba(255,170,80,.14)}.inx.warn b{color:#e8973a}
+.inx.bad{background:rgba(var(--heat-rgb,255,120,100),.14)}.inx.bad b{color:var(--heat)}
+html[data-mode=light] .inx.ok b{color:#17703d}
+html[data-mode=light] .inx.warn b{color:#a5560c}
+.inl{list-style:none;margin:0;padding:0;font-size:14px;line-height:1.5}
+.inl li{padding:3px 0 3px 16px;position:relative}.inl li>i{position:absolute;left:0;top:.62em}.inl b{font-weight:600}.inl .ina{color:var(--mut);white-space:nowrap}
+.inl i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mint)}
+.inl i.w{background:#e8973a}
+.inz .sm{margin-bottom:2px}
+.insp{display:block;width:100%;height:44px}
+.insp .dl{stroke:rgba(232,151,58,.55);stroke-width:1;stroke-dasharray:3 3}
+.insp .pa{fill:none;stroke:var(--ink);stroke-width:2;vector-effect:non-scaling-stroke}
+.insp .fu{fill:none;stroke:var(--cool,#7fb6ff);stroke-width:2;stroke-dasharray:4 3;vector-effect:non-scaling-stroke}
+.insp .nw{stroke:rgba(var(--w),.25);stroke-width:1;vector-effect:non-scaling-stroke}
+.inzl{font-size:13.5px}.inzl span{color:var(--mut)}
+.inc{opacity:.85}
+.ing{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ing>div{border-radius:12px;padding:8px 12px;background:rgba(var(--w),.06)}
+.ing small{display:block;color:var(--mut);font-size:12px}.ing b{font-size:22px;font-weight:500}
+.insa{display:flex;gap:8px;flex-wrap:wrap}
+.insg{display:inline-flex;align-items:center;gap:2px;align-self:flex-end;color:var(--mut);font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
+.insg svg{width:16px;height:16px;fill:currentColor}
+.insbox:empty{display:none}
+.insbox{margin-bottom:14px}
+/* Home teaser */
+#insc{display:flex;align-items:center;gap:12px;padding:10px 18px;text-decoration:none;color:inherit}
+#insc .insi{width:30px;height:30px}#insc .insi svg{width:18px;height:18px}
+#insc .inst{display:flex;align-items:baseline;gap:8px;min-width:0;white-space:nowrap}
+#insc .inst b{flex:none;font-size:15px}#insc .inst small{margin:0;overflow:hidden;text-overflow:ellipsis;font-size:14px}
+#insc[hidden]{display:none}
+html[data-style=metro] :is(.ins,.inx,.ing>div,.insi,#insc){border-radius:0}
+/* phone: Leaving and Insights live as pills in the greeting card, not as cards */
+#hpls{display:contents}
+@media(max-width:760px){#lvc,#insc{display:none!important}}
+.wpl.lvp{background:rgba(232,151,58,.16);color:#e8973a}
+.wpl.inp{background:rgba(var(--heat-rgb),.14);color:var(--heat)}
+html[data-mode=light] .wpl.lvp{background:rgba(165,86,12,.12);color:#a5560c}
+html[data-mode=light] .wpl.inp{color:#b3261e}
+/* tablet: open cards in columns (a long card no longer leaves a gap beside it); the soil zones side by side */
+.insgr>.ins{margin-bottom:12px}
+@media(min-width:761px){
+  .insgr{columns:2 440px;column-gap:14px}
+  .insgr>.ins{margin:0 0 14px;break-inside:avoid;display:block;width:100%}
+  .inzs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 18px}
+  .insp{height:56px}
+}
+/* glance tiles (Insights page): label, big value, a line; detail opens in a sheet (phone) or a side panel (tablet) */
+.itg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:6px}
+@media(min-width:761px){.itg{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}}
+.it{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0;padding:12px 14px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(160deg,var(--bg2),var(--bg));color:inherit;text-align:left;font:inherit;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.it:active{transform:scale(.98)}
+.itk{display:flex;align-items:center;gap:6px;max-width:100%;font:600 10.5px var(--mono);letter-spacing:.08em;color:var(--mut)}
+.itk span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.itk svg{flex:none;width:15px;height:15px;fill:currentColor}
+.itv{max-width:100%;font-size:26px;font-weight:400;line-height:1.15;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.its{max-width:100%;font-size:12px;color:var(--mut);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.it.warn .itk{color:#d0821f}.it.ok .itk{color:var(--mint)}
+.it.need{background:rgba(var(--heat-rgb),.12);border-color:rgba(var(--heat-rgb),.35)}.it.need .itk{color:var(--heat)}
+html[data-mode=light] .it.warn .itk{color:#a5560c}html[data-mode=light] .it.ok .itk{color:#17703d}html[data-mode=light] .it.need .itv{color:#7a1b14}
+@media(min-width:761px){.itv{font-size:30px}}
+#insd{position:fixed;inset:0;z-index:90;display:none}
+#insd.on{display:block}
+#insd .idbk{position:absolute;inset:0;background:rgba(0,0,0,.45);animation:pbgi .2s ease both}
+#insd .idp{position:absolute;left:0;right:0;bottom:0;max-height:82vh;overflow:auto;box-sizing:border-box;padding:16px 16px calc(18px + env(safe-area-inset-bottom));border-radius:26px 26px 0 0;background:linear-gradient(160deg,var(--bg2),var(--bg));border:1px solid var(--line);box-shadow:0 -10px 40px rgba(0,0,0,.35);animation:idUp .3s cubic-bezier(.2,.85,.3,1) both}
+@keyframes idUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+@keyframes idIn{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
+/* tablet and bigger: centred and roomier */
+@keyframes idPop{from{transform:translate(-50%,-48%) scale(.96);opacity:0}to{transform:translate(-50%,-50%);opacity:1}}
+@media(min-width:761px){
+  #insd .idp{left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%);width:min(760px,calc(100vw - 64px));max-height:calc(100vh - 64px);padding:24px 26px;border-radius:28px;animation-name:idPop}
+  #insd .idh{gap:16px;margin-bottom:16px}#insd .idh .insi{width:52px;height:52px}#insd .idh .insi svg{width:26px;height:26px}
+  #insd .idh .inst b{font-size:24px;font-weight:500}#insd .idh .inst small{font-size:14px;white-space:normal}
+  #insd .ids b{font-size:30px}
+  #insd .inx{font-size:16.5px;padding:14px 16px}#insd .inx small{font-size:14px}
+  #insd .inl{font-size:17px;line-height:1.55}#insd .inl li{padding:5px 0 5px 18px}
+  #insd .inzl{font-size:15.5px}#insd .insp{height:72px}#insd .eb{font-size:13px;padding:12px 20px}
+  #insd .insg{font-size:12px;padding:8px 0}
+}
+#insd .idh{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+#insd .idh .rnd{flex:none;width:40px;height:40px}
+#insd .ins{padding:0;border:0;background:none;box-shadow:none}
+html[data-style=metro] :is(.it,#insd .idp){border-radius:0}
+#insd .idk{display:block;font:600 11px var(--mono);font-style:normal;letter-spacing:.1em;color:var(--mut);margin-bottom:2px}
+#insd .idh.warn .idk,#insd .idh.warn .insi{color:#d0821f}#insd .idh.bad .idk{color:var(--heat)}#insd .idh.ok .idk{color:var(--mint)}
+html[data-mode=light] #insd .idh.warn .idk{color:#a5560c}
+#insd .ids{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:0 0 14px}
+#insd .ids>div{border-radius:14px;padding:10px 14px;background:rgba(var(--w),.07)}
+html[data-mode=light] #insd .ids>div{background:rgba(0,0,0,.05)}
+#insd .ids small{display:block;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+#insd .ids b{display:block;font-size:24px;font-weight:400;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* tablet and bigger: bigger tiles */
+@media(min-width:761px){
+  .itg{grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+  .it{gap:6px;min-height:150px;padding:20px 22px;border-radius:24px}
+  .itk{font-size:12.5px}.itk svg{width:18px;height:18px}
+  .itv{font-size:44px;margin-top:6px}
+  .its{font-size:14.5px;margin-top:auto}
+  #insights .insl{font-size:13px;margin:18px 4px 12px}
+}
+/* split bar (paid / free hours) with a row per part */
+.isp{display:flex;gap:3px;height:12px;border-radius:7px;overflow:hidden;margin:2px 0 4px}.isp i{display:block;min-width:4px}
+.isb{display:flex;flex-direction:column;gap:2px}
+.isr{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:15px;border-bottom:1px solid var(--line)}.isr:last-child{border-bottom:0}
+.isr>i{flex:none;width:12px;height:12px;border-radius:50%}.isr span{flex:1;min-width:0}.isr small{color:var(--mut);font-size:13.5px}.isr b{min-width:64px;text-align:right;font-weight:600}
+@media(min-width:761px){.isp{height:14px}.isr{font-size:17px;padding:9px 0}.isr small{font-size:15px}.isr b{min-width:80px}}
+html[data-style=metro] .isp{border-radius:0}
+@media(max-width:760px){#insd .ids{gap:8px}#insd .ids>div{padding:9px 11px}#insd .ids b{font-size:19px}}
+/* bar rows (water per day, overnight load per night, free hours per night) */
+.irs{display:flex;flex-direction:column;gap:2px}
+.irw{display:grid;grid-template-columns:minmax(78px,auto) 1fr auto minmax(56px,auto);align-items:center;gap:10px;padding:5px 0;font-size:14.5px}
+.irn{white-space:nowrap;font-weight:500}
+.irb{position:relative;display:flex;gap:2px;height:12px;border-radius:6px;background:rgba(var(--w),.07);overflow:visible}
+.irb i{display:block;height:100%;min-width:3px}.irb i:first-child{border-radius:6px 0 0 6px}.irb i:last-of-type{border-top-right-radius:6px;border-bottom-right-radius:6px}
+.irb em{position:absolute;top:-4px;bottom:-4px;border-left:2px dashed rgba(var(--w),.45)}
+html[data-mode=light] .irb{background:rgba(0,0,0,.06)}html[data-mode=light] .irb em{border-color:rgba(0,0,0,.35)}
+.irw small{color:var(--mut);font-size:13px;white-space:nowrap}.irw b{text-align:right;font-weight:600;white-space:nowrap}
+.irl{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px;color:var(--mut)}.irl span{display:inline-flex;align-items:center;gap:6px}.irl i{width:10px;height:10px;border-radius:50%}.irl b{color:var(--ink);font-weight:600}
+@media(min-width:761px){.irw{font-size:16.5px;padding:7px 0;gap:14px;grid-template-columns:minmax(110px,auto) 1fr auto minmax(72px,auto)}.irb{height:14px}.irw small{font-size:14.5px}.irl{font-size:15px}}
+html[data-style=metro] .irb,html[data-style=metro] .irb i{border-radius:0!important}
+/* list rows with a dot or an icon */
+.ils{display:flex;flex-direction:column}
+.ilr{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}.ilr:last-child{border-bottom:0}
+.ilr>i{width:10px;height:10px;border-radius:50%;background:rgba(var(--w),.3);margin:0 3px}
+.ilr.w>i{background:#e8973a}.ilr.ok>i{background:var(--mint)}.ilr.bad>i{background:var(--heat)}
+.ili{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(var(--w),.08)}.ili svg{width:17px;height:17px;fill:currentColor}
+.ilr.w .ili{color:#e8973a}
+.ilm{min-width:0}.ilm b{display:block;font-weight:600;font-size:15px}.ilm small{display:block;color:var(--mut);font-size:13px;margin-top:1px}
+.ilx{color:var(--mut);font-size:13.5px;white-space:nowrap}
+.ilr.ok .ilm b{font-weight:500}
+html[data-mode=light] .ilr.ok>i{background:#17703d}html[data-mode=light] .ilr.w>i,html[data-mode=light] .ilr.w .ili{color:#a5560c}html[data-mode=light] .ilr.w>i{background:#d0821f}
+/* columns over time */
+.icll{margin:4px 0 -2px}
+.icl{display:flex;flex-direction:column;gap:4px}
+.icb{position:relative;display:flex;align-items:flex-end;gap:3px;height:96px;padding-top:16px}
+.icb>span{flex:1;min-width:0;height:100%;display:flex;align-items:flex-end;cursor:default}.icb i{position:relative;width:100%;border-radius:4px 4px 1px 1px;background:#6bb8ff}
+.icb i.hl{background:var(--mint)}.icb i.warn{background:#e8973a}.icb i.cold{background:#9ad0ff}.icb i.rain{background:#5aa9ff}
+.icb i.ghost{background:rgba(var(--w),.14)}html[data-mode=light] .icb i.ghost{background:rgba(0,0,0,.1)}
+.icb em{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:2px;font:600 11px var(--mono);font-style:normal;white-space:nowrap}
+.icb s{position:absolute;left:0;right:0;border-top:2px dashed rgba(var(--w),.45);pointer-events:none}html[data-mode=light] .icb s{border-color:rgba(0,0,0,.3)}
+.icb s span{position:absolute;right:0;bottom:2px;font:600 10.5px var(--mono);color:var(--mut);background:var(--bg2);padding:0 4px;border-radius:4px}
+.icx{display:flex;gap:3px}.icx span{flex:1;min-width:0;overflow:visible;white-space:nowrap;font:500 10.5px var(--mono);color:var(--mut)}
+/* bill progress */
+.ibp{height:12px;border-radius:7px;background:rgba(var(--w),.08);overflow:hidden}.ibp i{display:block;height:100%;background:#6bb8ff;border-radius:7px}
+html[data-mode=light] .ibp{background:rgba(0,0,0,.07)}
+.ibl{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-top:-4px}
+/* free power: a week of hours */
+.iwk{display:flex;flex-direction:column;gap:5px}
+.iwr{display:grid;grid-template-columns:52px 1fr;align-items:center;gap:10px;font-size:13.5px}
+.iwb{position:relative;display:flex;gap:1px;height:14px}.iwb i{flex:1;background:rgba(var(--w),.08)}.iwb i:first-child{border-radius:4px 0 0 4px}.iwb i:last-of-type{border-radius:0 4px 4px 0}
+.iwb i.on{background:var(--mint)}html[data-mode=light] .iwb i{background:rgba(0,0,0,.07)}html[data-mode=light] .iwb i.on{background:#2fa36b}
+.iwb em{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:var(--heat);border-radius:1px}
+.iwl{display:flex;justify-content:space-between;font:500 10.5px var(--mono);color:var(--mut)}.iwl b{font-weight:500}
+.iwx{margin-top:-2px}
+/* night: when the detections were */
+.itl{display:flex;flex-direction:column;gap:5px}
+.itt{position:relative;height:14px;border-radius:7px;background:rgba(var(--w),.08)}html[data-mode=light] .itt{background:rgba(0,0,0,.07)}
+.itt i{position:absolute;top:1px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#e8973a;box-shadow:0 0 0 2px var(--bg2)}
+@media(min-width:761px){.ilm b{font-size:17px}.ilm small{font-size:14.5px}.ilx{font-size:15px}.ilr{padding:11px 0}.icb{height:130px}.icx span,.iwl{font-size:12px}.iwr{font-size:15px;grid-template-columns:64px 1fr}.iwb{height:18px}.ibl{font-size:14.5px}}
+html[data-style=metro] :is(.icb i,.iwb i,.ibp,.ibp i,.itt,.ili){border-radius:0!important}
+.icx span:last-child{display:flex;justify-content:flex-end}
+@media(max-width:760px){#insd .ids b{font-size:17px;white-space:normal;line-height:1.2}}
+/* the part under the hover card */
+#insd .tipon{filter:brightness(1.18)}#insd .icb>span.tipon{background:rgba(var(--w),.07);border-radius:4px}
+#insd .irw.tipon{background:rgba(var(--w),.05);border-radius:8px}html[data-mode=light] #insd .icb>span.tipon,html[data-mode=light] #insd .irw.tipon{background:rgba(0,0,0,.05)}
+#insd .iwb i.tipon{outline:2px solid var(--ink);outline-offset:-1px;position:relative;z-index:1}
+#insd .itt i.tipon{transform:scale(1.35)}
+#insd [data-tip]{-webkit-tap-highlight-color:transparent}
+/* camera detections: a grid of cameras by day, darker for more */
+.ihc{margin:0 0 4px}
+.ihm{display:grid;grid-template-columns:minmax(70px,auto) repeat(var(--n),minmax(0,1fr)) auto;gap:4px;align-items:center;font-size:13.5px}
+.ihm>b{font:600 10.5px var(--mono);letter-spacing:.06em;color:var(--mut);text-align:center;text-transform:uppercase}
+.ihm>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;padding-right:6px}
+.ihm>i{display:grid;place-items:center;height:30px;border-radius:7px;font-style:normal;font-weight:600;font-size:13px;background:rgba(107,184,255,var(--a));background-color:color-mix(in srgb,#6bb8ff calc(var(--a) * 100%),rgba(127,127,127,.08))}
+.ihm>i.tot{background:rgba(var(--w),.06);color:var(--mut)}html[data-mode=light] .ihm>i.tot{background:rgba(0,0,0,.05)}
+.ihm>em{font-style:normal;font-weight:600;text-align:right;padding-left:6px}
+@media(min-width:761px){.ihm{font-size:15px;gap:6px}.ihm>i{height:38px;font-size:15px}.ihm>b{font-size:12px}}
+html[data-style=metro] .ihm>i{border-radius:0}
+@media(max-width:760px){.ihm{gap:3px}.ihm>b{font-size:9.5px;letter-spacing:0}.ihm>em{padding-left:3px}}
+#insd .bn{margin:0}#insd .bn-h{display:none}
+/* phone greeting card: today's high / low sits beside the wind; the Leaving and Insights pills get the next line to themselves */
+@media(max-width:760px){
+  #wpls:not(:empty){flex-basis:auto;margin-top:0;margin-left:8px}
+  #hpls:not(:empty){display:flex;flex-wrap:wrap;gap:6px;flex-basis:100%;margin-top:2px}
+}
+/* the line under a detail's title wraps instead of being cut off (phone) */
+#insd .idh .inst small{white-space:normal;overflow:visible;text-overflow:clip}
+/* phone tiles: the line under the value may take two lines before it is cut */
+@media(max-width:760px){.its{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}}
 </style>
 </head>
 <body>
@@ -2899,13 +3127,13 @@ html:not(#x) #vw .cam.vf.cpo .cpanel{padding-bottom:calc(66px + env(safe-area-in
 <div id="bd"></div>
 <nav>
   <div class="t" id="outs">--°C</div><div class="t" id="nclk" role="button" aria-label="Notifications">--:--</div>
-  <a href="#home" class="on">HOME</a><a href="#rooms">ROOMS</a><a href="#climate">CLIMATE</a><a href="#security">SECURITY</a><a href="#weather">WEATHER</a><a href="#energy">ENERGY</a><a href="#irrigation">IRRIGATION</a><a href="#scenes">SCENES</a><a href="#media">MEDIA</a><a href="#events">EVENTS</a><a href="#vehicle">VEHICLE</a><a href="#hazards">HAZARDS</a><a href="#theme">THEME</a><a href="#admin">ADMIN</a><a href="/config/dashboard" id="navset" class="nset">SETTINGS</a>
+  <a href="#home" class="on">HOME</a><a href="#rooms">ROOMS</a><a href="#climate">CLIMATE</a><a href="#security">SECURITY</a><a href="#weather">WEATHER</a><a href="#energy">ENERGY</a><a href="#irrigation">IRRIGATION</a><a href="#scenes">SCENES</a><a href="#insights">INSIGHTS</a><a href="#media">MEDIA</a><a href="#events">EVENTS</a><a href="#vehicle">VEHICLE</a><a href="#hazards">HAZARDS</a><a href="#theme">THEME</a><a href="#admin">ADMIN</a><a href="/config/dashboard" id="navset" class="nset">SETTINGS</a>
 </nav>
-<div id="btab"><a href="#home" data-i2="n-home"><span>Home</span></a><a href="#rooms" data-i2="n-rooms"><span>Rooms</span></a><a href="#scenes" data-i2="n-scenes"><span>Scenes</span></a><a href="#security" data-i2="n-cam"><span>Camera</span></a><button id="bmore" data-i2="n-more"><span>More</span></button></div>
+<div id="btab"><a href="#home" data-i2="n-home"><span>Home</span></a><a href="#rooms" data-i2="n-rooms"><span>Rooms</span></a><a href="#climate" data-i2="n-climate"><span>Climate</span></a><a href="#security" data-i2="n-cam"><span>Camera</span></a><button id="bmore" data-i2="n-more"><span>More</span></button></div>
 <div id="npmini" class="npoff"></div><div id="npfab"></div>
 <div id="lvsheet"><div class="lvbk" data-lv="close"></div><div class="pn lvb" id="lvbody"></div></div>
 <div id="npsheet"><div class="npbk" data-np="close"></div><div class="pn npb" id="npbody"></div></div>
-<div id="mshe"><a href="#climate" data-i2="n-climate"><span>Climate</span></a><a href="#weather" data-i2="n-weather"><span>Weather</span></a><a href="#energy" data-i2="n-energy"><span>Energy</span></a><a href="#irrigation" data-i2="n-irr"><span>Irrigation</span></a><a href="#media" data-i2="music-note"><span>Media</span></a><a href="#events" data-i2="n-events"><span>Events</span></a><a href="#vehicle" data-i2="v-car"><span>Vehicle</span></a><a href="#hazards" data-i2="volcano"><span>Hazards</span></a><a href="#theme" data-i2="n-palette"><span>Theme</span></a><a href="#admin" data-i2="n-admin"><span>Admin</span></a><a href="/config/dashboard" id="navset2" data-i2="n-set"><span>Settings</span></a></div>
+<div id="mshe"><a href="#scenes" data-i2="n-scenes"><span>Scenes</span></a><a href="#insights" data-i2="lightbulb-on"><span>Insights</span></a><a href="#weather" data-i2="n-weather"><span>Weather</span></a><a href="#energy" data-i2="n-energy"><span>Energy</span></a><a href="#irrigation" data-i2="n-irr"><span>Irrigation</span></a><a href="#media" data-i2="music-note"><span>Media</span></a><a href="#events" data-i2="n-events"><span>Events</span></a><a href="#vehicle" data-i2="v-car"><span>Vehicle</span></a><a href="#hazards" data-i2="volcano"><span>Hazards</span></a><a href="#theme" data-i2="n-palette"><span>Theme</span></a><a href="#admin" data-i2="n-admin"><span>Admin</span></a><a href="/config/dashboard" id="navset2" data-i2="n-set"><span>Settings</span></a></div>
 <div class="main">
   <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><button id="hal" class="al s-x" aria-label="Alarm"></button><div id="hnp" class="npoff"></div><div class="hr"><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header>
   <div id="alb" hidden></div>
@@ -2945,6 +3173,7 @@ html:not(#x) #vw .cam.vf.cpo .cpanel{padding-bottom:calc(66px + env(safe-area-in
   <div id="admin" class="page"></div>
   <div id="vehicle" class="page"></div>
   <div id="hazards" class="page"></div>
+  <div id="insights" class="page"></div>
 
   <div id="climate" class="page"><div id="gsum" class="pn"></div><div id="grid"></div><div class="dots" id="gdots"></div></div>
 
@@ -2962,7 +3191,7 @@ html:not(#x) #vw .cam.vf.cpo .cpanel{padding-bottom:calc(66px + env(safe-area-in
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=1"></script>
+<script src="config.js?v=2.5.3"></script>
 <script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
@@ -2970,14 +3199,15 @@ html:not(#x) #vw .cam.vf.cpo .cpanel{padding-bottom:calc(66px + env(safe-area-in
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.2";   // the one place to change the version
+window.DASH_VER = "2.5.3";   // the one place to change the version
+window.DASH_BUILD = "996847";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
   var G = window.brandLogo(); if (!B || !G || !el || lp === "off") return;
   var d = document.createElement("div"); d.className = "bl"; d.innerHTML = window.brandMark("s");
   if (!G.lockup) { var n = document.createElement("b"); n.textContent = B.name || ""; var t = document.createElement("small"); t.textContent = B.tag || ""; d.appendChild(n); d.appendChild(t); }
-  var vv = document.createElement("span"); vv.className = "bv"; vv.textContent = "Kinetic " + window.DASH_VER; d.appendChild(vv);
+  var vv = document.createElement("span"); vv.className = "bv"; vv.textContent = "Kinetic " + window.DASH_VER + " · " + window.DASH_BUILD; d.appendChild(vv);
   el.appendChild(d); r.classList.add("brand"); if (G.lockup) r.classList.add("lockup"); window.__brandT0 = performance.now();
   var seen = 0, now = Date.now(), h = location.hash;
   try { seen = +localStorage.getItem("dashSeen") || 0; localStorage.setItem("dashSeen", now); } catch (e) {}
@@ -3014,8 +3244,8 @@ const E = k => (CONFIG.entities && CONFIG.entities[k]) || "unset." + k;   // nam
 const rxj = (base, extra) => new RegExp(base.source + (extra ? "|" + extra : ""));
 const ruSec = k => !(RU && RU.security && RU.security[k] === false);   // Security page parts a restricted person may use (alarm, detections, controls, playback)
 const camCtl = id => ruSec("controls") ? CONFIG.camControls[id] : null;
-const RU_ALL = ["home", "rooms", "climate", "security", "weather", "energy", "irrigation", "scenes", "media", "events", "vehicle", "hazards", "theme"];
-const RU_NAME = { home: "Home", rooms: "Rooms", climate: "Climate", security: "Security", weather: "Weather", energy: "Energy", irrigation: "Irrigation", scenes: "Scenes", media: "Media", events: "Events", vehicle: "Vehicle", hazards: "Hazards", theme: "Theme" };
+const RU_ALL = ["home", "rooms", "climate", "security", "weather", "energy", "irrigation", "scenes", "media", "events", "vehicle", "hazards", "insights", "theme"];
+const RU_NAME = { home: "Home", rooms: "Rooms", climate: "Climate", security: "Security", weather: "Weather", energy: "Energy", irrigation: "Irrigation", scenes: "Scenes", media: "Media", events: "Events", vehicle: "Vehicle", hazards: "Hazards", insights: "Insights", theme: "Theme" };
 const RU_SEC = [["alarm", "Alarm"], ["controls", "Camera controls"], ["playback", "Playback"], ["detections", "Detections"]];
 let ME = { id: "", name: "", pid: "", admin: false };   // the signed-in Home Assistant user
 try { if (localStorage.getItem("dashAdm") === "1") ME.admin = true; } catch (_) {}   // remembered from the last visit so #admin survives a reload; identify() sets the real value
@@ -3043,7 +3273,7 @@ function ruApply(o) {   // hides what this person may not use; the engine also s
     try { if (Array.isArray(RU.rooms)) { hideT = 0; css += "#grid{--nr:" + Math.max(1, CONFIG.rooms.filter(r => !r.main && !entHidden(r.id)).length) + "}"; CONFIG.rooms.forEach((r, i) => { if (!r.main && entHidden(r.id)) css += '#grid>.card[data-cl="' + r.id + '"]{display:none!important}#gdots i[data-i="' + i + '"]{display:none}'; }); } } catch (_) {}   // a room hidden from this person has no climate control either (not ready yet on the very first call: ruRefresh applies again)
     css += "#outs,#hnp{display:none!important}#hc{pointer-events:none}#nacc{display:none!important}";   // no notification pop-up (it holds the "all off" switches and admin toggles); the Settings link stays, Home Assistant itself decides what a non-admin may open
     if (!PAGE_ON("security") || !ruSec("alarm")) css += "#al,#hal,#alb{display:none!important}";
-    if (!["climate", "weather", "energy", "irrigation", "media", "events", "vehicle", "hazards", "theme"].some(PAGE_ON)) css += "#bmore{display:none!important}";
+    if (!["climate", "weather", "energy", "irrigation", "media", "events", "vehicle", "hazards", "insights", "theme"].some(PAGE_ON)) css += "#bmore{display:none!important}";
     if (off.indexOf("media") > -1) css += "#npmini,#npfab,#npsheet,#hnote{display:none!important}";
     if (left <= 1 || RU.header === false) css += "#hb{display:none!important}";
     if (!ruSec("alarm")) css += "#alp{display:none!important}";
@@ -3195,6 +3425,9 @@ MDI["battery-low"] = "M9,2H15V4H16.5A1.5,1.5 0 0,1 18,5.5V20.5A1.5,1.5 0 0,1 16.
 MDI["lock"] = "M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,2A5,5 0 0,1 17,6V8H18M12,4A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,4Z";
 MDI["lock-open-variant"] = "M18,1C15.24,1 13,3.24 13,6V8H4A2,2 0 0,0 2,10V20A2,2 0 0,0 4,22H16A2,2 0 0,0 18,20V10A2,2 0 0,0 16,8H15V6C15,4.34 16.34,3 18,3C19.66,3 21,4.34 21,6V8H23V6C23,3.24 20.76,1 18,1M10,13A2,2 0 0,1 12,15A2,2 0 0,1 10,17A2,2 0 0,1 8,15A2,2 0 0,1 10,13Z";
 Object.assign(MDI, {"minus":"M19,13H5V11H19V13Z"});
+
+// the count inside a filter chip ("ROOMS 60"): one style everywhere
+const chipN = n => ' <small class="cn">' + n + '</small>';
 const isMobile = () => window.matchMedia("(max-width:760px)").matches;
 const MAIN = CONFIG.rooms.filter(r => r.main)[0].id, W = CONFIG.weather;
 const MODE = { heat_cool: "AUTO", fan_only: "FAN", off: "OFF", heat: "HEAT", cool: "COOL", dry: "DRY", auto: "AUTO" };
@@ -3438,6 +3671,7 @@ function setState(s) {
   if (onView()) applyView(); else if (CONFIG.view.popup && s.state === "on" && (CONFIG.view.driveway.trig.concat(CONFIG.view.garage.trig)).indexOf(id) > -1 && VW) { VW.back = location.hash || "#home"; location.hash = "#view/auto"; }
   const rx = REL[curPg()]; if (rx && rx.test(id)) queuePg();
   if (CMTS.has(id)) schDraw();
+  if (typeof insRel === "function" && insRel(id)) insQueue();
   if (UPC.e === id) upcDraw();   // an open update card follows its entity (progress, done)
   if (NREL.test(id) || nskRel(id)) queueNotif();
   if (lvRel(id)) lvQ();
@@ -3657,7 +3891,7 @@ function drawEvents(gs, map, fin) {
       h += (td ? '<div class="agt">' : "") + '<div class="ah' + (k >= today ? " up" : " ps") + (td ? " t" : "") + '">' + (td ? "TODAY · " : "") + d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }).toUpperCase() + '</div>' +
         (l.length ? l.map(v => '<div class="ce' + (k < today ? " ps" : "") + '" data-ev="' + v.i + '" style="--c:' + v.c + '"><span class="mo">' + (v.ad ? "All day" : tm(v)) + '</span> ' + esc(v.s) + '</div>').join("") : '<div class="agn">Nothing on today</div>') + (td ? "</div>" : "");
     }
-    g.className = "cg ag"; g.innerHTML = h || '<div class="lbl" style="margin-top:18px">No events this month</div>';
+    evCls(g, "cg ag"); g.innerHTML = h || '<div class="lbl" style="margin-top:18px">No events this month</div>';
     if (evJump) { const f = g.querySelector(".ah.up"); if (f && cy === new Date().getFullYear() && cm === new Date().getMonth()) f.scrollIntoView({ block: "start" }); if (fin) evJump = false; }   // current month: start at today / the next event, earlier days stay above to scroll back to
     return;
   }
@@ -3668,7 +3902,7 @@ function drawEvents(gs, map, fin) {
       l.slice(0, 3).map(v => '<div class="ce" data-ev="' + v.i + '" style="--c:' + v.c + '">' + (v.ad ? "" : '<span class="mo">' + tm(v) + '</span> ') + esc(v.s) + '</div>').join("") +
       (l.length > 3 ? '<div class="mo">+' + (l.length - 3) + ' more</div>' : "") + '</div>';
   }
-  g.className = "cg"; g.style.setProperty("--rows", rows); g.innerHTML = h;
+  evCls(g, "cg"); g.style.setProperty("--rows", rows); g.innerHTML = h;
 }
 // ----- add / edit / delete events (Home Assistant calendar websocket API) -----
 const evSig = s => JSON.stringify([s.cal, s.title.trim(), s.ad, s.sd, s.ad ? "" : s.st, s.ed, s.ad ? "" : s.et, s.loc.trim(), s.note.trim(), s.rep, s.n, s.unit, s.days, s.until]);
@@ -3680,6 +3914,8 @@ const tzo = d => { const o = -d.getTimezoneOffset(), a = Math.abs(o); return (o 
 const dtIso = (d, t) => { const x = new Date(d + "T" + t + ":00"); return d + "T" + t + ":00" + tzo(x); };
 const WD = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"], WDN = ["M", "T", "W", "T", "F", "S", "S"];
 // restart the tab-switch animation on el (dir: +1 slides in from the right, -1 from the left; stag: stagger its children)
+// the calendar grid's own classes for each view, keeping a running slide / rise (tx / txc) so redrawing the new month does not cut the animation off
+function evCls(g, c) { const k = ["tx", "txc"].filter(x => g.classList.contains(x)); g.className = c; k.forEach(x => g.classList.add(x)); }
 function txGo(el, dir, stag) {
   if (!el || (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) || el.closest(".page.enter,.page.hold")) return;   // a page that is just arriving already plays its entrance: no second effect on top
   el.classList.remove("tx", "txc"); void el.offsetWidth;
@@ -3866,7 +4102,7 @@ $("#cg").addEventListener("click", e => {
 });
 function shiftMonth(d) { txGo($("#cg"), d, false); evJump = true; if (evView() === "week") { evw = new Date(evw.getFullYear(), evw.getMonth(), evw.getDate() + 7 * d); evSel = null; cy = evw.getFullYear(); cm = evw.getMonth(); loadEvents(); return; } evSel = null; cm += d; if (cm < 0) { cm = 11; cy--; } if (cm > 11) { cm = 0; cy++; } loadEvents(); }
 $("#ep").onclick = () => shiftMonth(-1); $("#en").onclick = () => shiftMonth(1);
-$("#etd").onclick = () => { evJump = true; cy = new Date().getFullYear(); cm = new Date().getMonth(); evw = evMon(new Date()); evSel = null; loadEvents(); };
+$("#etd").onclick = () => { const n = new Date(), d = (n.getFullYear() * 12 + n.getMonth()) - (cy * 12 + cm); txGo($("#cg"), d > 0 ? 1 : d < 0 ? -1 : 0, false); evJump = true; cy = new Date().getFullYear(); cm = new Date().getMonth(); evw = evMon(new Date()); evSel = null; loadEvents(); };
 const HOME = { status: ".hs", cams: "#cams", schedule: "#sch", rooms: "#rooms", heatpump: "#mini", nowplaying: "#npw", forecast: "#fcp" };
 const layout = () => {
   const L = ((CONFIG.layout || {})[isMobile() ? "mobile" : "tablet"] || Object.keys(HOME)).slice();
@@ -3965,7 +4201,7 @@ function evSearchLoad() {
     .then(() => { evSq.all = all; evSq.busy = false; });
 }
 function evSearchDraw() {
-  if (!evSq.on) return; const g = $("#cg"), q = evSq.q.trim().toLowerCase(); g.className = "cg ag evs"; g.style.removeProperty("--rows");
+  if (!evSq.on) return; const g = $("#cg"), q = evSq.q.trim().toLowerCase(); evCls(g, "cg ag evs"); g.style.removeProperty("--rows");
   const msg = t => { g.innerHTML = '<div class="lbl" style="margin-top:18px">' + t + '</div>'; };
   if (q.length < 2) return msg("Search every event, a year back and two years ahead");
   if (!evSq.all) return msg("Searching…");
@@ -4023,7 +4259,7 @@ function hsFit() {
   const h = $("#hstrip"), s = $("#sch"), a = $("#lvc"); if (!h || !s || !a) return;
   const own = !isMobile() && ((CONFIG.layout || {}).tablet || []).indexOf("schedule") < 0;
   if (own && s.parentNode !== h) h.appendChild(s); else if (!own && s.parentNode === h) $(".camcol").appendChild(s);
-  const n = [a, s].filter(x => x.parentNode === h && !x.hidden).length;
+  const n = [a, s, $("#insc")].filter(x => x && x.parentNode === h && !x.hidden).length;   // Leaving, Insights and Today share the row on a tablet
   h.dataset.n = n; h.hidden = !n; if (own && n) schFit();
 }
 function schFit() {   // tablet strip: chips that do not fit are hidden and counted as "+n"
@@ -4527,7 +4763,7 @@ function drawRoom(id) {
   const P = secs.map(x => { const ids = x.items.map(itE), sw = /^(switches|plugs?)$/i.test(x.name), lt = ids.filter(isLt); if (x.items.length && x.items.every(i => i.sensor)) return [x.name, grid(x.items), { k: "door", ids: x.items.map(i => i.sensor), off: [] }];
     return [x.name, grid(x.items, /^controls?$/i.test(x.name)), { k: "on", ids: sw || !lt.length ? ids.filter(onable) : lt, off: sw ? [] : lt }]; });
   const isCt = x => /^controls?$/i.test(x[0]), CT = P.filter(isCt); P.splice(0, P.length, ...P.filter(x => !isCt(x)));
-  const cv = members(r.covers), fn = members(r.fans), dwl = members(r.doors).concat(members(r.windows)), dw = members(r.doors).map(e => ({ entity: e, kind: "door" })).concat(members(r.windows).map(e => ({ entity: e, kind: "window" }))), cl = [].concat(r.climate || []);
+  const cv = members(r.covers), fn = members(r.fans), dwl = members(r.doors).concat(members(r.windows)), dw = members(r.doors).map(e => ({ entity: e, kind: "door" })).concat(members(r.windows).map(e => ({ entity: e, kind: "window" }))), cl = CONFIG.roomPageClimate === false ? [] : [].concat(r.climate || []);   // roomPageClimate: false keeps climate off the room pages (the room card still shows HEAT / COOL)
   { const sh = typeof rsHtml === "function" ? rsHtml(r) : ""; if (sh) P.push(["Scene", sh, { k: "scene", ids: [], off: [] }]); }   // the Scenes page's zones for this room (24-room-scenes.js)
   if (cv.length) P.push(["Curtains", grid(cv), { k: "open", ids: cv, off: [], cv: 1 }]);
   if (fn.length) P.push(["Fans", grid(fn), { k: "on", ids: fn, off: [] }]);
@@ -5167,7 +5403,7 @@ function drawWeather() {
   h += wxMapSlot();   // live rain radar, under the forecast (20-weather-map.js)
   const wr = states[E("weatherWarnings")];
   const AL = [], fr = wxFrost(a); if (fr) AL.push(fr);
-  if (wr && sv(E("weatherWarnings")) && wr.attributes.warnings) AL.push('<div class="alert w"><div class="lbl">Weather warning · MetService</div>' + esc(wr.attributes.warnings) + '</div>');
+  if (wr && sv(E("weatherWarnings")) && wr.attributes.warnings) AL.push(wwHtml(wr.attributes.warnings, "Weather warning · MetService"));
   AL.push.apply(AL, volcHtml()); AL.push.apply(AL, (quakeHtml() || "").split(/(?=<div class="alert q")/).filter(Boolean));
   if (alI >= AL.length) alI = 0;
   const al = AL.length > 1 ? '<div class="alc"><div class="alr">' + AL.join("") + '</div><div class="dots aldots">' + AL.map((x, i) => '<i data-ai="' + i + '"' + (i === alI ? ' class="on"' : "") + '></i>').join("") + '</div></div>' : AL.join("");   // several warnings: swipe left / right
@@ -5189,6 +5425,36 @@ function quakeHtml() {   // Weather page + notifications: real quakes within haz
   return q.slice(0, 2).map(x => { const a = x.attributes, M = hzMag(+a.magnitude || 0); return '<div class="alert q" data-go="#hazards/earthquakes" style="--qc:' + M[1] + '"><div class="lbl">' + mdi("alert-circle") + ' Earthquake · ' + M[2] + '</div><b>Magnitude ' + f1(a.magnitude) + ' · ' + Math.round(parseFloat(x.state)) + ' km away</b><div>' + esc(a.locality || "") + (a.mmi != null && a.mmi !== "" ? " · MMI " + a.mmi + " " + hzMMI(+a.mmi).toLowerCase() + " shaking" : "") + ' · ' + new Date(a.time).toLocaleString([], tmo({ weekday: "short", hour: "numeric", minute: "2-digit" })) + '</div></div>'; }).join("");
 }
 
+
+// ----- Weather warnings, folded: the title and the time window as pills, the first 2 lines of the text, MORE / LESS for the rest -----
+// MetService writes "<title>, <text>. , <N>hrs from <start> - <end>"; anything else shows as plain text, folded the same way.
+// Which warnings are open is kept (WWO) so a redraw does not fold them again. The wording itself is never changed.
+const WWO = new Set();
+function wwParse(t) {
+  t = String(t || "").trim();
+  const m = /^([^,]{3,80}),\s*([\s\S]*?)[\s.]*,\s*(\d+)\s*hrs?\s+from\s+(.+?)\s+-\s+(.+)$/i.exec(t);
+  if (!m) return { title: "", body: t, pills: [] };
+  const sh = x => { x = x.replace(/,\s*\d{1,2}\s+[A-Za-z]{3,}$/, "").trim(); return x.charAt(0).toUpperCase() + x.slice(1); };   // "midnight Fri, 6 Nov" -> "Midnight Fri"
+  return { title: m[1].trim(), body: m[2].trim().replace(/\s*\n\s*\n\s*/g, "\n\n").replace(/\.?$/, "."), pills: [sh(m[4]) + " → " + sh(m[5]), m[3] + " hrs"] };
+}
+function wwHtml(text, label) {
+  // several warnings: each one ends with its own "<N>hrs from ... - ..." time; blank lines inside one warning are only paragraphs
+  const all = String(text || "").replace(/\r/g, ""), parts = [], rx = /\d+\s*hrs?\s+from\s[^\n]*\s-\s[^\n]*/gi; let m, at = 0;   // no look-behind: older iPads cannot parse it
+  while ((m = rx.exec(all))) { parts.push(all.slice(at, m.index + m[0].length)); at = m.index + m[0].length; }
+  parts.push(all.slice(at));
+  return parts.map(x => x.trim()).filter(Boolean).map(x => {
+    const w = wwParse(x), k = String(x.length) + ":" + x.slice(0, 60), open = WWO.has(k), long = w.body.length > 140;
+    return '<div class="alert w ww' + (open ? " open" : "") + '" data-ww="' + esc(k) + '">' + (label ? '<div class="lbl">' + esc(label) + '</div>' : "") +
+      (w.title ? '<div class="wwt">' + esc(w.title) + '</div>' : "") + (w.pills.length ? '<div class="wwp">' + w.pills.map(p => '<span>' + esc(p) + '</span>').join("") + '</div>' : "") +
+      '<div class="wwb' + (long ? " cl" : "") + '">' + esc(w.body) + '</div>' + (long ? '<button class="wwm" data-wwm aria-expanded="' + open + '">' + (open ? "LESS" : "MORE") + mdi(open ? "chevron-up" : "chevron-down") + '</button>' : "") + '</div>';
+  }).join("");
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-wwm]"); if (!b) return; e.stopPropagation();
+  const c = b.closest("[data-ww]"), k = c.dataset.ww, open = !c.classList.contains("open");
+  if (open) WWO.add(k); else WWO.delete(k);
+  c.classList.toggle("open", open); b.setAttribute("aria-expanded", open); b.innerHTML = (open ? "LESS" : "MORE") + mdi(open ? "chevron-up" : "chevron-down");
+}, true);
 // ----- Weather page: live weather map (Windy embed) -----
 // config.js: weatherMap: { zoom: 7, lat: -41.29, lon: 174.78, overlay: "radar" } changes the view (default: zone.home at zoom 7, radar first); weatherMap: false hides the card.
 // overlay: "radar" | "rain" | "wind" | "clouds" | "temp" (the chips on the card switch between them; the last one picked is kept per device).
@@ -5502,7 +5768,7 @@ const scCount = f => scLib(f).reduce((n, c) => n + c[1].length, 0);
 function scPicFor(v) { let fn = ""; scLibAll().forEach(c => c[1].forEach(x => { if (!fn && v && scSame(x.v, v)) fn = x.img; })); return fn; }   // the same picture everywhere for a scene
 // the filter chips (Scenes page and the room page's CHANGE sheet): only when there are both kinds of light
 function scChips(f, attr) { if (!(CONFIG.scenes.lights || []).length || !(CONFIG.scenes.rooms || []).length) return "";
-  return '<div class="chips tabs scf">' + [["all", "ALL", ""], ["room", "ROOMS", "lightbulb"], ["led", "LEDS", "led-strip"]].map(x => '<button class="chip' + (f === x[0] ? " on" : "") + '" ' + attr + '="' + x[0] + '">' + (x[2] ? mdi(x[2]) : "") + x[1] + ' <small>' + scCount(x[0]) + '</small></button>').join("") + '</div>'; }
+  return '<div class="chips tabs scf">' + [["all", "ALL", ""], ["room", "ROOMS", "lightbulb"], ["led", "LEDS", "led-strip"]].map(x => '<button class="chip' + (f === x[0] ? " on" : "") + '" ' + attr + '="' + x[0] + '">' + (x[2] ? mdi(x[2]) : "") + x[1] + chipN(scCount(x[0])) + '</button>').join("") + '</div>'; }
 // where a scene plays, as two small tags (under the scene name, and on each picture)
 function scTags(v, full) { const both = (CONFIG.scenes.lights || []).length && (CONFIG.scenes.rooms || []).length; if (!both || !v) return "";
   const r = scRoomHas(v), l = scLedHas(v);
@@ -6001,7 +6267,7 @@ function dtDraw(soft) {
   const body = vis.slice(0, DT.show).map((x, i) => { const th = dtThumbUrl(x); return '<div class="dti" data-dt="play" data-k="' + esc(x.mc) + '" data-cam="' + esc(x.cam) + '" data-ts="' + x.ts + '" data-tg="' + esc(x.p.tags.join(",")) + '"><div class="pbth" data-dth="' + esc(x.mc) + '">' + (th ? '<img alt="" src="' + esc(th) + '">' : "") + '<b>' + mdi("play") + '</b><u>' + esc(x.p.len) + '</u></div><div class="pbx"><strong>' + esc(dtName(x.cam)) + '</strong><span>' + esc(dtWhen(x.ts)) + '</span><div>' + x.p.tags.map(t => '<i class="pbt2 ' + t.toLowerCase() + '">' + t + '</i>').join("") + '</div></div></div>'; }).join("");
   const loading = DT.busy ? '<div class="pbn">Looking through the recordings' + (DT.loaded ? " · " + DT.loaded : "") + '…</div>' : "";
   P.innerHTML = '<div class="lbl dthd">Recent detections<button class="eb" data-dt="refresh" aria-label="Refresh">' + mdi("refresh") + '</button></div>' +
-    '<div class="pbc dtf">' + [["Person", "PERSON"], ["Vehicle", "VEHICLE"], ["Animal", "ANIMAL"], ["Motion", "OTHER MOTION"]].map(x => '<button class="chip' + (DT.types[x[0]] ? " on" : "") + '" data-dt="type" data-v="' + x[0] + '">' + x[1] + (all.length ? " · " + cnt(x[0]) : "") + '</button>').join("") + '</div>' +
+    '<div class="pbc dtf">' + [["Person", "PERSON"], ["Vehicle", "VEHICLE"], ["Animal", "ANIMAL"], ["Motion", "OTHER MOTION"]].map(x => '<button class="chip' + (DT.types[x[0]] ? " on" : "") + '" data-dt="type" data-v="' + x[0] + '">' + x[1] + (all.length ? chipN(cnt(x[0])) : "") + '</button>').join("") + '</div>' +
     '<div class="pbc dtf"><button class="chip' + (DT.cam === "all" ? " on" : "") + '" data-dt="cam" data-v="all">ALL CAMERAS</button>' + dtCams().map(id => '<button class="chip' + (DT.cam === id ? " on" : "") + '" data-dt="cam" data-v="' + esc(id) + '">' + esc(dtName(id)).toUpperCase() + '</button>').join("") + '</div>' +
     '<div class="pbc dtf">' + DT_R.map((x, i) => '<button class="chip' + (DT.range === i + 1 ? " on" : "") + '" data-dt="range" data-v="' + (i + 1) + '">' + x[2] + '</button>').join("") + '</div>' +
     '<div class="dtg">' + (body || (DT.busy ? "" : '<div class="pbn">Nothing detected for these filters</div>')) + '</div>' + loading +
@@ -6232,7 +6498,7 @@ function drawPalette() {
     sec("Clock", '<div class="seg" style="margin-top:12px">' + [["auto", "DEVICE"], ["12", "12-HOUR"], ["24", "24-HOUR"]].map(x => '<button class="eb' + (CLOCK === x[0] ? " on" : "") + '" data-clock="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">How times are shown on this dashboard. DEVICE follows the language of this phone or tablet. Saved on this device only.</div>') +
     (brandOn() ? sec("Start-up logo", '<div class="seg" style="margin-top:12px">' + [["on", "LOGO + INTRO"], ["load", "WHILE LOADING ONLY"], ["off", "OFF"]].map(x => '<button class="eb' + (logoPref() === x[0] ? " on" : "") + '" data-logo="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">Applies the next time the dashboard starts. Saved on this device only.</div>') : "") +
     (AUTH && !AUTH.borrowed && !CONFIG.token ? sec("Account", '<div style="margin-top:12px"><button class="eb" data-signout="1">SIGN OUT OF THIS DEVICE</button><span class="lbl" style="margin-left:14px">Signed in on this device only</span></div>') : "") +
-    ('<div class="pn pg thab"><span class="lbl">Kinetic ' + esc(ENGINE_VERSION) + '</span></div>');
+    ('<div class="pn pg thab"><span class="lbl">Kinetic ' + esc(ENGINE_VERSION) + ' · build ' + esc(window.DASH_BUILD || "") + '</span></div>');
   $("#theme").innerHTML = '<div class="thg"><div class="thl">' + L + '</div></div>';
 }
 $("#theme").oninput = e => {
@@ -6472,7 +6738,7 @@ function drawAdmin() {
   const el = $("#admin"); if (!el || !ADMIN_ON()) return;
   const sec = (t, inner) => '<div class="pn pg"><div class="lbl">' + t + '</div>' + inner + '</div>';
   const n = Object.keys(states).length, who = ME.name ? esc(ME.name) : (CONFIG.token ? "long-lived token" : "-");
-  const about = sec("This dashboard", '<div class="adm-f"><div><small>Kinetic</small><b>' + esc(ENGINE_VERSION) + '</b></div><div><small>Signed in as</small><b>' + who + '</b></div><div><small>Entities loaded</small><b>' + n + '</b></div></div>');
+  const about = sec("This dashboard", '<div class="adm-f"><div><small>Kinetic</small><b>' + esc(ENGINE_VERSION) + ' · ' + esc(window.DASH_BUILD || "") + '</b></div><div><small>Signed in as</small><b>' + who + '</b></div><div><small>Entities loaded</small><b>' + n + '</b></div></div>');
   el.innerHTML = '<div class="thg"><div class="thl">' + sysSec(sec) + accSec(sec) + ceSec(sec) + sckSection(sec) + about + '</div></div>';
 }
 $("#admin").addEventListener("click", e => { const ac = e.target.closest("[data-acc]"); if (ac) accClick(ac); });
@@ -6736,19 +7002,21 @@ const doorsOpen = () => { const g = E("doorsGroup"), all = members(g).filter(x =
 // Each thing lives in one tab, by how urgent it is. Alerts: leaks, open outside doors, the garage, weather and hazards, cameras, Controls.
 // Active: whatever is switched on or running (lights, fans, taps, curtains, windows, appliances, laundry, towels). Attention: bins, soil, offline, updates, batteries, pollen.
 // So an alert from config alerts that is also in an Active group, the doors list or the Bins card is left out of Alerts, and the doors group is left out of Active.
+// Attention (bins, pollen, updates, alerts switched off) lives on the Insights page, unless insights: false: then the pop-up keeps its ATTENTION tab
+const npAttn = () => CONFIG.insights === false;
 const npFocus = (k, f) => !f || [].concat(k).indexOf(f) > -1;   // f = npOnly on the Alerts / Attention tab: show only that section (a strip chip opened it)
 function notif(full, f) {
   let n = 0, h = "";
   const sec = (t, b, k) => { if (full && b && npFocus(k, f)) h += '<div class="lbl np2">' + t + '</div>' + b; };
   const grid = a => a.length ? '<div class="tg3">' + a.map(tileHtml).join("") + '</div>' : "";
-  const al = volcHtml().concat(quakeHtml() || []), pa = !attnCfg() && polAlert(); if (pa) al.push(pa); n += al.length; sec("Alerts", al.join(""), "haz");
+  const al = volcHtml().concat(quakeHtml() || []), pa = !attnCfg() && npAttn() && polAlert(); if (pa) al.push(pa); n += al.length; sec("Alerts", al.join(""), "haz");
   const dr = doorsOpen();
   if (dr) { n++; sec("Doors", '<div class="alert q"><b>' + (dr.length || 1) + ' open</b><div>' + dr.map(x => esc(fname(x))).join(" · ") + '</div></div>', "door"); }
   const LK = LEAKS().filter(x => isOn(x[0])), dup = npDupIds(), W2 = (CONFIG.alerts || []).filter(x => isOn(x[0]) && !entHidden(x[0]) && !dup[x[0]]);   // leak sensors first, as red cards
   n += LK.length + W2.length; if (f === "leak") sec("Water leak", LK.map(x => '<div class="alert q"><div class="lbl">' + mdi("water-alert") + ' WATER LEAK</div><b>' + esc(x[1]) + '</b><div>' + esc(x[2]) + '</div></div>').join(""), "leak");
   sec("Warnings", LK.map(x => '<div class="alert q"><div class="lbl">' + mdi("water-alert") + ' WATER LEAK</div><b>' + esc(x[1]) + '</b><div>' + esc(x[2]) + '</div></div>').join("") + grid(W2.map(x => npItem(x[0], { name: x[1], sub: x[2], confirm: /rubbish|recycle/.test(x[0]) }))), "warnings");
   const wr = states[E("weatherWarnings")];
-  if (wr && sv(E("weatherWarnings")) && wr.attributes.warnings) { n++; sec("Weather warning", '<div class="alert w">' + esc(wr.attributes.warnings) + '</div>', "warn"); }
+  if (wr && sv(E("weatherWarnings")) && wr.attributes.warnings) { n++; sec("Weather warning", wwHtml(wr.attributes.warnings, ""), "warn"); }
   const wxa = wxaNow(); if (wxa) { n++; sec("Weather", wxaHtml(wxa), "wx"); }   // 31-weather-alerts.js: wind now / coming up, and rain in the next hours
   // Cameras: live pictures (the same WebRTC streams as the Security page), mounted into these slots after the list is drawn. An alert's 4th value names the camera to show while it is on:
   // "driveway", "garage", or any camera by its name as shown on the Security page ("road", "right-walkway"). The garage also shows while its door sensor says it is opening / open.
@@ -6757,7 +7025,7 @@ function notif(full, f) {
   n += tm.length;
   sec("Timers", tm.map(x => { const t = states[x].attributes, fin = Date.parse(t.finishes_at || "") || 0, dur = (t.duration || "0:00:00").split(":").reduce((p, q) => p * 60 + +q, 0) * 1000; return '<div class="ws" style="margin-bottom:8px"><span class="lbl">' + esc(fname(x)) + '</span><div class="lbl tmr" data-fin="' + fin + '">--</div><div class="zb"><i data-dur="' + dur + '"></i></div></div>'; }).join(""));
   // the Person / Vehicle alert switches (config adminToggles) live on the Security page now (secTog below); while one is off, Attention has a reminder
-  const ai = attnItems();   // 33-attention.js: bins, dry soil, offline devices, updates, low batteries, pollen
+  const ai = npAttn() ? attnItems() : [];   // 33-attention.js: bins, dry soil, offline devices, updates, low batteries, pollen
   return { n: n, all: n + ai.length, html: h, na: ai.length, ah: full ? attnHtml(f ? ai.filter(x => x.k === f) : ai) : "", ai: ai };
 }
 // header strip: normally a glowing bar while something is waiting; it turns into an icon for the conditions below. Priority when several are true:
@@ -6903,9 +7171,10 @@ function drawNotif() {
   if (!open) { npCamStop(); return; }
   const A = actList(), tot = A.reduce((s, x) => s + x.ids.length, 0);
   // the header and tabs are built once and only updated in place; the list below is only replaced when its HTML really changes, so nothing blinks on a state update
-  const np = $("#np"), tb = [["alerts", "ALERTS", r.n], ["attention", "ATTENTION", r.na], ["active", "ACTIVE", tot]]; let tc = false;
+  if (npTab === "attention" && !npAttn()) npTab = "alerts";
+  const np = $("#np"), tb = [["alerts", "ALERTS", r.n]].concat(npAttn() ? [["attention", "ATTENTION", r.na]] : []).concat([["active", "ACTIVE", tot]]); let tc = false;
   if (!np.querySelector(".nptabs")) { tc = true; np.innerHTML = '<div class="nh"><div><div class="lbl">Home</div><h3>Notifications</h3></div><button class="eb" data-close="1">DONE</button></div>' + hsw('<div class="chips tabs nptabs">' + tb.map(t => '<button class="chip" data-npt="' + t[0] + '"></button>').join("") + '</div>') + '<div id="npc"></div>'; }
-  np.querySelectorAll(".nptabs .chip").forEach((c, k) => { const tx = tb[k][1] + (tb[k][2] ? " · " + tb[k][2] : ""); if (c.textContent !== tx) { c.textContent = tx; tc = true; } c.classList.toggle("on", c.dataset.npt === npTab); });
+  np.querySelectorAll(".nptabs .chip").forEach((c, k) => { const tx = tb[k][1] + (tb[k][2] ? chipN(tb[k][2]) : ""); if (c._h !== tx) { c._h = tx; c.innerHTML = tx; tc = true; } c.classList.toggle("on", c.dataset.npt === npTab); });
   const body = npLoading() ? '<div class="lbl" style="margin:14px 0">Loading…</div>' : npTab === "active" ? npChips(A) + (npOnly ? actHtml(A.filter(x => x.c[0].toLowerCase().replace(/\s+/g, "-") === npOnly)) : actHtml(A)) : (npOnly ? '<div class="npfoc"><span>Only ' + esc(NPFN[npOnly] || npOnly) + '</span><button class="eb" data-npall="1">SHOW ALL</button></div>' : "") + (npTab === "attention" ? (r.na ? r.ah : '<div class="lbl" style="margin:14px 0">Nothing needs attention</div>') : (r.n ? "" : '<div class="lbl" style="margin:14px 0">All clear</div>') + r.html), nc = $("#npc"), key = npTab + "|" + body.replace(/<em class="ldr">[^<]*<\/em>/g, '<em class="ldr"></em>');   // the remaining time is filled in below, so the minute ticking over does not redraw the list (and restart the drum)
   if (nc._k !== key) {
     const at = npTab + "|" + npOnly;
@@ -6925,7 +7194,12 @@ const NPK = { leak: ["alerts", "leak"], warn: ["alerts", "warn"], garage: ["aler
   water: ["active", "water-taps"], bins: ["attention", "bins"], battery: ["attention", "bat"], pollen: ["attention", "pol"], laundry: ["active", "laundry"], towel: ["active", "towel-heating"] };
 $("#hc").onclick = e => {
   const open = document.body.classList.contains("np-open");
-  if (!open) { const ks = NSK.filter(k => k[3]()), ch = e && e.target.closest && e.target.closest(".nai[data-k]"), m = ch ? NPK[ch.dataset.k] : ks.length === 1 ? NPK[ks[0][0]] || ["alerts"] : null; if (m) { npTab = m[0]; npOnly = m[1] || ""; npGo = null; } }
+  if (!open) { const ks = NSK.filter(k => k[3]()), ch = e && e.target.closest && e.target.closest(".nai[data-k]"), m = ch ? NPK[ch.dataset.k] : ks.length === 1 ? NPK[ks[0][0]] || ["alerts"] : null;
+    // low batteries live on the Insights page (unless Attention still lists them): the chip opens that card there
+    // bins, low batteries and pollen live on the Insights page now: their chip opens that card there
+    const ic = m && !npAttn() && { bat: "batt", bins: "bins", pol: "pollen" }[m[1]];
+    if (ic) { INS.det = ic; location.hash = "#insights"; setTimeout(() => { if (typeof insDetDraw === "function") insDetDraw(); }, 60); return; }
+    if (m) { npTab = m[0]; npOnly = m[1] || ""; npGo = null; } }
   document.body.classList.toggle("np-open"); drawNotif();
 };
 $("#nclk").onclick = () => $("#hc").click();   // tablet: the clock at the top of the side menu opens the notifications too
@@ -6961,14 +7235,14 @@ function binsOut() { const b = binsCfg(); return !!(b && b.out && isOn(b.out)); 
 function binsIds() { const b = binsCfg(); return b ? b.due.map(x => x[0]).concat(b.out ? [b.out] : []) : []; }
 function binsEvening() { const f = (binsCfg() || {}).eveningFrom; return new Date().getHours() >= (typeof f === "number" ? f : 16); }   // from this hour the pickup is "tomorrow", before it "today"
 function binsWaiting() { return binsDue().length > 0 && !binsOut(); }   // something still has to go out: counts as an alert and shows in the header strip
-function binsCard() {
+function binsCard(noCam) {
   const b = binsCfg(), due = binsDue(); if (!b || !due.length) return "";
   const out = binsOut(), eve = binsEvening(), nm = due.map(x => x[1]), list = nm.length > 1 ? nm.slice(0, -1).join(", ") + " and " + nm[nm.length - 1] : nm[0];
   const ico = '<div class="bn-i">' + due.map(x => '<span class="bn-b" data-ic="' + esc(x[2] || "trash-can") + '">' + mdi(x[2] || "trash-can") + '</span>').join("") + '</div>';
   const title = out ? "Bins are out" : eve ? "Bins out tonight" : "Bring the bins out", sub = esc(list) + " · " + (eve ? "pickup tomorrow" : out ? "waiting for pickup today" : "pickup today");
   const step = (c, t) => '<div class="bn-s ' + c + '"><span class="bn-d">' + (c === "done" ? mdi("check") : "") + '</span>' + t + '</div>';
   const tl = eve ? '<div class="bn-tl">' + step("done", "Reminded") + '<i class="bn-ln done"></i>' + step(out ? "done" : "cur", "Bins out") + '<i class="bn-ln' + (out ? " done" : "") + '"></i>' + step("", "Collected") + '</div>' : "";
-  const cam = !eve && b.camera ? npCamFor(b.camera) : null, cs = cam ? '<div class="snap npcam" data-vw="' + esc(cam.key) + '" data-npc="' + esc(cam.id) + '" data-name="' + esc(cam.name) + '"></div>' : "";
+  const cam = !eve && b.camera && !noCam ? npCamFor(b.camera) : null, cs = cam ? '<div class="snap npcam" data-vw="' + esc(cam.key) + '" data-npc="' + esc(cam.id) + '" data-name="' + esc(cam.name) + '"></div>' : "";
   const btn = out && !eve ? '<button class="bn-btn" data-bn="done">Collected</button>' : !out && b.out ? '<button class="bn-btn" data-bn="out">Bins are out</button>' : !b.out ? '<button class="bn-btn" data-bn="done">Done</button>' : "";
   return '<div class="bn' + (out ? " out" : "") + '"><div class="bn-h">' + ico + '<div class="bn-t"><b>' + title + '</b><span>' + sub + '</span></div></div>' + tl + cs + btn + '</div>';
 }
@@ -6980,12 +7254,22 @@ function binsTap(k) {
 // ---------- Attention: things worth acting on ----------
 // Notifications > ATTENTION lists the bins, dry soil, devices that have been offline for a while, updates waiting and low batteries. Alerts keeps the urgent things (leak, warnings, doors).
 // Config: attention: false | { offline: true, offlineMinutes: 10, updates: true, soil: true, soilBelow: 25, batteries: true, batteryBelow: 26, ignore: ["light.hall_lamp"], watch: ["binary_sensor.x"] } (see config.example.js)
-const attnCfg = () => { const a = CONFIG.attention; return a === false ? null : Object.assign({ offline: true, offlineMinutes: 10, updates: true, soil: true, soilBelow: 25, batteries: true, batteryBelow: 26, ignore: [], watch: [] }, a || {}); };
+// dry soil, offline devices and low batteries are on the Insights page, so Attention leaves them out unless insights: false (or attention: { soil: true, ... } asks for them here too)
+const attnCfg = () => { const a = CONFIG.attention, here = CONFIG.insights === false; return a === false ? null : Object.assign({ offline: here, offlineMinutes: 10, updates: true, soil: here, soilBelow: 25, batteries: here, batteryBelow: 26, ignore: [], watch: [] }, a || {}); };
+// the settings above even when Attention is off: Insights uses the same offline and battery rules
+const attnRules = () => Object.assign({ offlineMinutes: 10, batteryBelow: 26, ignore: [], watch: [] }, CONFIG.attention || {});
+// devices offline for offlineMinutes or longer (lights, switches, covers, locks, climate, cameras, fans, sirens, alarms, vacuums, and attention.watch), minus attention.ignore: [[id, ms], ...]
+function attnOffline() {
+  const c = attnRules(), rx = [].concat(c.ignore || []).map(x => { try { return new RegExp(x); } catch (e) { return null; } }).filter(Boolean), min = (+c.offlineMinutes || 0) * 6e4, now = Date.now(), w = c.watch || [];
+  return Object.keys(states).filter(id => states[id].state === "unavailable" && (ATD.test(id) || w.includes(id)) && !rx.some(r => r.test(id))).sort().map(id => [id, now - (Date.parse(states[id].last_changed || "") || now)]).filter(x => x[1] >= min);
+}
+// Battery Notes "Battery+" sensors under batteryBelow (26 %), lowest first
+const attnBatts = () => { const th = +attnRules().batteryBelow || 26; return Object.keys(states).filter(k => /^sensor\..*battery_plus$/.test(k) && parseFloat(states[k].state) < th).sort((x, y) => parseFloat(states[x].state) - parseFloat(states[y].state)); };
 const ATD = /^(light|switch|cover|lock|climate|camera|fan|siren|alarm_control_panel|vacuum)\./;   // what counts as a device that can be "offline" (sensors and media players come and go too often); add more with watch
 const ATU = new Set();   // ids that were unavailable at their last change, so the redraw also fires when they come back
 function attnRel(id) {   // a state change that can alter the Attention list (the list redraws only for these)
   if (/^update\./.test(id) || /^sensor\.average_.*_soil_moisture$/.test(id)) return true;
-  const c = attnCfg(); if (!c || !c.offline || !(ATD.test(id) || (c.watch || []).includes(id))) return false;
+  const c = attnRules(); if (!(ATD.test(id) || (c.watch || []).includes(id))) return false;
   const u = !!states[id] && states[id].state === "unavailable", was = ATU.has(id); if (u) ATU.add(id); else ATU.delete(id); return u || was;
 }
 const attnAgo = ms => ms < 36e5 ? Math.max(1, Math.round(ms / 6e4)) + " min" : ms < 864e5 ? Math.round(ms / 36e5) + " h" : Math.round(ms / 864e5) + " d";
@@ -6996,12 +7280,9 @@ function attnItems() {
     out.push({ k: "tog", icon: "bell-off", id: x[0], t: x[1] + " alerts are off", sub: g[0].replace(/\s*security$/i, "") + " · off for " + attnAgo(Math.max(ms, 6e4)) }); }));   // a detection alert switched off on the Security page: a reminder, so it is not forgotten
   if (polAlert()) out.push({ k: "pol", icon: "pollen", t: "Pollen" });   // 19-pollen.js: from the level set by pollen.alertFrom (it used to be under Alerts)
   if (c.soil) Object.keys(CONFIG.derived.soil || {}).sort((a, b) => parseFloat(sv("sensor.average_" + a + "_soil_moisture")) - parseFloat(sv("sensor.average_" + b + "_soil_moisture"))).forEach(z => { const m = parseFloat(sv("sensor.average_" + z + "_soil_moisture")); if (m < (+c.soilBelow || 25)) out.push({ k: "soil", icon: "water-percent", t: title(z) + " soil", sub: (m < 15 ? "Very dry" : m < 25 ? "Dry" : "Moist") + " · " + f1(m) + "%", tone: m < 15 ? "bad" : m < 25 ? "warn" : "", m: m, z: title(z) }); });
-  if (c.offline) {
-    const rx = [].concat(c.ignore || []).map(x => { try { return new RegExp(x); } catch (e) { return null; } }).filter(Boolean), min = (+c.offlineMinutes || 0) * 6e4, now = Date.now(), w = c.watch || [];
-    Object.keys(states).filter(id => states[id].state === "unavailable" && (ATD.test(id) || w.includes(id)) && !rx.some(r => r.test(id))).sort().forEach(id => { const ms = now - (Date.parse(states[id].last_changed || "") || now); if (ms >= min) out.push({ k: "off", icon: "access-point-network", t: fname(id), sub: "Offline for " + attnAgo(ms) + " · " + id, tone: "warn" }); });
-  }
+  if (c.offline) attnOffline().forEach(x => out.push({ k: "off", icon: "access-point-network", t: fname(x[0]), sub: "Offline for " + attnAgo(x[1]) + " · " + x[0], tone: "warn" }));
   if (c.updates) Object.keys(states).filter(id => /^update\./.test(id) && states[id].state === "on").sort().forEach(id => { const a = states[id].attributes || {}; const ip = upcBusy(a), pc = upcPct(a); out.push({ k: "upd", icon: "autorenew", e: id, t: a.title || a.friendly_name || fname(id), sub: ip ? "Installing…" + (pc != null ? " " + pc + "%" : "") : (a.installed_version ? a.installed_version + " → " : "") + (a.latest_version || "new version"), prog: ip ? (pc != null ? pc : -1) : null }); });
-  if (c.batteries) { const th = +c.batteryBelow || 26; Object.keys(states).filter(k => /^sensor\..*battery_plus$/.test(k) && parseFloat(states[k].state) < th).sort((x, y) => parseFloat(states[x].state) - parseFloat(states[y].state)).forEach(k => { const v = Math.round(parseFloat(states[k].state)); out.push({ k: "bat", icon: "battery-low", t: fname(k).replace(/\s+battery(\s+plus|\+)$/i, ""), sub: v + "%", tone: v <= 15 ? "bad" : "warn" }); }); }   // Battery Notes "Battery+" sensors under 26 %
+  if (c.batteries) { attnBatts().forEach(k => { const v = Math.round(parseFloat(states[k].state)); out.push({ k: "bat", icon: "battery-low", t: fname(k).replace(/\s+battery(\s+plus|\+)$/i, ""), sub: v + "%", tone: v <= 15 ? "bad" : "warn" }); }); }   // Battery Notes "Battery+" sensors under 26 %
   return out;
 }
 function attnHtml(it) {
@@ -7097,7 +7378,7 @@ function lvItems() {
 function lvCard() {
   const el = $("#lvc"); if (!el) return; const it = lvItems(), on = it.length > 0;
   const h = on ? '<span class="at-h" title="Before you leave">' + mdi("door-open") + '</span><span class="at-l"><span class="at-x">Leaving? <small>' + esc(it.map(x => x.s).join(", ")) + '</small></span></span><span class="at-c">' + mdi("chevron-right") + '</span>' : "";
-  if (el._h !== h) { el._h = h; el.innerHTML = h; } el.hidden = !on; hsFit();
+  if (el._h !== h) { el._h = h; el.innerHTML = h; } el.hidden = !on; if (typeof hplDraw === "function") hplDraw(); hsFit();
   if (LV.open) { if (on) lvDraw(it); else lvClose(); }
 }
 function lvQ() { if (!LV.q) LV.q = requestAnimationFrame(() => { LV.q = 0; lvCard(); }); }
@@ -7234,19 +7515,19 @@ function evViews(V, gs, map, today, tm, srt, fin) {
     }
     let mm = WDS.map(n => '<span class="dnm">' + n[0] + '</span>').join("");
     for (let i = 0; i < mrows() * 7; i++) { const d = new Date(gs.getFullYear(), gs.getMonth(), gs.getDate() + i), k = dk(d); mm += '<button class="' + (d.getMonth() !== cm ? "o " : "") + (k === today ? "t" : "") + '" data-jump="' + k + '">' + d.getDate() + '</button>'; }
-    g.className = "cg ag evl"; g.innerHTML = '<div class="evla">' + (h || '<div class="lbl" style="margin-top:18px">No events this month</div>') + '</div><div class="evlm"><h4>' + esc(new Date(cy, cm, 1).toLocaleDateString([], { month: "long", year: "numeric" })) + '</h4><div class="emg">' + mm + '</div></div>';
+    evCls(g, "cg ag evl"); g.innerHTML = '<div class="evla">' + (h || '<div class="lbl" style="margin-top:18px">No events this month</div>') + '</div><div class="evlm"><h4>' + esc(new Date(cy, cm, 1).toLocaleDateString([], { month: "long", year: "numeric" })) + '</h4><div class="emg">' + mm + '</div></div>';
     return;
   }
   if (V === "week") {   // phone: the week as a strip of days, the picked day's events underneath
     const sel = evSelDay(gs, today, true); let st = "";
     for (let i = 0; i < 7; i++) { const d = new Date(gs.getFullYear(), gs.getMonth(), gs.getDate() + i), k = dk(d); st += '<button data-pick="' + k + '" class="' + (k === today ? "t " : "") + (k === sel ? "on" : "") + '"><small>' + WDS[i] + '</small><b>' + d.getDate() + '</b><span>' + evDots(map[k] || [], 3) + '</span></button>'; }
-    g.className = "cg ag evp"; g.innerHTML = '<div class="evstrip">' + st + '</div>' + evDayList(sel, map, tm, srt);
+    evCls(g, "cg ag evp"); g.innerHTML = '<div class="evstrip">' + st + '</div>' + evDayList(sel, map, tm, srt);
     return;
   }
   // phone month: compact grid with a dot per calendar, the picked day's events underneath
   const sel = evSelDay(gs, today, false), rows = mrows(); let c = WDS.map(n => '<span class="dnm">' + n[0] + '</span>').join("");
   for (let i = 0; i < rows * 7; i++) { const d = new Date(gs.getFullYear(), gs.getMonth(), gs.getDate() + i), k = dk(d); c += '<button data-pick="' + k + '" class="' + (d.getMonth() !== cm ? "o " : "") + (k === today ? "t " : "") + (k === sel ? "on" : "") + '"><b>' + d.getDate() + '</b><span>' + evDots(map[k] || [], 3) + '</span></button>'; }
-  g.className = "cg ag evp"; g.innerHTML = '<div class="evmg">' + c + '</div>' + evDayList(sel, map, tm, srt);
+  evCls(g, "cg ag evp"); g.innerHTML = '<div class="evmg">' + c + '</div>' + evDayList(sel, map, tm, srt);
 }
 function evWeekGrid(g, gs, map, today, tm, srt, fin) {   // tablet week: 7 columns, hours down the side, an all-day strip on top, a line for now
   const HH = 40, WDS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"], days = [];
@@ -7272,7 +7553,7 @@ function evWeekGrid(g, gs, map, today, tm, srt, fin) {   // tablet week: 7 colum
       return '<div class="wev" data-ev="' + o.v.i + '" style="--c:' + o.v.c + ';top:' + t0 + 'px;height:' + ht + 'px;left:calc(' + o.ln + '*100%/' + o.n + ' + 2px);width:calc(100%/' + o.n + ' - 4px)"><b>' + esc(o.v.s) + '</b>' + (ht > 34 ? '<small>' + tm(o.v) + '</small>' : "") + '</div>';
     }).join("") + (x.k === today ? '<u class="wn" style="top:' + y(now) + 'px"></u>' : "") + '</div>';
   });
-  g.className = "cg ag evwk"; g.innerHTML = '<div class="wk"><div class="wkh">' + hd + '</div><div class="wka">' + al + '</div><div class="wkb">' + bd + '</div></div>';
+  evCls(g, "cg ag evwk"); g.innerHTML = '<div class="wk"><div class="wkh">' + hd + '</div><div class="wka">' + al + '</div><div class="wkb">' + bd + '</div></div>';
   const sc = g.querySelector(".wkb"); if (sc && fin && evJump) { evJump = false; const first = days.some(d => d.k === today) ? y(now) - HH : Math.min.apply(null, days.reduce((a, d) => a.concat(d.tl.map(o => y(o.a))), [h1 * HH])) - 10; sc.scrollTop = Math.max(0, first); }
 }
 document.addEventListener("click", e => { const j = e.target.closest("[data-jump]"); if (!j || !$("#events").contains(j)) return; const t = $('#cg .ah[data-k="' + j.dataset.jump + '"]') || [].slice.call($$("#cg .ah[data-k]")).filter(x => x.dataset.k >= j.dataset.jump)[0]; if (t) t.scrollIntoView({ block: "start", behavior: "smooth" }); });
@@ -8382,12 +8663,38 @@ function enBuckets(sp) {
   return o;
 }
 const TARIFF_DEF = { symbol: "$", daily: 2.687, periods: [{ from: 0, to: 21, rate: 0.364, name: "Charged (midnight – 9pm)" }, { from: 21, to: 24, rate: 0, name: "Free (9pm – midnight)" }] };   // used when CONFIG.tariff is missing
-const enRate = h => { const T = CONFIG.tariff || TARIFF_DEF, k = T.periods.filter(p => h >= p.from && h < p.to)[0]; return k ? k.rate : 0; };
+const enRate = t => tarRate(t);
+// Tariff periods: { from, to, rate, name, days } with from/to hours of the day (from inclusive, to exclusive) and days optional (0 = Sunday … 6 = Saturday).
+// A period with days wins over one without on those days, so "free 9pm – midnight Mon–Fri" goes on top of an all-day charged rate.
+function tarT() { return CONFIG.tariff || TARIFF_DEF; }
+function tarPer(t, T) {
+  T = T || tarT(); const d = new Date(t), h = d.getHours(), w = d.getDay(), P = (T.periods || []).filter(p => p && h >= p.from && h < p.to);
+  return P.find(p => Array.isArray(p.days) && p.days.indexOf(w) > -1) || P.find(p => !Array.isArray(p.days)) || null;
+}
+function tarRate(t, T) { const p = tarPer(t, T); return p ? +p.rate || 0 : 0; }
+// average price over a whole week, hour by hour
+function tarAvg(T) { const d = new Date(2024, 0, 1); let s = 0; for (let i = 0; i < 168; i++) { s += tarRate(+d, T); d.setHours(d.getHours() + 1); } return s / 168; }
+function tarLoHi(T) { const P = ((T || tarT()).periods || []).filter(p => p && p.rate != null && p.to > p.from); return P.length < 2 ? null : { lo: Math.min.apply(null, P.map(p => +p.rate)), hi: Math.max.apply(null, P.map(p => +p.rate)), P: P }; }
+// "Mon–Fri", "Sat, Sun", "" for every day
+function tarDays(ds) {
+  if (!Array.isArray(ds) || !ds.length) return ""; const N = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], o = ds.map(x => (+x + 6) % 7).sort((a, b) => a - b).filter((x, i, a) => a.indexOf(x) === i);
+  if (o.length === 7) return ""; const nm = x => N[(x + 1) % 7];
+  return o.length > 2 && o[o.length - 1] - o[0] === o.length - 1 ? nm(o[0]) + "–" + nm(o[o.length - 1]) : o.map(nm).join(", ");
+}
+// the cheapest rate now or next: { now, end } while in it, else { next, end }; times in ms, scanned an hour at a time up to 8 days ahead
+function tarRun(T, from) {
+  const L = tarLoHi(T); if (!L || L.lo === L.hi) return null; const lo = L.lo, ch = t => tarRate(t, T) === lo, d = new Date(from || Date.now()), now = +d;
+  const step = () => { d.setMinutes(0, 0, 0); d.setHours(d.getHours() + 1); return +d; };
+  if (ch(now)) { for (let i = 0; i < 200; i++) { const t = step(); if (!ch(t)) return { now: true, end: t, lo: lo, hi: L.hi }; } return { now: true, end: null, lo: lo, hi: L.hi }; }
+  let nx = null; for (let i = 0; i < 200 && nx == null; i++) { const t = step(); if (ch(t)) nx = t; } if (nx == null) return null;
+  for (let i = 0; i < 200; i++) { const t = step(); if (!ch(t)) return { now: false, next: nx, end: t, lo: lo, hi: L.hi }; }
+  return { now: false, next: nx, end: null, lo: lo, hi: L.hi };
+}
 function enBk(sp, t) { const d = new Date(t); return sp.per === "hour" ? +d : sp.per === "day" ? +new Date(d.getFullYear(), d.getMonth(), d.getDate()) : +new Date(d.getFullYear(), d.getMonth(), 1); }
 function enCost(sp) {   // grid import split into the tariff periods + daily charge (prices from the power company's statistics when Home Assistant has them)
   const T = CONFIG.tariff || TARIFF_DEF, m = en.grid; if (!T || !m || en.gridCost === undefined) return null;
   const per = T.periods.map(p => ({ p: p, kwh: 0, cost: 0 })), cols = {};
-  let est = 0; Object.keys(m).forEach(t => { const d = new Date(+t), h = d.getHours(), k = per.filter(x => h >= x.p.from && h < x.p.to)[0]; if (!k) return; const real = en.gridCost && en.gridCost[t] != null && m[t] > 0.0005; if (!real && m[t] > 0.0005) est++; k.kwh += m[t]; k.cost += real ? en.gridCost[t] : m[t] * k.p.rate; const b = sp.per === "hour" ? +d : sp.per === "day" ? +new Date(d.getFullYear(), d.getMonth(), d.getDate()) : +new Date(d.getFullYear(), d.getMonth(), 1); (cols[b] = cols[b] || per.map(() => 0))[per.indexOf(k)] += m[t]; });
+  let est = 0; Object.keys(m).forEach(t => { const d = new Date(+t), h = d.getHours(), tp = tarPer(+t, T), k = tp ? per[T.periods.indexOf(tp)] : null; if (!k) return; const real = en.gridCost && en.gridCost[t] != null && m[t] > 0.0005; if (!real && m[t] > 0.0005) est++; k.kwh += m[t]; k.cost += real ? en.gridCost[t] : m[t] * k.p.rate; const b = sp.per === "hour" ? +d : sp.per === "day" ? +new Date(d.getFullYear(), d.getMonth(), d.getDate()) : +new Date(d.getFullYear(), d.getMonth(), 1); (cols[b] = cols[b] || per.map(() => 0))[per.indexOf(k)] += m[t]; });
   let days = 0; const now = Date.now(); for (const d = new Date(sp.s); d < sp.e; d.setDate(d.getDate() + 1)) if (+d <= now) days++;
   let use = per.reduce((s, x) => s + x.cost, 0), fixed = days * T.daily, total = use + fixed;
   if (en.gridCost) {   // the power company's cost already holds the daily charge: show it as its own line, as the bill does, and the rest as usage on the paid hours
@@ -8399,13 +8706,12 @@ function enCost(sp) {   // grid import split into the tariff periods + daily cha
 }
 function drawEnergy() { if (en.anim && Date.now() < en.anim) { clearTimeout(en.at); en.at = setTimeout(drawEnergy, en.anim - Date.now() + 30); return; }   // late answers wait until the slide-in has finished, so they do not cut it off
   enDraw(); const pg = $("#energy"); if (pg && pg.classList.contains("hold") && (en.data || en.err)) pgEnter(pg); }
-function enCheapLine(T) {   // tariff hint: which hours are cheapest, and whether now is one of them (only when the tariff has more than one rate)
-  const P = T.periods.filter(p => p.to > p.from); if (P.length < 2) return "";
-  const lo = Math.min.apply(null, P.map(p => p.rate)), hi = Math.max.apply(null, P.map(p => p.rate)); if (lo === hi) return "";
-  const hr = h => h === 0 || h === 24 ? "midnight" : h === 12 ? "noon" : (h % 12 || 12) + (h < 12 ? "am" : "pm"), cheap = P.filter(p => p.rate === lo), now = new Date().getHours(), inNow = cheap.some(p => now >= p.from && now < p.to);
-  const nx = cheap.map(p => p.from > now ? p.from : p.from + 24).sort((a, b) => a - b)[0], cur = cheap.filter(p => now >= p.from && now < p.to)[0];
+function enCheapLine(T) {   // tariff hint: which hours are cheapest (and on which days), and whether now is one of them (only when the tariff has more than one rate)
+  const R = tarRun(T); if (!R) return "";
+  const hr = h => h === 0 || h === 24 ? "midnight" : h === 12 ? "noon" : (h % 12 || 12) + (h < 12 ? "am" : "pm"), cheap = tarLoHi(T).P.filter(p => +p.rate === R.lo);
+  const tm = t => { const d = new Date(t), td = new Date(); td.setHours(0, 0, 0, 0); const dd = Math.round((new Date(d).setHours(0, 0, 0, 0) - td) / 864e5); if (dd === 1 && !d.getHours()) return "midnight"; return (dd === 0 ? "" : dd === 1 ? "tomorrow " : d.toLocaleDateString([], { weekday: "short" }) + " ") + hr(d.getHours()); };
   const rt = v => v === 0 ? "free" : T.symbol + v.toFixed(3) + "/kWh";
-  return '<div class="lbl enchp' + (inNow ? ' on' : '') + '" style="margin-top:10px;text-transform:none;letter-spacing:0">Cheapest: <b>' + cheap.map(p => hr(p.from) + " – " + hr(p.to)).join(", ") + '</b> (' + rt(lo) + ') · ' + (inNow ? "cheap rate now, until " + hr(cur.to) : "next at " + hr(nx % 24)) + '</div>';
+  return '<div class="lbl enchp' + (R.now ? ' on' : '') + '" style="margin-top:10px;text-transform:none;letter-spacing:0">Cheapest: <b>' + cheap.map(p => hr(p.from) + " – " + hr(p.to) + (tarDays(p.days) ? " " + tarDays(p.days) : "")).join(", ") + '</b> (' + rt(R.lo) + ') · ' + (R.now ? "cheap rate now" + (R.end ? ", until " + tm(R.end) : "") : "next at " + tm(R.next)) + '</div>';
 }
 function enDraw() {
   const mob = isMobile(), FS = mob ? 15 : 12, sp = enSpan(), pg = $("#energy"), P = en.prefs;
@@ -8447,7 +8753,7 @@ function enDraw() {
       const hf = x => { const f = k => CLK12() ? (k % 12 || 12) + (k % 24 < 12 ? "am" : "pm") : ("0" + k % 24).slice(-2) + ":00"; return f(x) + "–" + f(x + 1); }, rows = [], pn = ({ day: "yesterday", week: "last week", month: "last month", year: "last year" })[en.r], pl = en.o === 0 ? pn : "the previous " + en.r, part = sp.e > Date.now() && en.o === 0 ? " so far" : "";
       if (en.prev === undefined) rows.push(["Vs " + pl, "…", "Calculating…", ""]);
       else if (en.prev) {
-        let pk = 0, pc = 0; Object.keys(en.prev).forEach(t => { const v = en.prev[t]; pk += v; pc += v * enRate(new Date(+t).getHours()); });
+        let pk = 0, pc = 0; Object.keys(en.prev).forEach(t => { const v = en.prev[t]; pk += v; pc += v * enRate(+t); });
         const useC = !CS.real && pc > 0.005, cur = useC ? CS.use : CS.kwh, prv = useC ? pc : pk, f2 = v => useC ? mny(v) : fm(v) + " kWh";
         if (prv > 0.005) { const d = cur - prv, pc2 = d / prv * 100, up = d > 0.0005; rows.push(["Vs " + pl, (Math.abs(pc2) < 0.5 ? "≈ same" : (up ? "↑ " : "↓ ") + Math.abs(pc2).toFixed(0) + "%"), f2(cur) + " now vs " + f2(prv) + " at this point" + (part ? "" : "") + (CS.real ? "" : " · usage only"), Math.abs(pc2) < 0.5 ? "" : up ? "var(--heat)" : "var(--mint)"]); }
         else rows.push(["Vs " + pl, "-", "No usage recorded in " + pl, ""]);
@@ -8461,7 +8767,8 @@ function enDraw() {
         rows.push(["Free hours", Math.round(fk / CS.kwh * 100) + "% free", fm(fk) + " kWh used " + (fn === "free hours" ? fn : fn.replace(/–/, "to")) + "", "var(--mint)"]);
       }
       if (CS.real && pd.length) { const pkw = pd.reduce((a, x) => a + x.kwh, 0), pcost = CS.total - CS.fixed; if (pkw > 0.001 && pcost > 0) rows.push(["Average rate", (pcost / pkw * 100).toFixed(1) + "c", "per kWh on charged hours", ""]); }
-      if (rows.length) h += '<div class="pn pg enins"><div class="lbl">Insights</div><div class="eni">' + rows.map(r => '<div class="eil"><div class="lbl">' + esc(r[0]) + '</div><div class="eiv"' + (r[3] ? ' style="color:' + r[3] + '"' : '') + '>' + esc(r[1]) + '</div><div class="eic">' + esc(r[2]) + '</div></div>').join("") + '</div></div>';
+      // these now live on the Insights page (vs last bill, peak hours, free hours saved, the bill's average rate)
+      if (rows.length && CONFIG.energyInsights) h += '<div class="pn pg enins"><div class="lbl">Insights</div><div class="eni">' + rows.map(r => '<div class="eil"><div class="lbl">' + esc(r[0]) + '</div><div class="eiv"' + (r[3] ? ' style="color:' + r[3] + '"' : '') + '>' + esc(r[1]) + '</div><div class="eic">' + esc(r[2]) + '</div></div>').join("") + '</div></div>';
     }
     const et = hasGas && CS ? (en.tab === "g" ? "g" : "e") : "e";
     h = h.slice(0, h0) + (hasGas && CS ? '<div class="ensw"><button class="' + (et === "e" ? "on" : "") + '" data-et="e">ELECTRICITY</button><button class="' + (et === "g" ? "on" : "") + '" data-et="g">GAS</button></div>' : "") + '<div class="ensl" data-t="' + et + '" data-n="' + (hasGas && CS ? 3 : 2) + '">' + h.slice(h0) + '</div>'; en.body = h.slice(h0);
@@ -8513,9 +8820,9 @@ function route() {
     if (h0 && !PAGE_ON(h0) && h0 !== "home") { location.replace("#" + (PAGE_ON("home") ? "home" : lp)); return; }
     if ((!h0 || h0 === "home") && !PAGE_ON("home")) { location.replace("#" + lp); return; }
     if (h0 === "security" && /^#security\/detections/.test(location.hash) && !ruSec("detections")) { location.replace("#security"); return; } }
-  const h = location.hash.slice(1).split("/"), k = h[0] === "camera" ? "view" : h[0], p = ["climate", "events", "rooms", "security", "weather", "energy", "irrigation", "scenes", "media", "theme", "vehicle", "hazards", "admin", "view"].indexOf(k) > -1 ? k : "home", pg = p === "rooms" ? "roomspg" : p;
+  const h = location.hash.slice(1).split("/"), k = h[0] === "camera" ? "view" : h[0], p = ["climate", "events", "rooms", "security", "weather", "energy", "irrigation", "scenes", "media", "theme", "vehicle", "hazards", "insights", "admin", "view"].indexOf(k) > -1 ? k : "home", pg = p === "rooms" ? "roomspg" : p;
   $("#vw").className = p === "view" ? $("#vw").className : ""; document.body.classList.toggle("vwb", p === "view"); if (p === "view") vwFull(); else vwFullOff(); if (p !== "view") document.querySelectorAll("#vw .cam.ls, #vw .cam.nfs").forEach(e => camLandOff(e, true));
-  ["home", "climate", "events", "roomspg", "security", "weather", "energy", "irrigation", "scenes", "media", "theme", "vehicle", "hazards", "admin"].forEach(x => $("#" + x).classList.toggle("on", x === pg));
+  ["home", "climate", "events", "roomspg", "security", "weather", "energy", "irrigation", "scenes", "media", "theme", "vehicle", "hazards", "insights", "admin"].forEach(x => $("#" + x).classList.toggle("on", x === pg));
   { const t = $("#ttl"), back = p === "home" || !PAGE_ON("home") ? "" : p === "rooms" && h[1] ? "#rooms" : p === "view" ? (VW.back && VW.back !== location.hash ? VW.back : "#home") : "#home";   // phone: the page title is the back button (room -> Rooms, any other page -> Home)
     t.innerHTML = (back ? '<svg class="tbc" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>' : "") + "<span>" + p.charAt(0).toUpperCase() + p.slice(1) + "</span>"; t.dataset.back = back; t.classList.toggle("bk", !!back); }
   { const el = $("#" + pg); if (el && el !== lastPg && bootDone) { if (pg === "energy" && !en.data) pgHold(el, 900); else pgEnter(el); } lastPg = el; if (el) lazyIn(el); }
@@ -8557,8 +8864,11 @@ function route() {
   if (p === "admin") drawAdmin();
   npSheet = false; npRender();
   if (p === "vehicle") drawVehicle();
+  if (p === "insights" || p === "home") insTick();
   if (p === "hazards") { HZ.vb = null; HZ.tab = { earthquakes: "quake", quakes: "quake", volcanoes: "volc", volcano: "volc" }[h[1]] || "map"; HZ.view = HZ.view || (states["zone.home"] ? "home" : "ni"); requestAnimationFrame(drawHaz); }
   if (h[0] === "disarm") alarmLink("disarm"); else if (h[0] === "arm") alarmLink("arm_" + (h[1] || "away"));
+  // #attention / #batteries (old links): the Insights page now holds what Attention listed
+  if ((h[0] === "attention" || h[0] === "batteries") && CONFIG.insights !== false) { location.replace("#insights"); return; }
   if (h[0] === "notifications" || h[0] === "attention" || h[0] === "active" || h[0] === "batteries") { npTab = h[0] === "active" ? "active" : h[0] === "attention" || h[0] === "batteries" ? "attention" : "alerts";   // #batteries (old links) now opens Attention, which lists the low batteries
   npOnly = h[0] === "active" && h[1] ? h[1] : ""; npGo = null;
   if (h[0] === "active" && h[1] === "doors") { npTab = "alerts"; npOnly = "door"; }   // open doors are an alert now (not listed in Active): old #active/doors links show just the Doors card   // #active/water-taps: Active with just that group (SHOW ALL ACTIVE for the rest); plain #active lists everything
@@ -8615,7 +8925,7 @@ $("#hb").onclick = () => document.body.classList.toggle("nav-open");
 $("#ttl").onclick = () => { const b = $("#ttl").dataset.back; if (b && isMobile()) location.hash = b; };
 $("#bd").onclick = () => document.body.classList.remove("nav-open");
 const mq = window.matchMedia("(max-width:760px)"); if (mq.addEventListener) mq.addEventListener("change", route); else mq.addListener(route);
-["rooms", "climate", "security", "weather", "energy", "irrigation", "scenes", "media", "events", "vehicle", "hazards", "theme"].forEach(p => { if (!PAGE_ON(p)) $$('a[href="#' + p + '"]').forEach(a => a.remove()); });
+["rooms", "climate", "security", "weather", "energy", "irrigation", "scenes", "media", "events", "vehicle", "hazards", "insights", "theme"].forEach(p => { if (!PAGE_ON(p)) $$('a[href="#' + p + '"]').forEach(a => a.remove()); });
 // Opened from a notification through the Home Assistant page that holds this dashboard in an iframe: the target page rides on the outer
 // address (…/your-dashboard/0#view/driveway or …?go=view/driveway). Read it once at start-up and again whenever the outer address changes.
 (function () {
@@ -8873,6 +9183,752 @@ function sznBrand() {   // logos already on screen (start-up screen, sign-in): s
 }
 if (window.brandMark) { const bm = window.brandMark; window.brandMark = x => sznLogo(bm(x)); }
 setInterval(sznApply, 60000); sznApply();   // last, so every decoration above exists
+// ---------- Insights: one page that gathers what is worth knowing, things that need you first ----------
+// Each insight has a short card (title + one line) that opens into its full card; tapping through goes to its page. They live only here.
+// Home shows one teaser line while something needs you. Everything comes from sensors already in config.js:
+//   house rooms (climate, doors, windows), the alarm, the garage, tariff.periods, irrigation zones (moist, flow) and the hourly forecast.
+// config.js (all optional): insights: false hides it all; soilDry: 25 (moisture % that counts as dry; a zone can set its own `dry`).
+const INS = { open: new Set(), shut: new Set(), ign: new Set(), tab: "all", soil: null, soilT: 0, soilBusy: 0, water: null, waterT: 0, waterBusy: 0, q: 0, rel: null };
+const insOn = () => CONFIG.insights !== false;
+const insAgo = id => { const s = states[id]; const t = s && Date.parse(s.last_changed || ""); return t ? Date.now() - t : 0; };
+const insCats = { climate: "Climate", security: "Security", energy: "Energy", garden: "Garden", home: "Home" };
+
+// --- heat or cooling escaping: a room whose zone is running while one of its windows or doors is open
+function insClimWaste() {
+  const out = [];
+  HOUSE().forEach(r => {
+    if (!r.climate) return; const hp = roomHp(r); if (!hp) return;
+    const op = members(r.windows).concat(members(r.doors)).filter(isOn); if (!op.length) return;
+    const zs = [].concat(r.climate).filter(z => states[z] && !isOff(states[z]));
+    const id = "cw:" + r.id, ms = Math.max.apply(null, op.map(insAgo)), key = id + ":" + op.map(x => (states[x] || {}).last_changed).join("|");
+    if (INS.ign.has(key)) return;
+    const what = op.length > 1 ? op.length + " windows / doors" : fname(op[0]), verb = hp.k === "cool" ? "cooling" : hp.k === "heat" ? "heating" : "running";
+    out.push({ id: id, tile: ["HEAT ESCAPING", op.length + " open", r.name + " · while " + verb], cat: "climate", lvl: 2, icon: hp.k === "cool" ? "snowflake" : "fire", tone: "bad", go: "#climate",
+      title: esc(r.name) + ": " + esc(what) + " open", sub: "While " + verb + (hp.t != null ? " to " + hp.t + "°" : "") + (ms > 6e4 ? " · open " + attnAgo(ms) : ""),
+      stats: [].concat(r.temp && !isNaN(parseFloat(sv(r.temp))) ? [["Room now", (+parseFloat(sv(r.temp)).toFixed(1)) + "°"]] : []).concat(hp.t != null ? [["Set to", hp.t + "°"]] : []).concat([["Open for", ms > 6e4 ? attnAgo(ms) : "just now"]]),
+      full: () => insList(op.map(x => ({ b: fname(x), s: "open while " + verb, r: insAgo(x) > 6e4 ? attnAgo(insAgo(x)) : "now", t: "bad" }))) + '<div class="sm">Close ' + (op.length > 1 ? "them" : "it") + ' or pause the zone: the heat pump is working against the open air.</div>',
+      acts: [["PAUSE ZONE", () => zs.forEach(z => call("climate", "turn_off", z))], ["IGNORE", () => INS.ign.add(key)]] });
+  });
+  return out;
+}
+
+// --- house check: every door and window of the house rooms, the garage and the alarm
+function insHouse() {
+  const op = [], seen = new Set();
+  HOUSE().forEach(r => members(r.doors).concat(members(r.windows)).forEach(x => { if (seen.has(x)) return; seen.add(x); if (isOn(x)) op.push([r, x]); }));
+  const gar = (typeof lvGarage === "function" ? lvGarage() : []).filter(x => states[x]), gOpen = gar.filter(isOn);
+  const al = CONFIG.alarm && states[CONFIG.alarm], aTxt = al ? (al.state === "disarmed" ? "alarm off" : al.state.indexOf("armed") === 0 ? "alarm armed" : "alarm " + al.state.replace(/_/g, " ")) : "";
+  const n = op.length + gOpen.length; if (!seen.size && !gar.length) return [];
+  const isWin = x => HOUSE().some(r => members(r.windows).indexOf(x) > -1), nW = op.filter(p => isWin(p[1])).length, nD = op.length - nW, armed = al && al.state.indexOf("armed") === 0;
+  const parts = [nD ? nD + (nD > 1 ? " doors" : " door") : "", nW ? nW + (nW > 1 ? " windows" : " window") : "", gOpen.length ? "garage" : ""].filter(Boolean);
+  const title = n ? parts.join(" · ") + " open" : "All closed", sub = [aTxt].concat(nD ? [op.filter(p => !isWin(p[1])).slice(0, 2).map(p => fname(p[1])).join(", ") + (nD > 2 ? " +" + (nD - 2) : "")] : []).filter(Boolean).join(" · ");
+    return [{ id: "house", stats: [["Doors", nD], ["Windows", nW], ["Alarm", al ? (al.state === "disarmed" ? "Off" : al.state.indexOf("armed") === 0 ? "Armed" : al.state.replace(/_/g, " ")) : "—"]], tile: ["OPEN", n ? String(n) : "All shut", n ? parts.join(" · ") : aTxt], cat: "security", lvl: n && armed ? 2 : 1, icon: n ? "door-open" : "shield-home", tone: n ? "warn" : "ok", go: "#security",
+    title: title, sub: sub,
+    full: () => {
+      // one row per room: its open doors and windows and the longest time open
+      const by = []; op.forEach(p => { let g = by.find(x => x.r === p[0]); if (!g) by.push(g = { r: p[0], x: [] }); g.x.push(p[1]); });
+      const R = by.map(g => { const ms = Math.max.apply(null, g.x.map(insAgo)); return { b: g.r.name, s: g.x.map(fname).join(", "), r: ms > 6e4 ? attnAgo(ms) : "now", t: "w" }; })
+        .concat(gar.map(x => isOn(x) ? { b: "Garage", s: "open", r: insAgo(x) > 6e4 ? attnAgo(insAgo(x)) : "now", t: "w" } : { b: "Garage", s: "closed", t: "ok" }))
+        .concat(seen.size ? [{ b: op.length ? "Everything else" : "All doors and windows", s: "closed", t: "ok" }] : []);
+      return insList(R);
+    } }];
+}
+
+// --- cheapest power next, from tariff.periods (hour ranges with a rate per kWh)
+function insPower() {
+  const T = CONFIG.tariff; if (!T || !Array.isArray(T.periods)) return [];
+  const R = tarRun(T); if (!R) return [];
+  const now = Date.now(), free = R.lo === 0, word = free ? "Free" : "Cheapest";
+  const at = t => { const d = new Date(t), td = new Date(); td.setHours(0, 0, 0, 0); const dd = Math.round((new Date(d).setHours(0, 0, 0, 0) - td) / 864e5); if (dd === 1 && !d.getHours() && !d.getMinutes()) return "midnight"; return (dd === 0 ? "" : dd === 1 ? "tomorrow " : d.toLocaleDateString([], { weekday: "short" }) + " ") + schTm(d); };
+  const dur = m => (m >= 1440 ? Math.floor(m / 1440) + " d " + Math.floor(m % 1440 / 60) + " h" : (m >= 60 ? Math.floor(m / 60) + " h " : "") + (m % 60) + " min");
+  let title, sub, mins;
+  if (R.now) { mins = R.end ? Math.round((R.end - now) / 6e4) : 0; title = word + " power now"; sub = R.end ? "Until " + at(R.end) + " · " + dur(mins) + " left" : "All the time"; }
+  else { mins = Math.round((R.next - now) / 6e4); title = word + " from " + at(R.next); sub = "In " + dur(mins) + (R.end ? " · until " + at(R.end) : ""); }
+  const rate = (T.symbol || "$") + (+R.lo).toFixed(2) + "/kWh";
+  const st = R.now ? [["Now", free ? "Free" : "Cheap"], ["Until", R.end ? at(R.end) : "—"], ["Left", R.end ? dur(mins) : "—"]] : [["Next", at(R.next)], ["In", dur(mins)], ["Until", R.end ? at(R.end) : "—"]];
+  const week = () => {
+    // 7 rows from today, 24 hours each: the cheap hours lit, a line at now
+    const d0 = new Date(); d0.setHours(0, 0, 0, 0); let h = '<div class="iwk">';
+    for (let i = 0; i < 7; i++) { const d = new Date(d0); d.setDate(d.getDate() + i); h += '<div class="iwr"><span>' + (i === 0 ? "Today" : d.toLocaleDateString([], { weekday: "short" })) + '</span><span class="iwb">';
+      for (let k = 0; k < 24; k++) { const t = new Date(d); t.setHours(k); const r = tarRate(+t, T), p = tarPer(+t, T); h += '<i' + (r === R.lo ? ' class="on"' : '') + insTip((i === 0 ? "Today" : d.toLocaleDateString([], { weekday: "long" })) + " " + insHr(t) + "–" + insHr(new Date(+t + 36e5)), [[p && p.name ? p.name.replace(/\s*\(.*$/, "") : "Rate", r === 0 ? "free" : (T.symbol || "$") + r.toFixed(3) + "/kWh"]]) + '></i>'; }
+      if (i === 0) { const n = new Date(); h += '<em style="left:' + ((n.getHours() + n.getMinutes() / 60) / 24 * 100).toFixed(2) + '%"></em>'; }
+      h += '</span></div>'; }
+    return h + '<div class="iwr iwx"><span></span><span class="iwl"><b>12am</b><b>6am</b><b>noon</b><b>6pm</b><b>12am</b></span></div></div>';
+  };
+  return [{ id: "power", stats: st, tile: [(free ? "FREE" : "CHEAP") + " POWER", R.now ? "Now" : at(R.next), R.now ? (R.end ? "until " + at(R.end) : "") : sub.split(" · ").slice(-1)[0]], cat: "energy", lvl: 1, icon: "lightning-bolt", tone: "ok", go: "#energy", title: title, sub: sub,
+    full: () => week() + '<div class="sm">' + (free ? "Lit hours are free" : "Lit hours are " + esc(rate)) + ': good for the dishwasher, dryer, hot water boost or EV.</div>' }];
+}
+
+// --- soil: history (14 days, hourly) for how fast each zone dries and how high it gets; the hourly forecast for rain
+function insSoilLoad(force) {
+  const zs = (CONFIG.irrigation || []).filter(z => z.moist); if (!zs.length || !ws || ws.readyState !== 1) return;
+  if ((INS.soilBusy && Date.now() - INS.soilBusy < 30000) || (!force && INS.soil && Date.now() - INS.soilT < 1800000)) return;
+  const srcOf = z => { const d = CONFIG.derived && CONFIG.derived.soil && CONFIG.derived.soil[(z.zone || "")]; return d && d.moisture && d.moisture.length ? d.moisture : [z.moist]; };
+  const ids = []; zs.forEach(z => srcOf(z).forEach(x => { if (ids.indexOf(x) < 0) ids.push(x); }));
+  INS.soilBusy = Date.now(); const end = new Date(), st = new Date(end.getTime() - 14 * 864e5);
+  send({ type: "history/history_during_period", start_time: st.toISOString(), end_time: end.toISOString(), entity_ids: ids, minimal_response: true, no_attributes: true, significant_changes_only: false }, r => {
+    INS.soilBusy = 0; if (!r || typeof r !== "object") return;
+    const t0 = st.getTime(), n = 14 * 24, one = {};
+    ids.forEach(id => {
+      const a = (r[id] || []).map(x => [(x.lu != null ? x.lu * 1000 : Date.parse(x.last_updated || x.last_changed)), parseFloat(x.s != null ? x.s : x.state)]).filter(x => !isNaN(x[0]) && !isNaN(x[1])).sort((p, q) => p[0] - q[0]);
+      if (!a.length) return; const pts = []; let k = 0, cur = NaN;
+      for (let i = 0; i <= n; i++) { const t = t0 + i * 36e5; while (k < a.length && a[k][0] <= t) cur = a[k++][1]; pts.push(cur); }
+      one[id] = pts;
+    });
+    const out = {};
+    zs.forEach(z => { const L = srcOf(z).map(x => one[x]).filter(Boolean); if (!L.length) return; out[z.moist] = L[0].map((_, i) => { const v = L.map(q => q[i]).filter(x => !isNaN(x)); return v.length ? v.reduce((p, q) => p + q, 0) / v.length : NaN; }); });
+    INS.soil = out; INS.soilT = Date.now(); insQueue();
+  });
+}
+const insMed = a => { if (!a.length) return NaN; const s = a.slice().sort((p, q) => p - q); return s[Math.floor(s.length / 2)]; };
+// how a zone behaves: drying per hour (the median of the hours it went down, skipping jumps), the highest it usually gets, and how many rain / watering rises it saw
+function insSoilModel(a) {
+  const dn = [], ups = []; let rise = 0;
+  for (let i = 1; i < a.length; i++) { const d = a[i] - a[i - 1]; if (isNaN(d)) continue; if (d < 0 && d > -3) dn.push(-d); if (d > 0.8) { rise += d; } else if (rise) { ups.push(rise); rise = 0; } }
+  const v = a.filter(x => !isNaN(x)).sort((p, q) => p - q), cap = v.length ? v[Math.floor(v.length * 0.95)] : 45;
+  const dry = Math.max(0.02, insMed(dn) || 0.08);
+  return { dry: dry, cap: Math.max(cap, 30), events: ups.length, hours: dn.length };
+}
+// moisture for the next `hrs` hours: drying each hour, rain adds about 1.5 % per mm (soaks in up to the zone's usual high)
+function insSoilRun(m0, md, rain, hrs) {
+  const out = [m0]; let m = m0;
+  for (let i = 0; i < hrs; i++) { const mm = +rain[i] || 0; m = Math.min(md.cap, m - md.dry + mm * 1.5); out.push(Math.max(0, m)); }
+  return out;
+}
+function insSoil() {
+  // sv(): the same value the Irrigation page shows (the dashboard's own average of the probes when derived.soil is set, not an old HA template of the same name)
+  const zs = (CONFIG.irrigation || []).filter(z => z.moist && !isNaN(parseFloat(sv(z.moist)))); if (!zs.length) return [];
+  insSoilLoad();
+  const H = (typeof fcH !== "undefined" ? fcH : []).filter(x => Date.parse(x.datetime) > Date.now() - 36e5), rain = H.map(x => +x.precipitation || 0);
+  const skip = CONFIG.rainSkipMm != null ? CONFIG.rainSkipMm : 2, r24 = rain.slice(0, 24).reduce((p, q) => p + q, 0), fi = rain.findIndex(x => x >= 0.1);
+  const morning = (() => { const d = new Date(); d.setHours(7, 0, 0, 0); if (d <= new Date()) d.setDate(d.getDate() + 1); return Math.round((d - Date.now()) / 36e5); })();
+  const day = h => { const d = new Date(Date.now() + h * 36e5), t = new Date(); return h < 24 && d.getDate() === t.getDate() ? "today " + schTm(d) : d.toLocaleDateString([], { weekday: "short" }) + " " + schTm(d); };
+  const Z = zs.map(z => {
+    const now = parseFloat(sv(z.moist)), hist = INS.soil && INS.soil[z.moist], md = hist ? insSoilModel(hist) : { dry: 0.08, cap: 45, events: 0, hours: 0 };
+    md.cap = Math.max(md.cap, now);   // never below what the soil holds now (a wet spell after a dry fortnight used to be pulled straight back down)
+    const dryAt = z.dry != null ? +z.dry : CONFIG.soilDry != null ? +CONFIG.soilDry : 25, run = insSoilRun(now, md, rain.concat(new Array(Math.max(0, 96 - rain.length)).fill(0)), 96);
+    const due = run.findIndex(x => x < dryAt);
+    return { z: z, now: now, md: md, dryAt: dryAt, run: run, due: due, morn: run[Math.min(morning, run.length - 1)], past: hist ? hist.slice(-25) : [] };
+  });
+  const soon = Z.filter(x => x.due >= 0).sort((a, b) => a.due - b.due)[0];
+  let verdict, tone;
+  if (r24 >= skip) { verdict = '<b>Skip watering</b> · ~' + Math.round(r24) + ' mm due ' + (fi > 0 ? "from " + schTm(new Date(Date.parse(H[fi].datetime))) : "now"); tone = "ok"; }
+  else if (soon && soon.due <= 12) { verdict = '<b>Water ' + esc(soon.z.name) + ' today</b> · drying below ' + soon.dryAt + '%'; tone = "warn"; }
+  else if (soon) { verdict = '<b>Next watering ~' + esc(day(soon.due)) + '</b> · ' + esc(soon.z.name); tone = "ok"; }
+  else { verdict = '<b>No watering needed</b> for the next 4 days'; tone = "ok"; }
+  const ev = Math.min.apply(null, Z.map(x => x.md.events)), hrs = Math.min.apply(null, Z.map(x => x.md.hours)), conf = !INS.soil ? "learning…" : hrs >= 72 ? "good confidence" : hrs >= 24 ? "fair confidence" : "low confidence";
+  const spark = x => {   // past 24 h (solid) and the next 48 h (dashed), with the dry line
+    const W = 220, Hh = 44, all = x.past.concat(x.run.slice(1, 49)).filter(v => !isNaN(v)), lo = Math.min(x.dryAt - 5, Math.min.apply(null, all)), hi = Math.max(x.md.cap + 2, Math.max.apply(null, all));
+    const y = v => (Hh - 6 - (v - lo) / Math.max(1, hi - lo) * (Hh - 12)).toFixed(1), N = x.past.length + 48, X = i => (i / (N - 1) * W).toFixed(1);
+    const pp = x.past.map((v, i) => isNaN(v) ? "" : (i ? "L" : "M") + X(i) + " " + y(v)).join(""), np = x.run.slice(0, 49).map((v, i) => (i ? "L" : "M") + X(x.past.length - 1 + i) + " " + y(v)).join("");
+    return '<svg class="insp" viewBox="0 0 ' + W + ' ' + Hh + '" preserveAspectRatio="none" aria-hidden="true"' + insTip(x.z.name, [["Now", Math.round(x.now) + "%"], ["By morning", "~" + Math.round(x.morn) + "%"], ["Dry below", x.dryAt + "%"], ["Dry", x.due === 0 ? "now" : x.due > 0 ? "~" + day(x.due) : "not in 4 days"]]) + '><line x1="0" x2="' + W + '" y1="' + y(x.dryAt) + '" y2="' + y(x.dryAt) + '" class="dl"/>' + (pp ? '<path d="' + pp + '" class="pa"/>' : "") + '<path d="' + np + '" class="fu"/><line x1="' + X(x.past.length - 1) + '" x2="' + X(x.past.length - 1) + '" y1="0" y2="' + Hh + '" class="nw"/></svg>';
+  };
+  const plain = verdict.replace(/<[^>]+>/g, "");
+  return [{ id: "soil", tile: ["WATERING", r24 >= skip ? "Skip" : soon && soon.due <= 12 ? "Today" : soon ? day(soon.due).split(" ")[0].replace(/^today$/, "Today") : "Not needed", r24 >= skip ? "~" + Math.round(r24) + " mm due" : soon ? soon.z.name + " drying" : "next 4 days"], cat: "garden", lvl: tone === "warn" ? 2 : 1, icon: "water", tone: tone, go: "#irrigation",
+    title: plain.split(" · ")[0], sub: (plain.split(" · ")[1] ? plain.split(" · ")[1] + " · " : "") + Z.map(x => x.z.name + " ~" + Math.round(x.morn) + "%").join(" · ") + " by morning",
+    full: () => '<div class="inx ' + tone + '">' + verdict + '</div>' + '<div class="inzs">' + Z.map(x => '<div class="inz"><div class="sm">' + esc(x.z.name) + ' · now ' + Math.round(x.now) + '%</div>' + spark(x) +
+      '<div class="inzl">~' + Math.round(x.morn) + '% by morning <span>' + (x.due === 0 ? "· dry now" : x.due > 0 ? "· dry ~" + esc(day(x.due)) : "· dry below " + x.dryAt + "%") + '</span></div></div>').join("") + '</div>' +
+      '<div class="sm inc">Estimate · ' + (INS.soil ? "learned from 14 days" + (ev ? ", " + ev + " wet spells" : "") + " · " : "") + conf + '</div>' }];
+}
+
+// --- water used: the flow sensors over the last 7 days, worked out from their history (litres per minute or hour, or m³ per hour)
+function insWaterLoad(force) {
+  const zs = (CONFIG.irrigation || []).filter(z => z.flow); if (!zs.length || !ws || ws.readyState !== 1) return;
+  if ((INS.waterBusy && Date.now() - INS.waterBusy < 30000) || (!force && INS.water && Date.now() - INS.waterT < 900000)) return;
+  INS.waterBusy = Date.now(); const end = new Date(), st = new Date(end.getTime() - 7 * 864e5), ids = zs.map(z => z.flow).concat(zs.map(z => z.switch).filter(Boolean));
+  send({ type: "history/history_during_period", start_time: st.toISOString(), end_time: end.toISOString(), entity_ids: ids, minimal_response: true, no_attributes: true, significant_changes_only: false }, r => {
+    INS.waterBusy = 0; if (!r || typeof r !== "object") return;
+    const mid = new Date(); mid.setHours(0, 0, 0, 0); const out = {};
+    zs.forEach(z => {
+      const u = String(((states[z.flow] || {}).attributes || {}).unit_of_measurement || "L/min").toLowerCase(), perMin = /m³|m3/.test(u) ? 1000 / 60 : /\/h/.test(u) ? 1 / 60 : /ml\/s/.test(u) ? 0.06 : /gal/.test(u) ? 3.785 : 1;
+      const a = (r[z.flow] || []).map(x => [(x.lu != null ? x.lu * 1000 : Date.parse(x.last_updated || x.last_changed)), parseFloat(x.s != null ? x.s : x.state)]).filter(x => !isNaN(x[0])).sort((p, q) => p[0] - q[0]);
+      // the zone's switch history, as on / off spans: flow only counts while the tap was on (a flow sensor can read a little above 0 at rest)
+      const sw = z.switch && r[z.switch] ? r[z.switch].map(x => [(x.lu != null ? x.lu * 1000 : Date.parse(x.last_updated || x.last_changed)), (x.s != null ? x.s : x.state) === "on"]).sort((p, q) => p[0] - q[0]) : null;
+      const onAt = t => { if (!sw || !sw.length) return true; let v = false; for (let k = 0; k < sw.length && sw[k][0] <= t; k++) v = sw[k][1]; return v; };
+      const cut = sw && sw.length ? sw.map(x => x[0]) : [];
+      let wk = 0, td = 0; const dy = {};
+      // add litres to each day the span covers
+      const addDay = (a0, a1, lpm) => { while (a0 < a1) { const d = new Date(a0); d.setHours(0, 0, 0, 0); const e = new Date(d); e.setDate(e.getDate() + 1); const b = Math.min(+e, a1); dy[+d] = (dy[+d] || 0) + lpm * (b - a0) / 6e4; a0 = b; } };
+      for (let i = 0; i < a.length; i++) {
+        const v = isNaN(a[i][1]) ? 0 : Math.max(0, a[i][1]), t1 = i + 1 < a.length ? a[i + 1][0] : Date.now(), t0 = Math.max(a[i][0], st.getTime());
+        if (v * perMin < 0.5 || t1 <= t0) continue;
+        // split this flow reading at every switch change inside it, and add the parts while the switch was on
+        const pts = [t0].concat(cut.filter(t => t > t0 && t < t1), [t1]);
+        for (let j = 0; j + 1 < pts.length; j++) { if (!onAt(pts[j])) continue; const a0 = pts[j], a1 = pts[j + 1];
+          wk += v * perMin * (a1 - a0) / 6e4; addDay(a0, a1, v * perMin); if (a1 > mid.getTime()) td += v * perMin * (a1 - Math.max(a0, mid.getTime())) / 6e4; }
+      }
+      out[z.name] = { wk: wk, td: td, dy: dy };
+    });
+    INS.water = out; INS.waterT = Date.now(); insQueue();
+  });
+}
+function insWater() {
+  const zs = (CONFIG.irrigation || []).filter(z => z.flow); if (!zs.length) return [];
+  insWaterLoad(); if (!INS.water) return [];
+  const W = INS.water, wk = Object.keys(W).reduce((p, k) => p + W[k].wk, 0), td = Object.keys(W).reduce((p, k) => p + W[k].td, 0), L = v => (v >= 1000 ? (v / 1000).toFixed(1) + " kL" : Math.round(v) + " L");
+  const rate = +CONFIG.waterRate || 0, cost = rate ? " · " + ((CONFIG.tariff && CONFIG.tariff.symbol) || "$") + (wk / 1000 * rate).toFixed(2) : "";
+  return [{ id: "water", stats: [["Today", L(td)], ["This week", L(wk)]].concat(rate ? [["Cost", cost.slice(3)]] : []), tile: ["WATER USED", L(wk), "this week · today " + L(td)], cat: "garden", lvl: 1, icon: "sprinkler-variant", tone: "", go: "#irrigation", title: L(wk) + " watered this week", sub: "Today " + L(td) + cost,
+    full: () => {
+      // one row per day for the last 7 days, split by zone
+      const Z = Object.keys(W), C = INS_COL, mid = new Date(), days = []; mid.setHours(0, 0, 0, 0);
+      for (let i = 0; i < 7; i++) { const d = new Date(mid); d.setDate(d.getDate() - i); days.push(+d); }
+      return insRows(days.map((d, i) => { const seg = Z.map((k, j) => { const v = (W[k].dy || {})[d] || 0; return [v, C[j % C.length], k, v >= 0.5 ? L(v) : "–"]; }), t = seg.reduce((p, x) => p + x[0], 0);
+        return [i === 0 ? "Today" : i === 1 ? "Yesterday" : new Date(d).toLocaleDateString([], { weekday: "short" }) + " " + new Date(d).getDate(), seg, t >= 0.5 ? L(t) : "–", rate && t >= 0.5 ? ((CONFIG.tariff && CONFIG.tariff.symbol) || "$") + (t / 1000 * rate).toFixed(2) : ""]; })) +
+        (Z.length > 1 ? '<div class="irl">' + Z.map((k, j) => '<span><i style="background:' + C[j % C.length] + '"></i>' + esc(k) + ' <b>' + L(W[k].wk) + '</b></span>').join("") + '</div>' : "") +
+        '<div class="sm">Counted while each zone\'s valve was open' + (cost ? " · cost this week" + esc(cost.slice(2)) : "") + '</div>';
+    } }];
+}
+// colours for parts of a bar (zones, tariff periods)
+const INS_COL = ["#6bb8ff", "var(--mint)", "#ffd166", "#f78c6b", "#c39bff"];
+// hover / tap card for the charts: data-tip holds "heading\nlabel\tvalue\n…" (the same card as the other charts, #crtip)
+const insTip = (h, rows) => ' data-tip="' + esc([h].concat((rows || []).map(r => [].concat(r).join("\t"))).join("\n")) + '"';
+// rows of horizontal bars: [label, [[value, colour, name, value text], …], value text, side text]; opt.ref draws a dashed line at that value, opt.max sets the scale
+function insRows(R, opt) {
+  opt = opt || {}; const tot = r => r[1].reduce((p, x) => p + x[0], 0), mx = opt.max || Math.max.apply(null, R.map(tot).concat([opt.ref || 0, 1e-9]));
+  const tip = r => { const named = r[1].filter(x => x[2]); return insTip(r[0], (named.length > 1 ? named.map(x => [x[2], x[3] != null ? x[3] : String(x[0])]) : []).concat([[named.length > 1 ? "Total" : "", r[2] + (r[3] ? " · " + r[3] : "")]]).concat(opt.ref && opt.refL ? [[opt.refL, ""]] : [])); };
+  return '<div class="irs">' + R.map(r => '<div class="irw"' + tip(r) + '><span class="irn">' + esc(r[0]) + '</span><span class="irb">' + r[1].filter(x => x[0] > 0).map(x => '<i style="width:' + (x[0] / mx * 100).toFixed(2) + '%;background:' + x[1] + '"></i>').join("") +
+    (opt.ref ? '<em style="left:' + (opt.ref / mx * 100).toFixed(2) + '%"></em>' : "") + '</span><small>' + esc(r[3] || "") + '</small><b>' + esc(r[2]) + '</b></div>').join("") + '</div>';
+}
+// a list with a coloured dot (or an icon) per row: { b: label, s: line under it, r: text on the right, t: "w" | "ok" | "bad" | "", i: icon name }
+function insList(R) {
+  return '<div class="ils">' + R.map(r => '<div class="ilr' + (r.t ? " " + r.t : "") + '">' + (r.i ? '<span class="ili">' + mdi(r.i) + '</span>' : '<i></i>') + '<span class="ilm"><b>' + esc(r.b) + '</b>' + (r.s ? '<small>' + esc(r.s) + '</small>' : "") + '</span>' + (r.r ? '<span class="ilx">' + esc(r.r) + '</span>' : "") + '</div>').join("") + '</div>';
+}
+// columns over time: B = [{ v, l: label under (or ""), c: "hl" | "warn" | "ghost" | "", t: value text over the bar, h: hover heading, x: hover value }]; o.ref + o.refL draw a dashed line, o.floor is the value at the bottom
+function insCols(B, o) {
+  o = o || {}; const vs = B.map(b => b.v).filter(v => v != null && !isNaN(v)); if (!vs.length) return "";
+  const lo = o.floor != null ? o.floor : 0, hi = Math.max.apply(null, vs.concat(o.ref != null ? [o.ref] : [])), sp = Math.max(1e-9, hi - lo), pc = v => Math.max(2, Math.min(100, (v - lo) / sp * 100));
+  const ok = v => v != null && !isNaN(v);
+  return '<div class="icl"><div class="icb">' + B.map(b => '<span' + insTip(b.h || b.l || "", [[o.name || "", b.x != null ? b.x : ok(b.v) ? String(+(+b.v).toFixed(1)) : "no data"]].concat(o.ref != null && o.refL ? [[o.refN || "Line", o.refL]] : [])) + '><i class="' + (b.c || "") + '" style="height:' + (ok(b.v) ? pc(b.v) : 0).toFixed(1) + '%">' + (b.t ? '<em>' + esc(b.t) + '</em>' : "") + '</i></span>').join("") +
+    (o.ref != null ? '<s style="bottom:' + pc(o.ref).toFixed(1) + '%">' + (o.refL ? '<span>' + esc(o.refL) + '</span>' : "") + '</s>' : "") + '</div><div class="icx">' + B.map(b => '<span>' + esc(b.l || "") + '</span>').join("") + '</div></div>';
+}
+// the hover / tap card: shown over a chart part with data-tip in the Insights detail, until the pointer leaves it or the page scrolls
+let insTipEl = null;
+function insTipShow(el) {
+  if (typeof crTip !== "function") return; const t = crTip(), L = el.dataset.tip.split("\n");
+  t.innerHTML = '<div class="crh">' + esc(L[0]) + '</div>' + L.slice(1).map(r => { const q = r.split("\t"); return '<div class="crr"><i></i><span>' + esc(q[0] || "") + '</span>' + (q[1] ? '<b>' + esc(q[1]) + '</b>' : "") + '</div>'; }).join("");
+  t.hidden = false; if (insTipEl && insTipEl !== el) insTipEl.classList.remove("tipon"); insTipEl = el; el.classList.add("tipon");
+  const r = el.getBoundingClientRect(), tw = t.offsetWidth, th = t.offsetHeight, x = Math.max(8, Math.min(innerWidth - tw - 8, r.left + r.width / 2 - tw / 2)), up = r.top - th - 10 >= 8;
+  t.style.left = x + "px"; t.style.top = (up ? r.top - th - 10 : Math.min(innerHeight - th - 8, r.bottom + 10)) + "px";
+}
+function insTipHide() { if (!insTipEl) return; insTipEl.classList.remove("tipon"); insTipEl = null; const t = document.getElementById("crtip"); if (t) t.hidden = true; }
+["pointerover", "pointerdown"].forEach(ev => document.addEventListener(ev, e => { const el = e.target.closest && e.target.closest("#insd [data-tip]"); if (el) insTipShow(el); else if (insTipEl) insTipHide(); }, { passive: true }));
+document.addEventListener("pointerleave", insTipHide); addEventListener("scroll", insTipHide, { passive: true, capture: true }); addEventListener("hashchange", insTipHide);
+// short hour label: 6am, noon, 9pm
+const insHr = d => { const h = d.getHours(); return h === 0 ? "12am" : h === 12 ? "noon" : (h % 12) + (h < 12 ? "am" : "pm"); };
+
+function insAll() {
+  if (!insOn()) return [];
+  const all = [];
+  [insClimWaste, insHouse, insSoil, insPower, insWater].concat(typeof INSX_ALL !== "undefined" ? INSX_ALL : []).forEach(f => { try { f().forEach(x => all.push(x)); } catch (e) { console.warn("insight", f.name, e); } });
+  return all.sort((a, b) => b.lvl - a.lvl);
+}
+// one insight, short (title + line) and, opened, its full card and buttons
+function insItem(x, short) {
+  const op = !short || (isMobile() ? INS.open.has(x.id) : !INS.shut.has(x.id));   // phone: folded until tapped; tablet: open until folded
+  return '<div class="pn pg ins' + (op ? " open" : "") + (x.tone ? " " + x.tone : "") + '" data-ins="' + esc(x.id) + '">' +
+    (short ? '<button class="insh" data-insx aria-expanded="' + op + '"><span class="insi">' + mdi(x.icon) + '</span><span class="inst"><b>' + esc(x.title) + '</b><small>' + esc(x.sub) + '</small></span><span class="insc">' + mdi(op ? "chevron-up" : "chevron-down") + '</span></button>'
+      : '<div class="lbl">' + esc(insCats[x.cat] || "") + ' · ' + esc({ cw: "heat escaping", house: "house check", soil: "soil forecast", power: "cheapest power", water: "water used" }[x.id.split(":")[0]] || "") + '</div>') +
+    (op ? '<div class="insb">' + x.full() + ((x.acts || []).length ? '<div class="insa">' + x.acts.map((a, i) => '<button class="eb" data-insa="' + i + '">' + esc(a[0]) + '</button>').join("") + '</div>' : "") + (short ? '<a class="insg" href="' + x.go + '">Open ' + esc(insGoLbl(x.go)) + ' ' + mdi("chevron-right") + '</a>' : "") + '</div>' : "") + '</div>';
+}
+function drawInsights() {
+  const pg = $("#insights"); if (!pg) return; const all = insAll(); INS.last = all;
+  const need = all.filter(x => x.lvl === 2), cats = Object.keys(insCats).filter(c => all.some(x => x.cat === c));
+  if (INS.tab !== "all" && INS.tab !== "need" && cats.indexOf(INS.tab) < 0) INS.tab = "all";
+  const L = INS.tab === "all" ? all : INS.tab === "need" ? need : all.filter(x => x.cat === INS.tab);
+  const chip = (k, t) => '<button class="chip' + (INS.tab === k ? " on" : "") + '" data-inst="' + k + '">' + t + '</button>';
+  // glance tiles: a label, one big value and a line; tapping a tile opens its detail (insDet)
+  const sec = (t, a, cls) => a.length ? '<div class="lbl insl' + (cls ? " " + cls : "") + '">' + t + ' · ' + a.length + '</div><div class="itg">' + a.map(insTileHtml).join("") + '</div>' : "";
+  const h = '<div class="chips tabs inschips">' + chip("all", "ALL" + chipN(all.length)) + (need.length ? chip("need", "NEEDS YOU" + chipN(need.length)) : "") + cats.map(c => chip(c, insCats[c].toUpperCase())).join("") + '</div>' +
+    (L.length ? sec("Needs you", L.filter(x => x.lvl === 2), "bad") + sec("Today", L.filter(x => x.lvl < 2)) : '<div class="pn pg"><div class="sm">Nothing to report.</div></div>');
+  if (pg._h !== h) { pg._h = h; pg.innerHTML = h; }
+  insDetDraw();
+}
+function insTileHtml(x) {
+  const t = x.tile || [(insCats[x.cat] || "").toUpperCase(), x.title, x.sub];
+  return '<button class="it' + (x.lvl === 2 ? " need" : "") + (x.tone ? " " + x.tone : "") + '" data-inso="' + esc(x.id) + '"><span class="itk">' + mdi(x.icon) + '<span>' + esc(t[0]) + '</span></span><b class="itv">' + esc(t[1]) + '</b><small class="its">' + esc(t[2] || "") + '</small></button>';
+}
+// where a card's link goes, in words: a room's own name for a room page
+function insGoLbl(go) {
+  const m = /^#rooms\/(.+)$/.exec(go || ""); if (m) { const r = HOUSE().find(x => x.id === m[1]); if (r) return r.name; }
+  return (go || "#").slice(1).split("/")[0];
+}
+// the detail of one insight: a sheet from the bottom on a phone, a panel on the right on a tablet
+function insDetDraw() {
+  let el = $("#insd"); const id = INS.det;
+  if (!id) { insTipHide(); if (el) el.classList.remove("on"); return; }
+  const x = (INS.last || []).find(v => v.id === id); if (!x) { INS.det = ""; if (el) el.classList.remove("on"); return; }
+  if (!el) { el = document.createElement("div"); el.id = "insd"; el.innerHTML = '<div class="idbk" data-insdx></div><div class="idp"></div>'; document.body.appendChild(el); }
+  const kick = (insCats[x.cat] || "").toUpperCase() + (x.tile && x.tile[0] ? " · " + x.tile[0] : "");
+  const h = '<div class="idh ' + (x.tone || "") + '"><span class="insi">' + mdi(x.icon) + '</span><span class="inst"><i class="idk">' + esc(kick) + '</i><b>' + esc(x.title) + '</b><small>' + esc(x.sub) + '</small></span><button class="rnd" data-insdx aria-label="Close">' + mdi("close") + '</button></div>' +
+    (x.stats && x.stats.length ? '<div class="ids">' + x.stats.map(v => '<div><small>' + esc(v[0]) + '</small><b>' + esc(String(v[1])) + '</b></div>').join("") + '</div>' : "") +
+    '<div class="ins open ' + (x.tone || "") + '" data-ins="' + esc(x.id) + '"><div class="insb">' + (x.stats && x.stats.length ? x.full().replace(/^<div class="ing">[\s\S]*?<\/div><\/div>/, "") : x.full())   /* the stats row already shows the boxed numbers */ + ((x.acts || []).length ? '<div class="insa">' + x.acts.map((a, i) => '<button class="eb" data-insa="' + i + '">' + esc(a[0]) + '</button>').join("") + '</div>' : "") +
+    '<a class="insg" href="' + x.go + '">Open ' + esc(insGoLbl(x.go)) + ' ' + mdi("chevron-right") + '</a></div></div>';
+  const p = el.querySelector(".idp"); if (p._h !== h) { p._h = h; p.innerHTML = h; }
+  el.classList.add("on");
+}
+document.addEventListener("click", e => {
+  const o = e.target.closest("[data-inso]"); if (o) { INS.det = o.dataset.inso; insDetDraw(); return; }
+  if (e.target.closest("[data-insdx]") || e.target.closest("#insd .insg")) { INS.det = ""; insDetDraw(); }
+});
+addEventListener("hashchange", () => { if (INS.det && curPg() !== "insights") { INS.det = ""; insDetDraw(); } });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && INS.det) { INS.det = ""; insDetDraw(); } });
+function insHome() {
+  let el = $("#insc"); const lv = $("#lvc");
+  if (!el) { if (!lv) return; el = document.createElement("a"); el.id = "insc"; el.className = "pn pg"; el.href = "#insights"; lv.after(el); }
+  const need = (INS.last || []).filter(x => x.lvl === 2), more = (INS.last || []).length - need.length;
+  const on = insOn() && PAGE_ON("insights") && need.length > 0;
+  // one line, like the Leaving card beside it: "1 needs you · Living area: window open" (+ how many more)
+  const h = on ? '<span class="insi bad">' + mdi("lightbulb-on") + '</span><span class="inst"><b>' + need.length + ' need' + (need.length > 1 ? "" : "s") + ' you</b><small>' + esc(need[0].title) + (more > 0 ? ' · ' + more + ' more' : "") + '</small></span><span class="insc">' + mdi("chevron-right") + '</span>' : "";
+  if (el._h !== h) { el._h = h; el.innerHTML = h; } el.hidden = !on; hplDraw(); if (typeof hsFit === "function") hsFit();
+}
+function insTick() {
+  INS.last = insAll();
+  insHome();
+  const p = curPg();
+  if (p === "insights") drawInsights();
+}
+function insQueue() { if (INS.q) return; INS.q = setTimeout(() => { INS.q = 0; insTick(); }, 250); }
+// the entities that can change an insight
+function insRel(id) {
+  if (!INS.rel) { const s = new Set(); HOUSE().forEach(r => members(r.doors).concat(members(r.windows), [].concat(r.climate || [])).forEach(x => s.add(x)));
+    if (CONFIG.alarm) s.add(CONFIG.alarm); if (typeof MAIN !== "undefined") s.add(MAIN); (typeof lvGarage === "function" ? lvGarage() : []).forEach(x => s.add(x)); (CONFIG.irrigation || []).forEach(z => { if (z.moist) s.add(z.moist); const d = CONFIG.derived && CONFIG.derived.soil && CONFIG.derived.soil[z.zone || ""]; if (d && d.moisture) d.moisture.forEach(x => s.add(x)); }); INS.rel = s; }
+  // the cards that came from Notifications > Attention (bins, pollen, updates, alerts switched off) and the laundry
+  return INS.rel.has(id) || /^update\./.test(id) || (typeof binsIds === "function" && binsIds().indexOf(id) > -1) || (typeof polRel === "function" && polRel(id)) || (typeof togIds === "function" && togIds().indexOf(id) > -1) || id === E("laundryState") || id === E("laundryRemaining") || [].concat(CONFIG.laundryPresence || []).indexOf(id) > -1 || HOUSE().some(r => r.id === "laundry" && typeof occOf === "function" && occOf(r).indexOf(id) > -1);
+}
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-inst]"); if (t) { INS.tab = t.dataset.inst; drawInsights(); return; }
+  const x = e.target.closest("[data-insx]"); if (x) { const id = x.closest("[data-ins]").dataset.ins, S = isMobile() ? INS.open : INS.shut; if (S.has(id)) S.delete(id); else S.add(id); drawInsights(); return; }
+  if (e.target.closest("#insd")) {
+    const bn = e.target.closest("[data-bn]"); if (bn) { binsTap(bn.dataset.bn); setTimeout(insTick, 300); return; }
+    const up = e.target.closest("[data-up]"); if (up) { upcOpen(up.dataset.up); return; }
+    const tg = e.target.closest("[data-togon]"); if (tg) { const id = tg.dataset.togon, g = TOG.find(g => g[3].some(x => x[0] === id)), x = g && g[3].find(x => x[0] === id); if (x && x[2]) send({ type: "call_service", domain: "script", service: x[2] }); else call(id.split(".")[0], "turn_on", id); setTimeout(insTick, 400); return; }
+  }
+  const a = e.target.closest("[data-insa]"); if (a) { const id = a.closest("[data-ins]").dataset.ins, it = (INS.last || []).find(v => v.id === id); if (it && it.acts && it.acts[+a.dataset.insa]) { it.acts[+a.dataset.insa][1](); setTimeout(insTick, 300); } }
+});
+setInterval(() => { if (document.visibilityState === "visible") insTick(); }, 30000);
+
+// Phone: Home has no room for the Leaving and Insights cards, so the greeting card carries two small pills instead
+// ("3 doors" opens the Leaving sheet, "1 needs you" opens Insights). Tablets keep the cards.
+function hplDraw() {
+  const hs = $(".hs"), w = $("#wpls"); if (!hs || !w) return;
+  let el = $("#hpls"); if (!el) { el = document.createElement("span"); el.id = "hpls"; w.after(el); }
+  let h = "";
+  if (isMobile()) {
+    const lv = typeof lvItems === "function" ? lvItems() : [], need = insOn() && PAGE_ON("insights") ? (INS.last || []).filter(x => x.lvl === 2) : [];
+    if (lv.length) h += '<span class="wpl lvp" data-lvo>' + mdi("door-open") + esc(lv[0].s + (lv.length > 1 ? " +" + (lv.length - 1) : "")) + '</span>';
+    if (need.length) h += '<span class="wpl inp" data-go="#insights">' + mdi("lightbulb-on") + need.length + ' need' + (need.length > 1 ? "" : "s") + ' you</span>';
+  }
+  if (el._h !== h) { el._h = h; el.innerHTML = h; }
+}
+document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-lvo]"); if (b) { e.stopPropagation(); e.preventDefault(); lvOpen(); } }, true);
+addEventListener("resize", () => hplDraw());
+// ---------- More insights (see 42-insights.js for the page) ----------
+// Each one only appears when it has something to say. Data comes from what config.js already lists; the history and statistics
+// they need are loaded in the background at most every 15–30 minutes (INSX cache).
+const INSX = { c: {}, busy: {} };
+// one cached background load: key, minutes to keep, loader(done)
+function insxGet(k, mins, load) {
+  const c = INSX.c[k]; if (c && Date.now() - c.t < mins * 6e4) return c.v;
+  if (!ws || ws.readyState !== 1 || (INSX.busy[k] && Date.now() - INSX.busy[k] < 120000)) return c ? c.v : undefined;
+  INSX.busy[k] = Date.now();
+  load(v => { INSX.busy[k] = 0; INSX.c[k] = { t: Date.now(), v: v }; insQueue(); });
+  return c ? c.v : undefined;
+}
+// history of some entities as [[ms, state, attributes]] lists
+function insxHist(ids, hours, attrs, done) {
+  const end = new Date(), st = new Date(end.getTime() - hours * 36e5);
+  send({ type: "history/history_during_period", start_time: st.toISOString(), end_time: end.toISOString(), entity_ids: ids, minimal_response: !attrs, no_attributes: !attrs, significant_changes_only: false }, r => {
+    const o = {}; ids.forEach(id => { o[id] = ((r && r[id]) || []).map(x => [(x.lu != null ? x.lu * 1000 : Date.parse(x.last_updated || x.last_changed)), x.s != null ? x.s : x.state, x.a || x.attributes || {}]).filter(x => !isNaN(x[0])).sort((a, b) => a[0] - b[0]); });
+    done(o);
+  });
+}
+const insxHm = ms => { const m = Math.round(ms / 6e4); return m >= 60 ? Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : m + " min"; };
+const insxMoney = v => ((CONFIG.tariff && CONFIG.tariff.symbol) || "$") + v.toFixed(v >= 100 ? 0 : 2);
+const insxDay = d => d.toLocaleDateString([], { weekday: "long" });
+
+// --- 1. Bill projection: this bill so far (grid statistics, real prices when HA has them, else the tariff) and where it is heading
+// --- 2. Always-on load: the lowest hourly use between 1 and 5am over the last 7 nights, against the 7 nights before
+function insxGrid() {
+  return insxGet("grid", 30, done => send({ type: "energy/get_prefs" }, P => {
+    const gid = P && typeof enGridIds === "function" ? enGridIds(P) : [], cid = []; ((P || {}).energy_sources || []).forEach(x => { if (x.type === "grid") (x.flow_from || []).forEach(f => { if (f.stat_cost) cid.push(f.stat_cost); }); });
+    if (!gid.length) return done(null);
+    const cyc = typeof enCyc === "function" ? enCyc("electricity", 0) : null, now = new Date(), s0 = cyc ? cyc.s : new Date(now.getFullYear(), now.getMonth(), 1), pc = typeof enCyc === "function" ? enCyc("electricity", -1) : null, s = new Date(Math.min(+s0, now - 14 * 864e5, pc ? +pc.s : Infinity));
+    send({ type: "recorder/statistics_during_period", start_time: s.toISOString(), end_time: now.toISOString(), statistic_ids: gid.concat(cid), period: "hour", types: ["change"], units: { energy: "kWh" } }, g => {
+      const kwh = {}, cost = {}; Object.keys(g || {}).forEach(k => (g[k] || []).forEach(x => { const t = typeof x.start === "number" ? x.start : Date.parse(x.start), m = cid.indexOf(k) > -1 ? cost : kwh; m[t] = (m[t] || 0) + (x.change || 0); }));
+      done({ kwh: kwh, cost: cost, real: cid.length > 0, cyc: cyc || { s: s0, e: new Date(now.getFullYear(), now.getMonth() + 1, 1) }, prev: pc });
+    });
+  }));
+}
+function insxBill() {
+  const G = insxGrid(), T = CONFIG.tariff; if (!G || !T || !Array.isArray(T.periods)) return [];
+  const now = Date.now(), s = +G.cyc.s, e = +G.cyc.e, days = (e - s) / 864e5, gone = Math.max(0.5, (now - s) / 864e5); if (gone < 2) return [];   // too early in the bill to say
+  const rate = t => tarRate(t, T);
+  let used = 0, kw = 0; Object.keys(G.kwh).forEach(t => { if (+t < s) return; kw += G.kwh[t]; used += G.real && G.cost[t] != null ? G.cost[t] : G.kwh[t] * rate(+t); });
+  // the power company's data runs days behind: average the usage over the days it covers, not the days of the bill so far
+  const tk = Object.keys(G.kwh).map(Number).filter(t => t >= s), upTo = tk.length ? Math.max.apply(null, tk) + 36e5 : now, have = Math.max(0.5, (Math.min(upTo, now) - s) / 864e5);
+  const daily = (+T.daily || 0), gst = 1 + (+CONFIG.gst || 0), soFar = (used + daily * Math.ceil(gone)) * gst, proj = (used / have * days + daily * Math.round(days)) * gst;
+  const lag = Math.floor((now - upTo) / 864e5);
+  // what charged hours really cost a kWh (with the power company's prices)
+  let kp = 0, cp = 0; Object.keys(G.kwh).forEach(t => { if (+t < s || !(rate(+t) > 0)) return; kp += G.kwh[t]; if (G.cost[t] != null) cp += G.cost[t]; });
+  const last = (CONFIG.billing && CONFIG.billing.lastElectricity) || null;
+  return [{ id: "bill", stats: [["So far", insxMoney(soFar)], ["Heading for", "~" + insxMoney(proj)], ["Days", Math.round(gone) + " / " + Math.round(days)]], tile: ["BILL", "~" + insxMoney(proj), insxMoney(soFar) + " so far"], cat: "energy", lvl: 1, icon: "chart-bar", tone: "", go: "#energy", title: "On track for ~" + insxMoney(proj) + " this bill",
+    sub: insxMoney(soFar) + " so far · " + Math.round(gone) + " of " + Math.round(days) + " days",
+    full: () => {
+      // each day of the bill: what it cost (usage + daily charge, with GST); days the data has not reached yet are ghosts at the average
+      const per = {}; Object.keys(G.kwh).forEach(t => { if (+t < s) return; const d = new Date(+t); d.setHours(0, 0, 0, 0); per[+d] = (per[+d] || 0) + (G.real && G.cost[t] != null ? G.cost[t] : G.kwh[t] * rate(+t)); });
+      const avg = (used / have + daily) * gst, B = [], d = new Date(s), td = new Date(); td.setHours(0, 0, 0, 0); let i = 0;
+      while (+d < e && i < 40) { const k = +d, has = per[k] != null && k + 864e5 <= upTo + 36e5; B.push({ v: has ? (per[k] + daily) * gst : avg, c: has ? (k === +td ? "hl" : "") : "ghost", l: i % 7 === 0 ? d.getDate() + " " + d.toLocaleDateString([], { month: "short" }) : "", h: d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }), x: has ? insxMoney((per[k] + daily) * gst) : "~" + insxMoney(avg) + " (estimate)" }); d.setDate(d.getDate() + 1); i++; }
+      return '<div class="ibp"' + insTip("This bill", [["So far", insxMoney(soFar)], ["Heading for", "~" + insxMoney(proj)], ["Days", Math.round(gone) + " of " + Math.round(days)]]) + '><i style="width:' + Math.min(100, soFar / proj * 100).toFixed(1) + '%"></i></div><div class="ibl"><span>' + insxMoney(soFar) + ' so far</span><span>~' + insxMoney(proj) + '</span></div>' +
+        '<div class="lbl icll">Each day · faded = estimated at ~' + insxMoney(avg) + ' a day</div>' + insCols(B, { ref: avg, refL: "~" + insxMoney(avg), refN: "Average", name: "Cost" }) +
+      '<div class="sm">' + kw.toFixed(0) + ' kWh in ' + Math.round(have) + ' days of data' + (lag >= 1 ? ' (your power company\'s data runs ' + lag + (lag > 1 ? " days" : " day") + ' behind)' : "") + ' · ' + (G.real ? "your power company's prices" : "your tariff") + (daily ? " + daily charge" : "") + (gst > 1 ? " + GST" : "") + (last ? ' · last bill ' + insxMoney(+last) : "") + (G.real && kp > 0.5 ? ' · ' + (cp / kp * 100).toFixed(1) + 'c a kWh on charged hours' : "") + '</div>';
+    } }];
+}
+// --- Free-hours saving: what the power used in the free (cheapest) hours would have cost at the normal rate. Averaged per free night over the
+//     last 7 days that have data (days with no free hours, like weekends on a weeknights-only plan, are left out), plus the total this bill. With GST, like the bill.
+function insxSave() {
+  const G = insxGrid(), T = CONFIG.tariff; if (!G || !T || !Array.isArray(T.periods)) return [];
+  const L = tarLoHi(T); if (!L || L.hi <= L.lo) return [];
+  const lo = L.lo, hi = L.hi, cheap = L.P.filter(p => +p.rate === lo), gst = 1 + (+CONFIG.gst || 0), per = (hi - lo) * gst;
+  const day = {}; Object.keys(G.kwh).forEach(t => { if (tarRate(+t, T) !== lo) return; const d = new Date(+t); d.setHours(0, 0, 0, 0); day[+d] = (day[+d] || 0) + G.kwh[t]; });
+  const D = Object.keys(day).map(Number).sort((a, b) => b - a); if (!D.length) return [];
+  const last = D.filter(d => d > D[0] - 7 * 864e5), avgK = last.reduce((p, d) => p + day[d], 0) / last.length, avg$ = avgK * per;
+  const bill = D.filter(d => d >= +G.cyc.s).reduce((p, d) => p + day[d], 0) * per, word = lo === 0 ? "Free" : "Cheap";
+  const hr = h => h === 0 || h === 24 ? "midnight" : h === 12 ? "noon" : (h % 12 || 12) + (h < 12 ? "am" : "pm");
+  const span = cheap.map(p => hr(p.from) + " – " + hr(p.to) + (tarDays(p.days) ? " " + tarDays(p.days) : "")).join(", ");
+  let ba = 0, bf = 0; Object.keys(G.kwh).forEach(t => { if (+t < +G.cyc.s) return; ba += G.kwh[t]; if (tarRate(+t, T) === lo) bf += G.kwh[t]; });
+  return [{ id: "save", stats: [["A night", "~" + insxMoney(avg$)], ["Used then", avgK.toFixed(1) + " kWh"], ["This bill", "~" + insxMoney(bill)]].concat(ba > 1 ? [["Share of use", Math.round(bf / ba * 100) + "%"]] : []),
+    tile: [word.toUpperCase() + " HOURS SAVED", "~" + insxMoney(avg$), "a night · ~" + insxMoney(bill) + " this bill"], cat: "energy", lvl: 1, icon: "lightning-bolt", tone: "ok", go: "#energy",
+    title: word + " hours save ~" + insxMoney(avg$) + " a night", sub: "~" + avgK.toFixed(1) + " kWh in " + span + " · ~" + insxMoney(bill) + " this bill",
+    full: () => insRows(last.map(d => [new Date(d).toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }), [[day[d], "var(--mint)"]], insxMoney(day[d] * per), day[d].toFixed(1) + " kWh"])) +
+      '<div class="sm">What the power used ' + esc(span) + ' would cost at ' + insxMoney(hi) + '/kWh' + (gst > 1 ? " + GST" : "") + '. ~' + insxMoney(avg$) + ' a night is the average of the last ' + last.length + (last.length > 1 ? " nights" : " night") + ' with data.</div>' }];
+}
+// a bar split into parts with a row for each: [label, kWh, cost, colour]
+function insxSplit(R) {
+  const tot = R.reduce((p, r) => p + r[1], 0) || 1;
+  return '<div class="isp">' + R.filter(r => r[1] > 0).map(r => '<i style="flex:' + (r[1] / tot).toFixed(3) + ';background:' + r[3] + '"' + insTip(r[0], [["Energy", r[1].toFixed(1) + " kWh"], ["Cost", insxMoney(r[2])], ["Share", Math.round(r[1] / tot * 100) + "%"]]) + '></i>').join("") + '</div>' +
+    '<div class="isb">' + R.map(r => '<div class="isr"><i style="background:' + r[3] + '"></i><span>' + esc(r[0]) + '</span><small>' + r[1].toFixed(1) + ' kWh</small><b>' + insxMoney(r[2]) + '</b></div>').join("") + '</div>';
+}
+// --- This bill against the last one at the same point (the same number of days of data), usage only
+function insxVs() {
+  const G = insxGrid(), T = CONFIG.tariff; if (!G || !G.prev || !T || !Array.isArray(T.periods)) return [];
+  const s = +G.cyc.s, ps = +G.prev.s, tk = Object.keys(G.kwh).map(Number).filter(t => t >= s); if (!tk.length) return [];
+  const span = Math.max.apply(null, tk) + 36e5 - s; if (span < 2 * 864e5) return [];
+  const sum = (a, b) => { let k = 0, c = 0, real = true; Object.keys(G.kwh).forEach(t => { t = +t; if (t < a || t >= b) return; k += G.kwh[t]; if (G.real && G.cost[t] != null) c += G.cost[t]; else { real = false; c += G.kwh[t] * tarRate(t, T); } }); return { k: k, c: c, real: real }; };
+  const A = sum(s, s + span), B = sum(ps, Math.min(ps + span, s)); if (B.k < 1) return [];
+  const gst = 1 + (+CONFIG.gst || 0), d = (A.c - B.c) / Math.max(0.01, B.c) * 100, dk = (A.k - B.k) / B.k * 100, up = d > 0, days = Math.round(span / 864e5), same = Math.abs(d) < 3;
+  const word = same ? "About the same as last bill" : (up ? "Up " : "Down ") + Math.abs(Math.round(d)) + "% on last bill";
+  return [{ id: "vs", stats: [["This bill", insxMoney(A.c * gst)], ["Last bill", insxMoney(B.c * gst)], ["kWh", (dk >= 0 ? "+" : "−") + Math.abs(Math.round(dk)) + "%"]],
+    tile: ["VS LAST BILL", same ? "≈ same" : (up ? "↑ " : "↓ ") + Math.abs(Math.round(d)) + "%", "first " + days + " days · usage"], cat: "energy", lvl: 1, icon: "chart-bar", tone: same ? "" : up ? "warn" : "ok", go: "#energy", title: word,
+    sub: "Usage over the first " + days + " days: " + insxMoney(A.c * gst) + " vs " + insxMoney(B.c * gst),
+    full: () => insRows([["This bill", [[A.c, up ? "#e8973a" : "var(--mint)"]], insxMoney(A.c * gst), A.k.toFixed(0) + " kWh"], ["Last bill", [[B.c, "#6bb8ff"]], insxMoney(B.c * gst), B.k.toFixed(0) + " kWh"]]) +
+      '<div class="sm">The power used over the first ' + days + ' days of each bill' + (gst > 1 ? ", with GST" : "") + '; the daily charge is left out as it is the same both times.</div>' }];
+}
+// --- Peak hours: average use for each hour of the day over the last 7 days of data, the free hours tinted
+function insxPeak() {
+  const G = insxGrid(), T = CONFIG.tariff; if (!G) return [];
+  const tk = Object.keys(G.kwh).map(Number); if (!tk.length) return [];
+  const end = Math.max.apply(null, tk) + 36e5, st = end - 7 * 864e5, sum = new Array(24).fill(0), n = new Array(24).fill(0);
+  tk.forEach(t => { if (t < st) return; const h = new Date(t).getHours(); sum[h] += G.kwh[t]; n[h]++; });
+  if (n.reduce((p, x) => p + x, 0) < 48) return [];
+  const av = sum.map((v, h) => n[h] ? v / n[h] : 0), pk = av.indexOf(Math.max.apply(null, av)), L = T && T.periods ? tarLoHi(T) : null;
+  // a free hour on any day of the week (weeknights) counts as free for the tint
+  const freeH = h => { if (!L || L.lo !== 0) return false; const d = new Date(2024, 0, 1, h); for (let i = 0; i < 7; i++) { if (tarRate(+d, T) === 0) return true; d.setDate(d.getDate() + 1); } return false; };
+  const day = av.reduce((p, x) => p + x, 0), lbl = h => insHr(new Date(2024, 0, 1, h)) + "–" + insHr(new Date(2024, 0, 1, h + 1));
+  return [{ id: "peak", stats: [["Busiest", lbl(pk)], ["Then", av[pk].toFixed(1) + " kWh"], ["A day", "~" + day.toFixed(0) + " kWh"]],
+    tile: ["PEAK HOUR", lbl(pk), "~" + av[pk].toFixed(1) + " kWh on average"], cat: "energy", lvl: 1, icon: "chart-bar", tone: "", go: "#energy", title: "Busiest hour: " + lbl(pk),
+    sub: "~" + av[pk].toFixed(1) + " kWh on average · last 7 days",
+    full: () => '<div class="lbl icll">Average for each hour · last 7 days of data</div>' + insCols(av.map((v, h) => ({ v: v, c: freeH(h) ? "hl" : "", t: h === pk ? v.toFixed(1) : "", l: h % 6 === 0 ? insHr(new Date(2024, 0, 1, h)) : "", h: lbl(h) + (freeH(h) ? " · free on weeknights" : ""), x: v.toFixed(2) + " kWh" })), { name: "Average" }) +
+      '<div class="sm">' + (L && L.lo === 0 ? "Green hours are free on some days. " : "") + 'Moving the dishwasher, dryer or hot water out of the tall hours' + (L && L.lo === 0 ? " and into the free ones" : "") + ' saves the most.</div>' }];
+}
+function insxBase() {
+  const G = insxGrid(); if (!G) return [];
+  // the quietest hour between 1 and 5am, per night with data, counting back from the newest data (a power company's data runs days behind)
+  const tk = Object.keys(G.kwh).map(Number); if (!tk.length) return [];
+  const last = new Date(Math.max.apply(null, tk)); last.setHours(1, 0, 0, 0); if (Math.max.apply(null, tk) < +last + 3 * 36e5) last.setDate(last.getDate() - 1);
+  const night = n => { const d = new Date(last); d.setDate(d.getDate() - n); const v = [0, 1, 2, 3].map(h => [h + 1, G.kwh[+d + h * 36e5]]).filter(x => x[1] != null); if (v.length < 3) return null; const m = v.reduce((p, x) => x[1] < p[1] ? x : p); return { d: d, h: m[0], w: m[1] * 1000 }; };
+  const A = [0, 1, 2, 3, 4, 5, 6].map(night).filter(Boolean), B = [7, 8, 9, 10, 11, 12, 13].map(night).filter(Boolean); if (A.length < 3) return [];
+  const w = insMed(A.map(x => x.w)), wb = B.length >= 3 ? insMed(B.map(x => x.w)) : null, d = wb != null ? w - wb : 0, yr = w / 1000 * 24 * 365, T = CONFIG.tariff, avg = T && T.periods ? tarAvg(T) * (1 + (+CONFIG.gst || 0)) : 0, fh = T && T.periods ? (() => { const d = new Date(2024, 0, 1); let n = 0; for (let i = 0; i < 168; i++) { if (tarRate(+d, T) === 0) n++; d.setHours(d.getHours() + 1); } return n; })() : 0;
+  const hr = h => (h % 12 || 12) + (h < 12 ? "am" : "pm");
+  return [{ id: "base", stats: [["Recent nights", Math.round(w) + " W"]].concat(wb != null ? [["Week before", Math.round(wb) + " W"]] : []).concat(avg ? [["A year", "~" + insxMoney(yr * avg)]] : []), tile: ["OVERNIGHT LOAD", Math.round(w) + " W", wb != null && Math.abs(d) >= 20 ? (d > 0 ? "up " : "down ") + Math.round(Math.abs(d)) + " W on the week before" : "quietest hour of the night"], cat: "energy", lvl: 1, icon: "power", tone: d > 60 ? "warn" : "", go: "#energy", title: "Overnight load ~" + Math.round(w) + " W",
+    sub: (wb != null && Math.abs(d) >= 20 ? (d > 0 ? "Up " : "Down ") + Math.round(Math.abs(d)) + " W on the week before · " : "") + "the quietest hour of the night",
+    full: () => insRows(A.map(x => [x.d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }), [[x.w, wb != null && x.w > wb * 1.5 && x.w - wb > 100 ? "#e8973a" : "#6bb8ff"]], Math.round(x.w) + " W", hr(x.h) + "–" + hr(x.h + 1)]), { ref: wb }) +
+      '<div class="sm">The power still used in the quietest hour of each night: hot water, the heat pump, heated towel rails, fridges, standby. ~' + Math.round(w) + ' W is the middle of these ' + A.length + ' nights' + (wb != null ? '; the dashed line is the ' + B.length + ' nights before (~' + Math.round(wb) + ' W)' : '') + '.' + (avg ? " Running all year it costs about " + insxMoney(yr * avg) + (CONFIG.gst ? " incl. GST" : "") + (fh ? ", with the " + fh + " free hours a week left out" : "") + "." : "") + '</div>' }];
+}
+
+// --- 3. Mould / condensation: a room 70 % humidity or more for 3 hours or longer
+function insxMould() {
+  const rs = HOUSE().filter(r => r.hum && states[r.hum]); if (!rs.length) return [];
+  const H = insxGet("hum", 20, done => insxHist(rs.map(r => r.hum), 24, false, done)); if (!H) return [];
+  const lim = CONFIG.mouldAbove != null ? +CONFIG.mouldAbove : 70, out = [];
+  rs.forEach(r => {
+    const v = parseFloat(sv(r.hum)); if (isNaN(v) || v < lim) return;
+    const a = H[r.hum] || []; let since = Date.now(); for (let i = a.length - 1; i >= 0; i--) { if (parseFloat(a[i][1]) >= lim) since = a[i][0]; else break; }
+    const ms = Date.now() - since; if (ms < 3 * 36e5) return;
+    out.push({ id: "mould:" + r.id, stats: [["Humidity", Math.round(v) + "%"], ["For", insxHm(ms)], ["Limit", lim + "%"]], tile: ["HUMID", Math.round(v) + "%", r.name + " · " + insxHm(ms)], cat: "climate", lvl: ms >= 8 * 36e5 ? 2 : 1, icon: "water-percent", tone: "warn", go: "#rooms/" + r.id, title: r.name + " " + Math.round(v) + "% humid",
+      sub: "For " + insxHm(ms) + " · air it out or run the dehumidifier",
+      full: () => {
+        // the last 24 hours, an hour a column: the value at the end of each hour
+        const B = []; for (let k = 23; k >= 0; k--) { const t = Date.now() - k * 36e5; let x = NaN; for (let q = 0; q < a.length && a[q][0] <= t; q++) { const f = parseFloat(a[q][1]); if (!isNaN(f)) x = f; } const dd = new Date(t); B.push({ v: x, c: x >= lim ? "warn" : "", l: k % 6 === 0 ? (k === 0 ? "now" : insHr(dd)) : "", h: k === 0 ? "Now" : dd.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })), x: isNaN(x) ? "no data" : Math.round(x) + "%" }); }
+        return '<div class="lbl icll">Last 24 hours</div>' + insCols(B, { ref: lim, refL: lim + "%", refN: "Limit", name: "Humidity", floor: Math.max(0, Math.min.apply(null, B.map(b => b.v).filter(x => !isNaN(x)).concat([lim])) - 10) }) +
+          '<div class="sm">Above ' + lim + '% for long, mould and condensation start. Open a window for 10 minutes, or run the heat pump’s dry mode or a dehumidifier.</div>';
+      } });
+  });
+  return out;
+}
+
+// --- 4. Free cooling / heating: outside would do the job better than the heat pump
+function insxOutside() { const o = CONFIG.outside && parseFloat(sv(CONFIG.outside)); if (!isNaN(o) && o !== false && CONFIG.outside) return o; const w = states[W]; return w && w.attributes.temperature != null ? +w.attributes.temperature : NaN; }
+function insxInside() { const t = HOUSE().map(r => parseFloat(r.temp ? sv(r.temp) : NaN)).filter(x => !isNaN(x)); if (t.length) return t.reduce((a, b) => a + b, 0) / t.length; const m = typeof MAIN !== "undefined" && states[MAIN]; return m ? +m.attributes.current_temperature : NaN; }
+function insxFree() {
+  const o = insxOutside(), i = insxInside(); if (isNaN(o) || isNaN(i)) return [];
+  const fx = typeof hpFx === "function" ? hpFx() : null, run = fx ? fx[0] : "";
+  const ahead = (warm) => {
+    // outside over the next 12 hours against inside now (the dashed line)
+    const H = (typeof fcH !== "undefined" ? fcH : []).filter(x => Date.parse(x.datetime) > Date.now() - 36e5 && x.temperature != null).slice(0, 12); if (!H.length) return "";
+    const B = H.map((x, k) => ({ v: +x.temperature, t: k % 3 === 0 ? Math.round(x.temperature) + "°" : "", c: warm ? (+x.temperature >= i ? "hl" : "") : (+x.temperature <= i ? "hl" : ""), l: k % 3 === 0 ? insHr(new Date(x.datetime)) : "", h: insHr(new Date(x.datetime)), x: (+x.temperature).toFixed(1) + "°" }));
+    return '<div class="lbl icll">Outside, next 12 hours</div>' + insCols(B, { ref: i, refL: "inside " + i.toFixed(1) + "°", refN: "Inside", name: "Outside", floor: Math.min.apply(null, B.map(b => b.v).concat([i])) - 3 });
+  };
+  const fst = [["Inside", i.toFixed(1) + "°"], ["Outside", o.toFixed(1) + "°"]];
+  if (i >= 24 && o <= i - 3) return [{ id: "free", tile: ["OPEN UP", Math.round(i - o) + "° cooler", "outside than in"], cat: "climate", lvl: run === "cool" ? 2 : 1, icon: "window-open-variant", tone: "ok", go: "#climate", title: "Outside is " + Math.round(i - o) + "° cooler",
+    sub: (run === "cool" ? "Cooling now · " : "") + "open the windows instead" + (run === "cool" ? " of cooling" : ""), stats: fst, full: () => ahead(false) + '<div class="sm">' + (run === "cool" ? "The heat pump is cooling: turning it off and opening windows would do the same for free." : "Opening a few windows will cool the house for free.") + '</div>' }];
+  if (i <= 18 && o >= i + 3) return [{ id: "free", tile: ["OPEN UP", Math.round(o - i) + "° warmer", "outside than in"], cat: "climate", lvl: run === "heat" ? 2 : 1, icon: "window-open-variant", tone: "ok", go: "#climate", title: "Outside is " + Math.round(o - i) + "° warmer",
+    sub: (run === "heat" ? "Heating now · " : "") + "open up to let the warmth in", stats: fst, full: () => ahead(true) + '<div class="sm">Opening up for a while warms the house without the heat pump.</div>' }];
+  return [];
+}
+
+// --- 5. Heat pump runtime today (hvac_action heating / cooling when the unit reports it, else on / off), with energy when heatPumpKw is set
+function insxRun() {
+  if (typeof MAIN === "undefined" || !states[MAIN]) return [];
+  const H = insxGet("hp", 10, done => { const mid = new Date(); mid.setHours(0, 0, 0, 0); insxHist([MAIN], (Date.now() - mid) / 36e5 + 0.01, true, done); }); if (!H) return [];
+  const a = H[MAIN] || [], mid = new Date(); mid.setHours(0, 0, 0, 0);
+  const on = x => { const act = x[2] && x[2].hvac_action; return act ? /heating|cooling|drying|fan/.test(act) : x[1] !== "off" && x[1] !== "unavailable"; };
+  // running time split by the hour, so each hour is priced at its own rate (free hours cost nothing)
+  const T = CONFIG.tariff, kw = +CONFIG.heatPumpKw || 0, priced = !!(T && T.periods), gst = 1 + (+CONFIG.gst || 0);
+  let ms = 0, fk = 0, pk = 0, cost = 0;
+  for (let i = 0; i < a.length; i++) { let t0 = Math.max(a[i][0], +mid); const t1 = i + 1 < a.length ? a[i + 1][0] : Date.now(); if (!(t1 > t0) || !on(a[i])) continue; ms += t1 - t0;
+    while (t0 < t1) { const e = new Date(t0); e.setMinutes(0, 0, 0); e.setHours(e.getHours() + 1); const t = Math.min(+e, t1), k = kw * (t - t0) / 36e5, r = priced ? tarRate(t0, T) : 0; if (r > 0) { pk += k; cost += k * r * gst; } else fk += k; t0 = t; } }
+  if (ms < 10 * 6e4) return [];
+  const kwh = fk + pk, L = priced ? tarLoHi(T) : null, hasFree = !!(L && L.lo === 0), fs = hasFree && fk >= 0.05 ? " (" + fk.toFixed(1) + " kWh free)" : "", money = kw && priced;
+  return [{ id: "hprun", stats: [["Running", insxHm(ms)]].concat(kw ? [["Energy", "~" + kwh.toFixed(1) + " kWh"]] : []).concat(money ? [["Cost", "~" + insxMoney(cost)]] : []),
+    tile: ["HEAT PUMP", insxHm(ms).replace(/ h/, "h").replace(/ min/, "m").replace(/h (\d)/, "h $1"), kw ? "today · ~" + kwh.toFixed(1) + " kWh" + (money ? " · ~" + insxMoney(cost) : "") : "running today"], cat: "climate", lvl: 1, icon: "heat-pump", tone: "", go: "#climate", title: "Heat pump ran " + insxHm(ms) + " today",
+    sub: kw ? "~" + kwh.toFixed(1) + " kWh" + (money ? " · ~" + insxMoney(cost) + fs : "") : Math.round(ms / ((Date.now() - mid) || 1) * 100) + "% of the day so far",
+    full: () => (money ? insxSplit([["Paid hours", pk, cost, "#6bb8ff"]].concat(hasFree ? [["Free hours", fk, 0, "var(--mint)"]] : [])) +
+      '<div class="sm">' + insxHm(ms) + ' running since midnight, at about ' + kw + ' kW' + (gst > 1 ? " · costs incl. GST" : "") + '</div>'
+      : '<div class="inx"><b>' + insxHm(ms) + '</b> running since midnight<small>' + (kw ? "At about " + kw + " kW: ~" + kwh.toFixed(1) + " kWh" : "Set heatPumpKw in config.js (its average power) to see the energy and cost") + '</small></div>') }];
+}
+
+// --- 6. Night activity: a camera trigger (person / vehicle / motion) between 11pm and 5am, shown until noon
+function insxNight() {
+  const h = new Date().getHours(); if (h < 5 || h >= 12) return [];
+  const V = CONFIG.view || {}, trig = []; Object.keys(V).forEach(k => ((V[k] || {}).trig || []).forEach(t => { if (trig.indexOf(t) < 0 && states[t]) trig.push(t); })); if (!trig.length) return [];
+  const H = insxGet("night", 15, done => insxHist(trig, 14, false, done)); if (!H) return [];
+  const s = new Date(); s.setDate(s.getDate() - 1); s.setHours(23, 0, 0, 0); const e = new Date(); e.setHours(5, 0, 0, 0);
+  const hits = []; trig.forEach(t => (H[t] || []).forEach((x, i, a) => { if (x[1] === "on" && x[0] >= +s && x[0] < +e && (i === 0 || a[i - 1][1] !== "on")) hits.push([x[0], t]); }));
+  if (!hits.length) return [];
+  hits.sort((a, b) => a[0] - b[0]);
+  return [{ id: "night", tile: ["OVERNIGHT", String(hits.length), (hits.length > 1 ? "detections" : "detection") + " · first " + schTm(new Date(hits[0][0]))], cat: "security", lvl: 1, icon: "video", tone: "warn", go: "#security", title: hits.length + " detection" + (hits.length > 1 ? "s" : "") + " overnight",
+    sub: "Between 11pm and 5am · first at " + schTm(new Date(hits[0][0])),
+    stats: [["Detections", hits.length], ["First", schTm(new Date(hits[0][0]))], ["Last", schTm(new Date(hits[hits.length - 1][0]))]],
+    full: () => '<div class="itl"><span class="itt">' + hits.map(x => '<i style="left:' + ((x[0] - s) / (e - s) * 100).toFixed(2) + '%"' + insTip(schTm(new Date(x[0])), [[fname(x[1]), ""]]) + '></i>').join("") + '</span><div class="iwl"><b>11pm</b><b>1am</b><b>3am</b><b>5am</b></div></div>' +
+      insList(hits.slice(0, 8).map(x => ({ b: schTm(new Date(x[0])), s: fname(x[1]), t: "w" }))) + (hits.length > 8 ? '<div class="sm">+' + (hits.length - 8) + ' more on the Security page</div>' : "") }];
+}
+
+// --- 7. Tomorrow at a glance (from 5pm): first events, the drive and when to leave, bins out tonight, morning rain
+function insxTomorrow() {
+  if (new Date().getHours() < 17) return [];
+  const cals = (CONFIG.calendars || []).filter(Boolean);
+  const ev = cals.length ? insxGet("tmr", 30, done => {
+    const s = new Date(); s.setDate(s.getDate() + 1); s.setHours(0, 0, 0, 0); const e = new Date(s); e.setDate(e.getDate() + 1), q = "?start=" + encodeURIComponent(s.toISOString()) + "&end=" + encodeURIComponent(e.toISOString());
+    Promise.all(cals.map(c => getToken().then(tk => fetch(CONFIG.url + "/api/calendars/" + c + q, { headers: { Authorization: "Bearer " + tk } })).then(r => r.ok ? r.json() : []).then(a => a.map(v => ({ cal: c, s: v.summary || "", ad: !v.start.dateTime, t: new Date(v.start.dateTime || v.start.date + "T00:00:00") }))).catch(() => [])))
+      .then(L => done([].concat.apply([], L).sort((a, b) => (a.ad ? 0 : +a.t) - (b.ad ? 0 : +b.t)))).catch(() => done([]));
+  }) : [];
+  if (ev === undefined) return [];
+  const lines = [], tm = new Date(); tm.setDate(tm.getDate() + 1);
+  (ev || []).filter(v => !v.ad).slice(0, 3).forEach(v => {
+    // a commute that follows this event: leave = start minus today's drive time
+    const c = cmtList().find(c => c.match && v.s.toLowerCase().indexOf(String(c.match).toLowerCase()) > -1 && (!c.calendar || c.calendar === v.cal || (typeof calName === "function" && String(calName(v.cal)).toLowerCase() === String(c.calendar).toLowerCase())));
+    const m = c && states[c.sensor] ? Math.round(parseFloat(states[c.sensor].state)) : NaN;
+    lines.push([schTm(v.t) + " " + v.s, c && !isNaN(m) ? c.name + " leaves ~" + schTm(new Date(+v.t - m * 6e4)) + " (" + m + " min)" : ""]);
+  });
+  cmtList().filter(c => !c.match && (c.days || []).indexOf(tm.getDay()) > -1 && c.start).forEach(c => { const m = states[c.sensor] ? Math.round(parseFloat(states[c.sensor].state)) : NaN, st = cmtHm(c.start, tm); if (st && !isNaN(m)) lines.push([c.name + " to work", "leave ~" + schTm(new Date(+st - m * 6e4)) + " (" + m + " min)"]); });
+  const ad = (ev || []).filter(v => v.ad).map(v => v.s);
+  const bins = typeof binsDue === "function" && binsCfg() ? binsDue().filter(() => !binsOut()).map(x => x[1]) : [];
+  const H = (typeof fcH !== "undefined" ? fcH : []).filter(x => { const d = new Date(x.datetime); return d.getDate() === tm.getDate() && d.getHours() >= 6 && d.getHours() < 10; }), rain = H.reduce((p, x) => p + (+x.precipitation || 0), 0);
+  const D = (typeof fc !== "undefined" ? fc : []).find(x => new Date(x.datetime).getDate() === tm.getDate());
+  if (!lines.length && !ad.length && !bins.length && rain < 0.5 && !D) return [];
+  const first = lines[0] ? lines[0][0] : ad[0] || (bins.length ? bins.join(" and ") + " out tonight" : "No events");
+  return [{ id: "tmr", tile: ["TOMORROW", lines[0] ? lines[0][0].split(" ")[0] : ad.length ? "All day" : bins.length ? "Bins" : "—", lines[0] ? lines[0][0].replace(/^\S+\s/, "") : ad[0] || (bins.length ? bins.join(", ") + " out tonight" : (rain >= 0.5 ? "rain in the morning" : ""))], cat: "home", lvl: 1, icon: "timer-outline", tone: "", go: "#events", title: "Tomorrow: " + first,
+    sub: [lines[0] && lines[0][1], bins.length ? bins.join(", ") + " out tonight" : "", rain >= 0.5 ? "rain in the morning" : "", D ? "↑" + Math.round(D.temperature) + "° ↓" + Math.round(D.templow != null ? D.templow : D.temperature) + "°" : ""].filter(Boolean).join(" · "),
+    stats: (D ? [["High", Math.round(D.temperature) + "°"], ["Low", Math.round(D.templow != null ? D.templow : D.temperature) + "°"]] : []).concat(rain >= 0.5 ? [["Rain 6–10am", "~" + rain.toFixed(rain < 10 ? 1 : 0) + " mm"]] : []),
+    full: () => {
+      const R = lines.map(l => ({ i: "timer-outline", b: l[0], s: l[1] })).concat(ad.map(x => ({ i: "bell-outline", b: x, s: "all day" })))
+        .concat(bins.length ? [{ i: "recycle", b: bins.join(", ") + " out tonight", t: "w" }] : [])
+        .concat(D ? [{ i: "weather-partly-cloudy", b: insxDay(tm) + ": " + Math.round(D.temperature) + "° / " + Math.round(D.templow != null ? D.templow : D.temperature) + "°", s: D.condition ? String(D.condition).replace(/-/g, " ") : "" }] : []);
+      // tomorrow's rain by the hour, 6am to 10pm, when there is any
+      const RH = (typeof fcH !== "undefined" ? fcH : []).filter(x => { const d = new Date(x.datetime); return d.getDate() === tm.getDate() && d.getHours() >= 6 && d.getHours() < 22; }), rt = RH.reduce((p, x) => p + (+x.precipitation || 0), 0);
+      return insList(R) + (rt >= 0.5 ? '<div class="lbl icll">Rain tomorrow · ~' + rt.toFixed(rt < 10 ? 1 : 0) + ' mm</div>' + insCols(RH.map(x => { const d = new Date(x.datetime); return { v: +x.precipitation || 0, c: "rain", l: d.getHours() % 4 === 2 ? insHr(d) : "", h: insHr(d) + "–" + insHr(new Date(+d + 36e5)), x: (+x.precipitation || 0).toFixed(1) + " mm" }; }), { name: "Rain" }) : "");
+    } }];
+}
+
+// --- 8. Lights left on in empty rooms (20 minutes after the room's presence went clear)
+function insxLights() {
+  const out = [], mins = CONFIG.emptyLightsMin != null ? +CONFIG.emptyLightsMin : 20;
+  HOUSE().forEach(r => {
+    const L = members(r.lights).filter(x => /^light\./.test(x) && isOn(x)), O = typeof occOf === "function" ? occOf(r) : []; if (!L.length || !O.length || O.some(isOn)) return;
+    const ms = Math.min.apply(null, O.map(insAgo)); if (ms < mins * 6e4) return;
+    out.push({ id: "lights:" + r.id, tile: ["LIGHTS ON", L.length + " on", r.name + " · empty " + insxHm(ms)], cat: "energy", lvl: ms >= 60 * 6e4 ? 2 : 1, icon: "lightbulb-on", tone: "warn", go: "#rooms/" + r.id, title: r.name + ": " + L.length + (L.length > 1 ? " lights" : " light") + " on",
+      sub: "Empty " + insxHm(ms), stats: [["Lights on", L.length], ["Empty for", insxHm(ms)]],
+      full: () => insList(L.map(x => ({ i: "lightbulb-on", b: fname(x), r: (states[x].attributes.brightness != null ? Math.round(states[x].attributes.brightness / 2.55) + "%" : "on"), t: "w" }))) + '<div class="sm">No one has been in the room for ' + insxHm(ms) + '.</div>',
+      acts: [["TURN OFF", () => call("light", "turn_off", L)]] });
+  });
+  return out;
+}
+
+// --- 9. Low batteries (below derived.batteryAlertBelow, default 20 %)
+function insxBatt() {
+  // the Attention rule (Battery+ under 26 %) and the strip chip's, together
+  const L = (typeof attnBatts === "function" ? attnBatts() : []).concat(typeof lowBattChip === "function" ? lowBattChip() : []).filter((x, i, a) => a.indexOf(x) === i); if (!L.length) return [];
+  const v = L.map(k => [k, parseFloat(states[k].state)]).sort((a, b) => a[1] - b[1]), nm = k => fname(k).replace(/\s*battery\s*\+?$/i, "").replace(/\s*battery plus$/i, "");
+  return [{ id: "batt", tile: ["BATTERIES", String(L.length) + " low", nm(v[0][0]) + " " + Math.round(v[0][1]) + "%"], cat: "home", lvl: v[0][1] <= 10 ? 2 : 1, icon: "alert-circle", tone: "warn", go: "#notifications", title: L.length + (L.length > 1 ? " batteries" : " battery") + " low",
+    sub: v.slice(0, 2).map(x => nm(x[0]) + " " + Math.round(x[1]) + "%").join(" · ") + (v.length > 2 ? " +" + (v.length - 2) : ""),
+    full: () => insRows(v.map(x => [nm(x[0]), [[Math.max(1, x[1]), x[1] <= 10 ? "var(--heat)" : "#e8973a"]], Math.round(x[1]) + "%", ""]), { max: 100 }) + '<div class="sm">Lowest first. Swap the ones at 10% or below soon.</div>' }];
+}
+
+// --- 10. Devices offline: anything config.js uses that has been unavailable for an hour or more
+function insxOffline() {
+  const S = (typeof sckScan === "function" ? sckScan() : null) || { unavailable: [] };
+  // entities config.js uses (offline 1 h or more) and the devices Attention used to list (offline 10 min or more, minus attention.ignore)
+  const L = S.unavailable.map(x => x[0]).filter(id => insAgo(id) >= 36e5).concat(typeof attnOffline === "function" ? attnOffline().map(x => x[0]) : []).filter((x, i, a) => a.indexOf(x) === i).sort((a, b) => insAgo(b) - insAgo(a)); if (!L.length) return [];
+  return [{ id: "offline", tile: ["OFFLINE", String(L.length), L.slice(0, 2).map(fname).join(", ") + (L.length > 2 ? " +" + (L.length - 2) : "")], cat: "home", lvl: 1, icon: "access-point-network", tone: "warn", go: "#admin", title: L.length + (L.length > 1 ? " devices" : " device") + " offline",
+    sub: L.slice(0, 2).map(fname).join(", ") + (L.length > 2 ? " +" + (L.length - 2) : "") + " · for " + insxHm(Math.max.apply(null, L.map(insAgo))),
+    stats: [["Offline", L.length], ["Longest", insxHm(Math.max.apply(null, L.map(insAgo)))]],
+    full: () => insList(L.slice(0, 12).map(id => ({ b: fname(id), s: id, r: insxHm(insAgo(id)), t: "w" }))) + (L.length > 12 ? '<div class="sm">+' + (L.length - 12) + ' more in Admin > Setup check</div>' : "") }];
+}
+
+// --- 11. Vehicle: fuel getting low (vehicle.lowFuelPct, warned from one and a half times it)
+function insxCar() {
+  const V = CONFIG.vehicle; if (!V || !V.prefix) return [];
+  const f = parseFloat(sv("sensor." + V.prefix + "_fuel_level")), r = parseFloat(sv("sensor." + V.prefix + "_range_liquid")), lo = V.lowFuelPct != null ? +V.lowFuelPct : 15;
+  if (isNaN(f) || f > lo * 1.5) return [];
+  return [{ id: "car", stats: [["Fuel", Math.round(f) + "%"]].concat(isNaN(r) ? [] : [["Range", "~" + Math.round(r) + " km"]]).concat([["Low below", lo + "%"]]), tile: ["FUEL", Math.round(f) + "%", isNaN(r) ? (V.name || "car") : "~" + Math.round(r) + " km left"], cat: "home", lvl: f <= lo ? 2 : 1, icon: "car", tone: "warn", go: "#vehicle", title: "Fuel " + Math.round(f) + "%" + (isNaN(r) ? "" : " · ~" + Math.round(r) + " km"),
+    sub: "Fill up " + (f <= lo ? "soon" : "in the next few days"), full: () => insRows([[V.name || "Fuel", [[Math.max(1, f), f <= lo ? "var(--heat)" : "#e8973a"]], Math.round(f) + "%", isNaN(r) ? "" : "~" + Math.round(r) + " km"]], { max: 100, ref: lo }) + '<div class="sm">The dashed line is the low mark (' + lo + '%).</div>' }];
+}
+
+// --- 12. Weather heads-up: frost in the next 24 hours, or wind gusting 60 km/h or more
+function insxWx() {
+  const out = [], H = (typeof fcH !== "undefined" ? fcH : []).filter(x => Date.parse(x.datetime) > Date.now() - 36e5).slice(0, 24); if (!H.length) return [];
+  const lim = CONFIG.frostBelow != null ? +CONFIG.frostBelow : 2, cold = H.filter(x => x.temperature != null).reduce((p, x) => p && +p.temperature <= +x.temperature ? p : x, null);
+  if (cold && +cold.temperature <= lim) out.push({ id: "frost", tile: ["FROST", Math.round(cold.temperature) + "°", "around " + schTm(new Date(cold.datetime))], cat: "home", lvl: 1, icon: "snowflake", tone: "warn", go: "#weather/temp", title: (+cold.temperature <= 0 ? "Frost likely" : "Frost possible") + " · " + Math.round(cold.temperature) + "°",
+    sub: "Around " + schTm(new Date(cold.datetime)) + " · cover plants, garage the car", stats: [["Low", Math.round(cold.temperature) + "°"], ["Around", schTm(new Date(cold.datetime))]],
+    full: () => { const B = H.filter(x => x.temperature != null).map((x, k) => ({ v: +x.temperature, c: +x.temperature <= lim ? "cold" : "", t: x === cold ? Math.round(x.temperature) + "°" : "", l: k % 4 === 0 ? insHr(new Date(x.datetime)) : "", h: insHr(new Date(x.datetime)), x: (+x.temperature).toFixed(1) + "°" }));
+      return '<div class="lbl icll">Next 24 hours</div>' + insCols(B, { ref: lim, refL: lim + "°", refN: "Frost below", name: "Temperature", floor: Math.min.apply(null, B.map(b => b.v)) - 2 }) + '<div class="sm">Cover tender plants, bring pots in, park the car inside or cover the windscreen.</div>'; } });
+  const g = H.map(x => [x, +(x.wind_gust_speed != null ? x.wind_gust_speed : x.wind_speed) || 0]).reduce((p, x) => x[1] > p[1] ? x : p, [null, 0]);
+  if (g[0] && g[1] >= (CONFIG.windAbove != null ? +CONFIG.windAbove : 60)) out.push({ id: "wind", tile: ["WIND", Math.round(g[1]) + " km/h", "gusts around " + schTm(new Date(g[0].datetime))], cat: "home", lvl: 1, icon: "weather-windy", tone: "warn", go: "#weather/now", title: "Wind gusts ~" + Math.round(g[1]) + " km/h",
+    sub: "Around " + schTm(new Date(g[0].datetime)) + " · tie down outdoor furniture, bins", stats: [["Gusts", Math.round(g[1]) + " km/h"], ["Around", schTm(new Date(g[0].datetime))]],
+    full: () => { const wl = CONFIG.windAbove != null ? +CONFIG.windAbove : 60, B = H.map((x, k) => { const v = +(x.wind_gust_speed != null ? x.wind_gust_speed : x.wind_speed) || 0; return { v: v, c: v >= wl ? "warn" : "", t: x === g[0] ? Math.round(v) + "" : "", l: k % 4 === 0 ? insHr(new Date(x.datetime)) : "", h: insHr(new Date(x.datetime)), x: Math.round(v) + " km/h" }; });
+      return '<div class="lbl icll">Gusts, next 24 hours · km/h</div>' + insCols(B, { ref: wl, refL: wl + " km/h", refN: "Strong from", name: "Gusts" }) + '<div class="sm">Bring in or tie down outdoor furniture, umbrellas, trampolines and bins.</div>'; } });
+  return out;
+}
+// --- 13. Laundry: running (time left, done at, a bar for how far through), waiting for a delayed start, or finished and waiting to be emptied (up to 3 hours)
+//     entities.laundryState ("Run" / "Delay Run" / anything else), entities.laundryRemaining (seconds left), entities.laundryDelay (time until a delayed start)
+function insxLaundry() {
+  const sid = E("laundryState"), st = states[sid]; if (!st) return [];
+  const v = sv(sid), at = Date.parse(st.last_changed || "") || Date.now(), dot = t => schTm(new Date(t));
+  if (v === "Run") {
+    const rem = (parseInt(sv(E("laundryRemaining"))) || 0) * 1000, gone = Math.max(0, Date.now() - at), tot = gone + rem, done = Date.now() + rem, pc = tot ? gone / tot * 100 : 0;
+    const L = typeof tarLoHi === "function" && CONFIG.tariff ? tarLoHi(CONFIG.tariff) : null, fr = L && L.lo === 0 && rem ? tarRate(done - 6e4, CONFIG.tariff) === 0 : false;
+    return [{ id: "laundry", stats: [["Left", rem ? insxHm(rem) : "—"], ["Done at", rem ? dot(done) : "—"], ["Started", dot(at)]], tile: ["LAUNDRY", rem ? insxHm(rem).replace(/ h/, "h").replace(/ min/, "m") : "Running", rem ? "done ~" + dot(done) : "running"], cat: "home", lvl: 1, icon: "washing-machine", tone: "", go: "#notifications",
+      title: "Laundry done ~" + (rem ? dot(done) : "soon"), sub: (rem ? insxHm(rem) + " left · " : "") + "started " + dot(at),
+      full: () => '<div class="ibp"' + insTip("Laundry", [["Started", dot(at)], ["Running for", insxHm(gone)], ["Left", rem ? insxHm(rem) : "—"], ["Done at", rem ? dot(done) : "—"]]) + '><i style="width:' + pc.toFixed(1) + '%"></i></div><div class="ibl"><span>' + esc(dot(at)) + '</span><span>' + Math.round(pc) + '%</span><span>' + (rem ? esc(dot(done)) : "") + '</span></div>' +
+        '<div class="sm">' + (fr ? "It finishes in the free hours." : "") + ' The countdown comes from the washing machine.</div>' }];
+  }
+  if (v === "Delay Run") {
+    const w = sv(E("laundryDelay")) || "";
+    return [{ id: "laundry", stats: [["Starts in", w || "—"], ["Set", dot(at)]], tile: ["LAUNDRY", "Waiting", w ? "starts in " + w : "delayed start"], cat: "home", lvl: 1, icon: "washing-machine", tone: "", go: "#notifications", title: "Laundry starts " + (w ? "in " + w : "later"), sub: "Delayed start set " + dot(at),
+      full: () => '<div class="sm">The machine is waiting for its delayed start' + (w ? ": " + esc(w) + " to go" : "") + '. Set it to finish in the free hours to wash for nothing.</div>' }];
+  }
+  // finished: the last run ended within 3 hours (from the machine's history) and it has not started again
+  // someone in the laundry room after it finished = moved to the dryer or hung out: the card goes (laundryPresence in config.js, else the presence of a house room with id "laundry")
+  const lr = HOUSE().find(r => r.id === "laundry"), pres = [].concat(CONFIG.laundryPresence || (lr && typeof occOf === "function" ? occOf(lr) : [])).filter(x => states[x]);
+  const H = insxGet("laundry", 2, done => insxHist([sid].concat(pres), 6, false, done)); if (!H) return [];
+  const a = H[sid] || []; let end = 0, beg = 0;
+  for (let i = a.length - 1; i > 0; i--) { if (a[i - 1][1] === "Run" && a[i][1] !== "Run" && a[i][1] !== "Delay Run") { end = a[i][0]; for (let k = i - 1; k >= 0 && a[k][1] === "Run"; k--) beg = a[k][0]; break; } }
+  const ago = Date.now() - end; if (!end || ago > 3 * 36e5) return [];
+  if (pres.some(x => (H[x] || []).some(q => q[1] === "on" && q[0] > end) || (isOn(x) && (Date.parse(states[x].last_changed || "") || 0) > end))) return [];
+  return [{ id: "laundry", stats: [["Finished", dot(end)], ["Waiting", insxHm(ago)]].concat(beg ? [["Ran for", insxHm(end - beg)]] : []), tile: ["LAUNDRY", "Done", insxHm(ago) + " ago"], cat: "home", lvl: ago >= 36e5 ? 2 : 1, icon: "washing-machine", tone: ago >= 20 * 6e4 ? "warn" : "ok", go: "#notifications",
+    title: "Laundry finished " + insxHm(ago) + " ago", sub: "Done at " + dot(end) + (ago >= 20 * 6e4 ? " · hang it out before it creases" : ""),
+    full: () => insList([{ i: "washing-machine", b: "Finished " + dot(end), s: beg ? "Started " + dot(beg) + " · ran " + insxHm(end - beg) : "", r: insxHm(ago) + " ago", t: ago >= 20 * 6e4 ? "w" : "ok" }]) + '<div class="sm">Shown for 3 hours after a wash, or until the next one starts.</div>' }];
+}
+
+// --- 14. Camera detections: people and vehicles a day for each camera over the last 7 days (the same recordings as Security > Detections)
+function insxCamLoad(done) {
+  const cams = typeof dtCams === "function" ? dtCams() : []; if (!cams.length || CONFIG.detections === false) return done(null);
+  const d0 = new Date(); d0.setHours(0, 0, 0, 0); const since = +d0 - 6 * 864e5;
+  (async () => {
+    // the day folders of each camera (fetched again when today's folder is not there yet), then each day's clips (today's again after 10 minutes)
+    await dtPace(async id => { const k = "d|" + id, c = DT.cache[k]; if (c && c.length && +c[0].d >= +d0) return; DT.cache[k] = await dtBrowse(CONFIG.playback[id]).then(r => (r.children || []).map(x => ({ d: dtDay(x.title || ""), id: x.media_content_id })).filter(x => x.d).sort((a, b) => b.d - a.d)).catch(() => c || []); }, cams, 2);
+    const jobs = []; cams.forEach(id => (DT.cache["d|" + id] || []).filter(day => +day.d >= since).forEach(day => { const k = "c|" + day.id, c = DT.cache[k]; if (!c || (+day.d >= +d0 && Date.now() - c.t > 600000)) jobs.push(day); }));
+    await dtPace(async day => { const r = await dtBrowse(day.id).catch(() => null); if (r) DT.cache["c|" + day.id] = { t: Date.now(), kids: r.children || [] }; }, jobs, 2);
+    const n = {}; cams.forEach(id => { n[id] = {}; (DT.cache["d|" + id] || []).filter(day => +day.d >= since).forEach(day => { const c = DT.cache["c|" + day.id]; if (!c) return; const o = n[id][+day.d] = { P: 0, V: 0 };
+      c.kids.forEach(x => { if (x.can_expand) return; const p = pbParse(x.title); if (!p) return; if (p.tags.indexOf("Person") > -1) o.P++; if (p.tags.indexOf("Vehicle") > -1) o.V++; }); }); });
+    done({ cams: cams, d0: +d0, n: n });
+  })().catch(() => done(null));
+}
+function insxCams() {
+  if (curPg() !== "insights" && !INS.det) return INS.camLast || [];
+  const C = insxGet("cams", 10, insxCamLoad); if (!C) return INS.camLast || [];
+  const days = []; for (let i = 6; i >= 0; i--) { const d = new Date(C.d0); d.setDate(d.getDate() - i); days.push(+d); }
+  const get = (id, d, k) => ((C.n[id] || {})[d] || {})[k] || 0, sum = (d, k) => C.cams.reduce((p, id) => p + get(id, d, k), 0);
+  const tP = sum(C.d0, "P"), tV = sum(C.d0, "V"), wk = days.slice(0, 6).reduce((p, d) => p + sum(d, "P") + sum(d, "V"), 0) / 6;
+  // the BOTH / PEOPLE / VEHICLES chips change INS.camT: read when the detail is drawn
+  const ty = () => INS.camT || "all", val = (id, d) => ty() === "P" ? get(id, d, "P") : ty() === "V" ? get(id, d, "V") : get(id, d, "P") + get(id, d, "V");
+  const mx = () => Math.max(1, Math.max.apply(null, C.cams.map(id => Math.max.apply(null, days.map(d => val(id, d)))))), dl = d => d === C.d0 ? "Today" : new Date(d).toLocaleDateString([], { weekday: "short" });
+  const out = [{ id: "cams", stats: [["People today", tP], ["Vehicles today", tV], ["A day, last 6", "~" + Math.round(wk)]], tile: ["DETECTIONS", String(tP + tV), tP + (tP === 1 ? " person · " : " people · ") + tV + (tV === 1 ? " vehicle" : " vehicles") + " today"], cat: "security", lvl: 1, icon: "video", tone: "", go: "#security/detections",
+    title: "Today: " + tP + (tP === 1 ? " person, " : " people, ") + tV + (tV === 1 ? " vehicle" : " vehicles"), sub: "Across " + C.cams.length + " cameras · ~" + Math.round(wk) + " a day over the last 6 days",
+    full: () => '<div class="chips tabs ihc">' + [["all", "BOTH"], ["P", "PEOPLE"], ["V", "VEHICLES"]].map(c => '<button class="chip' + (ty() === c[0] ? " on" : "") + '" data-insct="' + c[0] + '">' + c[1] + '</button>').join("") + '</div>' +
+      '<div class="ihm" style="--n:' + days.length + '"><span></span>' + days.map(d => '<b>' + esc(dl(d)) + '</b>').join("") + '<b>WK</b>' +
+      C.cams.map(id => '<span>' + esc(dtName(id)) + '</span>' + days.map(d => { const v = val(id, d), p = get(id, d, "P"), q = get(id, d, "V"); return '<i style="--a:' + (v ? (0.18 + 0.82 * v / mx()).toFixed(2) : 0) + '"' + insTip(dtName(id) + " · " + new Date(d).toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }), [["People", String(p)], ["Vehicles", String(q)]]) + '>' + (v || "") + '</i>'; }).join("") +
+        '<em>' + days.reduce((p, d) => p + val(id, d), 0) + '</em>').join("") +
+      '<span>All</span>' + days.map(d => { const v = C.cams.reduce((p, id) => p + val(id, d), 0); return '<i class="tot"' + insTip("All cameras · " + new Date(d).toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }), [["People", String(sum(d, "P"))], ["Vehicles", String(sum(d, "V"))]]) + '>' + v + '</i>'; }).join("") + '<em>' + days.reduce((p, d) => p + C.cams.reduce((q, id) => q + val(id, d), 0), 0) + '</em></div>' +
+      '<div class="sm">From the recordings on Security > Detections; a clip with a person and a vehicle counts once in each.</div>' }];
+  INS.camLast = out; return out;
+}
+document.addEventListener("click", e => { const c = e.target.closest && e.target.closest("[data-insct]"); if (!c) return; INS.camT = c.dataset.insct; const p = document.querySelector("#insd .idp"); if (p) p._h = ""; insDetDraw(); });
+// --- 15. From Notifications > Attention: bins due, pollen, updates waiting, detection alerts switched off (only while the pop-up has no Attention tab)
+const insxAttn = () => CONFIG.insights !== false && CONFIG.attention !== false;
+function insxBins() {
+  if (!insxAttn() || typeof binsCfg !== "function" || !binsCfg() || !binsDue().length) return [];
+  const due = binsDue().map(x => x[1]), out = binsOut(), eve = binsEvening(), wait = !out;
+  return [{ id: "bins", tile: ["BINS", out ? "Out" : eve ? "Tonight" : "Today", due.join(", ")], cat: "home", lvl: wait && eve ? 2 : 1, icon: "recycle", tone: wait ? "warn" : "ok", go: "#notifications",
+    title: out ? "Bins are out" : eve ? "Bins out tonight" : "Bring the bins out", sub: due.join(", ") + " · pickup " + (eve ? "tomorrow" : "today"),
+    full: () => binsCard(true) }];
+}
+function insxPollen() {
+  if (!insxAttn() || typeof polNow !== "function") return [];
+  const p = polNow(); if (!p || p.l < polFrom()) return [];
+  return [{ id: "pollen", stats: [["Level", p.name]].concat(p.top ? [["Mostly", p.top]] : []), tile: ["POLLEN", p.name, p.top || "today"], cat: "home", lvl: 1, icon: "pollen", tone: "warn", go: "#weather/pollen",
+    title: "Pollen " + p.name.toLowerCase() + (p.top ? " · " + p.top : ""), sub: POLAD[p.l] || "",
+    full: () => insList([{ i: "pollen", b: p.name + (p.top ? " · " + p.top : ""), s: p.plants || "", t: "w" }]) + '<div class="sm">' + esc(POLAD[p.l] || "") + '</div>' }];
+}
+function insxUpdates() {
+  if (!insxAttn()) return [];
+  const L = Object.keys(states).filter(id => /^update\./.test(id) && states[id].state === "on").sort(); if (!L.length) return [];
+  const row = id => { const a = states[id].attributes || {}, ip = upcBusy(a), pc = upcPct(a); return { id: id, b: a.title || a.friendly_name || fname(id), s: ip ? "Installing…" + (pc != null ? " " + pc + "%" : "") : (a.installed_version ? a.installed_version + " → " : "") + (a.latest_version || "new version") }; };
+  const R = L.map(row), busy = L.filter(id => upcBusy(states[id].attributes));
+  return [{ id: "updates", stats: [["Waiting", L.length]].concat(busy.length ? [["Installing", busy.length]] : []), tile: ["UPDATES", String(L.length), R[0].b + (L.length > 1 ? " +" + (L.length - 1) : "")], cat: "home", lvl: 1, icon: "autorenew", tone: "", go: "#admin",
+    title: L.length + (L.length > 1 ? " updates" : " update") + " waiting", sub: R.slice(0, 2).map(r => r.b).join(", ") + (L.length > 2 ? " +" + (L.length - 2) : ""),
+    full: () => '<div class="ils">' + R.map(r => '<div class="ilr" data-up="' + esc(r.id) + '" role="button" tabindex="0"><span class="ili">' + mdi("autorenew") + '</span><span class="ilm"><b>' + esc(r.b) + '</b><small>' + esc(r.s) + '</small></span><span class="ilx">' + mdi("chevron-right") + '</span></div>').join("") + '</div><div class="sm">Tap one for its release notes, Install or Skip.</div>' }];
+}
+function insxAlertsOff() {
+  if (!insxAttn() || typeof TOG === "undefined" || !TOG.length) return [];
+  const L = []; TOG.forEach(g => g[3].forEach(x => { const s = states[x[0]]; if (s && s.state === "off") L.push({ id: x[0], b: x[1] + " alerts", s: g[0].replace(/\s*security$/i, ""), ms: Date.now() - (Date.parse(s.last_changed || "") || Date.now()) }); }));
+  if (!L.length) return [];
+  const mx = Math.max.apply(null, L.map(x => x.ms));
+  return [{ id: "alertsoff", stats: [["Off", L.length], ["Longest", attnAgo(Math.max(mx, 6e4))]], tile: ["ALERTS OFF", String(L.length), L[0].b + " · " + attnAgo(Math.max(L[0].ms, 6e4))], cat: "security", lvl: mx >= 6 * 36e5 ? 2 : 1, icon: "bell-off", tone: "warn", go: "#security",
+    title: L.length + (L.length > 1 ? " detection alerts" : " detection alert") + " switched off", sub: L.slice(0, 2).map(x => x.b).join(", ") + " · off " + attnAgo(Math.max(mx, 6e4)),
+    full: () => '<div class="ils">' + L.map(x => '<div class="ilr w"><i></i><span class="ilm"><b>' + esc(x.b) + '</b><small>' + esc(x.s) + ' · off for ' + attnAgo(Math.max(x.ms, 6e4)) + '</small></span><button class="eb" data-togon="' + esc(x.id) + '">TURN ON</button></div>').join("") + '</div>' }];
+}
+const INSX_ALL = [insxBins, insxLaundry, insxCams, insxAlertsOff, insxUpdates, insxPollen, insxLights, insxMould, insxFree, insxRun, insxNight, insxBatt, insxOffline, insxCar, insxWx, insxTomorrow, insxBill, insxVs, insxSave, insxPeak, insxBase];
 // ---------- start-up: runs last, once every module above has been defined ----------
 // This used to sit at the end of 38-energy.js. A page opened from a notification link (#active/doors, #batteries ...) draws the notifications pop-up
 // straight away, and that code reaches things defined in later files (galCfg in 40-garage-alert.js): "Cannot access 'galCfg' before initialization"
