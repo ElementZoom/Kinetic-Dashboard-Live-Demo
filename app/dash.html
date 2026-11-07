@@ -229,17 +229,7 @@ html.camlive .cam[data-det]::after,html.camlive .snap[data-det]::after{animation
 .sc span{position:absolute;left:8px;bottom:6px;font:600 11px var(--mono);color:#fff;text-shadow:0 1px 3px #000}
 @media(max-width:1100px){.wcols{grid-template-columns:1fr}.scl{grid-template-columns:1fr}.sct{position:static;max-height:none;order:-1}}
 
-/* Header: the alarm is a coloured cap on the left end of the card, glowing softly (same colours as the Security page: grey disarmed, green armed, yellow arming, red and blinking pending / triggered). The pill / round button (#hal on phones, #al on tablets) and the banner (#alb) are in 41-alarm-header.css. */
-header{--alc:rgba(var(--w),.2)}
-header::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;box-shadow:inset 5px 0 0 0 var(--alc);transition:box-shadow .4s}
-header[data-al=on]{--alc:var(--mint)}header[data-al=wn]{--alc:#ffe599}header[data-al=al]{--alc:var(--heat)}
-header[data-al=on]::after,header[data-al=wn]::after,header[data-al=al]::after{box-shadow:inset 7px 0 0 0 var(--alc),inset 26px 0 24px -14px color-mix(in srgb,var(--alc) 60%,transparent),-8px 0 22px -6px color-mix(in srgb,var(--alc) 55%,transparent);animation:alg 4.5s ease-in-out infinite}
-header[data-al=wn]::after{animation-duration:2.2s}
-@keyframes alg{50%{box-shadow:inset 7px 0 0 0 var(--alc),inset 34px 0 28px -14px color-mix(in srgb,var(--alc) 90%,transparent),-10px 0 28px -4px color-mix(in srgb,var(--alc) 80%,transparent)}}
-header[data-al=al]::after{animation:bl 1s infinite}
-html[data-mode=light] header[data-al=wn]{--alc:#d9a100}html[data-mode=light] header[data-al=al]{--alc:#c42a1f}
 .hr>#hc{position:relative;z-index:2}
-@media(prefers-reduced-motion:reduce){header[data-al=on]::after,header[data-al=wn]::after,header[data-al=al]::after{animation:none}}
 /* Stop scenes: no state label; red outline always, and it glows while a scene is running so it reads as "stop this" */
 #scenes .sr.stp{--sx:229,72,77;border:1px dashed rgba(var(--sx),.5);background:rgba(var(--sx),.06)}
 #scenes .sr.stp .sbd{color:rgb(var(--sx));background:rgba(var(--sx),.16)}
@@ -1681,6 +1671,12 @@ html[data-style] #npmini{background-color:var(--bg)}
 .cam.fs[data-gal] .cpanel{bottom:var(--galh)}
 .cam.pb[data-gal] .pbk{bottom:var(--galh)}
 #vw .cam.vf[data-gal] .cpanel{bottom:var(--galh)}
+/* Notifications pop-up: CLOSE GARAGE DOOR under the garage camera while the door is open (40-garage-alert.js galCloseAsk) */
+.npgc{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:10px 0 4px;padding:12px;border-radius:14px}
+.npgc svg{width:18px;height:18px;fill:currentColor}
+/* a room page's live camera (13-rooms.js rvCamMount): no taller than about half the screen, centred */
+#rv .rvcam{width:min(100%,calc(46vh * 16 / 9));margin:0 auto}
+#rv .rvcam+.tg3{margin-top:14px}
 /* camera full screen on phones: real full screen is full-bleed (no floating card), and closing fades + shrinks out */
 .cam.fs.nfs{border:0;border-radius:0}
 .cam.fs.nfs:not(.ls){inset:0}
@@ -2617,19 +2613,34 @@ svg[data-crs]{touch-action:pan-y}
 #crtip .crr i{width:8px;height:8px;border-radius:50%;flex:none;background:transparent}
 #crtip .crr span{flex:1;min-width:0;color:var(--mut)}
 #crtip .crr b{flex:none;font-weight:600;white-space:nowrap;padding-left:8px}
-/* Alarm in the header: a labelled pill beside the page title on phones (#hal), a round icon-only button next to the music button on tablets (#al), and a banner (#alb) while arming / pending / triggered. Tap opens Security. */
-#al,#hal{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0;margin:0;cursor:pointer;flex:none;position:relative}
-#al svg,#hal svg{width:18px;height:18px;fill:currentColor;pointer-events:none}
-#al{width:36px;height:36px;border-radius:50%}
+/* Alarm in the header: one round lock button (#al), the last thing before the notification icon and the clock, on phones and tablets; and a banner (#alb) while arming / pending / triggered. Tap arms / disarms (alarmTap).
+   The button carries the alarm colour (the header card's left accent before 2.5.6): grey disarmed, green (the theme's accent in dark) armed, yellow arming with an arc sweeping round it, red and blinking pending / triggered.
+   Light: a coloured ring and lock. Dark: filled with the colour, a black lock. */
+@property --ala{syntax:"<angle>";inherits:false;initial-value:0deg}
+#al{display:inline-flex;align-items:center;justify-content:center;padding:0;margin:0;cursor:pointer;flex:none;position:relative;width:36px;height:36px;border-radius:50%;
+  --alc:rgba(var(--w),.28);border:1.5px solid var(--alc)!important;transition:border-color .4s,box-shadow .4s,background .4s,color .4s}
+#al svg{width:18px;height:18px;fill:currentColor;pointer-events:none}
 #al .at{display:none}
-#hal{height:28px;padding:0 11px 0 8px;font-size:11px;letter-spacing:.06em;margin-left:10px}
-#hal svg{width:15px;height:15px}
-#hal .at{display:inline;text-transform:uppercase}
-@media(max-width:760px){#al{display:none}header h1{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}header .hr{margin-left:auto}}
-@media(min-width:761px){#hal{display:none}}
-.al.s-wn{animation:alp 1.6s ease-in-out infinite}
-@keyframes alp{50%{opacity:.55}}
-html[data-mode=light] .al.s-wn{background:rgba(176,112,0,.14);color:#7a4b00;border-color:rgba(176,112,0,.5)}
+header[data-al=on] #al{--alc:var(--mint);animation:alb2 4.5s ease-in-out infinite}
+header[data-al=wn] #al{--alc:#ffe599}
+header[data-al=al] #al{--alc:var(--heat);animation:bl 1s infinite}
+@keyframes alb2{0%,100%{box-shadow:0 0 12px -2px color-mix(in srgb,var(--alc) 55%,transparent)}50%{box-shadow:0 0 22px 0 color-mix(in srgb,var(--alc) 80%,transparent)}}
+/* arming: an arc runs round the button */
+header[data-al=wn] #al::before{content:"";position:absolute;inset:-4px;border-radius:50%;padding:3px;background:conic-gradient(from var(--ala),var(--alarc,#fff) 0 28%,transparent 28% 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:alsw 1.4s linear infinite;filter:drop-shadow(0 0 4px var(--alc))}
+@keyframes alsw{to{--ala:360deg}}
+/* dark: filled, black lock (white arc while arming, so it shows on the yellow) */
+html:not([data-mode=light]) #al{color:#111;background:var(--alc)!important;border-color:var(--alc)!important}
+html:not([data-mode=light]) header[data-al=x] #al,html:not([data-mode=light]) header:not([data-al]) #al{--alc:rgba(255,255,255,.82)}
+/* light: a ring in the colour, the lock in a deeper shade */
+html[data-mode=light] #al{--alc:rgba(0,0,0,.2);background:transparent!important}
+html[data-mode=light] header[data-al=on] #al{--alc:#13915f;color:#0f7a50;background:rgba(19,145,95,.1)!important}
+html[data-mode=light] header[data-al=wn] #al{--alc:#d9a100;--alarc:#d9a100;color:#8a5a00;background:rgba(217,161,0,.1)!important;border-color:rgba(217,161,0,.3)!important}
+html[data-mode=light] header[data-al=al] #al{--alc:#c42a1f;color:#fff;background:#c42a1f!important}
+@media(prefers-reduced-motion:reduce){header[data-al] #al,header[data-al=wn] #al::before{animation:none}}
+/* phone: smaller, and after anything else on the right so it sits right before the notification icon and the clock */
+@media(max-width:760px){#al{width:32px;height:32px}#al svg{width:17px;height:17px}header .hr>#al{order:9}header .hr>#hc{order:10}header h1{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}header .hr{margin-left:auto}}
+@media(min-width:761px){header .hr>#al{order:9}header .hr>#hc{order:10}}
 #alb{display:flex;align-items:center;gap:10px;margin:0 0 10px;padding:10px 14px;border-radius:14px;font-size:13px;border:1px solid var(--line);cursor:pointer}
 #alb[hidden]{display:none}
 #alb svg{width:20px;height:20px;fill:currentColor;flex:none}
@@ -3360,7 +3371,7 @@ html.camlive #mm .chip svg{animation:none!important}
 <div id="npsheet"><div class="npbk" data-np="close"></div><div class="pn npb" id="npbody"></div></div>
 <div id="mshe"><a href="#scenes" data-i2="n-scenes"><span>Scenes</span></a><a href="#insights" data-i2="lightbulb-on"><span>Insights</span></a><a href="#weather" data-i2="n-weather"><span>Weather</span></a><a href="#energy" data-i2="n-energy"><span>Energy</span></a><a href="#irrigation" data-i2="n-irr"><span>Irrigation</span></a><a href="#media" data-i2="music-note"><span>Media</span></a><a href="#events" data-i2="n-events"><span>Events</span></a><a href="#vehicle" data-i2="v-car"><span>Vehicle</span></a><a href="#hazards" data-i2="volcano"><span>Hazards</span></a><a href="#theme" data-i2="n-palette"><span>Theme</span></a><a href="#admin" data-i2="n-admin"><span>Admin</span></a><a href="/config/dashboard" id="navset2" data-i2="n-set"><span>Settings</span></a></div>
 <div class="main">
-  <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><button id="hal" class="al s-x" aria-label="Alarm"></button><div id="hnp" class="npoff"></div><div class="hr"><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header>
+  <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><div id="hnp" class="npoff"></div><div class="hr"><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header>
   <div id="alb" hidden></div>
 
   <div id="home" class="page on">
@@ -3416,7 +3427,7 @@ html.camlive #mm .chip svg{animation:none!important}
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.5"></script>
+<script src="config.js?v=2.5.6"></script>
 <script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
@@ -3424,8 +3435,8 @@ html.camlive #mm .chip svg{animation:none!important}
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.5";   // the one place to change the version
-window.DASH_BUILD = "1ae1e9";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.5.6";   // the one place to change the version
+window.DASH_BUILD = "74eb5f";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -3497,7 +3508,7 @@ function ruApply(o) {   // hides what this person may not use; the engine also s
     off.forEach(p => { css += 'nav a[href="#' + p + '"],#btab a[href="#' + p + '"],#mshe a[href="#' + p + '"]{display:none!important}'; });
     try { if (Array.isArray(RU.rooms)) { hideT = 0; css += "#grid{--nr:" + Math.max(1, CONFIG.rooms.filter(r => !r.main && !entHidden(r.id)).length) + "}"; CONFIG.rooms.forEach((r, i) => { if (!r.main && entHidden(r.id)) css += '#grid>.card[data-cl="' + r.id + '"]{display:none!important}#gdots i[data-i="' + i + '"]{display:none}'; }); } } catch (_) {}   // a room hidden from this person has no climate control either (not ready yet on the very first call: ruRefresh applies again)
     css += "#outs,#hnp{display:none!important}#hc{pointer-events:none}#nacc{display:none!important}";   // no notification pop-up (it holds the "all off" switches and admin toggles); the Settings link stays, Home Assistant itself decides what a non-admin may open
-    if (!PAGE_ON("security") || !ruSec("alarm")) css += "#al,#hal,#alb{display:none!important}";
+    if (!PAGE_ON("security") || !ruSec("alarm")) css += "#al,#alb{display:none!important}";
     if (!["climate", "weather", "energy", "irrigation", "media", "events", "vehicle", "hazards", "insights", "theme"].some(PAGE_ON)) css += "#bmore{display:none!important}";
     if (off.indexOf("media") > -1) css += "#npmini,#npfab,#npsheet,#hnote{display:none!important}";
     if (left <= 1 || RU.header === false) css += "#hb{display:none!important}";
@@ -3598,7 +3609,7 @@ const onHome = () => !/^#(climate|events|rooms|security|weather|energy|irrigatio
 const onView = () => /^#(view|camera)/.test(location.hash);
 const onSec = () => location.hash === "#security";
 const camPage = () => onHome() || onSec() || onView();
-const VWC = [], NPC = [];   // NPC = the live cameras inside the notifications pop-up
+const VWC = [], NPC = [], RVC = [];   // NPC = the live cameras inside the notifications pop-up; RVC = the one on a room page (13-rooms.js)
 const camList = () => onView() ? VWC : onSec() ? CONFIG.security : CONFIG.cameras;
 
 // A sideways-scrolling row (tabs, scene pictures) wrapped with hsw(): while more of it is hidden past an edge, that edge fades and a chevron nudges toward it.
@@ -4467,7 +4478,7 @@ function camEnt(c) {
   const cl = c.o.el.classList; if (cl.contains("fs") || cl.contains("vf")) return c.id;
   const f = c.id.replace(/_clear$/, "_fluent"); return f !== c.id && states[f] ? f : c.id;
 }
-function camLiveSync() { document.documentElement.classList.toggle("camlive", CONFIG.cameras.concat(CONFIG.security, VWC, NPC).some(c => c.live)); }   // lets CSS pause decorative effects while video is playing
+function camLiveSync() { document.documentElement.classList.toggle("camlive", CONFIG.cameras.concat(CONFIG.security, VWC, NPC, RVC).some(c => c.live)); }   // lets CSS pause decorative effects while video is playing
 function dropOld(c) { clearTimeout(c.swapT); if (c.old) { try { c.old.pc.close(); } catch (x) {} delete subs[c.old.sub]; c.old = null; } }   // the stream that was playing until the new one had its first picture
 function stopCam(c) {
   dropOld(c);
@@ -4477,9 +4488,9 @@ function stopCam(c) {
   if (c.live && c.o && c.o.vid.videoWidth) { const u = camMem.put(c.id, c.o.vid, true); if (u) c.o.img.src = u; }
   const o = c.o; c.live = false; o.el.classList.remove("live"); o.vid.classList.remove("on"); o.vid.srcObject = null; camLiveSync();
 }
-function stopCams() { CONFIG.cameras.concat(CONFIG.security, VWC, NPC).forEach(c => { clearTimeout(c.rt); stopCam(c); micOff(c); }); }
+function stopCams() { CONFIG.cameras.concat(CONFIG.security, VWC, NPC, RVC).forEach(c => { clearTimeout(c.rt); c._on = c.rv ? 0 : c._on; stopCam(c); micOff(c); }); }
 function startCams() { if (onView()) { VW.mode = ""; applyView(); return; } if (onHome() && !camsOn()) return; cams(); camList().forEach((c, i) => { if (!isMobile() || (CONFIG.mobileLive !== false && c.o.el._vis !== false)) { clearTimeout(c.rt); c.rt = setTimeout(() => { if (camPage()) liveCam(c); }, i * 160); } }); }   // staggered so several streams do not negotiate and decode at once   // phones: live too, but only for tiles on screen (CONFIG.mobileLive:false = snapshots, live on tap)
-function retryCam(c, ms) { stopCam(c); clearTimeout(c.rt); c.rt = setTimeout(() => { if ((c.np && document.body.classList.contains("np-open")) || camPage() && (onSec() || camsOn() || onView()) && (!isMobile() || c.o.el.classList.contains("fs") || (CONFIG.mobileLive !== false && c.o.el._vis !== false))) liveCam(c); }, ms); }
+function retryCam(c, ms) { stopCam(c); clearTimeout(c.rt); c.rt = setTimeout(() => { if ((c.np && document.body.classList.contains("np-open")) || (c.rv && c._on && curRoom && onRooms) || camPage() && (onSec() || camsOn() || onView()) && (!isMobile() || c.o.el.classList.contains("fs") || (CONFIG.mobileLive !== false && c.o.el._vis !== false))) liveCam(c); }, ms); }
 function liveCam(c, up) {   // HA built-in WebRTC (go2rtc); falls back to snapshots if it fails. up = a switch between the light and the clear stream: the picture that is playing keeps playing until the new one has its first picture
   const o = c.o, sid = { v: null }, q = [], eid = camEnt(c);
   dropOld(c); if (up && c.live && c.pc && o.vid.srcObject && c.eid && c.eid !== eid) { c.old = { pc: c.pc, sub: c.sub }; c.pc = null; c.sub = 0; clearTimeout(c.rt); } else stopCam(c);
@@ -4738,9 +4749,16 @@ function detApply(el, id) {
   const d = detOf(id), now = Date.now(), hold = ((CONFIG.view && CONFIG.view.detHold) || 0) * 1000, on = {};
   ["person", "vehicle"].forEach(k => { if (isOn(d[k])) DETHOLD[d[k]] = now; on[k] = isOn(d[k]) || (hold > 0 && now - (DETHOLD[d[k]] || 0) < hold); });
   const m = on.person && on.vehicle ? "both" : on.person ? "person" : on.vehicle ? "vehicle" : "";
-  if ((el.dataset.det || "") === m) return;
-  if (m) { el.dataset.det = m; el.style.setProperty("--dcl", { person: "#d8a266", vehicle: "#d9726f", both: "#a58be0" }[m] || "#d8a266"); const l = el.querySelector(".dl"); if (l) l.textContent = m === "both" ? "PERSON · VEHICLE" : m.toUpperCase(); } else delete el.dataset.det;
+  if ((el.dataset.det || "") === m) { if (m) dlPlace(el); return; }
+  if (m) { el.dataset.det = m; el.style.setProperty("--dcl", { person: "#d8a266", vehicle: "#d9726f", both: "#a58be0" }[m] || "#d8a266"); const l = el.querySelector(".dl"); if (l) l.textContent = m === "both" ? "PERSON · VEHICLE" : m.toUpperCase(); dlPlace(el); } else delete el.dataset.det;
 }
+// the PERSON / VEHICLE badge sits right beside the camera's name, on its line (not under it, where the full-screen buttons and PLAYBACK go). Measured from the name, so it
+// follows every layout (tiles, full screen, the pop-up, a room page); the full-screen view's header row (.vh) lays it out itself.
+function dlPlace(el) {
+  const l = el.querySelector(":scope > .lbl"), d = el.querySelector(":scope > .dl"); if (!l || !d || !l.offsetWidth) return;
+  d.style.left = Math.round(l.offsetLeft + l.offsetWidth + 8) + "px"; d.style.top = Math.round(l.offsetTop + (l.offsetHeight - (d.offsetHeight || 20)) / 2) + "px";
+}
+addEventListener("resize", () => { try { CAMREG.forEach(c => { if (c.el.dataset.det) dlPlace(c.el); }); } catch (e) {} });
 function detAll() { CAMREG.forEach(c => detApply(c.el, c.id)); document.querySelectorAll(".snap[data-cam]").forEach(e => detApply(e, e.dataset.cam)); }
 setInterval(() => { try { detAll(); } catch (e) {} }, 3000);
 // phone: full screen. Tapping a camera card on a phone goes straight to REAL full screen (status + navigation bars hidden), no floating card first.
@@ -4856,11 +4874,11 @@ function mkCam(c, host) {
     if (el.classList.contains("fs")) {   // close: only with the X (a tap on the picture does nothing, so a stray touch never leaves the camera)
       if (!e.target.closest(".cx")) return;
       mkLiveOff(el); closePb(c, false); c.snd = false; micOff(c); snd.classList.remove("on"); snd.innerHTML = AUD.off; o.vid.muted = true;
-      camClose(el, () => { el.classList.remove("fs"); if (el.classList.contains("cpo")) el._ctb(); if (el._ph) { el._ph.remove(); el._ph = null; } if (isMobile() && CONFIG.mobileLive === false) { clearTimeout(c.rt); stopCam(c); } else liveCam(c, true); });
+      camClose(el, () => { el.classList.remove("fs"); setTimeout(() => { if (el.dataset.det) dlPlace(el); }, 50); if (el.classList.contains("cpo")) el._ctb(); if (el._ph) { el._ph.remove(); el._ph = null; } if (isMobile() && CONFIG.mobileLive === false) { clearTimeout(c.rt); stopCam(c); } else liveCam(c, true); });
       return;
     }
     if (!el._ph && el.parentNode && el.parentNode.id !== "vw") { const cs = getComputedStyle(el), ph = document.createElement("div"); ph.className = "camph"; ph.style.height = el.offsetHeight + "px"; ph.style.gridColumn = cs.gridColumnStart + " / " + cs.gridColumnEnd; ph.style.margin = cs.margin; el.parentNode.insertBefore(ph, el); el._ph = ph; }   // the card leaves the page layout while full screen: this holds its place so the page behind does not jump during the fade
-    el.classList.add("fs", "fin"); setTimeout(() => el.classList.remove("fin"), 300); pbPre(c);   // "fin": the opening animation runs once, not again when the card turns or a panel opens
+    el.classList.add("fs", "fin"); setTimeout(() => { el.classList.remove("fin"); if (el.dataset.det) dlPlace(el); }, 300); pbPre(c);   // "fin": the opening animation runs once, not again when the card turns or a panel opens
     if (isMobile()) camNative(el);   // phones: straight to real full screen
     const ctl = camCtl(c.id);
     if (ctl && !cp.dataset.b) { cp.innerHTML = '<div class="tg3">' + ctl.map(tileHtml).join("") + '</div>'; cp.dataset.b = 1; }
@@ -4949,7 +4967,7 @@ function roomTabs() {
 let rlq = 0; const queueRl = () => { if (!rlq) rlq = requestAnimationFrame(() => { rlq = 0; if (onRooms && !curRoom) drawRooms(); }); };
 $("#rtabs").onclick = e => { const b = e.target.closest("[data-rt]"); if (!b) return; const old = rtab; rtab = +b.dataset.rt; rtabName = (roomTabs()[rtab] || [])[0] || ""; drawRooms(); if (rtab !== old) txGo($("#rl"), rtab > old ? 1 : -1, true); };
 function drawRooms() {
-  curRoom = null; $("#cpp").classList.remove("on"); $("#rl").style.display = ""; $("#rv").style.display = "none"; $("#rtabs").style.display = "";
+  curRoom = null; rvCamStop(); $("#cpp").classList.remove("on"); $("#rl").style.display = ""; $("#rv").style.display = "none"; $("#rtabs").style.display = "";
   const tabs = roomTabs(); if (!tabs.length) tabs.push(["Rooms", [], "No rooms"]); if (rEnter) { rtab = 0; rtabName = ""; rEnter = false; } else if (rtabName) { const ix = tabs.findIndex(x => x[0] === rtabName); rtab = ix < 0 ? 0 : ix; } if (rtab >= tabs.length) rtab = 0; rtabName = tabs[rtab] ? tabs[rtab][0] : "";
   const th = tabs.map((t, i) => '<button class="chip' + (i === rtab ? " on" : "") + '" data-rt="' + i + '">' + esc(t[0]) + '</button>').join(""), rs = tabs[rtab][1].map(ROOM).filter(Boolean);
   const key = th + "|" + rs.map(r => r.id + "," + r.name + "," + r.icon).join(";") + "|" + (tabs[rtab][1].length ? "" : tabs[rtab][2] || "No rooms");
@@ -5099,14 +5117,31 @@ function drawRoom(id) {
   if (fn.length) P.push(["Fans", grid(fn), { k: "on", ids: fn, off: [] }]);
   if (dw.length) P.push(["Doors & windows", '<div class="bl">' + dw.map(tileHtml).join("") + '</div>', { k: "open", ids: dwl, off: [] }]);
   if (cl.length) P.push(["Climate", '<div class="tg3">' + cl.map(climHtml).join("") + '</div>', { k: "on", ids: cl, off: [] }]);
+  // a live camera: the garage's (its garage alert) goes inside the card with the garage door button, above it; a room's own camera (config camera) gets the first card
+  { const rc = roomCam(r); if (rc) { const cv = '<div class="snap npcam rvcam" data-rvc="' + esc(rc.id) + '" data-name="' + esc(rc.name) + '"></div>', gs = ((typeof galCfg === "function" && galCfg()[rc.id]) || {}).sensor, gi = gs ? P.findIndex(p => p[2].ids.indexOf(gs) > -1) : -1;
+    if (gi > -1) P[gi][1] = cv + P[gi][1]; else P.unshift(["Camera", cv, { k: "cam", ids: [], off: [] }]); } }
   curPanels = P.map(p => p[2]);
   v.innerHTML = '<div class="rh"><a class="eb" href="#rooms">' + mdi("chevron-left") + ' ROOMS</a><h2><span class="rnm">' + esc(r.name) + '</span><span class="lbl" id="rvt">--</span></h2>' +
     (CT.length ? '<button class="eb cpb" data-cpo="1" aria-label="Automations"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><span class="cpt">AUTOMATIONS</span><b class="cpn z">0</b></button>' : "") + '</div>' +
     (P.length ? P.map((p, i) => '<div class="pn pg" data-pi="' + i + '"' + (p[0] === "Doors & windows" ? ' data-sec="doors"' : "") + (p[2].off.length ? ' data-grp="lt"' : "") + '><div class="lbl hd">' + esc(p[0]) + '<span class="rcnt"></span>' + (p[2].cv ? '<span class="rcv"><button class="eb" data-rcv="open">OPEN ALL</button><button class="eb" data-rcv="close">CLOSE ALL</button></span>' : "") + (p[2].off.length ? '<button class="eb roff" data-roff="' + i + '">ALL OFF</button>' : "") + '</div>' + p[1] + '</div>').join("") : CT.length ? "" : '<div class="pn lbl">No devices configured</div>');
   $("#cpp").innerHTML = CT.length ? '<div class="cpsh"><div class="cph"><div><div class="lbl">' + esc(r.name) + '</div><h3>Automations</h3></div><button class="eb" data-cpc="1">DONE</button></div><div class="cpl">' + CT.map(x => x[1].replace(/^<div class="tg3[^"]*">/, "").replace(/<\/div>$/, "")).join("") + '</div><div class="cpft"><button class="eb" data-cpall="on">ALL ON</button><button class="eb" data-cpall="off">ALL OFF</button></div></div>' : "";   // .cpft (all on / all off for the open tab) only shows in the wide-screen side panel
   $("#cpp").classList.remove("on"); cpTabs(r.id);
-  updTiles(); rsUpd(); lazyIn($("#rooms"));
+  updTiles(); rsUpd(); lazyIn($("#rooms")); setTimeout(rvCamMount, 60);
 }
+// ----- the room page's live camera: started when the room opens, stopped when you leave it (stopCams on a page change, drawRooms back to the list) -----
+function roomCam(r) {
+  const id = r.camera || (typeof galForRoom === "function" && (galForRoom(r) || {}).cam); if (!id || !states[id]) return null;
+  const f = CONFIG.security.concat(CONFIG.cameras).find(c => c.id === id); return { id: id, name: (f && f.name) || r.name };
+}
+function rvCamMount() {
+  const sl = $("#rv [data-rvc]"); if (!sl || !curRoom || !onRooms) { rvCamStop(); return; }
+  const id = sl.dataset.rvc; let c = RVC.find(x => x.id === id);
+  if (!c) { c = { id: id, name: sl.dataset.name, rv: true }; RVC.push(c); mkCam(c, document.createElement("div")); c.o.el.onclick = null; }
+  RVC.forEach(x => { if (x !== c && x._on) { clearTimeout(x.rt); x._on = 0; stopCam(x); } });
+  if (c.o.el.parentNode !== sl) sl.appendChild(c.o.el); c.o.el.querySelector(".lbl").textContent = sl.dataset.name;
+  if (!c._on) { c._on = 1; camSnap(c); clearTimeout(c.rt); c.rt = setTimeout(() => { if (c._on && curRoom && onRooms) { if (isMobile() && CONFIG.mobileLive === false) camSnap(c); else liveCam(c); } }, 200); }
+}
+function rvCamStop() { RVC.forEach(c => { clearTimeout(c.rt); if (c._on) { c._on = 0; stopCam(c); } }); }
 function updTiles() {
   if (curRoom) { const r = curRoom, hv = roomHum(r); $("#rvt").textContent = f1(roomTemp(r)) + "°C" + (hv != null ? "  ·  " + f1(hv) + "% RH" : ""); }
   $$("#rv [data-e], #rv [data-c], #cpp [data-e], .cpanel [data-e], #alp [data-e], #np [data-e]").forEach(el => {
@@ -5136,7 +5171,7 @@ function updTiles() {
     if (!(el._d && el._d > Date.now()) && !(d === "cover" && rg && !idle)) $(".ts2", el).textContent = el.dataset.sub || t;   // a curtain slider being dragged keeps showing the dragged value, not the positions HA reports on the way
   });
   if (curRoom) $$("#rv .pg[data-pi]").forEach(pn => {   // per-panel counts, and ALL OFF only while something in that light section is on
-    const m = curPanels[+pn.dataset.pi]; if (!m || m.k === "scene") return;   // the Scene card counts its own zones (rsUpd)
+    const m = curPanels[+pn.dataset.pi]; if (!m || m.k === "scene" || m.k === "cam") return;   // the Scene card counts its own zones (rsUpd)
     const q = x => { const e = states[x]; if (e && (CONFIG.countIfNotOff || []).indexOf(x) > -1) return !/^(off|unavailable|unknown|none)?$/i.test(e.state); return !!e && (/^climate\./.test(x) ? e.state !== "off" && e.state !== "unavailable" : isOn(x) && !npGone(x)); };
     const c = m.ids.filter(q).length, o = m.k === "open" || m.k === "door";
     $(".rcnt", pn).textContent = m.k === "door" && m.ids.length === 1 ? (c ? "· OPEN" : "· CLOSED") : c ? "· " + c + " of " + m.ids.length + (o ? " open" : " on") : "· " + (o ? "all closed" : "all off");
@@ -5374,8 +5409,8 @@ function drawAlarm() {
   const s = states[CONFIG.alarm]; if (!s) return;
   const m = ALS[s.state] || [String(s.state).toUpperCase(), ""], f = s.attributes.supported_features || 0, c = "s-" + (m[1] || "x");
   const h = ALH[s.state] || [m[0], "shield-outline"], cap = x => x.charAt(0) + x.slice(1).toLowerCase();
-  [$("#al"), $("#hal")].forEach(el => { if (!el) return; el.innerHTML = mdi(h[1]) + '<span class="at">' + h[0] + '</span>'; el.className = "al " + c; el.title = cap(m[0]); el.setAttribute("aria-label", "Alarm: " + cap(m[0])); });
-  document.querySelector("header").dataset.al = m[1] || "x";   // the header card also shows the state as a coloured strip on its left edge (see 04-alarm-weather-irrigation-scenes.css)
+  [$("#al")].forEach(el => { if (!el) return; el.innerHTML = mdi(h[1]) + '<span class="at">' + h[0] + '</span>'; el.className = "al " + c; el.title = cap(m[0]); el.setAttribute("aria-label", "Alarm: " + cap(m[0])); });
+  document.querySelector("header").dataset.al = m[1] || "x";   // the lock button takes the state colour from this (41-alarm-header.css)
   drawAlb();
   const p = $("#alp"); if (!p || !onSec()) return;
   const arm = [[1, "arm_home", "HOME"], [2, "arm_away", "AWAY"], [4, "arm_night", "NIGHT"]].filter(x => (f & x[0]) || (!f && x[1] === "arm_away"));
@@ -5446,7 +5481,6 @@ function alarmTap() {
   alarmDo(!f || (f & 2) ? "arm_away" : (f & 1) ? "arm_home" : "arm_night");
 }
 $("#al").onclick = alarmTap;
-$("#hal").onclick = alarmTap;
 $("#alb").onclick = e => { if (e.target.closest("[data-m]")) alarmDo("disarm"); else location.hash = "#security"; };
 
 // ---------- pollen: Google Pollen data, read from the sensors of Home Assistant's "pollenlevels" integration ----------
@@ -7803,10 +7837,13 @@ function notif(full, f) {
   if (wr && sv(E("weatherWarnings")) && wr.attributes.warnings) { n++; sec("Weather warning", wwHtml(wr.attributes.warnings, ""), "warn"); }
   const wxa = wxaNow(); if (wxa) { n++; sec("Weather", wxaHtml(wxa), "wx"); }
   const cwh = typeof cwAlertHtml === "function" ? cwAlertHtml() : ""; if (cwh) { n++; sec("Heat escaping", cwh, "cw"); }
-  const ros = typeof rosterAlertHtml === "function" ? rosterAlertHtml() : ""; if (ros) { n++; sec("Roster", ros, "roster"); }   // 43-insights-more.js: the shift roster stopped updating   // 31-weather-alerts.js: wind now / coming up, and rain in the next hours
+  // the roster card (SYNC NOW) lives on Insights; the pop-up keeps it only when there is no Insights page (insights: false)
+  const ros = npAttn() && typeof rosterAlertHtml === "function" ? rosterAlertHtml() : ""; if (ros) { n++; sec("Roster", ros, "roster"); }   // 43-insights-more.js: the shift roster stopped updating   // 31-weather-alerts.js: wind now / coming up, and rain in the next hours
   // Cameras: live pictures (the same WebRTC streams as the Security page), mounted into these slots after the list is drawn. An alert's 4th value names the camera to show while it is on:
   // "driveway", "garage", or any camera by its name as shown on the Security page ("road", "right-walkway"). The garage also shows while its door sensor says it is opening / open.
-  if (full) sec("Cameras", npCams().filter(x => f !== "garage" || x.key === "garage").map(x => '<div class="snap npcam" data-vw="' + esc(x.key) + '" data-npc="' + esc(x.id) + '" data-name="' + esc(x.name) + '"></div>').join(""), ["cam", "garage"]);
+  // a garage camera (one with a garage alert and an opener) gets CLOSE GARAGE DOOR under it while the door is open
+  const gcl = id => { const c = typeof galCfg === "function" && galCfg()[id]; return c && c.opener && galOpen(c) ? '<button class="eb npgc" data-gclose="' + esc(id) + '">' + mdi("garage") + '<span>CLOSE GARAGE DOOR</span></button>' : ""; };
+  if (full) sec("Cameras", npCams().filter(x => f !== "garage" || x.key === "garage").map(x => '<div class="snap npcam" data-vw="' + esc(x.key) + '" data-npc="' + esc(x.id) + '" data-name="' + esc(x.name) + '"></div>' + gcl(x.id)).join(""), ["cam", "garage"]);
   const tm = (CONFIG.notifTimers || []).filter(x => states[x] && states[x].state === "active");   // optional Timers card: config notifTimers ["timer.x", ...] (none by default; tiles show their own countdown, see tileTimers)
   n += tm.length;
   sec("Timers", tm.map(x => { const t = states[x].attributes, fin = Date.parse(t.finishes_at || "") || 0, dur = (t.duration || "0:00:00").split(":").reduce((p, q) => p * 60 + +q, 0) * 1000; return '<div class="ws" style="margin-bottom:8px"><span class="lbl">' + esc(fname(x)) + '</span><div class="lbl tmr" data-fin="' + fin + '">--</div><div class="zb"><i data-dur="' + dur + '"></i></div></div>'; }).join(""));
@@ -7924,6 +7961,8 @@ const npCamFor = tag => {   // an alert's camera tag -> { id, name, key }
 function npCams() {
   const out = []; (CONFIG.alerts || []).forEach(x => { if (x[3] && isOn(x[0])) { const c = npCamFor(x[3]); if (c && !out.some(o => o.id === c.id)) out.push(c); } });
   if (viewTrig("garage") && (CONFIG.view.garage || {}).id && !out.some(o => o.id === CONFIG.view.garage.id)) out.push({ id: CONFIG.view.garage.id, name: "Garage", key: "garage" });
+  // the garage being aired out (Insights' OPEN GARAGE DOOR): its camera, live
+  const ga = typeof galAirGet === "function" && galAirGet(); if (ga && galAirOn(ga.cam) && !out.some(o => o.id === ga.cam)) out.push({ id: ga.cam, name: "Garage", key: "garage" });
   return out;
 }
 const NPCAM = {};   // id -> camera object, made once and moved into the slot each time the list is drawn, so the stream keeps playing
@@ -7984,8 +8023,8 @@ $("#hc").onclick = e => {
   const open = document.body.classList.contains("np-open");
   if (!open) { const ks = NSK.filter(k => k[3]()), ch = e && e.target.closest && e.target.closest(".nai[data-k]"), m = ch ? NPK[ch.dataset.k] : ks.length === 1 ? NPK[ks[0][0]] || ["alerts"] : null;
     // low batteries live on the Insights page (unless Attention still lists them): the chip opens that card there
-    // bins, low batteries and pollen live on the Insights page now: their chip opens that card there
-    const ic = m && !npAttn() && { bat: "batt", bins: "bins", pol: "pollen" }[m[1]];
+    // bins, low batteries, pollen and the roster live on the Insights page now: their chip opens that card there
+    const ic = m && !npAttn() && { bat: "batt", bins: "bins", pol: "pollen", roster: "roster" }[m[1]];
     if (ic) { INS.det = ic; location.hash = "#insights"; setTimeout(() => { if (typeof insDetDraw === "function") insDetDraw(); }, 60); return; }
     if (m) { npTab = m[0]; npOnly = m[1] || ""; npGo = null; } }
   document.body.classList.toggle("np-open"); drawNotif();
@@ -9851,7 +9890,48 @@ function galOnState(id, s) {
     }
   });
 }
-setInterval(() => { try { Object.keys(galCfg()).forEach(k => galStep(k, false)); } catch (e) {} }, 1000);
+setInterval(() => { try { Object.keys(galCfg()).forEach(k => { galStep(k, false); galAirTick(k); }); } catch (e) {} }, 1000);
+
+// ----- air out the garage (the humid card's OPEN GARAGE DOOR): open the door and pause the automations in garageAlert.holdOpen (the one that closes it after a while),
+// then turn them back on as soon as the door is shut again, whoever shuts it. Remembered on this device (localStorage kinetic-gair) so a reload doesn't lose it;
+// if the dashboard is closed when the door shuts, it turns them back on the next time it opens (ha/garage-air-out.example.yaml does it in Home Assistant too).
+const galOpen = c => { const s = c && c.sensor && states[c.sensor]; return !!s && (s.state === "on") !== !!c.invert; };
+// the garage alert that belongs to a room: its room id, or its door sensor among the room's doors / counts
+function galForRoom(r) {
+  const m = galCfg(), ids = [].concat(r.doors || [], Object.keys(r.counts || {}).map(k => r.counts[k]));
+  const cam = Object.keys(m).find(k => m[k] && m[k].sensor && m[k].opener && (m[k].room === r.id || ids.indexOf(m[k].sensor) > -1)); if (!cam) return null;
+  return { cam: cam, open: galOpen(m[cam]), hold: [].concat(m[cam].holdOpen || []).filter(x => states[x]) };
+}
+function galAirGet() { try { return JSON.parse(localStorage.getItem("kinetic-gair") || "null"); } catch (e) { return null; } }
+function galAirSet(v) { try { if (v) localStorage.setItem("kinetic-gair", JSON.stringify(v)); else localStorage.removeItem("kinetic-gair"); } catch (e) {} }
+const galAirOn = cam => { const a = galAirGet(); return !!a && a.cam === cam && galOpen(galCfg()[cam]); };
+// press the opener: a cover opens / closes, a button is pressed, a switch (a pulse relay) is toggled like its Controls tile
+function galPress(cam, open) {
+  const c = galCfg()[cam]; if (!c || !c.opener) return; const d = c.opener.split(".")[0];
+  if (d === "cover") call("cover", open ? "open_cover" : "close_cover", c.opener);
+  else if (d === "button" || d === "input_button") call(d, "press", c.opener);
+  else call(d, "toggle", c.opener);
+  galStep(cam, true);
+}
+function galAir(cam) {
+  const c = galCfg()[cam]; if (!c || galOpen(c)) return;
+  const off = [].concat(c.holdOpen || []).filter(x => states[x] && states[x].state === "on"); if (off.length) call("automation", "turn_off", off);
+  galAirSet({ cam: cam, ids: off, t: Date.now(), seen: false }); galPress(cam, true);
+}
+function galAirTick(cam) {
+  const a = galAirGet(); if (!a || a.cam !== cam) return; const c = galCfg()[cam]; if (!c || !states[c.sensor]) return;
+  if (galOpen(c)) { if (!a.seen) { a.seen = true; galAirSet(a); } return; }
+  // shut: once it has been open, or 2 minutes after the press if it never opened
+  if (a.seen || Date.now() - a.t > 120000) { const back = (a.ids || []).filter(x => states[x] && states[x].state === "off"); if (back.length) call("automation", "turn_on", back); galAirSet(null); if (typeof insTick === "function") insTick(); }
+}
+// CLOSE GARAGE DOOR under the garage camera in the Notifications pop-up (while the door is open): asks first, like opening it
+function galCloseAsk(cam) { insAsk("Close the garage door?", "", "Make sure nothing is in the doorway.", "Close", () => galPress(cam, false)); }
+document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-gclose]"); if (!b) return; e.preventDefault(); e.stopPropagation(); galCloseAsk(b.dataset.gclose); }, true);
+function galAirAsk(cam) {
+  const c = galCfg()[cam] || {}, hold = [].concat(c.holdOpen || []).filter(x => states[x]);
+  insAsk("Open the garage door?", "", hold.length ? "To air out the garage, the door's automatic closing is turned off. It turns back on once you close the garage door."
+    : "To air out the garage. Nothing is paused (no holdOpen set for this garage), so an automation that closes the door after a while still will.", "Open", () => galAir(cam));
+}
 // ---------- seasonal themes ----------
 // Eight seasons, each with its own colours and decorations: Christmas, New Year, Halloween, Valentine's, Matariki, Easter, Diwali, Chinese New Year.
 // Theme page -> "Seasonal themes" (this device) or config.js seasonal: true (every device that has not chosen). Dates can be changed in config.js: seasons: { christmas: ["12-01", "12-26"], matariki: false, diwali: { 2031: "11-14" } }
@@ -10007,12 +10087,15 @@ function insClimWaste() {
 }
 
 // --- house check: every door and window of the house rooms, the garage and the alarm
+// after dark: the sun is down (sun.sun), else 8pm to 6am
+const insDark = () => { const s = states["sun.sun"], h = new Date().getHours(); return s ? s.state === "below_horizon" : h >= 20 || h < 6; };
 function insHouse() {
   const op = [], seen = new Set();
   HOUSE().forEach(r => members(r.doors).concat(members(r.windows)).forEach(x => { if (seen.has(x)) return; seen.add(x); if (isOn(x)) op.push([r, x]); }));
   const gar = (typeof lvGarage === "function" ? lvGarage() : []).filter(x => states[x]), gOpen = gar.filter(isOn);
   const al = CONFIG.alarm && states[CONFIG.alarm], aTxt = al ? (al.state === "disarmed" ? "alarm off" : al.state.indexOf("armed") === 0 ? "alarm armed" : "alarm " + al.state.replace(/_/g, " ")) : "";
-  // only when something is open ("all shut" is not news)
+  // only when something is open ("all shut" is not news), and only after dark or with the alarm armed: a lock-up check (in the day the pop-up lists what is open)
+  if (!INS.stat && !insDark() && !(al && al.state.indexOf("armed") === 0)) return [];
   const n = op.length + gOpen.length; if ((!seen.size && !gar.length) || (!n && !INS.stat)) return [];
   const isWin = x => HOUSE().some(r => members(r.windows).indexOf(x) > -1), nW = op.filter(p => isWin(p[1])).length, nD = op.length - nW, armed = al && al.state.indexOf("armed") === 0;
   const parts = [nD ? nD + (nD > 1 ? " doors" : " door") : "", nW ? nW + (nW > 1 ? " windows" : " window") : "", gOpen.length ? "garage" : ""].filter(Boolean);
@@ -10274,7 +10357,8 @@ function insLeak() {
 function insAll() {
   if (!insOn()) return [];
   const all = [];
-  [insClimWaste, insHouse, insLeak, insSoil, insPower, insWater].concat(typeof INSX_ALL !== "undefined" ? INSX_ALL : []).forEach(f => { try { f().forEach(x => all.push(x)); } catch (e) { console.warn("insight", f.name, e); } });
+  // heat escaping is not here: it is live, so the pop-up's Alerts card (with PAUSE) and the header chip have it (insClimWaste stays for insights: false setups that read it)
+  [insHouse, insLeak, insSoil, insPower, insWater].concat(typeof INSX_ALL !== "undefined" ? INSX_ALL : []).forEach(f => { try { f().forEach(x => all.push(x)); } catch (e) { console.warn("insight", f.name, e); } });
   // the System cards (server, network) only for those who can open the Admin page
   // low fuel and "fuel lasts N days" say the same thing: keep the one with the days
   const hasFuel = all.some(x => x.id === "fuel"), hasHp = !INS.stat && all.some(x => x.id === "hp");   // the heat pump tile already says how long it ran today
@@ -10304,22 +10388,28 @@ const insDisKey = () => "kinetic-insdis:" + ((typeof ME !== "undefined" && ME &&
 function insDisGet() { try { const o = JSON.parse(localStorage.getItem(insDisKey()) || "{}"); return o && o.d === new Date().toDateString() && Array.isArray(o.ids) ? o.ids : []; } catch (e) { return []; } }
 function insDisSet(ids) { try { localStorage.setItem(insDisKey(), JSON.stringify({ d: new Date().toDateString(), ids: ids })); } catch (e) {} }
 function insDisAsk(id) {
-  const x = (INS.last || []).find(v => v.id === id); if (!x) return;
   let q = $("#insq"); if (!q) { q = document.createElement("div"); q.id = "insq"; q.setAttribute("role", "alertdialog"); q.setAttribute("aria-modal", "true"); q.innerHTML = '<div class="evqc"></div>'; document.body.appendChild(q); }
+  q._fn = null; const x = (INS.last || []).find(v => v.id === id); if (!x) return;
   q.dataset.id = id; q.firstChild.innerHTML = '<h4>Hide this for today?</h4><p><b>' + esc(x.title) + '</b><br>It comes back tomorrow, or bring it back from the bottom of Insights.</p><div class="qb"><button data-iq="no">Cancel</button><button class="qd" data-iq="yes">Hide</button></div>';
+  q.classList.add("on"); const n = q.querySelector("[data-iq=no]"); if (n) n.focus();
+}
+// the same dialog for an action that needs a yes (OPEN GARAGE DOOR), laid out like deleting a calendar event: a heading, the thing in bold, a note
+function insAsk(h, b, p, yes, fn) {
+  insDisAsk(null); const q = $("#insq"); q.dataset.id = ""; q._fn = fn;
+  q.firstChild.innerHTML = '<h4>' + esc(h) + '</h4><p>' + (b ? '<b>' + esc(b) + '</b><br>' : "") + esc(p) + '</p><div class="qb"><button data-iq="no">Cancel</button><button class="qd" data-iq="yes">' + esc(yes) + '</button></div>';
   q.classList.add("on"); const n = q.querySelector("[data-iq=no]"); if (n) n.focus();
 }
 document.addEventListener("click", e => {
   if (!e.target.closest) return; const x = e.target.closest("[data-insx]");
   if (x) { e.preventDefault(); e.stopPropagation(); insDisAsk(x.dataset.insx); return; }
-  const b = e.target.closest("#insq [data-iq]"), q = $("#insq"); if (b && q) { e.stopPropagation(); if (b.dataset.iq === "yes") { const ids = insDisGet(); if (ids.indexOf(q.dataset.id) < 0) ids.push(q.dataset.id); insDisSet(ids); } q.classList.remove("on"); insTick(); return; }
+  const b = e.target.closest("#insq [data-iq]"), q = $("#insq"); if (b && q) { e.stopPropagation(); if (b.dataset.iq === "yes" && q._fn) { const f = q._fn; q._fn = null; q.classList.remove("on"); f(); setTimeout(insTick, 400); return; } if (b.dataset.iq === "yes") { const ids = insDisGet(); if (ids.indexOf(q.dataset.id) < 0) ids.push(q.dataset.id); insDisSet(ids); } q.classList.remove("on"); insTick(); return; }
   if (q && q.classList.contains("on") && e.target === q) { q.classList.remove("on"); return; }
   if (e.target.closest("[data-insun]")) { e.stopPropagation(); insDisSet([]); insTick(); }
 }, true);
 document.addEventListener("keydown", e => { const q = $("#insq"); if (e.key === "Escape" && q && q.classList.contains("on")) q.classList.remove("on"); });
 // ALL tab: the 4 that matter most under Needs you, the rest folded by category under More.
 // Order: what you'd act on today, then anything with a warning, then money, then figures and trends; a warning first within each, else the order they come in
-const INS_ACT = ["house", "soil", "laundry", "bins", "frost", "wind", "tmr", "lights", "garagedark", "night", "drive", "traffic", "away", "roster", "drying"], INS_MONEY = ["power", "free", "bill", "save", "vs", "peak", "base"];
+const INS_ACT = ["house", "soil", "laundry", "bins", "frost", "wind", "tmr", "lights", "night", "drive", "traffic", "away", "roster", "drying"], INS_MONEY = ["power", "free", "bill", "save", "vs", "peak", "base"];
 function insRank(x) { const k = x.id.split(":")[0], w = x.tone === "warn" || x.tone === "bad"; return (INS_ACT.indexOf(k) > -1 ? 0 : w ? 2 : INS_MONEY.indexOf(k) > -1 ? 4 : 6) - (w ? 1 : 0); }
 function insTop(a) { return a.map((x, i) => [x, i]).sort((p, q) => insRank(p[0]) - insRank(q[0]) || p[1] - q[1]).map(v => v[0]); }
 // a tile's label in normal case ("WATER USED" -> "Water used")
@@ -10436,7 +10526,7 @@ function hplDraw() {
 document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-lvo]"); if (b) { e.stopPropagation(); e.preventDefault(); lvOpen(); } }, true);
 addEventListener("resize", () => hplDraw());
 // ---------- Heat escaping: a room's zone runs while one of its windows or doors is open ----------
-// Shown as an insight (42-insights.js insClimWaste), a card under Notifications > Alerts and a header chip (a thermometer with a falling arrow).
+// Shown as a card under Notifications > Alerts and a header chip (a thermometer with a falling arrow).
 // PAUSE turns the room's zone(s) off and, for each zone, its "auto climate" switch (rooms[].autoClimate, an input_boolean) so the automations
 // don't turn it straight back on. When every window and door of that room has been shut for 3 seconds, both go back to how they were.
 // With config heatPause (the kinetic_heat_pause script and a paused flag per room, see ha/heat-escaping.example.yaml) Home Assistant does the pausing
@@ -10654,7 +10744,7 @@ function insxMould() {
     const v = parseFloat(sv(r.hum)); if (isNaN(v) || v < lim) return;
     const a = H[r.hum] || []; let since = Date.now(); for (let i = a.length - 1; i >= 0; i--) { if (parseFloat(a[i][1]) >= lim) since = a[i][0]; else break; }
     const ms = Date.now() - since; if (ms < 3 * 36e5) return;
-    const D = insxDryState(r), dry = D && D.drying;
+    const D = insxDryState(r), dry = D && D.drying, G = D ? null : galForRoom(r), air = G && galAirOn(G.cam);
     // drying: since the heat pump went to dry (or the zone came on, whichever is later), the humidity then and its line since
     let dz = null; if (dry) { const st = Math.max.apply(null, [MAIN].concat(D.zones).map(x => Date.parse(states[x].last_changed || "") || 0)) || Date.now(); let v0 = NaN; const L = [];
       a.forEach(q => { const f = parseFloat(q[1]); if (isNaN(f)) return; if (q[0] <= st) v0 = f; else L.push(f); }); if (isNaN(v0)) v0 = L.length ? L[0] : v; L.unshift(v0); L.push(v); dz = { st: st, v0: v0, L: L.slice(-40) }; }
@@ -10662,23 +10752,26 @@ function insxMould() {
     out.push({ id: "mould:" + r.id, stats: dz ? [["Humidity", Math.round(v) + "%"], ["Was", Math.round(dz.v0) + "%"], ["Drying for", insxHm(Math.max(6e4, Date.now() - dz.st))]] : [["Humidity", Math.round(v) + "%"], ["For", insxHm(ms)], ["Limit", lim + "%"]],
       tile: dz ? ["DRYING", Math.round(v) + "%" + (fall ? " ↓" : ""), r.name + " · from " + Math.round(dz.v0) + "%"] : ["HUMID", Math.round(v) + "%", r.name + " · " + insxHm(ms)],
       spark: dz ? dz.L : null, fx: dz ? "dry" : "", cat: "climate", lvl: dry ? 1 : ms >= 8 * 36e5 ? 2 : 1, icon: "water-percent", tone: dry ? "dry" : "warn", go: "#rooms/" + r.id, nogo: !!D, title: r.name + " " + Math.round(v) + "% humid",
-      sub: dry ? "Drying now · " + (fall ? "down " + Math.round(dz.v0 - v) + "% since it started" : "the heat pump is on dry for this room") : "For " + insxHm(ms) + " · " + (D ? "dry it with the heat pump" : "air it out or run the dehumidifier"),
-      acts: D && !dry ? [["DRY THIS ROOM", () => insxDry(r)]] : [],
+      sub: dry ? "Drying now · " + (fall ? "down " + Math.round(dz.v0 - v) + "% since it started" : "the heat pump is on dry for this room") : air ? "For " + insxHm(ms) + " · airing out, the garage door is open" : "For " + insxHm(ms) + " · " + (D ? "dry it with the heat pump" : G ? "open the garage door to air it out" : "air it out or run the dehumidifier"),
+      acts: D && !dry ? [["DRY THIS ROOM", () => insxDry(r)]] : G && !G.open ? [["OPEN GARAGE DOOR", () => galAirAsk(G.cam)]] : G && air ? [["CLOSE GARAGE DOOR", () => galPress(G.cam, false)]] : [],
       full: () => {
         // the last 24 hours, an hour a column: the value at the end of each hour
         const B = []; for (let k = 23; k >= 0; k--) { const t = Date.now() - k * 36e5; let x = NaN; for (let q = 0; q < a.length && a[q][0] <= t; q++) { const f = parseFloat(a[q][1]); if (!isNaN(f)) x = f; } const dd = new Date(t); B.push({ v: x, c: x >= lim ? "warn" : "", l: k % 6 === 0 ? (k === 0 ? "now" : insHr(dd)) : "", h: k === 0 ? "Now" : dd.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })), x: isNaN(x) ? "no data" : Math.round(x) + "%" }); }
         return '<div class="lbl icll">Last 24 hours</div>' + insCols(B, { ref: lim, refL: lim + "%", refN: "Limit", name: "Humidity", floor: Math.max(0, Math.min.apply(null, B.map(b => b.v).filter(x => !isNaN(x)).concat([lim])) - 10) }) +
           '<div class="sm">Above ' + lim + '% for long, mould and condensation start. Open a window for 10 minutes, or run the heat pump’s dry mode or a dehumidifier.</div>' +
+          // the same words as the OPEN GARAGE DOOR prompt (galAirAsk)
+          (G ? '<div class="sm">' + (air ? "The garage door is open to air out the garage. " + (G.hold.length ? "The door's automatic closing is off until you close the garage door." : "Nothing closes it by itself.") + " The garage camera is live on the Notifications Alerts card, with CLOSE GARAGE DOOR under it."
+            : "OPEN GARAGE DOOR opens the door to air out the garage. " + (G.hold.length ? "The door's automatic closing is turned off and turns back on once you close the garage door." : "Nothing is paused (no holdOpen set for this garage), so an automation that closes the door after a while still will.")) + '</div>' : "") +
           (D ? '<div class="sm">' + (dry ? "The heat pump is drying this room. Auto climate is off, so nothing changes by itself: switch the heat pump back and Auto climate on (Climate page) when it’s dry." : "DRY THIS ROOM opens this room’s zone, puts the heat pump on dry and turns Auto climate off, so it stays that way until you turn Auto climate back on.") + '</div>' : "");
       } });
   });
   return out;
 }
 
-// the room's zone(s) and the heat pump, for DRY THIS ROOM; null when the heat pump has no dry mode
+// the room's zone(s) and the heat pump, for DRY THIS ROOM; null when the heat pump has no dry mode or the room has no zone of its own (a garage, a hallway)
 function insxDryState(r) {
   const m = typeof MAIN !== "undefined" && states[MAIN]; if (!m || (m.attributes.hvac_modes || []).indexOf("dry") < 0) return null;
-  const z = [].concat(r.climate || []).filter(x => x !== MAIN && states[x] && states[x].state !== "unavailable");
+  const z = [].concat(r.climate || []).filter(x => x !== MAIN && states[x] && states[x].state !== "unavailable"); if (!z.length) return null;
   return { zones: z, drying: m.state === "dry" && z.every(x => states[x].state !== "off") };
 }
 function insxDry(r) {
@@ -10879,7 +10972,7 @@ function insxCar() {
     sub: "Fill up " + (f <= lo ? "soon" : "in the next few days"), full: () => insRows([[V.name || "Fuel", [[Math.max(1, f), f <= lo ? "var(--heat)" : "#e8973a"]], Math.round(f) + "%", isNaN(r) ? "" : "~" + Math.round(r) + " km"]], { max: 100, ref: lo }) + '<div class="sm">The dashed line is the low mark (' + lo + '%).</div>' }];
 }
 
-// --- 12. Weather heads-up: frost in the next 24 hours, or wind gusting 60 km/h or more
+// --- 12. Weather heads-up: frost in the next 24 hours, or Strong / Severe wind 6 to 24 hours ahead (the weather alerts' tiers; the pop-up has the first 6 hours)
 function insxWx() {
   const out = [], H = (typeof fcH !== "undefined" ? fcH : []).filter(x => Date.parse(x.datetime) > Date.now() - 36e5).slice(0, 24); if (!H.length) return [];
   const lim = CONFIG.frostBelow != null ? +CONFIG.frostBelow : 2, cold = H.filter(x => x.temperature != null).reduce((p, x) => p && +p.temperature <= +x.temperature ? p : x, null);
@@ -10887,11 +10980,26 @@ function insxWx() {
     sub: "Around " + schTm(new Date(cold.datetime)) + " · cover plants, garage the car", stats: [["Low", Math.round(cold.temperature) + "°"], ["Around", schTm(new Date(cold.datetime))]],
     full: () => { const B = H.filter(x => x.temperature != null).map((x, k) => ({ v: +x.temperature, c: +x.temperature <= lim ? "cold" : "", t: x === cold ? Math.round(x.temperature) + "°" : "", l: k % 4 === 0 ? insHr(new Date(x.datetime)) : "", h: insHr(new Date(x.datetime)), x: (+x.temperature).toFixed(1) + "°" }));
       return '<div class="lbl icll">Next 24 hours</div>' + insCols(B, { ref: lim, refL: lim + "°", refN: "Frost below", name: "Temperature", floor: Math.min.apply(null, B.map(b => b.v)) - 2 }) + '<div class="sm">Cover tender plants, bring pots in, park the car inside or cover the windscreen.</div>'; } });
-  const g = H.map(x => [x, +(x.wind_gust_speed != null ? x.wind_gust_speed : x.wind_speed) || 0]).reduce((p, x) => x[1] > p[1] ? x : p, [null, 0]);
-  if (g[0] && g[1] >= (CONFIG.windAbove != null ? +CONFIG.windAbove : 60)) out.push({ id: "wind", tile: ["WIND", Math.round(g[1]) + " km/h", "gusts around " + schTm(new Date(g[0].datetime))], cat: "weather", lvl: 1, icon: "weather-windy", tone: "warn", go: "#weather/now", title: "Wind gusts ~" + Math.round(g[1]) + " km/h",
-    sub: "Around " + schTm(new Date(g[0].datetime)) + " · tie down outdoor furniture, bins", stats: [["Gusts", Math.round(g[1]) + " km/h"], ["Around", schTm(new Date(g[0].datetime))]],
-    full: () => { const wl = CONFIG.windAbove != null ? +CONFIG.windAbove : 60, B = H.map((x, k) => { const v = +(x.wind_gust_speed != null ? x.wind_gust_speed : x.wind_speed) || 0; return { v: v, c: v >= wl ? "warn" : "", t: x === g[0] ? Math.round(v) + "" : "", l: k % 4 === 0 ? insHr(new Date(x.datetime)) : "", h: insHr(new Date(x.datetime)), x: Math.round(v) + " km/h" }; });
-      return '<div class="lbl icll">Gusts, next 24 hours · km/h</div>' + insCols(B, { ref: wl, refL: wl + " km/h", refN: "Strong from", name: "Gusts" }) + '<div class="sm">Bring in or tie down outdoor furniture, umbrellas, trampolines and bins.</div>'; } });
+  // wind: the same tiers as the pop-up's weather card and the Home Assistant weather-alert automation (weatherAlerts.windTiers, 30 / 62 / 89 km/h, on wind speed).
+  // The pop-up covers the next weatherAlerts.hours (6); this card is for Strong or Severe wind after that, up to 24 hours ahead. Once it is that close, the pop-up takes over.
+  // With weatherAlerts off (or wind: false) there is no pop-up card, so this one looks from now.
+  const wc = typeof wxaCfg === "function" ? wxaCfg() : null, wt = wc ? wc.wt : [30, 62, 89], from = wc && wc.wind ? wc.hours : 0;
+  const wu = ((states[W] || {}).attributes || {}).wind_speed_unit || "km/h", wk = /mph/i.test(wu) ? 1.609 : /m\/s/i.test(wu) ? 3.6 : /kn|kt/i.test(wu) ? 1.852 : 1;
+  const sp = x => x.wind_speed != null ? +x.wind_speed * wk : NaN, gu = x => x.wind_gust_speed != null ? +x.wind_gust_speed * wk : NaN, tierOf = v => typeof wxaTier === "function" ? wxaTier(v, wt) : v > wt[2] ? 3 : v > wt[1] ? 2 : v > wt[0] ? 1 : 0;
+  const late = H.filter(x => Date.parse(x.datetime) >= Date.now() + from * 36e5), wt2 = Math.max.apply(null, late.map(x => tierOf(sp(x))).concat(0));
+  if (wt2 >= 2) {
+    const band = late.filter(x => tierOf(sp(x)) >= 2), pk = band.reduce((p, x) => !p || sp(x) > sp(p) ? x : p, null), mx = Math.round(sp(pk));
+    const t0 = Date.parse(band[0].datetime), t1 = Date.parse(band[band.length - 1].datetime), day = t => new Date(t).toDateString() === new Date().toDateString() ? "" : new Date(t).toLocaleDateString([], { weekday: "short" }) + " ";
+    const when = band.length > 1 ? day(t0) + schTm(new Date(t0)) + "-" + (day(t1) !== day(t0) ? day(t1) : "") + schTm(new Date(t1 + 36e5)) : day(t0) + schTm(new Date(t0));
+    const nm = wt2 >= 3 ? "Severe" : "Strong", g = Math.round(gu(pk));
+    out.push({ id: "wind", tile: [nm.toUpperCase() + " WIND", "~" + mx + " km/h", when], cat: "weather", lvl: 1, icon: wt2 >= 3 ? "weather-hurricane" : "weather-windy", tone: "warn", go: "#weather/wind",
+      title: nm + " wind forecast · up to " + mx + " km/h", sub: when + (isNaN(g) ? "" : " · gusts ~" + g + " km/h") + " · " + (wt2 >= 3 ? "secure all outdoor items" : "bring in outdoor furniture"),
+      stats: [["Up to", mx + " km/h"]].concat(isNaN(g) ? [] : [["Gusts", "~" + g + " km/h"]]).concat([["When", when]]),
+      full: () => { const B = H.map((x, k) => { const v = sp(x), gv = gu(x), t = Date.parse(x.datetime), soon = t < Date.now() + from * 36e5, tr = tierOf(v);
+          return { v: isNaN(v) ? 0 : v, c: soon ? "ghost" : tr >= 2 ? "warn" : "", t: x === pk ? String(mx) : "", l: k % 4 === 0 ? insHr(new Date(t)) : "", h: insHr(new Date(t)) + (soon ? " · alerts card" : ""), x: Math.round(v) + " km/h" + (isNaN(gv) ? "" : " · gusts " + Math.round(gv)) }; });
+        return '<div class="lbl icll">Wind, next 24 hours · km/h</div>' + insCols(B, { ref: wt[1], refL: wt[1] + " km/h", refN: "Strong from", name: "Wind" }) +
+          '<div class="sm">' + (from ? "The first " + from + " hours (faded) are on the Notifications Alerts card. " : "") + 'Moderate from ' + wt[0] + ', strong from ' + wt[1] + ', severe from ' + wt[2] + ' km/h, as in the weather alerts. ' + (wt2 >= 3 ? "Secure all outdoor items." : "Bring in or tie down outdoor furniture, umbrellas, trampolines and bins.") + '</div>'; } });
+  }
   return out;
 }
 // --- 13. Laundry: running (time left, done at, a bar for how far through), waiting for a delayed start, or finished and waiting to be emptied (up to 3 hours)
@@ -11027,14 +11135,7 @@ function insxCycle() {
       '</span><div class="iwl"><b>3 h ago</b><b>2 h</b><b>1 h</b><b>now</b></div></div>' +
       '<div class="sm">Each block is a run; orange ones were under 10 minutes. Starting and stopping often wears the compressor and uses more power: check nothing blows warm air at its sensor, and try a lower fan speed or a set point a degree closer to the room.</div>' }];
 }
-// --- 18. Garage open after dark (the sun is down)
-function insxGarageDark() {
-  const gar = (typeof lvGarage === "function" ? lvGarage() : []).filter(x => states[x] && isOn(x)); if (!gar.length) return [];
-  const sun = states["sun.sun"], h = new Date().getHours(), dark = sun ? sun.state === "below_horizon" : (h >= 20 || h < 6); if (!dark) return [];
-  const ms = Math.max.apply(null, gar.map(insAgo));
-  return [{ id: "garagedark", stats: [["Open for", insxHm(Math.max(ms, 6e4))]].concat(sun && sun.attributes.next_rising ? [["Sunrise", schTm(new Date(sun.attributes.next_rising))]] : []), tile: ["GARAGE", "Open", "after dark · " + insxHm(Math.max(ms, 6e4))], cat: "security", lvl: 2, icon: "garage", tone: "bad", go: "#security",
-    title: "Garage open after dark", sub: "Open " + insxHm(Math.max(ms, 6e4)), full: () => insList(gar.map(x => ({ i: "garage", b: fname(x), s: "open since " + schTm(new Date(Date.now() - insAgo(x))), r: insxHm(Math.max(insAgo(x), 6e4)), t: "bad" }))) + '<div class="sm">Close it from the Security page or the garage card.</div>' }];
-}
+// --- 18. (Garage open after dark: the garage alert's pop-up card and header chip have it.)
 // --- 19. Lights on while the alarm is armed away (no one is home)
 function insxAway() {
   const al = CONFIG.alarm && states[CONFIG.alarm]; if (!al || !/^armed_(away|vacation)$/.test(al.state)) return [];
@@ -11511,21 +11612,22 @@ function insxQuakes() {
   const felt = Q.filter(q => q.mmi != null && q.mmi >= 3).sort((a, b) => b.mmi - a.mmi || b.m - a.m);
   const cs = Object.keys(states).find(k => /^sensor\.geonet_nz_quakes_/.test(k)), n = cs ? parseFloat(sv(cs)) : NaN;
   const H = cs ? insxGet("quakes", 120, done => insxHist([cs], 24 * 30, false, done)) : null, hist = H && cs ? (H[cs] || []).map(x => parseFloat(x[1])).filter(v => !isNaN(v)) : [], usual = hist.length >= 10 ? hist.reduce((p, v) => p + v, 0) / hist.length : null, swarm = !isNaN(n) && usual != null && n >= 5 && n >= usual * 3;
-  if (!felt.length && !swarm && !INS.stat) return [];
+  // the pop-up's Alerts shows quakes from the last 24 hours: this card is for the week (a felt quake before that) or a swarm
+  if (!felt.some(q => q.t < Date.now() - 864e5) && !swarm && !INS.stat) return [];
   const top = felt[0], dt = t => new Date(t).toLocaleDateString([], { weekday: "short" }) + " " + schTm(new Date(t));
   return [{ id: "quakes", stats: [["Felt this week", felt.length]].concat(top ? [["Strongest", "M" + top.m.toFixed(1)]] : []).concat(!isNaN(n) ? [["Nearby now", n + (usual != null ? " (usually ~" + Math.round(usual) + ")" : "")]] : []),
-    tile: ["EARTHQUAKES", swarm ? n + " nearby" : top ? "M" + top.m.toFixed(1) + " felt" : (isNaN(n) ? 0 : n) + " nearby", swarm ? "about " + Math.round(n / Math.max(1, usual)) + "× the usual" : top ? Math.round(top.km) + " km away · " + dt(top.t) : "quiet"], cat: "weather", lvl: top && top.mmi >= 5 ? 2 : 1, icon: "alert-circle", tone: swarm || (top && top.mmi >= 4) ? "warn" : "", go: "#hazards/earthquakes",
+    tile: ["EARTHQUAKES", swarm ? n + " nearby" : top ? "M" + top.m.toFixed(1) + " felt" : (isNaN(n) ? 0 : n) + " nearby", swarm ? "about " + Math.round(n / Math.max(1, usual)) + "× the usual" : top ? Math.round(top.km) + " km away · " + dt(top.t) : "quiet"], cat: "weather", lvl: 1, icon: "alert-circle", tone: swarm || (top && top.mmi >= 4) ? "warn" : "", go: "#hazards/earthquakes",
     title: swarm ? "More earthquakes nearby than usual" : top ? (felt.length > 1 ? felt.length + " earthquakes felt nearby this week" : "An earthquake felt nearby") : "No earthquakes felt this week", sub: top ? "Strongest M" + top.m.toFixed(1) + ", " + Math.round(top.km) + " km away" + (top.loc ? ", " + top.loc : "") : swarm ? n + " in the area, usually ~" + Math.round(usual) : "",
     full: () => (felt.length ? insList(felt.slice(0, 8).map(q => ({ i: "alert-circle", b: "M" + q.m.toFixed(1) + " · " + Math.round(q.km) + " km", s: (q.loc ? q.loc + " · " : "") + "MMI " + q.mmi + " " + (typeof hzMMI === "function" ? hzMMI(q.mmi).toLowerCase() : "") + " shaking", r: dt(q.t), t: q.mmi >= 4 ? "w" : "" }))) : "") +
       '<div class="sm">' + (swarm ? "A cluster like this is often a swarm of small quakes; GeoNet posts an update if it is unusual. " : "") + 'Felt means shaking of MMI 3 or more where the quake was recorded.</div>' }];
 }
-// --- 40. Volcano alert level changed in the last 7 days (to 1 or more): needs you at level 2 and up
+// --- 40. Volcano alert level changed in the last 7 days (to 1 or more); never "needs you": the pop-up's Alerts card has it from level 2
 function insxVolcano() {
   const ids = (CONFIG.volcanoes || []).concat(Object.keys(states).filter(k => /^sensor\.volcano_/.test(k))).filter((x, i, a) => a.indexOf(x) === i && states[x]);
   const L = ids.map(id => ({ id: id, lvl: parseInt(states[id].state, 10), ms: insAgo(id), a: states[id].attributes })).filter(v => !isNaN(v.lvl) && v.lvl >= 1 && v.ms < 7 * 864e5);
   if (!L.length) return [];
   const v = L.sort((a, b) => b.lvl - a.lvl)[0], nm = String(v.a.friendly_name || v.id).replace(/^Volcano\s+/i, "");
-  return [{ id: "volcano", stats: [["Alert level", String(v.lvl)], ["Changed", insxHm(Math.max(v.ms, 6e4)) + " ago"]], tile: [nm.toUpperCase(), "Level " + v.lvl, "changed " + insxHm(Math.max(v.ms, 6e4)) + " ago"], cat: "weather", lvl: v.lvl >= 2 ? 2 : 1, icon: "volcano", tone: "warn", go: "#hazards/volcanoes",
+  return [{ id: "volcano", stats: [["Alert level", String(v.lvl)], ["Changed", insxHm(Math.max(v.ms, 6e4)) + " ago"]], tile: [nm.toUpperCase(), "Level " + v.lvl, "changed " + insxHm(Math.max(v.ms, 6e4)) + " ago"], cat: "weather", lvl: 1, icon: "volcano", tone: "warn", go: "#hazards/volcanoes",
     title: nm + " volcanic alert level " + v.lvl, sub: v.a.activity || "Changed " + insxHm(Math.max(v.ms, 6e4)) + " ago", full: () => insList(L.map(x => ({ i: "volcano", b: String(x.a.friendly_name || x.id).replace(/^Volcano\s+/i, "") + ": level " + x.lvl, s: x.a.activity || "", r: insxHm(Math.max(x.ms, 6e4)) + " ago", t: x.lvl >= 2 ? "w" : "" }))) + '<div class="sm">' + esc(v.a.hazards || "GeoNet’s volcanic alert levels go from 0 (no unrest) to 5 (major eruption).") + '</div>' }];
 }
 // --- 41. Which forecast is right more often: Google's and MetService's high for each of the last 10 days (as forecast that morning) against the highest temperature the weather entity reported (STATS; on the tabs when one is 1° or more closer)
@@ -11551,7 +11653,7 @@ function insxAccuracy() {
     full: () => '<div class="lbl icll">How far each forecast was off the day’s high</div>' + rows.slice().reverse().map(r => insRows([[new Date(r.d).toLocaleDateString([], { weekday: "short", day: "numeric" }), [[Math.abs(r.g - r.a) + 0.05, "#6bb8ff", "Google", Math.round(r.g) + "°"], [Math.abs(r.m - r.a) + 0.05, "#e8973a", "MetService", Math.round(r.m) + "°"]], "actual " + Math.round(r.a) + "°", ""]], { max: Math.max(3, Math.max.apply(null, rows.map(x => Math.abs(x.g - x.a) + Math.abs(x.m - x.a)))) })).join("") +
       '<div class="irl"><span><i style="background:#6bb8ff"></i>Google</span><span><i style="background:#e8973a"></i>MetService</span></div><div class="sm">Each forecast as it stood at 9 am that morning, against the highest temperature the weather station reported during the day. Shorter bars are closer.</div>' }];
 }
-const INSX_ALL = [insxVolcano, insxQuakes, insxRoster, insxDrying, insxSwing, insxDisagree, insxEvening, insxPressure, insxDaylight, insxRain, insxAccuracy, insxDrops, insxDisk, insxBusy, insxWear, insxBoots, insxTraffic, insxPveUpd, insxGarageDark, insxAway, insxFilter, insxCycle, insxCarCare, insxDrive, insxFuel, insxTrips, insxEco, insxStarter, insxBins, insxLaundry, insxCams, insxAlertsOff, insxUpdates, insxPollen, insxLights, insxMould, insxClimRun, insxHpTile, insxFree, insxRun, insxNight, insxBatt, insxOffline, insxCar, insxWx, insxTomorrow, insxBill, insxVs, insxSave, insxPeak, insxBase];
+const INSX_ALL = [insxVolcano, insxQuakes, insxRoster, insxDrying, insxSwing, insxDisagree, insxEvening, insxPressure, insxDaylight, insxRain, insxAccuracy, insxDrops, insxDisk, insxBusy, insxWear, insxBoots, insxTraffic, insxPveUpd, insxAway, insxFilter, insxCycle, insxCarCare, insxDrive, insxFuel, insxTrips, insxEco, insxStarter, insxBins, insxLaundry, insxCams, insxAlertsOff, insxUpdates, insxPollen, insxLights, insxMould, insxClimRun, insxHpTile, insxFree, insxRun, insxNight, insxBatt, insxOffline, insxCar, insxWx, insxTomorrow, insxBill, insxVs, insxSave, insxPeak, insxBase];
 // ---------- start-up: runs last, once every module above has been defined ----------
 // This used to sit at the end of 38-energy.js. A page opened from a notification link (#active/doors, #batteries ...) draws the notifications pop-up
 // straight away, and that code reaches things defined in later files (galCfg in 40-garage-alert.js): "Cannot access 'galCfg' before initialization"
