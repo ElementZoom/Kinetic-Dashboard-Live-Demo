@@ -2939,13 +2939,24 @@ html[data-mode=light] .inx.warn b{color:#a5560c}
 .inl li{padding:3px 0 3px 16px;position:relative}.inl li>i{position:absolute;left:0;top:.62em}.inl b{font-weight:600}.inl .ina{color:var(--mut);white-space:nowrap}
 .inl i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mint)}
 .inl i.w{background:#e8973a}
-.inz .sm{margin-bottom:2px}
-.insp{display:block;width:100%;height:44px}
-.insp .dl{stroke:rgba(232,151,58,.55);stroke-width:1;stroke-dasharray:3 3}
-.insp .pa{fill:none;stroke:var(--ink);stroke-width:2;vector-effect:non-scaling-stroke}
-.insp .fu{fill:none;stroke:var(--cool,#7fb6ff);stroke-width:2;stroke-dasharray:4 3;vector-effect:non-scaling-stroke}
-.insp .nw{stroke:rgba(var(--w),.25);stroke-width:1;vector-effect:non-scaling-stroke}
-.inzl{font-size:13.5px}.inzl span{color:var(--mut)}
+/* watering: one chart for every zone (past solid, forecast dashed on a shaded band, dry line, rain bars), a colour per zone */
+:root{--zc0:#7fb6ff;--zc1:#5fe0a8;--zc2:#c7a2ff;--zc3:#ff9fb4}
+html[data-mode=light]{--zc0:#2f7fd8;--zc1:#14996f;--zc2:#7b4fd0;--zc3:#c4456a}
+.iwc{margin:2px 0 6px}
+.iwc svg{display:block;width:100%;height:120px;color:var(--ink);touch-action:pan-y}
+.iwc .fz{fill:rgba(var(--w),.04)}
+html[data-mode=light] .iwc .fz{fill:rgba(0,0,0,.035)}
+.iwc .rn{fill:rgba(107,184,255,.35)}
+.iwc .dl{stroke:rgba(232,151,58,.7);stroke-width:1;stroke-dasharray:3 3;vector-effect:non-scaling-stroke}
+.iwc .nw{stroke:rgba(var(--w),.3);stroke-width:1;vector-effect:non-scaling-stroke}
+html[data-mode=light] .iwc .nw{stroke:rgba(0,0,0,.25)}
+.iwc .pa,.iwc .fu{fill:none;stroke-width:2.2;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.iwc .fu{stroke-dasharray:5 4}
+.iwc .z0{stroke:var(--zc0)}.iwc .z1{stroke:var(--zc1)}.iwc .z2{stroke:var(--zc2)}.iwc .z3{stroke:var(--zc3)}
+.iwx{position:relative;height:1.4em;font-size:12.5px;color:var(--mut);margin-top:5px}
+.iwx span{position:absolute;top:0;white-space:nowrap}
+.iwx span:nth-child(1){left:0}.iwx span:nth-child(2){left:33.333%;transform:translateX(-50%)}.iwx span:nth-child(3){left:66.667%;transform:translateX(-50%)}.iwx span:nth-child(4){right:0}
+.ilr>i.iwd.z0{background:var(--zc0)}.ilr>i.iwd.z1{background:var(--zc1)}.ilr>i.iwd.z2{background:var(--zc2)}.ilr>i.iwd.z3{background:var(--zc3)}
 .inc{opacity:.85}
 .ing{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .ing>div{border-radius:12px;padding:8px 12px;background:rgba(var(--w),.06)}
@@ -2974,8 +2985,6 @@ html[data-mode=light] .wpl.inp{color:#b3261e}
 @media(min-width:761px){
   .insgr{columns:2 440px;column-gap:14px}
   .insgr>.ins{margin:0 0 14px;break-inside:avoid;display:block;width:100%}
-  .inzs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 18px}
-  .insp{height:56px}
 }
 /* glance tiles (Insights page): label, big value, a line; detail opens in a sheet (phone) or a side panel (tablet) */
 .itg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:6px}
@@ -3006,7 +3015,7 @@ html[data-mode=light] .it.warn .itk{color:#a5560c}html[data-mode=light] .it.ok .
   #insd .ids b{font-size:30px}
   #insd .inx{font-size:16.5px;padding:14px 16px}#insd .inx small{font-size:14px}
   #insd .inl{font-size:17px;line-height:1.55}#insd .inl li{padding:5px 0 5px 18px}
-  #insd .inzl{font-size:15.5px}#insd .insp{height:72px}#insd .eb{font-size:13px;padding:12px 20px}
+  #insd .iwc svg{height:150px}#insd .iwx{font-size:14px}#insd .eb{font-size:13px;padding:12px 20px}
   #insd .insg{font-size:12px;padding:8px 0}
 }
 #insd .idh{display:flex;align-items:center;gap:12px;margin-bottom:12px}
@@ -3159,6 +3168,36 @@ html[data-mode=light] .it.fan{background:#eeedfe;border-color:#cecbf6}html[data-
 @media(hover:none){.itx{opacity:.7}}
 #insq{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.55)}#insq.on{display:flex;animation:evqin .2s ease-out}
 .insdis{margin:18px 2px 6px;font-size:13px;color:var(--mut);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+/* ALL tab: the top 4 under Needs you, the rest folded by category under More (one column on a phone, two on a tablet, beside the tiles in landscape) */
+.insm{display:grid;gap:10px}
+.insgp{padding:0 14px;border-radius:20px}
+/* the same gaps as the tiles above: 10px on a phone, 18px on a tablet, 14px in landscape */
+.insm>.insgp{margin:0}
+.insgh{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:12px;width:100%;padding:11px 0;background:none;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.insgh>svg{width:20px;height:20px;fill:var(--mut)}
+.insgh .ilm b{font-weight:500;font-size:16px}
+.insgh .ilm small{display:block;color:var(--mut);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.insgn{font:600 12px var(--mono);color:var(--mut)}
+.insr{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;width:100%;padding:9px 0;border:0;border-top:1px solid var(--line);background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.insr .ilm b{font-weight:500;font-size:15px}
+.insr .ilm small{display:block;color:var(--mut);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.insr em{font-style:normal;font-size:18px;white-space:nowrap}
+.insr.warn em{color:#e8973a}html[data-mode=light] .insr.warn em{color:#a5560c}
+.insgp.open{padding-bottom:4px}
+html[data-style=metro] :is(.insgp){border-radius:0}
+@media(min-width:761px){
+  .insm{display:block;columns:2;column-gap:18px}
+  .insm>.insgp{break-inside:avoid;margin:0 0 18px;display:block}
+  .insgh .ilm b{font-size:17px}.insgh .ilm small{font-size:13.5px}
+  .insr .ilm b{font-size:16px}.insr .ilm small{font-size:13.5px}.insr em{font-size:20px}
+}
+@media(min-width:1100px) and (orientation:landscape){
+  .insv{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+  .insv1 .itg{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .insv1 .it{min-height:130px;padding:16px 20px}.insv1 .itv{font-size:36px;margin-top:2px}
+  .insm{columns:1}
+  .insm>.insgp{margin-bottom:14px}
+}
 /* ---------- Weather page scenes (20-weather-scenes.js): the animated skies, their sliders and the Forecast week explorer ---------- */
 .wsc{position:relative;overflow:hidden;border-radius:14px;margin:10px 0 0;background:#2d3f78;isolation:isolate}
 .wsc>canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-1}
@@ -3377,7 +3416,7 @@ html.camlive #mm .chip svg{animation:none!important}
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.4"></script>
+<script src="config.js?v=2.5.5"></script>
 <script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
@@ -3385,8 +3424,8 @@ html.camlive #mm .chip svg{animation:none!important}
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.4";   // the one place to change the version
-window.DASH_BUILD = "990efa";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.5.5";   // the one place to change the version
+window.DASH_BUILD = "1ae1e9";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -3635,6 +3674,7 @@ window.__ZHD={"D": {"0.0 mm": "0.0 毫米", "1 hr": "1 小时", "2 hr": "2 小�
   const Z = window.__ZHD = window.__ZHD || { D: {}, P: [] };
   Object.assign(Z.D, {
     // insights: chips, sections, kickers
+    "rain due": "预计降雨", "next watering": "下次浇水", "dry below": "低于此值为干", "4+ days": "4 天以上",
     "all": "全部", "needs you": "需要处理", "today": "今天", "tomorrow": "明天", "yesterday": "昨天", "stats": "统计", "climate": "气候", "security": "安防", "energy": "能源", "garden": "花园", "weather": "天气", "vehicle": "车辆", "system": "系统", "home": "家居",
     "batteries": "电池", "bill": "电费", "cheap power": "低价电", "cheap hours saved": "低价时段节省", "overnight load": "夜间负载", "peak hour": "用电高峰", "vs last bill": "对比上期电费", "detections": "检测", "open": "开着", "water flow": "水流", "water used": "用水量", "watering": "浇水",
     "daylight": "日照", "drying day": "晾晒日", "earthquakes": "地震", "rain": "降雨", "pollen": "花粉", "heat pump": "热泵", "heat escaping": "热量流失", "cool escaping": "冷气流失", "humid": "潮湿", "drying": "除湿中", "volcano": "火山", "frost": "霜冻", "wind": "风", "updates": "更新", "laundry": "洗衣", "restart": "重启",
@@ -10074,20 +10114,35 @@ function insSoil() {
   else if (soon) { verdict = '<b>Next watering ~' + esc(day(soon.due)) + '</b> · ' + esc(soon.z.name); tone = "ok"; }
   else { verdict = '<b>No watering needed</b> for the next 4 days'; tone = "ok"; }
   const ev = Math.min.apply(null, Z.map(x => x.md.events)), hrs = Math.min.apply(null, Z.map(x => x.md.hours)), conf = !INS.soil ? "learning…" : hrs >= 72 ? "good confidence" : hrs >= 24 ? "fair confidence" : "low confidence";
-  const spark = x => {   // past 24 h (solid) and the next 48 h (dashed), with the dry line
-    const W = 220, Hh = 44, all = x.past.concat(x.run.slice(1, 49)).filter(v => !isNaN(v)), lo = Math.min(x.dryAt - 5, Math.min.apply(null, all)), hi = Math.max(x.md.cap + 2, Math.max.apply(null, all));
-    const y = v => (Hh - 6 - (v - lo) / Math.max(1, hi - lo) * (Hh - 12)).toFixed(1), N = x.past.length + 48, X = i => (i / (N - 1) * W).toFixed(1);
-    const pp = x.past.map((v, i) => isNaN(v) ? "" : (i ? "L" : "M") + X(i) + " " + y(v)).join(""), np = x.run.slice(0, 49).map((v, i) => (i ? "L" : "M") + X(x.past.length - 1 + i) + " " + y(v)).join("");
-    return '<svg class="insp" viewBox="0 0 ' + W + ' ' + Hh + '" preserveAspectRatio="none" aria-hidden="true"' + insTip(x.z.name, [["Now", Math.round(x.now) + "%"], ["By morning", "~" + Math.round(x.morn) + "%"], ["Dry below", x.dryAt + "%"], ["Dry", x.due === 0 ? "now" : x.due > 0 ? "~" + day(x.due) : "not in 4 days"]]) + '><line x1="0" x2="' + W + '" y1="' + y(x.dryAt) + '" y2="' + y(x.dryAt) + '" class="dl"/>' + (pp ? '<path d="' + pp + '" class="pa"/>' : "") + '<path d="' + np + '" class="fu"/><line x1="' + X(x.past.length - 1) + '" x2="' + X(x.past.length - 1) + '" y1="0" y2="' + Hh + '" class="nw"/></svg>';
+  // one chart for every zone: the last 24 h (solid) and the next 48 h (dashed, on a shaded band), the dry line, rain bars along the bottom;
+  // pointing at it (or pressing and dragging on a phone) reads every zone and the rain at that hour (the shared chart readout, #crtip)
+  const chart = () => {
+    const W = 720, Hh = 140, P = 24, F = 48, N = P + F, X = i => +(i / N * W).toFixed(1);
+    const at = (x, i) => { if (i === P) return x.now; if (i < P) { const k = i - (P - (x.past.length - 1)); return k >= 0 && k < x.past.length ? x.past[k] : NaN; } return x.run[i - P]; };
+    const all = [].concat.apply([], Z.map(x => Array.from({ length: N + 1 }, (_, i) => at(x, i)))).filter(v => !isNaN(v)), dl = Z.map(x => x.dryAt).filter((v, i, A) => A.indexOf(v) === i);
+    const lo = Math.min(Math.min.apply(null, dl) - 5, Math.min.apply(null, all)), hi = Math.max(Math.max.apply(null, Z.map(x => x.md.cap)) + 2, Math.max.apply(null, all));
+    const y = v => +(Hh - 10 - (v - lo) / Math.max(1, hi - lo) * (Hh - 20)).toFixed(1), rmx = Math.max(4, Math.max.apply(null, rain.slice(0, F)));
+    const path = (x, i0, i1) => { let d = "", pen = false; for (let i = i0; i <= i1; i++) { const v = at(x, i); if (isNaN(v)) { pen = false; continue; } d += (pen ? "L" : "M") + X(i) + " " + y(v); pen = true; } return d; };
+    const when = i => i === P ? "Now" : crWhen(Math.round(Date.now() / 36e5 + i - P) * 36e5) + (i > P ? " · forecast" : "");
+    const pick = sx => { const i = Math.max(0, Math.min(N, Math.round(sx / W * N))), mm = i > P ? +rain[i - P - 1] || 0 : 0;
+      return { x: X(i), t: when(i), r: Z.map((x, k) => { const v = at(x, i); return [x.z.name, isNaN(v) ? "-" : (i > P ? "~" : "") + Math.round(v) + "%", "var(--zc" + (k % 4) + ")"]; }).concat(i > P ? [["Rain", mm >= 0.1 ? mm.toFixed(1) + " mm" : "none", ""]] : []).concat([["Dry below", dl.map(v => v + "%").join(" / "), ""]]) }; };
+    return '<div class="iwc"><svg viewBox="0 0 ' + W + ' ' + Hh + '" preserveAspectRatio="none"' + chartReadout("insSoil", [], { at: pick, scrub: true }) + '>' +
+      '<rect class="fz" x="' + X(P) + '" y="0" width="' + (W - X(P)) + '" height="' + Hh + '"/>' +
+      rain.slice(0, F).map((mm, k) => mm >= 0.1 ? '<rect class="rn" x="' + (X(P + k) + 1) + '" y="' + (Hh - mm / rmx * 34).toFixed(1) + '" width="' + Math.max(1, X(1) - 2) + '" height="' + (mm / rmx * 34).toFixed(1) + '"/>' : "").join("") +
+      dl.map(v => '<line class="dl" x1="0" x2="' + W + '" y1="' + y(v) + '" y2="' + y(v) + '"/>').join("") +
+      '<line class="nw" x1="' + X(P) + '" x2="' + X(P) + '" y1="0" y2="' + Hh + '"/>' +
+      Z.map((x, k) => '<path class="pa z' + (k % 4) + '" d="' + path(x, 0, P) + '"/><path class="fu z' + (k % 4) + '" d="' + path(x, P, N) + '"/>').join("") + '</svg>' +
+      '<div class="iwx"><span>Yesterday</span><span>Now</span><span>Tomorrow</span><span>' + esc(new Date(Date.now() + 48 * 36e5).toLocaleDateString([], { weekday: "short" })) + '</span></div></div>';
   };
+  const nextW = soon ? (soon.due <= 12 ? "Today" : day(soon.due).split(" ")[0].replace(/^today$/, "Today")) : "4+ days";
   const plain = verdict.replace(/<[^>]+>/g, "");
   // only when there is something to do: water within 2 days, or skip it because rain is coming
   if (!INS.stat && !(r24 >= skip) && !(soon && soon.due <= 48)) return [];
   return [{ id: "soil", tile: ["WATERING", r24 >= skip ? "Skip" : soon && soon.due <= 12 ? "Today" : soon ? day(soon.due).split(" ")[0].replace(/^today$/, "Today") : "Not needed", r24 >= skip ? "~" + Math.round(r24) + " mm due" : soon ? soon.z.name + " drying" : "next 4 days"], cat: "garden", lvl: tone === "warn" ? 2 : 1, icon: "water", tone: tone, go: "#irrigation",
     title: plain.split(" · ")[0], sub: (plain.split(" · ")[1] ? plain.split(" · ")[1] + " · " : "") + Z.map(x => x.z.name + " ~" + Math.round(x.morn) + "%").join(" · ") + " by morning",
-    full: () => '<div class="inx ' + tone + '">' + verdict + '</div>' + '<div class="inzs">' + Z.map(x => '<div class="inz"><div class="sm">' + esc(x.z.name) + ' · now ' + Math.round(x.now) + '%</div>' + spark(x) +
-      '<div class="inzl">~' + Math.round(x.morn) + '% by morning <span>' + (x.due === 0 ? "· dry now" : x.due > 0 ? "· dry ~" + esc(day(x.due)) : "· dry below " + x.dryAt + "%") + '</span></div></div>').join("") + '</div>' +
-      '<div class="sm inc">Estimate · ' + (INS.soil ? "learned from 14 days" + (ev ? ", " + ev + " wet spells" : "") + " · " : "") + conf + '</div>' }];
+    stats: [["Rain due", r24 >= 0.1 ? "~" + Math.round(Math.max(1, r24)) + " mm" : "None"], ["Next watering", nextW]].concat(Z.map(x => [x.z.name, Math.round(x.now) + "%"])),
+    full: () => chart() + '<div class="ils">' + Z.map((x, k) => '<div class="ilr"><i class="iwd z' + (k % 4) + '"></i><span class="ilm"><b>' + esc(x.z.name) + '</b><small>~' + Math.round(x.morn) + '% by morning · ' + (x.due === 0 ? "dry now" : x.due > 0 ? "dry ~" + esc(day(x.due)) : "not dry in 4 days") + '</small></span><span class="ilx">' + Math.round(x.now) + '% now</span></div>').join("") + '</div>' +
+      '<div class="sm inc">Estimate from ' + (INS.soil ? "14 days of soil history" + (ev ? " (" + ev + " wet spells)" : "") : "the soil readings (still learning)") + ' and the rain forecast · ' + conf + '. Dry below ' + Z.map(x => x.dryAt).filter((v, i, A) => A.indexOf(v) === i).join(" / ") + '%.</div>' }];
 }
 
 // --- water used: the flow sensors over the last 7 days, worked out from their history (litres per minute or hour, or m³ per hour)
@@ -10225,6 +10280,12 @@ function insAll() {
   const hasFuel = all.some(x => x.id === "fuel"), hasHp = !INS.stat && all.some(x => x.id === "hp");   // the heat pump tile already says how long it ran today
   // cards this person dismissed today stay out (STATS still lists every figure)
   const dis = INS.stat ? [] : insDisGet(), L0 = all.filter(x => !(hasFuel && x.id === "car") && !(hasHp && x.id === "hprun")); INS.hid = INS.stat ? INS.hid : L0.filter(x => dis.indexOf(x.id) > -1).length;
+  // two or more machines restarted: one Restarts card (each machine's own detail inside), not a tile each
+  const bt = L0.filter(x => /^boot:/.test(x.id));
+  if (bt.length > 1) { const n = bt.reduce((p, x) => p + (parseInt(x.tile[1]) || 1), 0), i0 = L0.indexOf(bt[0]), nm = bt.map(x => x.tile[0].replace(/^RESTART · /, "")).map(v => v.charAt(0) + v.slice(1).toLowerCase());
+    const one = { id: "boot", tile: ["RESTARTS", n + " restarts", nm.join(" · ")], cat: "system", lvl: 1, icon: "server", tone: bt.some(x => x.tone === "warn") ? "warn" : "", go: "#admin", title: n + " restarts this month", sub: bt.map(x => x.title).join(" · "),
+      full: () => bt.map(x => '<div class="lbl icll">' + esc(x.title) + '</div>' + x.full()).join("") };
+    L0.splice(i0, 1, one); bt.slice(1).forEach(x => L0.splice(L0.indexOf(x), 1)); }
   return L0.filter(x => dis.indexOf(x.id) < 0).filter(x => x.cat !== "system" || typeof ADMIN_ON !== "function" || ADMIN_ON()).sort((a, b) => b.lvl - a.lvl);
 }
 // one insight, short (title + line) and, opened, its full card and buttons
@@ -10256,6 +10317,20 @@ document.addEventListener("click", e => {
   if (e.target.closest("[data-insun]")) { e.stopPropagation(); insDisSet([]); insTick(); }
 }, true);
 document.addEventListener("keydown", e => { const q = $("#insq"); if (e.key === "Escape" && q && q.classList.contains("on")) q.classList.remove("on"); });
+// ALL tab: the 4 that matter most under Needs you, the rest folded by category under More.
+// Order: what you'd act on today, then anything with a warning, then money, then figures and trends; a warning first within each, else the order they come in
+const INS_ACT = ["house", "soil", "laundry", "bins", "frost", "wind", "tmr", "lights", "garagedark", "night", "drive", "traffic", "away", "roster", "drying"], INS_MONEY = ["power", "free", "bill", "save", "vs", "peak", "base"];
+function insRank(x) { const k = x.id.split(":")[0], w = x.tone === "warn" || x.tone === "bad"; return (INS_ACT.indexOf(k) > -1 ? 0 : w ? 2 : INS_MONEY.indexOf(k) > -1 ? 4 : 6) - (w ? 1 : 0); }
+function insTop(a) { return a.map((x, i) => [x, i]).sort((p, q) => insRank(p[0]) - insRank(q[0]) || p[1] - q[1]).map(v => v[0]); }
+// a tile's label in normal case ("WATER USED" -> "Water used")
+const insNm = x => { const t = (x.tile && x.tile[0]) || insCats[x.cat] || ""; return t.charAt(0) + t.slice(1).toLowerCase(); };
+function insMore(a) {
+  const cats = Object.keys(insCats).filter(c => a.some(x => x.cat === c));
+  return cats.map(c => { const L = a.filter(x => x.cat === c), op = INS.gopen && INS.gopen.has(c);
+    return '<div class="pn pg insgp' + (op ? " open" : "") + '"><button class="insgh" data-insgp="' + c + '" aria-expanded="' + !!op + '"><span class="ili">' + mdi(L[0].icon) + '</span><span class="ilm"><b>' + esc(insCats[c]) + '</b><small>' + esc(L.slice(0, 3).map(x => insNm(x) + " " + ((x.tile && x.tile[1]) || "")).join(" · ")) + '</small></span><span class="insgn">' + L.length + '</span>' + mdi(op ? "chevron-up" : "chevron-down") + '</button>' +
+      (op ? L.map(x => '<button class="insr' + (x.tone ? " " + x.tone : "") + '" data-inso="' + esc(x.id) + '"><span class="ilm"><b>' + esc(insNm(x)) + '</b>' + (x.tile && x.tile[2] ? '<small>' + esc(x.tile[2]) + '</small>' : "") + '</span><em>' + esc((x.tile && x.tile[1]) || x.title) + '</em></button>').join("") : "") + '</div>'; }).join("");
+}
+document.addEventListener("click", e => { const g = e.target.closest && e.target.closest("[data-insgp]"); if (!g) return; INS.gopen = INS.gopen || new Set(); const c = g.dataset.insgp; INS.gopen.has(c) ? INS.gopen.delete(c) : INS.gopen.add(c); drawInsights(); });
 function drawInsights() {
   const pg = $("#insights"); if (!pg) return; const all = insAll(); INS.last = all;
   const need = all.filter(x => x.lvl === 2), cats = Object.keys(insCats).filter(c => all.some(x => x.cat === c));
@@ -10266,6 +10341,8 @@ function drawInsights() {
   const sec = (t, a, cls) => a.length ? '<div class="lbl insl' + (cls ? " " + cls : "") + '">' + t + ' · ' + a.length + '</div><div class="itg">' + a.map(insTileHtml).join("") + '</div>' : "";
   const h = '<div class="chips tabs inschips">' + chip("all", "ALL" + chipN(all.length)) + (need.length ? chip("need", "NEEDS YOU" + chipN(need.length)) : "") + cats.map(c => chip(c, insCats[c].toUpperCase())).join("") + chip("stats", "STATS") + '</div>' +
     (ST ? (ST.length ? Object.keys(insCats).map(c => sec(insCats[c], ST.filter(x => x.cat === c))).join("") : '<div class="pn pg"><div class="sm">No figures yet.</div></div>')
+      : L.length && INS.tab === "all" ? (() => { const rest = insTop(L.filter(x => x.lvl < 2)), top = rest.slice(0, 4), more = rest.slice(4);
+          return '<div class="insv"><div class="insv1">' + sec("Needs you", L.filter(x => x.lvl === 2), "bad") + sec("Today", top) + '</div>' + (more.length ? '<div class="insv2"><div class="lbl insl">More · ' + more.length + '</div><div class="insm">' + insMore(more) + '</div></div>' : "") + '</div>'; })()
       : L.length ? sec("Needs you", L.filter(x => x.lvl === 2), "bad") + sec("Today", L.filter(x => x.lvl < 2)) : '<div class="pn pg"><div class="sm">Nothing stands out right now. The figures are under STATS.</div></div>') +
     (!ST && INS.hid ? '<div class="insdis">' + INS.hid + ' hidden for today · <button class="eb" data-insun>SHOW THEM</button></div>' : "");
   if (pg._h !== h) { pg._h = h; pg.innerHTML = h; }
@@ -10273,7 +10350,9 @@ function drawInsights() {
 }
 function insTileHtml(x) {
   const t = x.tile || [(insCats[x.cat] || "").toUpperCase(), x.title, x.sub];
-  return '<button class="it' + (x.lvl === 2 ? " need" : "") + (x.tone ? " " + x.tone : "") + '" data-inso="' + esc(x.id) + '">' + (INS.tab !== "stats" ? '<span class="itx" role="button" tabindex="0" data-insx="' + esc(x.id) + '" aria-label="Hide for today">' + mdi("close") + '</span>' : "") + '<span class="itk">' + mdi(x.icon) + '<span>' + esc(t[0]) + '</span></span><b class="itv">' + esc(t[1]) + '</b><small class="its">' + esc(t[2] || "") + '</small>' + (x.spark ? insSpark(x.spark, x.sparkRef) : "") + (x.fx ? '<span class="itfx fx-' + x.fx + '" aria-hidden="true">' + (x.fx === "fan" ? mdi("fan") : x.fx === "cool" ? mdi("snowflake") + mdi("snowflake") + mdi("snowflake") : "<i></i><i></i><i></i><i></i>") + '</span>' : "") + '</button>';
+  // memory / CPU tiles: just "MEMORY" when only one machine has one (the detail names it)
+  const k0 = String(t[0]).split(" · ")[0], kick = /^busy:/.test(x.id) && k0 !== t[0] && !(INS.last || []).some(v => v !== x && v.tile && String(v.tile[0]).split(" · ")[0] === k0) ? k0 : t[0];
+  return '<button class="it' + (x.lvl === 2 ? " need" : "") + (x.tone ? " " + x.tone : "") + '" data-inso="' + esc(x.id) + '">' + (INS.tab !== "stats" ? '<span class="itx" role="button" tabindex="0" data-insx="' + esc(x.id) + '" aria-label="Hide for today">' + mdi("close") + '</span>' : "") + '<span class="itk">' + mdi(x.icon) + '<span>' + esc(kick) + '</span></span><b class="itv">' + esc(t[1]) + '</b><small class="its">' + esc(t[2] || "") + '</small>' + (x.spark ? insSpark(x.spark, x.sparkRef) : "") + (x.fx ? '<span class="itfx fx-' + x.fx + '" aria-hidden="true">' + (x.fx === "fan" ? mdi("fan") : x.fx === "cool" ? mdi("snowflake") + mdi("snowflake") + mdi("snowflake") : "<i></i><i></i><i></i><i></i>") + '</span>' : "") + '</button>';
 }
 // a small line on a tile: values over time, the last one marked (the humid tile while drying)
 function insSpark(v, ref) {
@@ -10835,7 +10914,7 @@ function insxLaundry() {
     return [{ id: "laundry", stats: [["Starts in", w || "-"], ["Set", dot(at)]], tile: ["LAUNDRY", "Waiting", w ? "starts in " + w : "delayed start"], cat: "home", lvl: 1, icon: "washing-machine", tone: "", go: "#notifications", title: "Laundry starts " + (w ? "in " + w : "later"), sub: "Delayed start set " + dot(at),
       full: () => '<div class="sm">The machine is waiting for its delayed start' + (w ? ": " + esc(w) + " to go" : "") + '. Set it to finish in the free hours to wash for nothing.</div>' }];
   }
-  // finished: the last run ended within 3 hours (from the machine's history) and it has not started again
+  // finished: the last run ended within 3 hours (from the machine's history) and it has not started again; it needs you from the moment it is done
   // someone in the laundry room after it finished = moved to the dryer or hung out: the card goes (laundryPresence in config.js, else the presence of a house room with id "laundry")
   const lr = HOUSE().find(r => r.id === "laundry"), pres = [].concat(CONFIG.laundryPresence || (lr && typeof occOf === "function" ? occOf(lr) : [])).filter(x => states[x]);
   const H = insxGet("laundry", 2, done => insxHist([sid].concat(pres), 6, false, done)); if (!H) return [];
@@ -10843,7 +10922,7 @@ function insxLaundry() {
   for (let i = a.length - 1; i > 0; i--) { if (a[i - 1][1] === "Run" && a[i][1] !== "Run" && a[i][1] !== "Delay Run") { end = a[i][0]; for (let k = i - 1; k >= 0 && a[k][1] === "Run"; k--) beg = a[k][0]; break; } }
   const ago = Date.now() - end; if (!end || ago > 3 * 36e5) return [];
   if (pres.some(x => (H[x] || []).some(q => q[1] === "on" && q[0] > end) || (isOn(x) && (Date.parse(states[x].last_changed || "") || 0) > end))) return [];
-  return [{ id: "laundry", stats: [["Finished", dot(end)], ["Waiting", insxHm(ago)]].concat(beg ? [["Ran for", insxHm(end - beg)]] : []), tile: ["LAUNDRY", "Done", insxHm(ago) + " ago"], cat: "home", lvl: ago >= 36e5 ? 2 : 1, icon: "washing-machine", tone: ago >= 20 * 6e4 ? "warn" : "ok", go: "#notifications",
+  return [{ id: "laundry", stats: [["Finished", dot(end)], ["Waiting", insxHm(ago)]].concat(beg ? [["Ran for", insxHm(end - beg)]] : []), tile: ["LAUNDRY", "Done", insxHm(ago) + " ago"], cat: "home", lvl: 2, icon: "washing-machine", tone: ago >= 20 * 6e4 ? "warn" : "ok", go: "#notifications",
     title: "Laundry finished " + insxHm(ago) + " ago", sub: "Done at " + dot(end) + (ago >= 20 * 6e4 ? " · hang it out before it creases" : ""),
     full: () => insList([{ i: "washing-machine", b: "Finished " + dot(end), s: beg ? "Started " + dot(beg) + " · ran " + insxHm(end - beg) : "", r: insxHm(ago) + " ago", t: ago >= 20 * 6e4 ? "w" : "ok" }]) + '<div class="sm">Shown for 3 hours after a wash, or until the next one starts.</div>' }];
 }
@@ -11014,7 +11093,7 @@ function insxCarCare() {
     const lvl = soon < 14 * 864e5 ? 2 : 1, tone = soon < 45 * 864e5 ? "warn" : "", nm = c.name || V.name || "Car";
     const rowBar = (lbl, from, to, val, txt, side) => insRows([[lbl, [[Math.max(0.5, Math.min(to - from, val - from)), val >= to ? "var(--heat)" : (to - val) < (to - from) * 0.12 ? "#e8973a" : "#6bb8ff"]], txt, side]], { max: Math.max(1, to - from) });
     out.push({ id: "carcare:" + i, stats: items.map(x => [x.n, insxIn(x.t - now).replace(/^in /, "")]),
-      tile: [nm.toUpperCase().split(" ")[0] + " · " + nx.n.toUpperCase(), insxIn(nx.t - now).replace(/^in /, ""), insxD(new Date(nx.t)) + (nx.booked ? " · booked" : "")], cat: "vehicle", lvl: lvl, icon: "car", tone: tone, go: "#vehicle",
+      tile: [(C.length > 1 ? nm.toUpperCase().split(" ")[0] + " · " : "") + nx.n.toUpperCase(), insxIn(nx.t - now).replace(/^in /, ""), insxD(new Date(nx.t)) + (nx.booked ? " · booked" : "")], cat: "vehicle", lvl: lvl, icon: "car", tone: tone, go: "#vehicle",
       title: nm + ": " + nx.n.toLowerCase() + " " + insxIn(nx.t - now), sub: items.map(x => x.n + " " + insxD(new Date(x.t))).join(" · "),
       full: () => {
         let h = insList(items.map(x => ({ i: "car", b: x.n + (x.booked ? " · booked" : ""), s: insxD(new Date(x.t)) + (x.k === "service" && x.booked && x.due ? " (due by " + insxD(new Date(x.due)) + ")" : "") + (x.nx ? " · the next one lasts " + (x.nx % 12 ? x.nx + " months" : x.nx / 12 + (x.nx > 12 ? " years" : " year")) : ""), r: insxIn(x.t - now), t: x.t - now < 0 ? "bad" : x.t - now < 45 * 864e5 ? "w" : "ok" })));
@@ -11446,7 +11525,7 @@ function insxVolcano() {
   const L = ids.map(id => ({ id: id, lvl: parseInt(states[id].state, 10), ms: insAgo(id), a: states[id].attributes })).filter(v => !isNaN(v.lvl) && v.lvl >= 1 && v.ms < 7 * 864e5);
   if (!L.length) return [];
   const v = L.sort((a, b) => b.lvl - a.lvl)[0], nm = String(v.a.friendly_name || v.id).replace(/^Volcano\s+/i, "");
-  return [{ id: "volcano", stats: [["Alert level", String(v.lvl)], ["Changed", insxHm(Math.max(v.ms, 6e4)) + " ago"]], tile: ["VOLCANO · " + nm.toUpperCase(), "Level " + v.lvl, "changed " + insxHm(Math.max(v.ms, 6e4)) + " ago"], cat: "weather", lvl: v.lvl >= 2 ? 2 : 1, icon: "volcano", tone: "warn", go: "#hazards/volcanoes",
+  return [{ id: "volcano", stats: [["Alert level", String(v.lvl)], ["Changed", insxHm(Math.max(v.ms, 6e4)) + " ago"]], tile: [nm.toUpperCase(), "Level " + v.lvl, "changed " + insxHm(Math.max(v.ms, 6e4)) + " ago"], cat: "weather", lvl: v.lvl >= 2 ? 2 : 1, icon: "volcano", tone: "warn", go: "#hazards/volcanoes",
     title: nm + " volcanic alert level " + v.lvl, sub: v.a.activity || "Changed " + insxHm(Math.max(v.ms, 6e4)) + " ago", full: () => insList(L.map(x => ({ i: "volcano", b: String(x.a.friendly_name || x.id).replace(/^Volcano\s+/i, "") + ": level " + x.lvl, s: x.a.activity || "", r: insxHm(Math.max(x.ms, 6e4)) + " ago", t: x.lvl >= 2 ? "w" : "" }))) + '<div class="sm">' + esc(v.a.hazards || "GeoNet’s volcanic alert levels go from 0 (no unrest) to 5 (major eruption).") + '</div>' }];
 }
 // --- 41. Which forecast is right more often: Google's and MetService's high for each of the last 10 days (as forecast that morning) against the highest temperature the weather entity reported (STATS; on the tabs when one is 1° or more closer)
