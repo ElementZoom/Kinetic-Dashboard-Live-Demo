@@ -52,3 +52,4 @@ Object.assign(window.__ZHD.D, { "show all": "显示全部", "side by side": "并
   "drag across the chart to zoom in · tap a number to zoom to it": "在图表上拖动以放大 · 点数字放大到那段",
   "drag the edges or inside the window to adjust · tap a number to zoom to it": "拖动边缘或窗口内部来调整 · 点数字放大到那段",
   "nothing detected in this part of the timeline": "这段时间没有检测到任何东西", "could not open this recording": "无法打开这段录像" });
+window.__ZHD.P.unshift(["^also at (.+)$", "同一时刻 $1"], ["^(person|vehicle|animal) · today · (.+)$", "{1} · 今天 · $2"], ["^(person|vehicle|animal) · yesterday · (.+)$", "{1} · 昨天 · $2"], ["^today · (\\d+:\\d+[ap]m) · moment (\\d+) of (\\d+)$", "今天 · $1 · 第 $2 / $3 个时刻"]);

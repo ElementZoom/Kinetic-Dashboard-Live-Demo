@@ -2741,7 +2741,7 @@ html[data-mode=light] #alp .alsb.s-wn{--sr:217,138,0}
 /* irrigation zone card as a little garden scene (23-soil-moisture-history.js irrZone) */
 .zna{gap:10px}
 .zna .zst{font-size:15px;color:var(--mut);margin-top:-4px}
-.zna .zst.wn{color:#d98a00}
+.zna .zst.zskip{color:#d98a00}
 .zna.on .zst{color:#36a9e2}
 .zsc{position:relative;height:120px;border-radius:14px;overflow:hidden;background:#8ec5e8;flex:none}
 .zsc.nt{background:#18213b}
@@ -2767,7 +2767,7 @@ html[data-mode=light] #alp .alsb.s-wn{--sr:217,138,0}
 .zna .zd{gap:6px;flex-wrap:nowrap}
 .zna .zd .chip{flex:1;min-width:0;margin:0;padding:8px 0;text-align:center}
 .zgo{all:unset;box-sizing:border-box;cursor:pointer;position:relative;overflow:hidden;width:100%;padding:13px 10px;border-radius:14px;background:#7a5a34;color:#fff;text-align:center;font-size:13px;letter-spacing:.1em;font-weight:600;display:flex;justify-content:center;align-items:baseline;gap:6px}
-.zgo.wn{background:transparent;color:#d98a00;box-shadow:inset 0 0 0 1px currentColor}
+.zgo.zskip{background:transparent;color:#d98a00;box-shadow:inset 0 0 0 1px currentColor}
 .zgo.on{background:#2e6e9e}
 .zgo>span{position:relative}
 .zgo .zb{position:absolute;inset:0;height:auto;margin:0;border-radius:0;background:none}
@@ -3839,16 +3839,16 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.12"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.12"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.12"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="config.js?v=2.5.13"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.13"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.13"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.12";   // the one place to change the version
-window.DASH_BUILD = "623896";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.5.13";   // the one place to change the version
+window.DASH_BUILD = "6179cc";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -4369,6 +4369,8 @@ function connect() {
     if (err && err.code === "login") showLogin(err.msg); else { setStatus(false); setTimeout(connect, 5000); }
   });
 }
+// true once Home Assistant has accepted the login on this connection; send() drops anything sent before that
+let wsAuthed = false;
 function openWs(tk) {
   ws = new WebSocket(CONFIG.url.replace(/^http/, "ws") + "/api/websocket");
   ws.onmessage = e => {
@@ -4376,14 +4378,14 @@ function openWs(tk) {
     if (m.type === "auth_required") ws.send(JSON.stringify({ type: "auth", access_token: tk }));
     else if (m.type === "auth_invalid") authBad();
     else if (m.type === "auth_ok") {
-      setStatus(true); hideLogin();
+      wsAuthed = true; setStatus(true); hideLogin();
       send({ type: "get_states" }, list => { list.forEach(setState); calFix(); palTick(); schLoad(); vGroups(); buildDep(); drawGsum(); if (cards[MAIN]) render(MAIN); if (!identDone) identify(); batTick(); tick(); bootMark("s"); LV.t = null; lvQ(); queueNotif(); setTimeout(bootGo, 1400); if (camPage()) startCams(); if (onRooms) { if (curRoom) drawRoom(curRoom.id); else updRooms(); } });
       send({ type: "subscribe_events", event_type: "state_changed" }); cfgFetch();
       loadFc(); loadFcH(); evBtn(); if (curPg() === "energy") { en.busy = false; loadEnergy(); }
     } else if (m.type === "result" && pending[m.id]) { try { pending[m.id](m.result, m); } catch (x) {} delete pending[m.id]; }
     else if (m.type === "event") { if (m.event && m.event.event_type === "state_changed") skewSample(Date.now() - Date.parse(m.event.time_fired)); if (subs[m.id]) subs[m.id](m.event); else if (m.event.data && m.event.data.new_state) setState(m.event.data.new_state); }
   };
-  ws.onclose = () => { if (loginUp) return; setStatus(false); setTimeout(connect, 3000); };
+  ws.onclose = () => { wsAuthed = false; if (loginUp) return; setStatus(false); setTimeout(connect, 3000); };
 }
 let hq = 0;
 function queueHome() { if (!hq) hq = requestAnimationFrame(() => { hq = 0; home(); }); }
@@ -7067,14 +7069,14 @@ function irrZone(z) {
     const rw = !r ? "" : r.tot >= r.skip ? "rain on the way" : r.fi === 0 ? "raining now" : r.fi > 0 ? "rain likely in " + r.fi + " h" : "no rain due";
     const st = on ? "Watering" : [mw, rw].filter(Boolean).join(" · "), skip = !on && r && r.tot >= r.skip;
     return '<div class="pn zn zna' + (on ? " on" : "") + '" data-z="' + z.zone + '"><div class="zt"><b class="h3">' + mdi("sprinkler-variant") + ' ' + esc(z.name) + '</b></div>' +
-      (st ? '<div class="zst' + (skip ? " wn" : "") + '">' + esc(st.charAt(0).toUpperCase() + st.slice(1)) + '</div>' : "") +
+      (st ? '<div class="zst' + (skip ? " zskip" : "") + '">' + esc(st.charAt(0).toUpperCase() + st.slice(1)) + '</div>' : "") +
       '<div class="zsc' + (irrNight() ? " nt" : "") + (on ? " on" : "") + '">' +
         (isNaN(mo) ? "" : '<div class="zgg" role="img" aria-label="Soil moisture ' + Math.round(mo) + ' percent"><i style="height:' + Math.max(0, Math.min(100, mo)) + '%"></i></div><span class="zgv">' + Math.round(mo) + '%</span>') +
         (on ? '<span class="zfr">' + f1(fl) + ' m³/h</span>' : "") + '<i class="zgd"></i><i class="zhd"></i>' + (on ? irrSpray() : "") + '</div>' +
       '<div class="zin">' + (r ? '<span>' + mdi("weather-rainy") + ' Rain 12 h · ' + r.pk + '%</span>' : '<span></span>') + (isNaN(tp) ? "" : '<span>Soil ' + f1(tp) + '°</span>') + '</div>' +
       (on ? "" : '<div class="zd">' + IRR_DURS.map(x => '<button class="chip' + (x[0] === sel ? " on" : "") + '" data-zdur="' + x[0] + '">' + x[1].replace(" MIN", "m").replace(" HR", "h") + '</button>').join("") + '</div>') +
       (on ? '<button class="zgo on" data-zstop>' + (act ? '<span class="zb"><i data-dur="' + dur + '"></i></span>' : "") + '<span>STOP</span>' + (act ? '<span class="tmr" data-fin="' + fin + '">--</span>' : "") + '</button>'
-          : '<button class="zgo' + (skip ? " wn" : "") + '" data-d="' + sel + '">' + (skip ? "START ANYWAY · " : "START · ") + sl + '</button>') + '</div>';
+          : '<button class="zgo' + (skip ? " zskip" : "") + '" data-d="' + sel + '">' + (skip ? "START ANYWAY · " : "START · ") + sl + '</button>') + '</div>';
 }
 let zSheet = false, zTab = 0;   // phone: the zones live in a floating bar that opens into a sheet (like Scenes)
 function irrBar() {
@@ -7643,7 +7645,8 @@ const dtCams = () => Object.keys(CONFIG.playback || {});
 const dtName = id => { const f = CONFIG.security.concat(CONFIG.cameras).filter(c => c.id === id)[0]; return f ? f.name : calName ? id.replace(/^camera\./, "").replace(/_/g, " ") : id; };
 const dtDay = t => { const m = /(\d{4})[\/.-](\d{1,2})[\/.-](\d{1,2})/.exec(String(t)); return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null; };
 function dtPace(fn, list, n) { let i = 0, run = 0; return new Promise(res => { const go = () => { if (i >= list.length && !run) return res(); while (run < n && i < list.length) { const x = list[i++]; run++; fn(x).catch(() => {}).then(() => { run--; go(); }); } }; go(); }); }
-const dtBrowse = id => new Promise((ok, no) => { let t = setTimeout(() => no(new Error("timeout")), 25000); send({ type: "media_source/browse_media", media_content_id: id }, r => { clearTimeout(t); r ? ok(r) : no(new Error("none")); }); });
+// waits for the connection first: opening the dashboard straight on Detections (or the tablet waking up) asked before the login was through, and the answers never came
+const dtBrowse = id => new Promise((ok, no) => { let t = setTimeout(() => no(new Error("timeout")), 25000), w = Date.now(); const go = () => { if (!wsAuthed || !ws || ws.readyState !== 1) { if (Date.now() - w < 20000) return setTimeout(go, 250); return; } send({ type: "media_source/browse_media", media_content_id: id }, r => { clearTimeout(t); r ? ok(r) : no(new Error("none")); }); }; go(); });
 async function dtLoad(force) {
   if (DT.busy) { DT.again = DT.again || !!force || 1; return; } if (!dtCams().length) return; DT.busy = true; const want = (DT_R[DT.range - 1] || DT_R[0])[1], now = Date.now();
   if (force) { DT.cache = {}; DT.days = []; DT.loaded = 0; } dtDraw();
@@ -7766,7 +7769,7 @@ $("#dtp").addEventListener("click", e => {
   const b = e.target.closest("[data-dt]"); if (!b) return; const k = b.dataset.dt;
   if (k === "type") { DT.types[b.dataset.v] = !DT.types[b.dataset.v]; DT.show = 24; dtDraw(); txGo($("#dtp .dtg"), 0, true); }
   else if (k === "cam") { DT.cam = b.dataset.v; DT.show = 24; dtDraw(); txGo($("#dtp .dtg"), 0, true); }
-  else if (k === "range") { DT.range = +b.dataset.v; DT.show = 24; DTL.w0 = 0; DTL.w1 = 24; DTL.mi = -1; DT.open = ""; dtDraw(); txGo($("#dtp .dtg"), 0, true); dtLoad(); }
+  else if (k === "range") { DT.range = +b.dataset.v; DT.show = 24; DTL.w0 = 0; DTL.w1 = 24; DTL.mi = -1; DTL.pick = false; DT.open = ""; dtDraw(); txGo($("#dtp .dtg"), 0, true); dtLoad(); }
   else if (k === "more") { DT.show += 24; dtDraw(); }
   else if (k === "refresh") dtLoad(true);
   else if (k === "play") dtPlay(b.dataset.k, b.dataset.cam, +b.dataset.ts, (b.dataset.tg || "").split(","));
@@ -7779,7 +7782,7 @@ $("#dtm .dtv video").onerror = () => { if ($("#dtm").classList.contains("on") &&
 // hour, and clips from one camera with the same detection, each within 5 minutes of the next, fold into one row that opens in place. Phone: one big clip per "moment"
 // (detections less than 2 minutes apart, from any camera), the other cameras of that moment under it, and a slider through the moments.
 // The viewer opens full screen, keeps zoom and the AI detection button, and steps through moments; a tap on the picture never closes it.
-const DTL = { w0: 0, w1: 24, mi: -1, mci: 0 };
+const DTL = { w0: 0, w1: 24, mi: -1, mci: 0, pick: false };
 const DTC = { Person: "#9fb4ff", Vehicle: "#f0b95a", Animal: "#7dd69b", Face: "#f49ac1", Motion: "#a7a1b3" };
 const dtSpan = () => (DT_R[DT.range - 1] || DT_R[0])[0] * 36e5;
 function dtEnd() { const d = new Date(); d.setMinutes(0, 0, 0); return d.getTime() + 36e5; }   // the timeline ends at the next full hour
@@ -7834,7 +7837,7 @@ function dtWinUpd(full) {   // full = the list below as well (left out while dra
 function dtSetWin(a, b) { a = Math.max(0, Math.min(24, a)); b = Math.max(0, Math.min(24, b)); if (b - a < .25) { const m = (a + b) / 2; a = Math.max(0, Math.min(23.75, m - .125)); b = a + .25; } DTL.w0 = a; DTL.w1 = b; }
 // ----- phone -----
 function dtMomHtml() {
-  const M = DT.mom || []; if (!M.length) return ""; if (DTL.mi < 0 || DTL.mi >= M.length) DTL.mi = M.length - 1;
+  const M = DT.mom || []; if (!M.length) return ""; if (!DTL.pick || DTL.mi < 0 || DTL.mi >= M.length) DTL.mi = M.length - 1;   // the newest until you pick one (more moments arrive while the recordings load)
   const g = M[DTL.mi], x = g[Math.min(DTL.mci, g.length - 1)], th = dtThumbUrl(x), n = new Set(g.map(y => y.cam)).size;
   return '<div class="dtbig" data-dt="play" data-k="' + esc(x.mc) + '" data-cam="' + esc(x.cam) + '" data-ts="' + x.ts + '" data-tg="' + esc(x.p.tags.join(",")) + '" role="button" tabindex="0"><div class="pbth" data-dth="' + esc(x.mc) + '">' + (th ? '<img alt="" src="' + esc(th) + '">' : "") + '<b>' + mdi("play") + '</b></div>' +
     '<span class="dtbc">' + esc(dtName(x.cam)) + '</span>' + (g.length > 1 ? '<span class="dtbn">' + (n > 1 ? n + " cameras" : g.length + " clips") + '</span>' : "") + '<strong>' + esc(x.p.tags.join(" · ") + " · " + dtWhen(x.ts)) + '</strong></div>' +
@@ -7850,7 +7853,7 @@ function dtMomUpd() { const c = $("#dtp .dtcv"); if (!c) return; const r = $(".d
   P.addEventListener("input", e => {
     const t = e.target;
     if (false) {}
-    else if (t.hasAttribute("data-dtm")) { DT.drag = "m"; DTL.mi = +t.value; DTL.mci = 0; dtMomUpd(); }
+    else if (t.hasAttribute("data-dtm")) { DT.drag = "m"; DTL.pick = true; DTL.mi = +t.value; DTL.mci = 0; dtMomUpd(); }
   });
   ["change", "pointerup", "touchend"].forEach(n => P.addEventListener(n, () => { if (DT.drag) setTimeout(() => { DT.drag = ""; }, 0); }));
   // the chart brush
@@ -7871,7 +7874,7 @@ function dtMomUpd() { const c = $("#dtp .dtcv"); if (!c) return; const r = $(".d
     if (z) { e.stopPropagation(); const q = z.dataset.dtz.split(",").map(Number), t0 = dtT0(), b = dtBinMs(), pad = Math.max(5 * 60000, (q[1] - q[0]) * .15); dtSetWin((q[0] - pad - t0) / b, (q[1] + pad - t0) / b); dtWinUpd(true); return; }
     if (all) { e.stopPropagation(); dtSetWin(0, 24); dtWinUpd(true); return; }
     if (st) { e.stopPropagation(); DT.open = DT.open === st.dataset.dtst ? "" : st.dataset.dtst; const g = $(".dtgw", P); if (g) { g.innerHTML = dtGrid(); dtThumbs(); } return; } }, true);
-  P.addEventListener("click", e => { const b = e.target.closest("[data-dtmc]"); if (b) { e.stopPropagation(); DTL.mci = +b.dataset.dtmc; dtMomUpd(); } }, true);
+  P.addEventListener("click", e => { const b = e.target.closest("[data-dtmc]"); if (b) { e.stopPropagation(); DTL.pick = true; DTL.mci = +b.dataset.dtmc; dtMomUpd(); } }, true);
   P.addEventListener("keydown", e => { const b = e.target.closest(".dtbig,.dtst"); if (b && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); b.click(); } });
 })();
 

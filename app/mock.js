@@ -257,7 +257,8 @@
       case "frontend/get_user_data": return ok({ value: null });
       case "frontend/set_user_data": return ok(null);
       case "config/auth/list": return ok([{ id: "u1", name: "Alex", is_admin: true, is_active: true, system_generated: false }, { id: "u2", name: "Sam", is_admin: false, is_active: true, system_generated: false }]);
-      case "media_source/browse_media": return ok({ title: "Recordings", media_content_id: m.media_content_id, children: [] });
+      case "media_source/browse_media": return ok(window.__REC.browse(m.media_content_id));
+      case "media_source/resolve_media": return ok(window.__REC.resolve(m.media_content_id));
       case "logbook/get_events": return ok([]);
       case "trace/list": return ok(window.__TL.filter(function (x) { return !m.item_id || x.item_id === m.item_id; }));
       case "trace/get": { var t = window.__TG[m.run_id], r0 = window.__TL.filter(function (x) { return x.run_id === m.run_id; })[0] || {}; return t ? ok(Object.assign({ item_id: m.item_id, run_id: m.run_id, script_execution: r0.script_execution, trigger: r0.trigger }, t)) : w._emit({ id: m.id, type: "result", success: false, error: { code: "not_found", message: "Not found" } }); }
@@ -312,4 +313,31 @@
       push("binary_sensor.demo_patio_door_contact", on ? "on" : "off"); push("alarm_control_panel.demo_alarm", on ? "disarmed" : "armed_home"); },
     dryGarden: function () { ["sensor.demo_soil_drw_1_moisture", "sensor.demo_soil_drw_2_moisture"].forEach(function (id, i) { push(id, String(17 + i * 2)); }); }
   };
+})();
+
+/* demo recordings: day folders and detection clips for the Security page (Detections, Playback); times follow the clock, so they are always "today" */
+window.__REC = (function () {
+  var V = "Vehicle", P = "Person", A = "Animal", base = "/";
+  var plan = {   // minutes ago, what
+    street: [[4, V], [6, V], [9, V], [12, V], [55, V], [57, V], [61, V], [120, V], [180, V], [182, V], [260, V], [400, V], [402, V], [600, V], [720, V], [722, V], [900, V], [1100, V], [1300, V], [1500, V], [1800, V], [2200, V]],
+    driveway: [[12.5, P], [300, P], [302, P], [700, P], [1000, V], [1700, P]],
+    side_gate: [[12.2, P], [303, P], [1450, P]],
+    patio: [[90, P], [94, P], [97, P], [1600, P]],
+    backyard: [[200, A], [800, P], [2000, A]],
+    garage: [[480, P], [482, V], [1900, V]]
+  };
+  function day(off) { var d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - off); return d; }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function cam(id) { var m = /DEMO0+(\d)\|/.exec(id); return m ? ["", "driveway", "street", "side_gate", "patio", "backyard", "garage"][+m[1]] : ""; }
+  function browse(id) {
+    id = String(id); var c = cam(id), dm = /\|day\|(\d+)$/.exec(id);
+    if (!c) return { title: "Recordings", media_content_id: id, children: [] };
+    if (!dm) return { title: "Recordings", media_content_id: id, children: [0, 1, 2].map(function (o) { var d = day(o); return { title: d.getFullYear() + "/" + pad(d.getMonth() + 1) + "/" + pad(d.getDate()), media_content_id: id + "|day|" + o, can_expand: true, can_play: false }; }) };
+    var d0 = day(+dm[1]).getTime(), d1 = d0 + 864e5, now = Date.now();
+    return { title: "Day", media_content_id: id, children: plan[c].map(function (x) { var t = new Date(now - x[0] * 60000); return { t: t, x: x }; }).filter(function (y) { return y.t.getTime() >= d0 && y.t.getTime() < d1; }).map(function (y) {
+      var t = y.t, len = 12 + Math.round((y.x[0] * 7) % 30), pic = c === "driveway" && y.x[1] === P ? "driveway_person" : c;
+      return { title: t.getHours() + ":" + pad(t.getMinutes()) + ":" + pad(t.getSeconds()) + " 0:00:" + pad(len) + " " + y.x[1], media_content_id: "demo-clip|" + pic + "|" + t.getTime(), can_play: true, can_expand: false, thumbnail: base + "cams/camera.demo_" + pic + ".jpg" }; }) };
+  }
+  function resolve(id) { var m = /^demo-clip\|([a-z_]+)\|/.exec(String(id)); var mp4 = !!document.createElement("video").canPlayType('video/mp4; codecs="avc1.42E01E"'); return { url: base + "cams/clips/" + (m ? m[1] : "street") + (mp4 ? ".mp4" : ".webm"), mime_type: mp4 ? "video/mp4" : "video/webm" }; }
+  return { browse: browse, resolve: resolve };
 })();
