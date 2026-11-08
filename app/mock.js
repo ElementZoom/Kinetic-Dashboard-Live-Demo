@@ -202,6 +202,26 @@
     if (n != null) push(id, null, { current_temperature: n, hvac_action: heat ? "heating" : "cooling" }); else if (a.hvac_action !== "idle" && Math.abs(cur - tg) < 0.05) push(id, null, { hvac_action: "idle" }); }); }, 1500);
 
   // ---------- fake WebSocket speaking HA's protocol ----------
+  // ---------- Settings, admin tabs (2.5.7): a few automations with recent runs, and a short Home Assistant log ----------
+  (function () {
+    var now = Date.now(), iso = function (t) { return new Date(t).toISOString(); };
+    [["automation.demo_garage_auto_close", "Garage auto close"], ["automation.demo_hallway_night_light", "Hallway light at night"], ["automation.demo_weather_alert_wind", "Weather alert, wind"], ["automation.demo_christmas_lights", "Christmas lights"]].forEach(function (x) {
+      if (!S[x[0]]) S[x[0]] = { entity_id: x[0], state: /christmas/.test(x[0]) ? "off" : "on", attributes: { friendly_name: x[1] }, last_changed: iso(now - 864e5), last_updated: iso(now - 864e5) }; });
+    Object.keys(S).filter(function (i) { return i.indexOf("automation.") === 0; }).forEach(function (i, k) { var a = S[i].attributes; a.id = "demo" + k; if (S[i].state !== "off") a.last_triggered = iso(now - (k * 53 + 9) * 60000); });
+    var id = function (e) { return S[e] && S[e].attributes.id; }, g = id("automation.demo_garage_auto_close"), w = id("automation.demo_weather_alert_wind"), h = id("automation.demo_hallway_night_light");
+    window.__TL = [{ item_id: g, run_id: "dr1", state: "stopped", script_execution: "failed_conditions", timestamp: { start: iso(now - 9 * 60000) }, trigger: "state of binary_sensor.demo_garage_door" },
+      { item_id: g, run_id: "dr2", state: "stopped", script_execution: "finished", timestamp: { start: iso(now - 300 * 60000) }, trigger: "state of binary_sensor.demo_garage_door" },
+      { item_id: w, run_id: "dr3", state: "stopped", script_execution: "error", error: "Template variable error: 'None' has no attribute 'wind_speed'", timestamp: { start: iso(now - 115 * 60000) }, trigger: "time pattern" },
+      { item_id: h, run_id: "dr4", state: "stopped", script_execution: "finished", timestamp: { start: iso(now - 62 * 60000) }, trigger: "sun set" }];
+    window.__TG = {
+      dr1: { config: { triggers: [{ trigger: "state", entity_id: "binary_sensor.demo_garage_door", to: "on", for: "00:15:00" }], conditions: [{ condition: "state", entity_id: "input_boolean.demo_garage_hold", state: "off" }], actions: [{ action: "cover.close_cover", target: { entity_id: "cover.demo_garage_door" } }] }, trace: { "trigger/0": [{}], "condition/0": [{ result: { result: false } }] } },
+      dr2: { config: { triggers: [{ trigger: "state", entity_id: "binary_sensor.demo_garage_door", to: "on", for: "00:15:00" }], conditions: [{ condition: "state", entity_id: "input_boolean.demo_garage_hold", state: "off" }], actions: [{ action: "cover.close_cover", target: { entity_id: "cover.demo_garage_door" } }] }, trace: { "trigger/0": [{}], "condition/0": [{ result: { result: true } }], "action/0": [{}] } },
+      dr3: { config: { triggers: [{ trigger: "time_pattern" }], actions: [{ action: "notify.notify", alias: "Send the wind alert" }] }, trace: { "trigger/0": [{}], "action/0": [{ error: "Template variable error: 'None' has no attribute 'wind_speed'" }] }, error: "Template variable error: 'None' has no attribute 'wind_speed'" },
+      dr4: { config: { triggers: [{ trigger: "sun", event: "sunset" }], actions: [{ action: "light.turn_on", target: { entity_id: "light.demo_hallway" } }] }, trace: { "trigger/0": [{}], "action/0": [{}] } } };
+    window.__LOG = [{ name: "homeassistant.components.automation.demo_weather_alert_wind", message: ["Error while executing automation automation.demo_weather_alert_wind: Template variable error"], level: "ERROR", source: ["components/automation/__init__.py", 700], timestamp: (now - 115 * 60000) / 1000, exception: "Traceback (most recent call last):\nTemplateError: 'None' has no attribute 'wind_speed'", count: 4, first_occurred: (now - 9e6) / 1000 },
+      { name: "homeassistant.config_entries", message: ["Setup of the demo plug integration failed, retrying in 60 s"], level: "ERROR", source: ["config_entries.py", 600], timestamp: (now - 8e6) / 1000, count: 12 },
+      { name: "homeassistant.helpers.entity", message: ["Updating state for camera.demo_garage took longer than 10 s"], level: "WARNING", source: ["helpers/entity.py", 1], timestamp: (now - 9e6) / 1000, count: 3 }];
+  })();
   function FakeWS(url) { var w = this; w.url = url; w.readyState = 0; w._subs = []; w.onopen = w.onmessage = w.onclose = w.onerror = null; w._l = {};
     socks.push(w); setTimeout(function () { w.readyState = 1; w._fire("open", {}); w._emit({ type: "auth_required", ha_version: "2026.10.1" }); }, 30); }
   FakeWS.CONNECTING = 0; FakeWS.OPEN = 1; FakeWS.CLOSING = 2; FakeWS.CLOSED = 3;
@@ -232,6 +252,9 @@
       case "config/auth/list": return ok([{ id: "u1", name: "Alex", is_admin: true, is_active: true, system_generated: false }, { id: "u2", name: "Sam", is_admin: false, is_active: true, system_generated: false }]);
       case "media_source/browse_media": return ok({ title: "Recordings", media_content_id: m.media_content_id, children: [] });
       case "logbook/get_events": return ok([]);
+      case "trace/list": return ok(window.__TL.filter(function (x) { return !m.item_id || x.item_id === m.item_id; }));
+      case "trace/get": { var t = window.__TG[m.run_id], r0 = window.__TL.filter(function (x) { return x.run_id === m.run_id; })[0] || {}; return t ? ok(Object.assign({ item_id: m.item_id, run_id: m.run_id, script_execution: r0.script_execution, trigger: r0.trigger }, t)) : w._emit({ id: m.id, type: "result", success: false, error: { code: "not_found", message: "Not found" } }); }
+      case "system_log/list": return ok(window.__LOG);
       default: (window.__unk = window.__unk || []).push(m.type); return w._emit({ id: m.id, type: "result", success: false, error: { code: "not_supported", message: "Not available in the demo" } });
     }
   };
@@ -241,6 +264,7 @@
   var realFetch = window.fetch.bind(window);
   var J = function (o) { return Promise.resolve(new Response(JSON.stringify(o), { status: 200, headers: { "content-type": "application/json" } })); };
   window.fetch = function (u, o) { var s = String(u && u.url || u);
+    if (/\/api\/config\/core\/check_config/.test(s)) return J({ result: "valid", errors: null, warnings: null });
     if (/\/api\/calendars/.test(s)) {
       if (/\/api\/calendars(\?|$)/.test(s)) return J(Object.keys(S).filter(function (i) { return i.indexOf("calendar.") === 0; }).map(function (i) { return { entity_id: i, name: nm(i) }; }));
       var cal = s.split("/api/calendars/")[1].split("?")[0], d0 = new Date(); d0.setHours(0, 0, 0, 0);

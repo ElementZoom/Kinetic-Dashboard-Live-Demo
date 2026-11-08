@@ -62,17 +62,17 @@
     "open weather and tap more on the now card for wind, pressure and uv, then try the forecast tabs.": "打开“天气”，点击“现在”卡片上的“更多”查看风、气压和紫外线，然后试试预报标签。",
     "warnings, rain alerts and pollen show up here too when your area has them.": "如果您所在地区有警告、降雨提醒和花粉信息，也会显示在这里。",
     "choose how pages move": "选择页面如何切换",
-    "on the theme page, pick how the dashboard changes between pages: rise, slide, fade or none. then tap another page to feel it.": "在“主题”页面，选择仪表盘切换页面的方式：上升、滑动、淡入淡出或无。然后点开另一个页面感受一下。",
+    "in settings, pick how the dashboard changes between pages: rise, slide, fade or none. then tap another page to feel it.": "在“设置”中，选择仪表盘切换页面的方式：上升、滑动、淡入淡出或无。然后点开另一个页面感受一下。",
     "your choice is remembered on that device.": "您的选择会保存在该设备上。",
     "pick a look": "挑选风格",
-    "same dashboard, four styles. choose one on the theme page and the whole app changes.": "同一个仪表盘，四种风格。在“主题”页面选一个，整个应用都会随之改变。",
+    "same dashboard, four styles. choose one in settings and the whole app changes.": "同一个仪表盘，四种风格。在“设置”中选一个，整个应用都会随之改变。",
     "we match the look to your home when we install it.": "安装时我们会根据您的家来匹配风格。",
     // hints
     "tap · or hold to dim": "点击 · 或长按调光", "open living area": "打开客厅区域", "open rooms": "打开房间", "turn up the heat": "调高温度", "open climate": "打开气候", "tap more": "点击“更多”",
     "close all": "全部关闭", "show the curtains": "显示窗帘", "open master bedroom": "打开主卧", "show the main rooms": "显示主要房间", "tap to watch": "点击观看",
     "tap twice to close": "点两下关闭", "open garage": "打开车库", "show utility rooms": "显示功能房间", "water for 15 minutes": "浇水 15 分钟", "open the zones": "打开分区", "open irrigation": "打开灌溉",
     "open the alerts": "打开警报", "turn the lights off": "关灯", "arm the alarm": "启用布防", "tap to see what's left": "点击查看还剩什么", "tap for more": "点击查看更多", "try a forecast": "试试预报", "open weather": "打开天气",
-    "pick a transition": "选择切换效果", "show page transitions": "显示页面切换效果", "open theme": "打开主题", "pick a style": "选择风格", "close this first": "请先关闭这个"
+    "pick a transition": "选择切换效果", "show page transitions": "显示页面切换效果", "open theme": "打开主题", "open settings": "打开设置", "pick a style": "选择风格", "close this first": "请先关闭这个"
   };
   Object.keys(D).forEach(function (k) { Z.D[k] = D[k]; });
   Z.P = (Z.P || []).concat([

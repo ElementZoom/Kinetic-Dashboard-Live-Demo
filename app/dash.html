@@ -690,6 +690,18 @@ html[data-mode=light] .fcc b{color:color-mix(in srgb,var(--hc) 55%,#1d1d2b)}html
 #fcp #fc{min-width:0}#fcp .fcc{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc((100% - 24px) / 5);overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;overscroll-behavior-x:contain;min-width:0}#fcp .fcc::-webkit-scrollbar{display:none}#fcp .fcc>div{scroll-snap-align:start}
 @media(max-width:760px){#fcp .fcc{grid-auto-columns:calc((100% - 18px) / 4.4)}}
 @media(prefers-reduced-motion:reduce){.fcc .wb{animation:none}}
+/* Home forecast with weather scenes: each day a small sky (20-weather-scenes.js fcsLoop), white numbers on top like the Weather page's Now card */
+.fcc>div.fcs{color:#fff;background:#6f93bd;padding:12px 2px 10px;border-radius:18px;justify-content:flex-start;gap:2px;min-height:190px}
+.fcc>div.fcs::before{display:none}
+.fcc>div.fcs>canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
+.fcc>div.fcs>*:not(canvas){text-shadow:0 1px 6px rgba(0,0,0,.35)}
+.fcc>div.fcs .lbl,html[data-mode=light] .fcc>div.fcs .lbl{color:#fff;opacity:1}
+.fcc>div.fcs b,html[data-mode=light] .fcc>div.fcs b{color:#fff;font-size:26px;font-weight:400;margin-top:auto}
+.fcc>div.fcs small,html[data-mode=light] .fcc>div.fcs small{color:#fff;opacity:.92;font:500 14px var(--font,inherit)}
+.fcc>div.fcs em,html[data-mode=light] .fcc>div.fcs em{color:#fff;margin-top:6px;background:rgba(0,0,0,.22);border-radius:99px;padding:3px 8px;font-size:11px;text-shadow:none}
+.fcc>div.fcs em.no{background:none;padding:0}
+.fcc>div.fcs em svg{fill:#8fd0ff}
+.fcc>div.fcs.td{box-shadow:inset 0 0 0 2px rgba(255,255,255,.75)}
 /* tablet / desktop Home: cameras + climate column on top, the six rooms spread underneath */
 @media(min-width:761px){
 .hm .left{display:contents}
@@ -1900,6 +1912,19 @@ html:not(#x) #vw .cam.vf.pb:not(.ls) .vh>.cx{position:absolute!important;top:cal
 
 /* the edge arrows are buttons: a click scrolls the row (PC has no swipe) */
 .hsw .hsm{-webkit-tap-highlight-color:transparent}@media(hover:hover){.hsw.more .hsm.r:hover,.hsw.moreL .hsm.l:hover{background:rgba(var(--w),.12);border-radius:50%}}
+/* both feeds side by side (landscape): one X for the whole view, in the top right corner of the screen (not on the garage card); the driveway skips controls the garage card already has */
+@media(orientation:landscape){html:not(#x) #vw.two .cam.vf:not(.ls) .vh>.cx{display:none!important}
+html:not(#x):not(.camls) #vw.two>.vwx{display:flex!important;align-items:center;justify-content:center;position:fixed;top:calc(16px + env(safe-area-inset-top));right:calc(16px + env(safe-area-inset-right));z-index:70}}
+#vw .cpanel .tg3>.vdup{display:none!important}
+/* a recording in full screen: X in the top right corner, the detection boxes button beside it */
+.zc>.zx{display:none}
+html:not(#x) .zc:fullscreen>.zx,html:not(#x) .zc.zfull>.zx{display:flex;align-items:center;justify-content:center;position:absolute;top:calc(14px + env(safe-area-inset-top));right:calc(14px + env(safe-area-inset-right));z-index:8;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(18,18,24,.55);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;cursor:pointer}
+html:not(#x) .zc:fullscreen>.zx svg,html:not(#x) .zc.zfull>.zx svg{width:22px;height:22px;fill:currentColor}
+html:not(#x) .zc:fullscreen>.mkt,html:not(#x) .zc.zfull>.mkt{top:calc(14px + env(safe-area-inset-top));right:calc(68px + env(safe-area-inset-right));width:44px;height:44px}
+/* a recording going in or out of full screen: fades out, switches over black, fades back in (37-camera-zoom.js czFull) */
+.zc>video,.zc>.mkl,.zc>.mkt,.zc>.zx,.zc>.pbe{transition:opacity .22s ease}
+.zc.zfade{background:#000}.zc.zfade>*{opacity:0!important;transition:opacity .14s ease!important}.zc.zfnow>*{transition:none!important}
+@media(prefers-reduced-motion:reduce){.zc>*{transition:none!important}}
 /* artist info: the Artist tab beside the lyrics (Media page, and the lyrics sheet on a phone) and the Artist page in the Now Playing sheet */
 .aitabs{display:inline-flex;gap:2px;padding:4px;border-radius:99px;background:rgba(var(--w),.1);text-transform:none}.aitabs .chip{border:0;background:transparent;box-shadow:none;padding:8px 18px;min-height:0;font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}.aitabs .chip.on{background:var(--mint);color:var(--bg)}
 .lyh .aitabs{margin:-6px 0}
@@ -2281,6 +2306,9 @@ header.hmerge>.hs{align-items:center}
 header.hmerge>.hs>#gr,header.hmerge>.hs>.wch{display:inline-flex;align-items:center;gap:6px;line-height:1.2}
 header.hmerge>.hs>.wch svg{vertical-align:0;flex:none}
 header.hmerge #wpls .wpl{line-height:1.2}
+/* MORE under a shrunk weather card, like the weather warning's */
+.wxl .wxmore{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin:4px 0 0;padding:4px 0 0;border:0;background:none;color:inherit;opacity:.75;font:600 11px var(--mono);letter-spacing:.1em;cursor:pointer}
+.wxl .wxmore svg{width:16px;height:16px;fill:currentColor}
 /* page transition (Theme > Page transition): variants of the .page.enter entrance, set by html[data-pgfx]. "rise" is the original look. */
 @keyframes pgSlide{from{opacity:0;transform:translateX(var(--pgdx,36px))}}
 html[data-pgfx=slide] .page.enter{animation:pgSlide calc(.36s*var(--pgs,1)) cubic-bezier(.2,.8,.2,1) backwards}
@@ -2378,7 +2406,11 @@ html[data-style=minimal] .cbar i{box-shadow:0 1px 3px rgba(0,0,0,.4)}
 #grid>.card.rm .lbl.il{cursor:pointer;font-size:15px;letter-spacing:0;text-transform:none;font-weight:500;color:var(--ink);min-height:0;white-space:normal;line-height:1.2;overflow:hidden;min-width:0;padding-right:22px;align-items:center}
 #grid>.card.rm .lbl.il::after{content:"";position:absolute;top:50%;right:13px;width:8px;height:8px;margin-top:-6px;border:solid var(--mut);border-width:0 2px 2px 0;transform:rotate(45deg);transition:transform .2s;opacity:1}
 #grid>.card.rm[data-open] .lbl.il::after{transform:rotate(-135deg);margin-top:-2px;top:50%}
-#grid>.card.rm .md{margin:0;font-size:11px;white-space:nowrap;color:var(--mut)}
+#grid>.card.rm .md{margin:0;font-size:11px;white-space:nowrap;color:var(--mut);overflow:hidden;text-overflow:ellipsis;min-width:0}
+/* the icon sits in the middle of the room name, also when the name wraps to two lines */
+#grid>.card.rm .lbl.il{display:flex;align-items:center}#grid>.card.rm .lbl.il svg{vertical-align:0;align-self:center;flex:none}
+/* no room for the whole line next to the temperature: keep the mode and humidity, drop the target (the sheet still shows it) */
+#grid>.card.rm .md.tight[data-tg][data-hu]::after{content:" · " attr(data-hu)}
 #grid>.card.rm[data-hm] .md{color:var(--hzc)}
 #grid>.card.rm .temp{font-weight:300}
 #grid>.card.rm .rnd,#grid>.card.main2 .rnd{border-radius:50%;display:inline-flex;align-items:center;justify-content:center;padding:0;line-height:1}
@@ -2407,7 +2439,7 @@ html[data-style=minimal] .cbar i{box-shadow:0 1px 3px rgba(0,0,0,.4)}
 #grid>.card.main2 .czg{flex:1;display:flex;flex-direction:column;min-height:96px;max-height:460px}#grid>.card.main2 .czg svg{flex:1;height:auto;min-height:84px}
 .czm{flex-direction:column;align-items:flex-start;gap:6px}
 .czs{align-items:flex-start;text-align:left;padding-bottom:0}.czt,.czh .cout,#grid>.card.main2 .fanb{justify-content:flex-start}
-#grid>.card.rm{grid-column:2;display:grid;grid-template-columns:minmax(100px,140px) minmax(90px,1fr) auto auto 14px;grid-template-areas:"nm bar tp rw cv" "md bar tp rw cv" "ch ch ch ch ch" "fn fn fn fn fn" "tr tr tr tr tr";align-items:center;column-gap:18px;row-gap:0;padding:17px 20px;border-radius:18px}   /* row-gap 0: the empty rows under the room (chips, fan, trigger) used to add 6px of gap at the bottom and pushed everything above the middle */
+#grid>.card.rm{grid-column:2;display:grid;grid-template-columns:minmax(100px,170px) minmax(90px,1fr) auto auto 14px;grid-template-areas:"nm bar tp rw cv" "md bar tp rw cv" "ch ch ch ch ch" "fn fn fn fn fn" "tr tr tr tr tr";align-items:center;column-gap:18px;row-gap:0;padding:17px 20px;border-radius:18px}   /* row-gap 0: the empty rows under the room (chips, fan, trigger) used to add 6px of gap at the bottom and pushed everything above the middle */
 #grid>.card.rm .lbl.il{grid-area:nm}#grid>.card.rm .md{grid-area:md;margin-top:2px}#grid>.card.rm .cbar{grid-area:bar}
 #grid>.card.rm .temp{grid-area:tp;font-size:32px;text-align:right}#grid>.card.rm .temp small{font-size:13px}
 #grid>.card.rm .row{grid-area:rw;gap:6px}#grid>.card.rm .rnd{width:38px;height:38px;font-size:18px}
@@ -3132,7 +3164,8 @@ html[data-style=metro] .ihm>i{border-radius:0}
 #insd .bn{margin:0}#insd .bn-h{display:none}
 /* phone greeting card: today's high / low sits beside the wind; the Leaving and Insights pills get the next line to themselves */
 @media(max-width:760px){
-  #wpls:not(:empty){flex-basis:auto;margin-top:0;margin-left:8px}
+  /* no left margin: the card's own gap spaces it when it fits beside the wind, and when it wraps to its own line it lines up with the greeting */
+  #wpls:not(:empty){flex-basis:auto;margin-top:0;margin-left:0}
   #hpls:not(:empty){display:flex;flex-wrap:wrap;gap:6px;flex-basis:100%;margin-top:2px}
 }
 /* the line under a detail's title wraps instead of being cut off (phone) */
@@ -3193,6 +3226,13 @@ html[data-mode=light] .it.fan{background:#eeedfe;border-color:#cecbf6}html[data-
 .insr .ilm b{font-weight:500;font-size:15px}
 .insr .ilm small{display:block;color:var(--mut);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .insr em{font-style:normal;font-size:18px;white-space:nowrap}
+/* the value and its own line, together on the right (they read as one: "~$2.13" / "a night · ~$41.60 this bill") */
+.insr{grid-template-columns:minmax(0,max-content) minmax(0,1fr)!important}
+.insr>.ilm{max-width:100%}
+.insr .insv2r{display:flex;flex-direction:column;align-items:flex-end;text-align:right;min-width:0}
+.insr .insv2r small{display:block;max-width:100%;color:var(--mut);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.insr .ilm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:46vw}
+@media(min-width:761px){.insr .ilm b{max-width:none}}
 .insr.warn em{color:#e8973a}html[data-mode=light] .insr.warn em{color:#a5560c}
 .insgp.open{padding-bottom:4px}
 html[data-style=metro] :is(.insgp){border-radius:0}
@@ -3200,7 +3240,7 @@ html[data-style=metro] :is(.insgp){border-radius:0}
   .insm{display:block;columns:2;column-gap:18px}
   .insm>.insgp{break-inside:avoid;margin:0 0 18px;display:block}
   .insgh .ilm b{font-size:17px}.insgh .ilm small{font-size:13.5px}
-  .insr .ilm b{font-size:16px}.insr .ilm small{font-size:13.5px}.insr em{font-size:20px}
+  .insr .ilm b{font-size:16px}.insr .insv2r small{font-size:13.5px}.insr em{font-size:20px}
 }
 @media(min-width:1100px) and (orientation:landscape){
   .insv{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
@@ -3289,21 +3329,61 @@ html[data-mode=light] .cwr small{color:#993c1d}.cwr.cwp small{color:var(--mint)}
 @keyframes cwdrop{0%,100%{transform:translateY(-2px)}50%{transform:translateY(2px)}}
 .nai[data-k=cw] svg.cwi{width:1.25em;color:#ff7a45;fill:currentColor}html[data-mode=light] .nai[data-k=cw] svg.cwi{color:#d85a30}
 @media(prefers-reduced-motion:reduce){.cwi .cwa{animation:none}}
-/* Room cards (Home): the card is tinted by the room's temperature colour (--tc). Only a room outside its comfortable range moves:
-   frost twinkles when it's too cold, warm air rises when it's too warm. A comfortable room stays still. (13-rooms.js fillCard sets data-tz.) */
+/* Room cards: the card is tinted by the room's temperature colour (--tc), and each colour band has its own movement (13-rooms.js fillCard sets data-fx, 0-6):
+   freezing frost + snow, cold snow, cool a breeze, comfortable still, pleasant a sun glow, warm air rising, hot heat waves + embers + a hot glow.
+   Everything stays in the empty area beside and above the temperature, so nothing passes over the (see-through) badges. */
 html[data-roomfx=tint] .rc>.rg{opacity:1;background:linear-gradient(160deg,color-mix(in srgb,var(--tc) 38%,transparent),color-mix(in srgb,var(--tc) 70%,transparent))}
 html[data-roomfx=tint][data-mode=light] .rc>.rg{background:linear-gradient(160deg,color-mix(in srgb,var(--tc) 55%,transparent),color-mix(in srgb,var(--tc) 95%,transparent))}
 html[data-roomfx=tint] .rc>.rg::before,html[data-roomfx=tint] .rc>.rg::after{display:none!important;animation:none!important}
 .rc>.rg>b{display:none}
-html[data-roomfx=tint] .rc[data-tz=cold]>.rg>b{display:block;position:absolute;width:4px;height:4px;border-radius:50%;background:#fff;box-shadow:0 0 6px 1px rgba(181,212,244,.9);opacity:.2;animation:rtw 3.2s ease-in-out infinite}
-html[data-roomfx=tint][data-mode=light] .rc[data-tz=cold]>.rg>b{background:#85b7eb;box-shadow:0 0 5px 1px rgba(133,183,235,.7)}
-.rc[data-tz=cold]>.rg>b:nth-child(1){right:14%;top:56%}.rc[data-tz=cold]>.rg>b:nth-child(2){right:30%;top:78%;animation-delay:.8s}.rc[data-tz=cold]>.rg>b:nth-child(3){right:8%;top:30%;animation-delay:1.6s;width:3px;height:3px}.rc[data-tz=cold]>.rg>b:nth-child(4){right:22%;top:40%;animation-delay:2.4s;width:3px;height:3px}
-@keyframes rtw{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:.95;transform:scale(1)}}
-html[data-roomfx=tint] .rc[data-tz=warm]>.rg>b{display:block;position:absolute;bottom:8px;width:3px;height:16px;border-radius:3px;background:#ef9f27;opacity:0;animation:rwarm 2.8s ease-in infinite}
-.rc[data-tz=warm]>.rg>b:nth-child(1){right:12%}.rc[data-tz=warm]>.rg>b:nth-child(2){right:20%;animation-delay:.7s}.rc[data-tz=warm]>.rg>b:nth-child(3){right:28%;animation-delay:1.4s}.rc[data-tz=warm]>.rg>b:nth-child(4){right:16%;animation-delay:2.1s;height:12px}
-@keyframes rwarm{0%{transform:translateY(4px);opacity:0}30%{opacity:.85}100%{transform:translateY(-44px);opacity:0}}
-html.camlive .rc>.rg>b{animation:none!important;opacity:.5}
-@media(prefers-reduced-motion:reduce){.rc>.rg>b{animation:none!important;opacity:.6}}
+/* one animation per colour band (data-fx, 0-6, the same cut-offs as the colour), all kept above the badges: */
+.rc>.rg>b,.rc>.rg>s{display:none;position:absolute;pointer-events:none}
+/* 0 freezing: frost in the top-right corner, slowly spreading, and snowflakes drifting down */
+html[data-roomfx=tint] .rc[data-fx="0"]>.rg>s{display:block;right:-30%;top:-30%;width:90%;height:75%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.75),rgba(220,236,255,.35) 45%,transparent 70%);filter:blur(2px);animation:rfr 6s ease-in-out infinite}
+@keyframes rfr{0%,100%{transform:scale(.85);opacity:.6}50%{transform:scale(1.05);opacity:1}}
+html[data-roomfx=tint] .rc[data-fx="0"]>.rg>b,html[data-roomfx=tint] .rc[data-fx="1"]>.rg>b{display:block;top:-8px;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 6px rgba(160,200,255,.9);animation:rsn 5s linear infinite}
+html[data-roomfx=tint] .rc[data-fx="0"]>.rg>b:nth-of-type(1),html[data-roomfx=tint] .rc[data-fx="1"]>.rg>b:nth-of-type(1){right:10%}
+html[data-roomfx=tint] .rc[data-fx="0"]>.rg>b:nth-of-type(2),html[data-roomfx=tint] .rc[data-fx="1"]>.rg>b:nth-of-type(2){right:24%;animation-delay:1.2s;width:4px;height:4px}
+html[data-roomfx=tint] .rc[data-fx="0"]>.rg>b:nth-of-type(3),html[data-roomfx=tint] .rc[data-fx="1"]>.rg>b:nth-of-type(3){right:36%;animation-delay:2.5s}
+html[data-roomfx=tint] .rc[data-fx="0"]>.rg>b:nth-of-type(4),html[data-roomfx=tint] .rc[data-fx="1"]>.rg>b:nth-of-type(4){right:16%;animation-delay:3.7s;width:4px;height:4px}
+html[data-roomfx=tint] .rc[data-fx="0"]>.rg>b:nth-of-type(5){display:block;right:30%;animation-delay:.6s}html[data-roomfx=tint] .rc[data-fx="0"]>.rg>b:nth-of-type(6){display:block;right:5%;animation-delay:3.1s;width:3px;height:3px}
+@keyframes rsn{0%{top:-4%;transform:translateX(0);opacity:0}12%{opacity:1}50%{transform:translateX(-8px)}80%{opacity:.9}100%{top:46%;transform:translateX(4px);opacity:0}}
+html[data-roomfx=tint] .rc[data-fx="1"]>.rg>b{animation-duration:7s;opacity:.8}
+/* 2 cool: breeze lines drifting across the top right */
+html[data-roomfx=tint] .rc[data-fx="2"]>.rg>b{display:block;height:2px;width:34%;border-radius:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);animation:rbz 4.5s ease-in-out infinite}
+html[data-roomfx=tint] .rc[data-fx="2"]>.rg>b:nth-of-type(1){top:30%;right:0}html[data-roomfx=tint] .rc[data-fx="2"]>.rg>b:nth-of-type(2){top:40%;right:0;animation-delay:1.5s;width:26%}html[data-roomfx=tint] .rc[data-fx="2"]>.rg>b:nth-of-type(3){top:50%;right:0;animation-delay:3s}
+@keyframes rbz{0%{transform:translateX(-160%);opacity:0}30%{opacity:1}100%{transform:translateX(120%);opacity:0}}
+/* 3 comfortable: still */
+/* 4 pleasant warm: a soft sun glow in the corner, breathing */
+html[data-roomfx=tint] .rc[data-fx="4"]>.rg>s{display:block;right:-25%;top:-25%;width:80%;height:70%;border-radius:50%;background:radial-gradient(circle,rgba(255,236,170,.95),rgba(255,214,120,.4) 45%,transparent 70%);animation:rgl 5s ease-in-out infinite}
+@keyframes rgl{0%,100%{transform:scale(.9);opacity:.7}50%{transform:scale(1.08);opacity:1}}
+/* 5 warm: wavy warm air rising beside the temperature (above the badges) */
+html[data-roomfx=tint] .rc[data-fx="5"]>.rg>b,html[data-roomfx=tint] .rc[data-fx="6"]>.rg>b{display:block;top:30%;width:12px;height:26px;opacity:0;background:no-repeat center/100% 100% url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 28'%3E%3Cpath d='M6 27c-5-4 5-7 0-11s5-7 0-11' fill='none' stroke='%23e8822a' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");animation:rrs 3.2s ease-in infinite}
+html[data-roomfx=tint] .rc[data-fx="5"]>.rg>b:nth-of-type(1),html[data-roomfx=tint] .rc[data-fx="6"]>.rg>b:nth-of-type(1){right:10%}
+html[data-roomfx=tint] .rc[data-fx="5"]>.rg>b:nth-of-type(2),html[data-roomfx=tint] .rc[data-fx="6"]>.rg>b:nth-of-type(2){right:20%;animation-delay:1.1s}
+html[data-roomfx=tint] .rc[data-fx="5"]>.rg>b:nth-of-type(3),html[data-roomfx=tint] .rc[data-fx="6"]>.rg>b:nth-of-type(3){right:30%;animation-delay:2.2s}
+@keyframes rrs{0%{transform:translateY(0);opacity:0}30%{opacity:.95}100%{transform:translateY(-60px);opacity:0}}
+/* 6 hot: faster heat waves, embers rising, and a hot glow pulsing */
+html[data-roomfx=tint] .rc[data-fx="6"]>.rg>b{animation-duration:2s;filter:hue-rotate(-15deg) saturate(1.4)}
+html[data-roomfx=tint] .rc[data-fx="6"]>.rg>b:nth-of-type(4),html[data-roomfx=tint] .rc[data-fx="6"]>.rg>b:nth-of-type(5),html[data-roomfx=tint] .rc[data-fx="6"]>.rg>b:nth-of-type(6){width:5px;height:5px;border-radius:50%;background:#ff7a2e;box-shadow:0 0 8px 2px rgba(255,110,40,.8);animation:rem 2.6s ease-out infinite}
+html[data-roomfx=tint] .rc[data-fx="6"]>.rg>b:nth-of-type(4){right:14%;animation-delay:.3s}html[data-roomfx=tint] .rc[data-fx="6"]>.rg>b:nth-of-type(5){right:26%;animation-delay:1.2s}html[data-roomfx=tint] .rc[data-fx="6"]>.rg>b:nth-of-type(6){right:6%;animation-delay:2s}
+@keyframes rem{0%{transform:translate(0,6px);opacity:0}20%{opacity:1}100%{transform:translate(-10px,-60px);opacity:0}}
+html[data-roomfx=tint] .rc[data-fx="6"]>.rg>s{display:block;right:-25%;top:-20%;width:90%;height:75%;border-radius:50%;background:radial-gradient(circle,rgba(255,120,60,.55),transparent 65%);animation:rgl 2.4s ease-in-out infinite}
+
+/* light mode: snow and breeze in a cool blue so they show on a pale card */
+html[data-roomfx=tint][data-mode=light] .rc[data-fx="0"]>.rg>b,html[data-roomfx=tint][data-mode=light] .rc[data-fx="1"]>.rg>b{background:#9cc6f2;box-shadow:0 0 5px rgba(90,150,220,.8)}
+html[data-roomfx=tint][data-mode=light] .rc[data-fx="2"]>.rg>b{background:linear-gradient(90deg,transparent,rgba(70,140,210,.8),transparent)}
+
+html[data-roomfx=tint][data-mode=light] .rc[data-fx="0"]>.rg>b,html[data-roomfx=tint][data-mode=light] .rc[data-fx="1"]>.rg>b{background:#5f9fe0;box-shadow:0 0 5px rgba(60,130,210,.9)}
+html[data-roomfx=tint][data-mode=light] .rc[data-fx="0"]>.rg>s{background:radial-gradient(circle,rgba(255,255,255,.95),rgba(190,220,255,.6) 45%,transparent 70%)}
+html[data-roomfx=tint][data-mode=light] .rc[data-fx="2"]>.rg>b{height:2.5px;background:linear-gradient(90deg,transparent,rgba(40,120,200,.85),transparent)}
+html[data-roomfx=tint][data-mode=light] .rc[data-fx="4"]>.rg>s{background:radial-gradient(circle,rgba(255,220,110,.95),rgba(255,200,80,.5) 45%,transparent 70%)}
+html[data-roomfx=tint][data-mode=light] .rc[data-fx="5"]>.rg>b,html[data-roomfx=tint][data-mode=light] .rc[data-fx="6"]>.rg>b{filter:saturate(1.6) brightness(.85)}
+html[data-roomfx=tint][data-mode=light] .rc[data-fx="6"]>.rg>s{background:radial-gradient(circle,rgba(255,110,50,.6),transparent 65%)}
+html.camlive .rc>.rg>b,html.camlive .rc>.rg>s{animation:none!important;opacity:.5}
+@media(prefers-reduced-motion:reduce){.rc>.rg>b{display:none!important}.rc>.rg>s{animation:none!important}}
+/* the pieces a band doesn't use stay hidden (cold uses 4, cool 3, warm 3) */
+html[data-roomfx=tint] .rc[data-fx="1"]>.rg>b:nth-of-type(n+5),html[data-roomfx=tint] .rc[data-fx="2"]>.rg>b:nth-of-type(n+4),html[data-roomfx=tint] .rc[data-fx="5"]>.rg>b:nth-of-type(n+4){display:none}
 /* Fan and heated towel tiles (rooms, the Active pop-up), in the style of the Insights climate tiles:
    a fan is lavender with a fan turning in the corner; a towel rail is coral with warm air rising (no temperature: it has no reading). */
 html:not(#x):not(#y):not(#z) .tl.fx-air.on{background:rgba(175,169,236,.16);border:1px solid rgba(175,169,236,.45);box-shadow:none;color:var(--ink)}
@@ -3356,6 +3436,120 @@ html[data-mode=dark]:not(#x) .cb2.hvc{color:color-mix(in srgb,rgb(var(--ha)) 60%
 @keyframes mmdrip{0%,100%{transform:translateY(-2px)}50%{transform:translateY(2px)}}
 html.camlive #mm .chip svg{animation:none!important}
 @media(prefers-reduced-motion:reduce){#mm .chip svg{animation:none!important}}
+/* a climate room's on button (its own mode is often heat_cool) is lit in the heat pump's mode, like the Climate page's main buttons: COOL is blue when the heat pump cools */
+html:not(#x):not(#y):not(#z) .card.rm[data-hm] .chip[data-m]:not([data-m=off]){--mc:rgb(var(--mrgb))}
+/* side menu in groups (Home / Outside / Info), Settings pinned at the bottom; the phone's More sheet uses the same groups */
+nav{gap:6px;overflow-y:auto;scrollbar-width:none;overscroll-behavior:contain}nav::-webkit-scrollbar{display:none}
+nav a{padding:9px 14px;flex:none}
+nav .ngh{font:600 10px var(--mono);letter-spacing:.18em;opacity:.55;margin:8px 6px 0;flex:none}
+nav .ngh:first-of-type{margin-top:0}
+nav .ngh[hidden]{display:none}
+nav a.nset{margin-top:auto;display:flex;align-items:center;gap:8px;flex:none}
+nav a.nset svg{width:17px;height:17px;fill:currentColor;flex:none}
+body.m-tabs nav .ngh{display:none}
+@media(max-height:820px) and (min-width:761px){nav{gap:5px}nav a{padding:8px 14px}nav .t{padding:2px 0 8px}nav .ngh{margin-top:6px}}
+@media(max-width:760px){
+#mshe .mgh{grid-column:1/-1;font:600 10px var(--mono);letter-spacing:.18em;color:var(--mut);margin:6px 4px -2px}
+#mshe .mgh:first-child{margin-top:0}
+#mshe .mgh[hidden]{display:none}
+#mshe a.mset{grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:10px;padding:12px 16px;margin-top:4px}
+#mshe a.mset svg{width:20px;height:20px}
+}
+nav a[hidden],#mshe a[hidden]{display:none!important}
+/* Settings: the tab row on top of #theme and #admin */
+.chips.tabs.setchips{margin-bottom:calc(14px - var(--tb))}
+/* Account */
+.acw{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.acav{width:42px;height:42px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:500;background:color-mix(in srgb,var(--mint) 22%,transparent);color:var(--mint)}
+.acn{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.acn b{font-weight:500;font-size:16px}.acn small{color:var(--mut);font-size:12px}
+.pwf{display:grid;gap:10px;margin-top:12px;max-width:440px}
+.pwi{display:flex;align-items:center;gap:10px;height:46px;padding:0 6px 0 14px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--w),.05);color:var(--mut);transition:border-color .2s}
+.pwi:focus-within{border-color:var(--mint)}.pwi.bad{border-color:#ff6b5e}
+.pwi>svg{width:18px;height:18px;fill:currentColor;flex:none}
+.pwi input{flex:1;min-width:0;height:100%;border:0;background:none;outline:none;color:var(--ink);font:inherit;font-size:15px}
+.pwe{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:none;color:var(--mut);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.pwe svg{width:20px;height:20px;fill:currentColor}.pwe.on{color:var(--mint)}
+.pwm{font-size:13px;color:var(--mut);display:flex;align-items:center;gap:6px;line-height:1.4}.pwm svg{width:18px;height:18px;fill:currentColor;flex:none}
+.pwm.err{color:#ff8a80}.pwm.ok{color:var(--mint)}
+html[data-mode=light] .pwm.err{color:#c62828}
+.pwgo{justify-self:start}
+/* admin: quick actions */
+.adqg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.adq{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:rgba(var(--w),.06);color:var(--ink);text-align:left;cursor:pointer;font:inherit}
+.adq svg{width:22px;height:22px;fill:currentColor;flex:none}.adq span{display:flex;flex-direction:column;gap:2px;min-width:0}.adq b{font-weight:500;font-size:14px}.adq small{color:var(--mut);font-size:12px}
+.adq.bad{border-color:color-mix(in srgb,#ff6b5e 45%,transparent)}.adq.bad svg,.adq.bad b{color:#ff8a80}
+html[data-mode=light] .adq.bad svg,html[data-mode=light] .adq.bad b{color:#c62828}
+.adq[disabled]{opacity:.5}
+.adqm{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:13px;color:var(--mint)}.adqm svg{width:18px;height:18px;fill:currentColor}.adqm.err{color:#ff8a80}
+.adqh{margin-top:14px}.adqh .eb svg,.adbt .eb svg{width:16px;height:16px;fill:currentColor;vertical-align:-3px}
+.adpre{margin:10px 0 0;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.25);border:1px solid var(--line);font:12px/1.55 var(--mono);white-space:pre-wrap;word-break:break-word;color:var(--ink);max-height:260px;overflow:auto}
+html[data-mode=light] .adpre{background:rgba(0,0,0,.04)}
+/* admin: entities and automations (list + detail; on a phone the detail is a bottom sheet) */
+.adw{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:start}
+.adw>.pn{margin:0}
+.ads{display:flex;align-items:center;gap:10px;height:44px;padding:0 14px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--w),.05);color:var(--mut)}
+.ads:focus-within{border-color:var(--mint)}.ads svg{width:18px;height:18px;fill:currentColor;flex:none}
+.ads input{flex:1;min-width:0;height:100%;border:0;background:none;outline:none;color:var(--ink);font:inherit;font-size:15px;-webkit-appearance:none;appearance:none}
+.adch{margin:12px 0 4px}.adch .chips.tabs{--tb:10px}
+.chip.adbad{color:#ff8a80;border-color:color-mix(in srgb,#ff6b5e 40%,transparent)}.chip.adbad.on{background:#ff6b5e;border-color:#ff6b5e;color:#2a0d0b}
+html[data-mode=light] .chip.adbad:not(.on){color:#c62828}
+.adrs{display:flex;flex-direction:column}
+.adr{display:flex;align-items:center;gap:12px;width:100%;padding:10px 8px;margin:0;border:0;border-top:1px solid var(--line);background:none;color:var(--ink);font:inherit;text-align:left;cursor:pointer;border-radius:0;box-sizing:border-box}
+.adr:first-child{border-top:0}
+.adr.sel{background:rgba(var(--w),.08);border-radius:12px;border-top-color:transparent}.adr.sel+.adr{border-top-color:transparent}
+.adn{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.adn b{font-weight:500;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adn small{font:11px var(--mono);color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adr em{font:600 11px var(--mono);font-style:normal;letter-spacing:.06em;color:var(--mut);flex:none;max-width:42%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adr em.on,.adv .on{color:var(--mint)}.adr em.bad,.adv .bad{color:#ff8a80}
+html[data-mode=light] .adr em.bad,html[data-mode=light] .adv .bad{color:#c62828}
+.adra.err .adn b,.adra.err .adn small{color:#ff8a80}.adra.off .adn b{color:var(--mut)}
+html[data-mode=light] .adra.err .adn b,html[data-mode=light] .adra.err .adn small{color:#c62828}
+.admore,.ademp,.adhl{font-size:13px;color:var(--mut);padding:12px 4px;line-height:1.5}
+.adsw{position:relative;flex:none;width:46px;height:26px;border-radius:13px;border:0;padding:0;background:rgba(var(--w),.18);cursor:pointer;transition:background .2s}
+.adsw i{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35);transition:transform .2s}
+.adsw.on{background:var(--mint)}.adsw.on i{transform:translateX(20px)}
+.add{position:sticky;top:12px}
+.adhint{display:flex;flex-direction:column;align-items:center;gap:10px;padding:40px 16px;text-align:center;color:var(--mut);font-size:14px;line-height:1.5}.adhint svg{width:30px;height:30px;fill:currentColor;opacity:.6}
+.addh{display:flex;align-items:center;gap:10px}.addh>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}.addh b{font-weight:500;font-size:18px}.addh small{font:11.5px var(--mono);color:var(--mut);word-break:break-all}
+.adic{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(var(--w),.06);color:var(--ink);display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer}
+.adic svg{width:18px;height:18px;fill:currentColor}.adic.ok,.eb.ok{color:var(--mint);border-color:var(--mint)}
+.adx{display:none}
+.adv{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:16px}.adv>span{font-size:30px;font-weight:300;line-height:1.1;word-break:break-word}
+.adsel,.adnum{height:38px;border-radius:12px;border:1px solid var(--line);background:rgba(var(--w),.06);color:var(--ink);font:inherit;padding:0 10px}.adnum{width:110px}
+.adsince{font-size:12.5px;color:var(--mut);margin-top:4px}
+.adh{margin-top:14px;min-height:34px}.adh svg{display:block;width:100%;height:34px}
+.adhr{display:flex;justify-content:space-between;font:10.5px var(--mono);color:var(--mut);margin-top:2px}
+.adhx{display:flex;justify-content:space-between;font:600 10px var(--mono);letter-spacing:.12em;color:var(--mut);margin-top:4px}
+.adal{margin:18px 0 6px}
+.adat{display:flex;gap:12px;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line);font:12px var(--mono)}.adat:first-of-type{border-top:0}
+.adat b{font-weight:400;color:var(--mut);flex:none;max-width:45%;overflow:hidden;text-overflow:ellipsis}.adat span{text-align:right;word-break:break-word;min-width:0}
+.adbt{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.adruns{margin-top:4px}
+.adsteps{margin-top:8px}
+.adst{display:flex;gap:12px;padding:8px 0}.adst>i{width:12px;height:12px;border-radius:50%;flex:none;margin-top:4px;background:var(--mint)}
+.adst>div{display:flex;flex-direction:column;gap:2px;min-width:0}.adst b{font-weight:500;font-size:14px}.adst small{font-size:12.5px;color:var(--mut);word-break:break-word}
+.adst.bad>i{background:#ff6b5e}.adst.bad small{color:#ff8a80}.adst.no{opacity:.45}.adst.no>i{background:rgba(var(--w),.35)}
+html[data-mode=light] .adst.bad small{color:#c62828}
+.admbk{display:none}
+/* admin: logs */
+.adlh{display:flex;align-items:center;gap:10px}.adlh .adch{flex:1;min-width:0;margin:0}.adlh .eb svg{width:16px;height:16px;fill:currentColor;vertical-align:-3px}
+.adlog .adrs{margin-top:8px}
+.adlg{display:flex;gap:12px;align-items:flex-start;padding:11px 4px;border-top:1px solid var(--line);cursor:pointer}.adlg:first-child{border-top:0}
+.adlv{flex:none;font:600 10px var(--mono);letter-spacing:.1em;padding:3px 7px;border-radius:6px;margin-top:2px;background:rgba(var(--w),.1);color:var(--mut)}
+.adlv.err{background:rgba(255,107,94,.2);color:#ffb0a8}.adlv.warn{background:rgba(255,184,77,.2);color:#ffd28a}
+html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{color:#8a5a00}
+.adlb{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}.adlb>b{font-weight:400;font-size:14px;line-height:1.4;word-break:break-word}
+.adlg:not(.open) .adlb>b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.adlb>small{font:11px var(--mono);color:var(--mut);word-break:break-all}
+.adln{flex:none;font:11px var(--mono);color:var(--mut);margin-top:3px}
+@media(max-width:760px){
+  .adw{grid-template-columns:minmax(0,1fr)}
+  .adqg{grid-template-columns:minmax(0,1fr)}
+  .add{display:none;position:fixed;left:0;right:0;bottom:0;top:auto;z-index:82;max-height:86dvh;overflow-y:auto;overscroll-behavior:contain;margin:0!important;border-radius:26px 26px 0 0;padding:20px 18px calc(26px + env(safe-area-inset-bottom,0px));background:var(--bg);box-shadow:0 -10px 40px rgba(0,0,0,.35);animation:shUp .32s cubic-bezier(.2,.85,.3,1) both}
+  .adw.det .add{display:block}.adw.det .admbk{display:block;position:fixed;inset:0;z-index:81;background:rgba(0,0,0,.5);animation:thIn .2s ease}
+  .adx{display:flex}
+  .adhint{display:none}
+}
 </style>
 </head>
 <body>
@@ -3363,13 +3557,13 @@ html.camlive #mm .chip svg{animation:none!important}
 <div id="bd"></div>
 <nav>
   <div class="t" id="outs">--°C</div><div class="t" id="nclk" role="button" aria-label="Notifications">--:--</div>
-  <a href="#home" class="on">HOME</a><a href="#rooms">ROOMS</a><a href="#climate">CLIMATE</a><a href="#security">SECURITY</a><a href="#weather">WEATHER</a><a href="#energy">ENERGY</a><a href="#irrigation">IRRIGATION</a><a href="#scenes">SCENES</a><a href="#insights">INSIGHTS</a><a href="#media">MEDIA</a><a href="#events">EVENTS</a><a href="#vehicle">VEHICLE</a><a href="#hazards">HAZARDS</a><a href="#theme">THEME</a><a href="#admin">ADMIN</a><a href="/config/dashboard" id="navset" class="nset">SETTINGS</a>
+  <div class="ngh" data-g="home">HOME</div><a href="#home" data-g="home" class="on">HOME</a><a href="#rooms" data-g="home">ROOMS</a><a href="#climate" data-g="home">CLIMATE</a><a href="#security" data-g="home">SECURITY</a><a href="#energy" data-g="home">ENERGY</a><a href="#scenes" data-g="home">SCENES</a><div class="ngh" data-g="outside">OUTSIDE</div><a href="#weather" data-g="outside">WEATHER</a><a href="#irrigation" data-g="outside">IRRIGATION</a><a href="#vehicle" data-g="outside">VEHICLE</a><a href="#hazards" data-g="outside">HAZARDS</a><div class="ngh" data-g="info">INFO</div><a href="#insights" data-g="info">INSIGHTS</a><a href="#media" data-g="info">MEDIA</a><a href="#events" data-g="info">EVENTS</a><a href="#settings" id="navset" class="nset" data-i2="n-set">SETTINGS</a>
 </nav>
 <div id="btab"><a href="#home" data-i2="n-home"><span>Home</span></a><a href="#rooms" data-i2="n-rooms"><span>Rooms</span></a><a href="#climate" data-i2="n-climate"><span>Climate</span></a><a href="#security" data-i2="n-cam"><span>Camera</span></a><button id="bmore" data-i2="n-more"><span>More</span></button></div>
 <div id="npmini" class="npoff"></div><div id="npfab"></div>
 <div id="lvsheet"><div class="lvbk" data-lv="close"></div><div class="pn lvb" id="lvbody"></div></div>
 <div id="npsheet"><div class="npbk" data-np="close"></div><div class="pn npb" id="npbody"></div></div>
-<div id="mshe"><a href="#scenes" data-i2="n-scenes"><span>Scenes</span></a><a href="#insights" data-i2="lightbulb-on"><span>Insights</span></a><a href="#weather" data-i2="n-weather"><span>Weather</span></a><a href="#energy" data-i2="n-energy"><span>Energy</span></a><a href="#irrigation" data-i2="n-irr"><span>Irrigation</span></a><a href="#media" data-i2="music-note"><span>Media</span></a><a href="#events" data-i2="n-events"><span>Events</span></a><a href="#vehicle" data-i2="v-car"><span>Vehicle</span></a><a href="#hazards" data-i2="volcano"><span>Hazards</span></a><a href="#theme" data-i2="n-palette"><span>Theme</span></a><a href="#admin" data-i2="n-admin"><span>Admin</span></a><a href="/config/dashboard" id="navset2" data-i2="n-set"><span>Settings</span></a></div>
+<div id="mshe"><div class="mgh" data-g="home">HOME</div><a href="#energy" data-g="home" data-i2="n-energy"><span>Energy</span></a><a href="#scenes" data-g="home" data-i2="n-scenes"><span>Scenes</span></a><div class="mgh" data-g="outside">OUTSIDE</div><a href="#weather" data-g="outside" data-i2="n-weather"><span>Weather</span></a><a href="#irrigation" data-g="outside" data-i2="n-irr"><span>Irrigation</span></a><a href="#vehicle" data-g="outside" data-i2="v-car"><span>Vehicle</span></a><a href="#hazards" data-g="outside" data-i2="volcano"><span>Hazards</span></a><div class="mgh" data-g="info">INFO</div><a href="#insights" data-g="info" data-i2="lightbulb-on"><span>Insights</span></a><a href="#media" data-g="info" data-i2="music-note"><span>Media</span></a><a href="#events" data-g="info" data-i2="n-events"><span>Events</span></a><a href="#settings" id="navset2" class="mset" data-i2="n-set"><span>Settings</span></a></div>
 <div class="main">
   <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><div id="hnp" class="npoff"></div><div class="hr"><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header>
   <div id="alb" hidden></div>
@@ -3427,16 +3621,16 @@ html.camlive #mm .chip svg{animation:none!important}
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.6"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=1"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="config.js?v=2.5.7"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.7"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.7"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.6";   // the one place to change the version
-window.DASH_BUILD = "74eb5f";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.5.7";   // the one place to change the version
+window.DASH_BUILD = "091e31";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -3507,9 +3701,9 @@ function ruApply(o) {   // hides what this person may not use; the engine also s
   if (RU) {
     off.forEach(p => { css += 'nav a[href="#' + p + '"],#btab a[href="#' + p + '"],#mshe a[href="#' + p + '"]{display:none!important}'; });
     try { if (Array.isArray(RU.rooms)) { hideT = 0; css += "#grid{--nr:" + Math.max(1, CONFIG.rooms.filter(r => !r.main && !entHidden(r.id)).length) + "}"; CONFIG.rooms.forEach((r, i) => { if (!r.main && entHidden(r.id)) css += '#grid>.card[data-cl="' + r.id + '"]{display:none!important}#gdots i[data-i="' + i + '"]{display:none}'; }); } } catch (_) {}   // a room hidden from this person has no climate control either (not ready yet on the very first call: ruRefresh applies again)
-    css += "#outs,#hnp{display:none!important}#hc{pointer-events:none}#nacc{display:none!important}";   // no notification pop-up (it holds the "all off" switches and admin toggles); the Settings link stays, Home Assistant itself decides what a non-admin may open
+    css += "#outs,#hnp{display:none!important}#hc{pointer-events:none}#nacc{display:none!important}";   // no notification pop-up (it holds the "all off" switches and admin toggles); the Settings item stays (their Account tab, and Display if allowed)
     if (!PAGE_ON("security") || !ruSec("alarm")) css += "#al,#alb{display:none!important}";
-    if (!["climate", "weather", "energy", "irrigation", "media", "events", "vehicle", "hazards", "insights", "theme"].some(PAGE_ON)) css += "#bmore{display:none!important}";
+    if (!["climate", "weather", "energy", "irrigation", "media", "events", "vehicle", "hazards", "insights", "theme"].some(PAGE_ON) && !(typeof setAcct === "function" && setAcct())) css += "#bmore{display:none!important}";   // More holds Settings (their Account tab)
     if (off.indexOf("media") > -1) css += "#npmini,#npfab,#npsheet,#hnote{display:none!important}";
     if (left <= 1 || RU.header === false) css += "#hb{display:none!important}";
     if (!ruSec("alarm")) css += "#alp{display:none!important}";
@@ -3518,7 +3712,7 @@ function ruApply(o) {   // hides what this person may not use; the engine also s
   }
   st.textContent = css; b.classList.toggle("adm", ADMIN_ON()); b.classList.toggle("ru", !!RU); b.classList.toggle("ru1", !!RU && left <= 1);
   try { localStorage.setItem("dashRuO", RU ? JSON.stringify(RU) : "-"); } catch (_) {}
-  try { setLinks(); } catch (_) {}   // the Settings link points at Settings for an admin and at the profile page for everyone else (38-energy.js; not defined yet on the very first call)
+  try { setLinks(); } catch (_) {}   // the menu's group headings and its Settings item follow who is signed in (38-energy.js / 30-settings.js; not defined yet on the very first call)
 }
 function ruRefresh() { if (!identDone) return; const o = ruResolve(); if (JSON.stringify(o) !== JSON.stringify(RU)) { ruApply(o); route(); if (curPg() === "theme") drawPalette(); if (curPg() === "admin") drawAdmin(); } else ruApply(o); }
 let userName = "", userKnown = false; try { const c = localStorage.getItem("dashUser"); if (c != null) { userKnown = true; userName = c === "-" ? "" : c; } } catch (_) {}
@@ -3699,7 +3893,12 @@ window.__ZHD={"D": {"0.0 mm": "0.0 毫米", "1 hr": "1 小时", "2 hr": "2 小�
     "nothing on today": "今天没有安排", "not playing": "未播放", "sunny": "晴", "noon": "中午", "quiet": "安静", "kwh": "千瓦时",
     // theme / admin / misc
     "metro": "Metro", "config editor": "配置编辑器", "all closed": "全部关闭", "all shut": "全部关闭", "all doors and windows": "所有门窗", "armed": "已布防", "alarm armed": "警报已布防", "driveway alerts": "车道提醒", "open climate": "打开气候", "open energy": "打开能源", "open events": "打开日程", "open hazards": "打开灾害", "open irrigation": "打开灌溉", "open notifications": "打开通知", "open security": "打开安防", "open weather": "打开天气",
-    "display": "显示", "seasons": "季节", "animation": "动画", "driving": "驾驶", "car": "汽车", "setup": "设置", "access": "访问", "doors & climate": "门窗和气候", "lights & curtains": "灯光和窗帘", "room": "房间",
+    "display": "显示", "seasons": "季节", "animation": "动画", "driving": "驾驶", "car": "汽车", "setup": "配置", "access": "访问", "doors & climate": "门窗和气候", "lights & curtains": "灯光和窗帘", "room": "房间",
+    // menu groups and the Settings page (2.5.7)
+    "info": "信息", "outside": "室外", "account": "账户", "status": "状态", "entities": "实体", "logs": "日志", "change password": "修改密码", "quick actions": "快捷操作",
+    "attributes": "属性", "recent runs": "最近运行", "reload automations": "重新加载自动化", "reload templates": "重新加载模板", "check config": "检查配置", "restart home assistant": "重启 Home Assistant",
+    "open ha settings": "打开 HA 设置", "open in ha": "在 HA 中打开", "run now": "立即运行", "refresh": "刷新", "copy": "复制", "open automation": "打开自动化", "warnings": "警告", "errors": "错误",
+    "sign out of this device": "在此设备上退出登录", "signed in on this device": "已在此设备上登录", "at least 8 characters.": "至少 8 个字符。",
     "heating": "制热中", "cooling": "制冷中", "resting": "待机", "turn off": "关闭", "heat / cool": "制热 / 制冷",
     "hide this for today?": "今天隐藏此项？", "hide": "隐藏", "cancel": "取消", "show them": "显示", "hide for today": "今天隐藏",
     "language": "语言", "tap to open": "点击打开", "tap to close": "点击关闭", "tap to stop": "点击停止", "garage door": "车库门", "lights": "灯光", "living area": "起居区", "all off": "全部关闭", "heat escaping · 2 rooms": "热量流失 · 2 个房间", "paused · back on 3 s after it's shut": "已暂停 · 关好 3 秒后恢复", "shut · back on in a moment": "已关好 · 即将恢复", "paused until it's shut": "已暂停，直到关好"
@@ -4127,25 +4326,43 @@ function home() {
 // glow uses its own saturated colours so it stays vivid on any theme (the pastel palette turns grey over tinted backgrounds)
 const GLOW = ["#af9bec", "#78acfc", "#62cdec", "#80d89c", "#fcd36a", "#ffa368", "#f87b80"];
 function glowColor(t) { return isNaN(t) ? "transparent" : GLOW[t < 13 ? 0 : t < 16 ? 1 : t < 19 ? 2 : t < 22 ? 3 : t < 24 ? 4 : t < 27 ? 5 : 6]; }
+// the 7 temperature bands: under 13 freezing, 13-16 cold, 16-19 cool, 19-22 comfortable, 22-24 pleasant, 24-27 warm, 27+ hot (each has its colour, and a room card its animation)
+const tempBand = t => t < 13 ? 0 : t < 16 ? 1 : t < 19 ? 2 : t < 22 ? 3 : t < 24 ? 4 : t < 27 ? 5 : 6;
 function tempColor(t) {
   if (t == null || isNaN(t)) return "rgba(245,245,245,0.7)";
-  return "rgba(" + rgbOf(PAL.temp[t < 13 ? 0 : t < 16 ? 1 : t < 19 ? 2 : t < 22 ? 3 : t < 24 ? 4 : t < 27 ? 5 : 6]) + ",0.7)";
+  return "rgba(" + rgbOf(PAL.temp[tempBand(t)]) + ",0.7)";
 }
 function loadFc() {
   send({ type: "call_service", domain: "weather", service: "get_forecasts", service_data: { type: "daily" }, target: { entity_id: W }, return_response: true },
     r => { bootMark("f"); fc = r.response[W].forecast || []; drawFc(); home(); });
 }
+// Today's tile covers what is left of today: its rain chance, rain and sky come from the hourly forecast from this hour to midnight
+// (the daily forecast gives the whole day, so a wet morning kept saying 40% all evening). High / low stay the day's. Other days are unchanged.
+const FC_WET = ["lightning-rainy", "pouring", "hail", "snowy-rainy", "snowy", "lightning", "rainy"];
+function fcDay(d, i) {
+  if (!d || i !== 0 || new Date(d.datetime).toDateString() !== new Date().toDateString()) return d;
+  const now = new Date(), h0 = new Date(now); h0.setMinutes(0, 0, 0); const end = new Date(now); end.setHours(24, 0, 0, 0);
+  const H = (typeof fcH !== "undefined" ? fcH : []).filter(x => { const t = new Date(x.datetime); return t >= h0 && t < end; });
+  if (!H.length) return d;
+  const pp = Math.max.apply(null, H.map(x => +x.precipitation_probability || 0)), mm = H.reduce((p, x) => p + (+x.precipitation || 0), 0);
+  const wet = pp >= 30 ? H.filter(x => (+x.precipitation_probability || 0) >= 30 && FC_WET.indexOf(x.condition) > -1).sort((a, b) => FC_WET.indexOf(a.condition) - FC_WET.indexOf(b.condition))[0] : null;
+  return Object.assign({}, d, { precipitation_probability: pp, precipitation: Math.round(mm * 10) / 10, condition: wet ? wet.condition : H[0].condition || d.condition, rest: true });
+}
 function fcCols(l) {
   const L = d => d.templow != null ? d.templow : d.temperature;
   const lo = Math.min.apply(null, l.map(L)), hi = Math.max.apply(null, l.map(d => d.temperature)), rg = (hi - lo) || 1, tc = t => tempColor(t).replace(/,0\.7\)$/, ",1)");
   return '<div class="fcc">' + l.map((d, i) => {
+    d = fcDay(d, i);
     const dt = new Date(d.datetime), n = i === 0 && dt.toDateString() === new Date().toDateString() ? "Today" : dt.toLocaleDateString([], { weekday: "short" }), l0 = L(d), h = d.temperature;
     const p = d.precipitation_probability, rain = p != null && p >= 30 ? '<em>' + mdi("water") + p + '%</em>' : '<em class="no"></em>';
+    // with weather scenes on (the default), each day is a small sky of its own, like the Weather page's Now card (fcsLoop paints it); the numbers sit on top
+    if (typeof wxsOn === "function" && wxsOn()) return '<div class="fcs' + (n === "Today" ? ' td' : '') + '"><canvas data-fd="' + i + '"></canvas><span class="lbl">' + n + '</span><b>' + Math.round(h) + '°</b><small>' + Math.round(l0) + '°</small>' +
+      (p != null && p >= 30 ? '<em>' + mdi("water") + p + '%</em>' : '<em class="no"></em>') + '</div>';
     return '<div' + (n === "Today" ? ' class="td"' : '') + ' style="--hc:' + tc(h) + ';--lc:' + tc(l0) + '"><span class="lbl">' + n + '</span><i class="wb">' + wic(d.condition) + '</i><b>' + Math.round(h) + '°</b>' +
       '<span class="th"><u style="bottom:' + ((l0 - lo) / rg * 100) + '%;height:' + Math.max(12, (h - l0) / rg * 100) + '%"></u></span><small>' + Math.round(l0) + '°</small>' + rain + '</div>';
   }).join("") + '</div>';
 }
-function drawFc() { $("#fc").innerHTML = fc.length ? fcCols(fc.slice(0, 10)) : ""; }
+function drawFc() { $("#fc").innerHTML = fc.length ? fcCols(fc.slice(0, 10)) : ""; if (typeof fcsKick === "function") fcsKick(true); }
 const EVPAL = ["#ff6b6b", "#ff9f7a", "#f0d36b", "#8ff0c4", "#4fd1c5", "#6bb8ff", "#8d7bff", "#c79bff", "#ff8fc7", "#b8c0cc"];
 let EVCOL = (() => { try { return JSON.parse(localStorage.dashEvCol || "{}") || {}; } catch (e) { return {}; } })(), evColSynced = false;
 const evKey = (cal, t) => cal + "|" + (t || "").trim().toLowerCase();
@@ -4250,7 +4467,10 @@ const WD = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"], WDN = ["M", "T", "W", "T"
 // the calendar grid's own classes for each view, keeping a running slide / rise (tx / txc) so redrawing the new month does not cut the animation off
 function evCls(g, c) { const k = ["tx", "txc"].filter(x => g.classList.contains(x)); g.className = c; k.forEach(x => g.classList.add(x)); }
 function txGo(el, dir, stag) {
-  if (!el || (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) || el.closest(".page.enter,.page.hold")) return;   // a page that is just arriving already plays its entrance: no second effect on top
+  if (!el || (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) || el.closest(".page.hold")) return;   // a page still waiting for its data: it fades in once, complete
+  // a page that is arriving plays its entrance: a slide asked for in the same moment (the router opening #rooms/x) is skipped, no second effect on top.
+  // A tab tapped a little later, while the entrance is still running (the first second or so after arriving), ends the entrance there and plays its slide, so the first taps move too.
+  { const pg = el.closest(".page.enter"); if (pg) { if (performance.now() - (pg._enT || 0) < 200) return; clearTimeout(pg._enX); pg.classList.remove("enter"); } }
   el.classList.remove("tx", "txc"); void el.offsetWidth;
   el.style.setProperty("--tx", (dir || 0) * 28 + "px"); el.style.setProperty("--ty", dir ? "6px" : "14px");
   if (stag) Array.prototype.forEach.call(el.children, (c, i) => c.style.setProperty("--i", Math.min(i, 14)));
@@ -4912,6 +5132,9 @@ function applyView() {
   if (!onView()) return; const m = viewMode(); if (m === VW.mode) return; VW.mode = m;
   const vw = $("#vw"); vw.className = "on " + (m === "both" ? "two" : "one");
   VWC.forEach(c => { const vis = m === "both" ? (c.k === "driveway" || c.k === "garage") : m === c.k; c.o.el.style.display = vis ? "" : "none"; if (vis) { liveCam(c); if (m === "both") mkLiveOff(c.o.el); else mkLiveOn(c.o.el);   /* two cameras side by side: no recogniser (heavy, and the picture is laid out differently) */ const s = states[c.id], pc = s && s.attributes.entity_picture; if (pc) c.o.img.src = CONFIG.url + pc + (pc.indexOf("?") > -1 ? "&" : "?") + "t=" + Date.now(); } else { clearTimeout(c.rt); stopCam(c); mkLiveOff(c.o.el); } });
+  // both feeds on screen: a control the garage card already has (the garage door) only shows there, not under the driveway too
+  { const dv = VWC.filter(c => c.k === "driveway")[0], gv = VWC.filter(c => c.k === "garage")[0];
+    if (dv && gv) { const ge = new Set($$(".cpanel .tg3>[data-e]", gv.o.el).map(x => x.dataset.e)); $$(".cpanel .tg3>[data-e]", dv.o.el).forEach(t => t.classList.toggle("vdup", m === "both" && ge.has(t.dataset.e))); } }
   updTiles();
 }
 setInterval(() => { const V = CONFIG.view; if (onView() && V.returnAfter && VW.seen && /^#view(\/auto)?$/.test(location.hash) && Date.now() - Math.max(VW.hold.driveway, VW.hold.garage) > V.returnAfter * 1000) location.hash = "#home"; applyView(); }, 5000);
@@ -4991,7 +5214,7 @@ function roomBand(r) {
 }
 // Windows Phone tile colours (Metro style): blue, orange, purple, green, teal, magenta, red, lime, cobalt, mango, emerald, crimson
 const METRO = ["#1ba1e2", "#f09609", "#a200ff", "#339933", "#00aba9", "#e671b8", "#e51400", "#8cbf26", "#0050ef", "#f0a30a", "#008a00", "#a20025"];
-function cardHtml(n, i) { return '<div class="lbl">' + mdi(i) + esc(n) + '</div><div class="md">--</div><div class="temp"><span class="tm">--</span></div><div class="lbl ts">--</div><i class="rg"><b></b><b></b><b></b><b></b></i><div class="hvb"></div>'; }
+function cardHtml(n, i) { return '<div class="lbl">' + mdi(i) + esc(n) + '</div><div class="md">--</div><div class="temp"><span class="tm">--</span></div><div class="lbl ts">--</div><i class="rg"><s></s><b></b><b></b><b></b><b></b><b></b><b></b></i><div class="hvb"></div>'; }
 // room-card badges: use your own count sensors (r.counts) when set, else count members that are on / open
 const roomLights = r => { const o = []; const add = x => { if (x && o.indexOf(x) < 0) o.push(x); };   // every light in the room: its lights, its light switches, and any light.* shown in its sections
   members(r.lights).concat(members(r.lightSwitches || [])).forEach(add); (r.sections || []).forEach(sec => (sec.items || []).forEach(i => { const e = typeof i === "string" ? i : i.entity; if (e && e.indexOf("light.") === 0) add(e); })); return o; };
@@ -5017,7 +5240,9 @@ function fillCard(el, r) {
   const n = { lights: C.lights ? num("lights", r.lights) : roomLights(r).filter(isOn).length, doors: num("doors", r.doors), windows: num("windows", r.windows), covers: num("covers", r.covers), fans: num("fans", r.fans) };
   el.style.setProperty("--tc", tempColor(parseFloat(tv))); el.style.setProperty("--tg", glowColor(parseFloat(tv)));
   { const t = parseFloat(tv); if (isNaN(t)) delete el.dataset.tt; else el.dataset.tt = "1"; el.style.setProperty("--ts", isNaN(t) ? "4s" : (Math.round(Math.max(2.5, Math.min(6, 2.2 + (24 - t) * 0.35)) * 2) / 2).toFixed(1) + "s"); }   // warmer room = faster glow
-  { const t = parseFloat(tv), B = roomBand(r), z = isNaN(t) ? "" : t < B[0] ? "cold" : t > B[1] ? "warm" : "ok"; if (el.dataset.tz !== z) el.dataset.tz = z; }   // too cold / too warm moves a little; comfortable stays still
+  { const t = parseFloat(tv), B = roomBand(r), z = isNaN(t) ? "" : t < B[0] ? "cold" : t > B[1] ? "warm" : "ok"; if (el.dataset.tz !== z) el.dataset.tz = z;
+    // the card's animation follows its colour band (55-room-tint.css)
+    const fx = isNaN(t) ? "" : String(tempBand(t)); if (el.dataset.fx !== fx) el.dataset.fx = fx; }   // too cold / too warm moves a little; comfortable stays still
   const hx = roomHp(r); el.classList.toggle("hv", !!hx); if (hx) el.dataset.hm = hx.k; else delete el.dataset.hm;
   $(".tm", el).textContent = f1(tv) + "°";
   $(".md", el).textContent = hv != null ? f1(hv) + "% RH" : "";
@@ -5406,6 +5631,7 @@ function buildDep() { CONFIG.house.forEach(r => ["lights", "doors", "windows", "
 
 const title = v => String(v || "").replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
 function drawAlarm() {
+  setTimeout(alarmKpTry, 0);
   const s = states[CONFIG.alarm]; if (!s) return;
   const m = ALS[s.state] || [String(s.state).toUpperCase(), ""], f = s.attributes.supported_features || 0, c = "s-" + (m[1] || "x");
   const h = ALH[s.state] || [m[0], "shield-outline"], cap = x => x.charAt(0) + x.slice(1).toLowerCase();
@@ -5473,6 +5699,17 @@ document.addEventListener("keydown", e => { if (!kp) return; if (/^\d$/.test(e.k
 $("#kp").onclick = e => { const b = e.target.closest("[data-k]"); if (b) kpKey(b.dataset.k); else if (e.target.id === "kp") kpClose(); };
 $("#alp").onclick = e => { const b = e.target.closest("[data-m]"); if (b) alarmDo(b.dataset.m); else tapH(e); };
 // the alarm button in the header arms (Away if the panel has it) or disarms straight away, opening the keypad when the panel wants a code; with no alarm state to go on it still opens the Security page
+// #security/disarm: open the disarm keypad once the alarm's state is in (a page loaded from an automation has none yet for a moment), as tapping the lock
+// would when it's armed or pending. It never disarms on its own: with no code needed it just leaves the Security page open (tap the lock to disarm).
+let ALKP = 0;
+function alarmKpTry() {
+  if (!ALKP) return; if (Date.now() - ALKP > 60000) { ALKP = 0; return; }
+  const s = states[CONFIG.alarm]; if (!s) return; ALKP = 0;
+  // someone who isn't allowed the alarm (restricted user) gets the Security page only
+  if (!PAGE_ON("security") || (typeof ruSec === "function" && !ruSec("alarm"))) return;
+  if (s.state === "disarmed" || s.state === "unavailable" || s.state === "unknown" || kp) return;
+  const a = s.attributes || {}; if (a.code_format === "number") kpOpen("disarm"); else if (a.code_format) alarmDo("disarm");
+}
 function alarmTap() {
   const s = states[CONFIG.alarm], st = s && s.state;
   if (!s || st === "unavailable" || st === "unknown") { location.hash = "#security"; return; }
@@ -5588,7 +5825,7 @@ function wxSunCard() {
 let fcH = [];
 function loadFcH() {
   send({ type: "call_service", domain: "weather", service: "get_forecasts", service_data: { type: "hourly" }, target: { entity_id: W }, return_response: true },
-    r => { fcH = r.response[W].forecast || []; queueNotif(); queueHome(); if (curPg() === "weather") drawWeather(); else if (curPg() === "irrigation") drawIrr(); });
+    r => { fcH = r.response[W].forecast || []; drawFc(); queueNotif(); queueHome(); if (curPg() === "weather") drawWeather(); else if (curPg() === "irrigation") drawIrr(); });
 }
 const CARD = d => ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"][Math.round(d / 22.5) % 16];
 // ----- summary lines worked out from the hourly forecast (replaces the template sensors) -----
@@ -6113,6 +6350,33 @@ function wxsKick() { if (!WXS.raf && wxsOn()) WXS.raf = requestAnimationFrame(wx
 function wxsMount() { if (!wxsOn()) return; if ($("#wxpol") && WXS.polD !== 0) wxsPolApply(); wxsFrame(reducedMotion() ? 0 : performance.now() / 1000, true); wxsKick(); }
 document.addEventListener("visibilitychange", () => { if (!document.hidden && curPg() === "weather") wxsKick(); });
 window.addEventListener("hashchange", () => setTimeout(() => { if (curPg() === "weather") wxsKick(); }, 50));
+
+// ----- the Home forecast card: one small sky per day (10-home-page.js fcCols), moving while Home is open and on screen -----
+// Each day is painted at its middle (now, for today) with its condition, rain and wind; the phases move like the Weather page's (rain falls, clouds drift).
+const FCS = { ph: {}, raf: 0, last: 0 };
+function fcsRec(d, i) {
+  const t = i === 0 && new Date(d.datetime).toDateString() === new Date().toDateString() ? Date.now() : (() => { const x = new Date(d.datetime); x.setHours(13, 0, 0, 0); return +x; })();
+  return { t: t, temp: +d.temperature, cond: d.condition, rain: +d.precipitation || 0, pp: +d.precipitation_probability || 0, wind: +d.wind_speed || 0, gust: d.wind_gust_speed != null ? +d.wind_gust_speed : null, uv: d.uv_index != null ? +d.uv_index : null };
+}
+function fcsFrame(tm, dt) {
+  $$("#fc canvas[data-fd]").forEach(cv => {
+    if (!cv.offsetParent) return; const b = cv.getBoundingClientRect(); if (b.right < 0 || b.left > innerWidth || b.bottom < 0 || b.top > innerHeight) return;
+    try { const i = +cv.dataset.fd, d = fcDay((fc || [])[i], i); if (!d) return; const r = fcsRec(d, i), S = { kind: "now", ms: r.t, rec: r }, ph = FCS.ph[i] || (FCS.ph[i] = wxsPh0(S)); if (dt) wxsStep(ph, S, dt); wxsPaint(cv, S, tm, ph); } catch (e) {}
+  });
+}
+function fcsLoop(ts) {
+  FCS.raf = 0; if (curPg() !== "home" || document.hidden || !wxsOn() || !$("#fc canvas[data-fd]")) { FCS.last = 0; return; }
+  // 30 frames a second is plenty for a small card; reduced motion or a live camera: one still frame
+  if (reducedMotion()) { fcsFrame(0, 0); FCS.last = 0; return; }
+  // a live camera on screen (the tablet Home): keep moving, at 15 frames a second instead of 30 so the video stays smooth
+  if (ts - FCS.last < (document.documentElement.classList.contains("camlive") ? 66 : 33)) { FCS.raf = requestAnimationFrame(fcsLoop); return; }
+  const dt = FCS.last ? Math.min(0.1, (ts - FCS.last) / 1000) : 0; FCS.last = ts; fcsFrame(ts / 1000, dt); FCS.raf = requestAnimationFrame(fcsLoop);
+}
+function fcsKick(now) { if (now) fcsFrame(reducedMotion() ? 0 : performance.now() / 1000, 0); if (!FCS.raf && wxsOn()) FCS.raf = requestAnimationFrame(fcsLoop); }
+document.addEventListener("visibilitychange", () => { if (!document.hidden && curPg() === "home") fcsKick(); });
+window.addEventListener("hashchange", () => setTimeout(() => { if (curPg() === "home") fcsKick(true); }, 50));
+window.addEventListener("resize", () => { if (curPg() === "home") fcsKick(true); });
+document.addEventListener("scroll", () => { if (curPg() === "home") fcsKick(); }, { passive: true, capture: true });
 
 // ----- small pieces of markup -----
 const wxsSlider = (k, max, v, lbl, back) => '<div class="wsl"><input type="range" data-ws="' + k + '" min="' + (lbl.min || 0) + '" max="' + max + '" step="' + (lbl.step || 1) + '" value="' + v + '" aria-label="' + lbl.a + '"><button class="wsnow" data-wsback="' + k + '"' + (back ? "" : " hidden") + '>NOW</button></div>';
@@ -6833,7 +7097,7 @@ const REL = {
   admin: { test: id => sysIds().has(id) }   // the System status tiles on the Admin page
 };
 let pq = 0;
-function queuePg() { if (!pq) pq = requestAnimationFrame(() => { pq = 0; const p = curPg(); if (p === "weather") drawWeather(); else if (p === "irrigation") drawIrr(); else if (p === "scenes") updScenes(); else if (p === "media") drawMedia(); else if (p === "vehicle") drawVehicle(); else if (p === "hazards") drawHaz(); else if (p === "admin") sysUpd(); }); }
+function queuePg() { if (!pq) pq = requestAnimationFrame(() => { pq = 0; const p = curPg(); if (p === "weather") drawWeather(); else if (p === "irrigation") drawIrr(); else if (p === "scenes") updScenes(); else if (p === "media") drawMedia(); else if (p === "vehicle") drawVehicle(); else if (p === "hazards") drawHaz(); else if (p === "admin") { sysUpd(); admLive(); } }); }
 
 
 // Skip re-writing a container when its markup has not changed. The pages below are redrawn on every related sensor update; rebuilding them
@@ -7296,9 +7560,11 @@ function drawPalette() {
     sec("Clock", '<div class="seg" style="margin-top:12px">' + [["auto", "DEVICE"], ["12", "12-HOUR"], ["24", "24-HOUR"]].map(x => '<button class="eb' + (CLOCK === x[0] ? " on" : "") + '" data-clock="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">How times are shown on this dashboard. DEVICE follows the language of this phone or tablet. Saved on this device only.</div>') +
     sec(LANG === "zh" ? "语言 · Language" : "Language", '<div class="seg" style="margin-top:12px" data-notr>' + [["en", "English"], ["zh", "中文（简体）"]].map(x => '<button class="eb' + (LANG === x[0] ? " on" : "") + '" data-lang="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">' + (LANG === "zh" ? "标签、标题、按钮和日期显示为中文；Home Assistant 中的名称保持不变。切换后页面会重新加载。" : "Labels, headings, buttons and dates. Names from Home Assistant stay as they are. The page reloads to switch.") + '</div>') +
     (brandOn() ? sec("Start-up logo", '<div class="seg" style="margin-top:12px">' + [["on", "LOGO + INTRO"], ["load", "WHILE LOADING ONLY"], ["off", "OFF"]].map(x => '<button class="eb' + (logoPref() === x[0] ? " on" : "") + '" data-logo="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">Applies the next time the dashboard starts. Saved on this device only.</div>') : "") +
-    (AUTH && !AUTH.borrowed && !CONFIG.token ? sec("Account", '<div style="margin-top:12px"><button class="eb" data-signout="1">SIGN OUT OF THIS DEVICE</button><span class="lbl" style="margin-left:14px">Signed in on this device only</span></div>') : "") +
     ('<div class="pn pg thab" data-tab="Display"><span class="lbl">Kinetic ' + esc(ENGINE_VERSION) + ' · build ' + esc(window.DASH_BUILD || "") + '</span></div>');
-  $("#theme").innerHTML = '<div class="thg"><div class="thl">' + L + '</div></div>';
+  // Settings: DISPLAY (these cards) and ACCOUNT (sign out, change password) share this page; the admin tabs live on #admin (30-settings.js)
+  const acc = setTab() === "account";
+  $("#theme").innerHTML = setTabsHtml() + '<div class="thg"><div class="thl">' + (acc ? setAcctHtml() : L) + '</div></div>';
+  setSlide($("#theme .thl"));
 }
 $("#theme").oninput = e => {
   const t = e.target, k = t.dataset.k;
@@ -7477,7 +7743,7 @@ function secPills(page, host, anchor, min) {
   wrap("drawWeather", () => { const w = $("#wx"); secPills($("#weather"), w, w); });
   wrap("drawVehicle", () => { const g = $("#vehicle .vgrid"); secPills($("#vehicle"), g, g, 2); });
   wrap("drawPalette", () => { const g = $("#theme .thl"); secPills($("#theme"), g, $("#theme .thg")); });
-  wrap("drawAdmin", () => { const g = $("#admin .thl"); secPills($("#admin"), g, $("#admin .thg"), 2); });
+  // (the admin page has its own tab row: STATUS, ENTITIES, AUTOMATIONS, LOGS, ACCESS, SETUP; 30-admin-tools.js)
   wrap("drawRoom", () => { secPills($("#roomspg"), $("#rv"), $("#rv"), 2); });
 })();
 // ---------- Admin page: for Home Assistant admins only (nav link hidden for everyone else, and #admin sends other people home) ----------
@@ -7551,15 +7817,392 @@ function sysDev(d) {
 function sysHtml() { const G = sysGroups(); return G.map(g => (g[0] ? '<div class="lbl sysg">' + mdi(g[0] === "Network" ? "access-point-network" : "server") + g[0] + '</div>' : "") + (g[1].length ? '<div class="adm-f sys-st">' + sysTiles(g[1]) + '</div>' : "") + g[2].map(sysDev).join("")).join(""); }
 function sysSec(sec) { return sysGroups().length ? sec("System status", '<div class="sysw">' + sysHtml() + '</div>') : ""; }
 function sysUpd() { const b = $("#admin .sysw"); if (b) { const h = sysHtml(); if (b.innerHTML !== h) b.innerHTML = h; } }   // only the System status block is redrawn, so the rest of the page (access list, config editor) is left alone
+// drawAdmin(): the Settings page's admin tabs, in 30-admin-tools.js
+$("#admin").addEventListener("click", e => { const ac = e.target.closest("[data-acc]"); if (ac) accClick(ac); });
+// ---------- Settings: one page with tabs ----------
+// DISPLAY (the old Theme page) and ACCOUNT live on #theme; an admin also gets STATUS, ENTITIES, AUTOMATIONS, LOGS, ACCESS and SETUP on #admin.
+// The same tab row sits on top of both, so it reads as one page. Links: #settings, #theme, #theme/account, #admin, #admin/<tab>.
+// Nobody is sent into Home Assistant from here except an admin who taps OPEN HA SETTINGS on the Status tab.
+Object.assign(MDI, { "content-copy": "M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z",
+  "eye": "M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z",
+  "open-in-new": "M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z",
+  "check-circle": "M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z",
+  "lock": "M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" });
+const ADM_TABS = [["status", "STATUS"], ["entities", "ENTITIES"], ["automations", "AUTOMATIONS"], ["logs", "LOGS"], ["access", "ACCESS"], ["setup", "SETUP"]];
+// a person signed in with their own Home Assistant account (not a dashboard running on a long-lived token) has an Account tab
+const setAcct = () => !!(ME && ME.id && !CONFIG.token);
+const setOn = () => PAGE_ON("theme") || setAcct() || ADMIN_ON();
+function setTab() {
+  const h = location.hash.slice(1).split("/");
+  if (h[0] === "admin") return ADM_TABS.some(t => t[0] === h[1]) ? h[1] : "status";
+  if (h[1] === "account" && setAcct()) return "account";
+  return PAGE_ON("theme") ? "display" : setAcct() ? "account" : "display";
+}
+function setTabs() {
+  const t = [];
+  if (PAGE_ON("theme")) t.push(["display", "DISPLAY", "#theme"]);
+  if (setAcct()) t.push(["account", "ACCOUNT", "#theme/account"]);
+  if (ADMIN_ON()) ADM_TABS.forEach(x => t.push([x[0], x[1], "#admin" + (x[0] === "status" ? "" : "/" + x[0])]));
+  return t;
+}
+function setTabsHtml() {
+  const T = setTabs(), k = setTab(); if (T.length < 2) return "";
+  return hsw('<div class="chips tabs setchips">' + T.map(x => '<button class="chip' + (x[0] === k ? " on" : "") + '" data-set="' + x[2] + '">' + x[1] + '</button>').join("") + '</div>');
+}
+// switching tabs slides the cards in from the side of the tab you picked, like the other pages' tabs (Display and Account are on #theme, the admin tabs on
+// #admin: the page underneath changes, but the tab row stays and only the cards move). Opening Settings from the menu plays the usual page entrance.
+let SETPREV = "";
+function setSlide(host) {
+  const k = setTab(), o = setTabs().map(x => x[0]), was = SETPREV; SETPREV = k;
+  if (host && was && was !== k) txGo(host, o.indexOf(k) > o.indexOf(was) ? 1 : -1, true);
+}
+// where the Settings item in the menu goes: the first tab this person has
+const setHome = () => PAGE_ON("theme") ? "#theme" : setAcct() ? "#theme/account" : "#admin";
+document.addEventListener("click", e => {
+  const b = e.target.closest && e.target.closest("[data-set]"); if (!b) return;
+  e.preventDefault(); const to = b.dataset.set; if (location.hash !== to) location.replace(to);
+});
+
+// ----- Account: who is signed in, sign out, change password -----
+const PW = { busy: false, msg: "", ok: false, bad: "" };
+function setAcctHtml() {
+  const nm = ME.name || "You", sec = (t, inner) => '<div class="pn pg acct"><div class="lbl">' + t + '</div>' + inner + '</div>';
+  const so = AUTH && !AUTH.borrowed ? '<button class="eb" data-signout="1">SIGN OUT OF THIS DEVICE</button>' : "";
+  const fld = (k, ph, ic) => '<label class="pwi' + (PW.bad === k ? " bad" : "") + '">' + mdi(ic) + '<input type="password" data-pw="' + k + '" placeholder="' + ph + '" autocomplete="' + (k === "cur" ? "current-password" : "new-password") + '"><button type="button" class="pwe" data-pweye="' + k + '" aria-label="Show password">' + mdi("eye") + '</button></label>';
+  return sec("Account", '<div class="acw"><div class="acav">' + esc(nm.charAt(0).toUpperCase()) + '</div><div class="acn"><b>' + esc(nm) + '</b><small>' + (ADMIN_ON() ? "Administrator · " : "") + 'Signed in on this device</small></div>' + so + '</div>') +
+    sec("Change password", '<form class="pwf" autocomplete="on" onsubmit="return false"><input type="text" name="username" autocomplete="username" value="' + esc(ME.pid || ME.name || "") + '" hidden>' +
+      fld("cur", "Current password", "lock") + fld("new", "New password", "lock") + fld("again", "New password again", "lock") +
+      '<div class="pwm' + (PW.ok ? " ok" : PW.msg ? " err" : "") + '" role="status">' + (PW.ok ? mdi("check-circle") + " " : "") + esc(PW.msg || "At least 8 characters.") + '</div>' +
+      '<button class="eb pwgo" data-pwgo="1"' + (PW.busy ? " disabled" : "") + '>' + (PW.busy ? "CHANGING…" : "CHANGE PASSWORD") + '</button></form>');
+}
+function pwShow(msg, bad, ok) { PW.msg = msg; PW.bad = bad || ""; PW.ok = !!ok; const m = $("#theme .pwm"); if (!m) return;
+  m.className = "pwm" + (ok ? " ok" : msg ? " err" : ""); m.innerHTML = (ok ? mdi("check-circle") + " " : "") + esc(msg || "At least 8 characters.");
+  $$("#theme .pwi").forEach(l => l.classList.toggle("bad", !!bad && l.querySelector("input").dataset.pw === bad)); }
+function pwGo() {
+  if (PW.busy) return; const v = k => ($('#theme [data-pw="' + k + '"]') || {}).value || "", cur = v("cur"), nw = v("new"), ag = v("again");
+  if (!cur) return pwShow("Enter your current password.", "cur");
+  if (nw.length < 8) return pwShow("The new password needs at least 8 characters.", "new");
+  if (nw !== ag) return pwShow("The two new passwords don't match.", "again");
+  if (nw === cur) return pwShow("The new password is the same as the current one.", "new");
+  if (!ws || ws.readyState !== 1) return pwShow("Not connected to Home Assistant. Try again in a moment.");
+  PW.busy = true; const btn = $("#theme .pwgo"); if (btn) { btn.disabled = true; btn.textContent = "CHANGING…"; }
+  send({ type: "config/auth_provider/homeassistant/change_password", current_password: cur, new_password: nw }, (r, m) => {
+    PW.busy = false; const b2 = $("#theme .pwgo"); if (b2) { b2.disabled = false; b2.textContent = "CHANGE PASSWORD"; }
+    if (m && m.success) { $$("#theme [data-pw]").forEach(i => { i.value = ""; }); pwShow("Password changed. Use it next time you sign in.", "", true); return; }
+    const c = m && m.error && m.error.code;
+    if (c === "invalid_current_password" || c === "invalid_password") pwShow("That's not your current password.", "cur");
+    else if (c === "credentials_not_found") pwShow("This account doesn't sign in with a Home Assistant password, so it can't be changed here.");
+    else pwShow("Couldn't change the password" + (m && m.error && m.error.message ? ": " + m.error.message : "") + ".");
+  });
+}
+document.addEventListener("click", e => {
+  if (!e.target.closest) return;
+  const ey = e.target.closest("[data-pweye]"); if (ey) { e.preventDefault(); const i = ey.parentNode.querySelector("input"); i.type = i.type === "password" ? "text" : "password"; ey.classList.toggle("on", i.type === "text"); return; }
+  if (e.target.closest("[data-pwgo]")) { e.preventDefault(); pwGo(); }
+});
+document.addEventListener("input", e => { if (e.target.dataset && e.target.dataset.pw && (PW.msg || PW.bad)) pwShow("", ""); });
+document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.dataset && e.target.dataset.pw) { e.preventDefault(); const n = { cur: "new", new: "again" }[e.target.dataset.pw]; if (n) { const x = $('#theme [data-pw="' + n + '"]'); if (x) x.focus(); } else pwGo(); } });
+
+// ----- the side menu (tablet) and the phone's More sheet: groups -----
+// navGroups (config.js) can set your own groups: [{ name: "Home", pages: ["home", "rooms", ...] }, ...]; pages left out stay in their usual group at the end
+function navGroups() {
+  const G = CONFIG.navGroups; if (!Array.isArray(G) || !G.length) return;
+  const nav = $("nav"), sh = $("#mshe"), set = $("#navset"), set2 = $("#navset2");
+  const links = {}; $$("nav a[data-g]").forEach(a => { links[a.getAttribute("href").slice(1)] = a; });
+  const more = {}; $$("#mshe a[data-g]").forEach(a => { more[a.getAttribute("href").slice(1)] = a; });
+  const used = new Set(); G.forEach(g => (g.pages || []).forEach(p => used.add(p)));
+  $$("nav .ngh, #mshe .mgh").forEach(h => h.remove());
+  G.concat([{ name: "More", pages: Object.keys(links).filter(p => !used.has(p)) }]).forEach((g, i) => {
+    const ps = (g.pages || []).filter(p => links[p]); if (!ps.length) return; const k = "g" + i;
+    const h = document.createElement("div"); h.className = "ngh"; h.dataset.g = k; h.textContent = String(g.name || "").toUpperCase(); nav.insertBefore(h, set);
+    ps.forEach(p => { links[p].dataset.g = k; nav.insertBefore(links[p], set); });
+    const mp = ps.filter(p => more[p]); if (mp.length) { const m = document.createElement("div"); m.className = "mgh"; m.dataset.g = k; m.textContent = h.textContent; sh.insertBefore(m, set2); mp.forEach(p => { more[p].dataset.g = k; sh.insertBefore(more[p], set2); }); }
+  });
+}
+// a heading whose pages are all hidden for this person (or switched off) goes too; Settings shows when there is anything to set
+function navSync() {
+  const on = a => { const p = a.getAttribute("href").slice(1); return a.isConnected && PAGE_ON(p); };
+  $$("nav .ngh, #mshe .mgh").forEach(h => { const box = h.parentNode, g = h.dataset.g; h.hidden = ![...box.querySelectorAll('a[data-g="' + g + '"]')].some(on); });
+  const so = setOn(); [$("#navset"), $("#navset2")].forEach(a => { if (a) { a.hidden = !so; a.setAttribute("href", "#settings"); } });
+}
+try { navGroups(); } catch (_) {}
+// ---------- Settings, admin tabs: STATUS (+ quick actions) · ENTITIES · AUTOMATIONS · LOGS · ACCESS · SETUP ----------
+// For a quick look and a quick fix on the go; editing stays in Home Assistant (OPEN IN HA). Admins only (ADMIN_ON).
+// Home Assistant calls used: history/history_during_period, trace/list, trace/get, system_log/list, the REST check_config,
+// and the services automation.* / script.reload / scene.reload / template.reload / homeassistant.restart.
+const ADM = { tab: "", eq: "", ef: "all", esel: "", aq: "", af: "all", asel: "", arun: "", tl: null, tlT: 0, tlBusy: 0, tg: {}, logs: null, logT: 0, lf: "all", lopen: -1, hist: {}, qa: "", qaT: 0, qaBad: null, liveT: 0 };
+const admT = ms => { if (!ms) return "-"; const d = new Date(ms), now = new Date(), t = d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" }));
+  if (d.toDateString() === now.toDateString()) return t; const y = new Date(now); y.setDate(now.getDate() - 1); if (d.toDateString() === y.toDateString()) return "Yesterday " + t;
+  return d.toLocaleDateString([], { day: "numeric", month: "short" }) + " " + t; };
+const admMs = v => v == null ? 0 : typeof v === "number" ? (v < 1e12 ? v * 1000 : v) : Date.parse(v) || 0;
+const admNm = id => { const s = states[id]; return (s && s.attributes && s.attributes.friendly_name) || id; };
+const admSt = s => { if (!s) return ""; const u = s.attributes && s.attributes.unit_of_measurement; return String(s.state) + (u && !isNaN(parseFloat(s.state)) ? " " + u : ""); };
+const admBadSt = v => v === "unavailable" || v === "unknown";
+const admOnSt = v => /^(on|open|opening|home|playing|heat|cool|heat_cool|auto|dry|fan_only|unlocked|detected|armed_\w+|triggered|charging|active)$/.test(v);
+const admSec = (t, inner, cls) => '<div class="pn pg' + (cls ? " " + cls : "") + '"><div class="lbl">' + t + '</div>' + inner + '</div>';
+const admEmpty = t => '<div class="ademp">' + esc(t) + '</div>';
+
 function drawAdmin() {
   const el = $("#admin"); if (!el || !ADMIN_ON()) return;
-  const TB = { "Access": "Access", "This dashboard": "Access", "Config editor": "Setup", "Setup check": "Setup" };
-  const sec = (t, inner) => '<div class="pn pg"' + (TB[t] ? ' data-tab="' + TB[t] + '"' : "") + '><div class="lbl">' + t + '</div>' + inner + '</div>';
-  const n = Object.keys(states).length, who = ME.name ? esc(ME.name) : (CONFIG.token ? "long-lived token" : "-");
-  const about = sec("This dashboard", '<div class="adm-f"><div><small>Kinetic</small><b>' + esc(ENGINE_VERSION) + ' · ' + esc(window.DASH_BUILD || "") + '</b></div><div><small>Signed in as</small><b>' + who + '</b></div><div><small>Entities loaded</small><b>' + n + '</b></div></div>');
-  el.innerHTML = '<div class="thg"><div class="thl">' + sysSec(sec) + accSec(sec) + ceSec(sec) + sckSection(sec) + about + '</div></div>';
+  const tab = setTab(), sec = admSec;
+  const th = setTabsHtml();
+  if (!el.querySelector(":scope > #admb")) { el.innerHTML = th + '<div id="admb"></div>'; el._tabs = th; }
+  else if (el._tabs !== th) { const o = el.querySelector(":scope > .hsw"), sl = o && o.firstElementChild ? o.firstElementChild.scrollLeft : 0; if (o) o.remove(); el.insertAdjacentHTML("afterbegin", th); el._tabs = th; const n = el.querySelector(":scope > .hsw > .chips"); if (n) n.scrollLeft = sl; }
+  const b = $("#admb");
+  if (tab === "entities" || tab === "automations" || tab === "logs") {
+    if (b.dataset.t !== tab) { b.dataset.t = tab; b.innerHTML = tab === "entities" ? admEntShell() : tab === "automations" ? admAutShell() : admLogShell(); }
+    if (tab === "entities") admEntDraw(); else if (tab === "automations") { admAutDraw(); admTlLoad(); } else { admLogDraw(); admLogLoad(); }
+  } else {
+    b.dataset.t = tab;
+    const n = Object.keys(states).length, who = ME.name ? esc(ME.name) : (CONFIG.token ? "long-lived token" : "-");
+    const about = sec("This dashboard", '<div class="adm-f"><div><small>Kinetic</small><b>' + esc(ENGINE_VERSION) + ' · ' + esc(window.DASH_BUILD || "") + '</b></div><div><small>Signed in as</small><b>' + who + '</b></div><div><small>Entities loaded</small><b>' + n + '</b></div></div>');
+    const inner = tab === "access" ? accSec(sec) : tab === "setup" ? ceSec(sec) + sckSection(sec) : sysSec(sec) + admQaHtml() + about;
+    b.innerHTML = '<div class="thg"><div class="thl">' + (inner || admSec(tab === "access" ? "Access" : "Setup", admEmpty("Nothing to show here yet."))) + '</div></div>';
+  }
+  ADM.tab = tab;
+  setSlide(b.querySelector(":scope > .thg > .thl") || b);
 }
-$("#admin").addEventListener("click", e => { const ac = e.target.closest("[data-acc]"); if (ac) accClick(ac); });
+// live updates (queuePg): the lists follow state changes, at most once a second
+function admLive() {
+  if (curPg() !== "admin" || !ADMIN_ON()) return; const now = Date.now();
+  if (now - ADM.liveT < 1000) { clearTimeout(ADM.liveTm); ADM.liveTm = setTimeout(admLive, 1000 - (now - ADM.liveT)); return; }
+  ADM.liveT = now; const t = setTab(); if (t === "entities") admEntDraw(true); else if (t === "automations") admAutDraw(true);
+}
+
+// ----- STATUS: quick actions -----
+function admQaHtml() {
+  const q = (k, ic, t, s, cls) => '<button class="adq' + (cls ? " " + cls : "") + '" data-adq="' + k + '"' + (ADM.qa === k + "…" ? " disabled" : "") + '>' + mdi(ic) + '<span><b>' + t + '</b><small>' + s + '</small></span></button>';
+  const msg = ADM.qa && !/…$/.test(ADM.qa) ? '<div class="adqm' + (ADM.qaBad ? " err" : "") + '">' + (ADM.qaBad ? "" : mdi("check-circle") + " ") + esc(ADM.qa) + (ADM.qaT ? " · " + admT(ADM.qaT) : "") + '</div>' : ADM.qa ? '<div class="adqm">' + esc(ADM.qa) + '</div>' : "";
+  const bad = ADM.qaBad && ADM.qaBad.length ? '<pre class="adpre">' + esc(ADM.qaBad.join("\n")) + '</pre>' : "";
+  return admSec("Quick actions", '<div class="adqg">' + q("reload", "refresh", "Reload automations", "Also scripts and scenes") + q("templates", "refresh", "Reload templates", "Template sensors") +
+    q("check", "check-circle", "Check config", "Before a restart") + q("restart", "power", "Restart Home Assistant", "About a minute offline", "bad") + '</div>' + msg + bad +
+    '<div class="adqh"><button class="eb" data-adq="ha">OPEN HA SETTINGS ' + mdi("open-in-new") + '</button></div>', "adqa");
+}
+function admQaSet(msg, bad) { ADM.qa = msg; ADM.qaBad = bad || null; ADM.qaT = /…$/.test(msg) ? 0 : Date.now(); if (curPg() === "admin" && setTab() === "status") { const c = $("#admin .adqa"); if (c) c.outerHTML = admQaHtml(); } }
+function admCheck(then) {
+  admQaSet("Checking the config…");
+  getToken().then(tk => fetch(CONFIG.url + "/api/config/core/check_config", { method: "POST", headers: { Authorization: "Bearer " + tk } })).then(r => r.json()).then(j => {
+    if (j && j.result === "valid") { admQaSet("Config is valid" + (j.warnings ? " (with warnings)" : "")); if (then) then(); }
+    else admQaSet("The config has errors. Fix them before restarting.", String((j && j.errors) || "Unknown error").split("\n").filter(Boolean));
+  }).catch(() => admQaSet("Couldn't check the config. Is Home Assistant reachable?", []));
+}
+function admQa(k) {
+  if (k === "ha") { haGo(); return; }
+  if (k === "reload") { ["automation", "script", "scene"].forEach(d => call(d, "reload")); admQaSet("Automations, scripts and scenes reloaded"); return; }
+  if (k === "templates") { call("template", "reload"); admQaSet("Templates reloaded"); return; }
+  if (k === "check") { admCheck(); return; }
+  if (k === "restart") admCheck(() => insAsk("Restart Home Assistant?", "", "The config check passed. Every screen goes offline for about a minute and reconnects by itself.", "Restart", () => { call("homeassistant", "restart"); admQaSet("Restarting Home Assistant…"); }));
+}
+
+// ----- ENTITIES -----
+function admEntShell() {
+  return '<div class="adw' + (ADM.esel ? " det" : "") + '" data-w="ent"><div class="pn pg adl"><label class="ads">' + mdi("magnify") + '<input type="search" data-adq-ent placeholder="Search entities" value="' + esc(ADM.eq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div><div class="adrs"></div></div>' +
+    '<div class="admbk" data-adx="ent"></div><div class="pn pg add"></div></div>';
+}
+function admEntMatch() {
+  const w = ADM.eq.toLowerCase().split(/\s+/).filter(Boolean);
+  return Object.keys(states).filter(id => { if (!w.length) return true; const h = (id + " " + admNm(id)).toLowerCase(); return w.every(x => h.indexOf(x) > -1); });
+}
+function admEntDraw(live) {
+  const w = $('#admb .adw[data-w="ent"]'); if (!w) return;
+  const all = admEntMatch(), bad = all.filter(id => admBadSt(states[id].state)), dc = {};
+  all.forEach(id => { const d = id.split(".")[0]; dc[d] = (dc[d] || 0) + 1; });
+  const doms = Object.keys(dc).sort((a, b) => dc[b] - dc[a]).slice(0, 8);
+  if (ADM.ef !== "all" && ADM.ef !== "bad" && !dc[ADM.ef]) ADM.ef = "all";
+  const chip = (k, t) => '<button class="chip' + (ADM.ef === k ? " on" : "") + (k === "bad" ? " adbad" : "") + '" data-adf="' + k + '">' + t + '</button>';
+  const ch = chip("all", "ALL " + all.length) + (bad.length ? chip("bad", "UNAVAILABLE " + bad.length) : "") + doms.map(d => chip(d, d.toUpperCase().replace(/_/g, " ") + " " + dc[d])).join("");
+  const c = $(".adch", w); if (c._h !== ch) { c._h = ch; c.innerHTML = hsw('<div class="chips tabs">' + ch + '</div>'); }
+  const list = (ADM.ef === "all" ? all : ADM.ef === "bad" ? bad : all.filter(id => id.split(".")[0] === ADM.ef)).sort((a, b) => admNm(a).localeCompare(admNm(b)));
+  const max = 150, rows = list.slice(0, max).map(id => { const s = states[id], v = s.state;
+    return '<button class="adr' + (id === ADM.esel ? " sel" : "") + '" data-ae="' + esc(id) + '"><span class="adn"><b>' + esc(admNm(id)) + '</b><small>' + esc(id) + '</small></span><em class="' + (admBadSt(v) ? "bad" : admOnSt(v) ? "on" : "") + '">' + esc(admSt(s).toUpperCase()) + '</em></button>'; }).join("");
+  const h = (rows || admEmpty(ADM.eq ? "Nothing matches “" + ADM.eq + "”." : "No entities loaded yet.")) + (list.length > max ? '<div class="admore">Showing ' + max + ' of ' + list.length + '. Search to narrow it down.</div>' : "");
+  const r = $(".adrs", w); if (r._h !== h) { r._h = h; r.innerHTML = h; }
+  admEntDet(live);
+}
+function admEntDet(live) {
+  const w = $('#admb .adw[data-w="ent"]'), d = w && $(".add", w); if (!d) return; const id = ADM.esel, s = states[id];
+  w.classList.toggle("det", !!id);
+  if (!id || !s) { d.innerHTML = '<div class="adhint">' + mdi("magnify") + '<span>Pick an entity to see its state, attributes and the last 24 hours.</span></div>'; d._id = ""; return; }
+  const dom = id.split(".")[0], v = s.state, lc = admMs(s.last_changed), since = lc ? "for " + agoTxt(Date.now() - lc) + " · since " + admT(lc) : "";
+  const tog = ["switch", "light", "fan", "input_boolean", "automation", "siren", "humidifier"].indexOf(dom) > -1 && !admBadSt(v);
+  const ctl = tog ? '<button class="adsw' + (v === "on" ? " on" : "") + '" data-aet="' + esc(id) + '" aria-label="Turn ' + (v === "on" ? "off" : "on") + '"><i></i></button>'
+    : dom === "script" ? '<button class="eb" data-aerun="' + esc(id) + '">' + mdi("play") + ' RUN</button>'
+    : dom === "button" || dom === "input_button" ? '<button class="eb" data-aerun="' + esc(id) + '">PRESS</button>'
+    : dom === "scene" ? '<button class="eb" data-aerun="' + esc(id) + '">ACTIVATE</button>'
+    : (dom === "input_select" || dom === "select") && Array.isArray(s.attributes.options) ? '<select class="adsel" data-aesel="' + esc(id) + '">' + s.attributes.options.map(o => '<option' + (o === v ? " selected" : "") + '>' + esc(o) + '</option>').join("") + '</select>'
+    : (dom === "input_number" || dom === "number") && s.attributes.min != null ? '<input class="adnum" type="number" data-aenum="' + esc(id) + '" value="' + esc(v) + '" min="' + s.attributes.min + '" max="' + s.attributes.max + '" step="' + (s.attributes.step || 1) + '">' : "";
+  const at = Object.keys(s.attributes || {}).sort().map(k => { let x = s.attributes[k]; x = typeof x === "object" ? JSON.stringify(x) : String(x); if (x.length > 160) x = x.slice(0, 157) + "…"; return '<div class="adat"><b>' + esc(k) + '</b><span>' + esc(x) + '</span></div>'; }).join("");
+  const key = id + "|" + v + "|" + lc + "|" + JSON.stringify(s.attributes).length;
+  if (live && d._key === key) return; d._key = key;
+  const keepH = d._id === id ? ($(".adh", d) || {}).innerHTML : "";
+  d.innerHTML = '<div class="addh"><div><b>' + esc(admNm(id)) + '</b><small>' + esc(id) + '</small></div><button class="adic" data-aecopy="' + esc(id) + '" aria-label="Copy the entity id">' + mdi("content-copy") + '</button><button class="adic adx" data-adx="ent" aria-label="Close">' + mdi("close") + '</button></div>' +
+    '<div class="adv"><span class="' + (admBadSt(v) ? "bad" : admOnSt(v) ? "on" : "") + '">' + esc(admSt(s)) + '</span>' + ctl + '</div><div class="adsince">' + esc(since) + '</div>' +
+    '<div class="adh">' + (keepH || '<div class="adhl">Loading the last 24 hours…</div>') + '</div><div class="adhx"><span>24 H AGO</span><span>NOW</span></div>' +
+    '<div class="lbl adal">Attributes</div>' + (at || admEmpty("No attributes.")) +
+    '<div class="adbt"><button class="eb" data-aeha="' + esc(id) + '">OPEN IN HA ' + mdi("open-in-new") + '</button></div>';
+  d._id = id; if (!keepH || !live) admHist(id);
+}
+function admHist(id) {
+  const c = ADM.hist[id]; if (c && Date.now() - c.t < 60000) { admHistDraw(id, c.a); return; }
+  const end = new Date(), st = new Date(end.getTime() - 864e5);
+  send({ type: "history/history_during_period", start_time: st.toISOString(), end_time: end.toISOString(), entity_ids: [id], minimal_response: true, no_attributes: true, significant_changes_only: false }, r => {
+    const a = ((r && r[id]) || []).map(x => [x.lu != null ? x.lu * 1000 : admMs(x.last_updated || x.last_changed), x.s != null ? x.s : x.state]).filter(x => x[0]);
+    ADM.hist[id] = { t: Date.now(), a: a }; admHistDraw(id, a);
+  });
+}
+function admHistDraw(id, a) {
+  const h = $("#admb .add .adh"); if (!h || ADM.esel !== id) return;
+  const t1 = Date.now(), t0 = t1 - 864e5, W = 300, X = t => Math.max(0, Math.min(W, (t - t0) / 864e5 * W));
+  if (!a.length) { h.innerHTML = '<div class="adhl">No history in the last 24 hours.</div>'; return; }
+  const nums = a.map(x => parseFloat(x[1])), numeric = a.every((x, i) => !isNaN(nums[i]) || admBadSt(x[1]));
+  if (numeric && nums.some(n => !isNaN(n))) {
+    const ok = a.map((x, i) => [x[0], nums[i]]).filter(x => !isNaN(x[1])), lo = Math.min.apply(null, ok.map(x => x[1])), hi = Math.max.apply(null, ok.map(x => x[1])), sp = hi - lo || 1;
+    let pts = ""; ok.forEach((x, i) => { const y = 30 - (x[1] - lo) / sp * 26; pts += (i ? " " : "") + X(Math.max(x[0], t0)).toFixed(1) + "," + y.toFixed(1); }); pts += " " + W + "," + (30 - (ok[ok.length - 1][1] - lo) / sp * 26).toFixed(1);
+    h.innerHTML = '<svg viewBox="0 0 300 34" preserveAspectRatio="none"><polyline points="' + pts + '" fill="none" stroke="var(--mint)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg><div class="adhr"><span>' + esc(String(+lo.toFixed(2))) + '</span><span>' + esc(String(+hi.toFixed(2))) + '</span></div>';
+    return;
+  }
+  const col = v => admBadSt(v) ? "var(--heat)" : admOnSt(v) ? "var(--mint)" : v === "off" || v === "closed" || v === "idle" || v === "not_home" || v === "disarmed" || v === "locked" ? "rgba(var(--w),.12)" : "hsl(" + ([...String(v)].reduce((p, c) => p * 31 + c.charCodeAt(0) & 1023, 7) % 360) + " 55% 60% / .7)";
+  let seg = ""; a.forEach((x, i) => { const s0 = X(Math.max(x[0], t0)), s1 = i + 1 < a.length ? X(a[i + 1][0]) : W; if (s1 - s0 > 0) seg += '<rect x="' + s0.toFixed(2) + '" y="8" width="' + (s1 - s0).toFixed(2) + '" height="18" fill="' + col(x[1]) + '"><title>' + esc(String(x[1])) + ' · ' + esc(admT(x[0])) + '</title></rect>'; });
+  h.innerHTML = '<svg viewBox="0 0 300 34" preserveAspectRatio="none"><rect x="0" y="8" width="300" height="18" rx="4" fill="rgba(var(--w),.06)"/>' + seg + '</svg>';
+}
+
+// ----- AUTOMATIONS -----
+const AUT_WHY = { finished: "", failed_conditions: "stopped at a condition", failed_single: "skipped, already running", failed_max_runs: "skipped, too many runs", error: "error", aborted: "stopped", cancelled: "cancelled", running: "running now" };
+function admAutShell() {
+  return '<div class="adw' + (ADM.asel ? " det" : "") + '" data-w="aut"><div class="pn pg adl"><label class="ads">' + mdi("magnify") + '<input type="search" data-adq-aut placeholder="Search automations" value="' + esc(ADM.aq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div><div class="adrs"></div></div>' +
+    '<div class="admbk" data-adx="aut"></div><div class="pn pg add"></div></div>';
+}
+// the newest run of each automation, from trace/list (all of them at once); refreshed when the tab opens and every minute while it is open
+function admTlLoad(force) {
+  if (ADM.tlBusy && Date.now() - ADM.tlBusy < 15000) return; if (!force && ADM.tl && Date.now() - ADM.tlT < 60000) return;
+  ADM.tlBusy = Date.now();
+  send({ type: "trace/list", domain: "automation" }, (r, m) => { ADM.tlBusy = 0; ADM.tlT = Date.now(); ADM.tl = m && m.success && Array.isArray(r) ? r : []; if (curPg() === "admin" && setTab() === "automations") admAutDraw(); });
+  clearTimeout(ADM.tlTm); ADM.tlTm = setTimeout(() => { if (curPg() === "admin" && setTab() === "automations") admTlLoad(true); }, 60000);
+}
+const admRuns = cid => (ADM.tl || []).filter(x => x.item_id === cid).sort((a, b) => admMs(b.timestamp && b.timestamp.start) - admMs(a.timestamp && a.timestamp.start));
+const admRunBad = x => !!x && (x.script_execution === "error" || !!x.error);
+function admAutDraw(live) {
+  const w = $('#admb .adw[data-w="aut"]'); if (!w) return;
+  const q = ADM.aq.toLowerCase().split(/\s+/).filter(Boolean), all = Object.keys(states).filter(id => id.indexOf("automation.") === 0 && (!q.length || q.every(x => (id + " " + admNm(id)).toLowerCase().indexOf(x) > -1)));
+  const off = all.filter(id => states[id].state === "off"), err = all.filter(id => admRunBad(admRuns(states[id].attributes.id)[0]));
+  const chip = (k, t) => '<button class="chip' + (ADM.af === k ? " on" : "") + (k === "err" ? " adbad" : "") + '" data-adf="' + k + '">' + t + '</button>';
+  const ch = chip("all", "ALL " + all.length) + (off.length ? chip("off", "OFF " + off.length) : "") + (err.length ? chip("err", "ERRORS " + err.length) : "");
+  if ((ADM.af === "off" && !off.length) || (ADM.af === "err" && !err.length)) ADM.af = "all";
+  const c = $(".adch", w); if (c._h !== ch) { c._h = ch; c.innerHTML = hsw('<div class="chips tabs">' + ch + '</div>'); }
+  const list = (ADM.af === "off" ? off : ADM.af === "err" ? err : all).sort((a, b) => admNm(a).localeCompare(admNm(b)));
+  const rows = list.map(id => { const s = states[id], lt = admMs(s.attributes.last_triggered), r = admRuns(s.attributes.id)[0], why = r ? AUT_WHY[r.script_execution] : "", bad = admRunBad(r), isOff = s.state === "off";
+    const sub = isOff && !lt ? "Off · never ran" : (lt ? "Last ran " + admT(lt) : "Never ran") + (bad ? " · error" : why ? " · " + why : "") + (isOff ? " · off" : "");
+    return '<div class="adr adra' + (id === ADM.asel ? " sel" : "") + (bad ? " err" : "") + (isOff ? " off" : "") + '" data-aa="' + esc(id) + '" role="button" tabindex="0"><span class="adn"><b>' + esc(admNm(id)) + '</b><small>' + esc(sub) + '</small></span><button class="adsw' + (isOff ? "" : " on") + '" data-aat="' + esc(id) + '" aria-label="Turn ' + (isOff ? "on" : "off") + '"><i></i></button></div>'; }).join("");
+  const h = rows || admEmpty(ADM.aq ? "Nothing matches “" + ADM.aq + "”." : "No automations.");
+  const r = $(".adrs", w); if (r._h !== h) { r._h = h; r.innerHTML = h; }
+  admAutDet(live);
+}
+function admAutDet(live) {
+  const w = $('#admb .adw[data-w="aut"]'), d = w && $(".add", w); if (!d) return; const id = ADM.asel, s = states[id];
+  w.classList.toggle("det", !!id);
+  if (!id || !s) { d.innerHTML = '<div class="adhint">' + mdi("format-list-bulleted") + '<span>Pick an automation to see its recent runs and where a run stopped.</span></div>'; d._key = ""; return; }
+  const cid = s.attributes.id, runs = admRuns(cid).slice(0, 6); if (!ADM.arun || !runs.some(x => x.run_id === ADM.arun)) ADM.arun = runs[0] ? runs[0].run_id : "";
+  const key = id + "|" + s.state + "|" + runs.map(x => x.run_id + x.script_execution).join(",") + "|" + ADM.arun + "|" + (ADM.tg[ADM.arun] ? 1 : 0);
+  if (live && d._key === key) return; d._key = key;
+  const run = runs.filter(x => x.run_id === ADM.arun)[0];
+  d.innerHTML = '<div class="addh"><div><b>' + esc(admNm(id)) + '</b><small>' + esc(id) + '</small></div><button class="adsw' + (s.state === "off" ? "" : " on") + '" data-aat="' + esc(id) + '" aria-label="Turn on or off"><i></i></button><button class="adic adx" data-adx="aut" aria-label="Close">' + mdi("close") + '</button></div>' +
+    '<div class="adbt"><button class="eb" data-aarun="' + esc(id) + '">' + mdi("play") + ' RUN NOW</button><button class="eb" data-aaha="' + esc(cid || "") + '">OPEN IN HA ' + mdi("open-in-new") + '</button></div>' +
+    '<div class="lbl adal">Recent runs</div>' +
+    (!cid ? admEmpty("This automation has no id (it isn't from the automation editor or automations.yaml), so Home Assistant keeps no runs for it.")
+      : !ADM.tl ? '<div class="adhl">Loading…</div>'
+      : !runs.length ? admEmpty("No runs kept yet. Home Assistant keeps the last few runs of each automation.")
+      : hsw('<div class="chips tabs adruns">' + runs.map(x => '<button class="chip' + (x.run_id === ADM.arun ? " on" : "") + (admRunBad(x) ? " adbad" : "") + '" data-aarid="' + esc(x.run_id) + '">' + esc(admT(admMs(x.timestamp && x.timestamp.start))) + '</button>').join("") + '</div>') +
+        '<div class="adsteps">' + (ADM.tg[ADM.arun] ? admSteps(ADM.tg[ADM.arun], run) : '<div class="adhl">Loading the run…</div>') + '</div>');
+  if (run && !ADM.tg[run.run_id]) send({ type: "trace/get", domain: "automation", item_id: cid, run_id: run.run_id }, (r, m) => { ADM.tg[run.run_id] = m && m.success && r ? r : { failed: true }; if (ADM.asel === id) admAutDet(); });
+}
+// one run, step by step: the trigger, each condition (passed / failed), each action (done / error / not reached)
+function admDesc(c, kind) {
+  if (!c || typeof c !== "object") return ""; if (c.alias) return c.alias;
+  const ent = [].concat(c.entity_id || (c.target && c.target.entity_id) || []).join(", ");
+  if (kind === "trigger") return [c.trigger || c.platform, ent, c.to != null ? "to " + c.to : "", c.at ? "at " + c.at : "", c.event ? c.event : ""].filter(Boolean).join(" · ");
+  if (kind === "condition") return [c.condition, ent, c.state != null ? "is " + [].concat(c.state).join(" or ") : "", c.above != null ? "above " + c.above : "", c.below != null ? "below " + c.below : "", c.after ? "after " + c.after : "", c.before ? "before " + c.before : "", c.value_template ? "template" : ""].filter(Boolean).join(" · ");
+  const sv = c.action || c.service; if (sv) return sv + (ent ? " · " + ent : "");
+  if (c.delay) return "wait " + (typeof c.delay === "object" ? JSON.stringify(c.delay) : c.delay);
+  return Object.keys(c).filter(k => k !== "enabled")[0] || "";
+}
+function admSteps(t, run) {
+  if (t.failed) return admEmpty("Couldn't load this run.");
+  const tr = t.trace || {}, cfg = t.config || {}, out = [], step = (k, title, sub, cls) => out.push('<div class="adst ' + cls + '"><i></i><div><b>' + esc(title) + '</b>' + (sub ? '<small>' + esc(sub) + '</small>' : "") + '</div></div>');
+  const L = (a, b) => [].concat(cfg[a] || cfg[b] || []);
+  const trig = L("triggers", "trigger"), cond = L("conditions", "condition"), act = L("actions", "action");
+  const top = Object.keys(tr).filter(k => k.split("/").length === 2);
+  let seenAct = -1, failed = false;
+  top.forEach(k => { const [kind, i] = k.split("/"), n = +i, e = (tr[k] || [])[0] || {}, res = e.result || {};
+    if (kind === "trigger") step(k, "Trigger", (t.trigger || run && run.trigger || admDesc(trig[n], "trigger") || "").toString(), "ok");
+    else if (kind === "condition") { const pass = res.result !== false && !e.error; if (!pass) failed = true; step(k, pass ? "Condition passed" : "Condition failed", admDesc(cond[n], "condition") || "Condition " + (n + 1), pass ? "ok" : "bad"); }
+    else if (kind === "action") { seenAct = Math.max(seenAct, n); const er = e.error || (res && res.error); if (er) failed = true; step(k, er ? "Action failed" : "Action", (admDesc(act[n], "action") || "Action " + (n + 1)) + (er ? " · " + er : ""), er ? "bad" : "ok"); }
+  });
+  if (!top.some(k => k.indexOf("action/") === 0) || failed || (run && run.script_execution !== "finished")) act.forEach((a, n) => { if (n > seenAct) step("", admDesc(a, "action") || "Action " + (n + 1), "Not reached", "no"); });
+  const err = t.error || (run && run.error); if (err) out.push('<pre class="adpre">' + esc(String(err)) + '</pre>');
+  return out.join("") || admEmpty("This run has no steps to show.");
+}
+
+// ----- LOGS -----
+function admLogShell() {
+  return '<div class="pn pg adlog"><div class="adlh"><div class="adch"></div><button class="eb" data-adlr="1">' + mdi("refresh") + ' REFRESH</button></div><div class="adrs"></div></div>';
+}
+function admLogLoad(force) {
+  if (!force && ADM.logs && Date.now() - ADM.logT < 30000) return; ADM.logT = Date.now();
+  send({ type: "system_log/list" }, (r, m) => { ADM.logs = m && m.success && Array.isArray(r) ? r : []; ADM.logErr = !(m && m.success); if (curPg() === "admin" && setTab() === "logs") admLogDraw(); });
+}
+const admLvl = l => /ERROR|CRITICAL|FATAL/i.test(l) ? "err" : /WARN/i.test(l) ? "warn" : "info";
+function admLogDraw() {
+  const w = $("#admb .adlog"); if (!w) return;
+  const L = (ADM.logs || []).slice().sort((a, b) => admMs(b.timestamp) - admMs(a.timestamp)), E = L.filter(x => admLvl(x.level) === "err"), Wn = L.filter(x => admLvl(x.level) === "warn");
+  const chip = (k, t) => '<button class="chip' + (ADM.lf === k ? " on" : "") + '" data-adf="' + k + '">' + t + '</button>';
+  $(".adch", w).innerHTML = hsw('<div class="chips tabs">' + chip("all", "ALL " + L.length) + chip("err", "ERRORS " + E.length) + chip("warn", "WARNINGS " + Wn.length) + '</div>');
+  const list = ADM.lf === "err" ? E : ADM.lf === "warn" ? Wn : L;
+  $(".adrs", w).innerHTML = !ADM.logs ? '<div class="adhl">Loading the log…</div>' : ADM.logErr ? admEmpty("Couldn't read Home Assistant's log.") : !list.length ? admEmpty("Nothing logged. All quiet.") : list.slice(0, 100).map((x, i) => {
+    const msgs = [].concat(x.message || []), lv = admLvl(x.level), open = ADM.lopen === i, au = (msgs.join(" ") + " " + (x.exception || "")).match(/automation\.[a-z0-9_]+/);
+    return '<div class="adlg' + (open ? " open" : "") + '" data-adl="' + i + '"><span class="adlv ' + lv + '">' + (lv === "err" ? "ERROR" : lv === "warn" ? "WARN" : esc(String(x.level || "INFO").slice(0, 5))) + '</span><div class="adlb"><b>' + esc(String(msgs[0] || x.name || "")) + '</b><small>' + esc(String(x.name || "")) + ' · ' + esc(admT(admMs(x.timestamp))) + '</small>' +
+      (open ? (msgs.length > 1 || x.exception ? '<pre class="adpre">' + esc(msgs.slice(1).concat(x.exception ? [x.exception] : []).join("\n\n")) + '</pre>' : "") + (x.source ? '<small>' + esc([].concat(x.source).join(":")) + (x.first_occurred ? " · first " + esc(admT(admMs(x.first_occurred))) : "") + '</small>' : "") +
+        '<div class="adbt">' + (au && states[au[0]] ? '<button class="eb" data-adlau="' + esc(au[0]) + '">OPEN AUTOMATION</button>' : "") + '<button class="eb" data-adlc="' + i + '">' + mdi("content-copy") + ' COPY</button></div>' : "") +
+      '</div>' + (x.count > 1 ? '<span class="adln">×' + x.count + '</span>' : "") + '</div>'; }).join("");
+  w._list = list;
+}
+
+// ----- taps and typing -----
+function admCopy(t, btn) {
+  const done = () => { if (btn) { btn.classList.add("ok"); setTimeout(() => btn.classList.remove("ok"), 1200); } };
+  try { navigator.clipboard.writeText(t).then(done, () => {}); } catch (_) { const a = document.createElement("textarea"); a.value = t; document.body.appendChild(a); a.select(); try { document.execCommand("copy"); done(); } catch (__) {} a.remove(); }
+}
+$("#admin").addEventListener("click", e => {
+  const t = e.target, tab = setTab(), g = s => t.closest(s);
+  let b;
+  if ((b = g("[data-adq]"))) { admQa(b.dataset.adq); return; }
+  if ((b = g("[data-adf]"))) { const k = b.dataset.adf; if (tab === "entities") { ADM.ef = k; admEntDraw(); } else if (tab === "automations") { ADM.af = k; admAutDraw(); } else { ADM.lf = k; ADM.lopen = -1; admLogDraw(); } return; }
+  if ((b = g("[data-adx]"))) { if (b.dataset.adx === "ent") { ADM.esel = ""; admEntDraw(); } else { ADM.asel = ""; admAutDraw(); } return; }
+  if ((b = g("[data-aet]"))) { const id = b.dataset.aet, on = states[id] && states[id].state === "on"; call(id.split(".")[0] === "automation" ? "automation" : "homeassistant", on ? "turn_off" : "turn_on", id); b.classList.toggle("on", !on); return; }
+  if ((b = g("[data-aerun]"))) { const id = b.dataset.aerun, d = id.split(".")[0]; if (d === "script") call("script", "turn_on", id); else if (d === "scene") call("scene", "turn_on", id); else call(d, "press", id); b.classList.add("ok"); setTimeout(() => b.classList.remove("ok"), 1200); return; }
+  if ((b = g("[data-aecopy]"))) { admCopy(b.dataset.aecopy, b); return; }
+  if ((b = g("[data-aeha]"))) { haGo("/history?entity_id=" + encodeURIComponent(b.dataset.aeha)); return; }
+  if ((b = g("[data-ae]"))) { ADM.esel = b.dataset.ae; admEntDraw(); return; }
+  if ((b = g("[data-aat]"))) { e.stopPropagation(); const id = b.dataset.aat, on = states[id] && states[id].state !== "off"; call("automation", on ? "turn_off" : "turn_on", id); b.classList.toggle("on", !on); return; }
+  if ((b = g("[data-aarun]"))) { call("automation", "trigger", b.dataset.aarun, { skip_condition: true }); b.classList.add("ok"); setTimeout(() => { b.classList.remove("ok"); admTlLoad(true); }, 2500); return; }
+  if ((b = g("[data-aaha]"))) { haGo(b.dataset.aaha ? "/config/automation/edit/" + encodeURIComponent(b.dataset.aaha) : "/config/automation/dashboard"); return; }
+  if ((b = g("[data-aarid]"))) { ADM.arun = b.dataset.aarid; admAutDet(); return; }
+  if ((b = g("[data-aa]"))) { if (ADM.asel !== b.dataset.aa) ADM.arun = ""; ADM.asel = b.dataset.aa; admAutDraw(); admTlLoad(); return; }
+  if ((b = g("[data-adlr]"))) { admLogLoad(true); return; }
+  if ((b = g("[data-adlau]"))) { ADM.asel = b.dataset.adlau; ADM.arun = ""; location.replace("#admin/automations"); return; }
+  if ((b = g("[data-adlc]"))) { const x = ($("#admb .adlog") || {})._list[+b.dataset.adlc]; if (x) admCopy([].concat(x.message || []).join("\n") + (x.exception ? "\n" + x.exception : "") + "\n(" + x.name + ")", b); return; }
+  if ((b = g("[data-adl]"))) { const i = +b.dataset.adl; ADM.lopen = ADM.lopen === i ? -1 : i; admLogDraw(); return; }
+});
+$("#admin").addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.dataset && e.target.dataset.aa) { e.preventDefault(); e.target.click(); } });
+$("#admin").addEventListener("input", e => {
+  const t = e.target;
+  if (t.hasAttribute("data-adq-ent")) { ADM.eq = t.value; admEntDraw(); }
+  else if (t.hasAttribute("data-adq-aut")) { ADM.aq = t.value; admAutDraw(); }
+});
+$("#admin").addEventListener("change", e => {
+  const t = e.target;
+  if (t.dataset.aesel) call(t.dataset.aesel.split(".")[0], "select_option", t.dataset.aesel, { option: t.value });
+  else if (t.dataset.aenum) { const v = parseFloat(t.value); if (!isNaN(v)) call(t.dataset.aenum.split(".")[0], "set_value", t.dataset.aenum, { value: v }); }
+});
 // ---------- Config editor (Admin page): edit rooms, tiles, climate rooms, cameras, media and alarm tiles; kept on the Home Assistant host by the kinetic_config component ----------
 // config.js stays the base. What is saved here only replaces the listed parts of it (CFG_OV_KEYS); "Reset" puts a part back to what config.js says. Saving never switches a device.
 const CE = { draft: null, avail: null, busy: false, msg: "", open: {}, fresh: "" };
@@ -7760,7 +8403,7 @@ function wxaRow(k, x) {
 // ---------- the living card (2.5.0): the weather plays inside the card (rain falls, gusts sweep across, the sun turns in the corner; more of it for a higher tier)
 // and the next hours as bars under it, the hours over the first limit coloured and a dot on now. Several alerts: one card each, worst first; the others are one-line
 // strips with mini bars (tap one to open it as the big card). Tapping the big card opens that forecast chart on the Weather page.
-let WXA_OPEN = "";   // the alert shown as the big card when there are several ("" = the worst one)
+const WXA_EXP = new Set();   // shrunk weather cards opened in place with MORE (LESS shrinks them again); the worst alert is always the big card, first
 const wxaRnd = i => { const x = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); };   // the same "random" layout each time, so a redraw with the same data changes nothing
 function wxaSeries(k, x, c) {   // [{ v, t, now }] for the next hours: the live value first (wind, UV), then the hourly forecast
   const a = (states[W] || {}).attributes || {}, now = Date.now(), end = now + c.hours * 3600000;
@@ -7790,15 +8433,16 @@ function wxaParts(k, x) {   // [tag, title, sub, value, unit]
   if (k === "wind") return [(x.now ? "WIND NOW · " : "WIND FORECAST · ") + WXA_W[x.tier].toUpperCase(), WXA_NAME.wind(x) + (x.now ? " now" : " around " + wxaTime(x.fat)), wxaWindSub(x).filter(t => !/^Around /.test(t)).join(" · "), Math.round(x.v), "km/h"];
   return [(x.now ? "UV NOW · " : "UV · ") + wxaUvName(x).toUpperCase(), wxaUvName(x) + " UV" + (x.now ? " now" : " from " + wxaTime(x.from || x.fat)), wxaUvSub(x).join(" · "), Math.round(x.v), "UV index"];
 }
-function wxaCard(k, x, c, small) {
+// a shrunk card (small) carries MORE: tapping it, or anywhere on the card, opens it in place, full size, with LESS under it (32-notifications-popup.js)
+function wxaCard(k, x, c, small, exp) {
   const P = wxaParts(k, x), cls = "wxl wxl-" + k + " wt" + x.tier + (small ? " sm" : "");
-  if (small) return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, Math.min(x.tier, 1)) + '<div class="wxr"><div class="wxm"><div class="wxt"><i></i>' + esc(P[0]) + '</div><b>' + esc(P[1]) + '</b></div>' + wxaBars(k, x, c, true) + '<div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div></div>';
-  return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, x.tier) + '<div class="wxt"><i></i>' + esc(P[0]) + '</div><div class="wxr"><div class="wxm"><b>' + esc(P[1]) + '</b>' + (P[2] ? '<small>' + esc(P[2]) + '</small>' : "") + '</div><div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div>' + wxaBars(k, x, c, false) + '</div>';
+  if (small) return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, Math.min(x.tier, 1)) + '<div class="wxr"><div class="wxm"><div class="wxt"><i></i>' + esc(P[0]) + '</div><b>' + esc(P[1]) + '</b></div>' + wxaBars(k, x, c, true) + '<div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div><button class="wxmore" tabindex="-1">MORE ' + mdi("chevron-down") + '</button></div>';
+  return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, x.tier) + '<div class="wxt"><i></i>' + esc(P[0]) + '</div><div class="wxr"><div class="wxm"><b>' + esc(P[1]) + '</b>' + (P[2] ? '<small>' + esc(P[2]) + '</small>' : "") + '</div><div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div>' + wxaBars(k, x, c, false) + (exp ? '<button class="wxmore wxless" tabindex="-1">LESS ' + mdi("chevron-up") + '</button>' : "") + '</div>';
 }
 function wxaHtml(w) {
   const ks = ["wind", "rain", "uv"].filter(k => w[k]).sort((a, b) => w[b].tier - w[a].tier || (w[b].now ? 1 : 0) - (w[a].now ? 1 : 0));
-  const big = ks.indexOf(WXA_OPEN) > -1 ? WXA_OPEN : ks[0];
-  return '<div class="wxs">' + [big].concat(ks.filter(k => k !== big)).map(k => wxaCard(k, w[k], w.cfg, k !== big)).join("") + '</div>';
+  // the worst first and big; the others shrunk, unless opened with MORE (then full size where they are, with LESS)
+  return '<div class="wxs">' + ks.map((k, i) => wxaCard(k, w[k], w.cfg, i > 0 && !WXA_EXP.has(k), i > 0 && WXA_EXP.has(k))).join("") + '</div>';
 }
 // the header strip: Strong / Severe wind, Heavy rain and Very high UV are urgent (hi = true), the lower tiers are not (see NSK in 32-notifications-popup.js). Each shows from its own first tier (stripWind / stripRain / stripUv).
 // Two or more weather chips become one chip ("wx": "3 weather alerts", coloured by the worst), which is urgent when any of them is.
@@ -8041,7 +8685,8 @@ $("#np").onclick = e => {
   const tb = e.target.closest("[data-npt]"); if (tb) { npOnly = ""; const ord = ["alerts", "attention", "active"], was = npTab; npTab = tb.dataset.npt; drawNotif(); if (was !== npTab) txGo($("#npc"), ord.indexOf(npTab) > ord.indexOf(was) ? 1 : -1, true); return; }
   const of = e.target.closest("[data-off]"); if (of) { const ids = actList()[+of.dataset.off].ids; const cl = actList()[+of.dataset.off].c[3] === "close"; if (ids.length) { if (!cl) npDismiss(ids); call(cl ? "cover" : "homeassistant", cl ? "close_cover" : "turn_off", ids); } return; }
   if (e.target.closest("[data-wxatg]")) { WXA_FULL = !WXA_FULL; drawNotif(); return; }   // the combined weather card: one line each, or each as its full card
-  const wa = e.target.closest("[data-wxa]"); if (wa && wa.classList.contains("sm")) { WXA_OPEN = wa.dataset.wxa; drawNotif(); return; }   // a one-line weather strip opens as the big card
+  // a shrunk weather card opens in place (MORE, or a tap anywhere on it); LESS shrinks it again
+  const wa = e.target.closest("[data-wxa]"); if (wa && (wa.classList.contains("sm") || e.target.closest(".wxless"))) { if (wa.classList.contains("sm")) WXA_EXP.add(wa.dataset.wxa); else WXA_EXP.delete(wa.dataset.wxa); drawNotif(); return; }
   if (wa) { npClose(); location.hash = "#weather/" + wa.dataset.wxa; return; }   // the weather card opens that forecast chart
   const up = e.target.closest("[data-up]"); if (up) { upcOpen(up.dataset.up); return; }
   const tg = e.target.closest("[data-togon]"); if (tg) { const id = tg.dataset.togon, g = TOG.find(g => g[3].some(x => x[0] === id)), x = g && g[3].find(x => x[0] === id); if (x && x[2]) send({ type: "call_service", domain: "script", service: x[2] }); else call(id.split(".")[0], "turn_on", id); return; }   // an "alerts are off" reminder: turn it back on   // 33-update-card.js
@@ -8426,8 +9071,15 @@ function clHum(id) {
   const a = (states[id] || {}).attributes || {}; if (a.current_humidity != null && !isNaN(parseFloat(a.current_humidity))) return +a.current_humidity;
   const r = (typeof HOUSE === "function" ? HOUSE() : []).find(x => x.hum && [].concat(x.climate || []).indexOf(id) > -1), v = r ? parseFloat(sv(r.hum)) : NaN; return isNaN(v) ? null : v;
 }
+// the mode line must not run under the temperature: measure with the full line, then drop the target if it does not fit
+function clFit(md) {
+  if (!md || !md.offsetWidth || md.closest("[data-open]")) return; md.classList.remove("tight"); if (md.dataset.hu && md.dataset.tg && md.scrollWidth > md.clientWidth) md.classList.add("tight");
+}
+const clFitAll = () => { clearTimeout(clFit._t); clFit._t = setTimeout(() => $$("#grid>.card.rm .md").forEach(clFit), 150); };
+addEventListener("resize", clFitAll); addEventListener("hashchange", clFitAll); try { document.fonts.addEventListener("loadingdone", clFitAll); } catch (_) {}
 function clSub(id) {   // "Target 21° · humidity 55%" (shown in the phone sheet); the card's mode line gets "· 55% RH" too
   const c = cards[id]; if (!c || c.r.main) return; const hu = clHum(id), md = $(".md", c.el); if (md) { const v = hu == null ? "" : Math.round(hu) + "% RH"; if ((md.dataset.hu || "") !== v) { if (v) md.dataset.hu = v; else delete md.dataset.hu; } }
+  clFitAll();
   const s = $(".sub", c.el); if (!s) return; const tg = $(".tgt", c.el).textContent;
   const t = "Target " + tg + (hu != null && !isNaN(parseFloat(hu)) ? " · humidity " + Math.round(hu) + "%" : ""); if (s.textContent !== t) s.textContent = t;
 }
@@ -9161,11 +9813,17 @@ function czUi(el) {
   if (!el._zdrag) { const d = v.duration || 0; el._zr.value = d ? Math.round(v.currentTime / d * 1000) : 0; el._zt.textContent = czFmt(v.currentTime) + " / " + czFmt(d); }
 }
 function czPpShow(el, on) { if (!el._zui) return; clearTimeout(el._ztm); el._zshow = on; czUi(el); const v = el.querySelector("video"); if (on && !v.paused) el._ztm = setTimeout(() => { el._zshow = false; czUi(el); }, 3000); }
+// going in and out of full screen: the picture fades out, the switch happens over black, then it fades back in (like a Security camera on a phone),
+// so the moment the browser re-lays out the page (the picture jumping across a black screen) is never seen
+const czRm = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+function czFadeIn(el) { clearTimeout(el._zfT); el._zfT = setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(() => el.classList.remove("zfade", "zfnow"))), 90); }
 function czFull(el) {
-  if (czFsNow() === el) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); return; }
-  if (el.classList.contains("zfull")) { el.classList.remove("zfull"); czReset(el); czUi(el); return; }
+  const rm = czRm();
+  if (czFsNow() === el) { const go = () => { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }; if (rm) return go(); clearTimeout(el._zfT); el.classList.add("zfade"); el._zfT = setTimeout(go, 150); return; }
+  if (el.classList.contains("zfull")) { const go = () => { el.classList.remove("zfull"); czReset(el); czUi(el); if (!rm) czFadeIn(el); }; if (rm) return go(); clearTimeout(el._zfT); el.classList.add("zfade"); el._zfT = setTimeout(go, 150); return; }
+  if (!rm) { clearTimeout(el._zfT); el.classList.add("zfade", "zfnow"); clearTimeout(el._zfS); el._zfS = setTimeout(() => { if (el.classList.contains("zfade")) czFadeIn(el); }, 1500); }   // hidden at once: the request has to happen inside the tap, so there is no time to fade out first
   const rf = el.requestFullscreen || el.webkitRequestFullscreen; let p; if (rf) { try { p = rf.call(el); } catch (x) { p = Promise.reject(x); } }
-  const pseudo = () => { el.classList.add("zfull"); czReset(el); czUi(el); };   // no real full screen here (an iPhone, an iframe that does not allow it): fill the page instead
+  const pseudo = () => { el.classList.add("zfull"); czReset(el); czUi(el); if (!rm) czFadeIn(el); };   // no real full screen here (an iPhone, an iframe that does not allow it): fill the page instead
   if (!rf) pseudo(); else Promise.resolve(p).catch(pseudo);
 }
 function czEnhance(el) {
@@ -9174,7 +9832,9 @@ function czEnhance(el) {
   const mk = (tag, cls, html) => { const n = document.createElement(tag); n.className = cls; if (html) n.innerHTML = html; if (tag === "button") n.type = "button"; return n; };
   const gc = mk("div", "zgc"), pp = mk("button", "zpp"), bar = mk("div", "zbar"), tm = mk("span", "zt", "0:00 / 0:00"), rg = mk("input", "zr"), mu = mk("button", "zbt"), fs = mk("button", "zbt");
   rg.type = "range"; rg.min = 0; rg.max = 1000; rg.value = 0; pp.setAttribute("aria-label", "Play or pause"); mu.setAttribute("aria-label", "Sound"); fs.setAttribute("aria-label", "Full screen");
-  bar.append(tm, rg, mu, fs); el.append(gc, pp, bar); Object.assign(el, { _zpp: pp, _zbar: bar, _zt: tm, _zr: rg, _zmu: mu, _zfs: fs });
+  bar.append(tm, rg, mu, fs); el.append(gc, pp, bar);
+  // full screen: an X in the top right corner to come back (the detection boxes button sits beside it)
+  const zx = mk("button", "zx", mdi("close")); zx.setAttribute("aria-label", "Close full screen"); zx.onclick = e => { e.stopPropagation(); if (czFsNow() === el || el.classList.contains("zfull")) czFull(el); }; el.append(zx); Object.assign(el, { _zpp: pp, _zbar: bar, _zt: tm, _zr: rg, _zmu: mu, _zfs: fs });
   pp.onclick = e => { e.stopPropagation(); if (v.paused) v.play().catch(() => {}); else v.pause(); czPpShow(el, true); };
   mu.onclick = e => { e.stopPropagation(); v.muted = !v.muted; czPpShow(el, true); };
   fs.onclick = e => { e.stopPropagation(); czFull(el); czPpShow(el, true); };
@@ -9186,7 +9846,7 @@ function czEnhance(el) {
 const czScan = () => document.querySelectorAll(".pbv,.dtv").forEach(czEnhance);
 czScan(); if (window.MutationObserver) { let q = 0; new MutationObserver(() => { if (!q) q = requestAnimationFrame(() => { q = 0; czScan(); }); }).observe(document.body, { childList: true, subtree: true }); }
 ["loadstart"].forEach(n => document.addEventListener(n, e => { const p = e.target && e.target.tagName === "VIDEO" ? e.target.parentElement : null; if (p && czPlayer(p)) czEnhance(p); }, true));
-["fullscreenchange", "webkitfullscreenchange"].forEach(n => document.addEventListener(n, () => { document.querySelectorAll(".zm").forEach(czReset); document.querySelectorAll(".zc").forEach(e => { if (e._zui) czUi(e); }); }));
+["fullscreenchange", "webkitfullscreenchange"].forEach(n => document.addEventListener(n, () => { document.querySelectorAll(".zc.zfade").forEach(czFadeIn); document.querySelectorAll(".zm").forEach(czReset); document.querySelectorAll(".zc").forEach(e => { if (e._zui) czUi(e); }); }));
 document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll(".zc.zfull").forEach(czFull); });
 // ---------- Playback / Detections: mark the person or car that moves ----------
 // Needs no extra software: the picture is compared with the one a moment ago, and a box follows whatever changed. It only runs for clips the camera tagged Person / Vehicle / Animal, so wind and shadows in plain "Motion" clips are left alone.
@@ -9650,18 +10310,25 @@ function route() {
   if (/^#palette/.test(location.hash)) { try { history.replaceState(null, "", location.hash.replace("#palette", "#theme")); } catch (_) {} }
   document.body.classList.remove("nav-open", "np-open");
   { const h0 = location.hash.slice(1).split("/")[0], lp = RU && PAGE_ON(RU.landing || "") ? RU.landing : (RU_ALL.filter(PAGE_ON)[0] || "home");
-    if (h0 && !PAGE_ON(h0) && h0 !== "home") { location.replace("#" + (PAGE_ON("home") ? "home" : lp)); return; }
+    if (h0 === "settings") { location.replace(setHome()); return; }
+    if (h0 && !PAGE_ON(h0) && h0 !== "home" && !(h0 === "theme" && setOn())) { location.replace("#" + (PAGE_ON("home") ? "home" : lp)); return; }
     if ((!h0 || h0 === "home") && !PAGE_ON("home")) { location.replace("#" + lp); return; }
-    if (h0 === "security" && /^#security\/detections/.test(location.hash) && !ruSec("detections")) { location.replace("#security"); return; } }
+    if (h0 === "security" && /^#security\/detections/.test(location.hash) && !ruSec("detections")) { location.replace("#security"); return; }
+    // #security/disarm (a link from an automation, e.g. Fully Kiosk's load_url when the alarm goes pending): the Security page with the disarm keypad open
+    if (h0 === "security" && /^#security\/disarm\b/.test(location.hash)) { ALKP = Date.now(); location.replace("#security"); setTimeout(alarmKpTry, 80); return; } }
   const h = location.hash.slice(1).split("/"), k = h[0] === "camera" ? "view" : h[0], p = ["climate", "events", "rooms", "security", "weather", "energy", "irrigation", "scenes", "media", "theme", "vehicle", "hazards", "insights", "admin", "view"].indexOf(k) > -1 ? k : "home", pg = p === "rooms" ? "roomspg" : p;
   $("#vw").className = p === "view" ? $("#vw").className : ""; document.body.classList.toggle("vwb", p === "view"); if (p === "view") vwFull(); else vwFullOff(); if (p !== "view") document.querySelectorAll("#vw .cam.ls, #vw .cam.nfs").forEach(e => camLandOff(e, true));
   ["home", "climate", "events", "roomspg", "security", "weather", "energy", "irrigation", "scenes", "media", "theme", "vehicle", "hazards", "insights", "admin"].forEach(x => $("#" + x).classList.toggle("on", x === pg));
   { const t = $("#ttl"), back = p === "home" || !PAGE_ON("home") ? "" : p === "rooms" && h[1] ? "#rooms" : p === "view" ? (VW.back && VW.back !== location.hash ? VW.back : "#home") : "#home";   // phone: the page title is the back button (room -> Rooms, any other page -> Home)
-    t.innerHTML = (back ? '<svg class="tbc" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>' : "") + "<span>" + p.charAt(0).toUpperCase() + p.slice(1) + "</span>"; t.dataset.back = back; t.classList.toggle("bk", !!back); }
-  { const el = $("#" + pg); if (el && el !== lastPg && bootDone) { if (pg === "energy" && !en.data) pgHold(el, 900); else pgEnter(el); } lastPg = el; if (el) lazyIn(el); }
-  $$("nav a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + p));
+    t.innerHTML = (back ? '<svg class="tbc" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>' : "") + "<span>" + (p === "theme" || p === "admin" ? "Settings" : p.charAt(0).toUpperCase() + p.slice(1)) + "</span>"; t.dataset.back = back; t.classList.toggle("bk", !!back); }
+  // between Settings tabs on its two pages (#theme, #admin) the tab row stays put and only the cards slide (setSlide), no page entrance
+  { const el = $("#" + pg), stp = x => !!x && (x.id === "theme" || x.id === "admin"), inSet = stp(el) && stp(lastPg);
+    if (!stp(el)) SETPREV = ""; else if (!inSet || !bootDone) SETPREV = "";
+    if (el && el !== lastPg && bootDone && !inSet) { if (pg === "energy" && !en.data) pgHold(el, 900); else pgEnter(el); } lastPg = el; if (el) lazyIn(el); }
+  const setP = p === "theme" || p === "admin", onA = a => a.getAttribute("href") === "#" + p || (setP && a.getAttribute("href") === "#settings");
+  $$("nav a").forEach(a => a.classList.toggle("on", onA(a)));
   document.body.classList.remove("more-open");
-  { const inMore = $$("#mshe a").some(a => a.getAttribute("href") === "#" + p); $$("#btab a, #mshe a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + p)); $("#bmore").classList.toggle("on", inMore); }
+  { const inMore = $$("#mshe a").some(onA); $$("#btab a, #mshe a").forEach(a => a.classList.toggle("on", onA(a))); $("#bmore").classList.toggle("on", inMore); }
   if (p !== "rooms") rEnter = true; onRooms = p === "rooms"; if (!onRooms) { curRoom = null; $("#cpp").classList.remove("on"); }
   stopCams(); if (p === "home") { applyLayout(); queueHome(); schLoad(); schDraw(); }
   if (p === "home" || (p === "security" && h[1] !== "detections") || p === "view") startCams();
@@ -9742,23 +10409,23 @@ tick(); setInterval(tick, 10000); setInterval(batTick, 1500);
 setInterval(() => { try { localStorage.setItem("dashSeen", Date.now()); } catch (_) {} }, 60000);   // "page is open" marker: the brand intro only plays after the page was closed for a while
 setInterval(cams, 8000); setInterval(loadFc, 30 * 60000); setInterval(loadFcH, 30 * 60000); setInterval(() => { if (curPg() === "irrigation" || curRoom || document.body.classList.contains("np-open")) tickIrr(); if (curPg() === "media" || document.body.classList.contains("np-on")) tickMedia(); }, 1000); setInterval(queueNp, 30000); setInterval(() => { if (location.hash === "#events") loadEvents(); }, 15 * 60000);
 document.body.classList.add("m-" + (CONFIG.mobileNav === "tabs" ? "tabs" : "drawer"));
-// An admin goes to Home Assistant's Settings; anyone else would hit a page Home Assistant will not open for them (the tap did nothing), so they go to their own profile page, which every user can open
-const setPath = () => ME.id && !ADMIN_ON() ? CONFIG.profilePath || "/profile" : CONFIG.settingsPath || "/config/dashboard";
-function setLinks() { $("#navset").href = $("#navset2").href = CONFIG.url + setPath(); }   // run again when the person is known (ruApply)
+// Home Assistant's own pages (only offered to an admin: OPEN HA SETTINGS / OPEN IN HA on the Settings page). Inside the Lovelace iframe card a normal link
+// would load Home Assistant *inside* the iframe, so navigate the parent page instead
+function haGo(path) {
+  path = path || CONFIG.settingsPath || "/config/dashboard";
+  try { if (window.top !== window.parent || window.parent === window) throw 0; const w = window.parent; w.history.pushState(null, "", path); w.dispatchEvent(new CustomEvent("location-changed", { detail: { replace: false } })); }
+  catch (_) { try { (window.top || window).location.href = CONFIG.url + path; } catch (__) { location.href = CONFIG.url + path; } }
+}
+// the Settings item is the dashboard's own Settings page for everyone now; this only keeps the menu in step with who is signed in (ruApply calls it)
+function setLinks() { try { navSync(); } catch (_) {} }
 setLinks();
-// inside the Lovelace iframe card a normal link would load Home Assistant *inside* the iframe, so navigate the parent page instead
-$("#navset").onclick = $("#navset2").onclick = e => {
-  e.preventDefault();
-  try { if (window.top !== window.parent || window.parent === window) throw 0; const w = window.parent; w.history.pushState(null, "", setPath()); w.dispatchEvent(new CustomEvent("location-changed", { detail: { replace: false } })); }
-  catch (_) { try { (window.top || window).location.href = CONFIG.url + setPath(); } catch (__) { location.href = CONFIG.url + setPath(); } }
-};
 $("#bmore").onclick = e => { e.stopPropagation(); document.body.classList.toggle("more-open"); };
 document.addEventListener("click", () => document.body.classList.remove("more-open"));
 $("#hb").onclick = () => document.body.classList.toggle("nav-open");
 $("#ttl").onclick = () => { const b = $("#ttl").dataset.back; if (b && isMobile()) location.hash = b; };
 $("#bd").onclick = () => document.body.classList.remove("nav-open");
 const mq = window.matchMedia("(max-width:760px)"); if (mq.addEventListener) mq.addEventListener("change", route); else mq.addListener(route);
-["rooms", "climate", "security", "weather", "energy", "irrigation", "scenes", "media", "events", "vehicle", "hazards", "insights", "theme"].forEach(p => { if (!PAGE_ON(p)) $$('a[href="#' + p + '"]').forEach(a => a.remove()); });
+["rooms", "climate", "security", "weather", "energy", "irrigation", "scenes", "media", "events", "vehicle", "hazards", "insights", "theme"].forEach(p => { if (!PAGE_ON(p)) $$('a[href="#' + p + '"]').forEach(a => a.remove()); }); setLinks();
 // Opened from a notification through the Home Assistant page that holds this dashboard in an iframe: the target page rides on the outer
 // address (…/your-dashboard/0#view/driveway or …?go=view/driveway). Read it once at start-up and again whenever the outer address changes.
 (function () {
@@ -10413,12 +11080,20 @@ const INS_ACT = ["house", "soil", "laundry", "bins", "frost", "wind", "tmr", "li
 function insRank(x) { const k = x.id.split(":")[0], w = x.tone === "warn" || x.tone === "bad"; return (INS_ACT.indexOf(k) > -1 ? 0 : w ? 2 : INS_MONEY.indexOf(k) > -1 ? 4 : 6) - (w ? 1 : 0); }
 function insTop(a) { return a.map((x, i) => [x, i]).sort((p, q) => insRank(p[0]) - insRank(q[0]) || p[1] - q[1]).map(v => v[0]); }
 // a tile's label in normal case ("WATER USED" -> "Water used")
-const insNm = x => { const t = (x.tile && x.tile[0]) || insCats[x.cat] || ""; return t.charAt(0) + t.slice(1).toLowerCase(); };
+// a tile's label in normal case for a row ("WATER USED" -> "Water used", "SSD · SERVER" -> "SSD · Server"): short words that are acronyms stay capitals,
+// and a name after " · " takes its own capitals from the card's title or line when it is there ("MEMORY · HOME ASSISTANT VM" -> "Memory · Home Assistant VM")
+const INS_ACR = ["SSD", "CPU", "WOF", "UV", "EV", "TV", "AC", "HA", "VM", "WAN", "LAN", "NAS", "UPS", "PV", "EQ", "GB", "TB", "KM"];
+const insCase = w => w.split(" ").map((v, i) => INS_ACR.indexOf(v.replace(/[^A-Z]/g, "")) > -1 ? v : i ? v.toLowerCase() : v.charAt(0) + v.slice(1).toLowerCase()).join(" ");
+const insNm = x => {
+  const t = (x.tile && x.tile[0]) || (insCats[x.cat] || "").toUpperCase(), P = String(t).split(" · "), txt = (x.title || "") + " " + (x.sub || "");
+  return P.map((v, i) => { if (!i) return insCase(v); const k = txt.toUpperCase().indexOf(v); return k > -1 ? txt.substr(k, v.length) : insCase(v).replace(/^./, c => c.toUpperCase()); }).join(" · ");
+};
 function insMore(a) {
   const cats = Object.keys(insCats).filter(c => a.some(x => x.cat === c));
   return cats.map(c => { const L = a.filter(x => x.cat === c), op = INS.gopen && INS.gopen.has(c);
     return '<div class="pn pg insgp' + (op ? " open" : "") + '"><button class="insgh" data-insgp="' + c + '" aria-expanded="' + !!op + '"><span class="ili">' + mdi(L[0].icon) + '</span><span class="ilm"><b>' + esc(insCats[c]) + '</b><small>' + esc(L.slice(0, 3).map(x => insNm(x) + " " + ((x.tile && x.tile[1]) || "")).join(" · ")) + '</small></span><span class="insgn">' + L.length + '</span>' + mdi(op ? "chevron-up" : "chevron-down") + '</button>' +
-      (op ? L.map(x => '<button class="insr' + (x.tone ? " " + x.tone : "") + '" data-inso="' + esc(x.id) + '"><span class="ilm"><b>' + esc(insNm(x)) + '</b>' + (x.tile && x.tile[2] ? '<small>' + esc(x.tile[2]) + '</small>' : "") + '</span><em>' + esc((x.tile && x.tile[1]) || x.title) + '</em></button>').join("") : "") + '</div>'; }).join("");
+      // a row: the label on the left; the value on the right with its own line right under it, as on a tile ("~$2.13" / "a night · ~$41.60 this bill")
+      (op ? L.map(x => '<button class="insr' + (x.tone ? " " + x.tone : "") + '" data-inso="' + esc(x.id) + '"><span class="ilm"><b>' + esc(insNm(x)) + '</b></span><span class="insv2r"><em>' + esc((x.tile && x.tile[1]) || x.title) + '</em>' + (x.tile && x.tile[2] ? '<small>' + esc(x.tile[2]) + '</small>' : "") + '</span></button>').join("") : "") + '</div>'; }).join("");
 }
 document.addEventListener("click", e => { const g = e.target.closest && e.target.closest("[data-insgp]"); if (!g) return; INS.gopen = INS.gopen || new Set(); const c = g.dataset.insgp; INS.gopen.has(c) ? INS.gopen.delete(c) : INS.gopen.add(c); drawInsights(); });
 function drawInsights() {
@@ -10429,13 +11104,16 @@ function drawInsights() {
   const chip = (k, t) => '<button class="chip' + (INS.tab === k ? " on" : "") + '" data-inst="' + k + '">' + t + '</button>';
   // glance tiles: a label, one big value and a line; tapping a tile opens its detail (insDet)
   const sec = (t, a, cls) => a.length ? '<div class="lbl insl' + (cls ? " " + cls : "") + '">' + t + ' · ' + a.length + '</div><div class="itg">' + a.map(insTileHtml).join("") + '</div>' : "";
-  const h = '<div class="chips tabs inschips">' + chip("all", "ALL" + chipN(all.length)) + (need.length ? chip("need", "NEEDS YOU" + chipN(need.length)) : "") + cats.map(c => chip(c, insCats[c].toUpperCase())).join("") + chip("stats", "STATS") + '</div>' +
-    (ST ? (ST.length ? Object.keys(insCats).map(c => sec(insCats[c], ST.filter(x => x.cat === c))).join("") : '<div class="pn pg"><div class="sm">No figures yet.</div></div>')
+  // the chips and the cards are drawn apart, so switching tabs can slide just the cards (txGo, like the other pages) and the chip row keeps its scroll
+  const hc = '<div class="chips tabs inschips">' + chip("all", "ALL" + chipN(all.length)) + (need.length ? chip("need", "NEEDS YOU" + chipN(need.length)) : "") + cats.map(c => chip(c, insCats[c].toUpperCase())).join("") + chip("stats", "STATS") + '</div>';
+  const h = (ST ? (ST.length ? Object.keys(insCats).map(c => sec(insCats[c], ST.filter(x => x.cat === c))).join("") : '<div class="pn pg"><div class="sm">No figures yet.</div></div>')
       : L.length && INS.tab === "all" ? (() => { const rest = insTop(L.filter(x => x.lvl < 2)), top = rest.slice(0, 4), more = rest.slice(4);
           return '<div class="insv"><div class="insv1">' + sec("Needs you", L.filter(x => x.lvl === 2), "bad") + sec("Today", top) + '</div>' + (more.length ? '<div class="insv2"><div class="lbl insl">More · ' + more.length + '</div><div class="insm">' + insMore(more) + '</div></div>' : "") + '</div>'; })()
       : L.length ? sec("Needs you", L.filter(x => x.lvl === 2), "bad") + sec("Today", L.filter(x => x.lvl < 2)) : '<div class="pn pg"><div class="sm">Nothing stands out right now. The figures are under STATS.</div></div>') +
     (!ST && INS.hid ? '<div class="insdis">' + INS.hid + ' hidden for today · <button class="eb" data-insun>SHOW THEM</button></div>' : "");
-  if (pg._h !== h) { pg._h = h; pg.innerHTML = h; }
+  if (!pg.querySelector(":scope > #insbody")) { pg.innerHTML = hc + '<div id="insbody"></div>'; pg._hc = hc; }
+  else if (pg._hc !== hc) { const c = pg.querySelector(":scope > .inschips"), sl = c.scrollLeft; c.outerHTML = hc; pg._hc = hc; pg.querySelector(":scope > .inschips").scrollLeft = sl; }
+  const b = pg.querySelector(":scope > #insbody"); if (pg._h !== h) { pg._h = h; b.innerHTML = h; }
   insDetDraw();
 }
 function insTileHtml(x) {
@@ -10499,7 +11177,9 @@ function insRel(id) {
   return INS.rel.has(id) || /^update\./.test(id) || (typeof binsIds === "function" && binsIds().indexOf(id) > -1) || (typeof polRel === "function" && polRel(id)) || (typeof togIds === "function" && togIds().indexOf(id) > -1) || id === E("laundryState") || id === E("rainDetected") || id === E("laundryRemaining") || [].concat(CONFIG.laundryPresence || [], CONFIG.climateFilter || []).indexOf(id) > -1 || id === "sun.sun" || (typeof lvLights === "function" && lvLights().indexOf(id) > -1) || (CONFIG.irrigation || []).some(z => z.flow === id || z.switch === id) || HOUSE().some(r => r.id === "laundry" && typeof occOf === "function" && occOf(r).indexOf(id) > -1);
 }
 document.addEventListener("click", e => {
-  const t = e.target.closest("[data-inst]"); if (t) { INS.tab = t.dataset.inst; drawInsights(); return; }
+  // a tab: the cards slide in from the side of the chip you picked (left or right of the one you were on), as on the other pages
+  const t = e.target.closest("[data-inst]"); if (t) { const ks = [...document.querySelectorAll("#insights .inschips [data-inst]")].map(x => x.dataset.inst), a = ks.indexOf(INS.tab), z = ks.indexOf(t.dataset.inst);
+    if (t.dataset.inst === INS.tab) return; INS.tab = t.dataset.inst; drawInsights(); txGo($("#insbody"), z > a ? 1 : -1, true); return; }
   const x = e.target.closest("[data-insx]"); if (x) { const id = x.closest("[data-ins]").dataset.ins, S = isMobile() ? INS.open : INS.shut; if (S.has(id)) S.delete(id); else S.add(id); drawInsights(); return; }
   if (e.target.closest("#insd")) {
     const bn = e.target.closest("[data-bn]"); if (bn) { binsTap(bn.dataset.bn); setTimeout(insTick, 300); return; }
@@ -11654,6 +12334,75 @@ function insxAccuracy() {
       '<div class="irl"><span><i style="background:#6bb8ff"></i>Google</span><span><i style="background:#e8973a"></i>MetService</span></div><div class="sm">Each forecast as it stood at 9 am that morning, against the highest temperature the weather station reported during the day. Shorter bars are closer.</div>' }];
 }
 const INSX_ALL = [insxVolcano, insxQuakes, insxRoster, insxDrying, insxSwing, insxDisagree, insxEvening, insxPressure, insxDaylight, insxRain, insxAccuracy, insxDrops, insxDisk, insxBusy, insxWear, insxBoots, insxTraffic, insxPveUpd, insxAway, insxFilter, insxCycle, insxCarCare, insxDrive, insxFuel, insxTrips, insxEco, insxStarter, insxBins, insxLaundry, insxCams, insxAlertsOff, insxUpdates, insxPollen, insxLights, insxMould, insxClimRun, insxHpTile, insxFree, insxRun, insxNight, insxBatt, insxOffline, insxCar, insxWx, insxTomorrow, insxBill, insxVs, insxSave, insxPeak, insxBase];
+// ---------- Auto update: a new dash.html or config.js on the server is picked up by every screen, no ?v= to bump ----------
+// Every autoUpdateMinutes (5), and when the dashboard comes back on screen, it fetches its own page and config.js past the browser cache.
+// A different build id (DASH_BUILD) in the page, or a different config.js, refreshes the saved copies (cache "reload") and reloads onto them,
+// with ?v=<build> in the address so no cache can hand back the old page. It waits while something is open or in use (a pop-up, a card, a camera
+// in full screen, typing, Settings, a touch in the last minute). A file that can't be fetched or looks cut off changes nothing.
+// config.js: autoUpdate: false turns it off; autoUpdateMinutes: how often it looks.
+const AU = { cfg: null, last: 0, busyT: 0, touch: Date.now() };
+const auOn = () => CONFIG.autoUpdate !== false && /^https?:$/.test(location.protocol);
+const auHash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
+// the config.js this page loaded, as written in its script tag (config.js?v=1, or ?v=2.5.6 on the demo)
+const auCfgSrc = () => { const s = [...document.scripts].find(x => /(^|\/)config\.js(\?|$)/.test(x.getAttribute("src") || "")); return s ? s.src : ""; };
+["pointerdown", "keydown", "wheel"].forEach(t => addEventListener(t, () => { AU.touch = Date.now(); }, { passive: true, capture: true }));
+function auBusy() {
+  const b = document.body.classList, a = document.activeElement;
+  if (Date.now() - AU.touch < 60000) return "touched";
+  if (b.contains("np-open") || b.contains("more-open") || b.contains("lv-open")) return "pop-up";
+  if (document.querySelector("#insd.on, #insq.on, #evq.on, #cpp.on, .cam.fs, #sp.on, #kp.on")) return "open";
+  if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return "typing";
+  if (/^#admin/.test(location.hash)) return "settings";
+  return "";
+}
+async function auGet(u, mode) { const r = await fetch(u, { cache: mode || "no-store", credentials: "same-origin", mode: "same-origin" }); if (!r.ok) throw new Error(r.status); return r.text(); }
+async function auCheck(force) {
+  if (!auOn() || (!force && Date.now() - AU.last < 30000)) return; AU.last = Date.now();
+  let why = "", build = "";
+  try {
+    const page = location.pathname, txt = await auGet(page + "?au=" + Date.now());
+    const m = /DASH_BUILD = "(\w+)"/.exec(txt), v = /DASH_VER = "([^"]+)"/.exec(txt);
+    // only a whole page counts: its build id, its version and its end
+    if (m && v && /<\/html>\s*$/i.test(txt) && m[1] !== window.DASH_BUILD) { why = "page"; build = m[1]; AU.ver = v[1]; }
+  } catch (e) {}
+  const cs = auCfgSrc();
+  if (!why && cs) try {
+    const now = await auGet(cs.replace(/([?&])v=[^&]*/, "$1au=" + Date.now())), h = auHash(now);
+    if (AU.cfg === null) {
+      // the first look: the copy the browser has saved (what this page most likely ran) against the server's
+      let saved = null; try { saved = await auGet(cs, "only-if-cached"); } catch (e) {}
+      AU.cfg = saved != null ? auHash(saved) : h;
+    }
+    if (h !== AU.cfg && /\bDASH_CONFIG\b/.test(now)) { why = "config"; build = ""; AU.cfgNew = h; }
+  } catch (e) {}
+  if (why) auGo(why, build);
+}
+function auGo(why, build) {
+  const busy = auBusy(); if (busy) { clearTimeout(AU.busyT); AU.busyT = setTimeout(() => auGo(why, build), 15000); return; }
+  // no loop: the same target twice in a row in this tab (a cache that won't let go) and it stops trying until the next new build
+  const key = why + ":" + (build || AU.cfgNew || "cfg"); let tried = {}; try { tried = JSON.parse(sessionStorage.getItem("kinetic-au") || "{}"); } catch (e) {}
+  if ((tried[key] || 0) >= 2) return;
+  tried[key] = (tried[key] || 0) + 1; try { sessionStorage.setItem("kinetic-au", JSON.stringify(tried)); sessionStorage.setItem("kinetic-au-done", why === "page" ? (AU.ver || "") + " · " + build : "cfg"); } catch (e) {}
+  const u = new URL(location.href); if (build) u.searchParams.set("v", build);
+  const cs = auCfgSrc();
+  // refresh the saved copies the reload will use, then go
+  Promise.all([cs ? fetch(cs, { cache: "reload", credentials: "same-origin" }).catch(() => {}) : null, fetch(u.pathname + u.search, { cache: "reload", credentials: "same-origin" }).catch(() => {})])
+    .then(() => { if (u.href === location.href) location.reload(); else location.replace(u.href); });
+}
+// after an update: a short note at the bottom
+function auNote() {
+  let d = ""; try { d = sessionStorage.getItem("kinetic-au-done") || ""; sessionStorage.removeItem("kinetic-au-done"); } catch (e) {} if (!d) return;
+  let tt = $("#evtoast"); if (!tt) { tt = document.createElement("div"); tt.id = "evtoast"; document.body.appendChild(tt); }
+  tt.innerHTML = mdi("check-circle") + '<span><b>' + (d === "cfg" ? "Settings updated" : "Updated") + '</b>' + (d === "cfg" ? "" : " · Kinetic " + esc(d)) + '</span>';
+  setTimeout(() => { void tt.offsetWidth; tt.classList.add("on"); setTimeout(() => tt.classList.remove("on"), 4000); }, 1500);
+}
+if (auOn()) {
+  setTimeout(() => auCheck(true), 20000);
+  setInterval(() => auCheck(false), Math.max(1, +(CONFIG.autoUpdateMinutes || 5)) * 60000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) auCheck(false); });
+  addEventListener("online", () => auCheck(false));
+}
+auNote();
 // ---------- start-up: runs last, once every module above has been defined ----------
 // This used to sit at the end of 38-energy.js. A page opened from a notification link (#active/doors, #batteries ...) draws the notifications pop-up
 // straight away, and that code reaches things defined in later files (galCfg in 40-garage-alert.js): "Cannot access 'galCfg' before initialization"
