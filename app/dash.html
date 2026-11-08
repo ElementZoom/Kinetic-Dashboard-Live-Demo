@@ -3839,16 +3839,16 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.13"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.13"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.13"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="config.js?v=2.5.14"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.14"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.14"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.13";   // the one place to change the version
-window.DASH_BUILD = "6179cc";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.5.14";   // the one place to change the version
+window.DASH_BUILD = "f7ced8";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -4952,7 +4952,8 @@ function camEnt(c) {
   const cl = c.o.el.classList; if (cl.contains("fs") || cl.contains("vf")) return c.id;
   const f = c.id.replace(/_clear$/, "_fluent"); return f !== c.id && states[f] ? f : c.id;
 }
-function camLiveSync() { document.documentElement.classList.toggle("camlive", CONFIG.cameras.concat(CONFIG.security, VWC, NPC, RVC).some(c => c.live)); }   // lets CSS pause decorative effects while video is playing
+function camLiveSync() { document.documentElement.classList.toggle("camlive", location.hash === "#security/detections" || CONFIG.cameras.concat(CONFIG.security, VWC, NPC, RVC).some(c => c.live)); }   // the Detections tab counts as live too: clips play there
+addEventListener("hashchange", () => camLiveSync());   // lets CSS pause decorative effects while video is playing
 function dropOld(c) { clearTimeout(c.swapT); if (c.old) { try { c.old.pc.close(); } catch (x) {} delete subs[c.old.sub]; c.old = null; } }   // the stream that was playing until the new one had its first picture
 function stopCam(c) {
   dropOld(c);
@@ -7759,6 +7760,7 @@ function secTab(t) {   // Security page: LIVE (alarm + cameras) or DETECTIONS (l
   const pg = $("#security"), tb = $("#stabs"), has = dtCams().length && CONFIG.detections !== false && ruSec("detections"); pg.dataset.tab = has ? t : "live";
   tb.style.display = has ? "" : "none"; tb.innerHTML = has ? [["live", "LIVE", "#security"], ["det", "DETECTIONS", "#security/detections"]].map(x => '<button class="chip' + (pg.dataset.tab === x[0] ? " on" : "") + '" data-st="' + x[2] + '">' + x[1] + '</button>').join("") : "";
   if (pg.dataset.tab === "det") { stopCams(); dtInit(); } else drawAlarm();
+  camLiveSync(); sznVis();
   if (secPrev && secPrev !== pg.dataset.tab) { const d = pg.dataset.tab === "det" ? 1 : -1; ["#alp", "#sectog", "#scams", "#dtp"].forEach(q => txGo($(q), d, true)); }   // same slide as the Rooms tabs
   secPrev = pg.dataset.tab;
 }
@@ -11226,7 +11228,7 @@ function sznApply() {
   sznBrand();
   if (curPg() === "theme") drawPalette();
 }
-const sznVis = () => { const l = $("#szn"); if (l) { l.hidden = onView(); l.classList.toggle("cams", onSec() || onHome()); } };   // full-screen camera pages: nothing. Home and Security (cameras always running): only the still parts (web, spider, lights, lanterns), no moving bits
+const sznVis = () => { const l = $("#szn"); if (l) { l.hidden = onView(); l.classList.toggle("cams", onSec() || onHome() || location.hash.indexOf("#security/") === 0); } };   // full-screen camera pages: nothing. Home and Security (cameras always running): only the still parts (web, spider, lights, lanterns), no moving bits
 let sznRs = 0; addEventListener("resize", () => { clearTimeout(sznRs); sznRs = setTimeout(() => { const c = SZN_CUR; SZN_CUR = "\0"; sznApply(); SZN_CUR = c; }, 300); });
 addEventListener("hashchange", sznVis); document.addEventListener("visibilitychange", () => { if (!document.hidden) sznApply(); });
 // ---- Theme page: Seasonal themes

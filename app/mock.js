@@ -88,10 +88,10 @@
   Element.prototype.setAttribute = function (n, v) { return SA.call(this, n, this instanceof HTMLImageElement && n === "src" ? camUrl(v) : v); };
 
   // ---------- forecasts, energy, history ----------
-  function daily() { var c = ["partlycloudy", "sunny", "sunny", "cloudy", "rainy", "partlycloudy", "sunny", "sunny", "cloudy", "partlycloudy"], out = [];
+  function daily() { var c = ["rainy", "sunny", "sunny", "cloudy", "rainy", "partlycloudy", "sunny", "sunny", "cloudy", "partlycloudy"], out = [];
     for (var i = 0; i < 10; i++) { var d = new Date(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() + i); out.push({ datetime: d.toISOString(), condition: c[i], temperature: [18, 21, 22, 19, 16, 18, 21, 23, 20, 19][i], templow: [9, 10, 11, 11, 10, 8, 9, 11, 12, 10][i], precipitation: c[i] === "rainy" ? 6.2 : 0, precipitation_probability: c[i] === "rainy" ? 80 : c[i] === "cloudy" ? 30 : 5, wind_speed: 12 + i % 4 * 3, humidity: 60 }); } return out; }
   function hourly() { var out = [], b = new Date(); b.setMinutes(0, 0, 0);
-    for (var i = 0; i < 48; i++) { var d = new Date(+b + i * 3600e3), h = d.getHours(); out.push({ datetime: d.toISOString(), condition: h > 6 && h < 19 ? (i > 30 ? "cloudy" : "partlycloudy") : "clear-night", temperature: Math.round((13 + 6 * Math.sin((h - 9) / 24 * Math.PI * 2)) * 10) / 10, precipitation: 0, precipitation_probability: i > 26 && i < 32 ? 40 : 5, wind_speed: 10 + (i % 6), humidity: 62 }); } return out; }
+    for (var i = 0; i < 48; i++) { var d = new Date(+b + i * 3600e3), h = d.getHours(); out.push({ datetime: d.toISOString(), condition: i >= 3 && i <= 9 ? "rainy" : h > 6 && h < 19 ? (i > 30 ? "cloudy" : i === 2 || i === 10 ? "cloudy" : "partlycloudy") : "clear-night", temperature: Math.round((13 + 6 * Math.sin((h - 9) / 24 * Math.PI * 2)) * 10) / 10 - (i >= 3 && i <= 9 ? 1.5 : 0), precipitation: [0, 0, 0.2, 1.4, 3.1, 4.2, 3.6, 2.2, 1.1, 0.4][i] || 0, precipitation_probability: [10, 15, 35, 55, 70, 80, 75, 60, 45, 35][i] || (i > 26 && i < 32 ? 40 : 5), wind_speed: 10 + (i % 6), humidity: 62 }); } return out; }
   var DEV = ["sensor.demo_heat_pump_energy", "sensor.demo_heater_energy", "sensor.demo_towel_rail_energy", "sensor.demo_hot_water_energy", "sensor.demo_washer_energy", "sensor.demo_dishwasher_energy"];
   function hourUse(id, t) { var h = new Date(t).getHours(), r = (Math.sin(t / 3.7e6) + 1) / 2;
     switch (id) {
@@ -340,4 +340,22 @@ window.__REC = (function () {
   }
   function resolve(id) { var m = /^demo-clip\|([a-z_]+)\|/.exec(String(id)); var mp4 = !!document.createElement("video").canPlayType('video/mp4; codecs="avc1.42E01E"'); return { url: base + "cams/clips/" + (m ? m[1] : "street") + (mp4 ? ".mp4" : ".webm"), mime_type: mp4 ? "video/mp4" : "video/webm" }; }
   return { browse: browse, resolve: resolve };
+})();
+
+/* demo hazards (GeoNet-style quakes and volcano levels around the demo home) and a sample car, so the Hazards and Vehicle pages have something to show */
+(function () {
+  var D = window.DEMO; if (!D) return; var S = D.states, H = [-37.787, 175.279], t = function (h) { return new Date(Date.now() - h * 36e5).toISOString(); };
+  var km = function (la, lo) { var r = Math.PI / 180, a = Math.sin((la - H[0]) * r / 2), b = Math.sin((lo - H[1]) * r / 2), c = a * a + Math.cos(H[0] * r) * Math.cos(la * r) * b * b; return Math.round(12742 * Math.asin(Math.sqrt(c)) * 10) / 10; };
+  var set = function (id, st, a) { S[id] = { entity_id: id, state: String(st), attributes: a, last_changed: new Date().toISOString(), last_updated: new Date().toISOString() }; };
+  [["2026p840101", -37.81, 175.77, 4.4, 5, 6, 6, "10 km north-east of Matamata"], ["2026p839877", -37.55, 175.72, 4.6, 4, 8, 20, "15 km north of Te Aroha"], ["2026p836540", -38.72, 176.05, 4.2, 4, 7, 30, "10 km north-east of Taupō"],
+   ["2026p829310", -37.52, 177.18, 5.1, 3, 120, 74, "40 km south of Whakaari / White Island"], ["2026p822760", -39.18, 175.62, 4.0, 3, 9, 125, "20 km north of Mount Ruapehu"]].forEach(function (q) {
+    set("geo_location.demo_quake_" + q[0].slice(-6), km(q[1], q[2]), { source: "geonetnz_quakes", latitude: q[1], longitude: q[2], magnitude: q[3], mmi: q[4], depth: q[5], time: t(q[6]), locality: q[7], external_id: q[0], quality: "best", unit_of_measurement: "km", friendly_name: q[7] }); });
+  [["ruapehu", "Ruapehu", -39.28, 175.57, 1, "Minor volcanic unrest.", "Volcanic environment hazards. Possibility of eruption hazards."], ["whakaari", "Whakaari/White Island", -37.52, 177.18, 2, "Moderate to heightened volcanic unrest.", "Volcanic unrest hazards, potential for eruption hazards."],
+   ["taupo", "Taupō", -38.82, 175.92, 1, "Minor volcanic unrest.", "Volcanic environment hazards."], ["tongariro", "Tongariro", -39.13, 175.64, 0, "No volcanic unrest.", "Volcanic environment hazards."]].forEach(function (v) {
+    set("sensor.volcano_" + v[0], v[4], { latitude: v[2], longitude: v[3], activity: v[5], hazards: v[6], distance: km(v[2], v[3]), feed_last_update: t(3), external_id: "volcano_" + v[0], friendly_name: "Volcano " + v[1] }); });
+  var car = { fuel_level: 62, range_liquid: 548, odometer: 48230, lock: 2, ignition_state: 0, window_status_front_left: 2, window_status_front_right: 2, window_status_rear_left: 2, window_status_rear_right: 2, sunroof_status: 0, starter_battery_state: 0,
+    distance_start: 12.4, average_speed_start: 34, liquid_consumption_start: 7.8, distance_reset: 1840, average_speed_reset: 46, liquid_consumption_reset: 7.2, eco_score_acceleration: 72, eco_score_constant: 64, eco_score_free_wheel: 81, eco_score_bonus_range: 3.4 };
+  Object.keys(car).forEach(function (k) { set("sensor.demo_car_" + k, car[k], { friendly_name: "Sample Estate " + k.replace(/_/g, " ") }); });
+  set("sensor.current_water_restriction", "Level 1", { friendly_name: "Current water restriction" }); set("sensor.current_water_restriction_description", "Sprinklers on alternate days, 6 to 8 am and 6 to 8 pm only.", { friendly_name: "Water restriction description" });
+  [["park_brake_status", "on"], ["deck_lid", "off"], ["deck_lid_lock", "off"], ["low_brake_fluid_warning", "off"], ["low_coolant_level_warning", "off"], ["engine_light_warning", "off"], ["low_wash_water_warning", "on"]].forEach(function (b) { set("binary_sensor.demo_car_" + b[0], b[1], { friendly_name: "Sample Estate " + b[0].replace(/_/g, " ") }); });
 })();

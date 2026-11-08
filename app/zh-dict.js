@@ -53,3 +53,17 @@ Object.assign(window.__ZHD.D, { "show all": "显示全部", "side by side": "并
   "drag the edges or inside the window to adjust · tap a number to zoom to it": "拖动边缘或窗口内部来调整 · 点数字放大到那段",
   "nothing detected in this part of the timeline": "这段时间没有检测到任何东西", "could not open this recording": "无法打开这段录像" });
 window.__ZHD.P.unshift(["^also at (.+)$", "同一时刻 $1"], ["^(person|vehicle|animal) · today · (.+)$", "{1} · 今天 · $2"], ["^(person|vehicle|animal) · yesterday · (.+)$", "{1} · 昨天 · $2"], ["^today · (\\d+:\\d+[ap]m) · moment (\\d+) of (\\d+)$", "今天 · $1 · 第 $2 / $3 个时刻"]);
+
+/* demo hazards, vehicle and rain */
+window.__ZHD.P.unshift(["^(\\d+) earthquakes? within (\\d+) km \\((\\d+) further out\\) · (.+) at level (\\d)$", "$2 公里内 $1 次地震（更远处 $3 次）· {4} 处于 $5 级"],
+  ["^(\\d+) hours? ago · (\\d+) km deep · ([\\d.]+) km away$", "$1 小时前 · 深 $2 公里 · 距离 $3 公里"], ["^(\\d+) days? ago · (\\d+) km deep · ([\\d.]+) km away$", "$1 天前 · 深 $2 公里 · 距离 $3 公里"],
+  ["^(\\d+) km (north|south|east|west|north-east|north-west|south-east|south-west) of (.+)$", "{3}{2} $1 公里"], ["^level (\\d)$", "$1 级"], ["^(\\d+) above level 0$", "$1 个高于 0 级"],
+  ["^\\+([\\d.]+) km range$", "续航 +$1 公里"], ["^rain from (\\d+) pm$", "下午 $1 点起有雨"], ["^rain from (\\d+) am$", "上午 $1 点起有雨"], ["^vehicle health · (\\d+) to check$", "车辆状况 · $1 项需检查"],
+  ["^magnitude ([\\d.]+) · ([\\d.]+) km away$", "$1 级 · 距离 $2 公里"], ["^m(\\d)\\+ · within (\\d+) km$", "$1 级以上 · $2 公里内"]);
+Object.assign(window.__ZHD.D, { "north": "以北", "south": "以南", "east": "以东", "west": "以西", "north-east": "东北", "north-west": "西北", "south-east": "东南", "south-west": "西南",
+  "minor volcanic unrest.": "轻微火山活动。", "moderate to heightened volcanic unrest.": "中度至加剧的火山活动。", "no volcanic unrest.": "没有火山活动。", "no unrest": "没有活动",
+  "volcanic environment hazards.": "火山环境危害。", "volcanic environment hazards. possibility of eruption hazards.": "火山环境危害，可能出现喷发危害。", "volcanic unrest hazards, potential for eruption hazards.": "火山活动危害，可能出现喷发危害。",
+  "ignition off": "点火已关", "park brake on": "驻车制动已拉起", "park brake off": "驻车制动已松开", "vehicle health · all good": "车辆状况 · 一切正常", "brake fluid": "制动液", "coolant level": "冷却液液位", "engine light": "发动机故障灯", "washer water": "玻璃水",
+  "starter battery": "启动电池", "sunroof": "天窗", "boot": "后备箱", "boot lock": "后备箱锁", "light": "轻微", "moderate": "中等", "strong": "强烈", "weak": "微弱", "100-200 km": "100-200 公里", "within 100 km": "100 公里内",
+  "level 1": "1 级", "sprinklers on alternate days, 6 to 8 am and 6 to 8 pm only.": "隔天浇水，仅限早上 6 至 8 点和晚上 6 至 8 点。", "acceleration": "加速", "constant speed": "匀速", "free wheel": "滑行", "earthquakes": "地震", "volcanoes": "火山" });
+window.__ZHD.P.unshift(["^([\\d,]+) km odometer$", "里程表 $1 公里"]); Object.assign(window.__ZHD.D, { "ok": "正常", "warning": "警告" });
