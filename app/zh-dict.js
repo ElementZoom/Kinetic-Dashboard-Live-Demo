@@ -3,5 +3,6 @@ window.__ZHD={"D": {"0.0 mm": "0.0 毫米", "1 hr": "1 小时", "2 hr": "2 小�
 /* 2.5.7: the grouped menu and the Settings page */
 Object.assign(window.__ZHD.D, { "info": "信息", "outside": "室外", "account": "账户", "status": "状态", "entities": "实体", "logs": "日志", "setup": "配置", "change password": "修改密码", "quick actions": "快捷操作",
   "attributes": "属性", "recent runs": "最近运行", "reload automations": "重新加载自动化", "reload templates": "重新加载模板", "check config": "检查配置", "restart home assistant": "重启 Home Assistant",
-  "open ha settings": "打开 HA 设置", "open in ha": "在 HA 中打开", "run now": "立即运行", "refresh": "刷新", "copy": "复制", "open automation": "打开自动化", "warnings": "警告", "errors": "错误",
-  "sign out of this device": "在此设备上退出登录", "signed in on this device": "已在此设备上登录", "at least 8 characters.": "至少 8 个字符。", "settings": "设置" });
+  "open ha settings": "打开 HA 设置", "open in ha": "在 HA 中打开", "run now": "立即运行", "refresh": "刷新", "copy": "复制", "copy all": "全部复制", "open automation": "打开自动化", "warnings": "警告", "errors": "错误",
+  "sign out of this device": "在此设备上退出登录", "signed in on this device": "已在此设备上登录", "at least 8 characters.": "至少 8 个字符。", "settings": "设置", "display": "显示", "current password": "当前密码", "new password": "新密码", "new password again": "再次输入新密码",
+  "password changed. use it next time you sign in.": "密码已修改，下次登录时使用。", "change password": "修改密码", "signed in on this device": "已在此设备上登录" });

@@ -3532,7 +3532,7 @@ html[data-mode=light] .adra.err .adn b,html[data-mode=light] .adra.err .adn smal
 html[data-mode=light] .adst.bad small{color:#c62828}
 .admbk{display:none}
 /* admin: logs */
-.adlh{display:flex;align-items:center;gap:10px}.adlh .adch{flex:1;min-width:0;margin:0}.adlh .eb svg{width:16px;height:16px;fill:currentColor;vertical-align:-3px}
+.adlh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.adlh .adch{flex:1;min-width:0;margin:0}.adlh .eb svg{width:16px;height:16px;fill:currentColor;vertical-align:-3px}
 .adlog .adrs{margin-top:8px}
 .adlg{display:flex;gap:12px;align-items:flex-start;padding:11px 4px;border-top:1px solid var(--line);cursor:pointer}.adlg:first-child{border-top:0}
 .adlv{flex:none;font:600 10px var(--mono);letter-spacing:.1em;padding:3px 7px;border-radius:6px;margin-top:2px;background:rgba(var(--w),.1);color:var(--mut)}
@@ -3621,16 +3621,16 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.7"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.7"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.7"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="config.js?v=2.5.8"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.8"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.8"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.7";   // the one place to change the version
-window.DASH_BUILD = "091e31";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.5.8";   // the one place to change the version
+window.DASH_BUILD = "0f5646";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -3897,7 +3897,7 @@ window.__ZHD={"D": {"0.0 mm": "0.0 毫米", "1 hr": "1 小时", "2 hr": "2 小�
     // menu groups and the Settings page (2.5.7)
     "info": "信息", "outside": "室外", "account": "账户", "status": "状态", "entities": "实体", "logs": "日志", "change password": "修改密码", "quick actions": "快捷操作",
     "attributes": "属性", "recent runs": "最近运行", "reload automations": "重新加载自动化", "reload templates": "重新加载模板", "check config": "检查配置", "restart home assistant": "重启 Home Assistant",
-    "open ha settings": "打开 HA 设置", "open in ha": "在 HA 中打开", "run now": "立即运行", "refresh": "刷新", "copy": "复制", "open automation": "打开自动化", "warnings": "警告", "errors": "错误",
+    "open ha settings": "打开 HA 设置", "open in ha": "在 HA 中打开", "run now": "立即运行", "refresh": "刷新", "copy": "复制", "copy all": "全部复制", "open automation": "打开自动化", "warnings": "警告", "errors": "错误",
     "sign out of this device": "在此设备上退出登录", "signed in on this device": "已在此设备上登录", "at least 8 characters.": "至少 8 个字符。",
     "heating": "制热中", "cooling": "制冷中", "resting": "待机", "turn off": "关闭", "heat / cool": "制热 / 制冷",
     "hide this for today?": "今天隐藏此项？", "hide": "隐藏", "cancel": "取消", "show them": "显示", "hide for today": "今天隐藏",
@@ -8144,7 +8144,7 @@ function admSteps(t, run) {
 
 // ----- LOGS -----
 function admLogShell() {
-  return '<div class="pn pg adlog"><div class="adlh"><div class="adch"></div><button class="eb" data-adlr="1">' + mdi("refresh") + ' REFRESH</button></div><div class="adrs"></div></div>';
+  return '<div class="pn pg adlog"><div class="adlh"><div class="adch"></div><button class="eb" data-adlca="1">' + mdi("content-copy") + ' COPY ALL</button><button class="eb" data-adlr="1">' + mdi("refresh") + ' REFRESH</button></div><div class="adrs"></div></div>';
 }
 function admLogLoad(force) {
   if (!force && ADM.logs && Date.now() - ADM.logT < 30000) return; ADM.logT = Date.now();
@@ -8166,10 +8166,20 @@ function admLogDraw() {
   w._list = list;
 }
 
+// COPY ALL: the entries under the current filter as plain text, ready to paste into a chat or a bug report (level, count, times, logger, source, messages, traceback)
+function admLogText(list) {
+  const f = { all: "all", err: "errors", warn: "warnings" }[ADM.lf] || "all";
+  const head = "Kinetic " + ENGINE_VERSION + " (build " + (window.DASH_BUILD || "-") + "), Home Assistant log, " + f + ": " + list.length + " entr" + (list.length === 1 ? "y" : "ies") + ", copied " + new Date().toLocaleString();
+  return head + "\n\n" + list.map((x, i) => { const m = [].concat(x.message || []);
+    return (i + 1) + ". " + String(x.level || "") + (x.count > 1 ? " x" + x.count : "") + ", last " + admT(admMs(x.timestamp)) + (x.first_occurred ? ", first " + admT(admMs(x.first_occurred)) : "") + "\n" +
+      "   " + (x.name || "") + (x.source ? " (" + [].concat(x.source).join(":") + ")" : "") + "\n" + m.map(t => "   " + String(t).replace(/\n/g, "\n   ")).join("\n") +
+      (x.exception ? "\n   " + String(x.exception).trim().replace(/\n/g, "\n   ") : ""); }).join("\n\n");
+}
 // ----- taps and typing -----
-function admCopy(t, btn) {
+function admCopy(t, btn) {   // the clipboard API needs https; on plain http (a wall tablet on the LAN) fall back to the old copy command
   const done = () => { if (btn) { btn.classList.add("ok"); setTimeout(() => btn.classList.remove("ok"), 1200); } };
-  try { navigator.clipboard.writeText(t).then(done, () => {}); } catch (_) { const a = document.createElement("textarea"); a.value = t; document.body.appendChild(a); a.select(); try { document.execCommand("copy"); done(); } catch (__) {} a.remove(); }
+  const old = () => { const a = document.createElement("textarea"); a.value = t; a.setAttribute("readonly", ""); a.style.cssText = "position:fixed;left:-9999px;top:0"; document.body.appendChild(a); a.select(); try { if (document.execCommand("copy")) done(); } catch (_) {} a.remove(); };
+  try { if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(done, old); else old(); } catch (_) { old(); }
 }
 $("#admin").addEventListener("click", e => {
   const t = e.target, tab = setTab(), g = s => t.closest(s);
@@ -8188,6 +8198,7 @@ $("#admin").addEventListener("click", e => {
   if ((b = g("[data-aarid]"))) { ADM.arun = b.dataset.aarid; admAutDet(); return; }
   if ((b = g("[data-aa]"))) { if (ADM.asel !== b.dataset.aa) ADM.arun = ""; ADM.asel = b.dataset.aa; admAutDraw(); admTlLoad(); return; }
   if ((b = g("[data-adlr]"))) { admLogLoad(true); return; }
+  if ((b = g("[data-adlca]"))) { const L = ($("#admb .adlog") || {})._list || []; if (L.length) admCopy(admLogText(L), b); return; }
   if ((b = g("[data-adlau]"))) { ADM.asel = b.dataset.adlau; ADM.arun = ""; location.replace("#admin/automations"); return; }
   if ((b = g("[data-adlc]"))) { const x = ($("#admb .adlog") || {})._list[+b.dataset.adlc]; if (x) admCopy([].concat(x.message || []).join("\n") + (x.exception ? "\n" + x.exception : "") + "\n(" + x.name + ")", b); return; }
   if ((b = g("[data-adl]"))) { const i = +b.dataset.adl; ADM.lopen = ADM.lopen === i ? -1 : i; admLogDraw(); return; }

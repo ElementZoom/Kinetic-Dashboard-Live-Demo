@@ -255,6 +255,7 @@
       case "trace/list": return ok(window.__TL.filter(function (x) { return !m.item_id || x.item_id === m.item_id; }));
       case "trace/get": { var t = window.__TG[m.run_id], r0 = window.__TL.filter(function (x) { return x.run_id === m.run_id; })[0] || {}; return t ? ok(Object.assign({ item_id: m.item_id, run_id: m.run_id, script_execution: r0.script_execution, trigger: r0.trigger }, t)) : w._emit({ id: m.id, type: "result", success: false, error: { code: "not_found", message: "Not found" } }); }
       case "system_log/list": return ok(window.__LOG);
+      case "config/auth_provider/homeassistant/change_password": return m.current_password ? ok(null) : w._emit({ id: m.id, type: "result", success: false, error: { code: "invalid_current_password", message: "Invalid current password" } });
       default: (window.__unk = window.__unk || []).push(m.type); return w._emit({ id: m.id, type: "result", success: false, error: { code: "not_supported", message: "Not available in the demo" } });
     }
   };
