@@ -6,3 +6,49 @@ Object.assign(window.__ZHD.D, { "info": "信息", "outside": "室外", "account"
   "open ha settings": "打开 HA 设置", "open in ha": "在 HA 中打开", "run now": "立即运行", "refresh": "刷新", "copy": "复制", "copy all": "全部复制", "open automation": "打开自动化", "warnings": "警告", "errors": "错误",
   "sign out of this device": "在此设备上退出登录", "signed in on this device": "已在此设备上登录", "at least 8 characters.": "至少 8 个字符。", "settings": "设置", "display": "显示", "current password": "当前密码", "new password": "新密码", "new password again": "再次输入新密码",
   "password changed. use it next time you sign in.": "密码已修改，下次登录时使用。", "change password": "修改密码", "signed in on this device": "已在此设备上登录" });
+
+/* 2.5.8: Insights */
+Object.assign(window.__ZHD.D, { "all": "全部", "needs you": "需要处理", "garden": "花园", "stats": "统计", "watering": "浇水", "driveway drying": "车道正在变干", "batteries": "电池", "cheap hours saved": "便宜时段节省",
+  "rain due": "预计降雨", "next watering": "下次浇水", "yesterday": "昨天", "tomorrow": "明天", "open irrigation": "打开灌溉", "open notifications": "打开通知", "open weather": "打开天气", "open energy": "打开能源",
+  "lowest first. swap the ones at 10% or below soon.": "电量最低的排在前面。电量在 10% 及以下的请尽快更换。", "pollen moderate · grass": "花粉中等 · 禾本科", "level": "级别", "mostly": "主要", "moderate · grass": "中等 · 禾本科",
+  "so far": "目前", "heading for": "预计", "days": "天数", "a night": "每晚", "used then": "该时段用电", "this bill": "本期账单", "share of use": "用电占比", "busiest": "最忙", "then": "当时", "a day": "每天", "noon": "中午",
+  "moving the dishwasher, dryer or hot water out of the tall hours saves the most.": "把洗碗机、烘干机或热水器移出用电最多的时段最省钱。", "average for each hour · last 7 days of data": "每小时平均 · 最近 7 天数据",
+  "heating": "制热", "resting": "待机", "running today": "今天运行中", "all shut": "全部关好", "alarm armed": "警报已布防", "cheap power": "便宜电价", "vs last bill": "对比上期账单", "overnight load": "夜间负荷",
+  "quietest hour of the night": "夜里最安静的时段", "water used": "用水量", "quiet": "平静", "drying day": "晾晒好天", "warmer high than today": "最高气温比今天高", "busiest hour": "最忙时段", "peak hour": "高峰时段",
+  "until tomorrow 7:00am": "持续到明天早上 7:00", "first 26 days · usage": "前 26 天 · 用电量", "0 nearby": "附近 0 次", "8am-6pm": "早 8 点-晚 6 点", "8pm-9pm": "晚 8-9 点", "climate": "气候", "security": "安防", "energy": "能源", "weather": "天气", "home": "首页" });
+window.__ZHD.P.push(
+  ["^needs you · (\\d+)$", "需要处理 · $1"], ["^today · (\\d+)$", "今天 · $1"], ["^more · (\\d+)$", "更多 · $1"], ["^(climate|security|energy|garden|weather|home) · (\\d+)$", "{1} · $2"],
+  ["^(home|energy|garden|climate|security|weather) · (batteries|pollen|bill|cheap hours saved|peak hour|watering)$", "{1} · {2}"],
+  ["^(\\d+) low$", "$1 个电量低"], ["^(\\d+) batteries low$", "$1 个电池电量低"], ["^(garage remote|front door sensor|bathroom motion) (\\d+)%$", "{1} $2%"],
+  ["^garage remote (\\d+)% · front door sensor (\\d+)% \\+(\\d+)$", "车库遥控器 $1% · 前门传感器 $2% 等 $3 个"],
+  ["^\\$([\\d.,]+) so far$", "目前 $$1"], ["^\\$([\\d.,]+) so far · (\\d+) of (\\d+) days$", "目前 $$1 · 已过 $2 / $3 天"], ["^on track for ~\\$([\\d.,]+) this bill$", "本期账单预计约 $$1"],
+  ["^cheap hours save ~\\$([\\d.]+) a night$", "便宜时段每晚省约 $$1"], ["^a night · ~\\$([\\d.]+) this bill$", "每晚 · 本期约 $$1"],
+  ["^~([\\d.]+) kwh in midnight - 7am, 9pm - midnight · ~\\$([\\d.]+) this bill$", "午夜至早上 7 点、晚上 9 点至午夜约 $1 千瓦时 · 本期约 $$2"],
+  ["^what the power used midnight - 7am, 9pm - midnight would cost at \\$([\\d.]+)/kwh \\+ gst\\. ~\\$([\\d.]+) a night is the average of the last (\\d+) nights with data\\.$", "如果按每千瓦时 $$1（另加 GST）计费，午夜至早上 7 点、晚上 9 点至午夜的用电要花多少钱。每晚约 $$2 是最近 $3 晚数据的平均值。"],
+  ["^~([\\d.]+) kwh on average$", "平均约 $1 千瓦时"], ["^~([\\d.]+) kwh on average · last 7 days$", "平均约 $1 千瓦时 · 最近 7 天"], ["^busiest hour: (.+)$", "最忙时段：{1}"], ["^~(\\d+) kwh$", "约 $1 千瓦时"],
+  ["^water (\\w+) today$", "今天给{1}浇水"], ["^(\\d+)% now$", "当前 $1%"], ["^~(\\d+)% by morning · dry now$", "明早约 $1% · 现在已干"], ["^~(\\d+)% by morning · dry ~today (\\d+:\\d+)pm$", "明早约 $1% · 约今天下午 $2 变干"], ["^~(\\d+)% by morning · dry ~today (.+)$", "明早约 $1% · 约今天 $2 变干"],
+  ["^drying below (\\d+)% · driveway ~(\\d+)% · backyard ~(\\d+)% by morning$", "低于 $1% 即为干 · 明早车道约 $2%、后院约 $3%"],
+  ["^each day · faded = estimated at ~\\$([\\d.]+) a day$", "每天 · 浅色 = 按每天约 $$1 估算"], ["^(\\d+) (oct|nov|dec|sep) *$", "{2}$1日"],
+  ["^heating ([\\d.]+)° · heating ([\\d.]+)° · heat pump (heating|resting)$", "制热 $1° · 制热 $2° · 热泵{3}"], ["^(\\d+(?:\\.\\d+)?) kl$", "$1 千升"],
+  ["^this week · ([\\d.]+) kl the week before$", "本周 · 上周 $1 千升"], ["^(\\d+) people · (\\d+) vehicles today$", "今天 $1 人 · $2 辆车"], ["^today · (\\d+) spells$", "今天 · $1 次"]
+);
+window.__ZHD.P.push(
+  ["^estimate from (\\d+) days of soil history \\((\\d+) wet spells\\) and the rain forecast · good confidence\\. dry below (\\d+)%\\.$", "根据 $1 天的土壤历史（$2 次湿润期）和降雨预报估算 · 可信度高。低于 $3% 即为干。"],
+  ["^(\\d+) kwh in (\\d+) days of data · your power company's prices \\+ daily charge \\+ gst · ([\\d.]+)c a kwh on charged hours$", "$2 天数据共 $1 千瓦时 · 按电力公司电价 + 每日基本费 + GST · 计费时段每千瓦时 $3 分"],
+  ["^(living area|office|master bedroom|kids room) · to (\\d+)° · (\\d+) min$", "{1} · 至 $2° · $3 分钟"], ["^on (\\d+) min · (\\d+) h (\\d+) min today · (\\d+) rooms$", "已开 $1 分钟 · 今天共 $2 小时 $3 分钟 · $4 个房间"],
+  ["^\\+([\\d.]+) min a day$", "每天 +$1 分钟"], ["^(\\d+) min$", "$1 分钟"], ["^~(\\d+)% by morning · dry ~today (\\d+:\\d+)pm$", "明早约 $1% · 约今天下午 $2 变干"]);
+
+/* 2.5.9: the slim alarm bar */
+window.__ZHD.P.unshift(["^(.+) · (.+ (?:window|door)(?: \\d+)? open|\\d+ windows open|all windows shut)$", "{1} · {2}"], ["^(\\d+) doors open$", "$1 扇门开着"], ["^(\\d+) windows open$", "$1 扇窗开着"],
+  ["^(.+ (?:window|door)(?: \\d+)?) open$", "{1}开着"], ["^since (\\S+) by (.+)$", "{1} 起 · $2"], ["^since (\\S+)$", "{1} 起"], ["^stops in (\\d+) s$", "$1 秒后停止"]);
+Object.assign(window.__ZHD.D, { "all doors shut": "门都关好了", "all windows shut": "窗都关好了", "doors and windows shut": "门窗都关好了", "siren sounding": "警笛正在响", "tap to stop it": "点击停止",
+  "stop siren": "停止警笛", "hold for 2 seconds to sound the siren": "按住 2 秒拉响警笛", "cancel": "取消" });
+
+/* 2.5.11 and 2.5.12: the detections timeline, the viewer and the Protect-style list */
+window.__ZHD.P.unshift(["^(\\d+) detections?$", "$1 次检测"], ["^today · (.+)$", "今天 · $1"], ["^yesterday · (.+)$", "昨天 · $1"],
+  ["^(.+) · (\\d+) people$", "{1} · $2 人"], ["^(.+) · (\\d+) vehicles$", "{1} · $2 辆车"], ["^(.+) · (\\d+) animals$", "{1} · $2 只动物"], ["^(.+) · (\\d+) clips$", "{1} · $2 段片段"],
+  ["^(\\d+:\\d+[ap]m) to (\\d+:\\d+[ap]m)$", "$1 至 $2"], ["^(.+) to now$", "{1} 至现在"], ["^moment (\\d+) of (\\d+)$", "第 $1 / $2 个时刻"], ["^(\\d+) cameras$", "$1 个摄像头"], ["^(\\d+) clips$", "$1 段片段"]);
+Object.assign(window.__ZHD.D, { "show all": "显示全部", "side by side": "并排", "also at": "同一时刻", "older": "较早", "newer": "较新", "now": "现在",
+  "drag across the chart to zoom in · tap a number to zoom to it": "在图表上拖动以放大 · 点数字放大到那段",
+  "drag the edges or inside the window to adjust · tap a number to zoom to it": "拖动边缘或窗口内部来调整 · 点数字放大到那段",
+  "nothing detected in this part of the timeline": "这段时间没有检测到任何东西", "could not open this recording": "无法打开这段录像" });

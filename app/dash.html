@@ -645,17 +645,19 @@ body{-webkit-user-select:none;user-select:none}input,textarea{-webkit-user-selec
 @keyframes pgFade{from{opacity:0}to{opacity:1}}
 @keyframes pgIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .page.hold{opacity:0!important;animation:none!important}.page.hold *{animation:none!important}
-@keyframes cdIn{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes cdIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 @keyframes lzIn{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:no-preference){
 @media(min-width:761px){
-.page.enter{animation:pgFade calc(.3s*var(--pgs,1)) ease}
+.page.enter{animation:none}
 .page.enter>*,.page.enter :is(.rooms,.cams,#grid,.zg,.wcols,.hm,.left,.side,#wx,.vgrid,.hzg,.hzside,.scl,.mlay,.thl)>*{animation:cdIn calc(.5s*var(--pgs,1)) cubic-bezier(.2,.7,.2,1) both}
 .page.enter>:nth-child(2),.page.enter :is(.rooms,.cams,#grid,.zg,.wcols,.hm,.left,.side,#wx,.vgrid,.hzg,.hzside,.scl,.mlay,.thl)>:nth-child(2){animation-delay:calc(.05s*var(--pgs,1))}
 .page.enter>:nth-child(3),.page.enter :is(.rooms,.cams,#grid,.zg,.wcols,.hm,.left,.side,#wx,.vgrid,.hzg,.hzside,.scl,.mlay,.thl)>:nth-child(3){animation-delay:calc(.1s*var(--pgs,1))}
 .page.enter>:nth-child(4),.page.enter :is(.rooms,.cams,#grid,.zg,.wcols,.hm,.left,.side,#wx,.vgrid,.hzg,.hzside,.scl,.mlay,.thl)>:nth-child(4){animation-delay:calc(.15s*var(--pgs,1))}
 .page.enter>:nth-child(5),.page.enter :is(.rooms,.cams,#grid,.zg,.wcols,.hm,.left,.side,#wx,.vgrid,.hzg,.hzside,.scl,.mlay,.thl)>:nth-child(5){animation-delay:calc(.2s*var(--pgs,1))}
 .page.enter>:nth-child(n+6),.page.enter :is(.rooms,.cams,#grid,.zg,.wcols,.hm,.left,.side,#wx,.vgrid,.hzg,.hzside,.scl,.mlay,.thl)>:nth-child(n+6){animation-delay:calc(.25s*var(--pgs,1))}
+/* one fade per card: a wrapper whose cards rise does not also fade, or the fades stack and the text looks soft */
+.page.enter>:is(.rooms,.cams,#grid,.zg,.wcols,.hm,.left,.side,#wx,.vgrid,.hzg,.hzside,.scl,.mlay,.thl),.page.enter>:has(:is(.rooms,.cams,#grid,.zg,.wcols,.hm,.left,.side,#wx,.vgrid,.hzg,.hzside,.scl,.mlay,.thl)),.page.enter :is(.rooms,.cams,#grid,.zg,.wcols,.hm,.left,.side,#wx,.vgrid,.hzg,.hzside,.scl,.mlay,.thl):has(:is(.rooms,.cams,#grid,.zg,.wcols,.hm,.left,.side,#wx,.vgrid,.hzg,.hzside,.scl,.mlay,.thl)){animation:none!important}
 }
 @media(max-width:760px){
 .page.enter{animation:pgFade calc(.3s*var(--pgs,1)) ease}
@@ -2683,6 +2685,191 @@ html[data-mode=light] header[data-al=al] #al{--alc:#c42a1f;color:#fff;background
 #alb.ba{background:rgba(var(--heat-rgb),.18);color:var(--heat);border-color:var(--heat);animation:bl 1s infinite}
 html[data-mode=light] #alb.bw{background:rgba(176,112,0,.12);color:#7a4b00;border-color:rgba(176,112,0,.5)}
 html[data-mode=light] #alb.ba{color:#a3211a}
+/* slim alarm bar on the Security page (19-alarm-bar.js) */
+#alp.alsl{padding:10px 14px}
+#alp .alsb{display:flex;align-items:center;gap:12px;min-width:0;--sr:95,214,138;border-radius:14px}
+html[data-mode=light] #alp .alsb{--sr:31,157,85}
+#alp .alsb.s-on,#alp .alsb.s-al,#alp .alsb.sir{--sr:255,107,107}
+html[data-mode=light] #alp .alsb.s-on,html[data-mode=light] #alp .alsb.s-al,html[data-mode=light] #alp .alsb.sir{--sr:217,58,58}
+#alp .alsb.s-wn{--sr:255,181,71}
+html[data-mode=light] #alp .alsb.s-wn{--sr:217,138,0}
+#alp .alsi{flex:none;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(var(--sr),.16);color:rgb(var(--sr))}
+#alp .alsi svg{width:22px;height:22px;fill:currentColor}
+#alp .alst{min-width:0;display:flex;flex-direction:column;gap:2px}
+#alp .alst b{font-weight:400;font-size:19px;line-height:1.2;white-space:nowrap}
+#alp .alsb.s-on .alst b,#alp .alsb.s-al .alst b,#alp .alsb.sir .alst b{color:rgb(var(--sr))}
+#alp .alst small{font-size:13px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#alp .alsa{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
+#alp .alsa .chip.ag{margin:0;padding:10px 20px}
+#alp .almo,#alp .alsr{all:unset;box-sizing:border-box;cursor:pointer;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);color:var(--mut);position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;touch-action:none;user-select:none;-webkit-user-select:none}
+#alp .almo svg,#alp .alsr svg{width:20px;height:20px;fill:currentColor;position:relative}
+#alp .almo.on{color:inherit;border-color:currentColor}
+#alp .alsr{--rr:217,58,58;color:rgb(var(--rr));border-color:rgba(var(--rr),.45);background:rgba(var(--rr),.08)}
+#alp .alsr i{position:absolute;inset:0;background:rgba(var(--rr),.32);transform:scaleY(0);transform-origin:bottom}
+#alp .alsr.hold i{transform:scaleY(1);transition:transform 2s linear}
+#alp .alsr:focus-visible,#alp .almo:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+#alp .alms{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;margin-top:12px}
+#alp .alms button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:12px;border:1px solid var(--line);font-size:12px;letter-spacing:.08em}
+#alp .alms button svg{width:20px;height:20px;fill:currentColor}
+#alp .alms button.on{border-color:rgb(var(--sr,31,157,85));color:rgb(var(--sr,31,157,85))}
+#alp .alsb.sir{background:rgba(var(--sr),.12);margin:-10px -14px;padding:10px 14px}
+#alp .alsb.sir .alsi{--agr:var(--sr);animation:agPulse .7s ease-in-out infinite}
+#alp .alstop{all:unset;box-sizing:border-box;cursor:pointer;margin-left:auto;padding:12px 22px;border-radius:12px;background:rgb(var(--sr));color:#fff;font-weight:700;letter-spacing:.1em;font-size:14px}
+#alp .alhint{margin-top:8px;font-size:12px;color:var(--mut);text-align:right}
+@media(prefers-reduced-motion:reduce){#alp .alsb.sir .alsi{animation:none}#alp .alsr.hold i{transition-duration:0s}}
+/* phone: two lines, the buttons under the state */
+@media(max-width:760px){
+  #alp .alsb{flex-wrap:wrap;gap:10px}
+  #alp .alst{flex:1}
+  #alp .alsa{margin-left:0;width:100%}
+  #alp .alsa .chip.ag{flex:1;text-align:center}
+  #alp .alsb.sir{flex-wrap:nowrap}
+  #alp .alstop{padding:12px 14px;font-size:13px}
+}
+/* the open doors and windows, under the bar when its line is tapped */
+#alp .alsub{cursor:pointer;display:inline-flex;align-items:center;gap:4px;text-decoration:underline dotted;text-underline-offset:3px;max-width:100%}
+#alp .alsub svg{width:16px;height:16px;fill:currentColor;flex:none}
+#alp .alsub:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:4px}
+#alp .allst{margin:10px 0 0 52px}
+#alp .allst>div{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+#alp .allst svg{width:18px;height:18px;fill:#d98a00;flex:none}
+#alp .allst small{margin-left:auto;color:var(--mut);font-size:12px;white-space:nowrap}
+@media(max-width:760px){#alp .allst{margin-left:0}}
+#alp .allst span{min-width:0;display:flex;flex-direction:column;gap:1px}
+#alp .allst em{font-style:normal;font-size:12px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#alp .allst svg{fill:#ffaa00}
+/* irrigation zone card as a little garden scene (23-soil-moisture-history.js irrZone) */
+.zna{gap:10px}
+.zna .zst{font-size:15px;color:var(--mut);margin-top:-4px}
+.zna .zst.wn{color:#d98a00}
+.zna.on .zst{color:#36a9e2}
+.zsc{position:relative;height:120px;border-radius:14px;overflow:hidden;background:#8ec5e8;flex:none}
+.zsc.nt{background:#18213b}
+.zsc.nt::before{content:"";position:absolute;left:0;top:0;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.8;box-shadow:40px 14px #fff,92px 30px rgba(255,255,255,.6),150px 10px #fff,210px 26px rgba(255,255,255,.7),260px 8px #fff,300px 36px rgba(255,255,255,.5),340px 18px #fff,120px 52px rgba(255,255,255,.5),240px 56px rgba(255,255,255,.6)}
+.zsc .zgd{position:absolute;left:0;right:0;bottom:0;height:34px;background:#6ba34a}
+.zsc.nt .zgd{background:#1f3020}
+.zsc.nt .zsp i{background:#bfe3ff}
+.zsc .zgd::before,.zsc .zgd::after{content:"";position:absolute;bottom:22px;border-radius:50% 50% 0 0;background:#4f8a37}
+.zsc .zgd::before{right:12%;width:46px;height:30px}
+.zsc .zgd::after{right:calc(12% + 34px);width:30px;height:20px}
+.zsc.nt .zgd::before,.zsc.nt .zgd::after{background:#18261a}
+.zsc .zhd{position:absolute;left:50%;bottom:30px;width:10px;height:14px;margin-left:-5px;border-radius:3px 3px 1px 1px;background:#c9cfd8;z-index:1}
+.zsc .zgg{position:absolute;left:14px;top:14px;bottom:42px;width:16px;border:1.5px solid rgba(255,255,255,.9);border-radius:6px;overflow:hidden;z-index:2}
+.zsc .zgg i{position:absolute;left:0;right:0;bottom:0;background:#5da9e9;transition:height 1.5s ease}
+.zsc .zgv{position:absolute;left:36px;top:12px;font-size:12px;color:#fff;z-index:2;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.zsc .zfr{position:absolute;right:12px;top:10px;font-size:13px;color:#fff;z-index:2;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.zsc .zsp{position:absolute;left:50%;bottom:40px;width:0;height:0}
+.zsc .zsp i{position:absolute;left:-2px;bottom:0;width:4px;height:5px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#2a83d1;animation:zArc 1.2s linear infinite}
+@keyframes zArc{0%{transform:translate(0,0);opacity:1}50%{transform:translate(var(--x),calc(var(--y) * -1))}100%{transform:translate(calc(var(--x) * 2),6px);opacity:.15}}
+.zna .zin{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--mut)}
+.zna .zin span{display:inline-flex;align-items:center;gap:5px}
+.zna .zin svg{width:16px;height:16px;fill:currentColor}
+.zna .zd{gap:6px;flex-wrap:nowrap}
+.zna .zd .chip{flex:1;min-width:0;margin:0;padding:8px 0;text-align:center}
+.zgo{all:unset;box-sizing:border-box;cursor:pointer;position:relative;overflow:hidden;width:100%;padding:13px 10px;border-radius:14px;background:#7a5a34;color:#fff;text-align:center;font-size:13px;letter-spacing:.1em;font-weight:600;display:flex;justify-content:center;align-items:baseline;gap:6px}
+.zgo.wn{background:transparent;color:#d98a00;box-shadow:inset 0 0 0 1px currentColor}
+.zgo.on{background:#2e6e9e}
+.zgo>span{position:relative}
+.zgo .zb{position:absolute;inset:0;height:auto;margin:0;border-radius:0;background:none}
+.zgo .zb>i{display:block;height:100%;background:rgba(255,255,255,.18);width:0;transition:width 1s linear}
+.zgo .tmr{font-weight:400;letter-spacing:.04em;text-transform:none;opacity:.9}
+.zgo .tmr::before{content:"· "}
+.zgo:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.zsc .zsp i{animation:none;transform:translate(var(--x),calc(var(--y) * -1))}}
+/* Detections timeline (27-detections-timeline.js) */
+.dtl{margin:4px 0 14px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:rgba(var(--w),.03)}
+.dtlh{display:flex;justify-content:space-between;gap:10px}
+.dthi{display:flex;align-items:flex-end;gap:3px;height:52px;margin-top:8px}
+.dthi i{flex:1;border-radius:3px 3px 0 0;background:rgba(var(--w),.14)}
+.dthi i.in{background:var(--mint)}
+.dtax{display:flex;justify-content:space-between;gap:8px;font:11px var(--mono);color:var(--mut);margin-top:4px}
+.dtax b{color:var(--ink);font-weight:500}
+.dtax svg{width:9px;height:9px;fill:#9fb4ff;vertical-align:0}.dtax em{font-style:normal}.dtax em svg{fill:currentColor}
+.dtrg{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:6px 0 4px}
+.dtrg input,.dtphr,.dtmr{width:100%;margin:0;accent-color:var(--mint);height:28px}
+.dtlanes{margin-top:6px;display:flex;flex-direction:column;gap:6px}
+.dtln{display:grid;grid-template-columns:110px minmax(0,1fr);align-items:center;gap:10px;font-size:12px;color:var(--mut)}
+.dtln>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dtlt{position:relative;height:20px;border-radius:10px;background:rgba(var(--w),.06)}
+.dtdot{all:unset;position:absolute;top:4px;width:12px;height:12px;margin-left:-6px;border-radius:50%;cursor:pointer;box-shadow:0 0 0 2px var(--bg)}
+.dtdot:hover,.dtdot:focus-visible{transform:scale(1.35);outline:2px solid currentColor;outline-offset:1px}
+.dtph{position:absolute;top:-5px;bottom:-5px;width:2px;margin-left:-1px;background:var(--ink);border-radius:1px;pointer-events:none}
+.dti.hl{box-shadow:0 0 0 2px var(--mint)}
+/* phone: one big clip per moment */
+.dtcv{margin:4px 0 14px}
+.dtbig{position:relative;border-radius:16px;overflow:hidden;cursor:pointer}
+.dtbig .pbth{border-radius:16px;aspect-ratio:16/10}
+.dtbig .pbth img,.dtat .pbth img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dtbig .pbth b{width:56px;height:56px}.dtbig .pbth b svg{width:32px;height:32px;margin-left:3px;fill:#fff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
+.dtbig .dtbc{position:absolute;left:10px;top:10px;font-size:12px;color:#fff;background:rgba(0,0,0,.5);padding:3px 9px;border-radius:9px}
+.dtbig .dtbn{position:absolute;right:10px;top:10px;font:600 11px var(--mono);letter-spacing:.06em;color:#14233c;background:#b8a6f2;padding:3px 9px;border-radius:9px}
+.dtbig strong{position:absolute;left:12px;right:12px;bottom:10px;font-weight:500;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.dtal{display:flex;gap:8px;margin-top:8px;overflow-x:auto;scrollbar-width:none}
+.dtat{all:unset;box-sizing:border-box;flex:1 0 96px;max-width:140px;cursor:pointer;border-radius:10px;padding:3px;border:2px solid transparent;font-size:11px;color:var(--mut)}
+.dtat.on{border-color:var(--mint);color:var(--ink)}
+.dtat .pbth{border-radius:7px}.dtat>span{display:block;padding:3px 2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dttk{position:relative;height:16px;margin:12px 9px 0}
+.dttk i{position:absolute;top:5px;width:5px;height:7px;margin-left:-2.5px;border-radius:2px;background:rgba(var(--w),.3)}
+.dttk i.g{top:2px;height:13px;background:#b8a6f2}.dttk i.on{background:var(--ink)}
+/* the viewer: full screen on every screen; only the X closes it */
+html:not(#x) #dtm{padding:0;background:#000}
+html:not(#x) #dtm .dtc{width:100%;height:100%;max-width:none;border-radius:0;border:0;box-shadow:none;background:#000;display:flex;flex-direction:column;color:#fff}
+#dtm .dth{flex:none;display:flex;align-items:center;gap:10px;padding:max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 10px max(14px,env(safe-area-inset-left));background:#000;color:#fff;min-width:0}
+#dtm .dth .dtt{flex:none;font-weight:500;font-size:16px}
+#dtm .dtwn{flex:1;min-width:0;font-size:13px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#dtm .dtpill{flex:none;font:600 11px var(--mono);letter-spacing:.06em;color:#14233c;background:#9fb4ff;padding:3px 9px;border-radius:9px}
+#dtm .dtsb{flex:none;color:#fff;border-color:rgba(255,255,255,.4)}
+#dtm .evx{flex:none;color:#fff}
+#dtm .dtvw{position:relative;flex:1;min-height:0;display:flex}
+html:not(#x) #dtm .dtv{flex:1;aspect-ratio:auto;min-height:0;height:100%}
+#dtm.sbs .dtv{display:none}
+#dtm .dtsx{display:none}
+#dtm.sbs .dtsx{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:4px;padding:4px}
+#dtm .dtsxi{position:relative;background:#111;border-radius:8px;overflow:hidden;cursor:pointer}
+#dtm .dtsxi video{width:100%;height:100%;object-fit:contain}
+#dtm .dtsxi span{position:absolute;left:8px;top:6px;font-size:12px;background:rgba(0,0,0,.55);padding:2px 8px;border-radius:8px}
+#dtm .dtnv{position:absolute;top:50%;z-index:6;transform:translateY(-50%);width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+#dtm .dtnv[hidden]{display:none}
+#dtm .dtnv svg{width:26px;height:26px;fill:currentColor}
+#dtm .dtnv.pv{left:12px}#dtm .dtnv.nx{right:12px}
+#dtm .dtal2{flex:none;display:flex;align-items:center;gap:8px;padding:0 14px;overflow-x:auto;scrollbar-width:none}
+#dtm .dtal2:not(:empty){padding:8px 14px max(10px,env(safe-area-inset-bottom))}
+#dtm .dtal2>span{flex:none;font-size:12px;opacity:.7;margin-right:4px}
+#dtm .dtal2 .dtat{flex:0 0 auto;width:110px;max-width:none;position:relative;height:62px;padding:0;border-radius:8px;overflow:hidden;background:#222;color:#fff}
+#dtm .dtal2 .dtat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#dtm .dtal2 .dtat span{position:absolute;left:5px;bottom:3px;font-size:10px;text-shadow:0 1px 2px #000;padding:0}
+#dtm .dtal2 .dtat.on{border-color:#fff}
+@media(max-width:760px){#dtm .dtnv{width:36px;height:36px;background:rgba(255,255,255,.1)}#dtm .dth .dtt{font-size:14px}}
+/* 2.5.12: the chart is the control (drag across it), crowded dots become one dot with a count, and the list follows UniFi Protect */
+.dthw{position:relative;cursor:crosshair;touch-action:none;user-select:none;-webkit-user-select:none}
+.dtsel{position:absolute;top:-3px;bottom:-3px;border:1.5px solid var(--mint);border-radius:7px;background:color-mix(in srgb,var(--mint) 12%,transparent);pointer-events:none}
+.dtsel i{position:absolute;top:50%;width:8px;height:26px;margin-top:-13px;border-radius:4px;background:var(--mint)}
+.dtsel .ga{left:-5px}.dtsel .gb{right:-5px}
+.dthw,.dtaxc{margin-left:120px}
+.dtall[hidden]{display:none!important}
+.dthi i{opacity:.45}.dthi i.in{opacity:1}
+.dtlhr{display:flex;align-items:center;gap:10px}.dtall{padding:3px 10px;font-size:11px}
+.dtdot.dtdn{width:auto;min-width:18px;height:16px;top:2px;margin-left:-9px;padding:0 4px;box-sizing:border-box;border-radius:8px;font:600 10px/16px var(--mono);text-align:center;color:#14233c}
+.dtlg{margin-top:10px}
+#dtp .dtg.dtls{display:block}
+.dthh{display:flex;align-items:baseline;gap:10px;margin:16px 2px 8px}.dthh:first-child{margin-top:4px}
+.dthh b{font-size:15px;font-weight:600;color:var(--ink)}.dthh span{font:11px var(--mono);color:var(--mut);letter-spacing:.04em}
+.dthr{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:8px}
+.dtr{display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:center;gap:14px;padding:6px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--w),.03);cursor:pointer}
+.dtr:hover{background:rgba(var(--w),.06)}
+.dtr .pbth{border-radius:9px}.dtr .pbth img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dtr .pbth b{width:28px;height:28px}
+.dtrx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.dtrx strong{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dtrx span{font-size:12px;color:var(--mut)}.dtrx div{display:flex;gap:4px;flex-wrap:wrap;margin-top:3px}
+.dtrc{padding-right:8px;color:var(--mut)}.dtrc svg{width:20px;height:20px;fill:currentColor;transition:transform .25s}
+.dtst.open .dtrc svg{transform:rotate(180deg)}
+.dtsn{position:absolute;top:5px;right:5px;font:600 11px var(--mono);font-style:normal;padding:1px 7px;border-radius:8px;background:#b8a6f2;color:#14233c}
+.dtsf{position:absolute;left:5px;right:5px;bottom:5px;display:flex;gap:2px}.dtsf i{flex:1;height:10px;border-radius:2px;background:rgba(255,255,255,.75)}
+.dtso{grid-column:1/-1;display:flex;gap:8px;overflow-x:auto;padding:8px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--w),.05);scrollbar-width:thin}
+.dtso .dti{flex:0 0 150px;cursor:pointer}.dtso .pbth img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dtso .pbx{padding:4px 2px 0;font-size:12px;color:var(--mut);text-align:center}
+@media(max-width:760px){.dthr{grid-template-columns:minmax(0,1fr)}.dtr{grid-template-columns:120px minmax(0,1fr) auto;gap:10px}.dtso .dti{flex-basis:120px}}
 /* Header chips (weather alert, pollen, leak ...): the glow is a soft halo around the pill that breathes, not a fading, fuzzy-edged copy of the whole chip. The text and border stay steady. */
 @media(min-width:761px){
 #nacc[data-k] .nai,html[data-mode] #nacc[data-k] .nai{position:relative;animation:none;filter:none;opacity:1}
@@ -3550,6 +3737,37 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
   .adx{display:flex}
   .adhint{display:none}
 }
+/* 2.5.10: Entities use the full width until one is picked (two columns of rows); Automations and Logs show an overview beside the list */
+@media(min-width:761px){
+  .adw[data-w=ent]:not(.det){grid-template-columns:minmax(0,1fr)}
+  .adw[data-w=ent]:not(.det)>.add{display:none}
+  .adw[data-w=ent]:not(.det) .adrs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:28px}
+  .adw[data-w=ent]:not(.det) .adrs>.adr:nth-child(2){border-top:0}
+  .adw[data-w=ent]:not(.det) .adrs>.admore,.adw[data-w=ent]:not(.det) .adrs>.ademp{grid-column:1/-1}
+  .adw.det>.add{animation:adIn .25s ease both}
+}
+@keyframes adIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.adw.det>.add{animation:none}}
+.adbig{font-size:26px;line-height:1.2;margin-top:4px}
+.adov{padding:9px 6px}.adov>svg{width:18px;height:18px;fill:currentColor;opacity:.45;flex:none;margin-left:auto}
+.adov.err b,.adov.err small{color:#ff8a80}html[data-mode=light] .adov.err b,html[data-mode=light] .adov.err small{color:#c62828}
+.adov.off b{opacity:.6}
+.adint{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;padding:8px 6px;border-top:1px solid var(--line);position:relative}
+.adint span{display:flex;justify-content:space-between;gap:10px;font-size:14px}.adint b{font-weight:400;text-transform:capitalize}.adint small{color:var(--mut);font:11px var(--mono);white-space:nowrap}
+.adint i{display:block;height:5px;border-radius:3px;margin-top:6px;background:var(--mint);opacity:.8}.adint i.err{background:#ff8a80}
+.adint.on{background:rgba(var(--w),.08);border-radius:10px}
+.adint:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:8px}
+.adlq{font-size:13px;line-height:1.45;padding:8px 10px;border-radius:10px;background:rgba(var(--w),.05);word-break:break-word}.adlq.err{background:rgba(255,107,94,.1)}
+.adlq small{display:block;margin-top:4px;color:var(--mut);font:11px var(--mono)}
+.adli svg{width:14px;height:14px;fill:currentColor;vertical-align:-2px}
+.adlw{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+.adlw .adlh .adch{flex:1 1 100%}
+@media(max-width:760px){
+  /* phone: the filter chips get their own row, Copy all and Refresh share the next one */
+  .adlh .adch{flex:1 1 100%}
+  .adlh>.eb{flex:1;text-align:center;justify-content:center}
+  .adlw{grid-template-columns:minmax(0,1fr)}
+}
 </style>
 </head>
 <body>
@@ -3588,7 +3806,7 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
   <div id="roomspg" class="page"><div class="chips tabs" id="rtabs"></div><div id="rl"></div><div id="rv" style="display:none"></div></div>
 
   <div id="security" class="page" data-tab="live"><div class="chips tabs" id="stabs" style="display:none"></div><div class="pn pg" id="alp"></div><div id="sectog"></div><div class="cams cams3" id="scams"></div><div class="pn pg" id="dtp" style="display:none"></div></div>
-<div id="dtm"><div class="dtc"><div class="dth"><b class="dtt"></b><button class="evx" data-dt="close" aria-label="Close"></button></div><div class="dtv"><video controls playsinline></video><div class="dte"></div></div></div></div>
+<div id="dtm" role="dialog" aria-label="Detection"><div class="dtc"><div class="dth"><b class="dtt"></b><button class="evx" data-dt="close" aria-label="Close"></button></div><div class="dtvw"><div class="dtv"><video controls playsinline></video><div class="dte"></div></div><div class="dtsx"></div><button class="dtnv pv" aria-label="Previous moment" hidden></button><button class="dtnv nx" aria-label="Next moment" hidden></button></div><div class="dtal2"></div></div></div>
 
   <div id="weather" class="page"><div id="wx"></div></div>
 
@@ -3621,16 +3839,16 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.8"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.8"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.8"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="config.js?v=2.5.12"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.12"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.12"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.8";   // the one place to change the version
-window.DASH_BUILD = "0f5646";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.5.12";   // the one place to change the version
+window.DASH_BUILD = "623896";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -3911,6 +4129,11 @@ window.__ZHD={"D": {"0.0 mm": "0.0 毫米", "1 hr": "1 小时", "2 hr": "2 小�
     ["^heat escaping · (\\d+) rooms$", "热量流失 · $1 个房间"], ["^cool escaping · (\\d+) rooms$", "冷气流失 · $1 个房间"], ["^pause (\\d+) zones$", "暂停 $1 个分区"], ["^sun is down · set (\\d+) min ago$", "太阳已落山 · $1 分钟前"], ["^it rained (.+) today$", "今天下雨 {1}"], ["^raining now · (.+) today$", "正在下雨 · 今天共 {1}"]
   );
   Z.P.push(["^([a-z][a-z ]*[a-z]) · ([a-z][a-z ]*[a-z])$", "{1} · {2}"], ["^([a-z][a-z ]*[a-z]) · (\\d+)$", "{1} · $2"], ["^(\\d+(?:\\.\\d+)?)° · ([a-z ]+)$", "$1° · {2}"]);
+  // 2.5.9: the slim alarm bar
+  Object.assign(Z.D, { "all doors shut": "门都关好了", "all windows shut": "窗都关好了", "doors and windows shut": "门窗都关好了", "siren sounding": "警笛正在响", "tap to stop it": "点击停止",
+    "stop siren": "停止警笛", "hold for 2 seconds to sound the siren": "按住 2 秒拉响警笛", "cancel": "取消" });
+  Z.P.unshift(["^(.+) · (.+ (?:window|door)(?: \\d+)? open|\\d+ windows open|all windows shut)$", "{1} · {2}"], ["^(\\d+) doors open$", "$1 扇门开着"], ["^(\\d+) windows open$", "$1 扇窗开着"],
+    ["^(.+ (?:window|door)(?: \\d+)?) open$", "{1}开着"], ["^since (\\S+) by (.+)$", "{1} 起 · $2"], ["^since (\\S+)$", "{1} 起"], ["^stops in (\\d+) s$", "$1 秒后停止"]);
 })();
 // ---------- Language (Theme page): English or Simplified Chinese ----------
 // Chinese translates the dashboard's labels, headings, buttons and units as they appear (the dictionary in 56-zh-dict.js / 56-zh-more.js),
@@ -4682,6 +4905,11 @@ const camMem = {
     const k = "dcamt:" + id; if ((!force && Date.now() - (+localStorage.getItem(k) || 0) < 60000) || !v.videoWidth) return "";
     const cv = document.createElement("canvas"), w = 480, h = Math.round(w * v.videoHeight / v.videoWidth); cv.width = w; cv.height = h; const cx = cv.getContext("2d"); cx.drawImage(v, 0, 0, w, h);
     if (thBlack(cx, w, h)) return ""; const u = cv.toDataURL("image/jpeg", .55); localStorage.setItem("dcam:" + id, u); localStorage.setItem(k, Date.now()); return u;
+  } catch (e) { return ""; } },
+  // a still from a fetched snapshot (an <img>); "" when the browser won't let it be copied (the picture is still used as it is)
+  keep: (id, im) => { try {
+    const cv = document.createElement("canvas"), w = Math.min(480, im.naturalWidth), h = Math.round(w * im.naturalHeight / im.naturalWidth); cv.width = w; cv.height = h; const cx = cv.getContext("2d"); cx.drawImage(im, 0, 0, w, h);
+    if (thBlack(cx, w, h)) return ""; const u = cv.toDataURL("image/jpeg", .6); localStorage.setItem("dcam:" + id, u); localStorage.setItem("dcamt:" + id, Date.now()); return u;
   } catch (e) { return ""; } }
 };
 function camSnap(c) {   // phones: cameras scrolled out of view aren't fetched until they come into view
@@ -4693,6 +4921,30 @@ function camSnap(c) {   // phones: cameras scrolled out of view aren't fetched u
   const im = new Image(); im.onload = () => { c.o.img.src = im.src; };
   im.src = CONFIG.url + p + (p.indexOf("?") > -1 ? "&" : "?") + "t=" + Date.now();
 }
+// background stills: every camera tile that isn't playing gets a fresh picture every minute (2 on a phone) while the dashboard is open and on screen, so the Home and Security cameras open on a picture under a minute old instead of waiting for the snapshot. CONFIG.camPrefetch: seconds, or false to turn it off
+const CPF = { t: 0, busy: false };
+const cpfSec = () => CONFIG.camPrefetch === false ? 0 : Math.max(20, +CONFIG.camPrefetch || (isMobile() ? 120 : 60));
+async function camPrefetch(force) {
+  const sec = cpfSec(); if (!sec || document.hidden || CPF.busy || typeof states !== "object" || !states) return;
+  if (!force && Date.now() - CPF.t < sec * 1000 - 1000) return;
+  CPF.t = Date.now(); CPF.busy = true;
+  const by = {}; CONFIG.cameras.concat(CONFIG.security, VWC).forEach(c => { if (c && c.id && c.o) (by[c.id] = by[c.id] || []).push(c); });
+  try {
+    for (const id of Object.keys(by)) {
+      const cs = by[id]; if (cs.some(c => c.live)) continue;   // a playing camera keeps its own last frame when it stops
+      if (camMem.age(id) < sec * 1000 - 1000) continue;
+      const f = id.replace(/_clear$/, "_fluent"), s = states[f !== id && states[f] ? f : id], p = s && s.attributes && s.attributes.entity_picture; if (!p) continue;
+      const url = CONFIG.url + p + (p.indexOf("?") > -1 ? "&" : "?") + "t=" + Date.now();
+      const load = co => new Promise(r => { const im = new Image(), t = setTimeout(() => r(null), 8000); if (co) im.crossOrigin = "anonymous"; im.onload = () => { clearTimeout(t); r(im.naturalWidth ? im : null); }; im.onerror = () => { clearTimeout(t); r(null); }; im.src = url; });
+      const im = (await load(true)) || (await load(false)); if (!im) continue;   // without CORS the picture still loads, it just can't be kept between visits
+      let u = ""; try { u = camMem.keep(id, im); } catch (e) { u = ""; }
+      cs.forEach(c => { if (!c.live && c.o) c.o.img.src = u || url; });   // the tile on the page you are not on already holds the new picture
+      await new Promise(r => setTimeout(r, 300));
+    }
+  } finally { CPF.busy = false; }
+}
+setInterval(() => camPrefetch(), 15000);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) setTimeout(() => camPrefetch(), 1500); });
 // tiles use the light "_fluent" (sub) stream; full screen and the popup view switch to "_clear" (main)
 function camEnt(c) {
   const cl = c.o.el.classList; if (cl.contains("fs") || cl.contains("vf")) return c.id;
@@ -5414,7 +5666,7 @@ function updTiles() {
 const SIR = { flag: (CONFIG.siren || {}).flag || E("sirenFlag"), s30: "script." + ((CONFIG.siren || {}).script30 || "unset"), max: 600000 };
 function sirenSt() {
   const f = states[SIR.flag], sc = states[SIR.s30], lt = +(localStorage.getItem("dashSirT") || 0);
-  const timed = !!sc && sc.state === "on", tm = timed ? Math.max(0, 30 - Math.round((Date.now() - Date.parse(sc.last_changed)) / 1000)) : 0;
+  const mo = states[(CONFIG.siren || {}).momentary], timed = (!!sc && sc.state === "on") || (!!mo && mo.state === "on" && Date.now() - Date.parse(mo.last_changed) < 45000), tm = timed ? Math.max(0, 30 - Math.round((Date.now() - Date.parse((sc && sc.state === "on" ? sc : mo).last_changed)) / 1000)) : 0;
   const tog = f ? (f.state === "on" && Date.now() - Date.parse(f.last_changed) < SIR.max) : (lt && Date.now() - lt < SIR.max);
   return { timed: timed, left: tm, tog: !!tog, any: timed || !!tog };
 }
@@ -5423,7 +5675,17 @@ function sirenUpd(el) {
   el.classList.remove("na"); el.classList.toggle("on", on);
   $(".ts2", el).textContent = on ? (k === "timed" ? "SOUNDING · " + st.left + " s" : "SOUNDING") : "OFF";
 }
+// siren.via: "helpers" for non-admin logins: the siren scripts publish over MQTT, which Home Assistant allows admins only ("Unauthorized"
+// in the trace). The dashboard then only switches the two input_booleans and an automation (which runs with full rights) sounds the siren.
+function sirenHelp(k) {
+  const c = CONFIG.siren || {}, mo = c.momentary, st = sirenSt();
+  if (st.any) { try { localStorage.removeItem("dashSirT"); } catch (_) {} [SIR.flag, mo].forEach(x => { if (x && states[x]) call("input_boolean", "turn_off", x); }); if (st.timed) call("script", "turn_off", SIR.s30); }
+  else if (k === "timed" && mo) call("input_boolean", "turn_on", mo);
+  else { try { localStorage.setItem("dashSirT", String(Date.now())); } catch (_) {} if (states[SIR.flag]) call("input_boolean", "turn_on", SIR.flag); }
+  setTimeout(() => $$("#alp [data-sir]").forEach(sirenUpd), 250);
+}
 function sirenTap(k) {
+  if ((CONFIG.siren || {}).via === "helpers") return sirenHelp(k);
   const st = sirenSt(), sirOff = () => { try { localStorage.removeItem("dashSirT"); } catch (_) {} if (st.timed) call("script", "turn_off", SIR.s30); call("script", "alarm_siren_off"); if (states[SIR.flag]) call("input_boolean", "turn_off", SIR.flag); };
   if (st.any) sirOff();
   else if (k === "timed") call("script", (CONFIG.siren || {}).script30 || "unset");
@@ -5640,6 +5902,8 @@ function drawAlarm() {
   drawAlb();
   const p = $("#alp"); if (!p || !onSec()) return;
   const arm = [[1, "arm_home", "HOME"], [2, "arm_away", "AWAY"], [4, "arm_night", "NIGHT"]].filter(x => (f & x[0]) || (!f && x[1] === "arm_away"));
+  if (alSlim()) { p.classList.add("alsl"); p.innerHTML = alBar(s, m, c, arm); updTiles(); return; }
+  p.classList.remove("alsl");
   p.innerHTML = '<div class="lbl">Alarm</div><div class="astate ' + c + '">' + m[0] + '</div><div class="chips">' +
     (s.state === "disarmed" ? arm.map(x => '<button class="chip ag" data-ag="ok" data-m="' + x[1] + '">ARM ' + x[2] + '</button>').join("") : '<button class="chip on ag" data-ag="' + ({ arming: "wn", disarming: "wn", pending: "wn", triggered: "al" }[s.state] || "on") + '" data-m="disarm">DISARM</button>') +
     '</div><div class="tg3" style="margin-top:12px">' + CONFIG.alarmTiles.map(tileHtml).join("") + '</div>';
@@ -5720,6 +5984,77 @@ function alarmTap() {
 $("#al").onclick = alarmTap;
 $("#alb").onclick = e => { if (e.target.closest("[data-m]")) alarmDo("disarm"); else location.hash = "#security"; };
 
+// ---------- slim alarm bar (2.5.9): the Security page's alarm card as one line. State, what is open, the main arm button and a
+// panic button for the siren; the other arm modes sit behind the arrow. alarmCard: "classic" in config.js brings back the big card.
+const ALB = { more: false, sir: false, list: false, min: 0 };
+const alSlim = () => CONFIG.alarmCard !== "classic";
+const alSirTiles = () => (CONFIG.alarmTiles || []).filter(t => t && t.siren);
+// windows open across the house (each room's windows), the same list the Windows chip in Notifications uses
+function alWins() { const s = new Set(); (CONFIG.house || []).forEach(r => members(r.windows).forEach(x => { if (!/^group\./.test(x) && isOn(x) && !entHidden(x)) s.add(x); })); return [...s]; }
+const alHasWins = () => (CONFIG.house || []).some(r => members(r.windows).length);
+// the small line under the state: what is open while disarmed, since when (and by whom) once armed
+function alSub(s) {
+  if (s.state === "disarmed") {
+    let d = null; try { d = doorsOpen(); } catch (_) {}
+    const hd = !!(CONFIG.entities && CONFIG.entities.doorsGroup), w = alHasWins() ? alWins() : null;
+    const dt = d ? (d.length > 1 ? d.length + " doors open" : d.length ? fname(d[0]) + " open" : "A door is open") : "", wt = w && w.length ? (w.length > 1 ? w.length + " windows open" : fname(w[0]) + " open") : "";
+    if (!dt && !wt) return hd && w ? "Doors and windows shut" : hd ? "All doors shut" : w ? "All windows shut" : "";
+    return [dt || (hd ? "All doors shut" : ""), wt || (w ? "All windows shut" : "")].filter(Boolean).join(" · ");
+  }
+  if (/^armed/.test(s.state)) { const t = Date.parse(s.last_changed || ""), by = s.attributes.changed_by; return (t ? "Since " + schTm(new Date(t)) : "") + (by && typeof by === "string" ? " by " + by : ""); }
+  return "";
+}
+// tap the "… open" line: which doors and windows, and how long they have been open
+function alOpen() {
+  let d = null; try { d = doorsOpen(); } catch (_) {}
+  return (d || []).map(x => [x, "m3-door-open"]).concat((alHasWins() ? alWins() : []).map(x => [x, "m3-window-open"]));   // the same icons as the Notifications pop-up
+}
+function alAgo(id) {
+  const t = Date.parse((states[id] || {}).last_changed || ""); if (!t) return "";
+  const m = Math.max(0, Math.round((Date.now() - t) / 60000));
+  return m < 60 ? "open " + Math.max(1, m) + " min" : m < 720 ? "open " + Math.round(m / 60) + " h" : "since " + schTm(new Date(t));
+}
+// the room each one is in (several are just "Left window"), from CONFIG.house
+function alRoom(id) { const r = (CONFIG.house || []).find(x => members(x.windows).concat(members(x.doors)).indexOf(id) > -1); return r ? r.name : ""; }
+function alList() {
+  const o = alOpen(); if (!ALB.list || !o.length) return "";
+  return '<div class="allst">' + o.map(x => '<div>' + mdi(x[1]) + '<span>' + esc(fname(x[0])) + (alRoom(x[0]) ? '<em>' + esc(alRoom(x[0])) + '</em>' : "") + '</span><small>' + alAgo(x[0]) + '</small></div>').join("") + '</div>';
+}
+function alBar(s, m, c, arm) {
+  const st = s.state, sir = alSirTiles().length ? sirenSt() : { any: false }, dis = st === "disarmed";
+  ALB.sir = sir.any;
+  if (sir.any) return '<div class="alsb sir"><span class="alsi">' + mdi("alarm-light") + '</span><div class="alst"><b>Siren sounding</b><small>' + (sir.timed ? "Stops in " + sir.left + " s" : "Tap to stop it") + '</small></div><button class="alstop" data-alsr="stop">STOP SIREN</button></div>';
+  const pri = dis ? (arm.filter(x => x[1] === "arm_away")[0] || arm[0]) : null, rest = dis ? arm : [];
+  const sub = alSub(s), ag = { arming: "wn", disarming: "wn", pending: "wn", triggered: "al" }[st] || "on";
+  const btn = dis ? (pri ? '<button class="chip ag" data-ag="ok" data-m="' + pri[1] + '">ARM ' + pri[2] + '</button>' : "")
+    : '<button class="chip on ag" data-ag="' + ag + '" data-m="disarm">' + (st === "arming" ? "CANCEL" : "DISARM") + '</button>';
+  const sb = alSirTiles().length ? '<button class="alsr" data-alsr="hold" aria-label="Siren: hold 2 seconds to sound it" title="Siren: hold 2 s">' + mdi("alarm-light") + '<i></i></button>' : "";
+  const mo = dis && rest.length > 1 ? '<button class="almo' + (ALB.more ? " on" : "") + '" data-almo aria-label="Other arm modes" aria-expanded="' + ALB.more + '">' + mdi(ALB.more ? "chevron-up" : "chevron-down") + '</button>' : "";
+  const modes = dis && ALB.more && rest.length > 1 ? '<div class="alms">' + rest.map(x => '<button class="' + (x === pri ? "on" : "") + '" data-m="' + x[1] + '">' + mdi({ arm_home: "shield-home", arm_night: "weather-night", arm_away: "shield-lock" }[x[1]] || "shield-lock") + '<span>ARM ' + x[2] + '</span></button>').join("") + '</div>' : "";
+  const other = (CONFIG.alarmTiles || []).filter(t => t && !t.siren);
+  return '<div class="alsb ' + c + '"><span class="alsi">' + mdi(ALI[st] || "shield-outline") + '</span><div class="alst"><b>' + esc(m[0].charAt(0) + m[0].slice(1).toLowerCase()) + '</b>' + (sub ? (dis && alOpen().length ? '<small class="alsub" data-allist role="button" tabindex="0" aria-expanded="' + ALB.list + '">' + esc(sub) + mdi(ALB.list ? "chevron-up" : "chevron-down") + '</small>' : '<small>' + esc(sub) + '</small>') : "") + '</div>' +
+    '<div class="alsa">' + sb + btn + mo + '</div></div>' + (dis ? alList() : "") + modes + (other.length ? '<div class="tg3" style="margin-top:10px">' + other.map(tileHtml).join("") + '</div>' : "") + '<div class="alhint" hidden>Hold for 2 seconds to sound the siren</div>';
+}
+// panic button: hold 2 s to sound (the 30 s siren when there is one), a short tap only shows how; STOP SIREN turns everything off
+function alSirGo() { const t = alSirTiles(), k = t.some(x => x.siren === "timed") ? "timed" : "toggle"; sirenTap(k); setTimeout(drawAlarm, 300); }
+(function () {
+  const p = $("#alp"); if (!p) return; let tm = null, el = null;
+  const stop = () => { clearTimeout(tm); tm = null; if (el) el.classList.remove("hold"); el = null; };
+  p.addEventListener("pointerdown", e => { const b = e.target.closest("[data-alsr=hold]"); if (!b) return; e.preventDefault(); el = b; b.classList.add("hold"); tm = setTimeout(() => { stop(); if (navigator.vibrate) try { navigator.vibrate(60); } catch (_) {} alSirGo(); }, 2000); });
+  ["pointerup", "pointercancel", "pointerleave"].forEach(ev => p.addEventListener(ev, e => { if (!el) return; const short = tm; stop(); if (short && ev === "pointerup") { const h = $(".alhint", p); if (h) { h.hidden = false; clearTimeout(h._t); h._t = setTimeout(() => { h.hidden = true; }, 2600); } } }));
+  p.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.closest("[data-allist]")) { e.preventDefault(); ALB.list = !ALB.list; drawAlarm(); const b = $("[data-allist]", p); if (b) b.focus(); } });
+  p.addEventListener("contextmenu", e => { if (e.target.closest("[data-alsr]")) e.preventDefault(); });
+  p.addEventListener("click", e => {
+    if (e.target.closest("[data-alsr=stop]")) { e.stopPropagation(); sirenTap("toggle"); setTimeout(drawAlarm, 300); return; }
+    if (e.target.closest("[data-alsr]")) { e.stopPropagation(); return; }
+    if (e.target.closest("[data-almo]")) { e.stopPropagation(); ALB.more = !ALB.more; drawAlarm(); return; }
+    if (e.target.closest("[data-allist]")) { e.stopPropagation(); ALB.list = !ALB.list; drawAlarm(); return; }
+    if (e.target.closest(".alms [data-m]")) { ALB.more = false; setTimeout(drawAlarm, 0); }
+  }, true);
+  // the siren and the open doors / windows change without the alarm itself changing: keep the bar current
+  setInterval(() => { if (document.hidden || !alSlim() || !onSec()) return; const s = states[CONFIG.alarm]; if (!s) return; const sir = alSirTiles().length && sirenSt();
+    if ((sir && (sir.any !== ALB.sir || sir.timed)) || (s.state === "disarmed" && $(".alst small", p) && $(".alst small", p).textContent !== alSub(s)) || (ALB.list && Math.floor(Date.now() / 60000) !== ALB.min)) { ALB.min = Math.floor(Date.now() / 60000); drawAlarm(); } }, 1000);
+})();
 // ---------- pollen: Google Pollen data, read from the sensors of Home Assistant's "pollenlevels" integration ----------
 // config: pollen: { risk: "sensor.…_overall_pollen_risk_today", top: "sensor.…_top_pollen_types_today", plants: "sensor.…_plants_in_season_today", grass: "sensor.…_grass", alertFrom: "moderate" }
 // Only `risk` is needed. A level is the index 0-5 (None, Very low, Low, Moderate, High, Very high) or its name. alertFrom = the level where the strip beside the clock and the Alerts list start to show it (default "moderate"; false = never).
@@ -6712,17 +7047,34 @@ function irrPair() {   // rain + soil moisture side by side on a tablet, swipeab
   const c = [irrRain(), irrMoist()].filter(Boolean); if (c.length < 2) return c.join("");
   return '<div class="irc">' + c.join("") + '</div><div class="dots irdots">' + c.map((_, i) => '<i data-ci="' + i + '"' + (i === irrCi ? ' class="on"' : "") + '></i>').join("") + '</div>';
 }
+// ---------- zone card (2.5.10): a little garden scene like the Weather page's. Soil moisture is the gauge on the left; when the tap runs the
+// sprinkler sprays and the flow shows top right. Under it the rain chance for the next 12 h, the run length and one Start / Stop button.
+const IRRD = (() => { try { return JSON.parse(localStorage.getItem("dashIrrDur") || "{}"); } catch (_) { return {}; } })();
+const IRR_DURS = [["00:05:00", "5 MIN"], ["00:15:00", "15 MIN"], ["00:30:00", "30 MIN"], ["01:00:00", "1 HR"], ["02:00:00", "2 HR"]];
+function irr12() {   // the same numbers as the Rain · next 12 hours card
+  const d = fcH.filter(x => Date.parse(x.datetime) > Date.now() - 3600000).slice(0, 12); if (d.length < 3) return null;
+  const mm = d.map(x => +x.precipitation || 0), pr = d.map(x => +x.precipitation_probability || 0);
+  return { pk: Math.round(Math.max.apply(null, pr)), tot: mm.reduce((p, q) => p + q, 0), fi: d.findIndex((x, i) => mm[i] >= 0.1 || pr[i] >= 50), skip: CONFIG.rainSkipMm != null ? CONFIG.rainSkipMm : 2 };
+}
+function irrNight() { const s = states["sun.sun"], h = new Date().getHours(); return s ? s.state === "below_horizon" : (h < 6 || h >= 19); }
+let irrDrops = "";
+function irrSpray() { if (!irrDrops) for (let i = 0; i < 16; i++) irrDrops += '<i style="--x:' + ((i % 2 ? 1 : -1) * (8 + i * 3)) + 'px;--y:' + (34 + (i % 4) * 6) + 'px;animation-delay:' + (i * 0.075).toFixed(3) + 's"></i>'; return '<div class="zsp">' + irrDrops + '</div>'; }
 function irrZone(z) {
-    let h = "";
     const sw = states[z.switch], on = !!sw && sw.state === "on", fl = parseFloat(sv(z.flow)) || 0, t = states[z.timer], act = !!t && t.state === "active";
     const fin = act && t.attributes.finishes_at ? Date.parse(t.attributes.finishes_at) : 0, dur = act ? (t.attributes.duration || "0:00:00").split(":").reduce((p, q) => p * 60 + +q, 0) * 1000 : 0;
-    const mo = parseFloat(sv(z.moist)), tp = parseFloat(sv(z.stemp)), mc = mo < 15 ? "#a9a9a9" : mo < 25 ? "#ffd34f" : mo < 45 ? "#9fe7e8" : "#36a9e2";
-    h += '<div class="pn zn" data-z="' + z.zone + '"><div class="zt"><b class="h3">' + mdi("sprinkler-variant") + ' ' + esc(z.name) + '</b></div>' +
-      '<div class="zf' + (on ? " on" : "") + '" data-t="' + z.switch + '" style="--fc:' + FLOWC(fl) + '">' + irrWave(z.zone, on, fl) + '<span class="bi">' + mdi("water") + '</span><div><b class="h2">' + f1(fl) + ' m³/h</b><div class="lbl">' + (on ? (fl < .1 ? "minimal flow" : fl < .3 ? "low flow" : fl < .6 ? "moderate flow" : "high flow") : "off · tap to start") + '</div></div></div>' +
-      (act ? '<div><div class="lbl tmr" data-fin="' + fin + '">--</div><div class="zb"><i data-dur="' + dur + '"></i></div></div>' : "") +
-      '<div class="zd">' + [["5 m", "00:05:00"], ["15 m", "00:15:00"], ["30 m", "00:30:00"], ["1 hr", "01:00:00"], ["2 hr", "02:00:00"]].map(x => '<button class="chip" data-d="' + x[1] + '">' + x[0] + '</button>').join("") + '</div>' +
-      (isNaN(mo) ? "" : '<div class="wg"><div class="ws"><span class="lbl">Soil moisture</span><b style="color:' + mc + '">' + f1(mo) + '%</b><span class="lbl">' + (mo < 15 ? "very dry" : mo < 25 ? "dry" : mo < 45 ? "moist" : "wet") + '</span></div>' + (isNaN(tp) ? "" : '<div class="ws"><span class="lbl">Soil temp</span><b style="color:' + tcol(tp) + '">' + f1(tp) + '°</b></div>') + '</div>') + '</div>';
-    return h;
+    const mo = parseFloat(sv(z.moist)), tp = parseFloat(sv(z.stemp)), r = irr12(), sel = IRRD[z.zone] || "00:15:00", sl = (IRR_DURS.find(x => x[0] === sel) || IRR_DURS[1])[1];
+    const mw = isNaN(mo) ? "" : mo < 15 ? "very dry" : mo < 25 ? "dry" : mo < 45 ? "moist" : "wet";
+    const rw = !r ? "" : r.tot >= r.skip ? "rain on the way" : r.fi === 0 ? "raining now" : r.fi > 0 ? "rain likely in " + r.fi + " h" : "no rain due";
+    const st = on ? "Watering" : [mw, rw].filter(Boolean).join(" · "), skip = !on && r && r.tot >= r.skip;
+    return '<div class="pn zn zna' + (on ? " on" : "") + '" data-z="' + z.zone + '"><div class="zt"><b class="h3">' + mdi("sprinkler-variant") + ' ' + esc(z.name) + '</b></div>' +
+      (st ? '<div class="zst' + (skip ? " wn" : "") + '">' + esc(st.charAt(0).toUpperCase() + st.slice(1)) + '</div>' : "") +
+      '<div class="zsc' + (irrNight() ? " nt" : "") + (on ? " on" : "") + '">' +
+        (isNaN(mo) ? "" : '<div class="zgg" role="img" aria-label="Soil moisture ' + Math.round(mo) + ' percent"><i style="height:' + Math.max(0, Math.min(100, mo)) + '%"></i></div><span class="zgv">' + Math.round(mo) + '%</span>') +
+        (on ? '<span class="zfr">' + f1(fl) + ' m³/h</span>' : "") + '<i class="zgd"></i><i class="zhd"></i>' + (on ? irrSpray() : "") + '</div>' +
+      '<div class="zin">' + (r ? '<span>' + mdi("weather-rainy") + ' Rain 12 h · ' + r.pk + '%</span>' : '<span></span>') + (isNaN(tp) ? "" : '<span>Soil ' + f1(tp) + '°</span>') + '</div>' +
+      (on ? "" : '<div class="zd">' + IRR_DURS.map(x => '<button class="chip' + (x[0] === sel ? " on" : "") + '" data-zdur="' + x[0] + '">' + x[1].replace(" MIN", "m").replace(" HR", "h") + '</button>').join("") + '</div>') +
+      (on ? '<button class="zgo on" data-zstop>' + (act ? '<span class="zb"><i data-dur="' + dur + '"></i></span>' : "") + '<span>STOP</span>' + (act ? '<span class="tmr" data-fin="' + fin + '">--</span>' : "") + '</button>'
+          : '<button class="zgo' + (skip ? " wn" : "") + '" data-d="' + sel + '">' + (skip ? "START ANYWAY · " : "START · ") + sl + '</button>') + '</div>';
 }
 let zSheet = false, zTab = 0;   // phone: the zones live in a floating bar that opens into a sheet (like Scenes)
 function irrBar() {
@@ -6781,6 +7133,8 @@ $("#irrigation").onclick = e => {
   if (zt) { const old = zTab; zTab = +zt.dataset.zt; const k = $("#irrigation .zbk"); if (k) k.remove(); $("#irrigation .zsx").outerHTML = irrBar(); if (zTab !== old) txGo($("#irrigation .zsb"), zTab > old ? 1 : -1, true); tickIrr(); return; }
   const dt = e.target.closest("[data-zi]"); if (dt) { const g = $("#irrigation .zg"); irrI = +dt.dataset.zi; if (g) g.scrollTo({ left: irrI * (g.clientWidth + 14), behavior: "smooth" }); return; }
   const z = e.target.closest("[data-z]"); if (!z) return;
+  const zd = e.target.closest("[data-zdur]"); if (zd) { IRRD[z.dataset.z] = zd.dataset.zdur; try { localStorage.setItem("dashIrrDur", JSON.stringify(IRRD)); } catch (_) {} if (isMobile()) { const k = $("#irrigation .zbk"); if (k) k.remove(); $("#irrigation .zsx").outerHTML = irrBar(); } else drawIrr(); return; }
+  if (e.target.closest("[data-zstop]")) { const zc = CONFIG.irrigation.find(x => x.zone === z.dataset.z); if (zc) { call("switch", "turn_off", zc.switch); const tm = states[zc.timer]; if (tm && tm.state === "active") call("timer", "cancel", zc.timer); } return; }
   const t = e.target.closest("[data-t]"), d = e.target.closest("[data-d]");
   if (d) {
     send({ type: "call_service", domain: "script", service: "start_sprinkler_timer", service_data: { zone: z.dataset.z.replace(/-/g, "_"), duration: d.dataset.d } });   // the script keys its zones driveway | backyard | right_walkway
@@ -7272,7 +7626,7 @@ function pbPlay(c, x, it) {
 
 // ---------- recent detections card (Security page): person / vehicle clips from every camera, last few days ----------
 const DT_R = [[24, 2, "24 HOURS"], [72, 4, "3 DAYS"], [168, 8, "7 DAYS"]];   // [hours back, day folders to read, label]
-const DT = { days: [], cache: {}, items: [], busy: false, range: 1, types: { Person: true, Vehicle: true, Animal: false, Motion: false }, cam: "all", show: 24, t0: 0, th: {}, snapOf: {}, snapUrl: {}, q: [], run: 0, loaded: 0 };
+const DT = { days: [], cache: {}, items: [], busy: false, range: 1, types: { Person: true, Vehicle: true, Animal: false, Motion: false }, cam: "all", show: 24, t0: 0, th: {}, snapOf: {}, snapUrl: {}, q: [], run: 0, loaded: 0, open: "" };
 const thPar = () => { const d = CONFIG.detections, n = d && typeof d === "object" ? +d.previewParallel : 0; return n > 0 ? Math.min(6, n) : isMobile() ? 3 : 4; };   // how many preview pictures are grabbed at once (config.js: detections: { previewParallel: 4 })
 // remembers the preview pictures on this device (IndexedDB), so each clip is only ever decoded once
 const THDB = (() => {
@@ -7320,18 +7674,49 @@ const dtWhen = ts => { const d = new Date(ts), n = new Date(), df = Math.round((
 // the picture shown for a clip, the same everywhere: HA's own snapshot from when the detection began, else the frame cut from the clip, else the browse thumbnail
 function dtThumbUrl(x) { const su = DT.snapUrl[x.mc]; return su && Date.now() - su.t < 3000000 ? su.u : DT.th[x.mc] || (x.th ? (x.th.indexOf("/") === 0 ? CONFIG.url : "") + x.th : ""); }
 const dtWanted = () => location.hash === "#security/detections";   // the loader runs for the Detections tab
+function dtCard(x) { const th = dtThumbUrl(x); return '<div class="dti" data-dt="play" data-k="' + esc(x.mc) + '" data-cam="' + esc(x.cam) + '" data-ts="' + x.ts + '" data-tg="' + esc(x.p.tags.join(",")) + '"><div class="pbth" data-dth="' + esc(x.mc) + '">' + (th ? '<img alt="" src="' + esc(th) + '">' : "") + '<b>' + mdi("play") + '</b><u>' + esc(x.p.len) + '</u></div><div class="pbx"><span>' + esc(dtTm(x.ts)) + '</span></div></div>'; }
+// the list, like UniFi Protect: an hour heading, then a row per clip; clips from one camera with the same detection, each within 5 minutes of the next, are one row
+const DT_PL = { Person: "people", Vehicle: "vehicles", Animal: "animals", Face: "faces" };
+function dtHourOf(t) { const d = new Date(t); d.setMinutes(0, 0, 0); return d.getTime(); }
+function dtHourLbl(h) {
+  const d = new Date(h), t0 = new Date(); t0.setHours(0, 0, 0, 0); const dd = Math.round((new Date(h).setHours(0, 0, 0, 0) - t0.getTime()) / 864e5);
+  const hr = CLK12() ? d.toLocaleTimeString([], tmo({ hour: "numeric" })).replace(/\s|:00/g, "").toLowerCase() : d.toLocaleTimeString([], tmo({ hour: "2-digit", minute: "2-digit" }));
+  return (dd === 0 ? "Today" : dd === -1 ? "Yesterday" : d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" })) + " · " + hr;
+}
+function dtRows(gl) {   // gl is newest first
+  const R = [];
+  gl.forEach(x => { const r = R[R.length - 1], last = r && r.c[r.c.length - 1];
+    if (r && last.cam === x.cam && last.p.tags.join() === x.p.tags.join() && dtHourOf(last.ts) === dtHourOf(x.ts) && last.ts - x.ts <= 5 * 60000) r.c.push(x); else R.push({ c: [x] }); });
+  return R;
+}
+function dtRow(r) {
+  const x = r.c[0], th = dtThumbUrl(x), n = r.c.length, tags = x.p.tags.map(t => '<i class="pbt2 ' + t.toLowerCase() + '">' + t + '</i>').join("");
+  const thumb = '<div class="pbth" data-dth="' + esc(x.mc) + '">' + (th ? '<img alt="" src="' + esc(th) + '">' : "") + (n > 1 ? '<em class="dtsn">' + n + '</em><span class="dtsf">' + "<i></i>".repeat(Math.min(n, 5)) + '</span>' : '<b>' + mdi("play") + '</b><u>' + esc(x.p.len) + '</u>') + '</div>';
+  if (n === 1) return '<div class="dtr" data-dt="play" data-k="' + esc(x.mc) + '" data-cam="' + esc(x.cam) + '" data-ts="' + x.ts + '" data-tg="' + esc(x.p.tags.join(",")) + '">' + thumb + '<div class="dtrx"><strong>' + esc(dtName(x.cam)) + '</strong><span>' + esc(dtTm(x.ts)) + ' · ' + esc(x.p.len) + '</span><div>' + tags + '</div></div><span class="dtrc">' + mdi("play") + '</span></div>';
+  const open = DT.open === x.mc, z = r.c[n - 1];
+  return '<div class="dtr dtst' + (open ? " open" : "") + '" data-dtst="' + esc(x.mc) + '" role="button" tabindex="0" aria-expanded="' + open + '">' + thumb + '<div class="dtrx"><strong>' + esc(dtName(x.cam)) + ' · ' + n + ' ' + (DT_PL[x.p.tags[0]] || "clips") + '</strong><span>' + esc(dtTm(z.ts) + " to " + dtTm(x.ts)) + '</span><div>' + tags + '</div></div><span class="dtrc">' + mdi("chevron-down") + '</span></div>' +
+    (open ? '<div class="dtso">' + r.c.map(dtCard).join("") + '</div>' : "");
+}
+function dtGrid() {
+  const gl = dtGl(DT.vis || []), R = dtRows(gl), shown = R.slice(0, DT.show); let h = -1, body = "";
+  shown.forEach(r => { const k = dtHourOf(r.c[0].ts); if (k !== h) { if (h !== -1) body += '</div>'; h = k; const cnt = R.filter(q => dtHourOf(q.c[0].ts) === k).reduce((s, q) => s + q.c.length, 0); body += '<div class="dthh"><b>' + esc(dtHourLbl(k)) + '</b><span>' + cnt + (cnt === 1 ? " detection" : " detections") + '</span></div><div class="dthr">'; } body += dtRow(r); });
+  if (body) body += '</div>';
+  return '<div class="dtg dtls">' + (body || (DT.busy ? "" : '<div class="pbn">Nothing detected ' + (DT.vis && DT.vis.length && !isMobile() ? "in this part of the timeline" : "for these filters") + '</div>')) + '</div>' +
+    (R.length > DT.show ? '<button class="eb dtmore" data-dt="more">SHOW MORE · ' + (R.length - DT.show) + '</button>' : "");
+}
 function dtDraw(soft) {
   const P = $("#dtp"); if (!P) return; if (!dtCams().length || CONFIG.detections === false) { P.style.display = "none"; return; } P.style.display = "";
   const all = dtItems(), tyOn = k => DT.types[k], vis = all.filter(x => (DT.cam === "all" || x.cam === DT.cam) && x.p.tags.some(t => tyOn(t)));
+  DT.vis = vis; DT.mom = dtMoments(vis);
+  if (DT.drag && soft) { dtWinUpd(); return; }   // a slider is being dragged: only the parts it changes, so the drag is not interrupted
   const cnt = k => all.filter(x => x.p.tags.indexOf(k) > -1 && (DT.cam === "all" || x.cam === DT.cam)).length;
-  const body = vis.slice(0, DT.show).map((x, i) => { const th = dtThumbUrl(x); return '<div class="dti" data-dt="play" data-k="' + esc(x.mc) + '" data-cam="' + esc(x.cam) + '" data-ts="' + x.ts + '" data-tg="' + esc(x.p.tags.join(",")) + '"><div class="pbth" data-dth="' + esc(x.mc) + '">' + (th ? '<img alt="" src="' + esc(th) + '">' : "") + '<b>' + mdi("play") + '</b><u>' + esc(x.p.len) + '</u></div><div class="pbx"><strong>' + esc(dtName(x.cam)) + '</strong><span>' + esc(dtWhen(x.ts)) + '</span><div>' + x.p.tags.map(t => '<i class="pbt2 ' + t.toLowerCase() + '">' + t + '</i>').join("") + '</div></div></div>'; }).join("");
   const loading = DT.busy ? '<div class="pbn">Looking through the recordings' + (DT.loaded ? " · " + DT.loaded : "") + '…</div>' : "";
   P.innerHTML = '<div class="lbl dthd">Recent detections<button class="eb" data-dt="refresh" aria-label="Refresh">' + mdi("refresh") + '</button></div>' +
     '<div class="pbc dtf">' + [["Person", "PERSON"], ["Vehicle", "VEHICLE"], ["Animal", "ANIMAL"], ["Motion", "OTHER MOTION"]].map(x => '<button class="chip' + (DT.types[x[0]] ? " on" : "") + '" data-dt="type" data-v="' + x[0] + '">' + x[1] + (all.length ? chipN(cnt(x[0])) : "") + '</button>').join("") + '</div>' +
     '<div class="pbc dtf"><button class="chip' + (DT.cam === "all" ? " on" : "") + '" data-dt="cam" data-v="all">ALL CAMERAS</button>' + dtCams().map(id => '<button class="chip' + (DT.cam === id ? " on" : "") + '" data-dt="cam" data-v="' + esc(id) + '">' + esc(dtName(id)).toUpperCase() + '</button>').join("") + '</div>' +
     '<div class="pbc dtf">' + DT_R.map((x, i) => '<button class="chip' + (DT.range === i + 1 ? " on" : "") + '" data-dt="range" data-v="' + (i + 1) + '">' + x[2] + '</button>').join("") + '</div>' +
-    '<div class="dtg">' + (body || (DT.busy ? "" : '<div class="pbn">Nothing detected for these filters</div>')) + '</div>' + loading +
-    (vis.length > DT.show ? '<button class="eb dtmore" data-dt="more">SHOW MORE · ' + (vis.length - DT.show) + '</button>' : "");
+    (vis.length ? (isMobile() ? '<div class="dtcv">' + dtMomHtml() + '</div>' : dtTlHtml()) : "") +
+    '<div class="dtgw">' + dtGrid() + '</div>' + loading;
   dtThumbs();
 }
 function dtThumbs() {
@@ -7345,7 +7730,7 @@ function dtNext() {
   while (DT.run < thPar() && DT.q.length) dtOne(DT.q.shift());
 }
 function dtOne(mc) {
-  const put = u => { const n = $$("[data-dth]", $("#dtp")).filter(x => x.dataset.dth === mc)[0]; if (n && !n.querySelector("img")) { const im = document.createElement("img"); im.alt = ""; im.src = u; n.insertBefore(im, n.firstChild); } };
+  const put = u => { $$("[data-dth]", $("#dtp")).filter(x => x.dataset.dth === mc).forEach(n => { if (!n.querySelector("img")) { const im = document.createElement("img"); im.alt = ""; im.src = u; n.insertBefore(im, n.firstChild); } }); };
   const sid = DT.snapOf[mc];
   if (sid) {   // a picture HA saved at the time: just fetch it, nothing to decode
     const su = DT.snapUrl[mc]; if (su && Date.now() - su.t < 3000000) { put(su.u); return; }
@@ -7377,25 +7762,168 @@ function secTab(t) {   // Security page: LIVE (alarm + cameras) or DETECTIONS (l
 let secPrev = "";
 $("#stabs").onclick = e => { const b = e.target.closest("[data-st]"); if (b && location.hash !== b.dataset.st) location.hash = b.dataset.st; };
 function dtInit() { if (mkAiOn()) mkAiLoad(); if (!dtCams().length || CONFIG.detections === false || !ruSec("detections")) return; if (!DT.stored) { DT.stored = 1; THDB.load().then(n => { if (n && location.hash === "#security/detections") dtDraw(true); }); } dtDraw(); if (!DT.t0 || Date.now() - DT.t0 > 5 * 60000) dtLoad(); }
-function dtClose() { const m = $("#dtm"), v = $("#dtm video"); m.classList.remove("on"); v.pause(); v.removeAttribute("src"); try { v.load(); } catch (e) {} }
-$("#dtm .evx").innerHTML = mdi("close"); $("#dtm").addEventListener("click", e => { if (e.target.closest("[data-dt=close]") || e.target.id === "dtm") dtClose(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape" && $("#dtm").classList.contains("on")) dtClose(); });
 $("#dtp").addEventListener("click", e => {
   const b = e.target.closest("[data-dt]"); if (!b) return; const k = b.dataset.dt;
   if (k === "type") { DT.types[b.dataset.v] = !DT.types[b.dataset.v]; DT.show = 24; dtDraw(); txGo($("#dtp .dtg"), 0, true); }
   else if (k === "cam") { DT.cam = b.dataset.v; DT.show = 24; dtDraw(); txGo($("#dtp .dtg"), 0, true); }
-  else if (k === "range") { DT.range = +b.dataset.v; DT.show = 24; dtDraw(); txGo($("#dtp .dtg"), 0, true); dtLoad(); }
+  else if (k === "range") { DT.range = +b.dataset.v; DT.show = 24; DTL.w0 = 0; DTL.w1 = 24; DTL.mi = -1; DT.open = ""; dtDraw(); txGo($("#dtp .dtg"), 0, true); dtLoad(); }
   else if (k === "more") { DT.show += 24; dtDraw(); }
   else if (k === "refresh") dtLoad(true);
   else if (k === "play") dtPlay(b.dataset.k, b.dataset.cam, +b.dataset.ts, (b.dataset.tg || "").split(","));
 });
-// open the viewer on one exact clip (Detections tab): fades in, resolves the recording, plays it, adds the detection marks
-function dtPlay(mc, cam, ts, tags) {
-  const m = $("#dtm"), v = $("#dtm video"); m.classList.add("on"); $("#dtm .dtt").textContent = dtName(cam) + " · " + dtWhen(ts); $("#dtm .dte").textContent = "Loading…"; v.removeAttribute("src");
-  send({ type: "media_source/resolve_media", media_content_id: mc, expires: 3600 }, r => { if (!m.classList.contains("on")) return; if (!r || !r.url) { $("#dtm .dte").textContent = "Could not open this recording"; return; } $("#dtm .dte").textContent = ""; v.removeAttribute("crossorigin"); v.src = (r.url.indexOf("http") === 0 ? "" : CONFIG.url) + r.url; v.play().catch(() => {}); mkAttach($("#dtm .dtv"), tags); });
-}
-$("#dtm video").onerror = () => { if ($("#dtm").classList.contains("on") && $("#dtm video").getAttribute("src")) $("#dtm .dte").textContent = "This browser can't play this recording"; };
+$("#dtm .dtv video").onerror = () => { if ($("#dtm").classList.contains("on") && $("#dtm .dtv video").getAttribute("src")) $("#dtm .dte").textContent = "This browser can't play this recording"; };
 
+// ---------- Detections timeline (2.5.11) ----------
+// Tablet: a busy-ness chart of the chosen range (24 bars) that you drag across to zoom in, and one lane per camera inside that window (a dot per
+// detection, or one dot with a count where they crowd); the list below follows the window. The list (tablet and phone, like UniFi Protect): grouped by
+// hour, and clips from one camera with the same detection, each within 5 minutes of the next, fold into one row that opens in place. Phone: one big clip per "moment"
+// (detections less than 2 minutes apart, from any camera), the other cameras of that moment under it, and a slider through the moments.
+// The viewer opens full screen, keeps zoom and the AI detection button, and steps through moments; a tap on the picture never closes it.
+const DTL = { w0: 0, w1: 24, mi: -1, mci: 0 };
+const DTC = { Person: "#9fb4ff", Vehicle: "#f0b95a", Animal: "#7dd69b", Face: "#f49ac1", Motion: "#a7a1b3" };
+const dtSpan = () => (DT_R[DT.range - 1] || DT_R[0])[0] * 36e5;
+function dtEnd() { const d = new Date(); d.setMinutes(0, 0, 0); return d.getTime() + 36e5; }   // the timeline ends at the next full hour
+const dtT0 = () => dtEnd() - dtSpan(), dtBinMs = () => dtSpan() / 24;
+function dtWin() { const t0 = dtT0(), b = dtBinMs(); return [t0 + DTL.w0 * b, t0 + DTL.w1 * b]; }
+const dtGl = vis => { if (isMobile()) return vis; const w = dtWin(); return vis.filter(x => x.ts >= w[0] && x.ts < w[1]); };
+function dtMoments(vis) {   // oldest first; one moment = detections less than 2 minutes apart
+  const a = vis.slice().sort((p, q) => p.ts - q.ts), G = [];
+  a.forEach(x => { const g = G[G.length - 1]; if (g && x.ts - g[g.length - 1].ts < 120000) g.push(x); else G.push([x]); });
+  return G;
+}
+function dtTick(t) {
+  const d = new Date(t), h = CLK12() ? d.toLocaleTimeString([], tmo({ hour: "numeric" })).replace(/\s|:00/g, "").toLowerCase() : d.toLocaleTimeString([], tmo({ hour: "2-digit", minute: "2-digit" }));   // 9am, or 09:00 on a 24-hour clock (a bare "09" read like a stray number)
+  return DT.range > 1 ? d.toLocaleDateString([], { weekday: "short" }) + " " + h : h;
+}
+const dtTm = t => new Date(t).toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })).replace(" ", "").toLowerCase();
+// ----- tablet -----
+// the chart is the control: drag across it to zoom into that stretch, drag an edge of the window to adjust it, drag inside it to move it, tap a bar for that bar alone
+const dtZoomed = () => DTL.w0 > 0.001 || DTL.w1 < 23.999;
+function dtHistHtml() {
+  const t0 = dtT0(), b = dtBinMs(), n = Array(24).fill(0); (DT.vis || []).forEach(x => { const i = Math.floor((x.ts - t0) / b); if (i >= 0 && i < 24) n[i]++; });
+  const mx = Math.max(1, Math.max.apply(null, n));
+  return n.map((v, i) => '<i class="' + (i + 1 > DTL.w0 && i < DTL.w1 ? "in" : "") + '" style="height:' + (v ? Math.max(8, v / mx * 100) : 3) + '%" title="' + esc(dtTick(t0 + i * b)) + ' · ' + v + '"></i>').join("");
+}
+function dtSelCss() { return "left:" + (DTL.w0 / 24 * 100).toFixed(3) + "%;width:" + ((DTL.w1 - DTL.w0) / 24 * 100).toFixed(3) + "%" + (dtZoomed() ? "" : ";display:none"); }
+const DT_SLOTS = 44;   // a lane is cut into this many slots; detections in one slot become one dot with a count
+function dtLanesHtml() {
+  const w = dtWin(), sp = w[1] - w[0], cams = DT.cam === "all" ? dtCams() : [DT.cam];
+  return cams.map(id => { const ev = (DT.vis || []).filter(x => x.cam === id && x.ts >= w[0] && x.ts < w[1]), S = {};
+    ev.forEach(x => { const k = Math.min(DT_SLOTS - 1, Math.floor((x.ts - w[0]) / sp * DT_SLOTS)); (S[k] = S[k] || []).push(x); });
+    return '<div class="dtln"><span>' + esc(dtName(id)) + '</span><div class="dtlt">' + Object.keys(S).map(k => { const L = S[k], x = L[0], tc = {}; L.forEach(y => { const t = y.p.tags[0] || "Motion"; tc[t] = (tc[t] || 0) + 1; });
+      const top = Object.keys(tc).sort((p, q) => tc[q] - tc[p])[0], left = ((+k + .5) / DT_SLOTS * 100).toFixed(2) + "%", col = DTC[top] || DTC.Motion;
+      if (L.length === 1) return '<button class="dtdot" data-dt="play" data-k="' + esc(x.mc) + '" data-cam="' + esc(x.cam) + '" data-ts="' + x.ts + '" data-tg="' + esc(x.p.tags.join(",")) + '" style="left:' + left + ';background:' + col + '" aria-label="' + esc(x.p.tags.join(", ") + " · " + dtName(x.cam) + " · " + dtTm(x.ts)) + '" title="' + esc(x.p.tags[0] + " · " + dtTm(x.ts)) + '"></button>';
+      const a = Math.min.apply(null, L.map(y => y.ts)), z = Math.max.apply(null, L.map(y => y.ts));
+      return '<button class="dtdot dtdn" data-dtz="' + a + ',' + z + '" style="left:' + left + ';background:' + col + '" aria-label="' + L.length + ' detections, ' + esc(dtTm(a) + " to " + dtTm(z)) + ', zoom in" title="' + L.length + ' · ' + esc(dtTm(a) + " to " + dtTm(z)) + '">' + (L.length > 99 ? "99+" : L.length) + '</button>'; }).join("") + '</div></div>'; }).join("");
+}
+const dtRangeTxt = () => { const w = dtWin(); return dtTick(w[0]) + " to " + (w[1] >= dtEnd() - 60000 ? "now" : dtTick(w[1])); };
+function dtTlHtml() {
+  const t0 = dtT0(), b = dtBinMs();
+  return '<div class="dtl"><div class="dtlh"><span class="lbl dtlr">' + esc(dtRangeTxt()) + '</span><span class="dtlhr"><button class="eb dtall" data-dtall' + (dtZoomed() ? "" : " hidden") + '>SHOW ALL</button><span class="lbl dtlc">' + dtGl(DT.vis || []).length + ' detections</span></span></div>' +
+    '<div class="dthw" data-dtbr><div class="dthi">' + dtHistHtml() + '</div><div class="dtsel" style="' + dtSelCss() + '"><i class="ga"></i><i class="gb"></i></div></div><div class="dtax dtaxc">' + [0, 6, 12, 18].map(i => '<span>' + esc(dtTick(t0 + i * b)) + '</span>').join("") + '<span>now</span></div>' +
+    '<div class="dtlanes">' + dtLanesHtml() + '</div>' +
+    '<div class="dtax dtlg"><span>' + (dtZoomed() ? "Drag the edges or inside the window to adjust" : "Drag across the chart to zoom in") + ' · tap a number to zoom to it</span><span>' + mdi("circle") + ' person ' + '<em style="color:' + DTC.Vehicle + '">' + mdi("circle") + '</em> vehicle <em style="color:' + DTC.Animal + '">' + mdi("circle") + '</em> animal</span></div></div>';
+}
+function dtWinUpd(full) {   // full = the list below as well (left out while dragging, so the drag stays smooth)
+  const P = $("#dtp"), l = P && $(".dtl", P); if (!l) return;
+  $(".dthi", l).innerHTML = dtHistHtml(); $(".dtsel", l).setAttribute("style", dtSelCss()); $(".dtlanes", l).innerHTML = dtLanesHtml();
+  $(".dtlr", l).textContent = dtRangeTxt(); $(".dtlc", l).textContent = dtGl(DT.vis || []).length + " detections"; $(".dtall", l).hidden = !dtZoomed();
+  $(".dtlg span", l).textContent = (dtZoomed() ? "Drag the edges or inside the window to adjust" : "Drag across the chart to zoom in") + " · tap a number to zoom to it";
+  if (full) { DT.show = 24; DT.open = ""; const g = $(".dtgw", P); if (g) { g.innerHTML = dtGrid(); dtThumbs(); } }
+}
+function dtSetWin(a, b) { a = Math.max(0, Math.min(24, a)); b = Math.max(0, Math.min(24, b)); if (b - a < .25) { const m = (a + b) / 2; a = Math.max(0, Math.min(23.75, m - .125)); b = a + .25; } DTL.w0 = a; DTL.w1 = b; }
+// ----- phone -----
+function dtMomHtml() {
+  const M = DT.mom || []; if (!M.length) return ""; if (DTL.mi < 0 || DTL.mi >= M.length) DTL.mi = M.length - 1;
+  const g = M[DTL.mi], x = g[Math.min(DTL.mci, g.length - 1)], th = dtThumbUrl(x), n = new Set(g.map(y => y.cam)).size;
+  return '<div class="dtbig" data-dt="play" data-k="' + esc(x.mc) + '" data-cam="' + esc(x.cam) + '" data-ts="' + x.ts + '" data-tg="' + esc(x.p.tags.join(",")) + '" role="button" tabindex="0"><div class="pbth" data-dth="' + esc(x.mc) + '">' + (th ? '<img alt="" src="' + esc(th) + '">' : "") + '<b>' + mdi("play") + '</b></div>' +
+    '<span class="dtbc">' + esc(dtName(x.cam)) + '</span>' + (g.length > 1 ? '<span class="dtbn">' + (n > 1 ? n + " cameras" : g.length + " clips") + '</span>' : "") + '<strong>' + esc(x.p.tags.join(" · ") + " · " + dtWhen(x.ts)) + '</strong></div>' +
+    (g.length > 1 ? '<div class="dtal">' + g.map((y, i) => { const t = dtThumbUrl(y); return '<button class="dtat' + (y === x ? " on" : "") + '" data-dtmc="' + i + '"><div class="pbth" data-dth="' + esc(y.mc) + '">' + (t ? '<img alt="" src="' + esc(t) + '">' : "") + '</div><span>' + esc(dtName(y.cam)) + '</span></button>'; }).join("") + '</div>' : "") +
+    '<div class="dttk">' + M.map((m, i) => '<i class="' + (m.length > 1 ? "g" : "") + (i === DTL.mi ? " on" : "") + '" style="left:' + (M.length > 1 ? (i / (M.length - 1) * 100).toFixed(2) : 50) + '%"></i>').join("") + '</div>' +
+    '<input type="range" class="dtmr" data-dtm min="0" max="' + (M.length - 1) + '" step="1" value="' + DTL.mi + '" aria-label="Pick a moment">' +
+    '<div class="dtax"><span>older</span><span>moment ' + (DTL.mi + 1) + ' of ' + M.length + '</span><span>newer</span></div>';
+}
+function dtMomUpd() { const c = $("#dtp .dtcv"); if (!c) return; const r = $(".dtmr", c), keep = DT.drag && r; if (keep) { const tmp = document.createElement("div"); tmp.innerHTML = dtMomHtml(); [...c.children].forEach(ch => { if (ch !== r) ch.remove(); }); [...tmp.children].forEach(ch => { if (!ch.classList.contains("dtmr")) c.insertBefore(ch, ch.classList.contains("dtax") ? null : r); }); } else c.innerHTML = dtMomHtml(); dtThumbs(); }
+// sliders: drag without rebuilding the card
+(function () {
+  const P = $("#dtp"); if (!P) return;
+  P.addEventListener("input", e => {
+    const t = e.target;
+    if (false) {}
+    else if (t.hasAttribute("data-dtm")) { DT.drag = "m"; DTL.mi = +t.value; DTL.mci = 0; dtMomUpd(); }
+  });
+  ["change", "pointerup", "touchend"].forEach(n => P.addEventListener(n, () => { if (DT.drag) setTimeout(() => { DT.drag = ""; }, 0); }));
+  // the chart brush
+  let br = null; const bx = (e, el) => { const r = el.getBoundingClientRect(); return Math.max(0, Math.min(24, (e.clientX - r.left) / r.width * 24)); };
+  P.addEventListener("pointerdown", e => { const el = e.target.closest("[data-dtbr]"); if (!el || isMobile()) return; e.preventDefault(); try { el.setPointerCapture(e.pointerId); } catch (_) {}
+    const x = bx(e, el), r = el.getBoundingClientRect(), tol = 14 / r.width * 24, z = dtZoomed();
+    br = { el, x0: x, px: e.clientX, w0: DTL.w0, w1: DTL.w1, moved: false, m: z && Math.abs(x - DTL.w0) < tol ? "a" : z && Math.abs(x - DTL.w1) < tol ? "b" : z && x > DTL.w0 && x < DTL.w1 ? "pan" : "new" }; DT.drag = "w"; });
+  P.addEventListener("pointermove", e => { if (!br) return; if (!br.moved && Math.abs(e.clientX - br.px) < 4) return; br.moved = true; const x = bx(e, br.el);
+    if (br.m === "a") dtSetWin(Math.min(x, br.w1 - .25), br.w1); else if (br.m === "b") dtSetWin(br.w0, Math.max(x, br.w0 + .25));
+    else if (br.m === "pan") { const w = br.w1 - br.w0, a = Math.max(0, Math.min(24 - w, br.w0 + x - br.x0)); dtSetWin(a, a + w); }
+    else dtSetWin(Math.min(br.x0, x), Math.max(br.x0, x));
+    if (!br.f) br.f = requestAnimationFrame(() => { br && (br.f = 0); dtWinUpd(); }); });
+  const brEnd = () => { if (!br) return; const b0 = br; br = null; if (b0.f) cancelAnimationFrame(b0.f);
+    if (!b0.moved) { const i = Math.floor(Math.min(23.999, b0.x0)); if (b0.m === "new" || b0.m === "pan") dtSetWin(i, i + 1); }   // a tap: that bar alone
+    dtWinUpd(true); setTimeout(() => { DT.drag = ""; }, 0); };
+  P.addEventListener("pointerup", brEnd); P.addEventListener("pointercancel", brEnd);
+  P.addEventListener("click", e => { const z = e.target.closest("[data-dtz]"), all = e.target.closest("[data-dtall]"), st = e.target.closest("[data-dtst]");
+    if (z) { e.stopPropagation(); const q = z.dataset.dtz.split(",").map(Number), t0 = dtT0(), b = dtBinMs(), pad = Math.max(5 * 60000, (q[1] - q[0]) * .15); dtSetWin((q[0] - pad - t0) / b, (q[1] + pad - t0) / b); dtWinUpd(true); return; }
+    if (all) { e.stopPropagation(); dtSetWin(0, 24); dtWinUpd(true); return; }
+    if (st) { e.stopPropagation(); DT.open = DT.open === st.dataset.dtst ? "" : st.dataset.dtst; const g = $(".dtgw", P); if (g) { g.innerHTML = dtGrid(); dtThumbs(); } return; } }, true);
+  P.addEventListener("click", e => { const b = e.target.closest("[data-dtmc]"); if (b) { e.stopPropagation(); DTL.mci = +b.dataset.dtmc; dtMomUpd(); } }, true);
+  P.addEventListener("keydown", e => { const b = e.target.closest(".dtbig,.dtst"); if (b && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); b.click(); } });
+})();
+
+// ----- the viewer: full screen, moments, other cameras, side by side -----
+const DTV = { g: -1, i: 0, sbs: false };
+function dtVwHtmlTop(x, g) {
+  const M = DT.mom || [], n = new Set(g.map(y => y.cam)).size;
+  return '<span class="dtpill">' + esc(x.p.tags.join(" · ").toUpperCase()) + '</span><b class="dtt">' + esc(dtName(x.cam)) + '</b><span class="dtwn">' + esc(dtWhen(x.ts)) + (M.length > 1 ? ' · moment ' + (DTV.g + 1) + ' of ' + M.length : "") + '</span>' +
+    (g.length > 1 && n > 1 && !isMobile() ? '<button class="eb dtsb" data-dt="sbs">' + (DTV.sbs ? "ONE CAMERA" : "SIDE BY SIDE") + '</button>' : "") + '<button class="evx" data-dt="close" aria-label="Close">' + mdi("close") + '</button>';
+}
+function dtShow() {
+  const m = $("#dtm"), M = DT.mom || [], g = M[DTV.g]; if (!g) return; const x = g[Math.min(DTV.i, g.length - 1)];
+  $(".dth", m).innerHTML = dtVwHtmlTop(x, g);
+  $(".dtnv.pv", m).hidden = DTV.g <= 0; $(".dtnv.nx", m).hidden = DTV.g >= M.length - 1;
+  const al = $(".dtal2", m); al.innerHTML = g.length > 1 && !DTV.sbs ? '<span>Also at ' + esc(dtTm(g[0].ts)) + '</span>' + g.map((y, i) => { const t = dtThumbUrl(y); return '<button class="dtat' + (i === DTV.i ? " on" : "") + '" data-dtvi="' + i + '">' + (t ? '<img alt="" src="' + esc(t) + '">' : "") + '<span>' + esc(dtName(y.cam)) + '</span></button>'; }).join("") : "";
+  m.classList.toggle("sbs", DTV.sbs);
+  const sx = $(".dtsx", m);
+  if (DTV.sbs) {
+    $("#dtm .dtv video").pause();
+    sx.innerHTML = g.slice(0, 4).map((y, i) => '<div class="dtsxi" data-dtvi="' + i + '"><video muted playsinline loop></video><span>' + esc(dtName(y.cam)) + '</span></div>').join("");
+    g.slice(0, 4).forEach((y, i) => send({ type: "media_source/resolve_media", media_content_id: y.mc, expires: 3600 }, r => { const v = $$("#dtm .dtsxi video")[i]; if (!v || !DTV.sbs || !r || !r.url) return; v.src = (r.url.indexOf("http") === 0 ? "" : CONFIG.url) + r.url; v.play().catch(() => {}); }));
+    return;
+  }
+  sx.innerHTML = "";
+  const v = $("#dtm .dtv video"); if (DTV.cur === x.mc && v.getAttribute("src")) return; DTV.cur = x.mc;
+  $("#dtm .dte").textContent = "Loading…"; v.removeAttribute("src");
+  send({ type: "media_source/resolve_media", media_content_id: x.mc, expires: 3600 }, r => { if (!m.classList.contains("on") || DTV.cur !== x.mc) return; if (!r || !r.url) { $("#dtm .dte").textContent = "Could not open this recording"; return; } $("#dtm .dte").textContent = ""; v.removeAttribute("crossorigin"); v.src = (r.url.indexOf("http") === 0 ? "" : CONFIG.url) + r.url; v.play().catch(() => {}); mkAttach($("#dtm .dtv"), x.p.tags); });
+}
+function dtPlay(mc, cam, ts, tags) {
+  const M = DT.mom || []; let gi = -1, ii = 0; M.forEach((g, a) => g.forEach((y, b) => { if (y.mc === mc) { gi = a; ii = b; } }));
+  if (gi < 0) { DT.mom = M.concat([[{ cam: cam, mc: mc, ts: ts, p: { tags: tags, len: "" } }]]); gi = DT.mom.length - 1; }
+  DTV.g = gi; DTV.i = ii; DTV.sbs = false; DTV.cur = "";
+  $("#dtm").classList.add("on"); dtShow();
+}
+function dtGo(d) { const M = DT.mom || []; const n = DTV.g + d; if (n < 0 || n >= M.length) return; DTV.g = n; DTV.i = 0; dtShow(); }
+function dtClose() { const m = $("#dtm"), v = $("#dtm .dtv video"); m.classList.remove("on", "sbs"); DTV.sbs = false; DTV.cur = ""; v.pause(); v.removeAttribute("src"); try { v.load(); } catch (e) {} $$("#dtm .dtsxi video").forEach(x => { x.pause(); x.removeAttribute("src"); }); $("#dtm .dtsx").innerHTML = ""; const zv = $("#dtm .dtv"); if (zv && zv.classList.contains("zfull")) czFull(zv); }
+(function () {
+  const m = $("#dtm"); if (!m) return;
+  $(".dtnv.pv", m).innerHTML = mdi("chevron-left"); $(".dtnv.nx", m).innerHTML = mdi("chevron-right");
+  m.addEventListener("click", e => {   // only the X closes; a tap on the picture shows the play controls (37-camera-zoom), a tap on the black around it does nothing
+    const t = e.target;
+    if (t.closest("[data-dt=close]")) { dtClose(); return; }
+    if (t.closest("[data-dt=sbs]")) { DTV.sbs = !DTV.sbs; DTV.cur = ""; dtShow(); return; }
+    const vi = t.closest("[data-dtvi]"); if (vi) { DTV.i = +vi.dataset.dtvi; DTV.sbs = false; dtShow(); return; }
+    const nv = t.closest(".dtnv"); if (nv) { dtGo(nv.classList.contains("nx") ? 1 : -1); return; }
+  });
+  document.addEventListener("keydown", e => { if (!m.classList.contains("on")) return; if (e.key === "Escape") dtClose(); else if (e.key === "ArrowLeft") dtGo(-1); else if (e.key === "ArrowRight") dtGo(1); });
+  // a swipe left / right on the picture (not zoomed in, one finger): the next / previous moment
+  let sx = null;
+  m.addEventListener("pointerdown", e => { const v = e.target.closest(".dtv"); sx = v && e.isPrimary && !(v._z && v._z.s > 1) ? { x: e.clientX, y: e.clientY, t: Date.now() } : null; }, true);
+  m.addEventListener("pointerup", e => { if (!sx || !e.isPrimary) return; const dx = e.clientX - sx.x, dy = e.clientY - sx.y, v = $(".dtv", m); const ok = Math.abs(dx) > 70 && Math.abs(dy) < 60 && Date.now() - sx.t < 700 && !(v._z && v._z.s > 1); sx = null; if (ok) { CZ.t = Date.now(); dtGo(dx < 0 ? 1 : -1); } }, true);
+})();
 // ---------- hazards: GeoNet earthquakes + volcano alert levels on a New Zealand map ----------
 const NZP = "M107 1323L110 1321L112 1321L112 1322L108 1324L107 1323ZM129 1278L126 1279L126 1276L129 1276L130 1277L129 1278ZM196 1273L197 1275L196 1277L193 1280L193 1278L192 1276L194 1275L196 1273ZM166 1305L171 1309L169 1309L165 1307L165 1310L162 1309L163 1311L153 1312L143 1319L139 1317L135 1317L133 1314L130 1316L129 1319L128 1318L122 1321L123 1323L130 1321L126 1326L126 1324L125 1324L121 1327L116 1328L114 1325L117 1319L123 1316L122 1315L123 1307L126 1304L130 1304L132 1303L131 1296L134 1295L137 1290L133 1281L134 1278L133 1276L134 1271L137 1269L142 1270L145 1268L150 1271L158 1281L165 1288L164 1289L165 1290L164 1291L157 1290L157 1289L152 1289L152 1293L148 1297L150 1297L155 1293L162 1297L161 1299L168 1297L171 1300L170 1303L166 1305ZM54 1162L57 1167L56 1173L53 1174L52 1172L51 1174L49 1174L48 1169L47 1166L46 1166L38 1172L43 1164L54 1162ZM74 1116L78 1130L74 1130L68 1126L67 1124L68 1122L73 1115L74 1116ZM632 711L634 711L634 714L632 720L627 720L622 723L619 723L620 722L624 721L627 717L629 718L630 718L631 714L629 715L628 713L632 711ZM587 691L589 688L588 687L587 689L587 684L592 687L590 682L591 676L593 678L594 675L595 676L595 681L599 678L597 678L599 675L601 671L601 672L601 679L599 682L598 687L596 687L589 693L587 692L587 691ZM509 928L509 939L508 941L512 956L512 957L509 957L511 959L516 960L509 961L504 964L509 966L510 964L516 963L517 963L519 967L520 961L523 964L523 969L527 965L529 965L530 968L533 965L536 970L536 972L537 977L535 985L534 984L532 986L531 986L531 989L529 988L528 989L525 976L524 975L523 977L524 979L523 984L526 991L519 990L516 988L513 988L509 982L510 979L485 986L484 984L486 983L502 978L499 976L494 976L490 972L484 974L482 977L482 985L481 986L472 988L457 996L443 1006L438 1006L432 1011L428 1012L425 1014L419 1017L409 1026L403 1028L399 1037L398 1046L394 1050L394 1053L390 1055L392 1057L394 1074L390 1079L393 1079L393 1081L392 1093L384 1107L376 1116L372 1124L368 1136L371 1138L370 1140L367 1145L367 1148L362 1153L362 1157L359 1156L360 1160L358 1162L353 1162L355 1164L356 1164L355 1168L349 1171L349 1173L352 1174L354 1173L359 1176L359 1178L353 1180L351 1183L348 1184L347 1186L344 1190L354 1185L361 1178L362 1181L361 1188L356 1188L355 1191L339 1192L333 1194L327 1198L321 1206L321 1210L318 1217L309 1222L305 1228L294 1234L292 1238L290 1247L286 1249L281 1248L276 1249L283 1250L282 1253L274 1258L269 1257L268 1257L263 1260L264 1262L257 1262L256 1264L250 1263L247 1265L242 1266L241 1265L241 1262L240 1262L238 1266L234 1266L232 1264L231 1264L231 1267L229 1268L222 1266L218 1266L215 1256L201 1258L205 1256L197 1255L200 1258L199 1259L200 1260L196 1261L183 1260L186 1257L194 1259L190 1256L183 1256L178 1254L178 1258L181 1262L180 1262L172 1255L171 1253L174 1252L175 1254L180 1250L181 1247L179 1242L177 1242L177 1247L174 1248L167 1235L164 1234L155 1235L155 1238L147 1237L145 1239L142 1238L139 1239L131 1232L135 1229L129 1222L129 1220L120 1216L110 1215L106 1225L101 1226L98 1227L92 1226L89 1227L82 1224L58 1222L53 1219L51 1215L57 1210L63 1200L67 1199L72 1194L61 1199L59 1204L57 1207L55 1203L54 1206L46 1209L47 1206L49 1205L49 1202L51 1198L60 1195L61 1193L56 1195L52 1194L57 1188L56 1186L54 1188L48 1197L36 1201L35 1184L37 1181L47 1180L47 1182L51 1179L67 1178L76 1172L77 1170L73 1171L67 1171L58 1172L61 1168L67 1165L59 1166L59 1159L69 1156L75 1158L77 1156L74 1156L72 1155L79 1152L80 1149L70 1154L63 1155L59 1157L54 1158L53 1154L56 1148L58 1141L61 1139L72 1144L69 1138L68 1140L61 1136L62 1132L67 1128L69 1131L73 1133L70 1135L77 1134L79 1136L80 1139L76 1143L80 1142L83 1138L87 1141L89 1147L91 1148L91 1145L79 1133L81 1131L89 1129L90 1129L94 1133L97 1133L99 1131L95 1131L93 1129L94 1125L87 1127L79 1127L76 1119L76 1113L80 1112L86 1118L89 1118L81 1110L80 1110L84 1104L86 1104L89 1109L90 1114L90 1109L96 1109L89 1106L87 1101L90 1098L101 1104L102 1103L91 1097L91 1095L96 1091L100 1090L99 1088L105 1084L107 1084L109 1089L109 1094L111 1097L110 1099L114 1099L113 1095L111 1093L111 1089L109 1084L110 1079L112 1077L115 1076L117 1079L118 1080L116 1085L118 1088L121 1081L117 1073L120 1072L123 1075L127 1077L122 1072L121 1071L121 1068L126 1066L128 1064L134 1059L143 1064L146 1070L146 1066L140 1060L139 1051L153 1035L153 1032L161 1032L162 1028L159 1026L164 1024L174 1015L177 1012L178 1008L181 1005L179 1004L189 1002L200 996L204 1001L207 1001L212 1000L231 986L233 982L241 976L255 969L258 965L263 965L270 960L275 961L282 957L287 947L290 946L291 943L293 941L304 935L306 930L309 929L310 926L315 923L320 924L325 916L322 916L317 922L318 917L324 911L329 910L333 905L336 905L336 904L341 901L347 898L350 896L355 896L367 884L373 873L378 871L380 866L382 865L394 845L395 840L400 829L404 809L409 801L414 783L413 781L413 777L426 776L437 770L439 767L442 767L449 754L452 745L458 741L459 731L463 729L462 725L461 714L462 710L461 689L463 688L467 681L470 678L472 678L480 672L491 659L494 658L493 661L494 663L495 661L497 661L498 658L500 657L499 655L495 657L498 653L501 651L516 650L528 652L509 652L505 662L505 665L503 665L504 667L506 669L505 675L507 674L508 677L518 684L523 683L524 679L525 681L528 678L529 680L530 686L529 687L532 687L533 689L533 696L528 702L531 702L534 712L533 714L531 711L531 715L533 719L534 718L535 719L536 726L534 729L536 731L541 731L544 730L550 726L561 714L563 714L562 716L566 714L569 710L571 710L571 707L573 706L575 706L577 711L578 709L579 711L580 710L579 708L584 705L585 703L583 702L580 704L580 701L584 698L589 697L593 693L593 697L594 698L597 693L603 690L605 690L606 693L601 693L602 694L600 697L597 698L599 699L598 700L593 701L591 700L587 701L589 703L587 705L588 706L587 711L589 710L591 706L596 705L600 706L599 706L598 708L595 707L595 711L594 711L593 713L591 714L590 716L594 717L594 720L592 724L586 726L588 729L599 724L595 722L604 722L607 721L606 720L612 719L614 718L605 718L603 720L601 719L602 718L596 719L596 715L598 712L598 710L600 710L600 708L603 709L601 712L602 715L605 709L607 709L606 706L607 704L606 702L605 702L604 705L600 701L603 701L602 699L603 699L604 697L611 702L613 700L615 701L616 700L616 697L618 697L620 701L620 703L618 704L619 707L627 700L628 700L628 701L624 710L623 713L619 715L619 709L618 712L616 712L620 719L615 722L610 722L607 724L605 724L604 725L601 725L599 728L605 727L609 725L611 725L615 724L618 726L620 726L628 722L622 732L617 735L619 731L616 732L615 732L616 731L614 732L607 744L608 752L610 752L610 755L612 756L613 754L612 750L613 751L617 758L621 772L626 773L625 775L619 788L604 803L601 809L600 816L596 824L589 829L587 833L585 833L581 838L583 844L582 844L580 842L578 842L571 849L566 861L563 863L564 864L556 882L553 885L553 890L550 895L540 900L539 903L535 907L522 910L514 917L509 926L509 928ZM692 274L694 273L696 276L693 277L693 282L687 283L684 282L684 281L682 279L680 280L681 276L685 276L687 278L692 274ZM743 262L740 262L740 260L738 258L740 257L741 260L743 262ZM668 239L669 238L671 240L672 244L671 245L668 245L669 244L668 239ZM689 218L691 221L689 223L687 223L685 221L689 218ZM720 228L722 231L721 234L719 235L718 231L715 232L713 227L711 228L710 225L706 224L704 220L706 223L708 217L704 213L709 212L707 210L707 207L711 207L712 209L714 212L713 212L713 214L719 218L717 224L720 228ZM827 561L827 563L833 566L839 567L837 573L832 577L831 585L829 586L823 603L822 608L815 622L811 626L809 624L806 628L805 631L808 629L803 639L801 648L796 649L787 660L784 668L781 669L772 691L771 693L766 697L760 714L752 725L738 737L713 755L708 757L704 761L697 762L694 757L693 752L694 744L693 742L682 738L678 740L674 744L669 742L670 739L669 733L672 725L671 722L665 723L662 726L662 728L667 730L665 733L662 733L660 735L656 734L650 729L649 726L650 724L656 721L664 711L666 709L668 711L669 710L669 707L667 704L674 698L678 687L682 683L690 667L693 657L694 647L696 646L695 641L697 630L692 611L677 592L672 588L667 586L659 586L647 583L637 574L628 561L620 558L603 554L590 543L587 539L585 530L587 521L589 516L593 513L600 510L620 497L631 498L635 496L649 482L650 470L652 470L653 442L657 429L658 417L657 412L657 411L663 411L664 414L665 412L668 415L669 415L667 412L673 412L675 410L672 411L672 408L668 406L667 406L666 409L663 409L664 404L671 399L670 395L668 395L665 400L663 399L663 387L666 383L678 380L675 378L678 375L677 373L673 378L672 377L669 378L668 376L663 357L659 346L659 339L663 337L667 329L663 331L660 336L659 336L657 335L646 306L652 306L654 307L653 310L660 324L660 322L659 318L665 317L658 315L663 311L663 313L668 308L670 308L674 312L675 310L675 307L668 304L666 299L664 302L663 301L663 299L667 294L662 293L654 294L652 296L650 302L647 300L645 303L641 303L635 276L618 250L618 243L620 243L619 248L622 244L628 253L631 255L629 257L633 258L630 260L631 261L631 263L634 264L634 262L636 267L638 265L639 260L641 258L639 258L638 256L639 252L639 251L638 252L638 251L638 246L639 244L637 241L639 237L636 236L633 239L629 239L625 237L624 234L625 234L627 232L629 233L634 232L643 225L642 223L630 230L627 228L627 226L631 228L635 216L638 216L637 214L634 212L633 219L629 223L630 221L628 221L628 218L624 217L625 212L622 215L622 212L621 212L618 215L618 218L622 219L623 222L626 221L628 224L625 225L624 227L622 227L619 225L615 217L609 217L604 212L603 204L600 199L596 196L600 192L599 189L597 187L598 193L595 194L595 196L601 204L604 215L607 217L614 227L617 228L618 229L616 230L619 235L617 238L610 240L606 227L593 207L559 157L559 155L562 150L564 142L565 143L566 142L569 145L569 140L571 143L572 138L574 136L576 136L578 131L575 132L573 129L573 134L571 127L570 129L571 136L570 137L566 135L565 138L563 139L561 137L559 139L560 141L557 143L557 152L549 139L552 134L550 134L552 130L549 132L547 137L544 132L548 128L542 129L536 122L535 119L537 118L539 119L543 111L543 101L540 94L533 86L531 79L528 77L513 55L504 48L506 45L506 41L509 43L513 43L515 45L521 41L529 42L533 40L534 41L531 45L531 52L529 53L527 49L528 47L526 47L525 52L523 51L521 54L524 57L527 54L525 57L526 58L528 56L529 65L531 62L530 56L529 54L531 55L534 70L542 79L543 83L537 77L538 81L541 84L551 91L548 96L549 101L553 102L554 98L556 97L555 87L560 85L561 80L563 82L562 85L565 83L566 87L559 89L560 94L564 99L570 99L572 102L574 99L571 96L572 93L575 95L577 94L579 97L584 96L585 100L587 101L583 106L586 110L588 109L589 102L596 100L597 103L601 108L603 112L612 112L615 116L615 118L612 119L611 116L609 117L608 115L606 117L608 120L605 120L605 122L606 123L611 122L612 123L611 127L614 132L615 137L616 133L620 134L619 132L623 133L622 131L616 129L615 127L623 127L622 126L625 127L630 120L631 122L629 127L629 131L631 132L634 132L633 134L636 137L634 138L629 133L633 142L635 143L638 143L641 149L642 150L639 151L639 152L647 159L646 165L640 164L644 167L642 168L646 170L643 172L648 176L648 181L650 184L647 185L643 181L643 179L641 178L641 177L637 178L635 177L634 179L633 179L632 173L631 171L630 184L632 185L634 182L635 182L642 183L643 187L640 191L641 192L641 199L647 204L651 204L651 211L661 224L666 228L666 230L664 231L665 233L670 235L660 235L663 244L663 249L660 242L658 241L659 247L657 248L660 250L657 254L658 259L662 262L668 261L663 264L658 263L661 267L666 282L662 281L660 282L657 276L651 280L655 280L653 283L655 285L655 291L657 291L657 287L657 288L660 284L670 285L672 286L671 289L669 292L671 296L674 284L676 293L681 292L679 288L681 287L685 288L686 291L685 295L686 297L692 295L694 295L697 294L701 296L704 301L704 315L707 321L710 322L713 322L722 318L723 324L725 325L727 324L725 323L719 296L712 286L717 286L718 284L714 284L716 283L717 282L715 281L720 279L719 276L718 277L717 276L716 270L717 265L717 263L707 256L706 249L707 248L712 247L715 251L718 253L719 251L722 255L722 258L720 260L725 262L725 268L723 267L722 268L723 269L727 269L727 276L731 274L729 273L731 272L734 274L738 271L742 273L744 272L743 275L740 275L732 284L733 287L735 289L737 282L742 283L743 284L746 297L745 305L745 306L747 304L749 306L746 313L748 315L749 320L746 317L747 323L746 324L749 325L750 328L752 338L755 345L755 346L753 345L753 347L760 351L767 361L768 362L764 360L760 360L759 358L762 357L756 352L750 352L752 354L751 357L755 359L754 360L755 364L757 364L758 362L761 367L762 366L765 369L767 366L768 367L769 367L770 372L773 371L770 362L771 362L775 368L786 373L790 376L794 376L809 388L826 393L831 396L838 397L840 398L835 398L841 402L842 402L841 398L850 400L851 402L853 399L863 398L872 391L875 388L877 381L881 379L886 368L896 365L899 361L905 359L906 357L905 354L927 356L929 357L928 359L931 362L943 365L948 370L946 375L943 378L941 385L938 387L932 401L934 408L934 411L931 415L932 419L930 427L933 432L930 440L932 441L932 443L929 446L928 453L919 464L910 472L906 468L901 470L901 473L903 477L901 482L898 502L899 504L897 508L902 509L904 511L906 513L901 517L899 526L896 529L894 523L893 517L895 511L894 509L892 511L888 508L864 507L861 506L835 520L832 528L825 535L823 543L826 550L827 561Z";   // NZ coastline (Natural Earth 1:10m, simplified), x = (lon-166)*75.47, y = (-34-lat)*100
 const HZ = { view: "", vb: null, sel: "", d: null, drag: 0, tab: "map" };
@@ -7930,7 +8458,7 @@ try { navGroups(); } catch (_) {}
 // For a quick look and a quick fix on the go; editing stays in Home Assistant (OPEN IN HA). Admins only (ADMIN_ON).
 // Home Assistant calls used: history/history_during_period, trace/list, trace/get, system_log/list, the REST check_config,
 // and the services automation.* / script.reload / scene.reload / template.reload / homeassistant.restart.
-const ADM = { tab: "", eq: "", ef: "all", esel: "", aq: "", af: "all", asel: "", arun: "", tl: null, tlT: 0, tlBusy: 0, tg: {}, logs: null, logT: 0, lf: "all", lopen: -1, hist: {}, qa: "", qaT: 0, qaBad: null, liveT: 0 };
+const ADM = { tab: "", eq: "", ef: "all", esel: "", aq: "", af: "all", asel: "", arun: "", tl: null, tlT: 0, tlBusy: 0, tg: {}, logs: null, logT: 0, lf: "all", li: "", lopen: -1, hist: {}, qa: "", qaT: 0, qaBad: null, liveT: 0 };
 const admT = ms => { if (!ms) return "-"; const d = new Date(ms), now = new Date(), t = d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" }));
   if (d.toDateString() === now.toDateString()) return t; const y = new Date(now); y.setDate(now.getDate() - 1); if (d.toDateString() === y.toDateString()) return "Yesterday " + t;
   return d.toLocaleDateString([], { day: "numeric", month: "short" }) + " " + t; };
@@ -8100,7 +8628,8 @@ function admAutDraw(live) {
 function admAutDet(live) {
   const w = $('#admb .adw[data-w="aut"]'), d = w && $(".add", w); if (!d) return; const id = ADM.asel, s = states[id];
   w.classList.toggle("det", !!id);
-  if (!id || !s) { d.innerHTML = '<div class="adhint">' + mdi("format-list-bulleted") + '<span>Pick an automation to see its recent runs and where a run stopped.</span></div>'; d._key = ""; return; }
+  if (!id || !s) { const ov = admAutOv(); if (d._ov !== ov) { d._ov = ov; d.innerHTML = ov; } d._key = ""; return; }
+  d._ov = "";
   const cid = s.attributes.id, runs = admRuns(cid).slice(0, 6); if (!ADM.arun || !runs.some(x => x.run_id === ADM.arun)) ADM.arun = runs[0] ? runs[0].run_id : "";
   const key = id + "|" + s.state + "|" + runs.map(x => x.run_id + x.script_execution).join(",") + "|" + ADM.arun + "|" + (ADM.tg[ADM.arun] ? 1 : 0);
   if (live && d._key === key) return; d._key = key;
@@ -8114,6 +8643,18 @@ function admAutDet(live) {
       : hsw('<div class="chips tabs adruns">' + runs.map(x => '<button class="chip' + (x.run_id === ADM.arun ? " on" : "") + (admRunBad(x) ? " adbad" : "") + '" data-aarid="' + esc(x.run_id) + '">' + esc(admT(admMs(x.timestamp && x.timestamp.start))) + '</button>').join("") + '</div>') +
         '<div class="adsteps">' + (ADM.tg[ADM.arun] ? admSteps(ADM.tg[ADM.arun], run) : '<div class="adhl">Loading the run…</div>') + '</div>');
   if (run && !ADM.tg[run.run_id]) send({ type: "trace/get", domain: "automation", item_id: cid, run_id: run.run_id }, (r, m) => { ADM.tg[run.run_id] = m && m.success && r ? r : { failed: true }; if (ADM.asel === id) admAutDet(); });
+}
+// nothing picked (wide screens): an overview instead of an empty panel. What ran today, what needs a look, the latest runs, what is off.
+function admAutOv() {
+  const all = Object.keys(states).filter(id => id.indexOf("automation.") === 0), d0 = new Date(); d0.setHours(0, 0, 0, 0);
+  const lt = id => admMs(states[id].attributes.last_triggered), last = id => admRuns(states[id].attributes.id)[0];
+  const today = all.filter(id => lt(id) >= +d0), bad = all.filter(id => admRunBad(last(id))), cond = all.filter(id => { const r = last(id); return r && r.script_execution === "failed_conditions"; }), off = all.filter(id => states[id].state === "off");
+  const row = (id, sub, cls) => '<button class="adr adov' + (cls ? " " + cls : "") + '" data-aa="' + esc(id) + '"><span class="adn"><b>' + esc(admNm(id)) + '</b><small>' + esc(sub) + '</small></span>' + mdi("chevron-right") + '</button>';
+  const rec = all.filter(id => lt(id)).sort((a, b) => lt(b) - lt(a)).slice(0, 5);
+  return '<div class="lbl">Today</div><div class="adbig">' + today.length + ' ran</div><div class="adsince">' + (bad.length ? bad.length + " with an error" : "No errors") + (cond.length ? " · " + cond.length + " stopped at a condition" : "") + ' · ' + all.length + ' automations</div>' +
+    '<div class="lbl adal">Needs a look</div>' + (bad.length ? bad.map(id => row(id, "Last run " + admT(lt(id)) + " · error", "err")).join("") : '<div class="adhl">Nothing failed in the runs Home Assistant keeps.</div>') +
+    (rec.length ? '<div class="lbl adal">Latest runs</div>' + rec.map(id => { const r = last(id), why = r ? AUT_WHY[r.script_execution] : ""; return row(id, admT(lt(id)) + (why ? " · " + why : ""), admRunBad(r) ? "err" : ""); }).join("") : "") +
+    (off.length ? '<div class="lbl adal">Off</div>' + off.map(id => row(id, lt(id) ? "Last ran " + admT(lt(id)) : "Never ran", "off")).join("") : "");
 }
 // one run, step by step: the trigger, each condition (passed / failed), each action (done / error / not reached)
 function admDesc(c, kind) {
@@ -8144,7 +8685,7 @@ function admSteps(t, run) {
 
 // ----- LOGS -----
 function admLogShell() {
-  return '<div class="pn pg adlog"><div class="adlh"><div class="adch"></div><button class="eb" data-adlca="1">' + mdi("content-copy") + ' COPY ALL</button><button class="eb" data-adlr="1">' + mdi("refresh") + ' REFRESH</button></div><div class="adrs"></div></div>';
+  return '<div class="adw adlw" data-w="log"><div class="pn pg adlog"><div class="adlh"><div class="adch"></div><button class="eb" data-adlca="1">' + mdi("content-copy") + ' COPY ALL</button><button class="eb" data-adlr="1">' + mdi("refresh") + ' REFRESH</button></div><div class="adrs"></div></div><div class="pn pg add adlov"></div></div>';
 }
 function admLogLoad(force) {
   if (!force && ADM.logs && Date.now() - ADM.logT < 30000) return; ADM.logT = Date.now();
@@ -8156,7 +8697,9 @@ function admLogDraw() {
   const L = (ADM.logs || []).slice().sort((a, b) => admMs(b.timestamp) - admMs(a.timestamp)), E = L.filter(x => admLvl(x.level) === "err"), Wn = L.filter(x => admLvl(x.level) === "warn");
   const chip = (k, t) => '<button class="chip' + (ADM.lf === k ? " on" : "") + '" data-adf="' + k + '">' + t + '</button>';
   $(".adch", w).innerHTML = hsw('<div class="chips tabs">' + chip("all", "ALL " + L.length) + chip("err", "ERRORS " + E.length) + chip("warn", "WARNINGS " + Wn.length) + '</div>');
-  const list = ADM.lf === "err" ? E : ADM.lf === "warn" ? Wn : L;
+  const list0 = ADM.lf === "err" ? E : ADM.lf === "warn" ? Wn : L, list = ADM.li ? list0.filter(x => admInt(x) === ADM.li) : list0;
+  if (ADM.li) $(".adch .chips", w).insertAdjacentHTML("beforeend", '<button class="chip on adli" data-adli="">' + esc(ADM.li.toUpperCase().replace(/_/g, " ")) + ' ' + mdi("close") + '</button>');
+  admLogOv(L, E, Wn);
   $(".adrs", w).innerHTML = !ADM.logs ? '<div class="adhl">Loading the log…</div>' : ADM.logErr ? admEmpty("Couldn't read Home Assistant's log.") : !list.length ? admEmpty("Nothing logged. All quiet.") : list.slice(0, 100).map((x, i) => {
     const msgs = [].concat(x.message || []), lv = admLvl(x.level), open = ADM.lopen === i, au = (msgs.join(" ") + " " + (x.exception || "")).match(/automation\.[a-z0-9_]+/);
     return '<div class="adlg' + (open ? " open" : "") + '" data-adl="' + i + '"><span class="adlv ' + lv + '">' + (lv === "err" ? "ERROR" : lv === "warn" ? "WARN" : esc(String(x.level || "INFO").slice(0, 5))) + '</span><div class="adlb"><b>' + esc(String(msgs[0] || x.name || "")) + '</b><small>' + esc(String(x.name || "")) + ' · ' + esc(admT(admMs(x.timestamp))) + '</small>' +
@@ -8166,6 +8709,21 @@ function admLogDraw() {
   w._list = list;
 }
 
+// which integration a log line comes from: homeassistant.components.mqtt.light -> mqtt, custom_components.ge_home -> ge_home
+function admInt(x) { const n = String(x.name || ""), m = n.match(/(?:custom_)?components\.([a-z0-9_]+)/); if (m) return m[1]; const p = n.split("."); return p[0] === "homeassistant" && p[1] ? p[1] : p[0] || "other"; }
+// wide screens: next to the log, where the noise comes from (tap an integration to see only its lines)
+function admLogOv(L, E, Wn) {
+  const d = $("#admb .adlov"); if (!d) return;
+  if (!ADM.logs || ADM.logErr) { d.innerHTML = ""; return; }
+  const by = {}; L.forEach(x => { const k = admInt(x), c = by[k] || (by[k] = { n: 0, e: 0 }); c.n += x.count || 1; if (admLvl(x.level) === "err") c.e += x.count || 1; });
+  const top = Object.keys(by).sort((a, b) => by[b].n - by[a].n).slice(0, 7), mx = top.length ? by[top[0]].n : 1, rep = L.slice().sort((a, b) => (b.count || 1) - (a.count || 1))[0], ne = E[0];
+  const tot = L.reduce((p, x) => p + (x.count || 1), 0);
+  const h = '<div class="lbl">In the log</div><div class="adbig">' + E.length + ' error' + (E.length === 1 ? "" : "s") + ' · ' + Wn.length + ' warning' + (Wn.length === 1 ? "" : "s") + '</div><div class="adsince">' + L.length + ' different messages, logged ' + tot + ' times</div>' +
+    (top.length ? '<div class="lbl adal">By integration</div>' + top.map(k => '<button class="adint' + (ADM.li === k ? " on" : "") + '" data-adli="' + esc(k) + '"><span><b>' + esc(k.replace(/_/g, " ")) + '</b><small>' + by[k].n + (by[k].e ? " · " + by[k].e + " errors" : "") + '</small></span><i style="width:' + Math.max(4, by[k].n / mx * 100).toFixed(0) + '%"' + (by[k].e ? ' class="err"' : "") + '></i></button>').join("") : "") +
+    (ne ? '<div class="lbl adal">Newest error</div><div class="adlq err">' + esc(String([].concat(ne.message || [])[0] || ne.name || "")) + '<small>' + esc(admInt(ne)) + ' · ' + esc(admT(admMs(ne.timestamp))) + '</small></div>' : "") +
+    (rep && (rep.count || 1) > 1 ? '<div class="lbl adal">Most repeated</div><div class="adlq">' + esc(String([].concat(rep.message || [])[0] || rep.name || "")) + '<small>×' + rep.count + ' · ' + esc(admInt(rep)) + '</small></div>' : "");
+  if (d._h !== h) { d._h = h; d.innerHTML = h; }
+}
 // COPY ALL: the entries under the current filter as plain text, ready to paste into a chat or a bug report (level, count, times, logger, source, messages, traceback)
 function admLogText(list) {
   const f = { all: "all", err: "errors", warn: "warnings" }[ADM.lf] || "all";
@@ -8201,6 +8759,7 @@ $("#admin").addEventListener("click", e => {
   if ((b = g("[data-adlca]"))) { const L = ($("#admb .adlog") || {})._list || []; if (L.length) admCopy(admLogText(L), b); return; }
   if ((b = g("[data-adlau]"))) { ADM.asel = b.dataset.adlau; ADM.arun = ""; location.replace("#admin/automations"); return; }
   if ((b = g("[data-adlc]"))) { const x = ($("#admb .adlog") || {})._list[+b.dataset.adlc]; if (x) admCopy([].concat(x.message || []).join("\n") + (x.exception ? "\n" + x.exception : "") + "\n(" + x.name + ")", b); return; }
+  if ((b = g("[data-adli]"))) { const k = b.dataset.adli; ADM.li = ADM.li === k ? "" : k; ADM.lopen = -1; admLogDraw(); return; }
   if ((b = g("[data-adl]"))) { const i = +b.dataset.adl; ADM.lopen = ADM.lopen === i ? -1 : i; admLogDraw(); return; }
 });
 $("#admin").addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.dataset && e.target.dataset.aa) { e.preventDefault(); e.target.click(); } });
@@ -11532,9 +12091,9 @@ function insxFree() {
     return '<div class="lbl icll">Outside, next 12 hours</div>' + insCols(B, { ref: i, refL: "inside " + i.toFixed(1) + "°", refN: "Inside", name: "Outside", floor: Math.min.apply(null, B.map(b => b.v).concat([i])) - 3 });
   };
   const fst = [["Inside", i.toFixed(1) + "°"], ["Outside", o.toFixed(1) + "°"]];
-  if (i >= 24 && o <= i - 3) return [{ id: "free", tile: ["OPEN UP", Math.round(i - o) + "° cooler", "outside than in"], cat: "climate", lvl: run === "cool" ? 2 : 1, icon: "window-open-variant", tone: "ok", go: "#climate", title: "Outside is " + Math.round(i - o) + "° cooler",
+  if (i >= 24 && o <= i - 3) return [{ id: "free", tile: ["OPEN UP", Math.round(i - o) + "° cooler", "outside than in"], cat: "climate", lvl: run === "cool" ? 2 : 1, icon: "m3-window-open", tone: "ok", go: "#climate", title: "Outside is " + Math.round(i - o) + "° cooler",
     sub: (run === "cool" ? "Cooling now · " : "") + "open the windows instead" + (run === "cool" ? " of cooling" : ""), stats: fst, full: () => ahead(false) + '<div class="sm">' + (run === "cool" ? "The heat pump is cooling: turning it off and opening windows would do the same for free." : "Opening a few windows will cool the house for free.") + '</div>' }];
-  if (i <= 18 && o >= i + 3) return [{ id: "free", tile: ["OPEN UP", Math.round(o - i) + "° warmer", "outside than in"], cat: "climate", lvl: run === "heat" ? 2 : 1, icon: "window-open-variant", tone: "ok", go: "#climate", title: "Outside is " + Math.round(o - i) + "° warmer",
+  if (i <= 18 && o >= i + 3) return [{ id: "free", tile: ["OPEN UP", Math.round(o - i) + "° warmer", "outside than in"], cat: "climate", lvl: run === "heat" ? 2 : 1, icon: "m3-window-open", tone: "ok", go: "#climate", title: "Outside is " + Math.round(o - i) + "° warmer",
     sub: (run === "heat" ? "Heating now · " : "") + "open up to let the warmth in", stats: fst, full: () => ahead(true) + '<div class="sm">Opening up for a while warms the house without the heat pump.</div>' }];
   return [];
 }

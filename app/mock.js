@@ -113,6 +113,13 @@
       out[id] = L; }); return out; }
   function history(m) { var s = Date.parse(m.start_time), e = Date.parse(m.end_time || now()), out = {};
     (m.entity_ids || []).forEach(function (id) { var base = parseFloat((S[id] || {}).state) || 30, L = [];
+      // irrigation: the backyard waters 6:00-6:15 each morning; the taps and their flow sensors are quiet the rest of the time (no stray flow, so no leak card)
+      var tz = /^(switch\.demo_(\w+)_tap|sensor\.demo_(\w+)_tap_flow)$/.exec(id);
+      if (tz) { var zn = tz[2] || tz[3], fl = !!tz[3], d0 = new Date(s); d0.setHours(0, 0, 0, 0); L.push({ s: fl ? "0" : "off", lu: s / 1000 });
+        if (zn === "backyard") for (var d = +d0; d < e; d += 864e5) { var a1 = d + 6 * 3600e3, a2 = a1 + 15 * 6e4; if (a1 > s && a1 < e) L.push({ s: fl ? "12" : "on", lu: a1 / 1000 }); if (a2 > s && a2 < e) L.push({ s: fl ? "0" : "off", lu: a2 / 1000 }); }
+        out[id] = L; return; }
+      // on / off and other words: keep the current state (a sine wave of numbers only suits sensors)
+      if (S[id] && isNaN(parseFloat(S[id].state)) && !/^climate\./.test(id)) { out[id] = [{ s: S[id].state, lu: s / 1000 }]; return; }
       for (var t = s; t < e; t += 1800e3) { var v = Math.round((base + 6 * Math.sin((t - s) / 864e5 * Math.PI * 2) - 3 * (t - s) / (e - s)) * 10) / 10, pt = { s: String(v), lu: t / 1000 }; if (/^climate\./.test(id)) { pt.s = "heat"; pt.a = { current_temperature: Math.round((19 + 2 * Math.sin((t - s) / 864e5 * Math.PI * 2 + (id.length % 5))) * 10) / 10 }; } L.push(pt); }
       out[id] = L; }); return out; }
 
