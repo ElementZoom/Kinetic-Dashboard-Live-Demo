@@ -66,6 +66,7 @@ window.DASH_CONFIG = {
   outside: "",
   weather: "weather.home",
   calendars: ["calendar.alex", "calendar.sam", "calendar.household", "calendar.public_holidays"],
+  googlePlacesKey: "demo",   // 2.5.16: the demo answers address suggestions itself (mock.js); a real house uses its own Google key
 
   cameras: [   // Home page
     { id: "camera.demo_driveway", name: "Driveway" },

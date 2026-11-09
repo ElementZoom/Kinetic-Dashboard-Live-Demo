@@ -424,6 +424,14 @@ body.m-tabs .main{padding-bottom:72px}
 #evtoast.on{opacity:1;transform:translate(-50%,0)}#evtoast svg{width:20px;height:20px;fill:var(--mint);flex:none}#evtoast span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media(prefers-reduced-motion:reduce){.ce.evnew{animation:none;box-shadow:0 0 0 2px var(--c)}#evtoast{transition:opacity .2s;transform:translate(-50%,0)}.evm2.shk{animation:none}}
 .evqc .qs{flex-direction:column}.evqc .qs button{width:100%;flex:none}.evqc .qc{margin-top:8px;width:100%;flex:none;background:transparent;color:var(--mut)}
+
+/* 2.5.16: a clip loading in the Detections viewer: spinner and text over black, no empty player */
+.dtv.dtld video{opacity:0}.dtv.dtld :is(.zpp,.zbar){display:none!important}.dtv.dtld .dte{display:flex;flex-direction:column;align-items:center;gap:12px;color:rgba(255,255,255,.75)}
+.dtsp{width:34px;height:34px;border-radius:50%;border:3px solid rgba(255,255,255,.2);border-top-color:rgba(255,255,255,.85);animation:dtspin .9s linear infinite}
+@keyframes dtspin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.dtsp{animation-duration:2.5s}}
+.cam .pbv.dtld video,.pbv.dtld video{opacity:0!important}.pbv.dtld :is(.zpp,.zbar){display:none!important}
+.pbv.dtld .pbe{top:50%;display:flex;flex-direction:column;align-items:center;gap:12px;color:rgba(255,255,255,.75)}
 /* light / dark surfaces */
 .cam,nav{--w:255,255,255;--line:rgba(255,255,255,.1)}
 .cam{--ink:#eaf1fb;--ink-rgb:234,241,251;--mut:rgba(234,241,251,.6)}
@@ -2916,9 +2924,13 @@ html:not(#x) #dtm .dtv{flex:1;aspect-ratio:auto;min-height:0;height:100%}
 .rds-t{padding:8px 10px;border-radius:12px;background:rgba(var(--w),.05);margin-top:8px}.rds-t.rds-bad{background:color-mix(in srgb,var(--nzamb,#e89a2c) 12%,transparent)}
 .rds-th{display:flex;align-items:center;gap:8px}.rds-th b{font-size:14px;font-weight:500;flex:1;min-width:0}.rds-th small{font:11px var(--mono);color:var(--mut)}
 .rds-th svg{width:17px;height:17px;flex:none;fill:var(--mint)}.rds-bad .rds-th svg{fill:var(--nzamb,#e89a2c)}
-.rds-e{margin:8px 0 2px 25px}.rds-e b{display:block;font-size:13px;font-weight:500;color:var(--nzamb,#e89a2c)}.rds-e.rds-red b{color:var(--nzred,#e5483b)}
+.rds-e,.rds-n{display:block;position:relative;width:calc(100% - 25px);box-sizing:border-box;padding:6px 30px 6px 8px;border:0;border-radius:10px;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.rds-e{margin:4px 0 2px 25px}.rds-e:active,.rds-n:active{background:rgba(var(--w),.08)}
+.rds-e>svg,.rds-n>svg{position:absolute;right:8px;top:9px;width:16px;height:16px;fill:var(--mut)}
+.rds-n{margin:8px 0 2px 25px;border:1px dashed var(--line)}.rds-n span{display:block}.rds-n b{display:block;font-size:13px;font-weight:500;color:var(--ink)}.rds-n small{display:block;font:11px var(--mono);color:var(--mut)}
+#cmtsh .rds-sh{margin:10px 2px 0;line-height:1.45;max-height:7.5em;overflow:auto}.rds-e b{display:block;font-size:13px;font-weight:500;color:var(--nzamb,#e89a2c)}.rds-e.rds-red b{color:var(--nzred,#e5483b)}
 .rds-e small{display:block;font:11px var(--mono);color:var(--mut);margin-top:1px}.rds-e p{font-size:12.5px;margin:4px 0 0;line-height:1.45;color:var(--ink)}
-.rds-pl{margin:6px 0 0 25px}.rds-pl summary{cursor:pointer;font:11px var(--mono);color:var(--mut);list-style:none;display:flex;align-items:center;gap:6px}.rds-pl summary::-webkit-details-marker{display:none}
+.rds-pl{margin:6px 0 0 25px}.rds-pl .rds-e{width:100%}.rds-pl summary{cursor:pointer;font:11px var(--mono);color:var(--mut);list-style:none;display:flex;align-items:center;gap:6px}.rds-pl summary::-webkit-details-marker{display:none}
 .rds-pl summary svg{width:14px;height:14px;fill:currentColor}.rds-pl .rds-e{margin-left:0}.rds-pl .rds-e b{color:var(--ink)}
 .rds-cam{display:block;width:100%;margin-top:10px;padding:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer;font:inherit}.rds-cam[disabled]{cursor:default}
 .rds-cam .vcam-ph{aspect-ratio:16/9}
@@ -2936,6 +2948,30 @@ html:not(#x) #dtm .dtv{flex:1;aspect-ratio:auto;min-height:0;height:100%}
 .cdf-b{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}.cdf-b .eb{min-height:46px}.cdf-b .eb:first-child{background:#fff;color:#2b0f0d;border-color:#fff}
 #cdt:has(.cdf-clr){background:#0f2a1c}.cdf-tk.cdf-clr>svg{fill:#7fd6a5}
 @media(max-width:760px){.slv-r{grid-template-columns:minmax(0,1fr) 92px 46px;gap:8px}.cdf-tk h2{font-size:21px}.cdf-tk p{font-size:14.5px}}
+/* the road event sheet: verdict, the drawn map (closed stretch red, route blue), close up / whole trip, legend */
+#cmtsh .rds-vd{display:flex;align-items:center;gap:8px;margin:2px 0 10px;padding:9px 12px;border-radius:12px;font-size:14px;background:rgba(var(--w),.06)}
+#cmtsh .rds-vd svg{width:18px;height:18px;flex:none;fill:var(--mut)}
+#cmtsh .rds-vd.on{background:color-mix(in srgb,#e5483b 16%,transparent)}#cmtsh .rds-vd.on svg{fill:#e5483b}
+#cmtsh .rds-vd.off{background:color-mix(in srgb,var(--mint) 14%,transparent)}#cmtsh .rds-vd.off svg{fill:var(--mint)}
+#cmtsh .rds-map{position:relative}#cmtsh .rds-map img.cmf{object-fit:cover;display:block}
+#cmtsh .rds-mv{position:absolute;left:10px;top:10px;display:flex;gap:4px}
+#cmtsh .rds-mv button{font:600 10.5px var(--mono);letter-spacing:.06em;border:0;border-radius:8px;padding:6px 9px;background:rgba(0,0,0,.55);color:#fff;cursor:pointer}#cmtsh .rds-mv button.on{background:#fff;color:#222}
+#cmtsh .rds-lg{display:flex;flex-wrap:wrap;gap:6px 16px;margin:8px 2px 0;font:11px var(--mono);color:var(--mut)}#cmtsh .rds-lg span{display:inline-flex;align-items:center;gap:6px}
+#cmtsh .rds-lg i{display:inline-block;width:18px;height:4px;border-radius:2px}#cmtsh .rds-lr{background:#e5483b;height:6px!important}#cmtsh .rds-lb{background:#3b6fd8}
+#cmtsh .rds-map img.cmf{transition:opacity .2s}#cmtsh .rds-map img.rds-ld{opacity:.55}
+.vcam-tb{display:block;cursor:zoom-in}
+/* 2.5.16 event places: address suggestions under the event Location field, a MAP button, and a pin on Today's events (45-event-places.js) */
+.plc-w{display:flex;align-items:center;gap:8px}.plc-w input{flex:1}
+.plc-map{flex:none;display:inline-flex;align-items:center;gap:5px;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--w),.06);color:var(--ink);font:600 11px var(--mono);letter-spacing:.06em;cursor:pointer}
+.plc-map[hidden]{display:none}.plc-map svg{width:15px;height:15px;fill:var(--mint)}
+.plc-ls{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg2)}.plc-ls[hidden]{display:none}
+.plc-o{display:flex;align-items:flex-start;gap:9px;padding:9px 12px;cursor:pointer}.plc-o+.plc-o{border-top:1px solid var(--line)}.plc-o.on,.plc-o:hover{background:rgba(var(--w),.07)}
+.plc-o svg{width:16px;height:16px;flex:none;fill:var(--mut);margin-top:2px}.plc-o.on svg{fill:var(--mint)}
+.plc-o b{display:block;font-size:14px;font-weight:500}.plc-o small{display:block;font-size:12px;color:var(--mut);margin-top:1px}
+.plc-by{display:block;text-align:right;font:10px var(--mono);color:var(--mut);padding:4px 10px;border-top:1px solid var(--line)}
+#sch .plc-pin{flex:none;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;margin:-4px -6px -4px auto;border-radius:50%;cursor:pointer}
+#sch .sch-r em+.plc-pin{margin-left:4px}#sch .sch-c .plc-pin{width:20px;height:20px;margin:-3px -6px -3px -2px}
+#sch .plc-pin svg{width:16px;height:16px;fill:var(--c,var(--mint))}#sch .plc-pin:active{background:rgba(var(--w),.1)}
 /* Header chips (weather alert, pollen, leak ...): the glow is a soft halo around the pill that breathes, not a fading, fuzzy-edged copy of the whole chip. The text and border stay steady. */
 @media(min-width:761px){
 #nacc[data-k] .nai,html[data-mode] #nacc[data-k] .nai{position:relative;animation:none;filter:none;opacity:1}
@@ -3799,7 +3835,7 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
   .adw{grid-template-columns:minmax(0,1fr)}
   .adqg{grid-template-columns:minmax(0,1fr)}
   .add{display:none;position:fixed;left:0;right:0;bottom:0;top:auto;z-index:82;max-height:86dvh;overflow-y:auto;overscroll-behavior:contain;margin:0!important;border-radius:26px 26px 0 0;padding:20px 18px calc(26px + env(safe-area-inset-bottom,0px));background:var(--bg);box-shadow:0 -10px 40px rgba(0,0,0,.35);animation:shUp .32s cubic-bezier(.2,.85,.3,1) both}
-  .adw.det .add{display:block}.adw.det .admbk{display:block;position:fixed;inset:0;z-index:81;background:rgba(0,0,0,.5);animation:thIn .2s ease}
+  .adw.det .add{display:block}html .adw .add.pn{background:var(--bg)!important;backdrop-filter:none;-webkit-backdrop-filter:none}.adw.det .admbk{display:block;position:fixed;inset:0;z-index:81;background:rgba(0,0,0,.5);animation:thIn .2s ease}
   .adx{display:flex}
   .adhint{display:none}
 }
@@ -3873,7 +3909,7 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
   <div id="roomspg" class="page"><div class="chips tabs" id="rtabs"></div><div id="rl"></div><div id="rv" style="display:none"></div></div>
 
   <div id="security" class="page" data-tab="live"><div class="chips tabs" id="stabs" style="display:none"></div><div class="pn pg" id="alp"></div><div id="sectog"></div><div class="cams cams3" id="scams"></div><div class="pn pg" id="dtp" style="display:none"></div></div>
-<div id="dtm" role="dialog" aria-label="Detection"><div class="dtc"><div class="dth"><b class="dtt"></b><button class="evx" data-dt="close" aria-label="Close"></button></div><div class="dtvw"><div class="dtv"><video controls playsinline></video><div class="dte"></div></div><div class="dtsx"></div><button class="dtnv pv" aria-label="Previous moment" hidden></button><button class="dtnv nx" aria-label="Next moment" hidden></button></div><div class="dtal2"></div></div></div>
+<div id="dtm" role="dialog" aria-label="Detection"><div class="dtc"><div class="dth"><b class="dtt"></b><button class="evx" data-dt="close" aria-label="Close"></button></div><div class="dtvw"><div class="dtv"><video controls playsinline poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></video><div class="dte"></div></div><div class="dtsx"></div><button class="dtnv pv" aria-label="Previous moment" hidden></button><button class="dtnv nx" aria-label="Next moment" hidden></button></div><div class="dtal2"></div></div></div>
 
   <div id="weather" class="page"><div id="wx"></div></div>
 
@@ -3906,16 +3942,16 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.15"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.15"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.15"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="config.js?v=2.5.16"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.16"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.16"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.15";   // the one place to change the version
-window.DASH_BUILD = "2e8743";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.5.16";   // the one place to change the version
+window.DASH_BUILD = "21ac60";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -4204,6 +4240,14 @@ window.__ZHD={"D": {"0.0 mm": "0.0 毫米", "1 hr": "1 小时", "2 hr": "2 小�
 })();
 // 2.5.15 NZ feeds: volcano cameras, sea level, Civil Defence, roads
 Object.assign(window.__ZHD.D, {"sea level · gauges": "海平面 · 验潮站", "tide removed · 6 h": "已去除潮汐 · 6 小时", "sea is calm at nearby gauges": "附近验潮站海面平静", "unusual waves · stay off beaches": "异常波浪 · 远离海滩", "land threat level · follow civil defence": "陆地威胁级别 · 听从民防指示", "checking the gauges…": "正在查看验潮站…", "no data from the gauges yet": "暂无验潮站数据", "needs your home location (zone.home)": "需要您家的位置 (zone.home)", "biggest swing in the last hour": "过去一小时最大波动", "© gns science · geonet": "© GNS Science · GeoNet", "roads · nzta": "道路 · NZTA", "state highways on your routes": "您路线上的国道", "no problems": "没有问题", "near home": "家附近", "camera not available": "摄像头不可用", "too dark to see": "天太黑，看不见", "civil defence": "民防", "tsunami · beach": "海啸 · 海滩", "tsunami · land": "海啸 · 陆地", "road problem": "道路问题", "ok, got it": "好的，知道了", "open getready map": "打开 GetReady 地图", "roads": "道路", "read": "查看", "camera": "摄像头", "one gauge is one spot in one harbour, and the first wave is often not the biggest. official alerts come first: long or strong, get gone.": "一个验潮站只代表一个港口的一个点，第一个浪往往不是最大的。官方警报优先：地震长或强，马上撤离。"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^next light about (.+)$", "天亮约 $1"], ["^(\\d+) km from home$", "距家 $1 公里"], ["^(\\d+) problems?$", "$1 个问题"], ["^(\\d+) problems? · (\\d+) planned$", "$1 个问题 · $2 项计划施工"], ["^no problems · (\\d+) planned$", "没有问题 · $1 项计划施工"], ["^(\\d+) planned works?$", "$1 项计划施工"], ["^from (.+) · checked (.+)$", "来自 $1 · $2 查看"], ["^tap for the next camera \\((\\d+) of (\\d+)\\)$", "点按看下一个摄像头（第 $1 个，共 $2 个）"], ["^no data from the gauges since (.+)$", "自 $1 起无验潮站数据"], ["^emergency alert · (.+)$", "紧急警报 · $1"], ["^civil defence · emergency mobile alert(.*)$", "民防 · 紧急手机警报$1"]]);
+// 2.5.16 event places: address suggestions and the map sheet
+Object.assign(window.__ZHD.D, {"start typing an address": "开始输入地址", "navigate in google maps": "在 Google 地图中导航", "live traffic is in the google maps app": "实时路况请看 Google 地图 App", "route from home · live traffic is in the google maps app": "从家出发的路线 · 实时路况请看 Google 地图 App", "powered by google": "由 Google 提供"});
+window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^geonet has no new readings since (.+)$", "GeoNet 自 $1 起没有新读数"]]);
+// 2.5.16 roads: exact routes and tap-to-map
+Object.assign(window.__ZHD.D, {"nearby, not on your route": "附近，不在您的路线上", "open in google maps": "在 Google 地图中打开", "from nzta · the pin marks the middle of the event": "来自 NZTA · 图钉标在事件中间"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^(.+) · may not be on your route$", "{1} · 可能不在您的路线上"], ["^([\\d.]+) (km|m) from your route$", "距您的路线 $1 {2}"]]);
+Object.assign(window.__ZHD.D, {"close up": "近景", "whole trip": "整段行程", "closed or affected stretch": "封闭或受影响路段", "where it is": "位置"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^not on (.+)'s route: (.+) away$", "不在 $1 的路线上：相距 $2"], ["^on (.+)'s route home ↔ work \\((.+)\\)$", "在 $1 的上下班路线上（$2）"], ["^(.+)'s route, h home → w work$", "$1 的路线，H 家 → W 公司"]]);
+Object.assign(window.__ZHD.D, {"loading clip…": "正在加载片段…"});
+Object.assign(window.__ZHD.D, {"tide removed · last 6 hours": "已去除潮汐 · 最近 6 小时"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^not on (.+)'s drive to work: about (.+) away$", "不在 $1 的上班路线上：相距约 $2"], ["^on (.+)'s drive to work$", "在 $1 的上班路线上"], ["^biggest swing in the last hour · newest reading (\\S+) \\((.+)\\)$", "过去一小时最大波动 · 最新读数 $1（{2}）"]]);
 // ---------- Language (Theme page): English or Simplified Chinese ----------
 // Chinese translates the dashboard's labels, headings, buttons and units as they appear (the dictionary in 56-zh-dict.js / 56-zh-more.js),
 // and dates and times use Chinese formats. Names from Home Assistant and config.js stay as they are. Sentences that aren't in the dictionary stay English.
@@ -4811,7 +4855,7 @@ function evDraw() {
     (s.rep === "custom" ? '<div class="evr cu"><label><span class="lbl">Every</span><input type="number" id="evn" min="1" max="99" value="' + s.n + '" inputmode="numeric"></label><label><span class="lbl">&nbsp;</span><select id="evun2">' + [["daily", "day(s)"], ["weekly", "week(s)"], ["monthly", "month(s)"], ["yearly", "year(s)"]].map(x => '<option value="' + x[0] + '"' + (x[0] === s.unit ? " selected" : "") + '>' + x[1] + '</option>').join("") + '</select></label></div>' : "") +
     (evFreq(s) === "weekly" ? '<div class="evc">' + WD.map((d, i) => '<button class="wd' + (s.days.indexOf(d) > -1 ? " on" : "") + '" data-wd="' + d + '">' + WDN[i] + '</button>').join("") + '</div>' : "") +
     (s.rep ? f("Repeat until (optional)", '<input type="date" id="evun" value="' + s.until + '">') : "") +
-    f("Location", '<input type="text" id="evlc" value="' + esc(s.loc) + '" autocomplete="off">') + f("Notes", '<textarea id="evnt">' + esc(s.note) + '</textarea>') +
+    f("Location", '<span class="plc-w"><input type="text" id="evlc" value="' + esc(s.loc) + '" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="plcls"' + (typeof plcLookupOn === "function" && plcLookupOn() ? ' placeholder="Start typing an address"' : "") + '><button type="button" class="plc-map" data-plcmap="1"' + (s.loc.trim() ? "" : " hidden") + '>' + mdi("map-marker") + 'MAP</button></span><span class="plc-ls" id="plcls" role="listbox" hidden></span>') + f("Notes", '<textarea id="evnt">' + esc(s.note) + '</textarea>') +
     (s.edit && s.recur ? '<div><span class="lbl">Apply changes to</span><div class="evc" style="margin-top:6px">' + [["this", "This event"], ["following", "This and following"], ["all", "All events"]].filter(x => x[0] !== "all" || evCanUpdate(s.cal)).map(x => '<button data-sc="' + x[0] + '" class="' + (s.scope === x[0] ? "on" : "") + '">' + x[1] + '</button>').join("") + '</div></div>' : "") +
     '</div></div><div class="evm2" id="evmsg">' + (ro ? "This event can't be edited (no ID from the calendar)." : esc(s.msg)) + '</div><div class="evact">' + (s.edit ? '<button class="evdel" data-x="del"' + (ro ? " disabled" : "") + '>Delete</button><button class="evdup" data-x="dup">Duplicate</button>' : "") + '<button class="sv" data-x="save"' + (ro || !cs.length ? " disabled" : "") + '>' + (s.edit ? "Save" : "Add event") + '</button></div>';
 }
@@ -5111,7 +5155,7 @@ function schLoad(force) {
     .then(r => r.json()).then(j => { if (!Array.isArray(j)) return; j.forEach(v => { try {
       const ad = !v.start.dateTime, st = pd(v.start), en = pd(v.end);
       if (ad ? !(st < b && en > a) : !(st < b && en > a)) return;
-      out.push({ cal: c, ad: ad, t: st, e: en, s: v.summary || "", c: (typeof evColOf === "function" && evColOf(c, v)) || CALCOL[i % CALCOL.length] });
+      out.push({ cal: c, ad: ad, t: st, e: en, s: v.summary || "", l: String(v.location || "").trim(), c: (typeof evColOf === "function" && evColOf(c, v)) || CALCOL[i % CALCOL.length] });
     } catch (_) {} }); }).catch(() => {}))).then(() => { SCH.ev = out.sort((x, y) => (y.ad - x.ad) || (x.t - y.t)); SCH.t = Date.now(); SCH.busy = false; schDraw(); }, () => { SCH.busy = false; });
 }
 const schTm = d => d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })).replace(" ", "").toLowerCase();
@@ -5121,12 +5165,14 @@ function schDraw() {
   if (!live.length && !cm.length) { el.hidden = true; el.innerHTML = ""; hsFit(); return; }
   const nx = live.filter(v => !v.ad)[0], past = SCH.ev.filter(v => !v.ad && v.e <= now), n = SCH.ev.length;
   const when = v => v.ad ? "ALL DAY" : schTm(v.t);
-  const chip = v => '<span class="sch-c' + (v === nx ? " nx" : "") + (v.ad ? " ad" : "") + '" style="--c:' + v.c + '"><i></i><small>' + when(v) + '</small><span>' + esc(v.s) + '</span></span>';
+  // an event with a place gets a pin: it opens the map sheet (45-event-places.js), the rest of the card still opens Events
+  const pin = v => v.l && typeof plcPin === "function" ? plcPin(SCH.ev.indexOf(v)) : "";
+  const chip = v => '<span class="sch-c' + (v === nx ? " nx" : "") + (v.ad ? " ad" : "") + '" style="--c:' + v.c + '"><i></i><small>' + when(v) + '</small><span>' + esc(v.s) + '</span>' + pin(v) + '</span>';
   const left = (nx ? Math.round((nx.t - now) / 60000) : null);
   const eta = left != null && left > 0 && left < 180 ? (left < 60 ? "in " + left + " min" : "in " + Math.floor(left / 60) + " h " + (left % 60 ? left % 60 + " min" : "")).trim() : "";
   el.innerHTML = '<div class="sch-l"><b class="lbl">Today</b>' + cm.map(cmtChip).join("") + live.map(chip).join("") + '<span class="sch-n"></span></div>' +
     '<div class="sch-m"><div class="sch-h"><b class="lbl">Today</b><span class="lbl">' + (live.length ? n + (n === 1 ? ' event' : ' events') : "") + '</span></div>' + cm.map(cmtRow).join("") +
-    live.slice(0, 3).map(v => '<div class="sch-r' + (v === nx ? " nx" : "") + '" style="--c:' + v.c + '"><small>' + when(v) + '</small><span>' + esc(v.s) + '</span>' + (v === nx && eta ? '<em>' + eta + '</em>' : '') + '</div>').join("") +
+    live.slice(0, 3).map(v => '<div class="sch-r' + (v === nx ? " nx" : "") + '" style="--c:' + v.c + '"><small>' + when(v) + '</small><span>' + esc(v.s) + '</span>' + (v === nx && eta ? '<em>' + eta + '</em>' : '') + pin(v) + '</div>').join("") +
     (live.length > 3 ? '<div class="sch-x lbl">+' + (live.length - 3) + ' more</div>' : "") + (past.length ? '<div class="sch-x lbl">' + past.length + ' done</div>' : "") + '</div>' +
     '<span class="sch-g">' + mdi("chevron-right") + '</span>';
   el.hidden = false; hsFit(); schFit();
@@ -5148,7 +5194,7 @@ function schFit() {   // tablet strip: chips that do not fit are hidden and coun
   if (hid) nn.textContent = "+" + hid;
 }
 // a drive-to-work row / chip opens Google Maps instead (its own link); anywhere else on the card opens Events
-document.addEventListener("click", e => { const m = e.target.closest("#sch a.cmt"); if (m) { e.preventDefault(); if (CONFIG.googleMapsKey && m.dataset.ci != null) cmtSheet(+m.dataset.ci); else cmtOpen(m.getAttribute("href")); return; } if (e.target.closest("#sch")) location.hash = "#events"; });
+document.addEventListener("click", e => { const pl = e.target.closest("#sch [data-schloc]"); if (pl) { e.preventDefault(); e.stopPropagation(); plcFromToday(+pl.dataset.schloc); return; } const m = e.target.closest("#sch a.cmt"); if (m) { e.preventDefault(); if (gmKey() && m.dataset.ci != null) cmtSheet(+m.dataset.ci); else cmtOpen(m.getAttribute("href")); return; } if (e.target.closest("#sch")) location.hash = "#events"; });
 // Navigate in the Google Maps app. The Home Assistant Companion app shows links inside itself, where Google refuses to load, so on Android
 // the dashboard asks the phone for the Google Maps app directly (an intent link, with the website as the fallback); iPhones and iPads hand the
 // https link to iOS. Ordinary browsers get a new tab.
@@ -5173,14 +5219,17 @@ function cmtEnds(x) {
 function cmtSheet(i) {
   const x = cmtNow(new Date())[i]; if (!x) return;
   const e = cmtEnds(x), u = cmtMap(x); if (!e[1]) return cmtOpen(u);
-  const src = "https://www.google.com/maps/embed/v1/directions?key=" + encodeURIComponent(CONFIG.googleMapsKey) + (e[0] ? "&origin=" + encodeURIComponent(e[0]) : "") + "&destination=" + encodeURIComponent(e[1]) + "&mode=driving";
+  const src = "https://www.google.com/maps/embed/v1/directions?key=" + encodeURIComponent(gmKey()) + (e[0] ? "&origin=" + encodeURIComponent(e[0]) : "") + "&destination=" + encodeURIComponent(e[1]) + "&mode=driving";
+  const lv = cmtLeave(x);
+  cmtShow('<div class="cmb" role="dialog" aria-label="Drive to work"><div class="cmh"><div><b>' + esc(x.c.name || "") + ' · ' + (x.min != null ? x.min + " min to work" : "drive to work") + '</b><small>' + (x.route ? "via " + esc(x.route) : "") + (x.route && lv ? " · " : "") + (lv ? "leave by " + lv : "") + '</small></div><button class="rnd" data-cmx aria-label="Close">' + mdi("close") + '</button></div>' +
+    '<iframe class="cmf" title="Route to work" src="' + esc(src) + '" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>' +
+    '<button class="cmn" data-cmgo="' + esc(u) + '">' + mdi("directions") + '<span>NAVIGATE IN GOOGLE MAPS</span></button><div class="sm cmno">Live traffic is in the Google Maps app</div></div>');
+}
+// the map sheet itself, shared with event places (45-event-places.js)
+function cmtShow(h) {
   let el = $("#cmtsh"); if (!el) { el = document.createElement("div"); el.id = "cmtsh"; document.body.appendChild(el);
     el.addEventListener("click", ev => { if (ev.target === el || ev.target.closest("[data-cmx]")) { el.classList.remove("on"); el.innerHTML = ""; } else if (ev.target.closest("[data-cmgo]")) cmtOpen(ev.target.closest("[data-cmgo]").dataset.cmgo); }); }
-  const lv = cmtLeave(x);
-  el.innerHTML = '<div class="cmb" role="dialog" aria-label="Drive to work"><div class="cmh"><div><b>' + esc(x.c.name || "") + ' · ' + (x.min != null ? x.min + " min to work" : "drive to work") + '</b><small>' + (x.route ? "via " + esc(x.route) : "") + (x.route && lv ? " · " : "") + (lv ? "leave by " + lv : "") + '</small></div><button class="rnd" data-cmx aria-label="Close">' + mdi("close") + '</button></div>' +
-    '<iframe class="cmf" title="Route to work" src="' + esc(src) + '" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>' +
-    '<button class="cmn" data-cmgo="' + esc(u) + '">' + mdi("directions") + '<span>NAVIGATE IN GOOGLE MAPS</span></button><div class="sm cmno">Live traffic is in the Google Maps app</div></div>';
-  el.classList.add("on");
+  el.innerHTML = h; el.classList.add("on");
 }
 document.addEventListener("keydown", e => { const el = $("#cmtsh"); if (e.key === "Escape" && el && el.classList.contains("on")) { el.classList.remove("on"); el.innerHTML = ""; } });
 setInterval(() => { if (curPg() === "home") { schLoad(); schDraw(); } }, 60000);
@@ -5481,7 +5530,7 @@ function hideSet() {
   if (!RU || !Array.isArray(RU.rooms)) return null;
   if (hideC && Date.now() - hideT < 1500) return hideC;
   const vis = {}, hid = {};
-  CONFIG.house.forEach(r => { const o = RU.rooms.indexOf(r.id) > -1 ? vis : hid, add = e => { if (e && typeof e === "string") o[e] = 1; };
+  CONFIG.house.forEach(r => { const o = RU.rooms.indexOf(r.id) > -1 ? vis : hid, add = e => { if (e && typeof e === "string") o[e.split("#")[0]] = 1; };
     [r.lights, r.lightSwitches, r.covers, r.fans, r.doors, r.windows, r.climate, r.temp, r.hum, r.occ].forEach(l => { [].concat(l || []).forEach(add); members(l || []).forEach(add); });
     (r.sections || []).forEach(sc => (sc.items || []).forEach(i => add(typeof i === "string" ? i : i.entity)));
     ((CONFIG.roomControls || {})[r.id] || []).forEach(i => add(typeof i === "string" ? i : i.entity));
@@ -5577,7 +5626,7 @@ function fillCard(el, r) {
   $(".ts", el).innerHTML = b;
 }
 function roomTemp(r) {
-  const cl = [].concat(r.climate || [])[0], c = cl && states[cl], s = r.temp && states[r.temp];
+  const cl = [].concat(r.climate || [])[0], c = cl && states[cl], s = r.temp && (r.temp.indexOf("#") > 0 ? (sv(r.temp) != null ? { state: sv(r.temp) } : null) : states[r.temp]);
   return s && s.state !== "unavailable" ? s.state : (c ? c.attributes.current_temperature : null);
 }
 function updRooms() {
@@ -5959,6 +6008,8 @@ const VIRT = {
   "sensor.low_battery_count": () => lowBatt().length
 };
 Object.keys(CONFIG.derived.soil).forEach(z => { VIRT["sensor.average_" + z + "_soil_moisture"] = () => fx(avgOf(CONFIG.derived.soil[z].moisture)); VIRT["sensor.average_" + z + "_soil_temperature"] = () => fx(avgOf(CONFIG.derived.soil[z].temp)); });
+// a room's temp / hum can be an attribute of another entity: "weather.home#temperature" (the weather's current temperature), "weather.home#humidity"
+(CONFIG.house || []).forEach(r => [r.temp, r.hum].forEach(x => { if (typeof x === "string" && x.indexOf("#") > 0 && !VIRT[x]) VIRT[x] = () => { const q = x.split("#"), e = states[q[0]], v = e && e.attributes[q[1]]; return v == null || v === "" ? null : String(v); }; }));
 // dashboard knows which entities feed the room badges / house average, so it refreshes when they change
 const DEP = {};
 function buildDep() { CONFIG.house.forEach(r => ["lights", "doors", "windows", "covers", "fans"].forEach(k => members(r[k]).forEach(x => { DEP[x] = 1; }))); CONFIG.derived.houseTemps.forEach(x => { DEP[x] = 1; }); }
@@ -7553,7 +7604,7 @@ function openPb(c) {
   clearTimeout(c.rt); stopCam(c); czReset(el);
   if (!k.dataset.b) {
     k.dataset.b = 1;
-    k.innerHTML = '<div class="pbh"><button class="eb" data-pb="up">' + mdi("chevron-left") + ' BACK</button><b class="pbt">Recordings</b><button class="eb" data-pb="live">' + mdi("circle") + ' LIVE</button></div><div class="pbm"><div class="pbw"><div class="pbf"></div><div class="pbl"></div></div><div class="pbv"><video controls playsinline></video><div class="pbe"></div></div></div>';
+    k.innerHTML = '<div class="pbh"><button class="eb" data-pb="up">' + mdi("chevron-left") + ' BACK</button><b class="pbt">Recordings</b><button class="eb" data-pb="live">' + mdi("circle") + ' LIVE</button></div><div class="pbm"><div class="pbw"><div class="pbf"></div><div class="pbl"></div></div><div class="pbv"><video controls playsinline poster="' + DT_POSTER + '"></video><div class="pbe"></div></div></div>';
     k.onclick = e => {
       e.stopPropagation();   // the list redraws on tap; don't let the click fall through and close the camera
       const b = e.target.closest("[data-pb]"), it = e.target.closest(".pbi"), pb = el.pb, f = e.target.closest("[data-pf]"), vw = e.target.closest("[data-pview]"), sg = e.target.closest("[data-si]");
@@ -7564,8 +7615,9 @@ function openPb(c) {
       else if (sg) { const li = $('.pbi[data-i="' + sg.dataset.si + '"]', k), x = pb.items[+sg.dataset.si]; if (li && x && x.can_play) { pbPlay(c, x, li); li.scrollIntoView({ block: "nearest" }); } }
       else if (it) { const x = pb.items[+it.dataset.i]; if (x.can_expand) { pb.tx = 1; pbBrowse(c, x.media_content_id, x.title, true); } else if (x.can_play) pbPlay(c, x, it); }
     };
-    $("video", k).onloadeddata = () => { const q = el.pb; if (q) { q.hold = 0; if (q.nx) q.nx(); } };   // clip is up: preview pictures carry on
-    $("video", k).onerror = () => { if ($(".pbv", k).classList.contains("has")) $(".pbe", k).textContent = "This browser can't play this recording"; };
+    $("video", k).onloadeddata = () => { const q = el.pb; if (q) { q.hold = 0; if (q.nx) q.nx(); } pbLoading(el, false); };   // clip is up: preview pictures carry on
+    $("video", k).addEventListener("playing", () => pbLoading(el, false));
+    $("video", k).onerror = () => { if ($(".pbv", k).classList.contains("has")) { pbLoading(el, false); $(".pbe", k).textContent = "This browser can't play this recording"; } };
   }
   let view = "grid"; try { view = localStorage.dashPbView === "list" ? "list" : "grid"; } catch (x) {}
   if (!DT.stored) { DT.stored = 1; THDB.load(); }
@@ -7687,12 +7739,14 @@ function pbBrowse(c, id, ttl, push, auto) {
     pbList(c);
   });
 }
+// a clip loading: only a spinner and "Loading clip…" (like the Detections viewer, 27-detections-timeline.js dtLoading); no player buttons, no Android play symbol
+function pbLoading(el, on) { const pv = $(".pbv", el), v = pv && pv.querySelector("video"), e = $(".pbe", el); if (!pv) return; if (!on && !pv.classList.contains("dtld")) return; pv.classList.toggle("dtld", !!on); if (v && !pv._zui) v.controls = !on; if (e) e.innerHTML = on ? '<i class="dtsp"></i>Loading clip…' : ""; }
 function pbPlay(c, x, it) {
-  const el = c.o.el, v = $(".pbk video", el), e = $(".pbe", el), pv = $(".pbv", el); pv.classList.add("has"); e.textContent = "Loading…"; el.pb.hold = 1;   // preview pictures wait, so the clip gets the whole connection
+  const el = c.o.el, v = $(".pbk video", el), e = $(".pbe", el), pv = $(".pbv", el); pv.classList.add("has"); pbLoading(el, true); el.pb.hold = 1;   // preview pictures wait, so the clip gets the whole connection
   $$(".pbi", el).forEach(n => n.classList.toggle("on", n === it)); $$(".pbs", el).forEach(n => n.classList.toggle("on", !!it && n.dataset.si === it.dataset.i));
   send({ type: "media_source/resolve_media", media_content_id: x.media_content_id, expires: 3600 }, r => {
-    if (!r || !r.url) { e.textContent = "Could not open this recording"; return; }
-    e.textContent = ""; v.removeAttribute("crossorigin"); v.src = (r.url.indexOf("http") === 0 ? "" : CONFIG.url) + r.url; v.play().catch(() => {}); const pp = pbParse(x.title); mkAttach(pv, pp ? pp.tags : []);
+    if (!r || !r.url) { pbLoading(el, false); e.textContent = "Could not open this recording"; return; }
+    v.removeAttribute("crossorigin"); v.src = (r.url.indexOf("http") === 0 ? "" : CONFIG.url) + r.url; v.play().catch(() => {}); const pp = pbParse(x.title); mkAttach(pv, pp ? pp.tags : []);
   });
 }
 
@@ -7845,7 +7899,8 @@ $("#dtp").addEventListener("click", e => {
   else if (k === "refresh") dtLoad(true);
   else if (k === "play") dtPlay(b.dataset.k, b.dataset.cam, +b.dataset.ts, (b.dataset.tg || "").split(","));
 });
-$("#dtm .dtv video").onerror = () => { if ($("#dtm").classList.contains("on") && $("#dtm .dtv video").getAttribute("src")) $("#dtm .dte").textContent = "This browser can't play this recording"; };
+$("#dtm .dtv video").onerror = () => { if ($("#dtm").classList.contains("on") && $("#dtm .dtv video").getAttribute("src")) { dtLoading(false); $("#dtm .dte").textContent = "This browser can't play this recording"; } };
+["loadeddata", "playing"].forEach(k => $("#dtm .dtv video").addEventListener(k, () => { if ($("#dtm .dtv").classList.contains("dtld")) dtLoading(false); }));
 
 // ---------- Detections timeline (2.5.11) ----------
 // Tablet: a busy-ness chart of the chosen range (24 bars) that you drag across to zoom in, and one lane per camera inside that window (a dot per
@@ -7965,15 +8020,20 @@ function dtShow() {
   const sx = $(".dtsx", m);
   if (DTV.sbs) {
     $("#dtm .dtv video").pause();
-    sx.innerHTML = g.slice(0, 4).map((y, i) => '<div class="dtsxi" data-dtvi="' + i + '"><video muted playsinline loop></video><span>' + esc(dtName(y.cam)) + '</span></div>').join("");
+    sx.innerHTML = g.slice(0, 4).map((y, i) => '<div class="dtsxi" data-dtvi="' + i + '"><video muted playsinline loop poster="' + DT_POSTER + '"></video><span>' + esc(dtName(y.cam)) + '</span></div>').join("");
     g.slice(0, 4).forEach((y, i) => send({ type: "media_source/resolve_media", media_content_id: y.mc, expires: 3600 }, r => { const v = $$("#dtm .dtsxi video")[i]; if (!v || !DTV.sbs || !r || !r.url) return; v.src = (r.url.indexOf("http") === 0 ? "" : CONFIG.url) + r.url; v.play().catch(() => {}); }));
     return;
   }
   sx.innerHTML = "";
   const v = $("#dtm .dtv video"); if (DTV.cur === x.mc && v.getAttribute("src")) return; DTV.cur = x.mc;
-  $("#dtm .dte").textContent = "Loading…"; v.removeAttribute("src");
-  send({ type: "media_source/resolve_media", media_content_id: x.mc, expires: 3600 }, r => { if (!m.classList.contains("on") || DTV.cur !== x.mc) return; if (!r || !r.url) { $("#dtm .dte").textContent = "Could not open this recording"; return; } $("#dtm .dte").textContent = ""; v.removeAttribute("crossorigin"); v.src = (r.url.indexOf("http") === 0 ? "" : CONFIG.url) + r.url; v.play().catch(() => {}); mkAttach($("#dtm .dtv"), x.p.tags); });
+  dtLoading(true); v.removeAttribute("src");
+  send({ type: "media_source/resolve_media", media_content_id: x.mc, expires: 3600 }, r => { if (!m.classList.contains("on") || DTV.cur !== x.mc) return; if (!r || !r.url) { dtLoading(false); $("#dtm .dte").textContent = "Could not open this recording"; return; } v.removeAttribute("crossorigin"); v.src = (r.url.indexOf("http") === 0 ? "" : CONFIG.url) + r.url; v.play().catch(() => {}); mkAttach($("#dtm .dtv"), x.p.tags); });
 }
+// while a clip loads: a spinner and "Loading clip…" instead of the browser's own empty player (Android draws a huge grey play symbol there),
+// and no controls until there is a picture. A blank poster keeps that symbol away for good.
+const DT_POSTER = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+// Kinetic's own player buttons (37-camera-zoom.js, camZoom) are hidden while it loads; the browser's controls are only used when camZoom is off
+function dtLoading(on) { const w = $("#dtm .dtv"), v = w && w.querySelector("video"); if (!w) return; w.classList.toggle("dtld", !!on); if (v && !w._zui) v.controls = !on; $("#dtm .dte").innerHTML = on ? '<i class="dtsp"></i>Loading clip…' : ""; }
 function dtPlay(mc, cam, ts, tags) {
   const M = DT.mom || []; let gi = -1, ii = 0; M.forEach((g, a) => g.forEach((y, b) => { if (y.mc === mc) { gi = a; ii = b; } }));
   if (gi < 0) { DT.mom = M.concat([[{ cam: cam, mc: mc, ts: ts, p: { tags: tags, len: "" } }]]); gi = DT.mom.length - 1; }
@@ -8291,6 +8351,7 @@ function sckSection(sec) {
   else h += '<div class="sck-a"><button class="eb" data-sck="again">CHECK AGAIN</button></div>';
   if (u) h += '<details class="sck-u"><summary class="lbl">Unavailable now (' + u + ')</summary><div class="sck-l">' + sckGroup(SCK.unavailable) + '</div></details>';
   if (typeof nzfStatus === "function") h += nzfStatus();
+  if (typeof plcStatus === "function" && plcStatus()) h += '<details class="sck-u"><summary class="lbl">Address suggestions</summary><div class="sck-l">' + plcStatus() + '</div></details>';
   return sec("Setup check", h);
 }
 $("#admin").addEventListener("click", e => {
@@ -11325,7 +11386,9 @@ function sznClick(e) {
 }
 // ---- decorations (one function per season: returns the layer's markup for a screen W x H)
 const sznWire = (W, n, d, fn) => {   // a sagging wire along the top with n things hanging from it; fn(x, y, i) draws one
-  const seg = Math.max(2, Math.round(W / 320)); let o = '<svg width="' + W + '" height="' + (d + 40) + '" style="left:0;top:0"><path d="M-10 4 ' + sznN(seg, k => 'Q' + (W / seg * (k + .5)) + ' ' + (d + 12) + ' ' + (W / seg * (k + 1)) + ' 6') + '" stroke="rgba(var(--w),.28)" stroke-width="1.6" fill="none"/>';
+  // phone: only about 10 px sit above the header, so the string is drawn at 60 % with a shallow sag and drapes along the header's top edge, clear of the title and clock
+  const ph = W <= 760, k0 = ph ? .6 : 1; if (ph) { W = W / k0; d = 8; }
+  const seg = Math.max(2, Math.round(W / 320)); let o = '<svg class="wire" width="' + W + '" height="' + (d + 40) + '" style="left:0;top:0' + (ph ? ';transform:scale(' + k0 + ');transform-origin:0 0' : "") + '"><path d="M-10 4 ' + sznN(seg, k => 'Q' + (W / seg * (k + .5)) + ' ' + (d + 12) + ' ' + (W / seg * (k + 1)) + ' 6') + '" stroke="rgba(var(--w),.28)" stroke-width="1.6" fill="none"/>';
   for (let i = 0; i < n; i++) { const t = (i + .5) / n * seg, k = Math.min(seg - 1, Math.floor(t)), u = t - k, x0 = W / seg * k, x1 = W / seg * (k + 1), cx = W / seg * (k + .5), y0 = 6, y1 = 6, cy = d + 12, x = (1 - u) * (1 - u) * x0 + 2 * (1 - u) * u * cx + u * u * x1, y = (1 - u) * (1 - u) * y0 + 2 * (1 - u) * u * cy + u * u * y1; o += fn(x, y, i); }
   return o + '</svg>';
 };
@@ -13044,13 +13107,15 @@ function vcamBig(v) {
     '<span class="vcam-cap"><span class="vcam-tg">' + esc(L.length > 1 ? "From " + c[1] : c[1]) + ' · checked ' + nzfHHMM(Math.floor(Date.now() / 6e5) * 6e5) + '</span><span class="vcam-cr">© GNS Science</span></span></div>';
 }
 // thumbnails under a volcano in the list (only above level 0) and a small camera mark for the quiet ones
-const vcamThumbs = v => { const L = vcamFor(v); return L.length ? '<span class="vcam-th n' + L.length + '">' + L.map(c => vcamImg(c[0], c[1], false)).join("") + '</span>' : ""; };
+const vcamThumbs = v => { const L = vcamFor(v); return L.length ? '<span class="vcam-th n' + L.length + '">' + L.map(c => '<span class="vcam-tb" data-vco="' + c[0] + '" data-vcl="' + esc(c[1]) + '">' + vcamImg(c[0], c[1], false) + '</span>').join("") + '</span>' : ""; };
 const vcamMark = v => vcamFor(v).length ? '<i class="vcam-mk" title="Camera">' + mdi("camera") + '</i>' : "";
 function vcamView(id, lbl) {
   let el = $("#vcamv"); if (!el) { el = document.createElement("div"); el.id = "vcamv"; el.setAttribute("role", "dialog"); el.setAttribute("aria-label", "Volcano camera"); document.body.appendChild(el); el.onclick = () => el.classList.remove("on"); }
   el.innerHTML = '<figure><img src="' + vcamUrl(id) + '" alt="' + esc(lbl) + ' camera"><figcaption>' + esc(lbl) + ' · © GNS Science · tap to close</figcaption></figure>';
   el.classList.add("on");
 }
+// a thumbnail in the list opens that photo full screen straight away (caught first, so the row does not also jump to the map); the rest of the row opens the map pop-up
+$("#hazards").addEventListener("click", e => { const t = e.target.closest(".vcam-tb[data-vco]"); if (t) { e.stopPropagation(); e.preventDefault(); vcamView(t.dataset.vco, t.dataset.vcl); } }, true);
 $("#hazards").addEventListener("click", e => {
   const s = e.target.closest("[data-vcs]"); if (s) { e.stopPropagation(); NZF.vcSel[s.dataset.vcs] = +s.dataset.vci; const p = $("#hzd"); if (p && HZ.d) { const h = hzDetail(HZ.d); p._hd = h; p.innerHTML = h; } return; }
   const o = e.target.closest("[data-vco]"); if (o) { vcamView(o.dataset.vco, o.dataset.vcl); return; }
@@ -13079,7 +13144,9 @@ function slvPick(all) {
   return all.map(x => Object.assign({}, x, { km: nzfKm(h[0], h[1], x.lat, x.lon) })).sort((a, b) => a.km - b.km).slice(0, +c.n || 3);
 }
 async function slvGet(st, span) {
-  const r = await fetch(TILDE + "data/coastal/" + st.id + "/water-height-detided/" + st.sc + "/15s/nil/latest/" + span, { headers: { Accept: "application/json" }, cache: "no-store" });
+  // 20 s at most, so a request that never answers cannot stop the next checks
+  const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 20000);
+  let r; try { r = await fetch(TILDE + "data/coastal/" + st.id + "/water-height-detided/" + st.sc + "/15s/nil/latest/" + span, { headers: { Accept: "application/json" }, cache: "no-store", signal: ac.signal }); } finally { clearTimeout(tm); }
   if (!r.ok) throw new Error(r.status);
   const j = await r.json(), d = (Array.isArray(j) ? j[0] : j) || {};
   return (d.data || []).filter(p => p && p.val != null && isFinite(+p.val)).map(p => [Date.parse(p.ts), +p.val]);
@@ -13099,7 +13166,7 @@ async function slvRun(full) {
   try {
     const all = await slvStations(), pick = slvPick(all); NZF.pick = pick;
     await Promise.all(pick.map(async st => {
-      const g = NZF.gauges[st.id] = Object.assign(NZF.gauges[st.id] || {}, st), want6 = full || !g.t6 || Date.now() - g.t6 > 36e5;
+      const g = NZF.gauges[st.id] = Object.assign(NZF.gauges[st.id] || {}, st), want6 = full || !g.t6 || Date.now() - g.t6 > 36e5 || !g.last || Date.now() - g.last > 20 * 60000;
       try {
         const pts = await slvGet(st, want6 ? "6h" : "30m");
         if (want6) { g.pts = pts; g.t6 = Date.now(); g.full = 1; }
@@ -13132,14 +13199,14 @@ function slvHtml() {
   const c = SLV(); if (!c) return "";
   const pick = NZF.pick || [], G = pick.map(s => NZF.gauges[s.id] || s), live = G.filter(slvLive), lv = slvLevel();
   const head = !pick.length ? (NZF.gErr ? ["off", "help-circle-outline", "No data from the gauges yet"] : nzfHome() ? ["off", "help-circle-outline", "Checking the gauges…"] : ["off", "help-circle-outline", "Needs your home location (zone.home)"])
-    : !live.length ? ["off", "help-circle-outline", "No data from the gauges since " + nzfHHMM(Math.max.apply(null, G.map(g => g.last || 0)) || NZF.gt)]
+    : !live.length ? ["off", "help-circle-outline", (G.some(g => g.last) ? "GeoNet has no new readings since " : "No data from the gauges since ") + nzfHHMM(Math.max.apply(null, G.map(g => g.last || 0)) || NZF.gt)]
     : lv === 2 ? ["red", "alert-octagon", "Land threat level · follow Civil Defence"] : lv === 1 ? ["amb", "alert", "Unusual waves · stay off beaches"] : ["ok", "check-circle-outline", "Sea is calm at nearby gauges"];
   const rows = G.map(g => { const ok = slvLive(g), l = ok ? (g.amp >= c.red ? 2 : g.amp >= c.amber ? 1 : 0) : -1;
     return '<div class="slv-r' + (ok ? "" : " slv-old") + '"><span><b>' + esc(g.name) + '</b><small>' + (g.km != null ? Math.round(g.km) + " km from home" : esc(g.id)) + (ok ? "" : g.last ? " · last " + nzfHHMM(g.last) : " · no data") + '</small></span>' + (ok ? slvSpark(g, c) : '<svg class="slv-sp" viewBox="0 0 240 40"></svg>') + '<em class="l' + l + '">' + (ok ? (g.amp < 0.1 ? g.amp.toFixed(2) : g.amp.toFixed(1)) + " m" : "--") + '</em></div>'; }).join("");
-  return '<div class="pn hzps slv-' + head[0] + '"><div class="hzlh"><span class="lbl">' + mdi("waves") + ' Sea level · gauges</span><small>tide removed · 6 h</small></div>' +
+  return '<div class="pn hzps slv-' + head[0] + '"><div class="hzlh"><span class="lbl">' + mdi("waves") + ' Sea level · gauges</span><small>tide removed · last 6 hours</small></div>' +
     '<p class="slv-h">' + mdi(head[1]) + esc(head[2]) + '</p>' + rows +
     (lv ? '<p class="slv-n">One gauge is one spot in one harbour, and the first wave is often not the biggest. Official alerts come first: long or strong, get gone.</p>' : "") +
-    '<div class="slv-f"><span>' + (live.length ? "Biggest swing in the last hour" : "") + '</span><span>© GNS Science · GeoNet</span></div></div>';
+    '<div class="slv-f"><span>' + (live.length ? "Biggest swing in the last hour · newest reading " + nzfHHMM(Math.max.apply(null, live.map(g => g.last))) + " (" + hzAgo(Math.max.apply(null, live.map(g => g.last))) + ")" : "") + '</span><span>© GNS Science · GeoNet</span></div></div>';
 }
 
 // ===== 3. Civil Defence: Emergency Mobile Alerts (NEMA's public feed, through a Home Assistant REST sensor) =====
@@ -13208,17 +13275,58 @@ function rdEvents() {
   }).filter(e => !e.plan || e.on || e.soon);
 }
 function rdTripList() {
-  const c = RDC(); if ((c.trips || []).length) return c.trips.map(t => ({ name: t.name || "Trip", via: t.via || null, km: +c.km || 1 }));
+  const c = RDC(); if ((c.trips || []).length) return c.trips.map(t => ({ name: t.name || "Trip", via: t.via || null, km: +c.km || 1, own: 1 }));
   const W = (CONFIG.commute || []).map(x => { const s = states[x.sensor]; if (!s) return null; const o = rdLoc(s.attributes.origin) || nzfHome(), d = rdLoc(s.attributes.destination); return o && d ? { name: (x.name ? x.name + " · " : "") + "home ↔ work", via: [o, d], km: 3, hw: rdHw(s.attributes.route) } : null; }).filter(Boolean);
   return W.length ? W : [{ name: "Near home", via: null }];
 }
+// ----- the real route: Google Routes API (computeRoutes, Essentials: no traffic), once a day per trip, kept on this device -----
+// The key is the dashboard's Google key (gKey / gmKey in 45-event-places.js); it must allow "Routes API". Refused: the road-name matching below, marked as such.
+const RDR = { mem: {}, busy: {}, off: "", err: "" };
+const rdRKey = t => "kinetic-route:" + t.via.map(p => p[0].toFixed(3) + "," + p[1].toFixed(3)).join(">");
+function rdPoly(enc) {
+  const out = []; let i = 0, la = 0, lo = 0;
+  while (i < enc.length) { for (const k of [0, 1]) { let b, sh = 0, r = 0; do { b = enc.charCodeAt(i++) - 63; r |= (b & 31) << sh; sh += 5; } while (b >= 32); const d = r & 1 ? ~(r >> 1) : r >> 1; if (k) lo += d; else la += d; } out.push([la / 1e5, lo / 1e5]); }
+  return out;
+}
+function rdRoute(t) {
+  if (t.own || !t.via || t.via.length < 2) return null;
+  const k = rdRKey(t); if (RDR.mem[k]) return RDR.mem[k];
+  try { const c = JSON.parse(localStorage.getItem(k) || "null"); if (c && Date.now() - c.t < 864e5 && c.p && c.p.length > 1) return (RDR.mem[k] = c.p); } catch (e) {}
+  const key = typeof gmKey === "function" ? gmKey() : ""; if (!key || RDR.off || RDR.busy[k]) return null;
+  RDR.busy[k] = 1;
+  const ll = p => ({ location: { latLng: { latitude: p[0], longitude: p[1] } } });
+  fetch("https://routes.googleapis.com/directions/v2:computeRoutes", { method: "POST", headers: { "Content-Type": "application/json", "X-Goog-Api-Key": key, "X-Goog-FieldMask": "routes.polyline.encodedPolyline" },
+    body: JSON.stringify({ origin: ll(t.via[0]), destination: ll(t.via[t.via.length - 1]), travelMode: "DRIVE", routingPreference: "TRAFFIC_UNAWARE" }) })
+    .then(async r => { if (!r.ok) { let m = ""; try { m = ((await r.json()).error || {}).message || ""; } catch (e) {} const er = new Error(m || "HTTP " + r.status); er.status = r.status; throw er; } return r.json(); })
+    .then(j => { const enc = (((j.routes || [])[0] || {}).polyline || {}).encodedPolyline; if (!enc) throw new Error("no route"); const p = rdPoly(enc).map(x => [+x[0].toFixed(5), +x[1].toFixed(5)]); RDR.mem[k] = p; RDR.err = ""; try { localStorage.setItem(k, JSON.stringify({ t: Date.now(), p: p })); } catch (e) {} if (curPg() === "hazards") nzfPanels(); queueNotif(); })
+    .catch(e => { RDR.err = String(e.message || e); if (e.status === 400 || e.status === 403) RDR.off = RDR.err; })
+    .finally(() => { delete RDR.busy[k]; });
+  return null;
+}
+// the shortest distance (km) between an event (points and the lines between them) and a route line
+function rdDist(pts, line) {
+  const r = Math.PI / 180, k = Math.cos(line[0][0] * r) * 111.2, xy = p => [p[1] * k, p[0] * 111.2];
+  const ps = (p, a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], L = dx * dx + dy * dy, t = L ? Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / L)) : 0; return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy); };
+  const A = pts.map(xy), B = line.map(xy); let m = Infinity;
+  A.forEach(p => { for (let i = 1; i < B.length; i++) m = Math.min(m, ps(p, B[i - 1], B[i])); if (B.length === 1) m = Math.min(m, Math.hypot(p[0] - B[0][0], p[1] - B[0][1])); });
+  if (A.length > 1) B.forEach(p => { for (let i = 1; i < A.length; i++) m = Math.min(m, ps(p, A[i - 1], A[i])); });
+  return m;
+}
+// on the route: within 300 m of Google's line (or km of your own trip points). Nearby: unplanned and within 3 km, shown grey, no alert.
+// Without Google's line: the road-name matching from before, each event marked "may not be on your route".
 function rdTrips() {
   const E0 = rdEvents(); if (!RDC() || !E0) return null;
   return rdTripList().map(t => {
-    const box = t.via && t.via.length > 1 ? [Math.min.apply(null, t.via.map(p => p[0])) - .05, Math.max.apply(null, t.via.map(p => p[0])) + .05, Math.min.apply(null, t.via.map(p => p[1])) - .06, Math.max.apply(null, t.via.map(p => p[1])) + .06] : null;
-    const inBox = e => !box || e.pts.some(p => p[0] >= box[0] && p[0] <= box[1] && p[1] >= box[2] && p[1] <= box[3]);
-    const hit = e => e.pts.length && (rdNear(e.pts, t.via, t.km || 1) || (t.hw && t.hw.length && inBox(e) && t.hw.indexOf(rdHw(e.hw)[0]) > -1));
-    const ev = E0.filter(hit); return { name: t.name, bad: ev.filter(e => !e.plan), plan: ev.filter(e => e.plan) };
+    const line = rdRoute(t), via = line || t.via, near = (e, km) => e.pts.length && (!via || rdDist(e.pts, via) <= km);
+    let on, by;
+    if (line) { on = e => near(e, .3); by = e => !e.plan && near(e, 3); }
+    else {
+      const box = t.via && t.via.length > 1 ? [Math.min.apply(null, t.via.map(p => p[0])) - .05, Math.max.apply(null, t.via.map(p => p[0])) + .05, Math.min.apply(null, t.via.map(p => p[1])) - .06, Math.max.apply(null, t.via.map(p => p[1])) + .06] : null;
+      const inBox = e => !box || e.pts.some(p => p[0] >= box[0] && p[0] <= box[1] && p[1] >= box[2] && p[1] <= box[3]);
+      on = e => near(e, t.km || 1) || (t.hw && t.hw.length && inBox(e) && t.hw.indexOf(rdHw(e.hw)[0]) > -1); by = () => false;
+    }
+    const ev = E0.filter(on), nb = E0.filter(e => !on(e) && by(e));
+    return { name: t.name, line: line, via: t.via, own: !!t.own, exact: !!line || !!t.own || !t.via, bad: ev.filter(e => !e.plan), plan: ev.filter(e => e.plan), near: nb.map(e => Object.assign({ km: rdDist(e.pts, via) }, e)) };
   });
 }
 const rdBad = () => { const T = rdTrips(); return !!T && T.some(t => t.bad.length); };
@@ -13226,13 +13334,61 @@ const rdCamUrl = id => "https://trafficnz.info/camera/" + encodeURIComponent(id)
 function rdHtml() {
   const c = RDC(); if (!c) return "";
   const T = rdTrips(), cams = (c.cams || []).map(x => typeof x === "object" ? x : { id: x, name: "Camera " + x }), cam = cams.length ? cams[NZF.rcam % cams.length] : null;
-  const evRow = (e, red) => '<div class="rds-e' + (red ? " rds-red" : "") + '"><b>' + esc([e.hw, e.type || e.imp].filter(Boolean).join(" · ")) + (e.imp && e.imp !== "Caution" && e.type ? " · " + esc(e.imp) : "") + '</b><small>' + esc(e.area) + (e.plan && e.st && !e.on ? " · from " + esc(hzWhen(e.st)) : e.en && e.plan ? " · until " + esc(hzWhen(e.en)) : "") + '</small>' + (e.txt && !e.plan ? '<p>' + esc(e.txt.length > 220 ? e.txt.slice(0, 217) + "…" : e.txt) + '</p>' : "") + (e.alt ? '<p>Detour: ' + esc(e.alt) + '</p>' : "") + '</div>';
-  const trips = !T ? '<p class="hzempty rds-off">' + mdi("help-circle-outline") + 'No data from NZTA (' + esc(rdSens().join(", ")) + ')</p>' : T.map(t => '<div class="rds-t' + (t.bad.length ? " rds-bad" : "") + '"><div class="rds-th">' + mdi(t.bad.length ? "alert" : "check-circle-outline") + '<b>' + esc(t.name) + '</b><small>' + (t.bad.length ? t.bad.length + " problem" + (t.bad.length > 1 ? "s" : "") : "No problems") + (t.plan.length ? " · " + t.plan.length + " planned" : "") + '</small></div>' +
-    t.bad.map(e => evRow(e, /closed/i.test(e.imp))).join("") + (t.plan.length ? '<details class="rds-pl"><summary>' + mdi("traffic-cone") + t.plan.length + ' planned work' + (t.plan.length > 1 ? "s" : "") + '</summary>' + t.plan.map(e => evRow(e, false)).join("") + '</details>' : "") + '</div>').join("");
+  NZF.rdEv = {};
+  // every event is a button: tap for the map sheet with a pin where it is
+  NZF.rdTrip = T || [];
+  const evRow = (e, red, guess, ti) => { NZF.rdEv[e.id] = e; return '<button type="button" class="rds-e' + (red ? " rds-red" : "") + '" data-rde="' + esc(e.id) + '" data-rdt="' + ti + '"><b>' + esc([e.hw, e.type || e.imp].filter(Boolean).join(" · ")) + (e.imp && e.imp !== "Caution" && e.type ? " · " + esc(e.imp) : "") + '</b><small>' + esc(e.area) + (e.plan && e.st && !e.on ? " · from " + esc(hzWhen(e.st)) : e.en && e.plan ? " · until " + esc(hzWhen(e.en)) : "") + (guess ? " · may not be on your route" : "") + '</small>' + (e.txt && !e.plan ? '<p>' + esc(e.txt.length > 220 ? e.txt.slice(0, 217) + "…" : e.txt) + '</p>' : "") + (e.alt ? '<p>Detour: ' + esc(e.alt) + '</p>' : "") + mdi("map-marker") + '</button>'; };
+  const nearRow = (e, ti) => { NZF.rdEv[e.id] = e; return '<button type="button" class="rds-n" data-rde="' + esc(e.id) + '" data-rdt="' + ti + '"><span><small>Nearby, not on your route</small><b>' + esc([e.hw, e.type || e.imp].filter(Boolean).join(" · ")) + (e.imp && e.imp !== "Caution" && e.type ? " · " + esc(e.imp) : "") + '</b><small>' + (e.km < 1 ? Math.round(e.km * 1000) + " m" : e.km.toFixed(1) + " km") + ' from your route</small></span>' + mdi("map-marker") + '</button>'; };
+  const trips = !T ? '<p class="hzempty rds-off">' + mdi("help-circle-outline") + 'No data from NZTA (' + esc(rdSens().join(", ")) + ')</p>' : T.map((t, ti) => '<div class="rds-t' + (t.bad.length ? " rds-bad" : "") + '"><div class="rds-th">' + mdi(t.bad.length ? "alert" : "check-circle-outline") + '<b>' + esc(t.name) + '</b><small>' + (t.bad.length ? t.bad.length + " problem" + (t.bad.length > 1 ? "s" : "") : "No problems") + (t.plan.length ? " · " + t.plan.length + " planned" : "") + '</small></div>' +
+    t.bad.map(e => evRow(e, /closed/i.test(e.imp), !t.exact, ti)).join("") + t.near.map(e => nearRow(e, ti)).join("") + (t.plan.length ? '<details class="rds-pl"><summary>' + mdi("traffic-cone") + t.plan.length + ' planned work' + (t.plan.length > 1 ? "s" : "") + '</summary>' + t.plan.map(e => evRow(e, false, !t.exact, ti)).join("") + '</details>' : "") + '</div>').join("");
   const camH = cam ? '<button type="button" class="rds-cam" data-rdc="next"' + (cams.length > 1 ? "" : " disabled") + '><span class="vcam-ph"><img data-rdcam="' + esc(cam.id) + '" src="' + rdCamUrl(cam.id) + '" alt="' + esc(cam.name) + '" loading="lazy" onerror="this.parentNode.classList.add(\'vcam-err\')" onload="this.parentNode.classList.remove(\'vcam-err\')"><span class="vcam-gone">Camera not available</span><span class="vcam-lb">' + esc(cam.name) + '</span></span><span class="vcam-cap"><small>' + (cams.length > 1 ? 'Tap for the next camera (' + (NZF.rcam % cams.length + 1) + ' of ' + cams.length + ')' : "") + '</small><span class="vcam-cr">NZTA</span></span></button>' : "";
   return '<div class="pn hzpr"><div class="hzlh"><span class="lbl">' + mdi("road-variant") + ' Roads · NZTA</span><small>state highways on your routes</small></div>' + trips + camH + '</div>';
 }
-$("#hazards").addEventListener("click", e => { if (e.target.closest("[data-rdc]")) { NZF.rcam++; nzfPanels(); } });
+// the map sheet for one event: a pin at its middle point (the embedded map cannot draw the closed stretch), the details and the detour, Open in Google Maps
+// the map sheet for one event. With the Maps Static API allowed for the key: a drawn map with the closed stretch in red and the trip's real route
+// (Google Routes, home H -> work W) in blue, close up or the whole trip, and a line saying whether it crosses the route. Otherwise the pin map (Maps Embed).
+function rdEnc(pts) { let out = "", pa = 0, po = 0; const e = v => { v = v < 0 ? ~(v << 1) : v << 1; let s = ""; while (v >= 32) { s += String.fromCharCode((32 | (v & 31)) + 63); v >>= 5; } return s + String.fromCharCode(v + 63); }; pts.forEach(p => { const a = Math.round(p[0] * 1e5), o = Math.round(p[1] * 1e5); out += e(a - pa) + e(o - po); pa = a; po = o; }); return out; }
+const rdThin = (L, n) => { if (L.length <= n) return L; const k = Math.ceil(L.length / n); return L.filter((p, i) => i % k === 0 || i === L.length - 1); };
+function rdStatic(e, t, whole, key) {
+  const ll = p => p[0].toFixed(5) + "," + p[1].toFixed(5), mid = e.pts[Math.floor(e.pts.length / 2)], P = ["size=640x400", "scale=2"];
+  if (t && t.line) P.push("path=" + encodeURIComponent("color:0x3b6fd8dd|weight:5|enc:" + rdEnc(rdThin(t.line, 400))));
+  if (t && t.via && t.via.length > 1) P.push("markers=" + encodeURIComponent("size:mid|color:0x3b6fd8|label:H|" + ll(t.via[0])), "markers=" + encodeURIComponent("size:mid|color:0x3b6fd8|label:W|" + ll(t.via[t.via.length - 1])));
+  if (e.pts.length > 1) P.push("path=" + encodeURIComponent("color:0xe5483bff|weight:9|" + rdThin(e.pts, 60).map(ll).join("|")));
+  P.push("markers=" + encodeURIComponent("color:0xe5483b|label:X|" + ll(mid)));
+  if (!whole) P.push("center=" + ll(mid), "zoom=15");
+  return "https://maps.googleapis.com/maps/api/staticmap?" + P.join("&") + "&key=" + encodeURIComponent(key);
+}
+function rdSheet(id, ti, whole) {
+  const e = (NZF.rdEv || {})[id]; if (!e || !e.pts.length) return;
+  const t = (NZF.rdTrip || [])[+ti], p = e.pts[Math.floor(e.pts.length / 2)], q = p[0].toFixed(5) + "," + p[1].toFixed(5), u = "https://www.google.com/maps/search/?api=1&query=" + q, key = typeof gmKey === "function" ? gmKey() : "";
+  if (!key || typeof cmtShow !== "function") return cmtOpen(u);
+  const ttl = [e.hw, e.type || e.imp].filter(Boolean).join(" · ") + (e.imp && e.imp !== "Caution" && e.type ? " · " + e.imp : ""), who = t ? t.name.replace(/ · home ↔ work$/, "") : "";
+  // the verdict, from the route line itself
+  const d = t && t.line ? rdDist(e.pts, t.line) : null;
+  const vd = d == null ? (t && !t.own && t.via ? "Route not drawn: allow Routes API for your Google key to see " + (who ? who + "'s" : "the") + " route" : "") : d <= .3 ? "On " + (who ? who + "'s" : "the") + " drive to work" : "Not on " + (who ? who + "'s" : "the") + " drive to work: about " + (d < 1 ? Math.round(d * 10) * 100 + " m" : d.toFixed(1) + " km") + " away";
+  const drawn = !RDR.noStatic;
+  const map = drawn ? '<div class="rds-map"><img class="cmf" alt="Map of the event" src="' + esc(rdStatic(e, t, whole, key)) + '" onerror="rdNoStatic(\'' + esc(String(id)) + '\',\'' + esc(String(ti)) + '\')"><div class="rds-mv"><button type="button" class="' + (whole ? "" : "on") + '" data-rdv="0">CLOSE UP</button><button type="button" class="' + (whole ? "on" : "") + '" data-rdv="1">WHOLE TRIP</button></div></div>' +
+      '<div class="rds-lg"><span><i class="rds-lr"></i>' + (e.pts.length > 1 ? "closed or affected stretch" : "where it is") + '</span>' + (t && t.line ? '<span><i class="rds-lb"></i>' + esc(who ? who + "'s" : "your") + ' route, H home → W work</span>' : "") + '</div>'
+    : '<iframe class="cmf" title="Where it is" src="' + esc("https://www.google.com/maps/embed/v1/place?key=" + encodeURIComponent(key) + "&q=" + q + "&zoom=15") + '" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+  cmtShow('<div class="cmb rds-sheet" role="dialog" aria-label="Road event" data-rde="' + esc(String(id)) + '" data-rdt="' + esc(String(ti)) + '"><div class="cmh"><div><b>' + esc(ttl) + '</b><small>' + esc(e.area) + (e.en ? " · until " + esc(hzWhen(e.en)) : "") + '</small></div><button class="rnd" data-cmx aria-label="Close">' + mdi("close") + '</button></div>' +
+    (vd ? '<div class="rds-vd' + (d != null && d <= .3 ? " on" : d != null ? " off" : "") + '">' + mdi(d != null && d <= .3 ? "alert" : d != null ? "check-circle-outline" : "help-circle-outline") + '<span>' + esc(vd) + '</span></div>' : "") + map +
+    (e.txt || e.alt ? '<div class="sm rds-sh">' + esc(e.txt) + (e.alt ? (e.txt ? " " : "") + "Detour: " + esc(e.alt) : "") + '</div>' : "") +
+    '<button class="cmn" data-cmgo="' + esc(u) + '">' + mdi("map-marker") + '<span>OPEN IN GOOGLE MAPS</span></button><div class="sm cmno">From NZTA' + (drawn ? "" : " · the pin marks the middle of the event; allow Maps Static API to see the stretch and the route drawn") + '</div></div>');
+}
+// the key does not allow the Maps Static API: use the pin map from now on (this session)
+function rdNoStatic(id, ti) { if (RDR.noStatic) return; RDR.noStatic = 1; const el = $("#cmtsh"); if (el && el.classList.contains("on")) rdSheet(id, ti); }
+$("#hazards").addEventListener("click", e => { if (e.target.closest("[data-rdc]")) { NZF.rcam++; nzfPanels(); return; } const r = e.target.closest("[data-rde]"); if (r) rdSheet(r.dataset.rde, r.dataset.rdt); });
+// CLOSE UP / WHOLE TRIP: only the picture changes, and only once the new one has loaded (no redraw of the sheet, so no blink)
+document.addEventListener("click", e => {
+  const v = e.target.closest("#cmtsh [data-rdv]"); if (!v) return; const b = v.closest(".rds-sheet"), img = b && b.querySelector(".rds-map img"); if (!img) return;
+  const ev = (NZF.rdEv || {})[b.dataset.rde], t = (NZF.rdTrip || [])[+b.dataset.rdt], key = typeof gmKey === "function" ? gmKey() : ""; if (!ev || !key) return;
+  b.querySelectorAll("[data-rdv]").forEach(x => x.classList.toggle("on", x === v));
+  const u = rdStatic(ev, t, v.dataset.rdv === "1", key); if (img.getAttribute("src") === u) return;
+  const pre = new Image(); b._want = u; img.classList.add("rds-ld");
+  pre.onload = () => { if (b._want !== u) return; img.src = u; img.classList.remove("rds-ld"); };
+  pre.onerror = () => { if (b._want === u) img.classList.remove("rds-ld"); };
+  pre.src = u;
+});
 
 // ===== the Hazards page panels, the header chips and the timers =====
 // the side column: earthquakes (28-hazards.js), then sea level, roads and volcanoes
@@ -13263,7 +13419,109 @@ function nzfStatus() {
   if (vcamOn()) r.push(["Volcano cameras (GeoNet)", "loaded as pictures; a missing one says Camera not available"]);
   if (CONFIG.civilDefence || states[cd.sensor]) r.push(["Civil Defence (" + cd.sensor + ")", st(cd.sensor)]);
   if (rd) rdSens().forEach(id => r.push(["Roads (" + id + ")", st(id)]));
+  if (rd) r.push(["Drawn maps for road events (Google Maps Static API)", RDR.noStatic ? "Google refused the key: allow \"Maps Static API\" for it; until then the event map is a pin" : "used when you tap a road event"]);
+  if (rd && !(rd.trips || []).length && (CONFIG.commute || []).length) r.push(["Exact routes (Google Routes API)", RDR.off ? "Google refused the key: " + RDR.off + " Allow \"Routes API\" for it; until then events are matched by road name." : Object.keys(RDR.mem).length ? "OK, " + Object.keys(RDR.mem).length + " route" + (Object.keys(RDR.mem).length > 1 ? "s" : "") + " (checked once a day)" : RDR.err ? "last try failed: " + RDR.err : "checking…"]);
   return r.length ? '<details class="sck-u"><summary class="lbl">Public feeds (' + r.length + ')</summary><div class="sck-l">' + r.map(x => '<div class="sck-r"><b>' + esc(x[0]) + '</b><small>' + esc(x[1]) + '</small></div>').join("") + '</div></details>' : "";
+}
+// ---------- Event places (2.5.16): Google address suggestions in the event Location field, and a map sheet with Navigate ----------
+// Suggestions use Google's Places API (New) Autocomplete straight from the browser. Key: config googlePlacesKey, else googleMapsKey; the key must
+// allow "Places API (New)". If Google refuses (a map-only key, no billing), the field stays a plain text box and Settings > Setup check says why.
+// The map sheet is the drive-to-work sheet (cmtShow in 10-today-schedule.js): the route from home in the Maps Embed API (googleMapsKey), and
+// NAVIGATE IN GOOGLE MAPS. Without googleMapsKey, MAP opens Google Maps directions straight away.
+if (!MDI["map-marker"]) MDI["map-marker"] = "M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z";
+const PLC = { off: "", err: "", tok: "", t: 0, seq: 0, list: [], hi: -1, last: "" };
+// a Google key can be the key itself or a Home Assistant helper that holds it (input_text.google_maps_key, read when it's needed, so a new key works without
+// touching config.js). With no googleMapsKey in config.js, input_text.google_maps_key is used if Home Assistant has it.
+function gKey(v) {
+  v = String(v || "").trim();
+  if (/^input_text\.[a-z0-9_]+$/.test(v)) { const s = states[v]; v = s && s.state && s.state !== "unknown" && s.state !== "unavailable" ? String(s.state).trim() : ""; }
+  return /^AIza[\w-]{20,}$/.test(v) || v === "demo" || /^AIzaTEST/.test(v) ? v : "";
+}
+function gmKey() { return gKey(CONFIG.googleMapsKey || (states["input_text.google_maps_key"] ? "input_text.google_maps_key" : "")); }
+const plcKey = () => gKey(CONFIG.googlePlacesKey) || gmKey();
+const plcLookupOn = () => !!plcKey() && CONFIG.placesLookup !== false && !PLC.off;
+const plcHome = () => { const z = states["zone.home"]; return z && z.attributes.latitude != null ? [+z.attributes.latitude, +z.attributes.longitude] : null; };
+const plcTok = () => { if (!PLC.tok) PLC.tok = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2)); return PLC.tok; };
+// ask Google for up to 5 places, nearest to home first (50 km bias, not a limit). config placesRegions: ["nz"] keeps them in those countries
+async function plcAsk(q) {
+  const h = plcHome(), body = { input: q, sessionToken: plcTok() };
+  if (h) body.locationBias = { circle: { center: { latitude: h[0], longitude: h[1] }, radius: 50000 } };
+  if (Array.isArray(CONFIG.placesRegions) && CONFIG.placesRegions.length) body.includedRegionCodes = CONFIG.placesRegions.slice(0, 15);
+  const r = await fetch("https://places.googleapis.com/v1/places:autocomplete", { method: "POST", headers: { "Content-Type": "application/json", "X-Goog-Api-Key": plcKey() }, body: JSON.stringify(body) });
+  if (!r.ok) { let m = ""; try { m = ((await r.json()).error || {}).message || ""; } catch (e) {} const er = new Error(m || "HTTP " + r.status); er.status = r.status; throw er; }
+  const j = await r.json();
+  return (j.suggestions || []).map(s => s.placePrediction).filter(Boolean).slice(0, 5).map(p => {
+    const sf = p.structuredFormat || {};
+    return { full: (p.text || {}).text || "", main: (sf.mainText || {}).text || (p.text || {}).text || "", sub: (sf.secondaryText || {}).text || "" };
+  }).filter(p => p.full);
+}
+function plcDraw() {
+  const ls = $("#plcls"), inp = $("#evlc"); if (!ls || !inp) return;
+  const L = PLC.list;
+  if (!L.length) { ls.hidden = true; ls.innerHTML = ""; inp.setAttribute("aria-expanded", "false"); return; }
+  ls.innerHTML = L.map((p, i) => '<span class="plc-o' + (i === PLC.hi ? " on" : "") + '" role="option" id="plco' + i + '" aria-selected="' + (i === PLC.hi) + '" data-plci="' + i + '">' + mdi("map-marker") + '<span><b>' + esc(p.main) + '</b>' + (p.sub ? '<small>' + esc(p.sub) + '</small>' : "") + '</span></span>').join("") + '<span class="plc-by">powered by Google</span>';
+  ls.hidden = false; inp.setAttribute("aria-expanded", "true");
+  if (PLC.hi > -1) inp.setAttribute("aria-activedescendant", "plco" + PLC.hi); else inp.removeAttribute("aria-activedescendant");
+}
+function plcClear() { PLC.list = []; PLC.hi = -1; plcDraw(); }
+function plcPick(i) {
+  const p = PLC.list[i], inp = $("#evlc"); if (!p || !inp) return;
+  inp.value = p.full; PLC.last = p.full; PLC.tok = ""; plcClear();
+  if (typeof evRead === "function") evRead(); plcMapBtn(); inp.focus();
+}
+const plcMapBtn = () => { const b = $("#evp [data-plcmap]"), inp = $("#evlc"); if (b && inp) b.hidden = !inp.value.trim(); };
+function plcType() {
+  const inp = $("#evlc"); if (!inp) return; plcMapBtn();
+  const q = inp.value.trim(); clearTimeout(PLC.t);
+  if (!plcLookupOn() || q.length < 3 || q === PLC.last) { plcClear(); return; }
+  // 300 ms after the last key, so a word costs one lookup, not one per letter
+  PLC.t = setTimeout(async () => {
+    const n = ++PLC.seq;
+    try { const L = await plcAsk(q); if (n !== PLC.seq || !$("#evlc") || $("#evlc").value.trim() !== q) return; PLC.list = L; PLC.hi = -1; PLC.err = ""; plcDraw(); }
+    catch (e) { PLC.err = String(e.message || e); if (e.status === 400 || e.status === 403) PLC.off = PLC.err; plcClear(); }
+  }, 300);
+}
+$("#evp").addEventListener("input", e => { if (e.target.id === "evlc") plcType(); });
+$("#evp").addEventListener("keydown", e => {
+  if (e.target.id !== "evlc") return;
+  // Escape also drops a lookup still on its way, so the list cannot pop back up
+  if (e.key === "Escape") { clearTimeout(PLC.t); PLC.seq++; }
+  if (!PLC.list.length) return;
+  if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); const n = PLC.list.length; PLC.hi = e.key === "ArrowDown" ? (PLC.hi + 1) % n : (PLC.hi - 1 + n) % n; plcDraw(); }
+  else if (e.key === "Enter" && PLC.hi > -1) { e.preventDefault(); plcPick(PLC.hi); }
+  else if (e.key === "Escape") { e.stopPropagation(); e.preventDefault(); plcClear(); }
+});
+// pointerdown so the pick lands before the field loses focus
+$("#evp").addEventListener("pointerdown", e => { const o = e.target.closest("[data-plci]"); if (o) { e.preventDefault(); plcPick(+o.dataset.plci); } });
+$("#evp").addEventListener("click", e => {
+  if (e.target.closest("[data-plci]")) { e.preventDefault(); return; }
+  if (e.target.closest("[data-plcmap]")) { e.preventDefault(); if (typeof evRead === "function") evRead(); const s = evS || {}; plcSheet(s.title || "Event", s.loc || ($("#evlc") || {}).value || "", plcWhen(s)); return; }
+  if (!e.target.closest(".plc-w")) plcClear();
+});
+$("#evp").addEventListener("focusout", e => { if (e.target.id === "evlc") setTimeout(() => { if (!document.activeElement || document.activeElement.id !== "evlc") plcClear(); }, 150); });
+function plcWhen(s) {
+  if (!s || !s.sd) return "";
+  const d = new Date(s.sd + "T" + (s.ad ? "12:00" : s.st || "09:00")), today = new Date().toDateString() === d.toDateString();
+  return (today ? "Today" : d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" })) + (s.ad ? "" : " · " + d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })));
+}
+// the route from home to the place, and Navigate
+function plcNav(loc) { const h = plcHome(); return "https://www.google.com/maps/dir/?api=1" + (h ? "&origin=" + h[0] + "," + h[1] : "") + "&destination=" + encodeURIComponent(loc) + "&travelmode=driving"; }
+function plcSheet(title, loc, when) {
+  loc = String(loc || "").trim(); if (!loc) return;
+  const u = plcNav(loc); if (!gmKey() || typeof cmtShow !== "function") return cmtOpen(u);
+  const h = plcHome(), src = "https://www.google.com/maps/embed/v1/" + (h ? "directions?key=" + encodeURIComponent(gmKey()) + "&origin=" + h[0] + "," + h[1] + "&destination=" + encodeURIComponent(loc) + "&mode=driving" : "place?key=" + encodeURIComponent(gmKey()) + "&q=" + encodeURIComponent(loc));
+  cmtShow('<div class="cmb" role="dialog" aria-label="Map"><div class="cmh"><div><b>' + esc(title) + (when ? ' · ' + esc(when) : "") + '</b><small>' + esc(loc) + '</small></div><button class="rnd" data-cmx aria-label="Close">' + mdi("close") + '</button></div>' +
+    '<iframe class="cmf" title="Map" src="' + esc(src) + '" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>' +
+    '<button class="cmn" data-cmgo="' + esc(u) + '">' + mdi("directions") + '<span>NAVIGATE IN GOOGLE MAPS</span></button><div class="sm cmno">Route from home · live traffic is in the Google Maps app</div></div>');
+}
+// the pin on Today's events (10-today-schedule.js)
+const plcPin = i => '<i class="plc-pin" role="button" tabindex="0" data-schloc="' + i + '" aria-label="Map">' + mdi("map-marker") + '</i>';
+function plcFromToday(i) { const v = (SCH.ev || [])[i]; if (!v || !v.l) return; plcSheet(v.s || "Event", v.l, v.ad ? "Today" : "Today · " + schTm(v.t)); }
+document.addEventListener("keydown", e => { const p = e.target.closest && e.target.closest("#sch [data-schloc]"); if (p && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); plcFromToday(+p.dataset.schloc); } });
+// Admin > Setup check: why suggestions are not showing
+function plcStatus() {
+  if (!plcKey()) return "";
+  return '<div class="sck-r"><b>Address suggestions (Google Places)</b><small>' + esc(CONFIG.placesLookup === false ? "turned off (placesLookup: false)" : PLC.off ? "Google refused the key: " + PLC.off + " Allow \"Places API (New)\" for it, or set googlePlacesKey." : PLC.err ? "last try failed: " + PLC.err : "ready (checked when you type in an event's Location)") + '</small></div>';
 }
 // ---------- Auto update: a new dash.html or config.js on the server is picked up by every screen, no ?v= to bump ----------
 // Every autoUpdateMinutes (5), and when the dashboard comes back on screen, it fetches its own page and config.js past the browser cache.
