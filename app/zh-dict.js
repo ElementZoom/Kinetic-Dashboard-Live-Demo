@@ -90,3 +90,5 @@ Object.assign(window.__ZHD.D, {"updates": "更新", "select all": "全选", "sel
 
 Object.assign(window.__ZHD.D, {"unselect all": "取消全选"});
 Object.assign(window.__ZHD.D, {"quick actions": "快捷操作"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^updates · (\\d+)$", "更新 · $1"]]);
+Object.assign(window.__ZHD.D, {"airing": "通风中", "airing out · the garage door is open": "正在通风 · 车库门开着", "airing for": "通风时长"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^airing out · down (\\d+)% since the garage door opened$", "正在通风 · 车库门打开后下降了 $1%"]]);
+window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^already marked serviced on (.+?)( \\(next at (\\S+) km\\))?\\. save replaces it; cancel keeps it\\.$", "已于 $1 标记为已保养。保存会替换它；取消则保留。"]]);

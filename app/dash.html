@@ -1095,6 +1095,7 @@ body.vwb #btab,body.vwb #mshe{display:none}
 .csv-done{width:100%;height:46px;margin-top:14px;justify-content:center;display:flex;align-items:center;gap:6px}.csv-done svg{width:18px;height:18px;fill:currentColor}
 .csv-ed{all:unset;cursor:pointer;display:block;margin:10px auto 0;color:var(--mint);font-size:14px}.csv-bn .eb{height:46px;justify-content:center;display:flex;align-items:center;gap:6px}.csv-done svg{width:18px;height:18px;fill:currentColor}
 .vhr.soon b{color:#e8973a}
+.csv-warn{margin-top:8px;padding:8px 10px;border-radius:10px;background:rgba(232,151,58,.16);font-size:13px}
 /* hazards page: GeoNet earthquakes + volcanoes on a NZ map */
 #hazards{--hzbg:color-mix(in srgb,var(--bg) 84%,transparent)}
 .hzg{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,1fr);gap:14px;align-items:start}
@@ -2974,6 +2975,20 @@ html:not(#x) #dtm .dtv{flex:1;aspect-ratio:auto;min-height:0;height:100%}
 #tldial button i svg{width:22px;height:22px;fill:currentColor}
 #tlfab.dial{background:var(--ink);color:var(--bg)}
 #tlscrim{position:fixed;inset:0;z-index:42;background:rgba(0,0,0,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .2s}#tlscrim.on{opacity:1;pointer-events:auto}
+/* 2.5.17 switch tiles that are on: a light is a warm amber tile with dark text (a coloured bulb takes its own colour), a power switch a light purple one.
+   Everywhere tiles are drawn (rooms, the camera full screen, groups, controls), in every style; the brightness shows as a lighter band */
+html:not(#x):not(#y) .tl.lit{--lt1:255,214,128;--lt2:243,167,59;--ltx:#3a2300}
+html:not(#x):not(#y) .tl.lit.lc{--lt1:var(--lc);--lt2:var(--lc)}
+html:not(#x):not(#y) .tl.pwr{--lt1:222,207,255;--lt2:180,156,242;--ltx:#26174f}
+html:not(#x):not(#y) :is(.tl.lit,.tl.pwr){background:linear-gradient(135deg,rgb(var(--lt1)),rgb(var(--lt2)));border-color:rgba(var(--lt2),.9);color:var(--ltx);box-shadow:0 0 22px rgba(var(--lt2),.42)}
+html:not(#x):not(#y) :is(.tl.lit,.tl.pwr) :is(.nm,.tn,.ts2,.st,.tmr){color:var(--ltx)}
+html:not(#x):not(#y) :is(.tl.lit,.tl.pwr) .ts2{opacity:.82}
+html:not(#x):not(#y) :is(.tl.lit,.tl.pwr) svg{fill:var(--ltx)}
+html:not(#x):not(#y) .tl.lit.lc :is(.nm,.tn,.ts2,.st,.tmr){color:#1a1a1a}html:not(#x):not(#y) .tl.lit.lc svg{fill:#1a1a1a}
+/* dimmable: solid colour up to the brightness, a softer track after it */
+html:not(#x):not(#y) .tl.lit.dim{background:color-mix(in srgb,rgb(var(--lt1)) 62%,var(--bg))}
+html:not(#x):not(#y) .tl.lit.dim .fill{display:block;background:linear-gradient(135deg,rgb(var(--lt1)),rgb(var(--lt2)))}
+html:not(#x):not(#y) .tl.lit input[type=range]{accent-color:var(--ltx)}
 /* Header chips (weather alert, pollen, leak ...): the glow is a soft halo around the pill that breathes, not a fading, fuzzy-edged copy of the whole chip. The text and border stay steady. */
 @media(min-width:761px){
 #nacc[data-k] .nai,html[data-mode] #nacc[data-k] .nai{position:relative;animation:none;filter:none;opacity:1}
@@ -3944,16 +3959,16 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.17"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.17"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.17"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="config.js?v=2.5.18"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.18"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.18"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.17";   // the one place to change the version
-window.DASH_BUILD = "80c83b";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.5.18";   // the one place to change the version
+window.DASH_BUILD = "5076b5";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -4263,6 +4278,8 @@ Object.assign(window.__ZHD.D, {"updates": "更新", "select all": "全选", "sel
 
 Object.assign(window.__ZHD.D, {"unselect all": "取消全选"});
 Object.assign(window.__ZHD.D, {"quick actions": "快捷操作"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^updates · (\\d+)$", "更新 · $1"]]);
+Object.assign(window.__ZHD.D, {"airing": "通风中", "airing out · the garage door is open": "正在通风 · 车库门开着", "airing for": "通风时长"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^airing out · down (\\d+)% since the garage door opened$", "正在通风 · 车库门打开后下降了 $1%"]]);
+window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^already marked serviced on (.+?)( \\(next at (\\S+) km\\))?\\. save replaces it; cancel keeps it\\.$", "已于 $1 标记为已保养。保存会替换它；取消则保留。"]]);
 // ---------- Language (Theme page): English or Simplified Chinese ----------
 // Chinese translates the dashboard's labels, headings, buttons and units as they appear (the dictionary in 56-zh-dict.js / 56-zh-more.js),
 // and dates and times use Chinese formats. Names from Home Assistant and config.js stay as they are. Sentences that aren't in the dictionary stay English.
@@ -5659,6 +5676,15 @@ function updRooms() {
   if (curRoom) return;
   $$("#rl .rc").forEach(el => fillCard(el, ROOM(el.dataset.r)));
 }
+// light or power switch? light.* is a light; a switch.* is a light when its name, id or icon says so (light, lamp, LED, bulb, downlight ...), otherwise a power switch
+// (a rice cooker, a heater). config switchKinds: { "switch.x": "light" | "power" | "none" } overrides. Anything else (fans, covers, scripts) keeps its own look.
+const SW_LIGHT = /light|lamp|\bleds?\b|bulb|downlight|pendant|sconce|chandelier|lantern|fairy/i;
+function swKind(e, a) {
+  const o = (CONFIG.switchKinds || {})[e]; if (o) return o === "none" ? "" : o;
+  const d = e.split(".")[0]; if (d === "light") return "light"; if (d !== "switch") return "";
+  a = a || ((states[e] || {}).attributes || {});
+  return SW_LIGHT.test(e.split(".")[1].replace(/_/g, " ")) || SW_LIGHT.test(a.friendly_name || "") || /lightbulb|lamp|ceiling-light|led|light-switch/.test(a.icon || "") ? "light" : "power";
+}
 function tileHtml(x) {
   const it = typeof x === "string" ? { entity: x } : x, e = it.entity, d = e.split(".")[0], nm = '<span class="nm">' + (it.name ? esc(it.name) : "") + '</span>';
   if (d === "binary_sensor" && !it.script) return '<div class="bd" data-e="' + e + '"' + (it.kind ? ' data-k="' + it.kind + '"' : "") + (it.name ? ' data-n="1"' : "") + '><i></i>' + nm + '<span class="st"></span></div>';
@@ -5783,6 +5809,8 @@ function updTiles() {
       return;
     }
     el.classList.toggle("na", st === "unavailable"); el.classList.toggle("on", el.dataset.c ? st !== "off" : on);
+    { const k = !el.dataset.c && !el.dataset.sc && !el.dataset.sir && !el.classList.contains("wt") ? swKind(e, a) : "";   // water taps keep their flowing water look; heat / charge tiles get the colour with their effect on top
+      el.classList.toggle("lit", on && k === "light"); el.classList.toggle("pwr", on && k === "power"); }   // 2.5.17: a light that is on is a warm amber tile, a power switch a light purple one
     const hfx = el.dataset.c && st !== "off" && st !== "unavailable" ? hpFx() : null; if (el.dataset.c) { el.classList.toggle("hv", !!hfx); if (hfx) el.dataset.hm = hfx[0]; else delete el.dataset.hm; }
     if (el.classList.contains("bd")) { $(".st", el).textContent = on ? "OPEN" : "CLOSED"; if (el.dataset.k) $("i", el).innerHTML = mdi(el.dataset.k === "door" ? (on ? "m3-door-open" : "m3-door-back") : (on ? "m3-window-open" : "m3-window-closed")); return; }
     let t = st.toUpperCase(); const rg = $("input", el), idle = rg && document.activeElement !== rg && !(rg._d && rg._d > Date.now());   // not while a finger is on it, nor for 1.5s after (HA echoes the old value first)
@@ -12208,15 +12236,16 @@ function insxMould() {
     const v = parseFloat(sv(r.hum)); if (isNaN(v) || v < lim) return;
     const a = H[r.hum] || []; let since = Date.now(); for (let i = a.length - 1; i >= 0; i--) { if (parseFloat(a[i][1]) >= lim) since = a[i][0]; else break; }
     const ms = Date.now() - since; if (ms < 3 * 36e5) return;
-    const D = insxDryState(r), dry = D && D.drying, G = D ? null : galForRoom(r), air = G && galAirOn(G.cam);
+    const D = insxDryState(r), dry = D && D.drying, G = D ? null : galForRoom(r), air = !!(G && (G.open || galAirOn(G.cam)));
     // drying: since the heat pump went to dry (or the zone came on, whichever is later), the humidity then and its line since
-    let dz = null; if (dry) { const st = Math.max.apply(null, [MAIN].concat(D.zones).map(x => Date.parse(states[x].last_changed || "") || 0)) || Date.now(); let v0 = NaN; const L = [];
+    // airing (a garage with its door open): the same, since the door opened
+    let dz = null; if (dry || air) { const gs = air && states[(galCfg()[G.cam] || {}).sensor], st = air ? (gs && Date.parse(gs.last_changed || "")) || Date.now() : Math.max.apply(null, [MAIN].concat(D.zones).map(x => Date.parse(states[x].last_changed || "") || 0)) || Date.now(); let v0 = NaN; const L = [];
       a.forEach(q => { const f = parseFloat(q[1]); if (isNaN(f)) return; if (q[0] <= st) v0 = f; else L.push(f); }); if (isNaN(v0)) v0 = L.length ? L[0] : v; L.unshift(v0); L.push(v); dz = { st: st, v0: v0, L: L.slice(-40) }; }
     const fall = dz && v < dz.v0 - 0.5;
-    out.push({ id: "mould:" + r.id, stats: dz ? [["Humidity", Math.round(v) + "%"], ["Was", Math.round(dz.v0) + "%"], ["Drying for", insxHm(Math.max(6e4, Date.now() - dz.st))]] : [["Humidity", Math.round(v) + "%"], ["For", insxHm(ms)], ["Limit", lim + "%"]],
-      tile: dz ? ["DRYING", Math.round(v) + "%" + (fall ? " ↓" : ""), r.name + " · from " + Math.round(dz.v0) + "%"] : ["HUMID", Math.round(v) + "%", r.name + " · " + insxHm(ms)],
-      spark: dz ? dz.L : null, fx: dz ? "dry" : "", cat: "climate", lvl: dry ? 1 : ms >= 8 * 36e5 ? 2 : 1, icon: "water-percent", tone: dry ? "dry" : "warn", go: "#rooms/" + r.id, nogo: !!D, title: r.name + " " + Math.round(v) + "% humid",
-      sub: dry ? "Drying now · " + (fall ? "down " + Math.round(dz.v0 - v) + "% since it started" : "the heat pump is on dry for this room") : air ? "For " + insxHm(ms) + " · airing out, the garage door is open" : "For " + insxHm(ms) + " · " + (D ? "dry it with the heat pump" : G ? "open the garage door to air it out" : "air it out or run the dehumidifier"),
+    out.push({ id: "mould:" + r.id, stats: dz ? [["Humidity", Math.round(v) + "%"], ["Was", Math.round(dz.v0) + "%"], [air ? "Airing for" : "Drying for", insxHm(Math.max(6e4, Date.now() - dz.st))]] : [["Humidity", Math.round(v) + "%"], ["For", insxHm(ms)], ["Limit", lim + "%"]],
+      tile: dz ? [air ? "AIRING" : "DRYING", Math.round(v) + "%" + (fall ? " ↓" : ""), r.name + " · from " + Math.round(dz.v0) + "%"] : ["HUMID", Math.round(v) + "%", r.name + " · " + insxHm(ms)],
+      spark: dz ? dz.L : null, fx: dz ? "dry" : "", cat: "climate", lvl: dz ? 1 : ms >= 8 * 36e5 ? 2 : 1, icon: air ? "garage-open-variant" : "water-percent", tone: dz ? "dry" : "warn", go: "#rooms/" + r.id, nogo: !!D, title: r.name + " " + Math.round(v) + "% humid",
+      sub: dry ? "Drying now · " + (fall ? "down " + Math.round(dz.v0 - v) + "% since it started" : "the heat pump is on dry for this room") : air ? "Airing out · " + (fall ? "down " + Math.round(dz.v0 - v) + "% since the garage door opened" : "the garage door is open") : "For " + insxHm(ms) + " · " + (D ? "dry it with the heat pump" : G ? "open the garage door to air it out" : "air it out or run the dehumidifier"),
       acts: D && !dry ? [["DRY THIS ROOM", () => insxDry(r)]] : G && !G.open ? [["OPEN GARAGE DOOR", () => galAirAsk(G.cam)]] : G && air ? [["CLOSE GARAGE DOOR", () => galPress(G.cam, false)]] : [],
       full: () => {
         // the last 24 hours, an hour a column: the value at the end of each hour
@@ -13731,24 +13760,28 @@ function csvForm(m, v, odo, every) {
   return '<div class="evf csv-f"><b class="csv-ft">' + (m === "done" ? "Serviced" : "Edit details") + '</b><div class="csv-g">' + f(m === "done" ? "Date" : "Last service", '<input type="date" data-csvi="last" value="' + date + '">') +
     f("Next service km", '<input type="number" inputmode="numeric" data-csvi="km" value="' + km + '">') + '</div>' +
     (m === "done" && odo != null ? '<div class="sm">Odometer now ' + K(odo) + ' km · next service ' + K(every) + ' km later</div>' : "") +
+    // already marked serviced recently: say so, so a stray tap doesn't quietly replace it
+    (m === "done" && v.last && Date.now() - +v.last < 60 * 864e5 ? '<div class="csv-warn">Already marked serviced on ' + esc(insxD(v.last)) + (v.km != null ? ' (next at ' + K(v.km) + ' km)' : "") + '. SAVE replaces it; CANCEL keeps it.</div>' : "") +
     '<div class="csv-bn"><button type="button" class="eb" data-csv="cancel">CANCEL</button><button type="button" class="eb on" data-csv="save">SAVE</button></div></div>';
 }
+// redraw only the Service card (redrawing the whole Vehicle page made the other cards lose their names and slide in again)
+function csvRedraw() { const old = $("#vehicle .csv-card"); if (!old) { if (curPg() === "vehicle") drawVehicle(); return; } const t = document.createElement("div"); t.innerHTML = csvCard(); const n = t.firstChild; n.style.display = old.style.display; old.replaceWith(n); }
 function csvSave(o) {
   const c = csvCfg(), id = csvHelper(c);
-  if (!states[id]) { CSV.msg = "Add the Text helper " + id + " in Home Assistant first (Settings > Devices & services > Helpers)."; CSV.dirty = 0; CSV.mode = ""; drawVehicle(); return; }
+  if (!states[id]) { CSV.msg = "Add the Text helper " + id + " in Home Assistant first (Settings > Devices & services > Helpers)."; CSV.dirty = 0; CSV.mode = ""; csvRedraw(); return; }
   const val = JSON.stringify(o); call("input_text", "set_value", id, { value: val });
   states[id] = Object.assign({}, states[id], { state: val });   // show it straight away; Home Assistant's own update follows
-  CSV.msg = "Saved."; CSV.dirty = 0; CSV.mode = ""; setTimeout(() => { CSV.msg = ""; if (curPg() === "vehicle") drawVehicle(); }, 4000);
-  drawVehicle(); if (typeof insTick === "function") insTick();
+  CSV.msg = "Saved."; CSV.dirty = 0; CSV.mode = ""; setTimeout(() => { CSV.msg = ""; if (curPg() === "vehicle") csvRedraw(); }, 4000);
+  csvRedraw(); if (typeof insTick === "function") insTick();
 }
 document.addEventListener("input", e => { const i = e.target.closest("[data-csvi]"); if (!i) return; CSV.dirty = 1;
 });
 document.addEventListener("click", e => { const b = e.target.closest("[data-csv]"); if (!b) return; e.preventDefault();
   const every = +csvCfg().everyKm || 10000, odo = csvOdo();
-  if (b.dataset.csv === "done" || b.dataset.csv === "edit") { CSV.mode = b.dataset.csv; CSV.msg = ""; CSV.dirty = 0; return drawVehicle(); }
-  if (b.dataset.csv === "cancel") { CSV.mode = ""; CSV.dirty = 0; return drawVehicle(); }
+  if (b.dataset.csv === "done" || b.dataset.csv === "edit") { CSV.mode = b.dataset.csv; CSV.msg = ""; CSV.dirty = 0; return csvRedraw(); }
+  if (b.dataset.csv === "cancel") { CSV.mode = ""; CSV.dirty = 0; return csvRedraw(); }
   const g = n => ($('[data-csvi="' + n + '"]') || {}).value || "", last = insxDate(g("last"));
-  if (!last) { CSV.msg = "Fill in the last service date."; CSV.dirty = 0; return drawVehicle(); }
+  if (!last) { CSV.msg = "Fill in the last service date."; CSV.dirty = 0; return csvRedraw(); }
   csvSave({ last: csvIso(last), km: g("km") ? Math.round(+g("km")) : null, due: csvIso(csvYear(last, +csvCfg().everyMonths || 12)) });
 });
 // ---------- Updates and the tools button (2.5.17) ----------
