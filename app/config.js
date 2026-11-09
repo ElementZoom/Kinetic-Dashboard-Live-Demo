@@ -236,6 +236,8 @@ window.DASH_CONFIG = {
   },
   volcanoes: [],                         // alert-level sensors, e.g. ["sensor.volcano_name"]
   hazards: { radius: 200, focusKm: 100, minMag: 4 },
+  // 2.5.15: roads on a pretend trip over the Kaimai Range, with two real NZTA cameras there
+  roads: { trips: [{ name: "Home → Tauranga", via: [[-37.787, 175.279], [-37.88, 175.9], [-37.69, 176.17]] }], cams: [{ id: 604, name: "SH29 Kaimai Western" }, { id: 606, name: "SH29 Western Summit" }] },
   siren: { flag: "input_boolean.demo_siren_toggle", script30: "demo_siren_30_seconds" },
   // Notification pop-up rows: [entity, title, text, optional tag]. tag "driveway" also shows the driveway camera
   // Extra pairings for the countdown on notification tiles: entity -> timer. Taps use their zone's timer, and

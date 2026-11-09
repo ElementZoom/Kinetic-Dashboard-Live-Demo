@@ -1115,14 +1115,14 @@ body.vwb #btab,body.vwb #mshe{display:none}
   #hazards .hzg{height:var(--hzH,auto);align-items:stretch}
   #hazards .hzm{min-height:0}#hazards .hzmap{flex:1;height:auto;min-height:0}
   #hazards .hzside{min-height:0}#hazards .hzside>.pn{min-height:0;overflow-y:auto;overscroll-behavior:contain}
-  #hazards .hzside>.pn:first-child{flex:0 1 auto;max-height:42%}#hazards .hzside>.pn:last-child{flex:1 1 0}
+  #hazards .hzside>.hzpq{flex:0 1 auto;max-height:42%}#hazards .hzside>.hzpv{flex:1 1 0}#hazards .hzside>:is(.hzps,.hzpr){flex:0 0 auto;overflow:visible}
 }
 @media(max-width:760px){
   #hazards .hzg{display:block}
   #hazards .hzm{height:var(--hzH,auto);margin:0}
   #hazards .hzside{height:auto;margin:0}
   #hazards .hzg[data-tab=map] .hzside,#hazards .hzg[data-tab=quake] .hzm,#hazards .hzg[data-tab=volc] .hzm{display:none}
-  #hazards .hzg[data-tab=quake] .hzside>.pn:nth-child(2),#hazards .hzg[data-tab=volc] .hzside>.pn:first-child{display:none}
+  #hazards .hzg[data-tab=quake] .hzside>:is(.hzpv,.hzpr),#hazards .hzg[data-tab=volc] .hzside>:is(.hzpq,.hzps,.hzpr),#hazards .hzg[data-tab=roads] .hzside>:is(.hzpq,.hzps,.hzpv),#hazards .hzg[data-tab=roads] .hzm{display:none}
   #hazards .hzm{padding:14px;gap:10px}#hazards .hzmap{flex:1;height:auto;min-height:0}
   #hazards .hzside{gap:12px}
   .hzleg{gap:4px 12px}.hzleg em{font-size:10px;margin-right:2px}.hzleg .lbl{font-size:10px}.hzm.dop .hzleg{display:none}
@@ -2870,6 +2870,72 @@ html:not(#x) #dtm .dtv{flex:1;aspect-ratio:auto;min-height:0;height:100%}
 .dtso .dti{flex:0 0 150px;cursor:pointer}.dtso .pbth img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .dtso .pbx{padding:4px 2px 0;font-size:12px;color:var(--mut);text-align:center}
 @media(max-width:760px){.dthr{grid-template-columns:minmax(0,1fr)}.dtr{grid-template-columns:120px minmax(0,1fr) auto;gap:10px}.dtso .dti{flex-basis:120px}}
+/* 2.5.15 NZ public feeds: volcano cameras, sea level gauges, Civil Defence alerts, roads (44-nz-feeds.js) */
+#hazards{--nzamb:#e89a2c;--nzred:#e5483b}
+@media(min-width:1001px){#hazards .hzside{overflow-y:auto;overscroll-behavior:contain}#hazards .hzside>.hzpq{flex:0 0 auto;min-height:130px;max-height:34%}#hazards .hzside>.hzpv{min-height:220px}#hazards .hzside .rds-cam .vcam-ph{aspect-ratio:auto;height:130px}}
+/* camera pictures: GeoNet stills are 4:3; a missing one says so, at night a moon and "Too dark to see" sit over a faded picture */
+.vcam-ph{position:relative;display:block;overflow:hidden;border-radius:10px;background:#2a2d31;aspect-ratio:4/3}
+.vcam-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:filter .4s,opacity .4s}
+.vcam-gone{display:none;position:absolute;inset:0;align-items:center;justify-content:center;text-align:center;padding:6px;font:11px var(--mono);color:rgba(255,255,255,.7)}
+.vcam-err img{visibility:hidden}.vcam-err .vcam-gone{display:flex}.vcam-err .vcam-dk{display:none}
+.vcam-nt img{filter:grayscale(1);opacity:.35}
+.vcam-dk{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#fff;text-align:center;pointer-events:none}
+.vcam-dk svg{width:22px;height:22px;fill:currentColor}.vcam-dk b{font-size:13px;font-weight:500}.vcam-dk small{font:11px var(--mono);opacity:.75}
+.vcam-lb{position:absolute;left:5px;bottom:4px;font:600 10.5px var(--mono);color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100% - 10px)}
+.vcam-cap{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:5px;font:11px var(--mono);color:var(--mut)}
+.vcam-cap>*{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.vcam-cap .vcam-cr{flex:none}.vcam-cap small{font:inherit;margin:0!important}
+/* the big photo in the map pop-up */
+.vcam-big{position:relative;display:block;margin-top:12px;cursor:zoom-in}
+.vcam-big .vcam-ph{aspect-ratio:auto;height:clamp(110px,21vh,200px)}
+#hazards .hzd{max-height:calc(100% - 24px);overflow-y:auto;overscroll-behavior:contain}
+.vcam-sw{position:absolute;right:8px;top:8px;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;max-width:calc(100% - 16px)}
+.vcam-sw button{font:11px var(--mono);color:#fff;background:rgba(0,0,0,.45);border:0;border-radius:7px;padding:3px 8px;cursor:pointer}.vcam-sw button.on{background:#fff;color:#222}
+/* thumbnails under a volcano above level 0 */
+.hzrow.vcam-row{flex-wrap:wrap}
+.hzrow>.vcam-th,.vcam-th{flex:0 0 100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:2px}.vcam-th.n1{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.vcam-th.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.vcam-th .vcam-ph{aspect-ratio:auto;height:64px;border-radius:8px}.vcam-th.n3 .vcam-ph{height:50px}
+.vcam-mk{flex:none;display:flex;color:var(--mut);opacity:.75}.vcam-mk svg{width:16px;height:16px;fill:currentColor}
+#vcamv{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.86);padding:20px;cursor:zoom-out}
+#vcamv.on{display:flex}#vcamv figure{margin:0;max-width:min(96vw,1100px)}#vcamv img{width:100%;height:auto;max-height:84vh;object-fit:contain;border-radius:12px;display:block}
+#vcamv figcaption{font:12px var(--mono);color:rgba(255,255,255,.75);text-align:center;margin-top:10px}
+/* sea level card */
+.hzps .slv-h{display:flex;align-items:center;gap:8px;margin:2px 0 6px;font-size:14px}.hzps .slv-h svg{width:18px;height:18px;flex:none;fill:var(--mint)}
+.slv-off .slv-h{color:var(--mut)}.slv-off .slv-h svg{fill:var(--mut)}
+.slv-amb{background:color-mix(in srgb,var(--nzamb) 12%,transparent)!important;border-color:color-mix(in srgb,var(--nzamb) 55%,transparent)!important}.slv-amb .slv-h svg{fill:var(--nzamb)}
+.slv-red{background:color-mix(in srgb,var(--nzred) 14%,transparent)!important;border-color:color-mix(in srgb,var(--nzred) 60%,transparent)!important}.slv-red .slv-h svg{fill:var(--nzred)}
+.slv-r{display:grid;grid-template-columns:minmax(0,1fr) minmax(90px,150px) 52px;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--line)}
+.slv-r b{display:block;font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.slv-r small{display:block;font:11px var(--mono);color:var(--mut)}
+.slv-r em{font:600 13px var(--mono);font-style:normal;text-align:right}.slv-r em.l1{color:var(--nzamb)}.slv-r em.l2{color:var(--nzred)}.slv-r em.l-1{color:var(--mut)}
+.slv-old{opacity:.55}
+.slv-sp{width:100%;height:32px;display:block;overflow:visible}.slv-sp polyline{fill:none;stroke:var(--cool);stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.slv-sp.l1 polyline{stroke:var(--nzamb)}.slv-sp.l2 polyline{stroke:var(--nzred)}
+.slv-z{stroke:var(--line);stroke-dasharray:3 3;vector-effect:non-scaling-stroke}.slv-th{stroke:color-mix(in srgb,var(--nzamb) 40%,transparent);stroke-dasharray:2 4;vector-effect:non-scaling-stroke}
+.slv-n{font-size:12.5px;color:var(--mut);margin:8px 0 0;line-height:1.45}
+.slv-f{display:flex;justify-content:space-between;gap:8px;margin-top:6px;font:10.5px var(--mono);color:var(--mut)}
+/* roads card */
+.rds-t{padding:8px 10px;border-radius:12px;background:rgba(var(--w),.05);margin-top:8px}.rds-t.rds-bad{background:color-mix(in srgb,var(--nzamb,#e89a2c) 12%,transparent)}
+.rds-th{display:flex;align-items:center;gap:8px}.rds-th b{font-size:14px;font-weight:500;flex:1;min-width:0}.rds-th small{font:11px var(--mono);color:var(--mut)}
+.rds-th svg{width:17px;height:17px;flex:none;fill:var(--mint)}.rds-bad .rds-th svg{fill:var(--nzamb,#e89a2c)}
+.rds-e{margin:8px 0 2px 25px}.rds-e b{display:block;font-size:13px;font-weight:500;color:var(--nzamb,#e89a2c)}.rds-e.rds-red b{color:var(--nzred,#e5483b)}
+.rds-e small{display:block;font:11px var(--mono);color:var(--mut);margin-top:1px}.rds-e p{font-size:12.5px;margin:4px 0 0;line-height:1.45;color:var(--ink)}
+.rds-pl{margin:6px 0 0 25px}.rds-pl summary{cursor:pointer;font:11px var(--mono);color:var(--mut);list-style:none;display:flex;align-items:center;gap:6px}.rds-pl summary::-webkit-details-marker{display:none}
+.rds-pl summary svg{width:14px;height:14px;fill:currentColor}.rds-pl .rds-e{margin-left:0}.rds-pl .rds-e b{color:var(--ink)}
+.rds-cam{display:block;width:100%;margin-top:10px;padding:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer;font:inherit}.rds-cam[disabled]{cursor:default}
+.rds-cam .vcam-ph{aspect-ratio:16/9}
+.rds-off{margin-top:6px}
+/* Civil Defence: a red bar above every page, and once per alert a full screen notice until someone taps OK */
+#cdb[hidden]{display:none}
+.cdf-bar{display:flex;align-items:center;gap:12px;margin:0 0 10px;padding:12px 14px;border-radius:14px;background:#c0392b;color:#fff;cursor:pointer}
+.cdf-bar>svg{width:24px;height:24px;flex:none;fill:currentColor}.cdf-bar span{flex:1;min-width:0}.cdf-bar b{display:block;font-size:15px;font-weight:500}.cdf-bar small{display:block;font:11px var(--mono);opacity:.85;margin-top:2px}
+.cdf-bar em{flex:none;font:600 11px var(--mono);font-style:normal;letter-spacing:.08em;border:1px solid rgba(255,255,255,.6);border-radius:8px;padding:5px 9px}
+.cdf-bar.cdf-clr{background:#2f8a5a}
+#cdt{position:fixed;inset:0;z-index:320;display:none;align-items:center;justify-content:center;padding:24px;background:#2b0f0d;color:#fff;overflow-y:auto}
+#cdt.on{display:flex}
+.cdf-tk{max-width:560px;text-align:center}.cdf-tk>svg{width:52px;height:52px;fill:#ff8a7a}.cdf-tk .lbl{display:block;color:#ffb3a8!important;margin-top:8px}
+.cdf-tk h2{font-size:26px;font-weight:500;margin:10px 0;line-height:1.25}.cdf-tk p{font-size:16px;line-height:1.6;color:#f3d9d5;margin:0 0 12px;white-space:pre-line}.cdf-tk small{display:block;font:12px var(--mono);color:#d9a9a2}
+.cdf-b{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}.cdf-b .eb{min-height:46px}.cdf-b .eb:first-child{background:#fff;color:#2b0f0d;border-color:#fff}
+#cdt:has(.cdf-clr){background:#0f2a1c}.cdf-tk.cdf-clr>svg{fill:#7fd6a5}
+@media(max-width:760px){.slv-r{grid-template-columns:minmax(0,1fr) 92px 46px;gap:8px}.cdf-tk h2{font-size:21px}.cdf-tk p{font-size:14.5px}}
 /* Header chips (weather alert, pollen, leak ...): the glow is a soft halo around the pill that breathes, not a fading, fuzzy-edged copy of the whole chip. The text and border stay steady. */
 @media(min-width:761px){
 #nacc[data-k] .nai,html[data-mode] #nacc[data-k] .nai{position:relative;animation:none;filter:none;opacity:1}
@@ -3785,6 +3851,7 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
 <div class="main">
   <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><div id="hnp" class="npoff"></div><div class="hr"><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header>
   <div id="alb" hidden></div>
+  <div id="cdb" hidden></div>
 
   <div id="home" class="page on">
     <div class="pn hs"><canvas id="wfx"></canvas><b id="gr"></b><span id="dt" class="lbl"></span><span id="wchip" class="wch">--</span><span id="wwind" class="wch"></span><span id="wpls"></span></div>
@@ -3839,16 +3906,16 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.14"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.14"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.14"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="config.js?v=2.5.15"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.15"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.15"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.14";   // the one place to change the version
-window.DASH_BUILD = "f7ced8";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.5.15";   // the one place to change the version
+window.DASH_BUILD = "2e8743";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -4135,6 +4202,8 @@ window.__ZHD={"D": {"0.0 mm": "0.0 毫米", "1 hr": "1 小时", "2 hr": "2 小�
   Z.P.unshift(["^(.+) · (.+ (?:window|door)(?: \\d+)? open|\\d+ windows open|all windows shut)$", "{1} · {2}"], ["^(\\d+) doors open$", "$1 扇门开着"], ["^(\\d+) windows open$", "$1 扇窗开着"],
     ["^(.+ (?:window|door)(?: \\d+)?) open$", "{1}开着"], ["^since (\\S+) by (.+)$", "{1} 起 · $2"], ["^since (\\S+)$", "{1} 起"], ["^stops in (\\d+) s$", "$1 秒后停止"]);
 })();
+// 2.5.15 NZ feeds: volcano cameras, sea level, Civil Defence, roads
+Object.assign(window.__ZHD.D, {"sea level · gauges": "海平面 · 验潮站", "tide removed · 6 h": "已去除潮汐 · 6 小时", "sea is calm at nearby gauges": "附近验潮站海面平静", "unusual waves · stay off beaches": "异常波浪 · 远离海滩", "land threat level · follow civil defence": "陆地威胁级别 · 听从民防指示", "checking the gauges…": "正在查看验潮站…", "no data from the gauges yet": "暂无验潮站数据", "needs your home location (zone.home)": "需要您家的位置 (zone.home)", "biggest swing in the last hour": "过去一小时最大波动", "© gns science · geonet": "© GNS Science · GeoNet", "roads · nzta": "道路 · NZTA", "state highways on your routes": "您路线上的国道", "no problems": "没有问题", "near home": "家附近", "camera not available": "摄像头不可用", "too dark to see": "天太黑，看不见", "civil defence": "民防", "tsunami · beach": "海啸 · 海滩", "tsunami · land": "海啸 · 陆地", "road problem": "道路问题", "ok, got it": "好的，知道了", "open getready map": "打开 GetReady 地图", "roads": "道路", "read": "查看", "camera": "摄像头", "one gauge is one spot in one harbour, and the first wave is often not the biggest. official alerts come first: long or strong, get gone.": "一个验潮站只代表一个港口的一个点，第一个浪往往不是最大的。官方警报优先：地震长或强，马上撤离。"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^next light about (.+)$", "天亮约 $1"], ["^(\\d+) km from home$", "距家 $1 公里"], ["^(\\d+) problems?$", "$1 个问题"], ["^(\\d+) problems? · (\\d+) planned$", "$1 个问题 · $2 项计划施工"], ["^no problems · (\\d+) planned$", "没有问题 · $1 项计划施工"], ["^(\\d+) planned works?$", "$1 项计划施工"], ["^from (.+) · checked (.+)$", "来自 $1 · $2 查看"], ["^tap for the next camera \\((\\d+) of (\\d+)\\)$", "点按看下一个摄像头（第 $1 个，共 $2 个）"], ["^no data from the gauges since (.+)$", "自 $1 起无验潮站数据"], ["^emergency alert · (.+)$", "紧急警报 · $1"], ["^civil defence · emergency mobile alert(.*)$", "民防 · 紧急手机警报$1"]]);
 // ---------- Language (Theme page): English or Simplified Chinese ----------
 // Chinese translates the dashboard's labels, headings, buttons and units as they appear (the dictionary in 56-zh-dict.js / 56-zh-more.js),
 // and dates and times use Chinese formats. Names from Home Assistant and config.js stay as they are. Sentences that aren't in the dictionary stay English.
@@ -7450,7 +7519,7 @@ const REL = {
   scenes: rxj(/(dynamic_scene|gradient_scene)/, (CONFIG.relevance || {}).scenes),
   media: /^media_player\./,
   vehicle: new RegExp(((CONFIG.vehicle || {}).prefix || "\\u0000nomatch")),
-  hazards: /^(geo_location\.|sensor\.volcano_|zone\.home$)/,
+  hazards: { test: id => /^(geo_location\.|sensor\.volcano_|zone\.home$)/.test(id) || (typeof nzfRel === "function" && nzfRel(id)) },   // 44-nz-feeds.js: the Civil Defence and roads sensors
   admin: { test: id => sysIds().has(id) }   // the System status tiles on the Admin page
 };
 let pq = 0;
@@ -7994,7 +8063,7 @@ function hzDetail(d) {
       (it.del ? '<p class="hznote">GeoNet has withdrawn this event (quality: deleted), so it may not be a real earthquake.</p>' : "") + (it.ext ? '<a class="eb" target="_blank" rel="noopener" href="https://www.geonet.org.nz/earthquake/' + encodeURIComponent(it.ext) + '">OPEN ON GEONET</a>' : ""); }
   const L = HZ_VAL[it.lvl || 0];
   return '<button class="hzx" data-hz="x" aria-label="Close">' + mdi("close") + '</button><div class="hzdt"><i class="hzbig hztri">' + hzTri(L[1], it.lvl == null ? "?" : it.lvl) + '</i><div><span class="lbl">Volcanic alert level</span><b>' + esc(it.name) + '</b><small>' + esc(L[0]) + '</small></div></div>' +
-    '<div class="hzdg">' + row("Activity", esc(it.act || "--")) + row("Hazards", esc(it.haz || "--")) + row("From home", km(+it.dist)) + row("Updated", it.t ? hzAgo(it.t) : "--") + '</div>' + (it.ext ? '<a class="eb" target="_blank" rel="noopener" href="https://www.geonet.org.nz/volcano/' + encodeURIComponent(it.ext) + '">OPEN ON GEONET</a>' : "");
+    (typeof vcamBig === "function" ? vcamBig(it) : "") + '<div class="hzdg">' + row("Activity", esc(it.act || "--")) + row("Hazards", esc(it.haz || "--")) + row("From home", km(+it.dist)) + row("Updated", it.t ? hzAgo(it.t) : "--") + '</div>' + (it.ext ? '<a class="eb" target="_blank" rel="noopener" href="https://www.geonet.org.nz/volcano/' + encodeURIComponent(it.ext) + '">OPEN ON GEONET</a>' : "");
 }
 function drawHaz() {
   const pg = $("#hazards"); if (!pg) return; if (HZ.drag) { HZ.later = 1; return; }
@@ -8008,10 +8077,10 @@ function drawHaz() {
   const qrow = q => { const M = hzMag(q.m); return '<button class="hzrow' + (HZ.sel === q.id ? " on" : "") + (q.del ? " del" : "") + (q.far ? " far" : "") + '" data-hz="s" data-v="' + q.id + '"><i class="hzb" style="--c:' + M[1] + '">' + q.m.toFixed(1) + '</i><span><b>' + esc(q.name) + '</b><small>' + hzAgo(q.t) + ' · ' + (q.depth != null ? Math.round(q.depth) + " km deep · " : "") + (isNaN(q.dist) ? "" : Math.round(q.dist) + " km away") + (q.del ? " · withdrawn" : "") + '</small></span><em style="--c:' + M[1] + '">' + M[2] + '</em></button>'; };
   const qN = d.q.filter(q => !q.far), qF = d.q.filter(q => q.far);
   const ql = (qN.length ? qN.map(qrow).join("") : '<p class="hzempty">' + mdi("check-circle-outline") + ' Nothing within ' + fk + ' km' + (hzMin() ? ' (M' + hzMin() + '+)' : '') + '.</p>') + (qF.length ? '<div class="hzsub">' + fk + '-' + hzRad() + ' km</div>' + qF.map(qrow).join("") : "");
-  const vl = d.v.length ? d.v.map(v => { const L = HZ_VAL[v.lvl || 0]; return '<button class="hzrow' + (HZ.sel === v.id ? " on" : "") + (v.lvl > 0 ? "" : " q") + '" data-hz="s" data-v="' + v.id + '"><i class="hzb hztri">' + hzTri(L[1], v.lvl == null ? "?" : v.lvl) + '</i><span><b>' + esc(v.name) + '</b><small>' + esc(v.lvl > 0 ? (v.act || L[0]) : L[0]) + (hzOn(v) ? "" : " · off the map") + '</small></span>' + (v.lvl > 0 ? '<em style="--c:' + L[1] + '">Level ' + v.lvl + '</em>' : "") + '</button>'; }).join("") : '<p class="hzempty">No GeoNet volcano sensors found.</p>';
-  pg.innerHTML = '<div class="hsw hztw"><div class="chips tabs hztabs">' + [["map", "MAP"], ["quake", "EARTHQUAKES"], ["volc", "VOLCANOES"]].map(t => '<button class="chip' + (HZ.tab === t[0] ? " on" : "") + '" data-hz="tab" data-v="' + t[0] + '">' + t[1] + '</button>').join("") + '</div><span class="hsm l" aria-hidden="true">' + mdi("chevron-left") + '</span><span class="hsm r" aria-hidden="true">' + mdi("chevron-right") + '</span></div><div class="hzg" data-tab="' + HZ.tab + '"><div class="pn hzm' + (HZ.sel ? " dop" : "") + '"><div class="hzh"><div><span class="lbl">' + mdi("pulse") + ' GeoNet · live</span><b class="hzs">' + esc(sum) + '</b></div><div class="chips tabs hzseg">' + chip("nz", "NZ") + chip("ni", "NORTH ISLAND") + (d.home ? chip("home", fk + " KM") : "") + '</div></div>' +
+  const vl = d.v.length ? d.v.map(v => { const L = HZ_VAL[v.lvl || 0]; const th = v.lvl > 0 && typeof vcamThumbs === "function" ? vcamThumbs(v) : ""; return '<button class="hzrow' + (HZ.sel === v.id ? " on" : "") + (v.lvl > 0 ? "" : " q") + (th ? " vcam-row" : "") + '" data-hz="s" data-v="' + v.id + '"><i class="hzb hztri">' + hzTri(L[1], v.lvl == null ? "?" : v.lvl) + '</i><span><b>' + esc(v.name) + '</b><small>' + esc(v.lvl > 0 ? (v.act || L[0]) : L[0]) + (hzOn(v) ? "" : " · off the map") + '</small></span>' + (v.lvl > 0 ? '<em style="--c:' + L[1] + '">Level ' + v.lvl + '</em>' : typeof vcamMark === "function" ? vcamMark(v) : "") + th + '</button>'; }).join("") : '<p class="hzempty">No GeoNet volcano sensors found.</p>';
+  pg.innerHTML = '<div class="hsw hztw"><div class="chips tabs hztabs">' + [["map", "MAP"], ["quake", "EARTHQUAKES"], ["volc", "VOLCANOES"]].concat(typeof RDC === "function" && RDC() ? [["roads", "ROADS"]] : []).map(t => '<button class="chip' + (HZ.tab === t[0] ? " on" : "") + '" data-hz="tab" data-v="' + t[0] + '">' + t[1] + '</button>').join("") + '</div><span class="hsm l" aria-hidden="true">' + mdi("chevron-left") + '</span><span class="hsm r" aria-hidden="true">' + mdi("chevron-right") + '</span></div><div class="hzg" data-tab="' + HZ.tab + '"><div class="pn hzm' + (HZ.sel ? " dop" : "") + '"><div class="hzh"><div><span class="lbl">' + mdi("pulse") + ' GeoNet · live</span><b class="hzs">' + esc(sum) + '</b></div><div class="chips tabs hzseg">' + chip("nz", "NZ") + chip("ni", "NORTH ISLAND") + (d.home ? chip("home", fk + " KM") : "") + '</div></div>' +
     '<div class="hzmap"><svg id="hzsvg" viewBox="' + HZ.vb.join(" ") + '" preserveAspectRatio="xMidYMid meet"><path class="hzl" d="' + NZP + '"/>' + hzMarks(d) + '</svg><div class="hzzb"><button data-hz="in" aria-label="Zoom in">' + mdi("plus") + '</button><button data-hz="out" aria-label="Zoom out">' + mdi("minus") + '</button><button class="hzlb" data-hz="pg" data-v="1" aria-label="Lists">' + mdi("format-list-bulleted") + '</button></div><div class="hzd' + (HZ.sel ? " on" : "") + '" id="hzd">' + hzDetail(d) + '</div></div>' + leg + '</div>' +
-    '<div class="hzside"><div class="pn"><div class="hzlh"><span class="lbl">' + mdi("pulse") + ' Earthquakes</span><small>' + (hzMin() ? "M" + hzMin() + "+ · " : "") + 'within ' + hzRad() + ' km</small></div>' + ql + '</div><div class="pn"><div class="hzlh"><span class="lbl">' + mdi("volcano") + ' Volcanoes</span><small>' + (act.length ? act.length + " above level 0" : "all at level 0") + '</small></div>' + vl + '</div></div></div><div class="dots hzdots"><i data-hz="pg" data-v="0" class="on"></i><i data-hz="pg" data-v="1"></i></div>';
+    '<div class="hzside"><div class="pn hzpq"><div class="hzlh"><span class="lbl">' + mdi("pulse") + ' Earthquakes</span><small>' + (hzMin() ? "M" + hzMin() + "+ · " : "") + 'within ' + hzRad() + ' km</small></div>' + ql + '</div>' + (typeof slvHtml === "function" ? slvHtml() + rdHtml() : "") + '<div class="pn hzpv"><div class="hzlh"><span class="lbl">' + mdi("volcano") + ' Volcanoes</span><small>' + (act.length ? act.length + " above level 0" : "all at level 0") + '</small></div>' + vl + '</div></div></div><div class="dots hzdots"><i data-hz="pg" data-v="0" class="on"></i><i data-hz="pg" data-v="1"></i></div>';
   hzFit(); setTimeout(hzFit, 500); 
   hzBind($("#hzsvg")); hzApply();
 }
@@ -8022,7 +8091,7 @@ function hzFit() {   // phone: the map page and the lists page each fill the spa
   const bt = $("#btab"), br = bt ? bt.getBoundingClientRect() : null, bot = br && br.height ? br.top : innerHeight, hd = $("header"), tw = $("#hazards .hztw"), top = tw && tw.offsetHeight ? tw.getBoundingClientRect().bottom + 8 : hd ? hd.getBoundingClientRect().bottom + 12 : g.getBoundingClientRect().top, h = Math.max(360, bot - top - 54);
   g.style.setProperty("--hzH", h + "px");
 }
-function hzTab(t) { const ord = ["map", "quake", "volc"], was = HZ.tab; HZ.tab = t; if (was !== t && was && $("#hazards .hzg")) txGo($("#hazards .hzg"), ord.indexOf(t) > ord.indexOf(was) ? 1 : -1, true); const g = $("#hazards .hzg"); if (g) g.dataset.tab = t; $$("#hazards .hztabs .chip").forEach(c => c.classList.toggle("on", c.dataset.v === t)); hzFit(); }
+function hzTab(t) { const ord = ["map", "quake", "volc", "roads"], was = HZ.tab; HZ.tab = t; if (was !== t && was && $("#hazards .hzg")) txGo($("#hazards .hzg"), ord.indexOf(t) > ord.indexOf(was) ? 1 : -1, true); const g = $("#hazards .hzg"); if (g) g.dataset.tab = t; $$("#hazards .hztabs .chip").forEach(c => c.classList.toggle("on", c.dataset.v === t)); hzFit(); }
 function hzPage(i) { hzTab(i ? "quake" : "map"); }
 function hzSel(id, fly) {
   HZ.sel = HZ.sel === id && !fly ? "" : id; const d = HZ.d || hzData();
@@ -8221,6 +8290,7 @@ function sckSection(sec) {
   if (m) h += '<div class="sck-l">' + sckGroup(SCK.missing) + '</div>' + '<div class="sck-a"><button class="eb" data-sck="copy">COPY LIST</button><button class="eb" data-sck="again">CHECK AGAIN</button></div><div class="lbl sck-h">Open Developer tools → States and search for the name; if the id differs, fix it in config.js. Leave it if that part is not used in this house.</div>';
   else h += '<div class="sck-a"><button class="eb" data-sck="again">CHECK AGAIN</button></div>';
   if (u) h += '<details class="sck-u"><summary class="lbl">Unavailable now (' + u + ')</summary><div class="sck-l">' + sckGroup(SCK.unavailable) + '</div></details>';
+  if (typeof nzfStatus === "function") h += nzfStatus();
   return sec("Setup check", h);
 }
 $("#admin").addEventListener("click", e => {
@@ -9078,9 +9148,13 @@ const towelsOn = () => { const g = E("towelGroup"); return !!g && members(g).som
 // a washing-machine drum with a wave moving inside: used by the Laundry tile in Active and by the strip icon
 const DRUM = '<svg viewBox="0 0 24 24" class="drum" aria-hidden="true"><rect x="3" y="2" width="18" height="20" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="7" cy="5.6" r=".9" fill="currentColor"/><circle cx="12" cy="14" r="5.4" fill="none" stroke="currentColor" stroke-width="1.8"/><clipPath id="drumc"><circle cx="12" cy="14" r="4.6"/></clipPath><g clip-path="url(#drumc)"><path class="wv" d="M2 14 q2.5 -2.2 5 0 t5 0 t5 0 t5 0 t5 0 V22 H2Z" fill="currentColor" opacity=".85"/></g></svg>';
 const NSK = [
+  // 44-nz-feeds.js: a Civil Defence alert first, then the tsunami gauges (amber 0.3 m, red 1 m); a crash or closure on your route sits after the garage
+  ["cd", "alert-octagon", "Civil Defence", () => typeof cdAlerts === "function" && cdAlerts().some(a => !a.clr)],
+  ["tsu", "waves", () => slvLevel() === 2 ? "Tsunami · land" : "Tsunami · beach", () => typeof slvLevel === "function" && slvLevel() > 0],
   ["leak", "water-alert", "Water leak", () => LEAKS().some(x => isOn(x[0]))],
   ["warn", "weather-cloudy-alert", "Weather warning", () => { const s = states[E("weatherWarnings")]; return !!s && s.state !== "unknown" && s.state !== "unavailable"; }],
   ["garage", "garage-open-variant", "Garage door open", () => Object.keys(galCfg()).some(k => { const c = galCfg()[k], s = c && c.sensor && states[c.sensor]; return !!s && (s.state === "on") !== !!c.invert; })],
+  ["road", "road-variant", "Road problem", () => typeof rdBad === "function" && rdBad()],
   ["cw", "thermometer", () => { const L = typeof cwRooms === "function" ? cwRooms() : []; return L.some(x => x.hp.k !== "cool") || !L.length ? "Heat escaping" : "Cool escaping"; }, () => typeof cwRooms === "function" && cwRooms().length > 0],   // a zone running with a window or door open (42-heat-escaping.js)
   ["roster", "calendar-alert", "Roster not updating", () => typeof rosterBad === "function" && !!rosterBad()],   // config roster: the shift roster stopped coming through (MyDuty link expired)
   ["wind", "weather-windy", wxaName("wind"), () => wxaChip("wind", true)],   // Strong or Severe wind: right after the garage
@@ -9099,7 +9173,7 @@ const NSK = [
   ["laundry", "washing-machine", "Laundry running", laundryOn],
   ["towel", "radiator", "Towel heating on", towelsOn]
 ];
-const nskRel = id => attnRel(id) || polRel(id) || binsIds().includes(id) || /^sensor\..*battery_plus$/.test(id) || LEAKS().some(x => x[0] === id) || id === E("weatherWarnings") || id === W || id === E("doorsGroup") || id === E("laundryState") || id === E("laundryRemaining") || id === E("towelGroup") || members(E("towelGroup")).includes(id) || members(E("doorsGroup")).includes(id) || /^switch\..*water_tap$/.test(id) || Object.keys(galCfg()).some(k => (galCfg()[k] || {}).sensor === id) || (CONFIG.irrigation || []).some(z => z.switch === id);
+const nskRel = id => (typeof nzfRel === "function" && nzfRel(id)) || attnRel(id) || polRel(id) || binsIds().includes(id) || /^sensor\..*battery_plus$/.test(id) || LEAKS().some(x => x[0] === id) || id === E("weatherWarnings") || id === W || id === E("doorsGroup") || id === E("laundryState") || id === E("laundryRemaining") || id === E("towelGroup") || members(E("towelGroup")).includes(id) || members(E("doorsGroup")).includes(id) || /^switch\..*water_tap$/.test(id) || Object.keys(galCfg()).some(k => (galCfg()[k] || {}).sensor === id) || (CONFIG.irrigation || []).some(z => z.switch === id);
 const NPF = {};   // Active groups the person folded or opened by hand (key -> true = open); doors and windows start folded, the rest open
 let npTab = "alerts", npOnly = "";   // npOnly = an Active group key (e.g. "towel-heating"): the strip opened the pop-up for that one condition, so Active lists just that group until SHOW ALL
 const ACTC = CONFIG.quickAll || [];
@@ -9199,6 +9273,7 @@ function npCamMount() {
 }
 setInterval(() => { if (!document.body.classList.contains("np-open")) npCamStop(); }, 2500);   // closed: no streams running behind the page
 function drawNotif() {
+  if (typeof cdDraw === "function") cdDraw();
   const open = document.body.classList.contains("np-open");
   if (open && Date.now() < npHold) { clearTimeout(npht); npht = setTimeout(drawNotif, npHold - Date.now() + 10); return; }
   if (open && $$("#np input[type=range], #np .tl").some(r => r._d && r._d > Date.now())) { clearTimeout(npht); npht = setTimeout(drawNotif, 400); return; }
@@ -9206,7 +9281,7 @@ function drawNotif() {
   if (open && npTab !== "active" && npOnly && !npLoading() && !(npTab === "attention" ? r.ah : r.html)) { npOnly = ""; r = notif(open); }   // nothing left under that chip: show the whole tab
   const ks = NSK.filter(k => k[3]()), top = ks[0], nacc = $("#nacc");   // the strip turns into the icon of the most urgent condition
   // each condition is a .nai (icon + name): a phone shows just the top icon, a tablet shows the name as a chip, and a wide screen shows the two most urgent chips
-  const pn = polNow(), nkc = k => k[0] === "pollen" ? (pn ? pn.col : "") : k[0] === "wind" || k[0] === "rain" || k[0] === "uv" || k[0] === "wx" ? wxaCol(k[0]) : k[0] === "cw" ? "#ff7a45" : "", nsn = k => typeof k[2] === "function" ? k[2]() : k[2], nai = (k, c) => '<span class="nai' + c + '" data-k="' + k[0] + '"' + (nkc(k) ? ' style="--nk:' + nkc(k) + '"' : "") + '>' + (k[0] === "laundry" ? DRUM : k[0] === "cw" ? CWICO() : mdi(k[1])) + '<b class="nal">' + esc(k[0] === "pollen" && pn ? "Pollen · " + pn.name : k[0] === "battery" && lowBattChip().length > 1 ? lowBattChip().length + " low batteries" : nsn(k)) + '</b></span>';
+  const pn = polNow(), nkc = k => k[0] === "pollen" ? (pn ? pn.col : "") : k[0] === "wind" || k[0] === "rain" || k[0] === "uv" || k[0] === "wx" ? wxaCol(k[0]) : k[0] === "cw" ? "#ff7a45" : k[0] === "cd" ? "#e5483b" : k[0] === "tsu" ? (slvLevel() === 2 ? "#e5483b" : "#e89a2c") : k[0] === "road" ? "#e89a2c" : "", nsn = k => typeof k[2] === "function" ? k[2]() : k[2], nai = (k, c) => '<span class="nai' + c + '" data-k="' + k[0] + '"' + (nkc(k) ? ' style="--nk:' + nkc(k) + '"' : "") + '>' + (k[0] === "laundry" ? DRUM : k[0] === "cw" ? CWICO() : mdi(k[1])) + '<b class="nal">' + esc(k[0] === "pollen" && pn ? "Pollen · " + pn.name : k[0] === "battery" && lowBattChip().length > 1 ? lowBattChip().length + " low batteries" : nsn(k)) + '</b></span>';
   const sig = ks.slice(0, 2).map((k, i) => nai(k, i ? " nai2" : "")).join("");
   if ((nacc.dataset.k || "") !== (top ? top[0] : "") || nacc._sig !== sig) { nacc._sig = sig; if (top) nacc.dataset.k = top[0]; else nacc.removeAttribute("data-k"); nacc.innerHTML = sig; if (top && nkc(top)) nacc.style.setProperty("--nk", nkc(top)); else nacc.style.removeProperty("--nk"); }
   nacc.dataset.n = ks.length;   // 3+ conditions: one chip + "+N" (see 28-pollen.css)
@@ -9243,6 +9318,9 @@ $("#hc").onclick = e => {
   if (!open) { const ks = NSK.filter(k => k[3]()), ch = e && e.target.closest && e.target.closest(".nai[data-k]"), m = ch ? NPK[ch.dataset.k] : ks.length === 1 ? NPK[ks[0][0]] || ["alerts"] : null;
     // low batteries live on the Insights page (unless Attention still lists them): the chip opens that card there
     // bins, low batteries, pollen and the roster live on the Insights page now: their chip opens that card there
+    const nz = ch ? ch.dataset.k : ks.length === 1 ? ks[0][0] : "";
+    if (nz === "cd") { cdOpen(); return; }
+    if (nz === "tsu" || nz === "road") { location.hash = nz === "tsu" ? "#hazards/sea" : "#hazards/roads"; return; }
     const ic = m && !npAttn() && { bat: "batt", bins: "bins", pol: "pollen", roster: "roster" }[m[1]];
     if (ic) { INS.det = ic; location.hash = "#insights"; setTimeout(() => { if (typeof insDetDraw === "function") insDetDraw(); }, 60); return; }
     if (m) { npTab = m[0]; npOnly = m[1] || ""; npGo = null; } }
@@ -10940,7 +11018,7 @@ function route() {
   npSheet = false; npRender();
   if (p === "vehicle") drawVehicle();
   if (p === "insights" || p === "home") insTick();
-  if (p === "hazards") { HZ.vb = null; HZ.tab = { earthquakes: "quake", quakes: "quake", volcanoes: "volc", volcano: "volc" }[h[1]] || "map"; HZ.view = HZ.view || (states["zone.home"] ? "home" : "ni"); requestAnimationFrame(drawHaz); }
+  if (p === "hazards") { HZ.vb = null; HZ.tab = { earthquakes: "quake", quakes: "quake", sea: "quake", volcanoes: "volc", volcano: "volc", roads: "roads" }[h[1]] || "map"; HZ.view = HZ.view || (states["zone.home"] ? "home" : "ni"); requestAnimationFrame(drawHaz); }
   if (h[0] === "disarm") alarmLink("disarm"); else if (h[0] === "arm") alarmLink("arm_" + (h[1] || "away"));
   // #attention / #batteries (old links): the Insights page now holds what Attention listed
   if ((h[0] === "attention" || h[0] === "batteries") && CONFIG.insights !== false) { location.replace("#insights"); return; }
@@ -11674,17 +11752,17 @@ document.addEventListener("click", e => { const g = e.target.closest && e.target
 function drawInsights() {
   const pg = $("#insights"); if (!pg) return; const all = insAll(); INS.last = all;
   const need = all.filter(x => x.lvl === 2), cats = Object.keys(insCats).filter(c => all.some(x => x.cat === c));
-  if (INS.tab !== "all" && INS.tab !== "need" && INS.tab !== "stats" && cats.indexOf(INS.tab) < 0) INS.tab = "all";
+  if (INS.tab !== "all" && INS.tab !== "need" && cats.indexOf(INS.tab) < 0) INS.tab = "all";
   const ST = INS.tab === "stats" ? insStats() : null, L = ST || (INS.tab === "all" ? all : INS.tab === "need" ? need : all.filter(x => x.cat === INS.tab));
   const chip = (k, t) => '<button class="chip' + (INS.tab === k ? " on" : "") + '" data-inst="' + k + '">' + t + '</button>';
   // glance tiles: a label, one big value and a line; tapping a tile opens its detail (insDet)
   const sec = (t, a, cls) => a.length ? '<div class="lbl insl' + (cls ? " " + cls : "") + '">' + t + ' · ' + a.length + '</div><div class="itg">' + a.map(insTileHtml).join("") + '</div>' : "";
   // the chips and the cards are drawn apart, so switching tabs can slide just the cards (txGo, like the other pages) and the chip row keeps its scroll
-  const hc = '<div class="chips tabs inschips">' + chip("all", "ALL" + chipN(all.length)) + (need.length ? chip("need", "NEEDS YOU" + chipN(need.length)) : "") + cats.map(c => chip(c, insCats[c].toUpperCase())).join("") + chip("stats", "STATS") + '</div>';
+  const hc = '<div class="chips tabs inschips">' + chip("all", "ALL" + chipN(all.length)) + (need.length ? chip("need", "NEEDS YOU" + chipN(need.length)) : "") + cats.map(c => chip(c, insCats[c].toUpperCase())).join("") + '</div>';
   const h = (ST ? (ST.length ? Object.keys(insCats).map(c => sec(insCats[c], ST.filter(x => x.cat === c))).join("") : '<div class="pn pg"><div class="sm">No figures yet.</div></div>')
       : L.length && INS.tab === "all" ? (() => { const rest = insTop(L.filter(x => x.lvl < 2)), top = rest.slice(0, 4), more = rest.slice(4);
           return '<div class="insv"><div class="insv1">' + sec("Needs you", L.filter(x => x.lvl === 2), "bad") + sec("Today", top) + '</div>' + (more.length ? '<div class="insv2"><div class="lbl insl">More · ' + more.length + '</div><div class="insm">' + insMore(more) + '</div></div>' : "") + '</div>'; })()
-      : L.length ? sec("Needs you", L.filter(x => x.lvl === 2), "bad") + sec("Today", L.filter(x => x.lvl < 2)) : '<div class="pn pg"><div class="sm">Nothing stands out right now. The figures are under STATS.</div></div>') +
+      : L.length ? sec("Needs you", L.filter(x => x.lvl === 2), "bad") + sec("Today", L.filter(x => x.lvl < 2)) : '<div class="pn pg"><div class="sm">Nothing stands out right now.</div></div>') +
     (!ST && INS.hid ? '<div class="insdis">' + INS.hid + ' hidden for today · <button class="eb" data-insun>SHOW THEM</button></div>' : "");
   if (!pg.querySelector(":scope > #insbody")) { pg.innerHTML = hc + '<div id="insbody"></div>'; pg._hc = hc; }
   else if (pg._hc !== hc) { const c = pg.querySelector(":scope > .inschips"), sl = c.scrollLeft; c.outerHTML = hc; pg._hc = hc; pg.querySelector(":scope > .inschips").scrollLeft = sl; }
@@ -12909,6 +12987,284 @@ function insxAccuracy() {
       '<div class="irl"><span><i style="background:#6bb8ff"></i>Google</span><span><i style="background:#e8973a"></i>MetService</span></div><div class="sm">Each forecast as it stood at 9 am that morning, against the highest temperature the weather station reported during the day. Shorter bars are closer.</div>' }];
 }
 const INSX_ALL = [insxVolcano, insxQuakes, insxRoster, insxDrying, insxSwing, insxDisagree, insxEvening, insxPressure, insxDaylight, insxRain, insxAccuracy, insxDrops, insxDisk, insxBusy, insxWear, insxBoots, insxTraffic, insxPveUpd, insxAway, insxFilter, insxCycle, insxCarCare, insxDrive, insxFuel, insxTrips, insxEco, insxStarter, insxBins, insxLaundry, insxCams, insxAlertsOff, insxUpdates, insxPollen, insxLights, insxMould, insxClimRun, insxHpTile, insxFree, insxRun, insxNight, insxBatt, insxOffline, insxCar, insxWx, insxTomorrow, insxBill, insxVs, insxSave, insxPeak, insxBase];
+// ---------- NZ public feeds (2.5.15): GeoNet volcano cameras, Tilde tsunami gauges, Civil Defence alerts, NZTA roads ----------
+// Volcano cameras and the sea level gauges load straight from GeoNet (images / Tilde allow it). Civil Defence and NZTA do not allow a web page
+// to read them, so those two come in through Home Assistant REST sensors (README: "Civil Defence alerts" and "Roads").
+// A feed that stops only affects its own card: it says so in grey and never raises an alert. Admin > Setup check lists each feed's last data.
+// only the icons the dashboard does not have yet
+[["alert", "M13 14H11V9H13M13 18H11V16H13M1 21H23L12 2L1 21Z"], ["camera", "M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z"]].forEach(x => { if (!MDI[x[0]]) MDI[x[0]] = x[1]; });
+Object.assign(MDI, {
+  "alert-octagon": "M13 13H11V7H13M11 15H13V17H11M15.73 3H8.27L3 8.27V15.73L8.27 21H15.73L21 15.73V8.27L15.73 3Z",
+  "waves": "M20,12H22V14H20C18.62,14 17.26,13.65 16,13C13.5,14.3 10.5,14.3 8,13C6.74,13.65 5.37,14 4,14H2V12H4C5.39,12 6.78,11.53 8,10.67C10.44,12.38 13.56,12.38 16,10.67C17.22,11.53 18.61,12 20,12M20,6H22V8H20C18.62,8 17.26,7.65 16,7C13.5,8.3 10.5,8.3 8,7C6.74,7.65 5.37,8 4,8H2V6H4C5.39,6 6.78,5.53 8,4.67C10.44,6.38 13.56,6.38 16,4.67C17.22,5.53 18.61,6 20,6M20,18H22V20H20C18.62,20 17.26,19.65 16,19C13.5,20.3 10.5,20.3 8,19C6.74,19.65 5.37,20 4,20H2V18H4C5.39,18 6.78,17.53 8,16.67C10.44,18.38 13.56,18.38 16,16.67C17.22,17.53 18.61,18 20,18Z",
+  "road-variant": "M18.1,4.8C18,4.3 17.6,4 17.1,4H13L13.2,7H10.8L11,4H6.8C6.3,4 5.9,4.4 5.8,4.8L3.1,18.8C3,19.4 3.5,20 4.1,20H10L10.3,17H13.7L14,20H19.8C20.4,20 20.9,19.4 20.8,18.8L18.1,4.8M10.4,13L10.6,10H13.2L13.4,13H10.4Z",
+  "traffic-cone": "M17 15L18 19H21V22H3V19H6L7 15H17M15 8L16 12H8L9 8H15M13 1L14 5H10L11 1H13Z",
+  "help-circle-outline": "M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"
+});
+const NZF = { lv: 0, gt: 0, gauges: {}, gErr: 0, st: null, cdAck: null, vcSel: {}, rcam: 0 };
+const nzfHHMM = t => t ? new Date(t).toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })) : "--";
+const nzfKm = (a, b, c, d) => { const r = Math.PI / 180, x = (d - b) * r * Math.cos((a + c) / 2 * r), y = (c - a) * r; return Math.sqrt(x * x + y * y) * 6371; };
+const nzfTxt = x => x == null ? "" : typeof x === "object" ? String(x["#text"] || "") : String(x);
+const nzfList = x => x == null ? [] : Array.isArray(x) ? x : [x];
+const nzfHome = () => { const z = states["zone.home"]; return z && z.attributes.latitude != null ? [+z.attributes.latitude, +z.attributes.longitude] : null; };
+const nzfNight = () => { const s = states["sun.sun"]; return !!s && s.state === "below_horizon"; };
+
+// ===== 1. Volcano cameras (GeoNet stills, a new picture about every 10 minutes) =====
+// key -> [[GeoNet camera id, label], ...]; volcanoes with no camera (Auckland, Mayor Island, Okataina, Rotorua, Northland, Taupō) get none
+const VCAM = {
+  white: [["whakatane", "Whakatāne"], ["tekaha", "Te Kaha"]],
+  ruapehu: [["ruapehunorth", "North"], ["ruapehueast", "East"], ["ruapehusouth", "South"]],
+  tongariro: [["tongarirotemaaricrater", "Te Maari Crater"], ["tongariro", "Tongariro"], ["ngauruhoetongariro", "Ngauruhoe and Tongariro"]],
+  ngauruhoe: [["ngauruhoe", "Ngauruhoe"], ["ngauruhoetongariro", "Ngauruhoe and Tongariro"]],
+  taranaki: [["taranaki", "Taranaki Maunga"]],
+  raoul: [["raoulisland", "Raoul Island"]]
+};
+const vcamOn = () => (CONFIG.hazards || {}).cams !== false;
+function vcamFor(v) {
+  if (!vcamOn() || !v) return [];
+  const k = (String(v.name || "") + " " + String(v.ext || "")).toLowerCase().replace(/[^a-z ]/g, "");
+  const key = /white|whakaari/.test(k) ? "white" : /ruapehu/.test(k) ? "ruapehu" : /ngauruhoe/.test(k) ? "ngauruhoe" : /tongariro/.test(k) ? "tongariro" : /taranaki|egmont/.test(k) ? "taranaki" : /raoul|kermadec/.test(k) ? "raoul" : "";
+  return key ? VCAM[key] : [];
+}
+// a new address every 10 minutes, so the browser fetches the new still but never more often
+const vcamUrl = id => "https://images.geonet.org.nz/volcano/cameras/latest/" + id + ".jpg?t=" + Math.floor(Date.now() / 6e5);
+const vcamNext = () => { const s = states["sun.sun"], t = s && (s.attributes.next_dawn || s.attributes.next_rising); return t ? nzfHHMM(Date.parse(t)) : ""; };
+function vcamImg(id, lbl, big) {
+  const n = nzfNight();
+  return '<span class="vcam-ph' + (n ? " vcam-nt" : "") + '"><img data-vcam="' + id + '" src="' + vcamUrl(id) + '" alt="' + esc(lbl) + ' camera" loading="lazy" decoding="async" onerror="this.parentNode.classList.add(\'vcam-err\')" onload="this.parentNode.classList.remove(\'vcam-err\')">' +
+    '<span class="vcam-gone">Camera not available</span>' + (n ? '<span class="vcam-dk">' + mdi("weather-night") + (big ? '<b>Too dark to see</b>' + (vcamNext() ? '<small>Next light about ' + vcamNext() + '</small>' : "") : "") + '</span>' : "") +
+    (big ? "" : '<span class="vcam-lb">' + esc(lbl) + '</span>') + '</span>';
+}
+// the big photo in the map pop-up: camera picker, credit, tap for full size
+function vcamBig(v) {
+  const L = vcamFor(v); if (!L.length) return "";
+  const i = Math.min(NZF.vcSel[v.id] || 0, L.length - 1), c = L[i];
+  // the camera name, time and credit sit under the photo, clear of GeoNet's own caption on the picture
+  return '<div class="vcam-big" data-vco="' + c[0] + '" data-vcl="' + esc(c[1]) + '">' + vcamImg(c[0], c[1], true) +
+    (L.length > 1 ? '<span class="vcam-sw">' + L.map((x, k) => '<button type="button" class="' + (k === i ? "on" : "") + '" data-vcs="' + esc(v.id) + '" data-vci="' + k + '">' + esc(x[1]) + '</button>').join("") + '</span>' : "") +
+    '<span class="vcam-cap"><span class="vcam-tg">' + esc(L.length > 1 ? "From " + c[1] : c[1]) + ' · checked ' + nzfHHMM(Math.floor(Date.now() / 6e5) * 6e5) + '</span><span class="vcam-cr">© GNS Science</span></span></div>';
+}
+// thumbnails under a volcano in the list (only above level 0) and a small camera mark for the quiet ones
+const vcamThumbs = v => { const L = vcamFor(v); return L.length ? '<span class="vcam-th n' + L.length + '">' + L.map(c => vcamImg(c[0], c[1], false)).join("") + '</span>' : ""; };
+const vcamMark = v => vcamFor(v).length ? '<i class="vcam-mk" title="Camera">' + mdi("camera") + '</i>' : "";
+function vcamView(id, lbl) {
+  let el = $("#vcamv"); if (!el) { el = document.createElement("div"); el.id = "vcamv"; el.setAttribute("role", "dialog"); el.setAttribute("aria-label", "Volcano camera"); document.body.appendChild(el); el.onclick = () => el.classList.remove("on"); }
+  el.innerHTML = '<figure><img src="' + vcamUrl(id) + '" alt="' + esc(lbl) + ' camera"><figcaption>' + esc(lbl) + ' · © GNS Science · tap to close</figcaption></figure>';
+  el.classList.add("on");
+}
+$("#hazards").addEventListener("click", e => {
+  const s = e.target.closest("[data-vcs]"); if (s) { e.stopPropagation(); NZF.vcSel[s.dataset.vcs] = +s.dataset.vci; const p = $("#hzd"); if (p && HZ.d) { const h = hzDetail(HZ.d); p._hd = h; p.innerHTML = h; } return; }
+  const o = e.target.closest("[data-vco]"); if (o) { vcamView(o.dataset.vco, o.dataset.vcl); return; }
+});
+
+// ===== 2. Sea level: GeoNet's tsunami gauges, tide taken out (Tilde) =====
+// Each gauge reports every 15 s. The "swing" is the biggest move away from that gauge's normal level (the 6 h median) in the last hour,
+// after a 1 minute median so one odd reading cannot raise an alert. 0.3 m and 1 m are NEMA's beach and marine / land threat lines.
+const SLV = () => { const g = (CONFIG.hazards || {}).gauges; return g === false ? null : Object.assign({ n: 3, amber: 0.3, red: 1, stations: null }, g && typeof g === "object" ? g : {}); };
+const TILDE = "https://tilde.geonet.org.nz/v4/";
+async function slvStations() {
+  if (NZF.st) return NZF.st;
+  try { const c = JSON.parse(localStorage.getItem("kinetic-tilde-st") || "null"); if (c && Date.now() - c.t < 7 * 864e5 && c.s && c.s.length) return (NZF.st = c.s); } catch (e) {}
+  const r = await fetch(TILDE + "dataSummary/coastal", { cache: "no-store" }); if (!r.ok) throw new Error(r.status);
+  const S = ((((await r.json()).domain || {}).coastal || {}).stations) || {};
+  // only gauges that publish the tide-removed series (the Lake Taupō sensors do not)
+  const s = Object.values(S).filter(x => Object.values(x.sensorCodes || {}).some(c => (c.names || {})["water-height-detided"])).map(x => ({ id: x.station, name: x.stationLocality || x.station, lat: +x.latitude, lon: +x.longitude, sc: Object.keys(x.sensorCodes || {}).find(k => (x.sensorCodes[k].names || {})["water-height-detided"]) || "40" }));
+  if (!s.length) throw new Error("no gauges");
+  try { localStorage.setItem("kinetic-tilde-st", JSON.stringify({ t: Date.now(), s: s })); } catch (e) {}
+  return (NZF.st = s);
+}
+function slvPick(all) {
+  const c = SLV(), h = nzfHome();
+  if (c.stations && c.stations.length) return c.stations.map(id => all.find(x => x.id === id)).filter(Boolean);
+  if (!h) return [];
+  return all.map(x => Object.assign({}, x, { km: nzfKm(h[0], h[1], x.lat, x.lon) })).sort((a, b) => a.km - b.km).slice(0, +c.n || 3);
+}
+async function slvGet(st, span) {
+  const r = await fetch(TILDE + "data/coastal/" + st.id + "/water-height-detided/" + st.sc + "/15s/nil/latest/" + span, { headers: { Accept: "application/json" }, cache: "no-store" });
+  if (!r.ok) throw new Error(r.status);
+  const j = await r.json(), d = (Array.isArray(j) ? j[0] : j) || {};
+  return (d.data || []).filter(p => p && p.val != null && isFinite(+p.val)).map(p => [Date.parse(p.ts), +p.val]);
+}
+const slvMed = a => { if (!a.length) return null; const s = a.slice().sort((x, y) => x - y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+function slvCalc(g) {
+  const P = g.pts || []; if (!P.length) return;
+  if (g.base == null || g.full) g.base = slvMed(P.filter(p => p[0] > Date.now() - 6 * 36e5).map(p => p[1]));
+  const sm = P.map((p, i) => [p[0], slvMed(P.slice(Math.max(0, i - 2), i + 2).map(q => q[1]))]);
+  const hr = sm.filter(p => p[0] > Date.now() - 36e5);
+  g.amp = hr.length ? Math.max.apply(null, hr.map(p => Math.abs(p[1] - g.base))) : null;
+  g.last = P[P.length - 1][0]; g.sm = sm;
+}
+// every 3 min: away from Hazards just the last 30 minutes (small) and the 6 h window once an hour for the normal level; on the Hazards page the 6 h window every 3 min for the chart
+async function slvRun(full) {
+  const c = SLV(); if (!c || slvRun.busy) return; slvRun.busy = 1;
+  try {
+    const all = await slvStations(), pick = slvPick(all); NZF.pick = pick;
+    await Promise.all(pick.map(async st => {
+      const g = NZF.gauges[st.id] = Object.assign(NZF.gauges[st.id] || {}, st), want6 = full || !g.t6 || Date.now() - g.t6 > 36e5;
+      try {
+        const pts = await slvGet(st, want6 ? "6h" : "30m");
+        if (want6) { g.pts = pts; g.t6 = Date.now(); g.full = 1; }
+        else { const keep = (g.pts || []).filter(p => p[0] > Date.now() - 6 * 36e5 && (!pts.length || p[0] < pts[0][0])); g.pts = keep.concat(pts); g.full = 0; }
+        g.err = 0; slvCalc(g);
+      } catch (e) { g.err = Date.now(); }
+    }));
+    NZF.gt = Date.now(); NZF.gErr = 0;
+  } catch (e) { NZF.gErr = Date.now(); }
+  finally { slvRun.busy = 0; }
+  if (curPg() === "hazards") nzfPanels();
+  const lv = slvLevel(); if (lv !== NZF.lv) { NZF.lv = lv; queueNotif(); }
+}
+// a gauge counts only while its newest reading is under 30 minutes old
+const slvLive = g => g && g.last && Date.now() - g.last < 18e5 && g.amp != null;
+function slvLevel() {
+  const c = SLV(); if (!c) return 0;
+  const G = (NZF.pick || []).map(s => NZF.gauges[s.id]).filter(slvLive);
+  return G.reduce((m, g) => Math.max(m, g.amp >= c.red ? 2 : g.amp >= c.amber ? 1 : 0), 0);
+}
+function slvSpark(g, c) {
+  const P = (g.sm || []).filter(p => p[0] > Date.now() - 6 * 36e5); if (P.length < 2) return '<svg class="slv-sp" viewBox="0 0 240 40"></svg>';
+  const t0 = Date.now() - 6 * 36e5, B = [];
+  for (let i = 0; i < 120; i++) { const a = t0 + i * 18e4, s = P.filter(p => p[0] >= a && p[0] < a + 18e4); if (s.length) B.push([i * 2, s.reduce((m, p) => Math.abs(p[1] - g.base) > Math.abs(m - g.base) ? p[1] : m, s[0][1]) - g.base]); }
+  const sc = Math.max(0.25, (g.amp || 0) * 1.15), y = v => (20 - Math.max(-1, Math.min(1, v / sc)) * 18).toFixed(1), lv = g.amp >= c.red ? 2 : g.amp >= c.amber ? 1 : 0;
+  const thr = [c.amber, c.red].filter(t => t < sc).map(t => '<line class="slv-th" x1="0" x2="240" y1="' + y(t) + '" y2="' + y(t) + '"/><line class="slv-th" x1="0" x2="240" y1="' + y(-t) + '" y2="' + y(-t) + '"/>').join("");
+  return '<svg class="slv-sp l' + lv + '" viewBox="0 0 240 40" preserveAspectRatio="none" aria-hidden="true"><line class="slv-z" x1="0" x2="240" y1="20" y2="20"/>' + thr + '<polyline points="' + B.map(p => p[0] + "," + y(p[1])).join(" ") + '"/></svg>';
+}
+function slvHtml() {
+  const c = SLV(); if (!c) return "";
+  const pick = NZF.pick || [], G = pick.map(s => NZF.gauges[s.id] || s), live = G.filter(slvLive), lv = slvLevel();
+  const head = !pick.length ? (NZF.gErr ? ["off", "help-circle-outline", "No data from the gauges yet"] : nzfHome() ? ["off", "help-circle-outline", "Checking the gauges…"] : ["off", "help-circle-outline", "Needs your home location (zone.home)"])
+    : !live.length ? ["off", "help-circle-outline", "No data from the gauges since " + nzfHHMM(Math.max.apply(null, G.map(g => g.last || 0)) || NZF.gt)]
+    : lv === 2 ? ["red", "alert-octagon", "Land threat level · follow Civil Defence"] : lv === 1 ? ["amb", "alert", "Unusual waves · stay off beaches"] : ["ok", "check-circle-outline", "Sea is calm at nearby gauges"];
+  const rows = G.map(g => { const ok = slvLive(g), l = ok ? (g.amp >= c.red ? 2 : g.amp >= c.amber ? 1 : 0) : -1;
+    return '<div class="slv-r' + (ok ? "" : " slv-old") + '"><span><b>' + esc(g.name) + '</b><small>' + (g.km != null ? Math.round(g.km) + " km from home" : esc(g.id)) + (ok ? "" : g.last ? " · last " + nzfHHMM(g.last) : " · no data") + '</small></span>' + (ok ? slvSpark(g, c) : '<svg class="slv-sp" viewBox="0 0 240 40"></svg>') + '<em class="l' + l + '">' + (ok ? (g.amp < 0.1 ? g.amp.toFixed(2) : g.amp.toFixed(1)) + " m" : "--") + '</em></div>'; }).join("");
+  return '<div class="pn hzps slv-' + head[0] + '"><div class="hzlh"><span class="lbl">' + mdi("waves") + ' Sea level · gauges</span><small>tide removed · 6 h</small></div>' +
+    '<p class="slv-h">' + mdi(head[1]) + esc(head[2]) + '</p>' + rows +
+    (lv ? '<p class="slv-n">One gauge is one spot in one harbour, and the first wave is often not the biggest. Official alerts come first: long or strong, get gone.</p>' : "") +
+    '<div class="slv-f"><span>' + (live.length ? "Biggest swing in the last hour" : "") + '</span><span>© GNS Science · GeoNet</span></div></div>';
+}
+
+// ===== 3. Civil Defence: Emergency Mobile Alerts (NEMA's public feed, through a Home Assistant REST sensor) =====
+// config civilDefence: { sensor: "sensor.civil_defence_alerts", areas: ["Waikato"], hours: 24, takeover: true, test: false }
+// areas: words to look for in the alert (region, district or town). Empty = every alert in New Zealand. A cancelled or all-clear alert shows green for 10 minutes.
+const CDC = () => Object.assign({ sensor: "sensor.civil_defence_alerts", areas: [], hours: 24, takeover: true, test: false }, CONFIG.civilDefence || {});
+function cdAlerts() {
+  const c = CDC(), s = states[c.sensor]; if (!s || s.state === "unavailable" || s.state === "unknown") return [];
+  const ar = [].concat(c.areas || []).map(a => String(a).toLowerCase()).filter(Boolean);
+  return nzfList(s.attributes.item).map(x => {
+    const t = nzfTxt(x.title), d = nzfTxt(x.description).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(), at = Date.parse(nzfTxt(x.pubDate)) || 0;
+    return { id: nzfTxt(x.guid) || nzfTxt(x.link) || t + at, t: t, d: d, at: at, link: nzfTxt(x.link), by: nzfTxt(x.author) || nzfTxt(x.category), clr: /\b(cancel(led)?|all clear|has passed|lifted|ended)\b/i.test(t + " " + d.slice(0, 160)) };
+  }).filter(a => a.t && (c.test || !/\btest\b/i.test(a.t)) && (!a.at || Date.now() - a.at < (+c.hours || 24) * 36e5) && (!a.clr || Date.now() - a.at < 6e5) &&
+    (!ar.length || ar.some(w => (a.t + " " + a.d).toLowerCase().indexOf(w) > -1))).sort((a, b) => b.at - a.at);
+}
+const cdAckGet = () => { if (NZF.cdAck) return NZF.cdAck; try { NZF.cdAck = JSON.parse(localStorage.getItem("kinetic-cdack") || "[]"); } catch (e) { NZF.cdAck = []; } return NZF.cdAck; };
+const cdAck = id => { const a = cdAckGet(); if (a.indexOf(id) < 0) a.push(id); NZF.cdAck = a.slice(-30); try { localStorage.setItem("kinetic-cdack", JSON.stringify(NZF.cdAck)); } catch (e) {} };
+function cdDraw() {
+  const b = $("#cdb"); if (!b) return;
+  const A = cdAlerts(), a = A[0];
+  const h = a ? '<div class="cdf-bar' + (a.clr ? " cdf-clr" : "") + '" data-cd="open" role="button" tabindex="0">' + mdi(a.clr ? "check-circle-outline" : "alert-octagon") + '<span><b>' + esc(a.t) + '</b><small>' + esc(["Civil Defence · Emergency Mobile Alert", a.at ? nzfHHMM(a.at) : ""].filter(Boolean).join(" · ")) + (A.length > 1 ? " · +" + (A.length - 1) + " more" : "") + '</small></span><em>READ</em></div>' : "";
+  if (b._h !== h) { b._h = h; b.innerHTML = h; b.hidden = !h; }
+  // the wall tablet (and every screen) shows a new alert full screen once, until someone taps OK
+  if (a && !a.clr && CDC().takeover !== false && cdAckGet().indexOf(a.id) < 0) cdOpen(a, true);
+}
+function cdOpen(a, auto) {
+  a = a || cdAlerts()[0]; if (!a) return;
+  let el = $("#cdt"); if (!el) { el = document.createElement("div"); el.id = "cdt"; el.setAttribute("role", "alertdialog"); el.setAttribute("aria-modal", "true"); document.body.appendChild(el);
+    el.addEventListener("click", e => { const k = e.target.closest("[data-cdt]"); if (!k) return; if (k.dataset.cdt === "map") hzExt("https://getready.govt.nz/ema-map"); cdAck(el.dataset.id); el.classList.remove("on"); }); }
+  if (auto && el.classList.contains("on") && el.dataset.id === a.id) return;
+  el.dataset.id = a.id;
+  el.innerHTML = '<div class="cdf-tk' + (a.clr ? " cdf-clr" : "") + '">' + mdi(a.clr ? "check-circle-outline" : "alert-octagon") + '<span class="lbl">Emergency alert' + (a.at ? " · " + nzfHHMM(a.at) : "") + '</span><h2>' + esc(a.t) + '</h2>' + (a.d ? '<p>' + esc(a.d) + '</p>' : "") +
+    '<small>Civil Defence · Emergency Mobile Alert' + (a.by ? " · " + esc(a.by) : "") + '</small><div class="cdf-b"><button class="eb" data-cdt="ok">OK, GOT IT</button><button class="eb" data-cdt="map">OPEN GETREADY MAP</button></div></div>';
+  el.classList.add("on");
+  if (auto) { try { navigator.vibrate && navigator.vibrate([400, 200, 400]); } catch (e) {} }
+}
+$("#cdb").addEventListener("click", e => { if (e.target.closest("[data-cd]")) cdOpen(); });
+$("#cdb").addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.closest("[data-cd]")) { e.preventDefault(); cdOpen(); } });
+
+// ===== 4. Roads: NZTA state highway events (through Home Assistant REST sensors) and NZTA traffic cameras =====
+// config roads: { sensor: "sensor.nzta_road_events" (or a list, one per region), km: 1, trips: [{ name: "Home → work", via: [[lat, lon], ...] }], cams: [{ id: 123, name: "SH1 ..." }] }
+// With no trips, each commute entry (config commute, Waze sensors) is a trip: an event counts when it is near the line from home to work and on
+// a state highway in Waze's route, or within 3 km of that line. An explicit trip uses km (default 1) from the line through its points.
+// Planned work shows only while it is on, or when it starts in the next 24 h.
+const RDC = () => { const r = CONFIG.roads; return r ? Object.assign({ sensor: "sensor.nzta_road_events", km: 1, trips: [], cams: [] }, r) : null; };
+const rdSens = () => { const c = RDC(); return c ? [].concat(c.sensor || []) : []; };
+function rdWkt(w) { const n = String(w || "").match(/-?\d+(\.\d+)?\s+-?\d+(\.\d+)?/g) || []; return n.map(p => { const q = p.trim().split(/\s+/); return [+q[1], +q[0]]; }); }
+function rdNear(pts, via, km) {
+  if (!via || via.length < 1) return true;
+  const seg = (p, a, b) => { const r = Math.PI / 180, k = Math.cos(p[0] * r), ax = (a[1] - p[1]) * k, ay = a[0] - p[0], bx = (b[1] - p[1]) * k, by = b[0] - p[0], dx = bx - ax, dy = by - ay, L = dx * dx + dy * dy, t = L ? Math.max(0, Math.min(1, -(ax * dx + ay * dy) / L)) : 0; return Math.hypot(ax + t * dx, ay + t * dy) * 111.2; };
+  return pts.some(p => via.length === 1 ? nzfKm(p[0], p[1], via[0][0], via[0][1]) <= km : via.slice(1).some((b, i) => seg(p, via[i], b) <= km));
+}
+// a Waze origin / destination: "lat,lon", or an entity (zone, person, device tracker) with a position
+function rdLoc(v) {
+  const m = String(v || "").match(/^\s*(-?\d+(\.\d+)?)\s*,\s*(-?\d+(\.\d+)?)\s*$/); if (m) return [+m[1], +m[3]];
+  const s = states[String(v || "").trim()]; return s && s.attributes.latitude != null ? [+s.attributes.latitude, +s.attributes.longitude] : null;
+}
+const rdHw = t => (String(t || "").toUpperCase().match(/\bSH\s*\d+/g) || []).map(x => x.replace(/\s+/g, ""));
+function rdEvents() {
+  const S = rdSens().map(id => states[id]).filter(s => s && s.state !== "unavailable" && s.state !== "unknown"); if (!S.length) return null;
+  const now = Date.now(), seen = {};
+  return S.reduce((a, s) => a.concat(nzfList(s.attributes.roadevent)), []).filter(e => e && e.status !== "Resolved" && !seen[e.id] && (seen[e.id] = 1)).map(e => {
+    const st = Date.parse(e.startDate) || 0, en = Date.parse(e.endDate) || 0;
+    return { id: e.id, pts: rdWkt(e.geometry), plan: !!e.planned, on: (!st || st <= now) && (!en || en > now), soon: st > now && st - now < 864e5, st: st, en: en,
+      hw: (e.journey || {}).name || "", area: e.locationArea || "", type: e.eventDescription || e.eventType || "", imp: e.impact || "", txt: String(e.eventComments || "").trim(), alt: e.alternativeRoute && !/not applicable/i.test(e.alternativeRoute) ? e.alternativeRoute : "" };
+  }).filter(e => !e.plan || e.on || e.soon);
+}
+function rdTripList() {
+  const c = RDC(); if ((c.trips || []).length) return c.trips.map(t => ({ name: t.name || "Trip", via: t.via || null, km: +c.km || 1 }));
+  const W = (CONFIG.commute || []).map(x => { const s = states[x.sensor]; if (!s) return null; const o = rdLoc(s.attributes.origin) || nzfHome(), d = rdLoc(s.attributes.destination); return o && d ? { name: (x.name ? x.name + " · " : "") + "home ↔ work", via: [o, d], km: 3, hw: rdHw(s.attributes.route) } : null; }).filter(Boolean);
+  return W.length ? W : [{ name: "Near home", via: null }];
+}
+function rdTrips() {
+  const E0 = rdEvents(); if (!RDC() || !E0) return null;
+  return rdTripList().map(t => {
+    const box = t.via && t.via.length > 1 ? [Math.min.apply(null, t.via.map(p => p[0])) - .05, Math.max.apply(null, t.via.map(p => p[0])) + .05, Math.min.apply(null, t.via.map(p => p[1])) - .06, Math.max.apply(null, t.via.map(p => p[1])) + .06] : null;
+    const inBox = e => !box || e.pts.some(p => p[0] >= box[0] && p[0] <= box[1] && p[1] >= box[2] && p[1] <= box[3]);
+    const hit = e => e.pts.length && (rdNear(e.pts, t.via, t.km || 1) || (t.hw && t.hw.length && inBox(e) && t.hw.indexOf(rdHw(e.hw)[0]) > -1));
+    const ev = E0.filter(hit); return { name: t.name, bad: ev.filter(e => !e.plan), plan: ev.filter(e => e.plan) };
+  });
+}
+const rdBad = () => { const T = rdTrips(); return !!T && T.some(t => t.bad.length); };
+const rdCamUrl = id => "https://trafficnz.info/camera/" + encodeURIComponent(id) + ".jpg?t=" + Math.floor(Date.now() / 6e4);
+function rdHtml() {
+  const c = RDC(); if (!c) return "";
+  const T = rdTrips(), cams = (c.cams || []).map(x => typeof x === "object" ? x : { id: x, name: "Camera " + x }), cam = cams.length ? cams[NZF.rcam % cams.length] : null;
+  const evRow = (e, red) => '<div class="rds-e' + (red ? " rds-red" : "") + '"><b>' + esc([e.hw, e.type || e.imp].filter(Boolean).join(" · ")) + (e.imp && e.imp !== "Caution" && e.type ? " · " + esc(e.imp) : "") + '</b><small>' + esc(e.area) + (e.plan && e.st && !e.on ? " · from " + esc(hzWhen(e.st)) : e.en && e.plan ? " · until " + esc(hzWhen(e.en)) : "") + '</small>' + (e.txt && !e.plan ? '<p>' + esc(e.txt.length > 220 ? e.txt.slice(0, 217) + "…" : e.txt) + '</p>' : "") + (e.alt ? '<p>Detour: ' + esc(e.alt) + '</p>' : "") + '</div>';
+  const trips = !T ? '<p class="hzempty rds-off">' + mdi("help-circle-outline") + 'No data from NZTA (' + esc(rdSens().join(", ")) + ')</p>' : T.map(t => '<div class="rds-t' + (t.bad.length ? " rds-bad" : "") + '"><div class="rds-th">' + mdi(t.bad.length ? "alert" : "check-circle-outline") + '<b>' + esc(t.name) + '</b><small>' + (t.bad.length ? t.bad.length + " problem" + (t.bad.length > 1 ? "s" : "") : "No problems") + (t.plan.length ? " · " + t.plan.length + " planned" : "") + '</small></div>' +
+    t.bad.map(e => evRow(e, /closed/i.test(e.imp))).join("") + (t.plan.length ? '<details class="rds-pl"><summary>' + mdi("traffic-cone") + t.plan.length + ' planned work' + (t.plan.length > 1 ? "s" : "") + '</summary>' + t.plan.map(e => evRow(e, false)).join("") + '</details>' : "") + '</div>').join("");
+  const camH = cam ? '<button type="button" class="rds-cam" data-rdc="next"' + (cams.length > 1 ? "" : " disabled") + '><span class="vcam-ph"><img data-rdcam="' + esc(cam.id) + '" src="' + rdCamUrl(cam.id) + '" alt="' + esc(cam.name) + '" loading="lazy" onerror="this.parentNode.classList.add(\'vcam-err\')" onload="this.parentNode.classList.remove(\'vcam-err\')"><span class="vcam-gone">Camera not available</span><span class="vcam-lb">' + esc(cam.name) + '</span></span><span class="vcam-cap"><small>' + (cams.length > 1 ? 'Tap for the next camera (' + (NZF.rcam % cams.length + 1) + ' of ' + cams.length + ')' : "") + '</small><span class="vcam-cr">NZTA</span></span></button>' : "";
+  return '<div class="pn hzpr"><div class="hzlh"><span class="lbl">' + mdi("road-variant") + ' Roads · NZTA</span><small>state highways on your routes</small></div>' + trips + camH + '</div>';
+}
+$("#hazards").addEventListener("click", e => { if (e.target.closest("[data-rdc]")) { NZF.rcam++; nzfPanels(); } });
+
+// ===== the Hazards page panels, the header chips and the timers =====
+// the side column: earthquakes (28-hazards.js), then sea level, roads and volcanoes
+function nzfPanels() {
+  [[".hzps", slvHtml], [".hzpr", rdHtml]].forEach(x => {
+    const el = $("#hazards " + x[0]); if (!el) return; const h = x[1](); if (el.dataset.h === String(h.length) && el._h === h) return;
+    const open = el.querySelector("details[open]"), t = document.createElement("div"); t.innerHTML = h; const n = t.firstElementChild; if (!n) return;
+    if (open) { const nd = n.querySelector("details"); if (nd) nd.open = true; }
+    n._h = h; n.dataset.h = String(h.length); el.replaceWith(n);
+  });
+}
+const nzfRel = id => id === CDC().sensor || rdSens().indexOf(id) > -1 || (RDC() && (CONFIG.commute || []).some(x => x.sensor === id)) || id === "zone.home" || id === "sun.sun";
+// refresh the pictures in place when their 10 minute (volcano) or 1 minute (road camera) slot changes, without redrawing the page
+function nzfTick() {
+  if (document.hidden) return;
+  $$("img[data-vcam]").forEach(i => { const u = vcamUrl(i.dataset.vcam); if (i.getAttribute("src") !== u) i.src = u; });
+  $$("img[data-rdcam]").forEach(i => { const u = rdCamUrl(i.dataset.rdcam); if (i.getAttribute("src") !== u) i.src = u; });
+  cdDraw();
+}
+setInterval(nzfTick, 30000);
+setInterval(() => { if (!document.hidden && SLV()) slvRun(curPg() === "hazards"); }, 3 * 60000);
+addEventListener("hashchange", () => { if (curPg() === "hazards" && SLV() && Date.now() - NZF.gt > 6e4) slvRun(true); });
+setTimeout(() => { if (SLV()) slvRun(curPg() === "hazards"); }, 4000);
+// Admin > Setup check: when each public feed last gave data
+function nzfStatus() {
+  const r = [], c = SLV(), cd = CDC(), rd = RDC(), st = id => { const s = states[id]; return !s ? "not found in Home Assistant" : s.state === "unavailable" || s.state === "unknown" ? "unavailable" : "OK, updated " + hzAgo(Date.parse(s.last_updated) || 0); };
+  if (c) r.push(["Sea level (GeoNet Tilde)", NZF.gt ? (slvLevel() >= 0 && (NZF.pick || []).some(p => slvLive(NZF.gauges[p.id])) ? "OK, newest reading " + hzAgo(Math.max.apply(null, (NZF.pick || []).map(p => (NZF.gauges[p.id] || {}).last || 0))) : "no recent readings") : NZF.gErr ? "cannot reach GeoNet" : "checking…"]);
+  if (vcamOn()) r.push(["Volcano cameras (GeoNet)", "loaded as pictures; a missing one says Camera not available"]);
+  if (CONFIG.civilDefence || states[cd.sensor]) r.push(["Civil Defence (" + cd.sensor + ")", st(cd.sensor)]);
+  if (rd) rdSens().forEach(id => r.push(["Roads (" + id + ")", st(id)]));
+  return r.length ? '<details class="sck-u"><summary class="lbl">Public feeds (' + r.length + ')</summary><div class="sck-l">' + r.map(x => '<div class="sck-r"><b>' + esc(x[0]) + '</b><small>' + esc(x[1]) + '</small></div>').join("") + '</div></details>' : "";
+}
 // ---------- Auto update: a new dash.html or config.js on the server is picked up by every screen, no ?v= to bump ----------
 // Every autoUpdateMinutes (5), and when the dashboard comes back on screen, it fetches its own page and config.js past the browser cache.
 // A different build id (DASH_BUILD) in the page, or a different config.js, refreshes the saved copies (cache "reload") and reloads onto them,
