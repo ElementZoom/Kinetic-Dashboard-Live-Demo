@@ -15,7 +15,7 @@ if(m==="sun"){m=localStorage.getItem("dashSunDark")==="0"?"light":"dark"}
 var p=o[m]||(o.bg&&m==="dark"?o:{}),d=D[m]||D.dark,g=function(k){return p[k]||d[k]};
 r.setAttribute("data-mode",m);s.colorScheme=m;s.setProperty("--w",m==="light"?"0,0,0":"255,255,255");
 s.setProperty("--bg",g("bg"));s.setProperty("--bg2",g("glow"));s.setProperty("--ink",g("ink"));s.setProperty("--ink-rgb",h(g("ink")));s.setProperty("--mint",g("accent"));
-if(st)r.setAttribute("data-style",st)}catch(e){}})();
+if(st&&st!=="metro")r.setAttribute("data-style",st)}catch(e){}})();
 </script>
 <style>
 :root{--w:255,255,255;--bg:#06141b;--bg2:#0e3a42;--ink:#eaf1fb;--ink-rgb:234,241,251;--mut:rgba(var(--ink-rgb),.6);--line:rgba(var(--w),.1);--mint:#8ff0c4;--mint-rgb:143,240,196;--heat:#ff7a6b;--heat-rgb:255,122,107;--cool:#6bb8ff;--cool-rgb:107,184,255;--lit-rgb:255,224,130;--nav1:#8fb4d3;--nav2:#6f93b4;--navink:#06182b;
@@ -1085,6 +1085,16 @@ body.vwb #btab,body.vwb #mshe{display:none}
 @media(max-width:1100px){.vgrid{grid-template-columns:1fr}}
 @media(max-width:760px){.vhero{flex-wrap:wrap;gap:14px}.vring{width:104px;height:104px}.vrt b{font-size:30px}.vrt small{font-size:13px}.vmain{min-width:0;flex:1 1 150px}.vbig{font-size:34px}.vbig small{font-size:14px}.vchips{flex:1 0 100%}.vtv b{font-size:22px}}
 
+.csv-big{font-size:30px;font-weight:600;margin:6px 0 2px}.csv-sub{color:var(--mut);font-size:14px;margin-bottom:12px}
+.csv-card.soon .csv-big{color:#e8973a}.csv-card.over .csv-big{color:var(--heat)}
+.csv-bt{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-top:10px}.csv-bt span:last-child{color:var(--mut);text-align:right}
+.csv-bar{height:8px;border-radius:4px;background:rgba(var(--w),.08);margin-top:5px;overflow:hidden}.csv-bar i{display:block;height:100%;border-radius:4px}
+.csv-note{margin-top:14px;padding:10px 12px;border-radius:12px;background:rgba(107,184,255,.12);font-size:14px}.csv-card.soon .csv-note{background:rgba(232,151,58,.14)}.csv-card.over .csv-note{background:rgba(255,90,90,.14)}
+.csv-f{margin-top:14px}.csv-g{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end}.csv-bn{display:grid;grid-template-columns:1fr 1fr;gap:10px}.csv-ft{font-size:16px}
+.csv-rows{margin-top:14px}.csv-rows div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}.csv-rows span{color:var(--mut)}
+.csv-done{width:100%;height:46px;margin-top:14px;justify-content:center;display:flex;align-items:center;gap:6px}.csv-done svg{width:18px;height:18px;fill:currentColor}
+.csv-ed{all:unset;cursor:pointer;display:block;margin:10px auto 0;color:var(--mint);font-size:14px}.csv-bn .eb{height:46px;justify-content:center;display:flex;align-items:center;gap:6px}.csv-done svg{width:18px;height:18px;fill:currentColor}
+.vhr.soon b{color:#e8973a}
 /* hazards page: GeoNet earthquakes + volcanoes on a NZ map */
 #hazards{--hzbg:color-mix(in srgb,var(--bg) 84%,transparent)}
 .hzg{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,1fr);gap:14px;align-items:start}
@@ -1234,7 +1244,6 @@ html[data-roomfx=off] .rc>.rg{display:none}
 .spv[data-pv=glass] b,.spv[data-pv=glass] i{border-radius:20px;background:linear-gradient(150deg,rgba(255,255,255,.4),rgba(255,255,255,.1));border:1px solid rgba(255,255,255,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .spv[data-pv=material] b,.spv[data-pv=material] i{border-radius:22px;background:rgba(255,255,255,.2);border:0}.spv[data-pv=material] i{border-radius:999px;background:rgba(var(--mint-rgb),.9)}
 .spv[data-pv=minimal] b,.spv[data-pv=minimal] i{border-radius:5px;background:transparent;border:1px solid rgba(255,255,255,.5)}
-.spv[data-pv=metro] b,.spv[data-pv=metro] i{border-radius:0;border:0;background:#1ba1e2}.spv[data-pv=metro] i{background:#f09609}
 .sty{border-radius:20px!important;display:flex!important;flex-direction:column;align-items:stretch;text-align:left;padding:12px!important;flex:1 1 200px;min-width:180px}.sty small{display:block;font:400 12px var(--sans);letter-spacing:0;color:var(--mut);margin-top:4px;text-transform:none}.sty.sel,.fnb.sel{outline:2px solid var(--mint);background:rgba(var(--mint-rgb),.14)!important}
 .stg{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
 
@@ -1338,57 +1347,6 @@ html[data-style=minimal][data-mode=light] .rooms2 .rc{background:transparent}
 html[data-style=glass] .tl.on.lc{background:rgba(var(--lc),.32);border-color:rgba(var(--lc),.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
 html[data-style=material] .tl.on.lc{background:rgba(var(--lc),.3)}
 html[data-style=minimal] .tl.on.lc{background:rgba(var(--lc),.14);border-color:rgba(var(--lc),.65)}
-
-
-/* --- Metro (Windows Phone) ---
-   Square corners everywhere, no shadows, glass or glows. Black (dark) or white (light) background, flat colour tiles,
-   room cards each in their own tile colour (--mc, set per room), selected things in your accent colour, thin lowercase titles, round outline buttons. */
-html[data-style=metro]{--r:0px}
-html[data-style=metro] body{background:#000}
-html[data-style=metro][data-mode=light] body{background:#fff}
-html[data-style=metro] :where(.pn,.card,.cd,.ws,.zf,.kpb,.spb,#cpp .cpsh,#np,#bat,.sch,.alert,.fcc>div,.vtv>div){border-radius:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:0;background:rgba(var(--w),.07)}
-html[data-style=metro][data-mode=light] :where(.pn,.card,.cd,.ws,.zf,.fcc>div,.vtv>div){background:rgba(0,0,0,.05)}
-html[data-style=metro] :is(.spb,.kpb,#cpp .cpsh,#np){background:#1f1f1f;border:2px solid rgba(var(--w),.25)}
-html[data-style=metro][data-mode=light] :is(.spb,.kpb,#cpp .cpsh,#np){background:#f2f2f2}
-html[data-style=metro] :where(header,#mshe,#btab,nav){border-radius:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:0;background:transparent}
-html[data-style=metro] #btab{background:#1f1f1f}
-html[data-style=metro][data-mode=light] #btab{background:#f2f2f2}
-html[data-style=metro] #ttl{font-weight:300;text-transform:lowercase;letter-spacing:-.01em;font-size:1.35em}
-html[data-style=metro] nav a{border-radius:0;background:transparent;color:var(--mut);opacity:1;text-transform:lowercase;font-weight:300;letter-spacing:0;font-size:1.15em}
-html[data-style=metro] nav a.on{background:transparent;color:var(--ink);font-weight:400}
-/* room cards: solid colour tiles with white text */
-html[data-style=metro] .rc{border-radius:0!important;box-shadow:none!important;border:0!important;background:var(--mc,#1ba1e2)!important;color:#fff;--ink:#fff;--mut:rgba(255,255,255,.82)}
-html[data-style=metro] .rc>.rg,html[data-style=metro] .rc .hvb{display:none}
-html[data-style=metro] .rc :is(.lbl,.md,.tm,.temp){color:#fff}
-html[data-style=metro] .rc .tm{font-weight:300}
-html[data-style=metro] .rc .cb2{border-radius:0;background:rgba(0,0,0,.22)!important;border:0!important;color:#fff!important}
-html[data-style=metro] .rc .cb2 svg{fill:#fff!important}
-/* tiles, chips, buttons */
-html[data-style=metro] :where(.tl,.bd,.pk,.vch){border-radius:0!important;box-shadow:none!important;border:2px solid transparent;background:rgba(var(--w),.12)}
-html[data-style=metro] .tl.on,html[data-style=metro] .tl.on.lc{background:var(--mint);border-color:var(--mint);--ink:var(--onmint,#07241a);--mut:color-mix(in srgb,var(--onmint,#07241a) 75%,transparent);color:var(--onmint,#07241a)}
-html[data-style=metro] .tl.on :is(svg,.tn svg){fill:var(--onmint,#07241a)}
-html[data-style=metro] :where(.chip,.eb){border-radius:0!important;box-shadow:none!important;background:transparent;border:2px solid rgba(var(--w),.55)}
-html[data-style=metro] :is(.chip.on,.eb.on,.eb.sel){background:var(--mint)!important;border-color:var(--mint)!important;color:var(--onmint,#07241a)!important}
-html[data-style=metro] .rnd{border-radius:50%!important;background:transparent;border:2px solid var(--ink);box-shadow:none}
-html[data-style=metro] .rnd.on{background:var(--ink);color:var(--bg)}
-html[data-style=metro] .sty{border-radius:0!important}
-html[data-style=metro] :is(.card.aur,.bq,.mpc.pl)::before,html[data-style=metro] :is(.card.aur,.tl.cl.hv)::after{animation:none}
-html[data-style=metro] .card.aur::before,html[data-style=metro] .card.aur::after{display:none}
-html[data-style=metro] :is(.card.heat,.rc.heat){background:var(--heat)}
-html[data-style=metro] :is(.card.cool){background:rgba(var(--cool-rgb),.85)}
-html[data-style=metro] input[type=range]{accent-color:var(--mint)}
-html[data-style=metro] nav{color:var(--ink)}
-html[data-style=metro] nav .t{color:var(--ink)}
-html[data-style=metro] .cam{border-radius:0;border:0}
-html[data-style=metro] #btab{border-radius:0}
-html[data-style=metro] #btab :is(a,button){border-radius:0}
-html[data-style=metro] #btab :is(a,button).on{background:var(--mint);color:var(--onmint,#07241a)}
-html[data-style=metro] #btab :is(a,button).on span{color:var(--onmint,#07241a)}
-html[data-style=metro] :where(.seg,.hm .seg,.mds,.mbar){border-radius:0!important}
-html[data-style=metro] :where(.seg>*,.seg button){border-radius:0!important}
-html[data-style=metro]:not(#x) #mini :is(.chips,.chip){border-radius:0}
-html[data-style=metro] .rc .cb2.hvc{border-radius:0}
-html[data-style=metro] :is(.cam,.snap,#vw .cam){clip-path:inset(0);border-radius:0}
 /* ===== fonts (self-hosted in ./fonts, falls back to the system font if a file is missing) ===== */
 @font-face{font-family:"Roboto Flex";src:url("fonts/roboto-flex.woff2") format("woff2");font-weight:100 1000;font-display:swap}
 @font-face{font-family:"Roboto Mono";src:url("fonts/roboto-mono.woff2") format("woff2");font-weight:100 700;font-display:swap}
@@ -2141,7 +2099,6 @@ html[data-mode=light] #sch .sch-r.cmt .cmg :is(b,svg){color:#1f5f99;fill:#1f5f99
 #cmtsh .cmn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border:0;border-radius:999px;background:var(--mint);color:var(--onmint,#07241a);font:600 12px var(--mono);letter-spacing:.08em;cursor:pointer}
 #cmtsh .cmn svg{width:18px;height:18px;fill:currentColor}
 #cmtsh .cmno{text-align:center;margin-top:-4px}
-html[data-style=metro] #cmtsh :is(.cmb,.cmf,.cmn){border-radius:0}
 /* Theme page: setup check */
 .sck-s{display:flex;flex-direction:column;gap:4px;margin-top:12px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--w),.05)}
 .sck-s b{font-weight:600;font-size:15px}.sck-s small{color:var(--mut);font-size:12px}
@@ -2827,6 +2784,9 @@ html:not(#x) #dtm .dtc{width:100%;height:100%;max-width:none;border-radius:0;bor
 #dtm .dtwn{flex:1;min-width:0;font-size:13px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #dtm .dtpill{flex:none;font:600 11px var(--mono);letter-spacing:.06em;color:#14233c;background:#9fb4ff;padding:3px 9px;border-radius:9px}
 #dtm .dtsb{flex:none;color:#fff;border-color:rgba(255,255,255,.4)}
+/* the header is always as tall as the SIDE BY SIDE button, so the video does not move when a moment has several cameras */
+#dtm .dth{min-height:calc(59px + max(10px,env(safe-area-inset-top)) - 10px);box-sizing:border-box}
+#dtm .dtsb{margin:-4px 0}
 #dtm .evx{flex:none;color:#fff}
 #dtm .dtvw{position:relative;flex:1;min-height:0;display:flex}
 html:not(#x) #dtm .dtv{flex:1;aspect-ratio:auto;min-height:0;height:100%}
@@ -2840,8 +2800,8 @@ html:not(#x) #dtm .dtv{flex:1;aspect-ratio:auto;min-height:0;height:100%}
 #dtm .dtnv[hidden]{display:none}
 #dtm .dtnv svg{width:26px;height:26px;fill:currentColor}
 #dtm .dtnv.pv{left:12px}#dtm .dtnv.nx{right:12px}
-#dtm .dtal2{flex:none;display:flex;align-items:center;gap:8px;padding:0 14px;overflow-x:auto;scrollbar-width:none}
-#dtm .dtal2:not(:empty){padding:8px 14px max(10px,env(safe-area-inset-bottom))}
+#dtm .dtal2{flex:none;display:flex;align-items:center;gap:8px;overflow-x:auto;scrollbar-width:none;box-sizing:border-box;padding:8px 14px max(10px,env(safe-area-inset-bottom));min-height:calc(70px + max(10px,env(safe-area-inset-bottom)))}
+/* the Also at strip keeps its height when a moment has one clip, so the video and the arrows stay put while stepping through */
 #dtm .dtal2>span{flex:none;font-size:12px;opacity:.7;margin-right:4px}
 #dtm .dtal2 .dtat{flex:0 0 auto;width:110px;max-width:none;position:relative;height:62px;padding:0;border-radius:8px;overflow:hidden;background:#222;color:#fff}
 #dtm .dtal2 .dtat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -2960,6 +2920,7 @@ html:not(#x) #dtm .dtv{flex:1;aspect-ratio:auto;min-height:0;height:100%}
 #cmtsh .rds-lg i{display:inline-block;width:18px;height:4px;border-radius:2px}#cmtsh .rds-lr{background:#e5483b;height:6px!important}#cmtsh .rds-lb{background:#3b6fd8}
 #cmtsh .rds-map img.cmf{transition:opacity .2s}#cmtsh .rds-map img.rds-ld{opacity:.55}
 .vcam-tb{display:block;cursor:zoom-in}
+.slv-odd .slv-h svg{fill:var(--nzamb)}
 /* 2.5.16 event places: address suggestions under the event Location field, a MAP button, and a pin on Today's events (45-event-places.js) */
 .plc-w{display:flex;align-items:center;gap:8px}.plc-w input{flex:1}
 .plc-map{flex:none;display:inline-flex;align-items:center;gap:5px;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--w),.06);color:var(--ink);font:600 11px var(--mono);letter-spacing:.06em;cursor:pointer}
@@ -2972,6 +2933,47 @@ html:not(#x) #dtm .dtv{flex:1;aspect-ratio:auto;min-height:0;height:100%}
 #sch .plc-pin{flex:none;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;margin:-4px -6px -4px auto;border-radius:50%;cursor:pointer}
 #sch .sch-r em+.plc-pin{margin-left:4px}#sch .sch-c .plc-pin{width:20px;height:20px;margin:-3px -6px -3px -2px}
 #sch .plc-pin svg{width:16px;height:16px;fill:var(--c,var(--mint))}#sch .plc-pin:active{background:rgba(var(--w),.1)}
+/* 2.5.17 tools button (admins) and its sheet; the Updates list (Settings > System and the sheet) */
+#tlfab{position:fixed;right:24px;bottom:24px;z-index:43;width:56px;height:56px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--mint);color:var(--bg);border:0;box-shadow:0 6px 18px rgba(0,0,0,.28);cursor:pointer;transition:bottom .25s,transform .2s}
+#tlfab[hidden]{display:none}
+#tlfab>svg{width:24px;height:24px;fill:currentColor}
+#tlfab.run>svg{animation:tlspin 2.4s linear infinite}
+@keyframes tlspin{to{transform:rotate(360deg)}}
+#tlfab .tlc{position:absolute;top:-3px;right:-3px;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:#e8973a;color:#2a1700;font:700 11px/20px var(--sans,system-ui);text-align:center}
+#tlfab .tlc[hidden]{display:none}
+@media(max-width:760px){
+  /* just above the tab bar; 48-tools-fab.js raises it (--tlb) only while the music mini player or music button is on screen */
+  #tlfab{right:16px;bottom:var(--tlb,calc(var(--navh,72px) + 14px))}
+  body:is(.pill-open,.nps-open,.ls-open) #tlfab{display:none}
+}
+#tlsh{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:max(14px,env(safe-area-inset-top)) 14px max(14px,env(safe-area-inset-bottom));background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#tlsh.on{display:flex;animation:fdIn .25s ease both}
+#tlsh .tlx{width:min(520px,100%);max-height:calc(100dvh - 28px);display:flex;flex-direction:column;overflow:hidden;border-radius:24px;padding:16px 0 0;background:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.05),0 20px 60px rgba(0,0,0,.4)}
+#tlsh .tlh{flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 16px 8px}
+/* only the list scrolls; the title and close stay on top, the buttons at the bottom */
+#tlsh .tlb{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 16px 16px}#tlsh .tlh .lbl{display:flex;align-items:center;gap:8px}#tlsh .tlh .lbl svg{width:16px;height:16px;fill:currentColor}
+#tlsh .pn{margin-top:10px}
+@media(max-width:760px){#tlsh{align-items:flex-end;padding:0}#tlsh .tlx{border-radius:24px 24px 0 0;max-height:88dvh}#tlsh .tlx.qa .tlb{padding-bottom:max(16px,env(safe-area-inset-bottom))}}
+.upd-h{display:flex;align-items:center;justify-content:space-between}.upd-all{all:unset;cursor:pointer;color:var(--mint);font-size:13px}
+.upd-ok{display:flex;align-items:center;gap:8px;margin-top:10px;color:var(--mut)}.upd-ok svg{width:18px;height:18px;fill:var(--mint)}
+.upd-r{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.upd-r:last-of-type{border-bottom:0}
+.upd-r input{width:20px;height:20px;accent-color:var(--mint)}
+.upd-n{all:unset;cursor:pointer;min-width:0}.upd-n b{display:block;font-weight:600;font-size:15px}.upd-n small{display:block;color:var(--mut);font-size:13px;margin-top:1px}
+.upd-r.run .upd-n small{color:var(--mint)}
+.upd-bar{grid-column:2;display:block;height:5px;border-radius:3px;background:rgba(var(--w),.1);overflow:hidden}.upd-bar i{display:block;height:100%;background:var(--mint)}
+.upd-bk{display:flex;align-items:center;gap:8px;margin:10px 0 2px;font-size:13px;color:var(--mut)}.upd-bk input{accent-color:var(--mint)}
+.upd-bn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.upd-bn .eb{height:46px;justify-content:center;white-space:nowrap;letter-spacing:.04em;font-size:13px;padding:0 10px}.upd-bn .eb[disabled]{opacity:.45}
+#tlsh .upd-bn{flex:none;margin:0;padding:12px 16px max(14px,env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+.upd-m{margin-top:8px}
+/* the speed dial: two small labelled buttons above the tools button */
+#tldial{position:fixed;z-index:44;display:flex;flex-direction:column;align-items:flex-end;gap:12px;pointer-events:none}
+#tldial button{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(12px) scale(.9);transition:opacity .18s,transform .22s cubic-bezier(.2,.8,.2,1)}
+#tldial.on{pointer-events:auto}#tldial.on button{opacity:1;transform:none}#tldial.on button:nth-child(1){transition-delay:.04s}
+#tldial button span{padding:6px 12px;border-radius:12px;background:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.08),0 4px 14px rgba(0,0,0,.25);color:var(--ink);font-size:14px;font-weight:600;white-space:nowrap}
+#tldial button i{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.12),0 4px 14px rgba(0,0,0,.25);color:var(--ink)}
+#tldial button i svg{width:22px;height:22px;fill:currentColor}
+#tlfab.dial{background:var(--ink);color:var(--bg)}
+#tlscrim{position:fixed;inset:0;z-index:42;background:rgba(0,0,0,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .2s}#tlscrim.on{opacity:1;pointer-events:auto}
 /* Header chips (weather alert, pollen, leak ...): the glow is a soft halo around the pill that breathes, not a fading, fuzzy-edged copy of the whole chip. The text and border stay steady. */
 @media(min-width:761px){
 #nacc[data-k] .nai,html[data-mode] #nacc[data-k] .nai{position:relative;animation:none;filter:none;opacity:1}
@@ -3304,7 +3306,6 @@ html[data-mode=light] .iwc .nw{stroke:rgba(0,0,0,.25)}
 #insc .inst{display:flex;align-items:baseline;gap:8px;min-width:0;white-space:nowrap}
 #insc .inst b{flex:none;font-size:15px}#insc .inst small{margin:0;overflow:hidden;text-overflow:ellipsis;font-size:14px}
 #insc[hidden]{display:none}
-html[data-style=metro] :is(.ins,.inx,.ing>div,.insi,#insc){border-radius:0}
 /* phone: Leaving and Insights live as pills in the greeting card, not as cards */
 #hpls{display:contents}
 @media(max-width:760px){#lvc,#insc{display:none!important}}
@@ -3353,7 +3354,6 @@ html[data-mode=light] .it.warn .itk{color:#a5560c}html[data-mode=light] .it.ok .
 #insd .idh{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 #insd .idh .rnd{flex:none;width:40px;height:40px}
 #insd .ins{padding:0;border:0;background:none;box-shadow:none}
-html[data-style=metro] :is(.it,#insd .idp){border-radius:0}
 #insd .idk{display:block;font:600 11px var(--mono);font-style:normal;letter-spacing:.1em;color:var(--mut);margin-bottom:2px}
 #insd .idh.warn .idk,#insd .idh.warn .insi{color:#d0821f}#insd .idh.bad .idk{color:var(--heat)}#insd .idh.ok .idk{color:var(--mint)}
 html[data-mode=light] #insd .idh.warn .idk{color:#a5560c}
@@ -3377,7 +3377,6 @@ html[data-mode=light] #insd .ids>div{background:rgba(0,0,0,.05)}
 .isr{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:15px;border-bottom:1px solid var(--line)}.isr:last-child{border-bottom:0}
 .isr>i{flex:none;width:12px;height:12px;border-radius:50%}.isr span{flex:1;min-width:0}.isr small{color:var(--mut);font-size:13.5px}.isr b{min-width:64px;text-align:right;font-weight:600}
 @media(min-width:761px){.isp{height:14px}.isr{font-size:17px;padding:9px 0}.isr small{font-size:15px}.isr b{min-width:80px}}
-html[data-style=metro] .isp{border-radius:0}
 @media(max-width:760px){#insd .ids{gap:8px}#insd .ids>div{padding:9px 11px}#insd .ids b{font-size:19px}}
 /* bar rows (water per day, overnight load per night, free hours per night) */
 .irs{display:flex;flex-direction:column;gap:2px}
@@ -3390,7 +3389,6 @@ html[data-mode=light] .irb{background:rgba(0,0,0,.06)}html[data-mode=light] .irb
 .irw small{color:var(--mut);font-size:13px;white-space:nowrap}.irw b{text-align:right;font-weight:600;white-space:nowrap}
 .irl{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px;color:var(--mut)}.irl span{display:inline-flex;align-items:center;gap:6px}.irl i{width:10px;height:10px;border-radius:50%}.irl b{color:var(--ink);font-weight:600}
 @media(min-width:761px){.irw{font-size:16.5px;padding:7px 0;gap:14px;grid-template-columns:minmax(110px,auto) 1fr auto minmax(72px,auto)}.irb{height:14px}.irw small{font-size:14.5px}.irl{font-size:15px}}
-html[data-style=metro] .irb,html[data-style=metro] .irb i{border-radius:0!important}
 /* list rows with a dot or an icon */
 .ils{display:flex;flex-direction:column}
 .ilr{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}.ilr:last-child{border-bottom:0}
@@ -3430,7 +3428,6 @@ html[data-mode=light] .ibp{background:rgba(0,0,0,.07)}
 .itt{position:relative;height:14px;border-radius:7px;background:rgba(var(--w),.08)}html[data-mode=light] .itt{background:rgba(0,0,0,.07)}
 .itt i{position:absolute;top:1px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#e8973a;box-shadow:0 0 0 2px var(--bg2)}
 @media(min-width:761px){.ilm b{font-size:17px}.ilm small{font-size:14.5px}.ilx{font-size:15px}.ilr{padding:11px 0}.icb{height:130px}.icx span,.iwl{font-size:12px}.iwr{font-size:15px;grid-template-columns:64px 1fr}.iwb{height:18px}.ibl{font-size:14.5px}}
-html[data-style=metro] :is(.icb i,.iwb i,.ibp,.ibp i,.itt,.ili){border-radius:0!important}
 .icx span:last-child{display:flex;justify-content:flex-end}
 @media(max-width:760px){#insd .ids b{font-size:17px;white-space:normal;line-height:1.2}}
 /* the part under the hover card */
@@ -3448,7 +3445,6 @@ html[data-style=metro] :is(.icb i,.iwb i,.ibp,.ibp i,.itt,.ili){border-radius:0!
 .ihm>i.tot{background:rgba(var(--w),.06);color:var(--mut)}html[data-mode=light] .ihm>i.tot{background:rgba(0,0,0,.05)}
 .ihm>em{font-style:normal;font-weight:600;text-align:right;padding-left:6px}
 @media(min-width:761px){.ihm{font-size:15px;gap:6px}.ihm>i{height:38px;font-size:15px}.ihm>b{font-size:12px}}
-html[data-style=metro] .ihm>i{border-radius:0}
 @media(max-width:760px){.ihm{gap:3px}.ihm>b{font-size:9.5px;letter-spacing:0}.ihm>em{padding-left:3px}}
 #insd .bn{margin:0}#insd .bn-h{display:none}
 /* phone greeting card: today's high / low sits beside the wind; the Leaving and Insights pills get the next line to themselves */
@@ -3524,7 +3520,6 @@ html[data-mode=light] .it.fan{background:#eeedfe;border-color:#cecbf6}html[data-
 @media(min-width:761px){.insr .ilm b{max-width:none}}
 .insr.warn em{color:#e8973a}html[data-mode=light] .insr.warn em{color:#a5560c}
 .insgp.open{padding-bottom:4px}
-html[data-style=metro] :is(.insgp){border-radius:0}
 @media(min-width:761px){
   .insm{display:block;columns:2;column-gap:18px}
   .insm>.insgp{break-inside:avoid;margin:0 0 18px;display:block}
@@ -3538,6 +3533,8 @@ html[data-style=metro] :is(.insgp){border-radius:0}
   .insm{columns:1}
   .insm>.insgp{margin-bottom:14px}
 }
+.stl-go{all:unset;cursor:pointer;display:block;font-weight:600;font-size:15px;text-decoration:underline;text-decoration-color:rgba(var(--w),.3);text-underline-offset:3px}
+.stl-mu{padding:5px 10px;font-size:11px}
 /* ---------- Weather page scenes (20-weather-scenes.js): the animated skies, their sliders and the Forecast week explorer ---------- */
 .wsc{position:relative;overflow:hidden;border-radius:14px;margin:10px 0 0;background:#2d3f78;isolation:isolate}
 .wsc>canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-1}
@@ -3870,6 +3867,11 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
   .adlh>.eb{flex:1;text-align:center;justify-content:center}
   .adlw{grid-template-columns:minmax(0,1fr)}
 }
+/* 2.5.17 Entities, Automations, Logs: the search box and filter chips (Logs: chips, COPY ALL, REFRESH) stay at the top while the list scrolls */
+.adtop,.adlog>.adlh{position:sticky;top:var(--adtop,0px);z-index:5;margin:-18px -18px 0;padding:18px 18px 12px;border-radius:22px 22px 0 0;background:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.04)}
+.adtop .adch{margin-bottom:0}
+/* phones: the detail sheet's title row and close stay at the top while the sheet scrolls */
+@media(max-width:760px){.adw .add .addh{position:sticky;top:-20px;z-index:3;margin:-20px -18px 0;padding:20px 18px 12px;background:var(--bg);border-radius:26px 26px 0 0}}
 </style>
 </head>
 <body>
@@ -3942,16 +3944,16 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.16"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.16"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.16"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="config.js?v=2.5.17"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.17"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.17"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.16";   // the one place to change the version
-window.DASH_BUILD = "21ac60";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.5.17";   // the one place to change the version
+window.DASH_BUILD = "80c83b";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -4096,7 +4098,7 @@ function applyPal() {
   v("--nav1", p.nav1); v("--nav2", p.nav2); v("--navink", (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) / 255 > 0.55 ? "#06182b" : "#f2f7fb");
 }
 let STYLE = "default"; try { STYLE = localStorage.getItem("dashStyle") || "default"; } catch (_) {}
-const STYLES = [["default", "Kinetic", "The original look: tinted depth, fine outlines"], ["glass", "Liquid Glass", "Apple style: glass navigation over clear cards"], ["material", "Material", "Google style: tonal surfaces from your colour, pill buttons"], ["minimal", "Minimal", "Flat, thin lines, no effects"], ["metro", "Metro", "Windows Phone style: square colour tiles, thin lowercase titles"]];
+const STYLES = [["default", "Kinetic", "The original look: tinted depth, fine outlines"], ["glass", "Liquid Glass", "Apple style: glass navigation over clear cards"], ["material", "Material", "Google style: tonal surfaces from your colour, pill buttons"], ["minimal", "Minimal", "Flat, thin lines, no effects"]];
 const applyStyle = () => document.documentElement.setAttribute("data-style", STYLES.some(x => x[0] === STYLE) ? STYLE : "default");
 applyStyle();
 // page transition: how a page appears when you move between tabs (Theme page; per device, config pageTransition sets the default)
@@ -4248,6 +4250,19 @@ Object.assign(window.__ZHD.D, {"nearby, not on your route": "附近，不在您�
 Object.assign(window.__ZHD.D, {"close up": "近景", "whole trip": "整段行程", "closed or affected stretch": "封闭或受影响路段", "where it is": "位置"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^not on (.+)'s route: (.+) away$", "不在 $1 的路线上：相距 $2"], ["^on (.+)'s route home ↔ work \\((.+)\\)$", "在 $1 的上下班路线上（$2）"], ["^(.+)'s route, h home → w work$", "$1 的路线，H 家 → W 公司"]]);
 Object.assign(window.__ZHD.D, {"loading clip…": "正在加载片段…"});
 Object.assign(window.__ZHD.D, {"tide removed · last 6 hours": "已去除潮汐 · 最近 6 小时"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^not on (.+)'s drive to work: about (.+) away$", "不在 $1 的上班路线上：相距约 $2"], ["^on (.+)'s drive to work$", "在 $1 的上班路线上"], ["^biggest swing in the last hour · newest reading (\\S+) \\((.+)\\)$", "过去一小时最大波动 · 最新读数 $1（{2}）"]]);
+// 2.5.17 stale sensors
+Object.assign(window.__ZHD.D, {"not reporting": "未上报", "same value": "数值不变", "stuck": "卡住", "longest": "最长", "mute": "静音", "home assistant keeps showing the last value it got. usually a flat battery, or the device is out of range. mute hides one on this screen; stalesensors.ignore in config.js hides it everywhere.": "Home Assistant 会一直显示收到的最后一个值。通常是电池没电或设备超出范围。静音只在此屏幕上隐藏；在 config.js 的 staleSensors.ignore 中可在所有地方隐藏。", "still reporting, but the very same number. temperature, humidity and soil moisture normally move every day, so the probe may be stuck or dirty.": "仍在上报，但数值完全相同。温度、湿度和土壤湿度通常每天都会变化，探头可能卡住或脏了。"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^(\\d+) sensors? not reporting$", "$1 个传感器未上报"], ["^(\\d+) sensors? stuck on the same value$", "$1 个传感器数值一直不变"], ["^(.+) · nothing for (\\d+) h or more$", "$1 · $2 小时以上无数据"], ["^(.+) · unchanged for (\\d+) h or more$", "$1 · $2 小时以上未变化"], ["^(.+) · last heard from (.+)$", "$1 · 最后上报 {2}"], ["^(.+) · same since (.+) · still reporting$", "$1 · 自 $2 起未变 · 仍在上报"]]);
+// 2.5.17 vehicle service
+Object.assign(window.__ZHD.D, {"service": "保养", "next service": "下次保养", "last service": "上次保养", "next service km": "下次保养里程", "due by": "截止日期", "serviced today": "今天已保养", "due now": "现在到期", "overdue": "已逾期", "not set": "未设置", "fill in the last service below": "在下方填写上次保养", "book a service now.": "现在就预约保养。", "saved.": "已保存。", "fill in the last service date.": "请填写上次保养日期。", "distance": "里程", "time": "时间", "km not set": "里程未设置"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^or at (\\S+) km, whichever comes first$", "或在 $1 公里时，以先到者为准"], ["^the odometer passed (\\S+) km$", "里程表已超过 $1 公里"], ["^was due (.+)$", "原定 $1 到期"], ["^book a service when the odometer reaches (.+) or by (.+), whichever comes first\\.$", "当里程表达到 $1 或在 $2 之前预约保养，以先到者为准。"], ["^(\\S+) km left · (\\S+) km now$", "剩余 $1 公里 · 当前 $2 公里"], ["^(\\d+) days? left · due (.+)$", "剩余 $1 天 · $2 到期"], ["^(\\d+) days over · due (.+)$", "已超 $1 天 · $2 到期"]]);
+// 2.5.17 clearer Insights tiles
+Object.assign(window.__ZHD.D, {"for the next 4 days": "未来 4 天", "always on · the quietest hour at night": "常开负载 · 夜间最安静的一小时", "same use as the last bill so far": "与上期账单同期用量相同", "stuck on the same value": "数值一直不变", "of rain today · raining now": "今天的降雨 · 正在下雨"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^rain coming · ~(\\d+) mm in 24 h$", "即将下雨 · 24 小时约 $1 毫米"], ["^(.+) is drying out$", "{1} 正在变干"], ["^expected · (.+) so far$", "预计 · 目前 $1"], ["^most power used · ~(\\S+) kWh$", "用电最多 · 约 $1 千瓦时"], ["^more use than the last bill’s first (\\d+) days$", "比上期账单前 $1 天用得多"], ["^less use than the last bill’s first (\\d+) days$", "比上期账单前 $1 天用得少"], ["^(\\S+) km left at ~(\\d+) km a day$", "剩余 $1 公里 · 每天约 $2 公里"], ["^falling over 3 hours · now (\\d+) hPa$", "3 小时内下降 · 当前 $1 百帕"], ["^rising over 3 hours · now (\\d+) hPa$", "3 小时内上升 · 当前 $1 百帕"], ["^of rain today · (\\d+) spells?$", "今天的降雨 · $1 次"]]);
+Object.assign(window.__ZHD.D, {}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^unusual reading at (.+) only · the other gauges are calm$", "仅 $1 读数异常 · 其他验潮站平静"], ["^due (\\d+) months after the last service\\. saved in (.+) for every device\\.$", "上次保养后 $1 个月到期。保存在 $2，所有设备共享。"]]);
+Object.assign(window.__ZHD.D, {"one gauge on its own is usually the sensor or harbour traffic, not a tsunami. it counts once a second gauge or civil defence agrees.": "单个验潮站的异常通常来自传感器或港口船只，而不是海啸。要有第二个验潮站或民防部门确认才算数。"});
+Object.assign(window.__ZHD.D, {"mark as serviced": "标记为已保养", "edit details": "编辑详情", "serviced": "已保养", "date": "日期"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^odometer now (\\S+) km · next service (\\S+) km later$", "当前里程 $1 公里 · 下次保养在 $2 公里后"]]);
+Object.assign(window.__ZHD.D, {"updates": "更新", "select all": "全选", "select none": "全不选", "everything is up to date": "全部已是最新", "back up first (where supported)": "先备份（如支持）", "waiting its turn": "排队中", "starting…": "正在开始…", "one at a time; home assistant itself goes last because it restarts.": "逐个安装；Home Assistant 本身最后安装，因为它会重启。", "home assistant": "Home Assistant", "install all": "全部安装"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^update all \\((\\d+)\\)$", "全部更新（$1）"], ["^install selected \\((\\d+)\\)$", "安装所选（$1）"], ["^updates · (\\d+)$", "更新 · $1"], ["^install all (\\d+) updates\\?$", "安装全部 $1 个更新？"], ["^installing · (\\d+)%$", "正在安装 · $1%"]]);
+
+Object.assign(window.__ZHD.D, {"unselect all": "取消全选"});
+Object.assign(window.__ZHD.D, {"quick actions": "快捷操作"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^updates · (\\d+)$", "更新 · $1"]]);
 // ---------- Language (Theme page): English or Simplified Chinese ----------
 // Chinese translates the dashboard's labels, headings, buttons and units as they appear (the dictionary in 56-zh-dict.js / 56-zh-more.js),
 // and dates and times use Chinese formats. Names from Home Assistant and config.js stay as they are. Sentences that aren't in the dictionary stay English.
@@ -4706,6 +4721,19 @@ let EVCOL = (() => { try { return JSON.parse(localStorage.dashEvCol || "{}") || 
 const evKey = (cal, t) => cal + "|" + (t || "").trim().toLowerCase();
 const evUk = (c, v) => v && v.uid ? "u|" + c + "|" + v.uid : "";   // a colour belongs to the event itself (its id), not to its title; older title colours still apply to events that have none of their own
 let EVPEND = null;
+// shift colours (2.5.17): events on a roster calendar get a colour from their hours, not their title (MyDuty titles like "1500" or "0900" are codes, not times).
+//   past midnight = night, starts before 10 am = day, from 5 pm = evening, otherwise afternoon; all-day: sick, annual leave / stat (leave). A colour picked by hand still wins.
+//   config shiftColors: true (the roster's calendar, these colours) | { calendars: ["calendar.x"], day, afternoon, evening, night, sick, leave } | false
+const SHIFT_COL = { day: "#f2c94c", afternoon: "#f39c3c", evening: "#e0663f", night: "#8e8e93", sick: "#9b6dd6", leave: "#4f8fe8" };
+function shiftCfg() { const s = CONFIG.shiftColors, r = CONFIG.roster; if (s === false || (!s && !r)) return null; const o = s && typeof s === "object" ? s : {}; const cals = [].concat(o.calendars || (r && r.calendar ? [r.calendar] : [])); return s || (r && r.calendar) ? Object.assign({}, SHIFT_COL, o, { calendars: cals }) : null; }
+function shiftKind(v) {
+  if (!v || !v.start) return "";
+  if (!v.start.dateTime) { const t = ((v.summary || "") + " " + (v.description || "")).toLowerCase(); return /\bsick/.test(t) ? "sick" : /annual leave|\bleave\b|\bstat\b|stat day|\bal\b|holiday/.test(t) ? "leave" : ""; }
+  const s = new Date(v.start.dateTime), e = new Date(v.end && v.end.dateTime || v.start.dateTime), mid = new Date(s); mid.setHours(24, 0, 0, 0);
+  if (+e > +mid) return "night";
+  const h = s.getHours() + s.getMinutes() / 60; return h < 10 ? "day" : h >= 17 ? "evening" : "afternoon";
+}
+function shiftCol(c, v) { const S = shiftCfg(); if (!S || S.calendars.indexOf(c) < 0) return ""; const k = shiftKind(v); return k ? S[k] || "" : ""; }
 function evColOf(c, v) { const u = evUk(c, v); if (u && EVCOL[u] !== undefined) return EVCOL[u] === "-" ? "" : EVCOL[u]; return EVCOL[evKey(c, v.summary)] || ""; }
 function evPend(c, v) {   // a colour picked for an event that had no id yet: claim it as soon as the calendar lists that event
   const p = EVPEND, u = evUk(c, v); if (!p || !u || p.cal !== c || (v.summary || "").trim().toLowerCase() !== p.t) return;
@@ -4745,7 +4773,7 @@ function loadEvents() {
       const last = ad ? new Date(e.getFullYear(), e.getMonth(), e.getDate() - 1) : new Date(e.getFullYear(), e.getMonth(), e.getDate());
       let d = new Date(s.getFullYear(), s.getMonth(), s.getDate());
       for (let n = 0; n < 42 && d <= last; n++, d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1))
-        (map[dk(d)] = map[dk(d)] || []).push({ t: s, e: e, n: calName(c), ad: ad, s: v.summary, c: evColOf(c, v) || CALCOL[i % CALCOL.length], i: EVS.push({ v: v, cal: c, ci: i }) - 1 });
+        (map[dk(d)] = map[dk(d)] || []).push({ t: s, e: e, n: calName(c), ad: ad, s: v.summary, c: evColOf(c, v) || shiftCol(c, v) || CALCOL[i % CALCOL.length], i: EVS.push({ v: v, cal: c, ci: i }) - 1 });
     } catch (x) { evErr.push(calName(c) + ": skipped \"" + (v && v.summary || "?") + "\" (" + x.message + ")"); } })).catch(x => { evErr.push(calName(c) + ": " + x.message); }))).then(() => { if (tok === evTok) { evLast = { k: mk, gs: gs, map: map }; drawEvents(gs, map, true); evReveal(); const el = $("#eerr"); if (el) el.textContent = evErr.length ? evErr.join(" · ") + "  |  Calendars HA has: " + Object.keys(states).filter(k => k.indexOf("calendar.") === 0).join(", ") : ""; } });
 }
 let evTy = null;
@@ -5132,7 +5160,7 @@ function evSearchDraw() {
   const today = dk(new Date());
   hit.forEach((x, i) => { const st = pd(x.v.start), k = dk(st), ad = !x.v.start.dateTime;
     if (k !== last) { last = k; h += '<div class="ah' + (k >= today ? " up" : "") + (k === today ? " t" : "") + '">' + st.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short", year: "numeric" }).toUpperCase() + '</div>'; }
-    h += '<div class="ce" data-ev="' + i + '" style="--c:' + (evColOf(x.cal, x.v) || CALCOL[x.ci % CALCOL.length]) + '"><span class="mo">' + (ad ? "All day" : st.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })).replace(" ", "").toLowerCase()) + '</span> ' + esc(x.v.summary || "") + '</div>'; });
+    h += '<div class="ce" data-ev="' + i + '" style="--c:' + (evColOf(x.cal, x.v) || shiftCol(x.cal, x.v) || CALCOL[x.ci % CALCOL.length]) + '"><span class="mo">' + (ad ? "All day" : st.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })).replace(" ", "").toLowerCase()) + '</span> ' + esc(x.v.summary || "") + '</div>'; });
   g.innerHTML = h; const f = g.querySelector(".ah.up"); if (f && !evSq.sc) { evSq.sc = 1; f.scrollIntoView({ block: "start" }); }
 }
 function evSearchToggle(on) {
@@ -5155,7 +5183,7 @@ function schLoad(force) {
     .then(r => r.json()).then(j => { if (!Array.isArray(j)) return; j.forEach(v => { try {
       const ad = !v.start.dateTime, st = pd(v.start), en = pd(v.end);
       if (ad ? !(st < b && en > a) : !(st < b && en > a)) return;
-      out.push({ cal: c, ad: ad, t: st, e: en, s: v.summary || "", l: String(v.location || "").trim(), c: (typeof evColOf === "function" && evColOf(c, v)) || CALCOL[i % CALCOL.length] });
+      out.push({ cal: c, ad: ad, t: st, e: en, s: v.summary || "", l: String(v.location || "").trim(), c: (typeof evColOf === "function" && evColOf(c, v)) || (typeof shiftCol === "function" && shiftCol(c, v)) || CALCOL[i % CALCOL.length] });
     } catch (_) {} }); }).catch(() => {}))).then(() => { SCH.ev = out.sort((x, y) => (y.ad - x.ad) || (x.t - y.t)); SCH.t = Date.now(); SCH.busy = false; schDraw(); }, () => { SCH.busy = false; });
 }
 const schTm = d => d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })).replace(" ", "").toLowerCase();
@@ -5585,8 +5613,6 @@ function roomBand(r) {
   if (lo == null) lo = val(H.heatBelow); if (hi == null) hi = val(H.coolAbove);
   return [lo == null ? 18 : lo, hi == null ? 25 : hi];
 }
-// Windows Phone tile colours (Metro style): blue, orange, purple, green, teal, magenta, red, lime, cobalt, mango, emerald, crimson
-const METRO = ["#1ba1e2", "#f09609", "#a200ff", "#339933", "#00aba9", "#e671b8", "#e51400", "#8cbf26", "#0050ef", "#f0a30a", "#008a00", "#a20025"];
 function cardHtml(n, i) { return '<div class="lbl">' + mdi(i) + esc(n) + '</div><div class="md">--</div><div class="temp"><span class="tm">--</span></div><div class="lbl ts">--</div><i class="rg"><s></s><b></b><b></b><b></b><b></b><b></b><b></b></i><div class="hvb"></div>'; }
 // room-card badges: use your own count sensors (r.counts) when set, else count members that are on / open
 const roomLights = r => { const o = []; const add = x => { if (x && o.indexOf(x) < 0) o.push(x); };   // every light in the room: its lights, its light switches, and any light.* shown in its sections
@@ -5607,7 +5633,6 @@ function roomHp(r) {
   return { k: fx[0], l: fx[1], i: fx[2], t: zs[0].attributes.temperature };
 }
 function fillCard(el, r) {
-  el.style.setProperty("--mc", METRO[Math.max(0, HOUSE().findIndex(x => x.id === r.id)) % METRO.length]);   // Metro style: each room keeps its own tile colour (its place in the house list)
   const tv = roomTemp(r), hv = roomHum(r), C = r.counts || {};
   const num = (k, list) => { const v = C[k] ? sv(C[k]) : null; return v != null && !isNaN(+v) ? Math.round(+v) : members(list).filter(isOn).length; };
   const n = { lights: C.lights ? num("lights", r.lights) : roomLights(r).filter(isOn).length, doors: num("doors", r.doors), windows: num("windows", r.windows), covers: num("covers", r.covers), fans: num("fans", r.fans) };
@@ -6712,14 +6737,18 @@ function wxsPaint(cv, S, tm, ph) {
   if (S.pol) { const n = S.pol * 16; for (let i = 0; i < n; i++) { const s = 0.5 + wxsR(i + 400), x = (wxsR(i + 410) * (w + 20) + ph.pol * s) % (w + 20) - 10, y = gy * 0.3 + wxsR(i + 420) * gy * 0.65 + Math.sin(tm * 1.3 + i) * 7, rr = 1.1 + wxsR(i + 430) * 1.6; c.fillStyle = "rgba(255,214,102,.22)"; c.beginPath(); c.arc(x, y, rr * 2.6, 0, 2 * Math.PI); c.fill(); c.fillStyle = "rgba(255,222,120,.9)"; c.beginPath(); c.arc(x, y, rr, 0, 2 * Math.PI); c.fill(); } }
   // rain or snow
   if (wet || snow) {
-    const n = Math.min(170, Math.round((snow ? 40 : 22) + (r.rain || 0) * 30)), sl = Math.min(0.6, wind / 60);
-    c.strokeStyle = "rgba(196,220,255,.6)"; c.fillStyle = "rgba(255,255,255,.88)"; c.lineWidth = 1.1; c.beginPath();
-    for (let i = 0; i < n; i++) { const v = snow ? 26 + wxsR(i) * 20 : 260 + wxsR(i) * 160, y = (wxsR(i + 50) * (h + 20) + tm * v) % (h + 20) - 10, x = ((wxsR(i + 60) * (w + 60) + y * sl + (snow ? Math.sin(tm + i) * 6 : 0)) % (w + 60)) - 30;
+    // how hard it rains (mm an hour; r.rate = the day's average while it rains, on the Home forecast card) sets how many drops, how fast and how bright:
+    // drizzle (0.2 mm/h) is a few slow faint drops, 1 mm/h steady rain, 4 mm/h and up a downpour
+    const mmh = Math.max(0, r.rate != null ? r.rate : r.rain || 0), k = Math.min(1, Math.sqrt(mmh / 4));
+    const n = snow ? Math.min(170, Math.round(40 + mmh * 30)) : Math.round(12 + k * 110), sl = Math.min(0.6, wind / 60);
+    c.strokeStyle = "rgba(196,220,255," + (snow ? 0.6 : (0.32 + k * 0.3).toFixed(2)) + ")"; c.fillStyle = "rgba(255,255,255,.88)"; c.lineWidth = 1 + k * 0.4; c.beginPath();
+    for (let i = 0; i < n; i++) { const v = snow ? 26 + wxsR(i) * 20 : 150 + k * 170 + wxsR(i) * (90 + k * 80), y = (wxsR(i + 50) * (h + 20) + tm * v) % (h + 20) - 10, x = ((wxsR(i + 60) * (w + 60) + y * sl + (snow ? Math.sin(tm + i) * 6 : 0)) % (w + 60)) - 30;
       if (snow) { c.moveTo(x + 1.7, y); c.arc(x, y, 1.7, 0, 2 * Math.PI); } else { c.moveTo(x, y); c.lineTo(x - sl * 10, y + 10); } }
     if (snow) c.fill(); else c.stroke();
   }
   if (fog) for (let i = 0; i < 4; i++) { c.fillStyle = "rgba(220,226,235,.18)"; const y = gy * (0.35 + i * 0.17), x = ((tm * 8 * (i + 1)) % (w * 2)) - w; c.fillRect(x, y, w * 1.6, 16 + i * 4); c.fillRect(x - w * 2, y, w * 1.6, 16 + i * 4); }
   if (S.cat) { c.save(); try { wxsCatPaint(c, w, h, gy, S, tm, wet, day, ph); } catch (e) {} c.restore(); }
+  if (S.amb) { c.save(); try { wxsAmb(c, w, h, gy, S, tm, ph, wet || snow); } catch (e) {} c.restore(); }
   if (/lightning/.test(cond) && tm % 5.3 < 0.12) { c.fillStyle = "rgba(255,255,255,.35)"; c.fillRect(0, 0, w, h); }
 }
 // ----- the Forecast card's categories: each one adds its own instrument to the scene -----
@@ -6730,6 +6759,20 @@ const wxsUvN = u => u < 3 ? "Low" : u < 6 ? "Moderate" : u < 8 ? "High" : u < 11
 const WXS_UVC = [[3, "#4fd59a"], [6, "#f2c261"], [8, "#ff9f43"], [11, "#ff4d5e"], [99, "#c792ea"]];
 const wxsUvC = u => WXS_UVC.find(x => u < x[0])[1];
 function wxsRRect(c, x, y, w, h, r) { c.beginPath(); if (c.roundRect) c.roundRect(x, y, w, h, r); else c.rect(x, y, w, h); }
+// the Home forecast card's day at a glance, no gauges: heat shimmer on a hot day (high 24° and up), frost on the ground on a cold night (low 3° and under),
+// sun rays by the day's top UV (6 and up), wind streaks by the day's average wind (20 km/h and up). Each one gets stronger with the number.
+function wxsAmb(c, w, h, gy, S, tm, ph, wet) {
+  const r = S.rec || {}, hi = +r.temp, lo = r.low != null ? +r.low : NaN, u = +r.uv || 0, wd = Math.max(0, ph.wind);
+  if (hi >= 24 && !wet) { const a = Math.min(0.45, (hi - 23) / 14); c.strokeStyle = "rgba(255,236,200," + a.toFixed(2) + ")"; c.lineWidth = 1.4;
+    for (let i = 0; i < 5; i++) { const x0 = w * (0.12 + i * 0.19), p = (tm * 0.6 + i * 0.37) % 1; c.beginPath(); for (let j = 0; j <= 10; j++) { const y = gy - 3 - p * h * 0.3 - j * 3, x = x0 + Math.sin(j * 0.9 + tm * 4 + i) * 2.5; if (j) c.lineTo(x, y); else c.moveTo(x, y); } c.stroke(); } }
+  if (lo <= 3) { const a = Math.min(0.85, (4 - lo) / 6); c.fillStyle = "rgba(225,240,255," + (a * 0.3).toFixed(2) + ")"; c.fillRect(0, gy + 2, w, h - gy);
+    c.fillStyle = "rgba(255,255,255," + a.toFixed(2) + ")"; for (let i = 0; i < 22; i++) { const x = wxsR(i + 500) * w, y = gy + 4 + wxsR(i + 510) * (h - gy - 6), tw = 0.5 + 0.5 * Math.sin(tm * 3 + i); c.fillRect(x, y, 1.2 + tw, 1.2 + tw); } }
+  const sx = S.sunXY;
+  if (u >= 6 && sx && sx[3] > 0 && !wet) { const n = 10, L = sx[2] * (0.5 + Math.min(12, u - 5) / 6), pul = 1 + Math.sin(tm * 3) * 0.1; c.strokeStyle = wxsUvC(u); c.globalAlpha = 0.6; c.lineWidth = 1.8; c.lineCap = "round"; c.beginPath();
+    for (let i = 0; i < n; i++) { const a = i / n * 2 * Math.PI + tm * 0.25, r0 = sx[2] * 1.4, r1 = r0 + L * pul * (i % 2 ? 0.7 : 1); c.moveTo(sx[0] + Math.cos(a) * r0, sx[1] + Math.sin(a) * r0); c.lineTo(sx[0] + Math.cos(a) * r1, sx[1] + Math.sin(a) * r1); } c.stroke(); c.globalAlpha = 1; }
+  if (wd >= 20) { const n = Math.min(10, Math.round((wd - 15) / 4)); c.strokeStyle = "rgba(255,255,255,.45)"; c.lineWidth = 1.2; c.lineCap = "round"; c.beginPath();
+    for (let i = 0; i < n; i++) { const L = 12 + wd * 0.5 * (0.6 + wxsR(i + 600)), span = w + L * 2, x = ((wxsR(i + 610) * span + ph.streak * (0.7 + wxsR(i + 620) * 0.6)) % span) - L, y = h * 0.15 + wxsR(i + 630) * gy * 0.7 + Math.sin(tm * 2 + i) * 3; c.moveTo(x, y); c.lineTo(x + L, y); } c.stroke(); }
+}
 function wxsCatPaint(c, w, h, gy, S, tm, wet, day, ph) {
   const r = S.rec || {}, k = S.cat, ix = Math.max(34, w * 0.09), base = gy + 8, glass = "rgba(255,255,255,.88)", ink = "rgba(20,28,44,.55)";
   if (k === "temp") {
@@ -6812,14 +6855,29 @@ window.addEventListener("hashchange", () => setTimeout(() => { if (curPg() === "
 // ----- the Home forecast card: one small sky per day (10-home-page.js fcCols), moving while Home is open and on screen -----
 // Each day is painted at its middle (now, for today) with its condition, rain and wind; the phases move like the Weather page's (rain falls, clouds drift).
 const FCS = { ph: {}, raf: 0, last: 0 };
+// the day's rain as an hourly rate: the average of its wet hours in the hourly forecast (from now, for today); past the hourly forecast, the day's total over about 8 wet hours
+function fcsRate(d, i) {
+  const tot = +d.precipitation || 0, day = new Date(d.datetime).toDateString(), now = Date.now();
+  const W = (fcH || []).filter(x => { const t = Date.parse(x.datetime); return new Date(t).toDateString() === day && (i !== 0 || t > now - 36e5); }).map(x => +x.precipitation || 0);
+  if (W.length >= 6) { const wet = W.filter(v => v >= 0.1); return wet.length ? wet.reduce((p, v) => p + v, 0) / wet.length : 0; }
+  return tot / 8;
+}
+// the day's average wind (daylight hours, 7 am to 8 pm) and its top UV from the hourly forecast, when it reaches that day
+function fcsAvg(d, i) {
+  const day = new Date(d.datetime).toDateString(), H = (fcH || []).filter(x => { const t = new Date(x.datetime); return t.toDateString() === day && t.getHours() >= 7 && t.getHours() <= 20; });
+  if (H.length < 4) return {};
+  const wv = H.map(x => +x.wind_speed).filter(v => !isNaN(v)), uv = H.map(x => +x.uv_index).filter(v => !isNaN(v));
+  return { wind: wv.length ? wv.reduce((p, v) => p + v, 0) / wv.length : null, uv: uv.length ? Math.max.apply(null, uv) : null };
+}
 function fcsRec(d, i) {
   const t = i === 0 && new Date(d.datetime).toDateString() === new Date().toDateString() ? Date.now() : (() => { const x = new Date(d.datetime); x.setHours(13, 0, 0, 0); return +x; })();
-  return { t: t, temp: +d.temperature, cond: d.condition, rain: +d.precipitation || 0, pp: +d.precipitation_probability || 0, wind: +d.wind_speed || 0, gust: d.wind_gust_speed != null ? +d.wind_gust_speed : null, uv: d.uv_index != null ? +d.uv_index : null };
+  const A = fcsAvg(d, i);
+  return { t: t, temp: +d.temperature, low: d.templow != null ? +d.templow : null, cond: d.condition, rain: +d.precipitation || 0, rate: fcsRate(d, i), pp: +d.precipitation_probability || 0, wind: A.wind != null ? A.wind : +d.wind_speed || 0, gust: d.wind_gust_speed != null ? +d.wind_gust_speed : null, uv: A.uv != null ? A.uv : d.uv_index != null ? +d.uv_index : null };
 }
 function fcsFrame(tm, dt) {
   $$("#fc canvas[data-fd]").forEach(cv => {
     if (!cv.offsetParent) return; const b = cv.getBoundingClientRect(); if (b.right < 0 || b.left > innerWidth || b.bottom < 0 || b.top > innerHeight) return;
-    try { const i = +cv.dataset.fd, d = fcDay((fc || [])[i], i); if (!d) return; const r = fcsRec(d, i), S = { kind: "now", ms: r.t, rec: r }, ph = FCS.ph[i] || (FCS.ph[i] = wxsPh0(S)); if (dt) wxsStep(ph, S, dt); wxsPaint(cv, S, tm, ph); } catch (e) {}
+    try { const i = +cv.dataset.fd, d = fcDay((fc || [])[i], i); if (!d) return; const r = fcsRec(d, i), S = { kind: "now", ms: r.t, rec: r, amb: 1 }, ph = FCS.ph[i] || (FCS.ph[i] = wxsPh0(S)); if (dt) wxsStep(ph, S, dt); wxsPaint(cv, S, tm, ph); } catch (e) {}
   });
 }
 function fcsLoop(ts) {
@@ -7081,8 +7139,14 @@ function drawVehicle() {
   let health = W.filter(w => B(w[0]) != null).map(w => hr(w[1], w[2], !B(w[0]), B(w[0]) ? "Warning" : "OK")).join("");
   if (bs != null) health += hr("v-batt", "Starter battery", bs === 0, T(V.batteryText, bs));
   const bad = W.filter(w => B(w[0])).length + (bs != null && bs !== 0 ? 1 : 0);
-  const healthC = '<div class="pn" data-tab="Car"><div class="lbl">' + mdi("v-engine") + ' Vehicle health' + (bad ? " · " + bad + " to check" : " · all good") + '</div>' + health + '</div>';
-  pg.innerHTML = '<div class="vgrid">' + hero + trips + eco + openings + healthC + '</div>';
+  // WOF and rego from carCare, under the health checks
+  const CC = [].concat(CONFIG.carCare || [])[0] || {};
+  [["wof", "WOF"], ["rego", "Rego"]].forEach(k => { const d = typeof insxDate === "function" && insxDate(CC[k[0]]); if (!d) return; const dd = (+d - Date.now()) / 864e5; health += hr("v-key", k[1], dd >= 0, insxD(d)).replace('class="vhr', 'class="vhr' + (dd >= 0 && dd <= 30 ? " soon" : "")); });
+  const healthC = '<div class="pn" data-tab="Service"><div class="lbl">' + mdi("v-engine") + ' Vehicle health' + (bad ? " · " + bad + " to check" : " · all good") + '</div>' + health + '</div>';
+  // the Service card keeps what is being typed while the car's sensors redraw the page
+  const keep = CSV.dirty && pg.querySelector(".csv-card");
+  pg.innerHTML = '<div class="vgrid">' + hero + trips + eco + openings + csvCard() + healthC + '</div>';
+  if (keep) pg.querySelector(".csv-card").replaceWith(keep);
 }
 function irrRain() {   // next 12 hours only, as hour columns (the Weather page chart covers 24 h)
   const d = fcH.filter(x => Date.parse(x.datetime) > Date.now() - 3600000).slice(0, 12);
@@ -7838,12 +7902,15 @@ function dtDraw(soft) {
   if (DT.drag && soft) { dtWinUpd(); return; }   // a slider is being dragged: only the parts it changes, so the drag is not interrupted
   const cnt = k => all.filter(x => x.p.tags.indexOf(k) > -1 && (DT.cam === "all" || x.cam === DT.cam)).length;
   const loading = DT.busy ? '<div class="pbn">Looking through the recordings' + (DT.loaded ? " · " + DT.loaded : "") + '…</div>' : "";
+  // the chip rows scroll sideways on phones: keep where each one was (a tap on a camera chip must not jump the row back to the start)
+  const keepX = [...P.querySelectorAll(".dtf")].map(r => r.scrollLeft);
   P.innerHTML = '<div class="lbl dthd">Recent detections<button class="eb" data-dt="refresh" aria-label="Refresh">' + mdi("refresh") + '</button></div>' +
     '<div class="pbc dtf">' + [["Person", "PERSON"], ["Vehicle", "VEHICLE"], ["Animal", "ANIMAL"], ["Motion", "OTHER MOTION"]].map(x => '<button class="chip' + (DT.types[x[0]] ? " on" : "") + '" data-dt="type" data-v="' + x[0] + '">' + x[1] + (all.length ? chipN(cnt(x[0])) : "") + '</button>').join("") + '</div>' +
     '<div class="pbc dtf"><button class="chip' + (DT.cam === "all" ? " on" : "") + '" data-dt="cam" data-v="all">ALL CAMERAS</button>' + dtCams().map(id => '<button class="chip' + (DT.cam === id ? " on" : "") + '" data-dt="cam" data-v="' + esc(id) + '">' + esc(dtName(id)).toUpperCase() + '</button>').join("") + '</div>' +
     '<div class="pbc dtf">' + DT_R.map((x, i) => '<button class="chip' + (DT.range === i + 1 ? " on" : "") + '" data-dt="range" data-v="' + (i + 1) + '">' + x[2] + '</button>').join("") + '</div>' +
     (vis.length ? (isMobile() ? '<div class="dtcv">' + dtMomHtml() + '</div>' : dtTlHtml()) : "") +
     '<div class="dtgw">' + dtGrid() + '</div>' + loading;
+  P.querySelectorAll(".dtf").forEach((r, i) => { if (keepX[i]) r.scrollLeft = keepX[i]; });
   dtThumbs();
 }
 function dtThumbs() {
@@ -8329,7 +8396,7 @@ function sckScan() {
     Object.keys(x).forEach(k => { if (d === 0 && SCK_SKIP.has(k)) return; add(k, path + "." + k); walk(x[k], path ? path + "." + k : k, d + 1); });
   };
   walk(CONFIG, "", 0);
-  const ids = Object.keys(found), out = { total: ids.length, missing: [], unavailable: [] };
+  const ids = Object.keys(found), out = { total: ids.length, missing: [], unavailable: [], ids: ids };
   ids.forEach(id => { const s = states[id]; if (!s) out.missing.push([id, found[id]]); else if (s.state === "unavailable") out.unavailable.push([id, found[id]]); });
   const by = (a, b) => a[0] < b[0] ? -1 : 1; out.missing.sort(by); out.unavailable.sort(by);
   return out;
@@ -8620,7 +8687,7 @@ function drawAdmin() {
     b.dataset.t = tab;
     const n = Object.keys(states).length, who = ME.name ? esc(ME.name) : (CONFIG.token ? "long-lived token" : "-");
     const about = sec("This dashboard", '<div class="adm-f"><div><small>Kinetic</small><b>' + esc(ENGINE_VERSION) + ' · ' + esc(window.DASH_BUILD || "") + '</b></div><div><small>Signed in as</small><b>' + who + '</b></div><div><small>Entities loaded</small><b>' + n + '</b></div></div>');
-    const inner = tab === "access" ? accSec(sec) : tab === "setup" ? ceSec(sec) + sckSection(sec) : sysSec(sec) + admQaHtml() + about;
+    const inner = tab === "access" ? accSec(sec) : tab === "setup" ? ceSec(sec) + sckSection(sec) : sysSec(sec) + about;
     b.innerHTML = '<div class="thg"><div class="thl">' + (inner || admSec(tab === "access" ? "Access" : "Setup", admEmpty("Nothing to show here yet."))) + '</div></div>';
   }
   ADM.tab = tab;
@@ -8642,7 +8709,7 @@ function admQaHtml() {
     q("check", "check-circle", "Check config", "Before a restart") + q("restart", "power", "Restart Home Assistant", "About a minute offline", "bad") + '</div>' + msg + bad +
     '<div class="adqh"><button class="eb" data-adq="ha">OPEN HA SETTINGS ' + mdi("open-in-new") + '</button></div>', "adqa");
 }
-function admQaSet(msg, bad) { ADM.qa = msg; ADM.qaBad = bad || null; ADM.qaT = /…$/.test(msg) ? 0 : Date.now(); if (curPg() === "admin" && setTab() === "status") { const c = $("#admin .adqa"); if (c) c.outerHTML = admQaHtml(); } }
+function admQaSet(msg, bad) { ADM.qa = msg; ADM.qaBad = bad || null; ADM.qaT = /…$/.test(msg) ? 0 : Date.now(); if (curPg() === "admin" && setTab() === "status") { const c = $("#admin .adqa"); if (c) c.outerHTML = admQaHtml(); } const t = $("#tlsh .adqa"); if (t) t.outerHTML = admQaHtml(); }
 function admCheck(then) {
   admQaSet("Checking the config…");
   getToken().then(tk => fetch(CONFIG.url + "/api/config/core/check_config", { method: "POST", headers: { Authorization: "Bearer " + tk } })).then(r => r.json()).then(j => {
@@ -8660,7 +8727,7 @@ function admQa(k) {
 
 // ----- ENTITIES -----
 function admEntShell() {
-  return '<div class="adw' + (ADM.esel ? " det" : "") + '" data-w="ent"><div class="pn pg adl"><label class="ads">' + mdi("magnify") + '<input type="search" data-adq-ent placeholder="Search entities" value="' + esc(ADM.eq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div><div class="adrs"></div></div>' +
+  return '<div class="adw' + (ADM.esel ? " det" : "") + '" data-w="ent"><div class="pn pg adl"><div class="adtop"><label class="ads">' + mdi("magnify") + '<input type="search" data-adq-ent placeholder="Search entities" value="' + esc(ADM.eq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div></div><div class="adrs"></div></div>' +
     '<div class="admbk" data-adx="ent"></div><div class="pn pg add"></div></div>';
 }
 function admEntMatch() {
@@ -8733,7 +8800,7 @@ function admHistDraw(id, a) {
 // ----- AUTOMATIONS -----
 const AUT_WHY = { finished: "", failed_conditions: "stopped at a condition", failed_single: "skipped, already running", failed_max_runs: "skipped, too many runs", error: "error", aborted: "stopped", cancelled: "cancelled", running: "running now" };
 function admAutShell() {
-  return '<div class="adw' + (ADM.asel ? " det" : "") + '" data-w="aut"><div class="pn pg adl"><label class="ads">' + mdi("magnify") + '<input type="search" data-adq-aut placeholder="Search automations" value="' + esc(ADM.aq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div><div class="adrs"></div></div>' +
+  return '<div class="adw' + (ADM.asel ? " det" : "") + '" data-w="aut"><div class="pn pg adl"><div class="adtop"><label class="ads">' + mdi("magnify") + '<input type="search" data-adq-aut placeholder="Search automations" value="' + esc(ADM.aq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div></div><div class="adrs"></div></div>' +
     '<div class="admbk" data-adx="aut"></div><div class="pn pg add"></div></div>';
 }
 // the newest run of each automation, from trace/list (all of them at once); refreshed when the tab opens and every minute while it is open
@@ -9029,7 +9096,7 @@ $("#admin").addEventListener("change", e => {
 });
 $("#admin").addEventListener("toggle", e => { const d = e.target; if (d.classList && d.classList.contains("ce-s")) CE.open[d.dataset.k] = d.open; }, true);
 // ---------- Home weather shortcuts ----------
-[[".hs", "#weather/now"], ["#fcp", "#weather/week"]].forEach(q => { const x = $(q[0]); x.style.cursor = "pointer"; x.onclick = e => { const g = e.target.closest && e.target.closest("[data-go]"); if (g) { e.stopPropagation(); location.hash = g.dataset.go; return; } location.hash = q[1]; }; });   // the greeting opens the Now card, the Forecast card opens Next 7 days
+[[".hs", "#weather/now"], ["#fcp", "#weather/forecast"]].forEach(q => { const x = $(q[0]); x.style.cursor = "pointer"; x.onclick = e => { const g = e.target.closest && e.target.closest("[data-go]"); if (g) { e.stopPropagation(); location.hash = g.dataset.go; return; } location.hash = q[1]; }; });   // the greeting opens the Now card, the Forecast card opens Next 7 days
 // in the greeting, "rain at 6 PM" opens the Rain forecast chart and the high / low arrows open the Temp chart (data-go, 10-home-page.js)
 // ---------- weather alerts: wind now, wind, rain and UV coming up (Notifications > Alerts card, and the header strip chips) ----------
 // Same tiers as a Home Assistant weather-alert automation: wind 30 / 62 / 89 km/h, rain 0.5 / 2 / 5 mm per hour over the next 6 hours, UV index 3 / 6 / 8 (Moderate / High / Very high; 11 and over reads Extreme).
@@ -11060,11 +11127,12 @@ function route() {
     const ti = { temp: 0, wind: 1, rain: 2, uv: 3, cloud: 3 }[h[1]];
     if (ti != null) fcTab = ti;
     if (h[1] === "radar" || h[1] === "map") SECP.want = { page: "weather", q: "#wxmap" };
-    if (h[1] === "pollen") SECP.want = { page: "weather", q: "#wxpol" }; else if (ti != null) SECP.want = { page: "weather", q: ".fcp" };
+    if (h[1] === "pollen") SECP.want = { page: "weather", q: "#wxpol" }; else if (ti != null || h[1] === "forecast") SECP.want = { page: "weather", q: ".fcp" };   // #weather/forecast = the Forecast tab (the Home forecast card)
     const wk = h[1] === "now" || h[1] === "week"; if (wk) { wcI = h[1] === "week" ? 1 : 0; SECP.want = { page: "weather", q: ".wnow" }; }   // #weather/now = the Now card, #weather/week = the Next 7 days card (both on the Now tab)   // phones: open the tab that holds that card
     drawWeather();
     if (wk) [0, 80, 400].forEach(ms => setTimeout(() => { const wc = $("#wx .wcols"); if (curPg() === "weather" && wc && wc.clientWidth) { wc.scrollLeft = wcI * (wc.clientWidth + 12); $$("#wx .wdots i").forEach((d, k) => d.classList.toggle("on", k === wcI)); } }, ms));
     if (h[1] === "radar" || h[1] === "map") [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wxmap"); if (f) f.scrollIntoView({ block: "start" }); } }, ms));
+    if (h[1] === "forecast" && !isMobile()) [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wx .fcp"); if (f) f.scrollIntoView({ block: "start" }); } }, ms));
     if (h[1] === "pollen") [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wxpol"); if (f) f.scrollIntoView({ block: "start" }); } }, ms));   // #weather/pollen scrolls to the Pollen card
     if (ti != null) [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { fcSync(); const f = $("#wx .fcp"); if (f) f.scrollIntoView({ block: "start" }); } }, ms));
   }
@@ -11604,7 +11672,7 @@ function insSoil() {
   const plain = verdict.replace(/<[^>]+>/g, "");
   // only when there is something to do: water within 2 days, or skip it because rain is coming
   if (!INS.stat && !(r24 >= skip) && !(soon && soon.due <= 48)) return [];
-  return [{ id: "soil", tile: ["WATERING", r24 >= skip ? "Skip" : soon && soon.due <= 12 ? "Today" : soon ? day(soon.due).split(" ")[0].replace(/^today$/, "Today") : "Not needed", r24 >= skip ? "~" + Math.round(r24) + " mm due" : soon ? soon.z.name + " drying" : "next 4 days"], cat: "garden", lvl: tone === "warn" ? 2 : 1, icon: "water", tone: tone, go: "#irrigation",
+  return [{ id: "soil", tile: ["WATERING", r24 >= skip ? "Skip" : soon && soon.due <= 12 ? "Today" : soon ? day(soon.due).split(" ")[0].replace(/^today$/, "Today") : "Not needed", r24 >= skip ? "rain coming · ~" + Math.round(r24) + " mm in 24 h" : soon ? soon.z.name + " is drying out" : "for the next 4 days"], cat: "garden", lvl: tone === "warn" ? 2 : 1, icon: "water", tone: tone, go: "#irrigation",
     title: plain.split(" · ")[0], sub: (plain.split(" · ")[1] ? plain.split(" · ")[1] + " · " : "") + Z.map(x => x.z.name + " ~" + Math.round(x.morn) + "%").join(" · ") + " by morning",
     stats: [["Rain due", r24 >= 0.1 ? "~" + Math.round(Math.max(1, r24)) + " mm" : "None"], ["Next watering", nextW]].concat(Z.map(x => [x.z.name, Math.round(x.now) + "%"])),
     full: () => chart() + '<div class="ils">' + Z.map((x, k) => '<div class="ilr"><i class="iwd z' + (k % 4) + '"></i><span class="ilm"><b>' + esc(x.z.name) + '</b><small>~' + Math.round(x.morn) + '% by morning · ' + (x.due === 0 ? "dry now" : x.due > 0 ? "dry ~" + esc(day(x.due)) : "not dry in 4 days") + '</small></span><span class="ilx">' + Math.round(x.now) + '% now</span></div>').join("") + '</div>' +
@@ -12041,7 +12109,7 @@ function insxBill() {
   // what charged hours really cost a kWh (with the power company's prices)
   let kp = 0, cp = 0; Object.keys(G.kwh).forEach(t => { if (+t < s || !(rate(+t) > 0)) return; kp += G.kwh[t]; if (G.cost[t] != null) cp += G.cost[t]; });
   const last = (CONFIG.billing && CONFIG.billing.lastElectricity) || null;
-  return [{ id: "bill", stats: [["So far", insxMoney(soFar)], ["Heading for", "~" + insxMoney(proj)], ["Days", Math.round(gone) + " / " + Math.round(days)]], tile: ["BILL", "~" + insxMoney(proj), insxMoney(soFar) + " so far"], cat: "energy", lvl: 1, icon: "chart-bar", tone: "", go: "#energy", title: "On track for ~" + insxMoney(proj) + " this bill",
+  return [{ id: "bill", stats: [["So far", insxMoney(soFar)], ["Heading for", "~" + insxMoney(proj)], ["Days", Math.round(gone) + " / " + Math.round(days)]], tile: ["BILL", "~" + insxMoney(proj), "expected · " + insxMoney(soFar) + " so far"], cat: "energy", lvl: 1, icon: "chart-bar", tone: "", go: "#energy", title: "On track for ~" + insxMoney(proj) + " this bill",
     sub: insxMoney(soFar) + " so far · " + Math.round(gone) + " of " + Math.round(days) + " days",
     full: () => {
       // each day of the bill: what it cost (usage + daily charge, with GST); days the data has not reached yet are ghosts at the average
@@ -12090,7 +12158,7 @@ function insxVs() {
   if (!INS.stat && Math.abs(d) < 15) return [];
   const word = same ? "About the same as last bill" : (up ? "Up " : "Down ") + Math.abs(Math.round(d)) + "% on last bill";
   return [{ id: "vs", stats: [["This bill", insxMoney(A.c * gst)], ["Last bill", insxMoney(B.c * gst)], ["kWh", (dk >= 0 ? "+" : "−") + Math.abs(Math.round(dk)) + "%"]],
-    tile: ["VS LAST BILL", same ? "≈ same" : (up ? "↑ " : "↓ ") + Math.abs(Math.round(d)) + "%", "first " + days + " days · usage"], cat: "energy", lvl: 1, icon: "chart-bar", tone: same ? "" : up ? "warn" : "ok", go: "#energy", title: word,
+    tile: ["VS LAST BILL", same ? "≈ same" : (up ? "↑ " : "↓ ") + Math.abs(Math.round(d)) + "%", same ? "same use as the last bill so far" : (up ? "more" : "less") + " use than the last bill’s first " + days + " days"], cat: "energy", lvl: 1, icon: "chart-bar", tone: same ? "" : up ? "warn" : "ok", go: "#energy", title: word,
     sub: "Usage over the first " + days + " days: " + insxMoney(A.c * gst) + " vs " + insxMoney(B.c * gst),
     full: () => insRows([["This bill", [[A.c, up ? "#e8973a" : "var(--mint)"]], insxMoney(A.c * gst), A.k.toFixed(0) + " kWh"], ["Last bill", [[B.c, "#6bb8ff"]], insxMoney(B.c * gst), B.k.toFixed(0) + " kWh"]]) +
       '<div class="sm">The power used over the first ' + days + ' days of each bill' + (gst > 1 ? ", with GST" : "") + '; the daily charge is left out as it is the same both times.</div>' }];
@@ -12109,7 +12177,7 @@ function insxPeak() {
   const mean = av.reduce((p, v) => p + v, 0) / 24; if (!INS.stat && (av[pk] < mean * 2 || freeH(pk))) return [];
   const day = av.reduce((p, x) => p + x, 0), lbl = h => insHr(new Date(2024, 0, 1, h)) + "-" + insHr(new Date(2024, 0, 1, h + 1));
   return [{ id: "peak", stats: [["Busiest", lbl(pk)], ["Then", av[pk].toFixed(1) + " kWh"], ["A day", "~" + day.toFixed(0) + " kWh"]],
-    tile: ["PEAK HOUR", lbl(pk), "~" + av[pk].toFixed(1) + " kWh on average"], cat: "energy", lvl: 1, icon: "chart-bar", tone: "", go: "#energy", title: "Busiest hour: " + lbl(pk),
+    tile: ["PEAK HOUR", lbl(pk), "most power used · ~" + av[pk].toFixed(1) + " kWh"], cat: "energy", lvl: 1, icon: "chart-bar", tone: "", go: "#energy", title: "Busiest hour: " + lbl(pk),
     sub: "~" + av[pk].toFixed(1) + " kWh on average · last 7 days",
     full: () => '<div class="lbl icll">Average for each hour · last 7 days of data</div>' + insCols(av.map((v, h) => ({ v: v, c: freeH(h) ? "hl" : "", t: h === pk ? v.toFixed(1) : "", l: h % 6 === 0 ? insHr(new Date(2024, 0, 1, h)) : "", h: lbl(h) + (freeH(h) ? " · free on weeknights" : ""), x: v.toFixed(2) + " kWh" })), { name: "Average" }) +
       '<div class="sm">' + (L && L.lo === 0 ? "Green hours are free on some days. " : "") + 'Moving the dishwasher, dryer or hot water out of the tall hours' + (L && L.lo === 0 ? " and into the free ones" : "") + ' saves the most.</div>' }];
@@ -12125,7 +12193,7 @@ function insxBase() {
   const hr = h => (h % 12 || 12) + (h < 12 ? "am" : "pm");
   // only when it moved a lot on the week before (25 % and 80 W or more): something new is running all night, or something stopped
   if (!INS.stat && (wb == null || Math.abs(d) < 80 || Math.abs(d) / Math.max(1, wb) < 0.25)) return [];
-  return [{ id: "base", stats: [["Recent nights", Math.round(w) + " W"]].concat(wb != null ? [["Week before", Math.round(wb) + " W"]] : []).concat(avg ? [["A year", "~" + insxMoney(yr * avg)]] : []), tile: ["OVERNIGHT LOAD", Math.round(w) + " W", wb != null && Math.abs(d) >= 20 ? (d > 0 ? "up " : "down ") + Math.round(Math.abs(d)) + " W on the week before" : "quietest hour of the night"], cat: "energy", lvl: 1, icon: "power", tone: d > 60 ? "warn" : "", go: "#energy", title: "Overnight load ~" + Math.round(w) + " W",
+  return [{ id: "base", stats: [["Recent nights", Math.round(w) + " W"]].concat(wb != null ? [["Week before", Math.round(wb) + " W"]] : []).concat(avg ? [["A year", "~" + insxMoney(yr * avg)]] : []), tile: ["OVERNIGHT LOAD", Math.round(w) + " W", wb != null && Math.abs(d) >= 20 ? (d > 0 ? "up " : "down ") + Math.round(Math.abs(d)) + " W on the week before" : "always on · the quietest hour at night"], cat: "energy", lvl: 1, icon: "power", tone: d > 60 ? "warn" : "", go: "#energy", title: "Overnight load ~" + Math.round(w) + " W",
     sub: (wb != null && Math.abs(d) >= 20 ? (d > 0 ? "Up " : "Down ") + Math.round(Math.abs(d)) + " W on the week before · " : "") + "the quietest hour of the night",
     full: () => insRows(A.map(x => [x.d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }), [[x.w, wb != null && x.w > wb * 1.5 && x.w - wb > 100 ? "#e8973a" : "#6bb8ff"]], Math.round(x.w) + " W", hr(x.h) + "-" + hr(x.h + 1)]), { ref: wb }) +
       '<div class="sm">The power still used in the quietest hour of each night: hot water, the heat pump, heated towel rails, fridges, standby. ~' + Math.round(w) + ' W is the middle of these ' + A.length + ' nights' + (wb != null ? '; the dashed line is the ' + B.length + ' nights before (~' + Math.round(wb) + ' W)' : '') + '.' + (avg ? " Running all year it costs about " + insxMoney(yr * avg) + (CONFIG.gst ? " incl. GST" : "") + (fh ? ", with the " + fh + " free hours a week left out" : "") + "." : "") + '</div>' }];
@@ -12576,7 +12644,13 @@ function insxCarCare() {
     const V = CONFIG.vehicle || {}, odo = c.odometer || (V.prefix ? "sensor." + V.prefix + "_odometer" : ""), D = insxGet("car" + i, 360, done => insxCarLoad(c, odo, done)); if (!D) return;
     const now = Date.now(), km = parseFloat(sv(odo)), last = insxDate(c.lastService), items = [];
     // service: a year (everyMonths) from the last one, or everyKm on from its odometer reading, whichever comes first (km turned into a date at the rate driven since)
-    if (last) { const byT = new Date(last); byT.setMonth(byT.getMonth() + (+c.everyMonths || 12)); let byK = null, left = null;
+    // set on Vehicle > Service (the helper): those dates and km win; a booking on or before that service is the one just done
+    const SV = i === 0 && typeof csvGet === "function" ? csvGet(c) : null;
+    if (SV && SV.src === "helper") { if (D.ev && D.ev < +SV.last + 864e5) D.ev = null;
+      const left = SV.km != null && !isNaN(km) ? SV.km - km : null, ek = +c.everyKm || 10000, per = left != null ? (ek - left) / Math.max(1, (now - SV.last) / 864e5) : 0, byK = left != null && per > 0 ? now + left / per * 864e5 : left != null && left <= 0 ? now : null;
+      const due = byK && byK < +SV.due ? byK : +SV.due;
+      items.push({ k: "service", n: "Service", t: D.ev || due, booked: !!D.ev, due: due, byT: +SV.due, byK: byK, byC: null, left: left, from: +SV.last, km: km, ek: ek }); }
+    else if (last) { const byT = new Date(last); byT.setMonth(byT.getMonth() + (+c.everyMonths || 12)); let byK = null, left = null;
       if (c.everyKm && D.km != null && !isNaN(km)) { left = D.km + +c.everyKm - km; const per = (km - D.km) / Math.max(1, (now - last) / 864e5); byK = per > 0 ? now + left / per * 864e5 : null; }
       // the car's own service countdown (Mercedes: serviceintervaldays on the odometer) wins over the estimate
       const cd = parseFloat(((states[odo] || {}).attributes || {}).serviceintervaldays), byC = !isNaN(cd) ? now + cd * 864e5 : null;
@@ -12596,7 +12670,7 @@ function insxCarCare() {
         let h = insList(items.map(x => ({ i: "car", b: x.n + (x.booked ? " · booked" : ""), s: insxD(new Date(x.t)) + (x.k === "service" && x.booked && x.due ? " (due by " + insxD(new Date(x.due)) + ")" : "") + (x.nx ? " · the next one lasts " + (x.nx % 12 ? x.nx + " months" : x.nx / 12 + (x.nx > 12 ? " years" : " year")) : ""), r: insxIn(x.t - now), t: x.t - now < 0 ? "bad" : x.t - now < 45 * 864e5 ? "w" : "ok" })));
         const sv0 = items.find(x => x.k === "service" && x.from);
         if (sv0) { h += '<div class="lbl icll">Since the last service · ' + esc(insxD(new Date(sv0.from))) + '</div>' + rowBar("Time", sv0.from, sv0.byT, now, insxIn(sv0.byT - now).replace(/^in /, "") + " left", insxD(new Date(sv0.byT)));
-          if (sv0.left != null) h += rowBar("Distance", 0, +c.everyKm, +c.everyKm - sv0.left, Math.max(0, Math.round(sv0.left)).toLocaleString() + " km left", Math.round(sv0.km).toLocaleString() + " km now"); }
+          if (sv0.left != null) h += rowBar("Distance", 0, sv0.ek || +c.everyKm, (sv0.ek || +c.everyKm) - sv0.left, Math.max(0, Math.round(sv0.left)).toLocaleString() + " km left", Math.round(sv0.km).toLocaleString() + " km now"); }
         if (sv0 && sv0.byC) h += '<div class="sm">The service date comes from the car’s own countdown (' + Math.round((sv0.byC - now) / 864e5) + ' days).</div>';
         return h + '<div class="sm">' + (c.everyKm ? "Service every " + (+c.everyKm).toLocaleString() + " km or " + (+c.everyMonths || 12) + " months, whichever comes first" + (sv0 && sv0.left == null ? " (km: set lastKm in carCare, the odometer history does not reach back to the last service)" : "") + ". " : "") + (c.event ? "A “" + esc(c.event) + "” event in the calendar counts as the booking." : "") + '</div>';
       } });
@@ -12663,7 +12737,7 @@ function insxFuel() {
   if (INS.stat ? (!last && daysLeft == null) : (daysLeft == null || daysLeft > 7)) return [];
   const K = v => Math.round(v).toLocaleString(), dt = t => new Date(t).toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" });
   return [{ id: "fuel", stats: [].concat(daysLeft != null ? [["Lasts", "~" + Math.round(daysLeft) + " days"]] : []).concat(perTank ? [["A tank", "~" + K(perTank) + " km"]] : []).concat(last ? [["Last fill", insxIn(last.t - Date.now()).replace(/^in /, "") === "today" ? "today" : Math.round((Date.now() - last.t) / 864e5) + " days ago"]] : []),
-    tile: ["FUEL", daysLeft != null ? "~" + Math.round(daysLeft) + " days" : Math.round(lvl) + "%", daysLeft != null ? K(rg) + " km at ~" + Math.round(kpd) + " km a day" : "last fill " + dt(last.t)], cat: "vehicle", lvl: daysLeft != null && daysLeft < 3 ? 2 : 1, icon: "car", tone: daysLeft != null && daysLeft < 5 ? "warn" : "", go: "#vehicle",
+    tile: ["FUEL", daysLeft != null ? "~" + Math.round(daysLeft) + " days" : Math.round(lvl) + "%", daysLeft != null ? K(rg) + " km left at ~" + Math.round(kpd) + " km a day" : "last fill " + dt(last.t)], cat: "vehicle", lvl: daysLeft != null && daysLeft < 3 ? 2 : 1, icon: "car", tone: daysLeft != null && daysLeft < 5 ? "warn" : "", go: "#vehicle",
     title: daysLeft != null ? "Fuel lasts ~" + Math.round(daysLeft) + " more days" : "Last filled up " + dt(last.t), sub: daysLeft != null ? "Fill up around " + dt(next) + " · " + K(rg) + " km of range" : "",
     full: () => (F.length ? '<div class="lbl icll">Fill-ups · last 120 days</div>' + insRows(F.slice(-6).reverse().map(f => [dt(f.t), [[f.to - f.from, "#6bb8ff"]], "+" + Math.round(f.to - f.from) + "%", [f.km != null ? K(f.km) + " km since the last" : "", f.L ? "~" + Math.round(f.L) + " L" + (fp ? " · ~" + sym + Math.round(f.L * fp) : "") : ""].filter(Boolean).join(" · ")]), { max: 100 }) : "") +
       '<div class="sm">' + (perTank ? "A full tank takes you ~" + K(perTank) + " km. " : "") + (kpd ? "You've driven ~" + Math.round(kpd) + " km a day over the last month" + (daysLeft != null ? ", so " + K(rg) + " km of range lasts about " + Math.round(daysLeft) + " days." : ".") : "") + (!tank ? " Set vehicle.tank (litres) to see litres and cost per fill-up." : "") + '</div>' }];
@@ -12964,7 +13038,7 @@ function insxPressure() {
   const a = (H[W] || []).map(x => [x[0], parseFloat(x[2] && x[2].pressure) * f]).filter(x => !isNaN(x[1])); if (a.length < 3) return [];
   const now = a[a.length - 1], then = a.filter(x => x[0] <= now[0] - 3 * 36e5).pop() || a[0]; if (now[0] - then[0] < 2 * 36e5) return [];
   const drop = (then[1] - now[1]) * 3 * 36e5 / (now[0] - then[0]); if (drop < 3 && !INS.stat) return [];
-  return [{ id: "pressure", stats: [["Now", Math.round(now[1]) + " hPa"], ["3 h ago", Math.round(then[1]) + " hPa"], ["Change", (drop > 0 ? "−" : "+") + Math.abs(drop).toFixed(1)]], tile: ["PRESSURE", (drop > 0 ? "↓ " : "↑ ") + Math.abs(drop).toFixed(1) + " hPa", "in 3 hours · " + Math.round(now[1]) + " hPa"], cat: "weather", lvl: 1, icon: "weather-windy", tone: drop >= 3 ? "warn" : "", go: "#weather",
+  return [{ id: "pressure", stats: [["Now", Math.round(now[1]) + " hPa"], ["3 h ago", Math.round(then[1]) + " hPa"], ["Change", (drop > 0 ? "−" : "+") + Math.abs(drop).toFixed(1)]], tile: ["PRESSURE", (drop > 0 ? "↓ " : "↑ ") + Math.abs(drop).toFixed(1) + " hPa", (drop > 0 ? "falling" : "rising") + " over 3 hours · now " + Math.round(now[1]) + " hPa"], cat: "weather", lvl: 1, icon: "weather-windy", tone: drop >= 3 ? "warn" : "", go: "#weather",
     title: drop >= 3 ? "Pressure falling fast" : "Pressure steady", sub: Math.abs(drop).toFixed(1) + " hPa in 3 hours" + (drop >= 3 ? ": wind and rain on the way" : ""),
     full: () => insCols(a.filter((x, i) => i % Math.max(1, Math.floor(a.length / 24)) === 0).map(x => ({ v: x[1], l: "", h: schTm(new Date(x[0])), x: x[1].toFixed(1) + " hPa" })), { floor: Math.min.apply(null, a.map(x => x[1])) - 1, name: "Pressure" }) + '<div class="sm">A fall of 3 hPa or more in three hours usually means a front: stronger wind and rain within half a day. Tie down what can blow away.</div>' }];
 }
@@ -12993,7 +13067,7 @@ function insxRain() {
   const dl = t => new Date(t).toLocaleDateString([], { weekday: "short" });
   const sub = (sp.length > 1 ? sp.length + " spells, longest " + hm(long[1] - long[0]) + " from " + schTm(new Date(long[0])) : sp.length ? "from " + schTm(new Date(sp[0][0])) + (now ? "" : " to " + schTm(new Date(sp[0][1]))) : "") +
     (most ? " · the wettest day of the week" : wet.length ? " · " + wet.length + " of the last 7 days had rain" : " · the first rain in a week");
-  return [{ id: "rain", stats: [["Today", hm(today)], ["Spells", sp.length], ["Last 7 days", wet.length + " wet"]], tile: ["RAIN", hm(today), now ? "raining now" : "today · " + sp.length + (sp.length === 1 ? " spell" : " spells")], cat: "weather", lvl: 1, icon: "weather-rainy", tone: now ? "warn" : "", go: "#weather",
+  return [{ id: "rain", stats: [["Today", hm(today)], ["Spells", sp.length], ["Last 7 days", wet.length + " wet"]], tile: ["RAIN", hm(today), now ? "of rain today · raining now" : "of rain today · " + sp.length + (sp.length === 1 ? " spell" : " spells")], cat: "weather", lvl: 1, icon: "weather-rainy", tone: now ? "warn" : "", go: "#weather",
     title: now ? "Raining now · " + hm(today) + " today" : "It rained " + hm(today) + " today", sub: sub.replace(/^ · /, ""),
     full: () => {
       const e = Date.now(), w = Math.max(1, e - T0), lab = [0, 6, 12, 18].map(h => '<b>' + insHr(new Date(T0 + h * 36e5)) + '</b>').join("") + '<b>now</b>';
@@ -13044,12 +13118,12 @@ function insxAccuracy() {
   if (rows.length < 4) return [];
   const eg = rows.reduce((p, r) => p + Math.abs(r.g - r.a), 0) / rows.length, em = rows.reduce((p, r) => p + Math.abs(r.m - r.a), 0) / rows.length, diff = Math.abs(eg - em), win = eg < em ? "Google" : "MetService";
   if (diff < 1 && !INS.stat) return [];
-  return [{ id: "accuracy", stats: [["Google off by", eg.toFixed(1) + "°"], ["MetService off by", em.toFixed(1) + "°"], ["Days", rows.length]], tile: ["FORECASTS", diff < 0.3 ? "Even" : win, diff < 0.3 ? "both as close on the high" : "closer on the high · last " + rows.length + " days"], cat: "weather", lvl: 1, icon: "weather-partly-cloudy", tone: "", go: "#weather",
+  return [{ id: "accuracy", stats: [["Google off by", eg.toFixed(1) + "°"], ["MetService off by", em.toFixed(1) + "°"], ["Days", rows.length]], tile: ["FORECASTS", diff < 0.3 ? "Even" : win, diff < 0.3 ? "both as close on the daily high" : "closer on the daily high · last " + rows.length + " days"], cat: "weather", lvl: 1, icon: "weather-partly-cloudy", tone: "", go: "#weather",
     title: diff < 0.3 ? "Google and MetService are as good as each other" : win + " has been closer lately", sub: "Off by " + Math.min(eg, em).toFixed(1) + "° on the day's high, vs " + Math.max(eg, em).toFixed(1) + "°",
     full: () => '<div class="lbl icll">How far each forecast was off the day’s high</div>' + rows.slice().reverse().map(r => insRows([[new Date(r.d).toLocaleDateString([], { weekday: "short", day: "numeric" }), [[Math.abs(r.g - r.a) + 0.05, "#6bb8ff", "Google", Math.round(r.g) + "°"], [Math.abs(r.m - r.a) + 0.05, "#e8973a", "MetService", Math.round(r.m) + "°"]], "actual " + Math.round(r.a) + "°", ""]], { max: Math.max(3, Math.max.apply(null, rows.map(x => Math.abs(x.g - x.a) + Math.abs(x.m - x.a)))) })).join("") +
       '<div class="irl"><span><i style="background:#6bb8ff"></i>Google</span><span><i style="background:#e8973a"></i>MetService</span></div><div class="sm">Each forecast as it stood at 9 am that morning, against the highest temperature the weather station reported during the day. Shorter bars are closer.</div>' }];
 }
-const INSX_ALL = [insxVolcano, insxQuakes, insxRoster, insxDrying, insxSwing, insxDisagree, insxEvening, insxPressure, insxDaylight, insxRain, insxAccuracy, insxDrops, insxDisk, insxBusy, insxWear, insxBoots, insxTraffic, insxPveUpd, insxAway, insxFilter, insxCycle, insxCarCare, insxDrive, insxFuel, insxTrips, insxEco, insxStarter, insxBins, insxLaundry, insxCams, insxAlertsOff, insxUpdates, insxPollen, insxLights, insxMould, insxClimRun, insxHpTile, insxFree, insxRun, insxNight, insxBatt, insxOffline, insxCar, insxWx, insxTomorrow, insxBill, insxVs, insxSave, insxPeak, insxBase];
+const INSX_ALL = [insxStale, insxVolcano, insxQuakes, insxRoster, insxDrying, insxSwing, insxDisagree, insxEvening, insxPressure, insxDaylight, insxRain, insxAccuracy, insxDrops, insxDisk, insxBusy, insxWear, insxBoots, insxTraffic, insxPveUpd, insxAway, insxFilter, insxCycle, insxCarCare, insxDrive, insxFuel, insxTrips, insxEco, insxStarter, insxBins, insxLaundry, insxCams, insxAlertsOff, insxPollen, insxLights, insxMould, insxClimRun, insxHpTile, insxFree, insxRun, insxNight, insxBatt, insxOffline, insxCar, insxWx, insxTomorrow, insxBill, insxVs, insxSave, insxPeak, insxBase];
 // ---------- NZ public feeds (2.5.15): GeoNet volcano cameras, Tilde tsunami gauges, Civil Defence alerts, NZTA roads ----------
 // Volcano cameras and the sea level gauges load straight from GeoNet (images / Tilde allow it). Civil Defence and NZTA do not allow a web page
 // to read them, so those two come in through Home Assistant REST sensors (README: "Civil Defence alerts" and "Roads").
@@ -13155,9 +13229,13 @@ const slvMed = a => { if (!a.length) return null; const s = a.slice().sort((x, y
 function slvCalc(g) {
   const P = g.pts || []; if (!P.length) return;
   if (g.base == null || g.full) g.base = slvMed(P.filter(p => p[0] > Date.now() - 6 * 36e5).map(p => p[1]));
-  const sm = P.map((p, i) => [p[0], slvMed(P.slice(Math.max(0, i - 2), i + 2).map(q => q[1]))]);
-  const hr = sm.filter(p => p[0] > Date.now() - 36e5);
+  // a 9-reading (about 2 minute) median: a gauge's one-off spikes go, a tsunami wave (10 to 60 minutes from crest to crest) stays
+  const sm = P.map((p, i) => [p[0], slvMed(P.slice(Math.max(0, i - 4), i + 5).map(q => q[1]))]);
+  const hr = sm.filter(p => p[0] > Date.now() - 36e5), c = SLV() || { amber: 0.3, red: 1 };
   g.amp = hr.length ? Math.max.apply(null, hr.map(p => Math.abs(p[1] - g.base))) : null;
+  // it has to stay over the line for 2 minutes or more (8 readings) to count
+  const over = t => hr.filter(p => Math.abs(p[1] - g.base) >= t).length >= 8;
+  g.lv = over(c.red) ? 2 : over(c.amber) ? 1 : 0;
   g.last = P[P.length - 1][0]; g.sm = sm;
 }
 // every 3 min: away from Hazards just the last 30 minutes (small) and the 6 h window once an hour for the normal level; on the Hazards page the 6 h window every 3 min for the chart
@@ -13182,16 +13260,24 @@ async function slvRun(full) {
 }
 // a gauge counts only while its newest reading is under 30 minutes old
 const slvLive = g => g && g.last && Date.now() - g.last < 18e5 && g.amp != null;
+// The level only counts as a tsunami when it is backed up: two or more gauges over the line, or a Civil Defence alert that mentions a tsunami.
+// One gauge on its own (a jumpy sensor, a ship's wake in the harbour) is only "unusual reading at X" on the card: no chip, no alert.
+const slvGl = g => slvLive(g) ? g.lv || 0 : 0;
+const slvCdTsu = () => typeof cdAlerts === "function" && cdAlerts().some(a => !a.clr && /tsunami/i.test(a.t + " " + a.d));
 function slvLevel() {
   const c = SLV(); if (!c) return 0;
-  const G = (NZF.pick || []).map(s => NZF.gauges[s.id]).filter(slvLive);
-  return G.reduce((m, g) => Math.max(m, g.amp >= c.red ? 2 : g.amp >= c.amber ? 1 : 0), 0);
+  const L = (NZF.pick || []).map(s => slvGl(NZF.gauges[s.id])), hit = L.filter(l => l > 0), cd = slvCdTsu();
+  if (hit.length >= 2) return Math.max.apply(null, hit);
+  if (cd) return Math.max(1, hit.length ? hit[0] : 0);
+  return 0;
 }
+// the gauges over the line while it is not backed up
+const slvOdd = () => slvLevel() ? [] : (NZF.pick || []).map(s => NZF.gauges[s.id]).filter(g => slvGl(g) > 0);
 function slvSpark(g, c) {
   const P = (g.sm || []).filter(p => p[0] > Date.now() - 6 * 36e5); if (P.length < 2) return '<svg class="slv-sp" viewBox="0 0 240 40"></svg>';
   const t0 = Date.now() - 6 * 36e5, B = [];
   for (let i = 0; i < 120; i++) { const a = t0 + i * 18e4, s = P.filter(p => p[0] >= a && p[0] < a + 18e4); if (s.length) B.push([i * 2, s.reduce((m, p) => Math.abs(p[1] - g.base) > Math.abs(m - g.base) ? p[1] : m, s[0][1]) - g.base]); }
-  const sc = Math.max(0.25, (g.amp || 0) * 1.15), y = v => (20 - Math.max(-1, Math.min(1, v / sc)) * 18).toFixed(1), lv = g.amp >= c.red ? 2 : g.amp >= c.amber ? 1 : 0;
+  const sc = Math.max(0.25, (g.amp || 0) * 1.15), y = v => (20 - Math.max(-1, Math.min(1, v / sc)) * 18).toFixed(1), lv = slvGl(g);
   const thr = [c.amber, c.red].filter(t => t < sc).map(t => '<line class="slv-th" x1="0" x2="240" y1="' + y(t) + '" y2="' + y(t) + '"/><line class="slv-th" x1="0" x2="240" y1="' + y(-t) + '" y2="' + y(-t) + '"/>').join("");
   return '<svg class="slv-sp l' + lv + '" viewBox="0 0 240 40" preserveAspectRatio="none" aria-hidden="true"><line class="slv-z" x1="0" x2="240" y1="20" y2="20"/>' + thr + '<polyline points="' + B.map(p => p[0] + "," + y(p[1])).join(" ") + '"/></svg>';
 }
@@ -13200,12 +13286,13 @@ function slvHtml() {
   const pick = NZF.pick || [], G = pick.map(s => NZF.gauges[s.id] || s), live = G.filter(slvLive), lv = slvLevel();
   const head = !pick.length ? (NZF.gErr ? ["off", "help-circle-outline", "No data from the gauges yet"] : nzfHome() ? ["off", "help-circle-outline", "Checking the gauges…"] : ["off", "help-circle-outline", "Needs your home location (zone.home)"])
     : !live.length ? ["off", "help-circle-outline", (G.some(g => g.last) ? "GeoNet has no new readings since " : "No data from the gauges since ") + nzfHHMM(Math.max.apply(null, G.map(g => g.last || 0)) || NZF.gt)]
-    : lv === 2 ? ["red", "alert-octagon", "Land threat level · follow Civil Defence"] : lv === 1 ? ["amb", "alert", "Unusual waves · stay off beaches"] : ["ok", "check-circle-outline", "Sea is calm at nearby gauges"];
-  const rows = G.map(g => { const ok = slvLive(g), l = ok ? (g.amp >= c.red ? 2 : g.amp >= c.amber ? 1 : 0) : -1;
+    : lv === 2 ? ["red", "alert-octagon", "Land threat level · follow Civil Defence"] : lv === 1 ? ["amb", "alert", "Unusual waves · stay off beaches"]
+    : slvOdd().length ? ["odd", "help-circle-outline", "Unusual reading at " + slvOdd().map(g => g.name).join(", ") + " only · the other gauges are calm"] : ["ok", "check-circle-outline", "Sea is calm at nearby gauges"];
+  const rows = G.map(g => { const ok = slvLive(g), l = ok ? slvGl(g) : -1;
     return '<div class="slv-r' + (ok ? "" : " slv-old") + '"><span><b>' + esc(g.name) + '</b><small>' + (g.km != null ? Math.round(g.km) + " km from home" : esc(g.id)) + (ok ? "" : g.last ? " · last " + nzfHHMM(g.last) : " · no data") + '</small></span>' + (ok ? slvSpark(g, c) : '<svg class="slv-sp" viewBox="0 0 240 40"></svg>') + '<em class="l' + l + '">' + (ok ? (g.amp < 0.1 ? g.amp.toFixed(2) : g.amp.toFixed(1)) + " m" : "--") + '</em></div>'; }).join("");
   return '<div class="pn hzps slv-' + head[0] + '"><div class="hzlh"><span class="lbl">' + mdi("waves") + ' Sea level · gauges</span><small>tide removed · last 6 hours</small></div>' +
     '<p class="slv-h">' + mdi(head[1]) + esc(head[2]) + '</p>' + rows +
-    (lv ? '<p class="slv-n">One gauge is one spot in one harbour, and the first wave is often not the biggest. Official alerts come first: long or strong, get gone.</p>' : "") +
+    (lv ? '<p class="slv-n">One gauge is one spot in one harbour, and the first wave is often not the biggest. Official alerts come first: long or strong, get gone.</p>' : head[0] === "odd" ? '<p class="slv-n">One gauge on its own is usually the sensor or harbour traffic, not a tsunami. It counts once a second gauge or Civil Defence agrees.</p>' : "") +
     '<div class="slv-f"><span>' + (live.length ? "Biggest swing in the last hour · newest reading " + nzfHHMM(Math.max.apply(null, live.map(g => g.last))) + " (" + hzAgo(Math.max.apply(null, live.map(g => g.last))) + ")" : "") + '</span><span>© GNS Science · GeoNet</span></div></div>';
 }
 
@@ -13523,6 +13610,253 @@ function plcStatus() {
   if (!plcKey()) return "";
   return '<div class="sck-r"><b>Address suggestions (Google Places)</b><small>' + esc(CONFIG.placesLookup === false ? "turned off (placesLookup: false)" : PLC.off ? "Google refused the key: " + PLC.off + " Allow \"Places API (New)\" for it, or set googlePlacesKey." : PLC.err ? "last try failed: " + PLC.err : "ready (checked when you type in an event's Location)") + '</small></div>';
 }
+// ---------- Insights: sensors that stopped reporting, or are stuck on one value (2.5.17) ----------
+// Only sensors config.js uses (the Setup check list), and only measuring ones: temperature, humidity, soil moisture, power, pressure, air quality ...
+//   Not reporting (Needs you): nothing at all from the device for staleSensors.hours (24). Home Assistant keeps showing the last value it got,
+//     so this is the flat battery / out of range case. Uses last_reported (Home Assistant 2024.3+).
+//   Same value (an insight): still reporting, but the identical number for staleSensors.stuckHours (48). Only for things that drift every day:
+//     temperature, humidity, soil moisture.
+// Left out: on / off sensors, set points, batteries (their own card), anything unavailable (the Offline card), staleSensors.ignore, and muted ones.
+// The browser only hears about a sensor when it changes, so the suspects are re-read from Home Assistant about once an hour (one small request each).
+// config staleSensors: false | { hours: 24, stuckHours: 48, ignore: ["sensor.x"] }
+const STL = { lr: {}, t: 0, busy: 0 };
+const stlCfg = () => { const c = CONFIG.staleSensors; return c === false ? null : Object.assign({ hours: 24, stuckHours: 48, ignore: [] }, c && typeof c === "object" ? c : {}); };
+const STL_MEASURE = /^(temperature|humidity|moisture|pressure|atmospheric_pressure|power|current|voltage|carbon_dioxide|pm25|pm10|pm1|volatile_organic_compounds|illuminance)$/;
+const STL_DRIFT = /^(temperature|humidity|moisture)$/;
+const stlKind = s => { const a = s.attributes || {}, dc = a.device_class || "", id = s.entity_id; if (dc === "battery") return ""; if (STL_MEASURE.test(dc)) return dc; if (/soil|moisture/.test(id)) return "moisture"; if (/_temperature$|_temp$/.test(id) && /°/.test(a.unit_of_measurement || "")) return "temperature"; if (/_humidity$/.test(id) && a.unit_of_measurement === "%") return "humidity"; return ""; };
+const stlMuted = () => { try { return JSON.parse(localStorage.getItem("kinetic-stale-mute") || "[]"); } catch (e) { return []; } };
+function stlMute(id) { const m = stlMuted(); if (m.indexOf(id) < 0) m.push(id); try { localStorage.setItem("kinetic-stale-mute", JSON.stringify(m)); } catch (e) {} }
+// does this Home Assistant send last_reported at all? (older versions do not: then only "same value" is checked)
+const stlLrOk = () => Object.keys(states).some(k => states[k] && states[k].last_reported);
+const stlRep = s => STL.lr[s.entity_id] || Date.parse(s.last_reported || s.last_updated || s.last_changed || "") || 0;
+function stlList() {
+  const c = stlCfg(); if (!c || typeof sckScan !== "function") return null;
+  const S = sckScan(), ign = [].concat(c.ignore || []).concat(stlMuted()), now = Date.now(), lrOk = stlLrOk(), out = { dead: [], stuck: [], sus: [] };
+  (S.ids || []).forEach(id => {
+    const s = states[id]; if (!s || id.indexOf("sensor.") !== 0 || ign.indexOf(id) > -1 || (typeof VIRT !== "undefined" && VIRT[id])) return;
+    if (s.state === "unavailable" || s.state === "unknown" || isNaN(parseFloat(s.state))) return;
+    const k = stlKind(s); if (!k) return;
+    const ch = Date.parse(s.last_changed || "") || now, rep = stlRep(s);
+    if (now - ch >= 6 * 36e5) out.sus.push(id);
+    if (lrOk && now - rep >= c.hours * 36e5) out.dead.push({ id: id, rep: rep, k: k });
+    else if (STL_DRIFT.test(k) && now - ch >= c.stuckHours * 36e5) out.stuck.push({ id: id, ch: ch, k: k });
+  });
+  out.dead.sort((a, b) => a.rep - b.rep); out.stuck.sort((a, b) => a.ch - b.ch);
+  return out;
+}
+// re-read the sensors that have not changed for 6 h, so last_reported is current (Home Assistant's REST API, one request each, at most every 50 min)
+async function stlRefresh(force) {
+  const c = stlCfg(); if (!c || STL.busy || (!force && Date.now() - STL.t < 50 * 60000) || !stlLrOk()) return; const L = stlList(); if (!L || !L.sus.length) { STL.t = Date.now(); return; }
+  STL.busy = 1;
+  try {
+    const tk = await getToken();
+    await Promise.all(L.sus.slice(0, 40).map(id => fetch(CONFIG.url + "/api/states/" + encodeURIComponent(id), { headers: { Authorization: "Bearer " + tk } }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.last_reported) STL.lr[id] = Date.parse(j.last_reported) || 0; }).catch(() => {})));
+    STL.t = Date.now();
+  } catch (e) {} finally { STL.busy = 0; }
+  if (typeof insTick === "function") insTick();
+}
+setInterval(() => { if (!document.hidden) stlRefresh(); }, 10 * 60000);
+setTimeout(() => stlRefresh(true), 20000);
+const stlDur = ms => { const h = Math.round(ms / 36e5); return h >= 48 ? Math.round(h / 24) + " days" : h + " h"; };
+const stlWhen = t => { const d = new Date(t), today = new Date().toDateString() === d.toDateString(); return today ? d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })) : d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }) + " " + d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })); };
+const stlVal = s => { const a = s.attributes || {}, v = parseFloat(s.state); return (Math.abs(v) >= 100 ? Math.round(v) : +v.toFixed(1)) + (a.unit_of_measurement ? (a.unit_of_measurement === "%" ? "%" : /^°/.test(a.unit_of_measurement) ? "°" : " " + a.unit_of_measurement) : ""); };
+// one row: name, value and when it was last heard from / last changed; MUTE (this device); tap the name: Settings > Entities (admins)
+function stlRows(L, dead) {
+  return '<div class="ils stl-ls">' + L.map(x => { const s = states[x.id]; return '<div class="ilr ' + (dead ? "bad" : "w") + '"><i></i><span class="ilm">' + (typeof ADMIN_ON === "function" && ADMIN_ON() ? '<button type="button" class="stl-go" data-stgo="' + esc(x.id) + '">' + esc(fname(x.id)) + '</button>' : '<b>' + esc(fname(x.id)) + '</b>') +
+    '<small>' + esc(stlVal(s) + " · " + (dead ? "last heard from " + hzAgo(x.rep) : "same since " + stlWhen(x.ch) + " · still reporting")) + '</small></span><button type="button" class="eb stl-mu" data-stmute="' + esc(x.id) + '">MUTE</button></div>'; }).join("") + '</div>';
+}
+function insxStale() {
+  const c = stlCfg(), L = stlList(); if (!c || !L) return [];
+  const out = [], nm = A => A.slice(0, 2).map(x => fname(x.id)).join(" · ") + (A.length > 2 ? " +" + (A.length - 2) : "");
+  if (L.dead.length) out.push({ id: "stale", tile: ["SENSORS", String(L.dead.length), "not reporting"], cat: "home", lvl: 2, icon: "access-point-network", tone: "bad", nogo: 1,
+    title: L.dead.length + (L.dead.length > 1 ? " sensors" : " sensor") + " not reporting", sub: nm(L.dead) + " · nothing for " + c.hours + " h or more",
+    stats: [["Not reporting", L.dead.length], ["Longest", stlDur(Date.now() - L.dead[0].rep)]],
+    full: () => stlRows(L.dead, true) + '<div class="sm">Home Assistant keeps showing the last value it got. Usually a flat battery, or the device is out of range. MUTE hides one on this screen; staleSensors.ignore in config.js hides it everywhere.</div>' });
+  if (L.stuck.length) out.push({ id: "stuck", tile: ["SENSORS", String(L.stuck.length), "stuck on the same value"], cat: "home", lvl: 1, icon: "alert-circle", tone: "warn", nogo: 1,
+    title: L.stuck.length + (L.stuck.length > 1 ? " sensors" : " sensor") + " stuck on the same value", sub: nm(L.stuck) + " · unchanged for " + c.stuckHours + " h or more",
+    stats: [["Stuck", L.stuck.length], ["Longest", stlDur(Date.now() - L.stuck[0].ch)]],
+    full: () => stlRows(L.stuck, false) + '<div class="sm">Still reporting, but the very same number. Temperature, humidity and soil moisture normally move every day, so the probe may be stuck or dirty.</div>' });
+  return out;
+}
+document.addEventListener("click", e => {
+  const m = e.target.closest("[data-stmute]"); if (m) { e.stopPropagation(); stlMute(m.dataset.stmute); if (typeof insTick === "function") insTick(); setTimeout(() => { if (typeof drawInsights === "function" && curPg() === "insights") drawInsights(); if (typeof insDetDraw === "function") insDetDraw(); }, 60); return; }
+  const g = e.target.closest("[data-stgo]"); if (g) { e.stopPropagation(); const id = g.dataset.stgo; if (typeof INS !== "undefined") INS.det = ""; location.hash = "#admin/entities"; setTimeout(() => { if (typeof ADM !== "undefined" && typeof admEntDraw === "function") { ADM.esel = id; admEntDraw(); } }, 400); }
+}, true);
+// ---------- Vehicle > Service: the next service by km or date, filled in on the dashboard (2.5.17) ----------
+// The values live in one Home Assistant Text helper (max length 255) so every device sees the same: carCare[0].serviceHelper, default input_text.car_service,
+// holding {"last":"YYYY-MM-DD","km":105000,"due":"YYYY-MM-DD"}. Without the helper the card shows what config.js says (lastService, lastKm + everyKm, everyMonths).
+// Insights' car card uses the same values; once they are set the car's own countdown (serviceintervaldays) and a calendar booking on or before the last service no longer count.
+const CSV = { dirty: 0, msg: "", mode: "" };
+const csvCfg = () => [].concat(CONFIG.carCare || [])[0] || {};
+const csvHelper = c => (c || csvCfg()).serviceHelper || "input_text.car_service";
+const csvIso = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+const csvYear = (d, m) => { const x = new Date(d); x.setMonth(x.getMonth() + (m || 12)); return x; };
+// { last: Date, km: number|null, due: Date|null, src: "helper"|"config" }
+function csvGet(c) {
+  c = c || csvCfg(); const h = states[csvHelper(c)], every = +c.everyMonths || 12;
+  if (h && h.state && h.state[0] === "{") { try { const j = JSON.parse(h.state), last = insxDate(j.last); if (last) return { last: last, km: j.km != null && j.km !== "" && !isNaN(+j.km) ? +j.km : null, due: csvYear(last, every), src: "helper" }; } catch (e) {} }
+  const last = insxDate(c.lastService); if (!last) return null;
+  return { last: last, km: c.nextKm != null ? +c.nextKm : c.lastKm != null && c.everyKm ? +c.lastKm + +c.everyKm : null, due: csvYear(last, every), src: "config" };
+}
+function csvOdo() { const V = CONFIG.vehicle || {}, c = csvCfg(), id = c.odometer || (V.prefix ? "sensor." + V.prefix + "_odometer" : ""), v = parseFloat(sv(id)); return isNaN(v) ? null : v; }
+// the Service card on the Vehicle page
+function csvCard() {
+  const c = csvCfg(), S = csvGet(c), odo = csvOdo(), now = Date.now(), every = +c.everyKm || 10000, hasH = !!states[csvHelper(c)];
+  const kmL = S && S.km != null && odo != null ? S.km - odo : null, dL = S && S.due ? Math.round((+S.due - now) / 864e5) : null;
+  const over = (kmL != null && kmL <= 0) || (dL != null && dL < 0), soon = !over && ((kmL != null && kmL <= 1000) || (dL != null && dL <= 30));
+  const K = v => Math.round(v).toLocaleString();
+  let big = "Not set", sub = "Fill in the last service below";
+  if (S) {
+    const byKm = kmL != null && kmL <= 0, byDate = dL != null && dL < 0;
+    big = over ? (byKm ? "Due now" : "Overdue") : dL != null ? insxIn(+S.due - now).replace(/^in /, "In ") : K(kmL) + " km";
+    sub = over ? (byKm ? "The odometer passed " + K(S.km) + " km" : "Was due " + insxD(S.due)) : (S.km != null ? "or at " + K(S.km) + " km, whichever comes first" : "km not set");
+    if (byKm && byDate) sub = "The odometer passed " + K(S.km) + " km and it was due " + insxD(S.due);
+  }
+  const bar = (lbl, txt, p) => { const col = p >= 1 ? "var(--heat)" : p >= .9 ? "#e8973a" : "#6bb8ff"; return '<div class="csv-bt"><span>' + lbl + '</span><span>' + esc(txt) + '</span></div><div class="csv-bar"><i style="width:' + Math.max(2, Math.min(100, p * 100)).toFixed(1) + '%;background:' + col + '"></i></div>'; };
+  let bars = "";
+  if (S && kmL != null) bars += bar("Distance", (kmL > 0 ? K(kmL) + " km left" : K(-kmL) + " km over") + " · " + K(odo) + " km now", (every - kmL) / every);
+  if (S && dL != null) bars += bar("Time", (dL >= 0 ? dL + (dL === 1 ? " day" : " days") + " left" : -dL + " days over") + " · due " + insxD(S.due), (now - +S.last) / Math.max(864e5, +S.due - +S.last));
+  const note = S ? (over ? "Book a service now." : "Book a service when the odometer reaches " + (S.km != null ? K(S.km) + " km" : "the next service km") + " or by " + insxD(S.due) + ", whichever comes first.") : "";
+  const v = S || { last: null, km: null, due: null };
+  return '<div class="pn csv-card' + (over ? " over" : soon ? " soon" : "") + '" data-tab="Service"><div class="lbl">' + mdi("v-timer") + ' Next service</div>' +
+    '<div class="csv-big">' + esc(big) + '</div><div class="csv-sub">' + esc(sub) + '</div>' + bars + (note ? '<div class="csv-note">' + esc(note) + '</div>' : "") +
+    (CSV.mode ? csvForm(CSV.mode, v, odo, every) : '<div class="csv-rows"><div><span>Last service</span><b>' + (v.last ? esc(insxD(v.last)) : "not set") + '</b></div><div><span>Next service</span><b>' + (v.km != null ? K(v.km) + " km" : "km not set") + '</b></div></div>' +
+      '<button type="button" class="eb csv-done" data-csv="done">' + mdi("v-ok") + ' MARK AS SERVICED</button><button type="button" class="csv-ed" data-csv="edit">Edit details</button>') +
+    '<div class="sm csv-msg">' + esc(CSV.msg || (hasH ? "Due " + (+c.everyMonths || 12) + " months after the last service. Saved in " + csvHelper(c) + " for every device." : "To save here, add a Text helper named " + csvHelper(c).replace(/^input_text\./, "") + " (max length 255) in Home Assistant. Until then this card shows config.js.")) + '</div></div>';
+}
+// the small form inside the card: "done" = serviced (date, odometer, next service km), "edit" = fix the last service and next km
+function csvForm(m, v, odo, every) {
+  const K = n => Math.round(n).toLocaleString(), t = new Date(), f = (l, h) => '<label><span class="lbl">' + l + '</span>' + h + '</label>';
+  const date = m === "done" ? csvIso(t) : v.last ? csvIso(v.last) : "", km = m === "done" ? (odo != null ? Math.round(odo + every) : "") : v.km != null ? Math.round(v.km) : "";
+  return '<div class="evf csv-f"><b class="csv-ft">' + (m === "done" ? "Serviced" : "Edit details") + '</b><div class="csv-g">' + f(m === "done" ? "Date" : "Last service", '<input type="date" data-csvi="last" value="' + date + '">') +
+    f("Next service km", '<input type="number" inputmode="numeric" data-csvi="km" value="' + km + '">') + '</div>' +
+    (m === "done" && odo != null ? '<div class="sm">Odometer now ' + K(odo) + ' km · next service ' + K(every) + ' km later</div>' : "") +
+    '<div class="csv-bn"><button type="button" class="eb" data-csv="cancel">CANCEL</button><button type="button" class="eb on" data-csv="save">SAVE</button></div></div>';
+}
+function csvSave(o) {
+  const c = csvCfg(), id = csvHelper(c);
+  if (!states[id]) { CSV.msg = "Add the Text helper " + id + " in Home Assistant first (Settings > Devices & services > Helpers)."; CSV.dirty = 0; CSV.mode = ""; drawVehicle(); return; }
+  const val = JSON.stringify(o); call("input_text", "set_value", id, { value: val });
+  states[id] = Object.assign({}, states[id], { state: val });   // show it straight away; Home Assistant's own update follows
+  CSV.msg = "Saved."; CSV.dirty = 0; CSV.mode = ""; setTimeout(() => { CSV.msg = ""; if (curPg() === "vehicle") drawVehicle(); }, 4000);
+  drawVehicle(); if (typeof insTick === "function") insTick();
+}
+document.addEventListener("input", e => { const i = e.target.closest("[data-csvi]"); if (!i) return; CSV.dirty = 1;
+});
+document.addEventListener("click", e => { const b = e.target.closest("[data-csv]"); if (!b) return; e.preventDefault();
+  const every = +csvCfg().everyKm || 10000, odo = csvOdo();
+  if (b.dataset.csv === "done" || b.dataset.csv === "edit") { CSV.mode = b.dataset.csv; CSV.msg = ""; CSV.dirty = 0; return drawVehicle(); }
+  if (b.dataset.csv === "cancel") { CSV.mode = ""; CSV.dirty = 0; return drawVehicle(); }
+  const g = n => ($('[data-csvi="' + n + '"]') || {}).value || "", last = insxDate(g("last"));
+  if (!last) { CSV.msg = "Fill in the last service date."; CSV.dirty = 0; return drawVehicle(); }
+  csvSave({ last: csvIso(last), km: g("km") ? Math.round(+g("km")) : null, due: csvIso(csvYear(last, +csvCfg().everyMonths || 12)) });
+});
+// ---------- Updates and the tools button (2.5.17) ----------
+// The tools button on Settings opens a sheet listing every update waiting (update.* entities that are on) with a tick box each: INSTALL SELECTED or UPDATE ALL. They install one at a time,
+// Home Assistant Core / OS / Supervisor last (those restart Home Assistant), with "Back up first" where the update supports it. Tap a name for its card (release notes, skip).
+// On the Settings page admins get a round tools button at the bottom right: a tap pops out two small buttons, Updates and Quick actions, each opening its own sheet,
+// with a count on it while updates wait. It sits above the music mini player or the music button when they show. Not for non-admins.
+Object.assign(MDI, { "download": "M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z", "wrench": "M22.7,19L13.6,9.9C14.5,7.6 14,4.9 12.1,3C10.1,1 7.1,0.6 4.7,1.7L9,6L6,9L1.6,4.7C0.4,7.1 0.9,10.1 2.9,12.1C4.8,14 7.5,14.4 9.8,13.5L18.9,22.6C19.3,23 19.9,23 20.3,22.6L22.6,20.3C23.1,19.9 23.1,19.3 22.7,19Z" });
+const UPD = { sel: new Set(), q: [], cur: "", t0: 0, backup: true, msg: "", open: "", dial: false };
+const updName = e => { const a = (states[e] || {}).attributes || {}; return a.title || a.friendly_name || fname(e); };
+const updLast = e => /home_assistant_(core|operating_system|supervisor)|_os_update$/.test(e) || /^home assistant (core|operating system|supervisor)/i.test(updName(e));
+function updList() { return Object.keys(states).filter(k => k.indexOf("update.") === 0 && states[k].state === "on").sort((a, b) => updLast(a) - updLast(b) || updName(a).localeCompare(updName(b))); }
+// the ones that can be ticked now (installable, not installing or queued), and whether they all are ticked
+const updPick = () => updList().filter(e => updCan(e) && !upcBusy((states[e] || {}).attributes) && UPD.q.indexOf(e) < 0 && UPD.cur !== e);
+const updAllOn = () => { const P = updPick(); return P.length > 0 && P.every(e => UPD.sel.has(e)); };
+const updCan = e => !!(+((states[e] || {}).attributes || {}).supported_features & 1);
+// the INSTALL SELECTED / UPDATE ALL bar: pinned to the bottom of the sheet
+function updBar() {
+  const L = updList(); if (!L.length) return "";
+  const n = UPD.sel.size, all = L.filter(e => updCan(e) && !upcBusy(states[e].attributes) && UPD.q.indexOf(e) < 0).length;
+  return '<div class="upd-bn"><button type="button" class="eb" data-upd="all"' + (all ? "" : " disabled") + '>UPDATE ALL (' + all + ')</button><button type="button" class="eb on" data-upd="sel"' + (n ? "" : " disabled") + '>INSTALL SELECTED (' + n + ')</button></div>';
+}
+function updHtml() {
+  const L = updList(); UPD.sel.forEach(e => { if (L.indexOf(e) < 0) UPD.sel.delete(e); });
+  const head = '<div class="upd-h"><span class="lbl">Updates' + (L.length ? " · " + L.length : "") + '</span>' + (L.length > 1 && updPick().length ? '<button type="button" class="upd-all" data-upd="selall">' + (updAllOn() ? "Unselect all" : "Select all") + '</button>' : "") + '</div>';
+  if (!L.length) return '<div class="pn pg upd">' + head + '<div class="upd-ok">' + mdi("check-circle") + ' Everything is up to date</div></div>';
+  const rows = L.map(e => { const a = states[e].attributes || {}, busy = upcBusy(a), pct = upcPct(a), q = UPD.q.indexOf(e) > -1, can = updCan(e);
+    const st = busy ? "Installing" + (pct != null ? " · " + pct + "%" : "…") : UPD.cur === e ? "Starting…" : q ? "Waiting its turn" : "";
+    return '<div class="upd-r' + (busy || UPD.cur === e ? " run" : "") + '"><input type="checkbox" data-updk="' + esc(e) + '"' + (UPD.sel.has(e) ? " checked" : "") + (can && !busy && !q ? "" : " disabled") + ' aria-label="' + esc(updName(e)) + '">' +
+      '<button type="button" class="upd-n" data-updo="' + esc(e) + '"><b>' + esc(updName(e)) + '</b><small>' + esc((a.installed_version || "installed") + " → " + (a.latest_version || "new")) + (st ? " · " + st : "") + '</small></button>' +
+      (busy && pct != null ? '<i class="upd-bar"><i style="width:' + Math.max(2, pct) + '%"></i></i>' : "") + '</div>'; }).join("");
+  const bk = L.some(e => +(states[e].attributes || {}).supported_features & 8);
+  return '<div class="pn pg upd">' + head + rows + (bk ? '<label class="upd-bk"><input type="checkbox" data-upd="bk"' + (UPD.backup ? " checked" : "") + '> Back up first (where supported)</label>' : "") +
+    (UPD.msg ? '<div class="sm upd-m">' + esc(UPD.msg) + '</div>' : L.some(updLast) ? '<div class="sm upd-m">One at a time; Home Assistant itself goes last because it restarts.</div>' : "") + '</div>';
+}
+// install the queue one by one: the next starts when the last one is no longer on (installed) or has stopped installing
+function updRun(list) {
+  if (!ADMIN_ON()) return;
+  list.filter(e => UPD.q.indexOf(e) < 0 && e !== UPD.cur).sort((a, b) => updLast(a) - updLast(b)).forEach(e => UPD.q.push(e));
+  UPD.sel.clear(); UPD.msg = ""; updNext(); updDraw();
+}
+function updNext() {
+  if (UPD.cur) return; const e = UPD.q.shift(); if (!e) { updDraw(); return; }
+  UPD.cur = e; UPD.t0 = Date.now(); const sf = +((states[e] || {}).attributes || {}).supported_features || 0;
+  send({ type: "call_service", domain: "update", service: "install", service_data: sf & 8 ? { backup: UPD.backup } : {}, target: { entity_id: e } }, (r, m) => {
+    if (m && m.success === false) { UPD.msg = "Couldn’t install " + updName(e) + ": " + ((m.error && m.error.message) || "Home Assistant refused it") + "."; UPD.cur = ""; updNext(); updDraw(); } });
+  updDraw();
+}
+setInterval(() => {
+  const e = UPD.cur; if (!e) return; const s = states[e], busy = s && upcBusy(s.attributes), age = Date.now() - UPD.t0;
+  if (!s || s.state !== "on" || (!busy && age > 60000)) { UPD.cur = ""; updNext(); }
+  updDraw();
+}, 3000);
+// ----- the tools button and its sheet -----
+// where it sits on a phone: just above the tab bar, or 12 px above whatever music control is really showing (the mini player bar or the round music button)
+function updFabPos() {
+  const fab = $("#tlfab"); if (!fab || fab.hidden) return;
+  const vis = el => { if (!el) return null; const cs = getComputedStyle(el); if (cs.display === "none" || cs.visibility === "hidden" || +cs.opacity < 0.5) return null; const r = el.getBoundingClientRect(); return r.height && r.bottom > 0 && r.top < innerHeight ? r : null; };
+  const nav = vis($("#btab")), top = [vis($("#npmini")), vis($("#npfab"))].filter(Boolean).reduce((m, r) => Math.min(m, r.top), Infinity);
+  const v = top < Infinity ? Math.round(innerHeight - top + 12) + "px" : nav ? Math.round(innerHeight - nav.top + 14) + "px" : "";
+  if (fab.style.getPropertyValue("--tlb") !== v) { if (v) fab.style.setProperty("--tlb", v); else fab.style.removeProperty("--tlb"); }
+}
+// again once the music controls have finished sliding in or out
+{ const mo = new MutationObserver(() => { updFabPos(); setTimeout(updFabPos, 450); }); [document.body, $("#npmini"), $("#npfab")].forEach(el => { if (el) mo.observe(el, { attributes: true, attributeFilter: ["class", "style"] }); }); }
+addEventListener("resize", () => updFabPos());
+function updFabMake() {
+  if ($("#tlfab")) return;
+  const b = document.createElement("button"); b.id = "tlfab"; b.type = "button"; b.setAttribute("aria-label", "Updates and quick actions"); b.innerHTML = mdi("wrench") + '<span class="tlc"></span>'; document.body.appendChild(b);
+  const s = document.createElement("div"); s.id = "tlsh"; s.setAttribute("aria-hidden", "true"); document.body.appendChild(s);
+  // tap: two small buttons pop out above it (Updates, Quick actions); tap again (now an X) to fold them away
+  const d = document.createElement("div"); d.id = "tldial"; document.body.appendChild(d);
+  // a blurred backdrop behind the two small buttons, so their labels read over any card
+  const bk = document.createElement("div"); bk.id = "tlscrim"; document.body.appendChild(bk);
+  b.addEventListener("click", () => { UPD.dial = !UPD.dial; updDraw(); });
+  d.addEventListener("click", e => { const t = e.target.closest("[data-tld]"); if (!t) return; UPD.open = t.dataset.tld; UPD.dial = false; updDraw(); });
+  document.addEventListener("pointerdown", e => { if (UPD.dial && !e.target.closest("#tlfab,#tldial")) { UPD.dial = false; updDraw(); } }, true);
+  s.addEventListener("click", e => { if (e.target === s || e.target.closest("[data-tlx]")) { UPD.open = ""; updDraw(); return; } const q = e.target.closest("[data-adq]"); if (q && typeof admQa === "function") admQa(q.dataset.adq); });
+}
+function updDraw() {
+  updFabMake();
+  const adm = typeof ADMIN_ON === "function" && ADMIN_ON(), pg = curPg(), n = adm ? updList().length : 0, fab = $("#tlfab");
+  fab.hidden = !adm || pg !== "admin";
+  fab.classList.toggle("run", !!UPD.cur && !UPD.dial);
+  updFabPos();
+  if (fab.hidden) UPD.dial = false;
+  fab.classList.toggle("dial", UPD.dial); const fh = mdi(UPD.dial ? "close" : "wrench") + '<span class="tlc"' + (n && !UPD.dial ? "" : " hidden") + '>' + (n || "") + '</span>'; if (fab._k !== fh) { fab._k = fh; fab.innerHTML = fh; }   // only when it changed (no needless rebuilds) fab.setAttribute("aria-expanded", UPD.dial ? "true" : "false");
+  const dl = $("#tldial"); dl.classList.toggle("on", UPD.dial); $("#tlscrim").classList.toggle("on", UPD.dial);
+  if (UPD.dial) { const r = fab.getBoundingClientRect(); dl.style.right = Math.round(innerWidth - r.right + (r.width - 44) / 2) + "px"; dl.style.bottom = Math.round(innerHeight - r.top + 10) + "px";
+    const h = '<button type="button" data-tld="qa"><span>Quick actions</span><i>' + mdi("lightning-bolt") + '</i></button><button type="button" data-tld="upd"><span>Updates' + (n ? " · " + n : "") + '</span><i>' + mdi("download") + '</i></button>';
+    if (dl._k !== h) { dl._k = h; dl.innerHTML = h; } }
+  const sh = $("#tlsh"), on = adm && UPD.open && !fab.hidden; sh.classList.toggle("on", on); sh.setAttribute("aria-hidden", on ? "false" : "true"); document.body.classList.toggle("tl-open", on);
+  if (on) { const qa = UPD.open === "qa", h = '<div class="tlx' + (qa ? " qa" : "") + '" role="dialog" aria-modal="true" aria-label="' + (qa ? "Quick actions" : "Updates") + '"><div class="tlh"><span class="lbl">' + mdi(qa ? "lightning-bolt" : "download") + (qa ? " Quick actions" : " Updates") + '</span><button class="evx" data-tlx aria-label="Close">' + mdi("close") + '</button></div><div class="tlb">' + (qa ? (typeof admQaHtml === "function" ? admQaHtml() : "") : updHtml()) + '</div>' + (qa ? "" : updBar()) + '</div>';
+    if (sh._k !== h) { const sc = sh.querySelector(".tlb"), y = sc ? sc.scrollTop : 0; sh._k = h; sh.innerHTML = h; const n2 = sh.querySelector(".tlb"); if (n2) n2.scrollTop = y; } }
+  else if (sh._k) { sh._k = ""; sh.innerHTML = ""; }
+}
+document.addEventListener("click", e => {
+  const k = e.target.closest("[data-updk]"); if (k) { if (k.checked) UPD.sel.add(k.dataset.updk); else UPD.sel.delete(k.dataset.updk); updDraw(); return; }
+  const o = e.target.closest("[data-updo]"); if (o) { e.preventDefault(); if (typeof upcOpen === "function") upcOpen(o.dataset.updo); return; }
+  const b = e.target.closest("[data-upd]"); if (!b) return; const a = b.dataset.upd, L = updList();
+  if (a === "bk") { UPD.backup = b.checked; return; }
+  if (a === "selall") { if (updAllOn()) UPD.sel.clear(); else updPick().forEach(e2 => UPD.sel.add(e2)); updDraw(); return; }
+  if (a === "sel") { const S = [...UPD.sel]; if (S.length) updRun(S); return; }
+  if (a === "all") { const A = L.filter(e2 => updCan(e2) && !upcBusy(states[e2].attributes)); if (A.length) insAsk("Install all " + A.length + " updates?", "", "One at a time" + (A.some(updLast) ? ", Home Assistant itself last (it restarts)" : "") + ". Things connected to them may be unavailable for a few minutes.", "Install all", () => updRun(A)); }
+}, true);
+document.addEventListener("keydown", e => { if (e.key === "Escape" && (UPD.open || UPD.dial)) { UPD.open = ""; UPD.dial = false; updDraw(); } });
+addEventListener("hashchange", () => { UPD.open = ""; UPD.dial = false; updDraw(); });
+setInterval(() => { if (!document.hidden) updDraw(); }, 2000);
+setTimeout(updDraw, 1500);
 // ---------- Auto update: a new dash.html or config.js on the server is picked up by every screen, no ?v= to bump ----------
 // Every autoUpdateMinutes (5), and when the dashboard comes back on screen, it fetches its own page and config.js past the browser cache.
 // A different build id (DASH_BUILD) in the page, or a different config.js, refreshes the saved copies (cache "reload") and reloads onto them,

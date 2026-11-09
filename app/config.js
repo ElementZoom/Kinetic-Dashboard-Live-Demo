@@ -58,14 +58,17 @@ window.DASH_CONFIG = {
     sunroofText: { 0: "Closed", 1: "Open", 2: "Lifted", 3: "Moving", 4: "Closed", 5: "Partly open" },
     batteryText: { 0: "Good", 1: "Fair", 2: "Low", 3: "Unavailable", 4: "Unavailable" }
   },
+  // Vehicle > Service: next service km and dates are filled in on the dashboard and kept in this Text helper
+  carCare: [{ name: "Sample Estate 200", lastService: "2026-03-23", everyKm: 10000, everyMonths: 12, wof: "2027-09-08", rego: "2027-05-01", firstRegistered: "2020", serviceHelper: "input_text.car_service" }],
   settingsPath: "/config/dashboard",
   weatherFx: { speed: 0.5 },
   mobileNav: "drawer",               // phones: "drawer" | "tabs"
   tileStyle: "line",                 // "line" | "edge" | "dot" | "text"
-  calNames: { "calendar.alex": "Alex", "calendar.sam": "Sam" },
+  calNames: { "calendar.alex": "Alex", "calendar.sam": "Sam", "calendar.sam_roster": "Sam (roster)" },
   outside: "",
   weather: "weather.home",
-  calendars: ["calendar.alex", "calendar.sam", "calendar.household", "calendar.public_holidays"],
+  calendars: ["calendar.alex", "calendar.sam", "calendar.sam_roster", "calendar.household", "calendar.public_holidays"],
+  shiftColors: { calendars: ["calendar.sam_roster"] },   // roster shifts coloured by their hours: day, afternoon, evening, night, leave, sick
   googlePlacesKey: "demo",   // 2.5.16: the demo answers address suggestions itself (mock.js); a real house uses its own Google key
 
   cameras: [   // Home page
