@@ -68,7 +68,7 @@
   var BAT = { front_door_sensor: 14, garage_remote: 9, bathroom_motion: 22, patio_door_sensor: 78, kitchen_leak_sensor: 91, hallway_motion: 64 };
   Object.keys(BAT).forEach(function (k) { ids["sensor.demo_" + k + "_battery_plus"] = 1; });
   Object.keys(ids).forEach(function (id) { S[id] = mk(id); });
-  Object.keys(BAT).forEach(function (k) { var s = S["sensor.demo_" + k + "_battery_plus"]; s.state = String(BAT[k]); s.attributes.friendly_name = nm("sensor.demo_" + k) + " Battery+"; });
+  Object.keys(BAT).forEach(function (k) { var s = S["sensor.demo_" + k + "_battery_plus"]; s.state = String(BAT[k]); s.attributes.friendly_name = nm("sensor.demo_" + k) + " Battery+"; if (BAT[k] < 26) s.last_changed = new Date(Date.now() - (2 + (BAT[k] % 3)) * 864e5).toISOString(); });   // the dashboard only counts a battery as low after it has been low for 24 h, so the pretend low ones have been low for a few days
   // whole-house groups that are real entities in the demo (e.g. light.all_lights): list their members so the Active tab can see what is on
   var DG = (CFG.derived && CFG.derived.groups) || {};
   Object.keys(DG).forEach(function (g) { if (!S[g]) return; var L = [].concat(DG[g]); S[g].attributes.entity_id = L; S[g].state = L.some(function (x) { return S[x] && S[x].state === "on"; }) ? "on" : "off"; });

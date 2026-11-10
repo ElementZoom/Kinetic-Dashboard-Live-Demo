@@ -92,3 +92,8 @@ Object.assign(window.__ZHD.D, {"unselect all": "取消全选"});
 Object.assign(window.__ZHD.D, {"quick actions": "快捷操作"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^updates · (\\d+)$", "更新 · $1"]]);
 Object.assign(window.__ZHD.D, {"airing": "通风中", "airing out · the garage door is open": "正在通风 · 车库门开着", "airing for": "通风时长"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^airing out · down (\\d+)% since the garage door opened$", "正在通风 · 车库门打开后下降了 $1%"]]);
 window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^already marked serviced on (.+?)( \\(next at (\\S+) km\\))?\\. save replaces it; cancel keeps it\\.$", "已于 $1 标记为已保养。保存会替换它；取消则保留。"]]);
+
+Object.assign(window.__ZHD.D, {"several at once; home assistant itself goes last because it restarts.": "同时安装多个；Home Assistant 本身最后安装，因为它会重启。"});
+// 2.5.27: scene picker, battery hold (Insights > Batteries), HA diagnostics
+Object.assign(window.__ZHD.D, {"pick a scene": "选择场景", "more diagnostics": "更多诊断信息", "lowest first. swap the ones at 10% or below soon.": "电量从低到高排列。电量在 10% 或以下的请尽快更换。"});
+window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^low for (\\d+) min$", "低电量已持续 $1 分钟"], ["^low for (\\d+) h$", "低电量已持续 $1 小时"], ["^low for (\\d+) days$", "低电量已持续 $1 天"], ["^a battery is listed once it has read low for (\\d+) h\\.$", "电量持续偏低 $1 小时后才会列出。"], ["^a battery is listed once it has read low for (\\d+) days\\.$", "电量持续偏低 $1 天后才会列出。"]]);
