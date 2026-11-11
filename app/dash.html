@@ -2188,7 +2188,8 @@ html[data-mode=light] .nrow.at-r{--bc:#2d6aa3}html[data-mode=light] .nrow.warn.a
 .at-more{margin:2px 0 10px;padding-left:4px}
 #hstrip{margin-bottom:14px}#hstrip[hidden]{display:none}
 #hstrip[data-n="2"]{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr);gap:14px;align-items:stretch}
-#hstrip>#lvc,#hstrip>#sch,#hstrip>#insc{margin:0;min-height:46px;box-sizing:border-box}
+#hstrip>#lvc,#hstrip>#sch,#hstrip>#insc,#hstrip>#updc{margin:0;min-height:46px;box-sizing:border-box}
+#hstrip[data-n="4"]{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch}
 #hstrip[data-n="3"]{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.1fr);gap:14px;align-items:stretch}
 #lvc{display:flex;align-items:center;gap:14px;padding:10px 18px;cursor:pointer;min-height:0}#lvc[hidden]{display:none}
 #lvc .at-h{flex:none;display:inline-flex;align-items:center;gap:8px;font:600 14px var(--mono);color:#f2a33a}#lvc .at-h svg{width:20px;height:20px;fill:currentColor}
@@ -3021,6 +3022,83 @@ html:not(#x):not(#y) .tl.lit.lc :is(.nm,.tn,.ts2,.st,.tmr){color:#1a1a1a}html:no
 html:not(#x):not(#y) .tl.lit.dim{background:color-mix(in srgb,rgb(var(--lt1)) 62%,var(--bg))}
 html:not(#x):not(#y) .tl.lit.dim .fill{display:block;background:linear-gradient(135deg,rgb(var(--lt1)),rgb(var(--lt2)))}
 html:not(#x):not(#y) .tl.lit input[type=range]{accent-color:var(--ltx)}
+/* Header-chip pop-ups (49-takeover.js): Road problem and Tsunami, built on the centred #cmtsh card. A tablet gets the wide two column pop-up, a phone one column. */
+#cmtsh .cmb.tk{width:min(560px,100%);max-height:calc(100vh - 32px);padding:0;gap:0;overflow:hidden}
+.tk-h{display:flex;align-items:center;gap:14px;padding:18px 18px 12px}
+.tk-ic{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;flex:none;background:rgba(var(--w),.08)}.tk-ic svg{width:24px;height:24px;fill:currentColor}
+.tk-ic.warn{color:#d0821f;background:color-mix(in srgb,#d0821f 16%,transparent)}.tk-ic.bad{color:#e5483b;background:color-mix(in srgb,#e5483b 16%,transparent)}.tk-ic.ok{color:var(--mint);background:color-mix(in srgb,var(--mint) 16%,transparent)}
+.tk-ht{flex:1;min-width:0}.tk-ht b{display:block;font-size:19px;font-weight:600}.tk-ht small{display:block;margin-top:2px;color:var(--mut);font-size:13px}
+.tk-h .rnd{flex:none;width:42px;height:42px}
+.tk-rail,.tk-body{padding:0 18px 4px;overflow:auto;min-height:0}
+.tk-t{margin-bottom:12px}.tk-th{font:600 11px var(--mono);letter-spacing:.1em;color:var(--mut);text-transform:uppercase;margin:6px 2px 8px}
+.tk-ev{display:flex;align-items:center;gap:12px;width:100%;box-sizing:border-box;padding:12px 14px;margin:0 0 8px;border:1px solid var(--line);border-radius:16px;background:rgba(var(--w),.05);color:inherit;text-align:left;font:inherit;cursor:pointer}
+.tk-ev.red{border-color:color-mix(in srgb,#e5483b 45%,transparent);background:color-mix(in srgb,#e5483b 10%,transparent)}
+.tk-ev.sel{outline:2px solid var(--mint);outline-offset:-1px}
+.tk-ev:active{background:rgba(var(--w),.1)}
+.tk-dot{width:10px;height:10px;border-radius:50%;flex:none;background:#e89a2c}.tk-ev.red .tk-dot{background:#e5483b}
+.tk-ev span{flex:1;min-width:0}.tk-ev b{display:block;font-size:15px;font-weight:600}.tk-ev small{display:block;margin-top:2px;color:var(--mut);font-size:12.5px;line-height:1.35}
+.tk-ev>svg{width:18px;height:18px;flex:none;fill:var(--mut)}
+.tk-ok{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--mint) 14%,transparent);font-size:14px;font-weight:600}.tk-ok svg{width:18px;height:18px;fill:var(--mint);flex:none}
+.tk-pl{margin:2px 0 8px}.tk-pl summary{cursor:pointer;font:11px var(--mono);color:var(--mut);list-style:none;display:flex;align-items:center;gap:6px;padding:4px 2px}.tk-pl summary svg{width:14px;height:14px;fill:currentColor}.tk-pl .tk-ev{margin-top:6px}
+.tk-none{display:flex;align-items:center;gap:10px;padding:14px 2px;color:var(--mut)}.tk-none svg{width:20px;height:20px;fill:currentColor;flex:none}.tk-none.big{font-size:17px;justify-content:center;padding:70px 0}
+.tk-body .pn{margin:0}
+.tk-f{display:flex;gap:10px;padding:14px 18px 18px;margin-top:auto}
+.tk-b{flex:1;box-sizing:border-box;padding:14px 10px;border:1.5px solid var(--line);border-radius:999px;background:none;color:var(--ink);font:600 12px var(--mono);letter-spacing:.08em;text-align:center;cursor:pointer}
+.tk-b.pri{background:var(--mint);border-color:transparent;color:var(--onmint,#07241a)}
+.tk-pt b{display:block;font-size:18px;font-weight:600}.tk-pt small{display:block;margin:2px 0 12px;color:var(--mut);font-size:13px}
+/* tablet: events on the left, the map and detour on the right */
+#cmtsh .cmb.tkw{width:min(1040px,calc(100vw - 64px));height:min(660px,calc(100vh - 64px))}
+.tkw .tk-cols{display:grid;grid-template-columns:330px minmax(0,1fr);flex:1;min-height:0;border-top:1px solid var(--line)}
+.tkw .tk-rail{padding:16px 18px;border-right:1px solid var(--line);background:rgba(var(--w),.03)}
+.tkw .tk-pane{padding:16px 22px;overflow:auto;min-height:0}
+.tkw .tk-pane .cmf{height:min(38vh,300px)}
+.tkw .tk-f{border-top:1px solid var(--line);padding-top:14px}
+.tkw .tk-rail .rds-cam{margin-top:6px}
+#cmtsh .cmn.cms{background:none;border:1.5px solid var(--line);color:var(--ink);margin-top:8px}
+/* an Insights card opened from a header chip: centred on a phone too, not a sheet from the bottom */
+@media(max-width:760px){#insd.ctr .idp{left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%);width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 48px);padding:18px;border-radius:28px;animation-name:idPop}}
+/* weather and camera pop-ups */
+#dtm{z-index:96}
+.tk-tl{margin-top:12px;border:1px solid var(--line);border-radius:18px;padding:12px 14px;background:rgba(var(--w),.05)}
+.tk-tlh{display:flex;justify-content:space-between;font:600 11px var(--mono);letter-spacing:.08em;color:var(--mut)}.tk-tlh em{font-style:normal}
+.tk-tlb{display:flex;align-items:flex-end;gap:3px;height:46px;margin:10px 0 4px}.tk-tlb i{flex:1;border-radius:4px;background:rgba(var(--w),.14);min-height:3px}
+.tk-tlk{display:flex;justify-content:space-between;font-size:11px;color:var(--mut)}
+.tk-tlr{display:flex;gap:8px;overflow-x:auto;margin-top:10px;padding-bottom:4px;scrollbar-width:none}.tk-tlr::-webkit-scrollbar{display:none}
+.tk-tlc{flex:none;width:112px;border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;background:rgba(var(--w),.06);color:inherit;font:inherit;text-align:left;cursor:pointer}.tk-th{position:relative;width:100%;aspect-ratio:16/10;background:#0004}.tk-th img{display:block;width:100%;height:100%;object-fit:cover}.tk-th u{position:absolute;top:6px;right:6px;min-width:20px;height:20px;border-radius:10px;padding:0 6px;box-sizing:border-box;text-decoration:none;background:#8c7bd8;color:#fff;font:700 11px/20px var(--mono);text-align:center}.tk-tlc span{display:block;padding:6px 8px;font-size:11px;color:var(--mut)}.tk-tlc b{display:block;font-size:13px;font-weight:600;color:var(--ink)}
+.tk-tle{margin-top:10px;font-size:13px;color:var(--mut)}
+.tk-wxcard .wxl{margin:0;cursor:default}.tk-wxcard .wxl .wxmore{display:none}
+.tk-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.tk-facts>div{border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:rgba(var(--w),.05)}.tk-facts small{display:block;font:600 11px var(--mono);letter-spacing:.08em;color:var(--mut)}.tk-facts b{display:block;font-size:17px;font-weight:500;margin-top:3px}
+.tk-tip{border-radius:16px;padding:12px 15px;font-size:14px;line-height:1.4;background:color-mix(in srgb,#d0821f 16%,transparent)}
+.tk-wsw{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}.tk-wc{border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;background:none;color:var(--ink);font:600 12px var(--mono);letter-spacing:.08em;cursor:pointer}.tk-wc.on{background:var(--mint);border-color:transparent;color:var(--onmint,#07241a)}
+.tk-wxl{display:flex;flex-direction:column;gap:8px}.tk-wr{display:block;width:100%;box-sizing:border-box;text-align:left;border:1.5px solid var(--line);border-radius:18px;padding:12px 14px;background:rgba(var(--w),.05);color:inherit;font:inherit;cursor:pointer}.tk-wr.sel{border-color:var(--mint);background:color-mix(in srgb,var(--mint) 10%,transparent)}.tk-wr small{display:block;font:600 11px var(--mono);letter-spacing:.1em;color:var(--mut)}.tk-wr b{display:block;font-size:15px;font-weight:500;margin:3px 0 6px}.tk-wr .wxb{height:26px}
+.tk-camv{border-radius:20px;overflow:hidden;aspect-ratio:16/9;background:#0006;position:relative}.tk-camv>*{width:100%;height:100%}
+.tk-door{display:flex;align-items:center;gap:12px;margin-top:12px;border:1px solid var(--line);border-radius:18px;padding:12px 14px;background:rgba(var(--w),.05)}.tk-door i{width:12px;height:12px;border-radius:50%;background:var(--mint);flex:none}.tk-door.open i{background:#e5483b}.tk-door span{flex:1}.tk-door b{display:block;font-size:16px;font-weight:500}.tk-door small{color:var(--mut);font-size:13px}.tk-door .eb{flex:none}
+@media(prefers-reduced-motion:reduce){#cmtsh.on>.cmb.tk{animation:none}}
+
+/* weather warning pop-up (50-takeover-warning.js) */
+.tk-ww .tk-ht b{display:inline}.tk-sev{display:inline-block;margin-left:8px;vertical-align:middle;font:700 11px var(--mono);letter-spacing:.1em;color:#fff;border-radius:999px;padding:4px 10px;background:#d4a017}
+.tk-sev.orange{background:#e07a1f}.tk-sev.red{background:#d64545}
+.tk-wsv{font:700 11px var(--mono);letter-spacing:.1em;color:#d4a017}.tk-wsv.orange{color:#e07a1f}.tk-wsv.red{color:#d64545}
+.tk-wwp2{min-width:0}
+.tk-wwt{margin:2px 0 12px}.tk-wwtb{position:relative;height:14px;border-radius:7px;background:rgba(var(--w),.1)}.tk-wwtb .w{position:absolute;top:0;bottom:0;border-radius:7px;background:#e07a1f}.tk-wwtb .n{position:absolute;top:-4px;width:3px;height:22px;border-radius:2px;background:var(--ink);margin-left:-1px}
+.tk-wwtr{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--mut);margin-top:7px}.tk-wwtr b{color:var(--ink)}
+.tk-wwc{border:1px solid var(--line);border-radius:20px;padding:14px 16px;margin-bottom:6px;background:rgba(var(--w),.04)}
+.tk-wwh{font:700 11px var(--mono);letter-spacing:.1em;color:var(--mut);margin-bottom:8px}
+.tk-wwb{display:flex;align-items:flex-end;gap:4px;height:84px;border-radius:12px}.tk-wwb i{flex:1;border-radius:6px;background:rgba(107,184,255,.4);min-height:4px}.tk-wwb i.in{background:#e07a1f}
+.tk-wwk{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin-top:6px}.tk-wwp{font-size:13px;margin-top:6px}
+.tk-wwl{font:700 11px var(--mono);letter-spacing:.1em;color:var(--mut);margin:14px 2px 8px}
+.tk-wwr{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:16px;padding:10px 14px;margin-bottom:8px;background:rgba(var(--w),.04);font-size:14px}
+.tk-wwr.go{cursor:pointer}.tk-wwr>i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex:none;background:color-mix(in srgb,#e07a1f 20%,transparent);color:#e07a1f}.tk-wwr>i svg{width:17px;height:17px;fill:currentColor}
+.tk-wwr>span{display:flex;flex-direction:column;min-width:0}.tk-wwr b{font-weight:600}.tk-wwr small{color:var(--mut);font-size:12px}.tk-wwr .eb{margin-left:auto;flex:none;padding:8px 12px;font-size:11px}
+.tk-wwn{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tk-wwn .tk-wwr{margin:0}
+.tk-wwx{font-size:14px;line-height:1.5;margin:12px 2px 0;white-space:pre-line}.tk-wwx.cl{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.tk-wwm{background:none;border:0;color:var(--mint);font:700 12px var(--mono);letter-spacing:.08em;padding:6px 2px;cursor:pointer;display:inline-flex;align-items:center;gap:4px}.tk-wwm svg{width:16px;height:16px;fill:currentColor}
+.tk-wr small.tk-wsv+b{display:block;margin-top:2px}.tk-wr>span{display:block;font-size:12px;color:var(--mut);margin-top:4px}
+.tk-wws{border-radius:20px;padding:13px 16px;margin:0 0 12px;background:color-mix(in srgb,var(--mint) 12%,transparent)}.tk-wws p{margin:6px 0 0;font-size:15px;line-height:1.45}.tk-wws p.adv{font-size:14px;color:var(--mut)}
+.tk-wwsh{display:flex;align-items:center;gap:8px;font:700 11px var(--mono);letter-spacing:.1em;color:var(--mut)}.tk-wwsh em{font-style:normal;font-size:10px;border:1px solid var(--line);border-radius:999px;padding:2px 7px}
+.tk-wws.ld p{color:var(--mut);animation:tkwwp 1.4s ease-in-out infinite}@keyframes tkwwp{50%{opacity:.45}}@media(prefers-reduced-motion:reduce){.tk-wws.ld p{animation:none}}
+.tk-wc{display:inline-flex;align-items:center;gap:7px}.tk-wc i{width:9px;height:9px;border-radius:50%;background:#d4a017;flex:none}.tk-wc i.orange{background:#e07a1f}.tk-wc i.red{background:#d64545}.tk-wsw{gap:10px;margin-bottom:14px}
+.ww.cpt{cursor:pointer;position:relative;padding-right:14px}.ww.cpt .wwt{display:flex;align-items:center;justify-content:space-between;gap:8px}.ww.cpt .wwt svg{width:20px;height:20px;fill:currentColor;opacity:.5;flex:none}.ww.cpt .wwb{opacity:.85}
 /* Header chips (weather alert, pollen, leak ...): the glow is a soft halo around the pill that breathes, not a fading, fuzzy-edged copy of the whole chip. The text and border stay steady. */
 @media(min-width:761px){
 #nacc[data-k] .nai,html[data-mode] #nacc[data-k] .nai{position:relative;animation:none;filter:none;opacity:1}
@@ -3348,14 +3426,14 @@ html[data-mode=light] .iwc .nw{stroke:rgba(0,0,0,.25)}
 .insbox:empty{display:none}
 .insbox{margin-bottom:14px}
 /* Home teaser */
-#insc{display:flex;align-items:center;gap:12px;padding:10px 18px;text-decoration:none;color:inherit}
-#insc .insi{width:30px;height:30px}#insc .insi svg{width:18px;height:18px}
-#insc .inst{display:flex;align-items:baseline;gap:8px;min-width:0;white-space:nowrap}
+#insc,#updc{display:flex;align-items:center;gap:12px;padding:10px 18px;text-decoration:none;color:inherit}
+#insc .insi,#updc .insi{width:30px;height:30px}#insc .insi svg,#updc .insi svg{width:18px;height:18px}#updc .insi{display:grid;place-items:center;border-radius:50%;background:rgba(var(--cool-rgb,120,170,255),.18);color:var(--cool)}
+#insc .inst,#updc .inst{display:flex;align-items:baseline;gap:8px;min-width:0;white-space:nowrap}
 #insc .inst b{flex:none;font-size:15px}#insc .inst small{margin:0;overflow:hidden;text-overflow:ellipsis;font-size:14px}
 #insc[hidden]{display:none}
 /* phone: Leaving and Insights live as pills in the greeting card, not as cards */
 #hpls{display:contents}
-@media(max-width:760px){#lvc,#insc{display:none!important}}
+@media(max-width:760px){#lvc,#insc,#updc{display:none!important}}
 .wpl.lvp{background:rgba(232,151,58,.16);color:#e8973a}
 .wpl.inp{background:rgba(var(--heat-rgb),.14);color:var(--heat)}
 html[data-mode=light] .wpl.lvp{background:rgba(165,86,12,.12);color:#a5560c}
@@ -3582,6 +3660,16 @@ html[data-mode=light] .it.fan{background:#eeedfe;border-color:#cecbf6}html[data-
 }
 .stl-go{all:unset;cursor:pointer;display:block;font-weight:600;font-size:15px;text-decoration:underline;text-decoration-color:rgba(var(--w),.3);text-underline-offset:3px}
 .stl-mu{padding:5px 10px;font-size:11px}
+
+/* badges for the important counts: Insights "needs you" and pending updates */
+#mshe a,nav a{position:relative}
+.nbg{position:absolute;top:6px;right:8px;min-width:20px;height:20px;padding:0 6px;box-sizing:border-box;border-radius:10px;display:grid;place-items:center;font:700 11px/1 var(--sans);font-style:normal;letter-spacing:0;background:var(--heat);color:#fff;pointer-events:none}
+.nbg[data-tone=upd]{background:var(--cool)}
+#navset .nbg,#navset2 .nbg{position:static;margin-left:auto;flex:none}
+#btab #bmore{position:relative}#btab #bmore.hasn::after{content:"";position:absolute;top:10px;left:calc(50% + 6px);width:10px;height:10px;border-radius:50%;background:var(--heat);box-shadow:0 0 0 2px var(--bg)}
+.wpl.upp{background:rgba(var(--cool-rgb,120,170,255),.18);color:var(--cool)}
+/* More button open as a pill (icon and label side by side): the dot goes to the pill's corner, clear of the label */
+#btab #bmore.hasn.on::after{left:auto;right:18px;top:7px}
 /* ---------- Weather page scenes (20-weather-scenes.js): the animated skies, their sliders and the Forecast week explorer ---------- */
 .wsc{position:relative;overflow:hidden;border-radius:14px;margin:10px 0 0;background:#2d3f78;isolation:isolate}
 .wsc>canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-1}
@@ -3647,6 +3735,10 @@ button.wnp.on{border-color:var(--acc,#6ab7ff);background:rgba(106,183,255,.16)}
 #wx .ww .wwm{position:absolute;top:50%;transform:translateY(-50%);right:10px;gap:0;width:30px;height:30px;margin:0;padding:0;font-size:0;letter-spacing:0;border-radius:50%;background:rgba(var(--w),.08)}
 #wx .ww .wwm svg{width:18px;height:18px;flex:none;display:block}
 }
+
+/* the warning cards on the Weather page are the compact ones: a level colour on the left, two lines, tap for the pop-up */
+#wx .ww.cpt{padding:12px 14px 12px 16px;border-left:4px solid #d4a017}#wx .ww.cpt.orange{border-left-color:#e07a1f}#wx .ww.cpt.red{border-left-color:#d64545}
+#wx .ww.cpt .wwt{font-size:15px;margin:0 0 6px}#wx .ww.cpt .wwb.cl{-webkit-line-clamp:2}
 /* Heat escaping (42-heat-escaping.js): the Alerts card - every room, one PAUSE button - and the header chip's thermometer with a dropping arrow */
 .alert.cw,#np .alert.cw{padding:14px 16px;text-align:left}
 .alert.cw{background:rgba(255,122,69,.13);border:1px solid rgba(255,122,69,.35)}
@@ -3820,9 +3912,9 @@ html[data-mode=light] .adpre{background:rgba(0,0,0,.04)}
 /* admin: entities and automations (list + detail; on a phone the detail is a bottom sheet) */
 .adw{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:start}
 .adw>.pn{margin:0}
-.ads{display:flex;align-items:center;gap:10px;height:44px;padding:0 14px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--w),.05);color:var(--mut)}
-.ads:focus-within{border-color:var(--mint)}.ads svg{width:18px;height:18px;fill:currentColor;flex:none}
-.ads input{flex:1;min-width:0;height:100%;border:0;background:none;outline:none;color:var(--ink);font:inherit;font-size:15px;-webkit-appearance:none;appearance:none}
+.admsrch{display:flex;align-items:center;gap:10px;height:44px;padding:0 14px;border-radius:14px;border:1px solid var(--line);background:rgba(var(--w),.05);color:var(--mut)}
+.admsrch:focus-within{border-color:var(--mint)}.admsrch svg{width:18px;height:18px;fill:currentColor;flex:none}
+.admsrch input{flex:1;min-width:0;height:100%;border:0;background:none;outline:none;color:var(--ink);font:inherit;font-size:15px;-webkit-appearance:none;appearance:none}
 .adch{margin:12px 0 4px}.adch .chips.tabs{--tb:10px}
 .chip.adbad{color:#ff8a80;border-color:color-mix(in srgb,#ff6b5e 40%,transparent)}.chip.adbad.on{background:#ff6b5e;border-color:#ff6b5e;color:#2a0d0b}
 html[data-mode=light] .chip.adbad:not(.on){color:#c62828}
@@ -3915,8 +4007,8 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
   .adlw{grid-template-columns:minmax(0,1fr)}
 }
 /* 2.5.17 Entities, Automations, Logs: the search box and filter chips (Logs: chips, COPY ALL, REFRESH) stay at the top while the list scrolls */
-.adtop,.adlog>.adlh{position:sticky;top:var(--adtop,0px);z-index:5;margin:-18px -18px 0;padding:18px 18px 12px;border-radius:22px 22px 0 0;background:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.04)}
-.adtop .adch{margin-bottom:0}
+.admtop,.adlog>.adlh{position:sticky;top:var(--admtop,0px);z-index:5;margin:-18px -18px 0;padding:18px 18px 12px;border-radius:22px 22px 0 0;background:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.04)}
+.admtop .adch{margin-bottom:0}
 /* phones: the detail sheet's title row and close stay at the top while the sheet scrolls */
 @media(max-width:760px){.adw .add .addh{position:sticky;top:-20px;z-index:3;margin:-20px -18px 0;padding:20px 18px 12px;background:var(--bg);border-radius:26px 26px 0 0}}
 
@@ -3928,7 +4020,7 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
  background:transparent;box-shadow:none;isolation:isolate;
 }
 #theme > .secw{top:62px;z-index:23}
-#admin .adtop,#admin .adlog>.adlh{--adtop:62px;z-index:12}
+#admin .admtop,#admin .adlog>.adlh{--admtop:62px;z-index:12}
 /* The nav surface is bounded by the tabs. The fade is contained within the
    navigation row, never below it or on the first card. */
 #theme > .hsw:has(> .setchips)::before,#admin > .hsw:has(> .setchips)::before,
@@ -4019,7 +4111,7 @@ html[data-style=material] :is(#insights > .inschips,#scenes .scfh){
 }
 :is(#theme,#admin) > .hsw:has(> .setchips){z-index:26}
 #theme > .secw{top:62px;z-index:25}
-#admin .adtop,#admin .adlog>.adlh{--adtop:62px}
+#admin .admtop,#admin .adlog>.adlh{--admtop:62px}
 /* No overlays: artwork disappears behind the opaque row. */
 :is(#theme,#admin) > .hsw:has(> .setchips)::before,
 #theme > .secw::before,.page > .secw::before,
@@ -4120,6 +4212,111 @@ html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs)>.chip{
 #alp .al-list-clip{overflow:hidden;min-height:0;min-width:0}
 #alp .al-list-fold .allst{margin-top:10px;margin-bottom:0}
 @media(prefers-reduced-motion:reduce){#alp .al-list-fold{transition:none!important}}
+.adlh .admsrch{flex:1 1 100%}
+/* Settings: the search block pins exactly where it sits at rest (just under the tab row), so nothing shifts when scrolling starts;
+   on wide screens the overview / detail card pins in place beside the list */
+#admin .admtop,#admin .adlog>.adlh{--admtop:68px}
+@media(min-width:761px){
+  #admin .adw>.add{position:sticky;top:68px;align-self:start;max-height:calc(100dvh - 190px);overflow-y:auto;overscroll-behavior:contain}
+}
+/* wide screens: the same opaque surfaces for the tab row and the search block, so the list never shows through while scrolling */
+@media(min-width:761px){
+  html{--snc:linear-gradient(160deg,var(--bg2),var(--bg));--snb:var(--line)}
+  html[data-style=glass]{--snc:var(--bg2)}
+  html[data-style=material]{--snc:var(--m1);--snb:transparent}
+  :is(#admin,#theme) > .hsw:has(> .setchips){background:var(--snc)!important;border:1px solid var(--snb);border-bottom:0;border-radius:18px 18px 0 0!important;padding:9px 0 1px}
+  :is(#admin,#theme):not(:has(.admtop,.adlog>.adlh)) > .hsw:has(> .setchips){border-bottom:1px solid var(--snb);border-radius:18px!important}
+  #admin .admtop,#admin .adlog>.adlh{background:var(--snc)!important;box-shadow:none!important;border:1px solid var(--snb);border-top:0;border-radius:0 0 18px 18px!important}
+}
+@media(min-width:761px){:is(#admin,#theme) > .hsw:has(> .setchips){margin-bottom:0!important}#admin .admtop,#admin .adlog>.adlh{--admtop:67px}#admin .adw>.add{top:67px}}
+@media(min-width:761px){html[data-style=glass] #admin .admtop,html[data-style=glass] #admin .adlog>.adlh{--admtop:68px}html:not([data-style=glass]):not([data-style=material]) #admin .admtop,html:not([data-style=glass]):not([data-style=material]) #admin .adlog>.adlh{--admtop:68px}}
+@media(min-width:761px){
+  :is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips){margin-bottom:-1px!important}
+  #admin .admtop,#admin .adlog>.adlh{--admtop:67px!important}
+  html[data-style=material] #admin .admtop,html[data-style=material] #admin .adlog>.adlh{--admtop:66px!important}
+  #admin .adw>.add{top:66px}
+}
+
+/* The same single opaque card on the other pages' sticky tab rows (Weather and the pages with section pills, Rooms, Security, Insights, Scenes): the title bar and the tab row share one surface */
+@media(min-width:761px){
+  .page:not(#admin):not(#theme) > .secw,#security > #stabs,#insights > .inschips,#scenes .scfh{background:var(--snc)!important;border:1px solid var(--snb);border-radius:18px!important;box-shadow:none!important}
+}
+
+/* no outlines on the joined card: the title bar, tab row and search block are one surface with no seams; the card's lower edge is a soft shadow */
+html{--snb:transparent}
+:is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#security > #stabs,#insights > .inschips,#scenes .scfh,#admin .admtop,#admin .adlog>.adlh{border-color:transparent!important}
+/* one flat colour, so the title bar and the rows below it can never show a seam where two gradients meet */
+html{--snc:var(--bg2)}html[data-style=material]{--snc:var(--m1)}
+/* wide screens: the tab rows look like the title bar above them (same radius, outline and shadow per style); opaque, so the list can't show through */
+@media(min-width:761px){
+  html{--wnr:20px;--wnb:color-mix(in srgb,#fff 72%,var(--bg));--wnbd:1px solid rgba(0,0,0,.1);--wnsh:0 1px 4px rgba(0,0,0,.08)}
+  html[data-mode=dark]{--wnb:color-mix(in srgb,#fff 3%,var(--bg));--wnbd:1px solid rgba(255,255,255,.1);--wnsh:none}
+  html[data-style=glass]{--wnr:30px;--wnb:linear-gradient(150deg,rgba(255,255,255,.22),rgba(255,255,255,.03) 42%,rgba(255,255,255,.1)),var(--g1);--wnbd:1px solid var(--gline);--wnsh:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(255,255,255,.08),var(--gsh)}
+  html[data-style=material]{--wnr:30px;--wnb:var(--m1);--wnbd:0 none transparent;--wnsh:none}
+  .page > .secw,#security > #stabs,#insights > .inschips,#scenes .scfh,
+  :is(#admin,#theme):not(:has(.admtop,.adlog>.adlh)) > .hsw:has(> .setchips){background:var(--wnb)!important;border:var(--wnbd)!important;border-radius:var(--wnr)!important;box-shadow:var(--wnsh)!important}
+  :is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips){background:var(--wnb)!important;border:var(--wnbd)!important;border-bottom:0!important;border-radius:var(--wnr) var(--wnr) 0 0!important;box-shadow:none!important}
+  #admin .admtop,#admin .adlog>.adlh{background:var(--wnb)!important;border:var(--wnbd)!important;border-top:0!important;border-radius:0 0 var(--wnr) var(--wnr)!important;box-shadow:var(--wnsh)!important}
+}
+/* wide screens: the wallpaper behind the tab rows. Like the greeting card, the tab row sits on the page's own background, so the list scrolling underneath never shows
+   around it: a layer with the same gradient as the page extends past the row's edges, and the row's own surface sits on top of it */
+@media(min-width:0px){
+  :is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#admin .admtop,#admin .adlog>.adlh{position:relative;isolation:isolate}
+  :is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#admin .admtop,#admin .adlog>.adlh{position:sticky;background:transparent!important;border-color:transparent!important;box-shadow:none!important}
+  :is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#admin .admtop::before,#admin .adlog>.adlh::before{content:""!important;display:block!important;position:absolute;z-index:-2;left:-14px;right:-14px;top:-14px;bottom:-12px;background:var(--wbg);background-repeat:no-repeat;background-size:var(--ww,100vw) var(--wh,100vh);background-position:var(--wx,0) var(--wy,0);pointer-events:none}
+  :is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips)::before{bottom:-3px}
+  #admin .admtop::before,#admin .adlog>.adlh::before{bottom:0}
+  #admin .admtop::before,#admin .adlog>.adlh::before{top:0}
+  :is(#admin,#theme) > .hsw:has(> .setchips)::after,.page > .secw::after,#scenes .scfh::after,#admin .admtop::after,#admin .adlog>.adlh::after{content:""!important;display:block!important;position:absolute;inset:0;z-index:-1;background:var(--wnb);border:var(--wnbd);border-radius:var(--wnr);box-shadow:var(--wnsh);pointer-events:none}
+  :is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips)::after{border-bottom:0;border-radius:var(--wnr) var(--wnr) 0 0;box-shadow:none}
+  #admin .admtop::after,#admin .adlog>.adlh::after{border-top:0;border-radius:0 0 var(--wnr) var(--wnr)}
+}
+/* the wallpaper layer must be a copy of whatever the page itself uses: Kinetic and Material are plain, Glass has its own colour washes (dark and light differ) */
+@media(min-width:0px){
+  html{--wbg:radial-gradient(120% 100% at 0 0,var(--bg2),var(--bg) 60%)}
+  html[data-style=material]{--wbg:var(--bg)}
+  html[data-style=glass]{--wbg:radial-gradient(55% 45% at 12% 8%,rgba(var(--mint-rgb),.5),transparent 62%),radial-gradient(50% 45% at 92% 18%,rgba(var(--cool-rgb),.5),transparent 62%),radial-gradient(55% 50% at 72% 100%,rgba(var(--heat-rgb),.38),transparent 62%),linear-gradient(160deg,var(--bg2),var(--bg))}
+  html[data-style=glass][data-mode=dark]{--wbg:radial-gradient(55% 45% at 12% 8%,rgba(var(--mint-rgb),.3),transparent 62%),radial-gradient(50% 45% at 92% 18%,rgba(var(--cool-rgb),.3),transparent 62%),radial-gradient(55% 50% at 72% 100%,rgba(var(--heat-rgb),.24),transparent 62%),linear-gradient(160deg,var(--bg2),var(--bg))}
+  html[data-style=glass][data-mode=light]{--wbg:radial-gradient(55% 45% at 12% 8%,rgba(var(--mint-rgb),.4),transparent 62%),radial-gradient(50% 45% at 92% 18%,rgba(var(--cool-rgb),.4),transparent 62%),radial-gradient(55% 50% at 72% 100%,rgba(var(--heat-rgb),.3),transparent 62%),linear-gradient(160deg,var(--bg2),var(--bg))}
+  html[data-style=glass] :is(#admin,#theme) > .hsw:has(> .setchips)::after,html[data-style=glass] .page > .secw::after,html[data-style=glass] #scenes .scfh::after,html[data-style=glass] #admin .admtop::after,html[data-style=glass] #admin .adlog>.adlh::after{-webkit-backdrop-filter:var(--gb);backdrop-filter:var(--gb)}
+  html[data-style=glass] #admin .admtop::after,html[data-style=glass] #admin .adlog>.adlh::after{box-shadow:inset 0 -1px 0 rgba(255,255,255,.08),var(--gsh)}
+}
+/* wide screens, final: no card behind the tabs. The tabs are loose pills on the wallpaper (like the Rooms page), and the row stays pinned on scroll with a wallpaper layer so nothing shows around them */
+@media(min-width:0px){
+  :is(#admin,#theme) > .hsw:has(> .setchips)::after,.page > .secw::after,#scenes .scfh::after,#admin .admtop::after,#admin .adlog>.adlh::after{content:none!important;display:none!important}
+  #security > #stabs,#insights > .inschips{background:var(--wbg)!important;background-repeat:no-repeat!important;background-size:var(--ww,100vw) var(--wh,100vh)!important;background-position:var(--wx,0) var(--wy,0)!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+}
+@media(max-width:760px){
+  :is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#admin .admtop::before,#admin .adlog>.adlh::before{left:-10px;right:-10px}
+}
+/* the wallpaper layer shows only while the page is scrolled (class set in 31-section-pills.js); at rest there is nothing under the row, so nothing can show a seam */
+:is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#admin .admtop::before,#admin .adlog>.adlh::before{opacity:0}
+html:not(#x) .stk:is(.hsw,.secw,.scfh,.admtop,.adlh)::before{opacity:1}
+/* the rows' own surfaces are off in every state (the earlier card rules have higher specificity, so they are repeated here at that strength) */
+:is(#admin,#theme):not(:has(.admtop,.adlog>.adlh)) > .hsw:has(> .setchips),:is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips),#admin .admtop,#admin .adlog>.adlh,.page > .secw,#scenes .scfh{background:transparent!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+/* the search block sits on top of the list's own card at rest, so its layer is always on */
+#admin .admtop::before,#admin .adlog>.adlh::before,:is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips)::before{opacity:1}
+
+/* the second tab row (Display: STYLE, PRESETS, FONT, DISPLAY): an older rule at id strength switched its layer off, so it gets the layer back at that strength;
+   and the first row's layer stops at its own bottom edge so it never covers the top of the second row */
+#theme > .secw::before{content:""!important;display:block!important}
+#theme > .hsw:not(.secw):has(~ .secw)::before{bottom:0}
+/* 2.5.28: the search box and filter chips (Entities, Automations, Logs) are a card of their own, with the list in a second card below; the wallpaper layer behind the pinned strip also covers the gap between the two */
+@media(min-width:0px){
+  #admin .pn.adl:has(> .admtop),#admin .pn.adlog:has(> .adlh){background:none!important;border:0!important;box-shadow:none!important;padding:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  #admin .admtop,#admin .adlog > .adlh{margin:0 0 12px!important;padding:14px 16px!important}
+  #admin .admtop::before,#admin .adlog > .adlh::before{top:-14px;bottom:-12px;left:-14px;right:-14px}
+  #admin .admtop::after,#admin .adlog > .adlh::after{content:""!important;display:block!important;position:absolute;inset:0;z-index:-1;background:var(--wnb)!important;border:var(--wnbd)!important;border-radius:var(--wnr)!important;box-shadow:var(--wnsh)!important;pointer-events:none}
+  #admin .admtop ~ .adrs,#admin .adlog > .adlh ~ .adrs{background:var(--wnb);border:var(--wnbd);border-radius:var(--wnr);box-shadow:var(--wnsh);padding:6px 18px;margin-top:0}
+  #admin .admtop .admsrch{background:rgba(var(--w),.06)}
+}
+/* phones: the same card surface colours (the wide block above only defines them from 761px) */
+@media(max-width:760px){
+  html{--wnr:20px;--wnb:color-mix(in srgb,#fff 72%,var(--bg));--wnbd:1px solid rgba(0,0,0,.1);--wnsh:0 1px 4px rgba(0,0,0,.08)}
+  html[data-mode=dark]{--wnb:color-mix(in srgb,#fff 3%,var(--bg));--wnbd:1px solid rgba(255,255,255,.1);--wnsh:none}
+  html[data-style=glass]{--wnr:24px;--wnb:linear-gradient(150deg,rgba(255,255,255,.22),rgba(255,255,255,.03) 42%,rgba(255,255,255,.1)),var(--g1);--wnbd:1px solid var(--gline);--wnsh:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(255,255,255,.08),var(--gsh)}
+  html[data-style=material]{--wnr:24px;--wnb:var(--m1);--wnbd:0 none transparent;--wnsh:none}
+}
 </style>
 <style>
 /* HA diagnostics stay compact until requested. */
@@ -4197,16 +4394,16 @@ html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs)>.chip{
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.27"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.27"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.27"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="config.js?v=2.5.28"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.28"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.28"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.27";   // the one place to change the version
-window.DASH_BUILD = "d4840a";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.5.28";   // the one place to change the version
+window.DASH_BUILD = "668173";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -4525,6 +4722,23 @@ Object.assign(window.__ZHD.D, {"several at once; home assistant itself goes last
 // 2.5.27: scene picker, battery hold (Insights > Batteries), HA diagnostics
 Object.assign(window.__ZHD.D, {"pick a scene": "选择场景", "more diagnostics": "更多诊断信息", "lowest first. swap the ones at 10% or below soon.": "电量从低到高排列。电量在 10% 或以下的请尽快更换。"});
 window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^low for (\\d+) min$", "低电量已持续 $1 分钟"], ["^low for (\\d+) h$", "低电量已持续 $1 小时"], ["^low for (\\d+) days$", "低电量已持续 $1 天"], ["^a battery is listed once it has read low for (\\d+) h\\.$", "电量持续偏低 $1 小时后才会列出。"], ["^a battery is listed once it has read low for (\\d+) days\\.$", "电量持续偏低 $1 天后才会列出。"]]);
+// 2.5.28: header-chip pop-ups (Road problem, Tsunami), possibly out of date road events
+Object.assign(window.__ZHD.D, {"sea level": "海平面", "possibly out of date": "可能已过期", "open hazards page": "打开灾害页面", "all road events": "全部道路事件", "no problems on this route": "此路线没有问题", "no road problems on your routes": "您的路线上没有道路问题", "tsunami · land": "海啸 · 陆地", "tsunami · beach": "海啸 · 海滩"});
+window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^(\\d+) possibly out of date$", "$1 项可能已过期"], ["^(\\d+) problems? on your routes · nzta$", "您的路线上有 $1 个问题 · NZTA"], ["^no problems on your routes · nzta$", "您的路线上没有问题 · NZTA"], ["^(\\d+) planned works?$", "$1 项计划施工"]]);
+// 2.5.28: update limits and the big-batch warning
+Object.assign(window.__ZHD.D, {"installing this many together can slow or freeze the house for several minutes.": "同时安装这么多更新，可能会让家中设备变慢甚至卡住几分钟。", "install": "安装", "lights, sensors and automations may stop responding while it runs. fewer at a time is safer.": "安装期间灯光、传感器和自动化可能暂时无响应。一次少装几个更安全。", "home assistant itself goes last (it restarts).": "Home Assistant 本身最后安装（会重启）。"});
+window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^install (\\d+) updates\\?$", "安装 $1 个更新？"], ["^install all (\\d+) updates\\?$", "全部安装 $1 个更新？"], ["^(\\d+) others? go (\\d+|all) (?:at a time|at once)\\. lights, sensors and automations may stop responding while it runs\\. fewer at a time is safer\\.$", "其他 $1 个每次安装 $2 个。安装期间灯光、传感器和自动化可能暂时无响应。一次少装几个更安全。"], ["^(\\d+) others? go (\\d+|all) (?:at a time|at once)\\. home assistant itself goes last \\(it restarts\\)\\. lights, sensors and automations may stop responding while it runs\\. fewer at a time is safer\\.$", "其他 $1 个每次安装 $2 个。Home Assistant 本身最后安装（会重启）。安装期间灯光、传感器和自动化可能暂时无响应。一次少装几个更安全。"], ["^(\\d+) zigbee or mesh devices? go (\\d+|all) (?:at a time|at once)\\. lights, sensors and automations may stop responding while it runs\\. fewer at a time is safer\\.$", "$1 个 Zigbee 或网状设备每次安装 $2 个。安装期间灯光、传感器和自动化可能暂时无响应。一次少装几个更安全。"], ["^(\\d+) zigbee or mesh devices? go (\\d+|all) (?:at a time|at once)\\. home assistant itself goes last \\(it restarts\\)\\. lights, sensors and automations may stop responding while it runs\\. fewer at a time is safer\\.$", "$1 个 Zigbee 或网状设备每次安装 $2 个。Home Assistant 本身最后安装（会重启）。安装期间灯光、传感器和自动化可能暂时无响应。一次少装几个更安全。"], ["^(\\d+) zigbee or mesh devices? go (\\d+|all) (?:at a time|at once); (\\d+) others? go (\\d+|all) (?:at a time|at once)\\. lights, sensors and automations may stop responding while it runs\\. fewer at a time is safer\\.$", "$1 个 Zigbee 或网状设备每次安装 $2 个；其他 $3 个每次安装 $4 个。安装期间灯光、传感器和自动化可能暂时无响应。一次少装几个更安全。"], ["^(\\d+) zigbee or mesh devices? go (\\d+|all) (?:at a time|at once); (\\d+) others? go (\\d+|all) (?:at a time|at once)\\. home assistant itself goes last \\(it restarts\\)\\. lights, sensors and automations may stop responding while it runs\\. fewer at a time is safer\\.$", "$1 个 Zigbee 或网状设备每次安装 $2 个；其他 $3 个每次安装 $4 个。Home Assistant 本身最后安装（会重启）。安装期间灯光、传感器和自动化可能暂时无响应。一次少装几个更安全。"]]);
+// 2.5.28: weather and camera pop-ups
+Object.assign(window.__ZHD.D, {"open weather page": "打开天气页面", "open camera page": "打开摄像头页面", "live view": "实时画面", "garage door": "车库门", "peak": "峰值", "up to": "最高", "starts": "开始", "until": "直到", "now": "现在", "forecast peak": "预报峰值", "gusts": "阵风",
+  "sunscreen if you will be outside for long.": "在户外待较长时间请涂防晒霜。", "sunscreen, a hat and shade through the middle of the day.": "中午前后请涂防晒霜、戴帽子并待在阴凉处。", "stay out of the midday sun and cover up.": "避开正午阳光并做好遮盖。",
+  "secure anything loose outside.": "请固定好户外松动的物品。", "secure everything outside and stay clear of trees and signs.": "请固定好户外所有物品，远离树木和标牌。", "bring washing in and close the windows.": "请收衣服并关好窗户。", "bring washing in, close the windows and check your drains.": "请收衣服、关好窗户并检查排水。"});
+window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^uv (\\d+) or more until$", "紫外线指数 $1 以上直到"], ["^uv (\\d+) or more from$", "紫外线指数 $1 以上从"], ["^around (.+)$", "大约 $1"], ["^uv (\\d+) around (.+)$", "紫外线指数 $1，约 $2"]]);
+Object.assign(window.__ZHD.D, {"detections · last 24 hours": "检测 · 过去 24 小时", "loading recordings…": "正在加载录像…", "nothing detected in the last 24 hours": "过去 24 小时没有检测到任何活动", "1 clip": "1 段录像"});
+window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^(\\d+) clips$", "$1 段录像"]]);
+Object.assign(window.__ZHD.D, {"at your place": "你家里", "nearby": "附近", "in effect now": "正在生效", "ended": "已结束", "irrigation running": "灌溉运行中", "washing machine running": "洗衣机运行中", "roads": "道路", "sea level": "海平面", "calm": "平静", "unusual waves": "异常海浪", "land threat": "陆地威胁", "stop": "停止", "no problems": "无问题", "no data": "无数据", "open weather page": "打开天气页面", "rain is on the way": "即将下雨", "orange": "橙色", "yellow": "黄色", "red": "红色", "weather warning": "天气警告"});
+window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^starts in (.+)$", "$1 后开始"], ["^ends in (.+)$", "$1 后结束"], ["^close before (.+)$", "请在 $1 前关闭"], ["^(\\d+) windows open$", "$1 扇窗户开着"], ["^(.+) open$", "$1 开着"], ["^done in (.+)$", "$1 后完成"], ["^(\\d+) problems?$", "$1 个问题"], ["^(rain|wind), next (\\d+) hours( · warning shaded)?$", "未来 $2 小时$1预报$3"], ["^metservice · (\\d+) hrs( from (.+))?$", "MetService · $1 小时$2"]]);
+
+Object.assign(window.__ZHD.D, {"summary": "摘要", "summarising…": "正在总结…", "full text": "全文", "stay indoors and avoid driving through flooded roads.": "请留在室内，避免驶过积水的道路。"});
 // ---------- Language (Theme page): English or Simplified Chinese ----------
 // Chinese translates the dashboard's labels, headings, buttons and units as they appear (the dictionary in 56-zh-dict.js / 56-zh-more.js),
 // and dates and times use Chinese formats. Names from Home Assistant and config.js stay as they are. Sentences that aren't in the dictionary stay English.
@@ -5472,7 +5686,7 @@ function hsFit() {
   const h = $("#hstrip"), s = $("#sch"), a = $("#lvc"); if (!h || !s || !a) return;
   const own = !isMobile() && ((CONFIG.layout || {}).tablet || []).indexOf("schedule") < 0;
   if (own && s.parentNode !== h) h.appendChild(s); else if (!own && s.parentNode === h) $(".camcol").appendChild(s);
-  const n = [a, s, $("#insc")].filter(x => x && x.parentNode === h && !x.hidden).length;   // Leaving, Insights and Today share the row on a tablet
+  const n = [a, s, $("#insc"), $("#updc")].filter(x => x && x.parentNode === h && !x.hidden).length;   // Leaving, Insights and Today share the row on a tablet
   h.dataset.n = n; h.hidden = !n; if (own && n) schFit();
 }
 function schFit() {   // tablet strip: chips that do not fit are hidden and counted as "+n"
@@ -6808,7 +7022,7 @@ function drawWeather() {
   h += wxMapSlot();   // live rain radar, under the forecast (20-weather-map.js)
   const wr = states[E("weatherWarnings")];
   const AL = [], fr = wxFrost(a); if (fr) AL.push(fr);
-  if (wr && sv(E("weatherWarnings")) && wr.attributes.warnings) AL.push(wwHtml(wr.attributes.warnings, "Weather warning · MetService"));
+  if (wr && sv(E("weatherWarnings")) && wr.attributes.warnings) AL.push(wwHtml(wr.attributes.warnings, "", true));
   AL.push.apply(AL, volcHtml()); AL.push.apply(AL, (quakeHtml() || "").split(/(?=<div class="alert q")/).filter(Boolean));
   if (alI >= AL.length) alI = 0;
   const al = AL.length > 1 ? '<div class="alc"><div class="alr">' + AL.join("") + '</div><div class="dots aldots">' + AL.map((x, i) => '<i data-ai="' + i + '"' + (i === alI ? ' class="on"' : "") + '></i>').join("") + '</div></div>' : AL.join("");   // several warnings: swipe left / right
@@ -6837,18 +7051,32 @@ function quakeHtml() {   // Weather page + notifications: real quakes within haz
 const WWO = new Set();
 function wwParse(t) {
   t = String(t || "").trim();
-  const m = /^([^,]{3,80}),\s*([\s\S]*?)[\s.]*,\s*(\d+)\s*hrs?\s+from\s+(.+?)\s+-\s+(.+)$/i.exec(t);
+  // the end is either "None" (no times given) or "<N>hrs <M>min from <start> - <end>" (either count may be left out)
+  const m = /^([^,]{3,80}),\s*([\s\S]*?)[\s.]*,\s*(?:none|(?:(\d+)\s*hrs?)?\s*(?:(\d+)\s*min)?\s*from\s+(.+?)\s+-\s+(.+))\s*$/i.exec(t);
   if (!m) return { title: "", body: t, pills: [] };
   const sh = x => { x = x.replace(/,\s*\d{1,2}\s+[A-Za-z]{3,}$/, "").trim(); return x.charAt(0).toUpperCase() + x.slice(1); };   // "midnight Fri, 6 Nov" -> "Midnight Fri"
-  return { title: m[1].trim(), body: m[2].trim().replace(/\s*\n\s*\n\s*/g, "\n\n").replace(/\.?$/, "."), pills: [sh(m[4]) + " → " + sh(m[5]), m[3] + " hrs"] };
+  const dur = m[3] || m[4] ? (m[3] ? m[3] + " hrs" : "") + (m[3] && m[4] ? " " : "") + (m[4] ? m[4] + " min" : "") : "";
+  return { title: m[1].trim(), body: m[2].trim().replace(/\s*\n\s*\n\s*/g, "\n\n").replace(/\.?$/, "."), pills: m[5] ? [sh(m[5]) + " → " + sh(m[6])].concat(dur ? [dur] : []) : [], hrs: (+m[3] || 0) + (+m[4] || 0) / 60, dur: dur, f: m[5] || "", t: m[6] || "" };
 }
-function wwHtml(text, label) {
-  // several warnings: each one ends with its own "<N>hrs from ... - ..." time; blank lines inside one warning are only paragraphs
-  const all = String(text || "").replace(/\r/g, ""), parts = [], rx = /\d+\s*hrs?\s+from\s[^\n]*\s-\s[^\n]*/gi; let m, at = 0;   // no look-behind: older iPads cannot parse it
-  while ((m = rx.exec(all))) { parts.push(all.slice(at, m.index + m[0].length)); at = m.index + m[0].length; }
-  parts.push(all.slice(at));
-  return parts.map(x => x.trim()).filter(Boolean).map(x => {
+// several warnings in one text. Each starts on its own line with a title ("Severe Thunderstorm Warning, ..."); older senders end each with its own "<N>hrs from ... - ..." time instead
+function wwSplit(text) {
+  const all = String(text || "").replace(/\r/g, ""), tr = /(?:^|\n)[ \t]*((?:[A-Z][A-Za-z-]*[ \t]+){0,4}(?:Warning|Watch|Advisory)),[ \t]/g, at = []; let m;
+  while ((m = tr.exec(all))) at.push(m.index + (m[0].charAt(0) === "\n" ? 1 : 0));
+  if (at.length) { const out = []; if (at[0] > 0 && all.slice(0, at[0]).trim()) out.push(all.slice(0, at[0])); at.forEach((p, i) => out.push(all.slice(p, i + 1 < at.length ? at[i + 1] : undefined))); return out.map(x => x.trim()).filter(Boolean); }
+  const parts = [], rx = /(?:\d+\s*hrs?)?\s*(?:\d+\s*min)?\s*from\s[^\n]*\s-\s[^\n]*/gi; let q, p0 = 0;   // no look-behind: older iPads cannot parse it
+  while ((q = rx.exec(all))) { parts.push(all.slice(p0, q.index + q[0].length)); p0 = q.index + q[0].length; }
+  parts.push(all.slice(p0));
+  return parts.map(x => x.trim()).filter(Boolean);
+}
+function wwHtml(text, label, compact) {
+  const I = compact && typeof wwItems === "function" ? wwItems() : [];
+  return wwSplit(text).map(x => {
     const w = wwParse(x), k = String(x.length) + ":" + x.slice(0, 60), open = WWO.has(k), long = w.body.length > 140;
+    if (compact) {   // notification list: title, time chips and a two-line gist; the whole card opens the centred pop-up, which has everything else
+      const it = I.find(i => i.k === k), a = it && typeof wwAiGet === "function" ? wwAiGet(it) : null; if (it && typeof wwAiAsk === "function") wwAiAsk(it);
+      return '<div class="alert w ww cpt ' + (it ? it.sev : "yellow") + '" data-ww="' + esc(k) + '" role="button" tabindex="0">' + (w.title ? '<div class="wwt">' + esc(w.title) + mdi("chevron-right") + '</div>' : "") + (w.pills.length ? '<div class="wwp">' + w.pills.map(p => '<span>' + esc(p) + '</span>').join("") + '</div>' : "") +
+        '<div class="wwb cl">' + esc(a ? a.summary : w.body) + '</div></div>';
+    }
     return '<div class="alert w ww' + (open ? " open" : "") + '" data-ww="' + esc(k) + '">' + (label ? '<div class="lbl">' + esc(label) + '</div>' : "") +
       (w.title ? '<div class="wwt">' + esc(w.title) + '</div>' : "") + (w.pills.length ? '<div class="wwp">' + w.pills.map(p => '<span>' + esc(p) + '</span>').join("") + '</div>' : "") +
       '<div class="wwb' + (long ? " cl" : "") + '">' + esc(w.body) + '</div>' + (long ? '<button class="wwm" data-wwm aria-expanded="' + open + '">' + (open ? "LESS" : "MORE") + mdi(open ? "chevron-up" : "chevron-down") + '</button>' : "") + '</div>';
@@ -8200,7 +8428,8 @@ function dtItems() {
 const dtWhen = ts => { const d = new Date(ts), n = new Date(), df = Math.round((new Date(n.getFullYear(), n.getMonth(), n.getDate()) - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 864e5), tm = d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })).replace(" ", "").toLowerCase(); return (df === 0 ? "Today" : df === 1 ? "Yesterday" : d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" })) + " · " + tm; };
 // the picture shown for a clip, the same everywhere: HA's own snapshot from when the detection began, else the frame cut from the clip, else the browse thumbnail
 function dtThumbUrl(x) { const su = DT.snapUrl[x.mc]; return su && Date.now() - su.t < 3000000 ? su.u : DT.th[x.mc] || (x.th ? (x.th.indexOf("/") === 0 ? CONFIG.url : "") + x.th : ""); }
-const dtWanted = () => location.hash === "#security/detections";   // the loader runs for the Detections tab
+const dtWanted = () => location.hash === "#security/detections" || !!document.querySelector("#cmtsh .tk-cam .tk-tl");   // the Detections tab, or a camera pop-up with its timeline
+const dtRoots = () => [$("#dtp"), $("#cmtsh .tk-tl")].filter(Boolean);   // the loader runs for the Detections tab
 function dtCard(x) { const th = dtThumbUrl(x); return '<div class="dti" data-dt="play" data-k="' + esc(x.mc) + '" data-cam="' + esc(x.cam) + '" data-ts="' + x.ts + '" data-tg="' + esc(x.p.tags.join(",")) + '"><div class="pbth" data-dth="' + esc(x.mc) + '">' + (th ? '<img alt="" src="' + esc(th) + '">' : "") + '<b>' + mdi("play") + '</b><u>' + esc(x.p.len) + '</u></div><div class="pbx"><span>' + esc(dtTm(x.ts)) + '</span></div></div>'; }
 // the list, like UniFi Protect: an hour heading, then a row per clip; clips from one camera with the same detection, each within 5 minutes of the next, are one row
 const DT_PL = { Person: "people", Vehicle: "vehicles", Animal: "animals", Face: "faces" };
@@ -8279,8 +8508,8 @@ function dtDraw(soft) {
   dtThumbs();
 }
 function dtThumbs() {
-  const P = $("#dtp"); if (!P || !("IntersectionObserver" in window)) return; if (DT.io) DT.io.disconnect();
-  const need = $$("[data-dth]", P).filter(n => !n.querySelector("img") && (DT.snapOf[n.dataset.dth] || DT.th[n.dataset.dth] == null)); if (!need.length) return;
+  const RT = dtRoots(); if (!RT.length || !("IntersectionObserver" in window)) return; if (DT.io) DT.io.disconnect();
+  const need = [].concat.apply([], RT.map(P => $$("[data-dth]", P))).filter(n => !n.querySelector("img") && (DT.snapOf[n.dataset.dth] || DT.th[n.dataset.dth] == null)); if (!need.length) return;
   DT.io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { DT.io.unobserve(en.target); DT.q.push(en.target.dataset.dth); dtNext(); } }), { rootMargin: "500px" });   // start a little before a card scrolls into view
   need.forEach(n => DT.io.observe(n));
 }
@@ -8289,7 +8518,7 @@ function dtNext() {
   while (DT.run < thPar() && DT.q.length) dtOne(DT.q.shift());
 }
 function dtOne(mc) {
-  const put = u => { $$("[data-dth]", $("#dtp")).filter(x => x.dataset.dth === mc).forEach(n => { if (!n.querySelector("img")) { const im = document.createElement("img"); im.alt = ""; im.src = u; n.insertBefore(im, n.firstChild); } }); };
+  const put = u => { [].concat.apply([], dtRoots().map(P => $$("[data-dth]", P))).filter(x => x.dataset.dth === mc).forEach(n => { if (!n.querySelector("img")) { const im = document.createElement("img"); im.alt = ""; im.src = u; n.insertBefore(im, n.firstChild); } }); };
   const sid = DT.snapOf[mc];
   if (sid) {   // a picture HA saved at the time: just fetch it, nothing to decode
     const su = DT.snapUrl[mc]; if (su && Date.now() - su.t < 3000000) { put(su.u); return; }
@@ -8838,6 +9067,29 @@ function secPills(page, host, anchor, min) {
   // (the admin page has its own tab row: STATUS, ENTITIES, AUTOMATIONS, LOGS, ACCESS, SETUP; 30-admin-tools.js)
   wrap("drawRoom", () => { secPills($("#roomspg"), $("#rv"), $("#rv"), 2); });
 })();
+
+// The wallpaper behind a pinned tab row. The row carries a copy of the page's own wallpaper so the list never shows around it. Instead of relying on
+// background-attachment:fixed (browsers treat it differently inside scrollers), each row is given the exact offset of the page background in its own
+// coordinates (--wx, --wy) and the size of the page (--ww, --wh). The row also gets the class "stk" while its page is scrolled off the top.
+const WP_ROWS = ":is(#admin,#theme) > .hsw:has(> .setchips), .page > .secw, #scenes .scfh, #admin .admtop, #admin .adlog > .adlh, #security > #stabs, #insights > .inschips";
+const wpScroller = e => { for (let p = e.parentElement; p; p = p.parentElement) { const o = getComputedStyle(p).overflowY; if ((o === "auto" || o === "scroll") && p.scrollHeight > p.clientHeight) return p; } return null; };
+function wpSync() {
+  const R = document.documentElement.getBoundingClientRect(), st = document.documentElement.style;
+  st.setProperty("--ww", R.width + "px"); st.setProperty("--wh", R.height + "px");
+  document.querySelectorAll(WP_ROWS).forEach(e => {
+    const r = e.getBoundingClientRect(); if (!r.width) return;
+    const b = getComputedStyle(e, "::before"), l = parseFloat(b.left) || 0, t = parseFloat(b.top) || 0;
+    e.style.setProperty("--wx", (R.left - r.left - l) + "px"); e.style.setProperty("--wy", (R.top - r.top - t) + "px");
+    const sc = wpScroller(e); e.classList.toggle("stk", !!sc && sc.scrollTop > 1);
+  });
+}
+let wpQ = 0;
+const wpGo = () => { if (wpQ) return; wpQ = requestAnimationFrame(() => { wpQ = 0; wpSync(); }); };
+const wpBurst = () => { let n = 0; const f = () => { wpSync(); if (++n < 45) requestAnimationFrame(f); }; requestAnimationFrame(f); };
+document.addEventListener("scroll", wpGo, { capture: true, passive: true });
+addEventListener("resize", wpBurst); addEventListener("hashchange", wpBurst);
+document.addEventListener("click", wpBurst, true); document.addEventListener("animationend", wpGo, true); document.addEventListener("transitionend", wpGo, true);
+setInterval(wpSync, 1000); setTimeout(wpBurst, 300);
 // ---------- Admin page: for Home Assistant admins only (nav link hidden for everyone else, and #admin sends other people home) ----------
 // Holds what used to sit at the bottom of the Theme page: who can see which pages (Access), plus the setup check, and a few facts about this dashboard.
 // config.js systemStatus adds a "System status" block at the top of this page. Two forms:
@@ -9054,7 +9306,7 @@ try { navGroups(); } catch (_) {}
 // For a quick look and a quick fix on the go; editing stays in Home Assistant (OPEN IN HA). Admins only (ADMIN_ON).
 // Home Assistant calls used: history/history_during_period, trace/list, trace/get, system_log/list, the REST check_config,
 // and the services automation.* / script.reload / scene.reload / template.reload / homeassistant.restart.
-const ADM = { tab: "", eq: "", ef: "all", esel: "", aq: "", af: "all", asel: "", arun: "", tl: null, tlT: 0, tlBusy: 0, tg: {}, logs: null, logT: 0, lf: "all", li: "", lopen: -1, hist: {}, qa: "", qaT: 0, qaBad: null, liveT: 0 };
+const ADM = { tab: "", eq: "", ef: "all", esel: "", aq: "", af: "all", asel: "", arun: "", tl: null, tlT: 0, tlBusy: 0, tg: {}, logs: null, logT: 0, lf: "all", lq: "", li: "", lopen: -1, hist: {}, qa: "", qaT: 0, qaBad: null, liveT: 0 };
 const admT = ms => { if (!ms) return "-"; const d = new Date(ms), now = new Date(), t = d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" }));
   if (d.toDateString() === now.toDateString()) return t; const y = new Date(now); y.setDate(now.getDate() - 1); if (d.toDateString() === y.toDateString()) return "Yesterday " + t;
   return d.toLocaleDateString([], { day: "numeric", month: "short" }) + " " + t; };
@@ -9120,7 +9372,7 @@ function admQa(k) {
 
 // ----- ENTITIES -----
 function admEntShell() {
-  return '<div class="adw' + (ADM.esel ? " det" : "") + '" data-w="ent"><div class="pn pg adl"><div class="adtop"><label class="ads">' + mdi("magnify") + '<input type="search" data-adq-ent placeholder="Search entities" value="' + esc(ADM.eq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div></div><div class="adrs"></div></div>' +
+  return '<div class="adw' + (ADM.esel ? " det" : "") + '" data-w="ent"><div class="pn pg adl"><div class="admtop"><label class="admsrch">' + mdi("magnify") + '<input type="search" data-adq-ent placeholder="Search entities" value="' + esc(ADM.eq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div></div><div class="adrs"></div></div>' +
     '<div class="admbk" data-adx="ent"></div><div class="pn pg add"></div></div>';
 }
 function admEntMatch() {
@@ -9193,7 +9445,7 @@ function admHistDraw(id, a) {
 // ----- AUTOMATIONS -----
 const AUT_WHY = { finished: "", failed_conditions: "stopped at a condition", failed_single: "skipped, already running", failed_max_runs: "skipped, too many runs", error: "error", aborted: "stopped", cancelled: "cancelled", running: "running now" };
 function admAutShell() {
-  return '<div class="adw' + (ADM.asel ? " det" : "") + '" data-w="aut"><div class="pn pg adl"><div class="adtop"><label class="ads">' + mdi("magnify") + '<input type="search" data-adq-aut placeholder="Search automations" value="' + esc(ADM.aq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div></div><div class="adrs"></div></div>' +
+  return '<div class="adw' + (ADM.asel ? " det" : "") + '" data-w="aut"><div class="pn pg adl"><div class="admtop"><label class="admsrch">' + mdi("magnify") + '<input type="search" data-adq-aut placeholder="Search automations" value="' + esc(ADM.aq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div></div><div class="adrs"></div></div>' +
     '<div class="admbk" data-adx="aut"></div><div class="pn pg add"></div></div>';
 }
 // the newest run of each automation, from trace/list (all of them at once); refreshed when the tab opens and every minute while it is open
@@ -9281,7 +9533,7 @@ function admSteps(t, run) {
 
 // ----- LOGS -----
 function admLogShell() {
-  return '<div class="adw adlw" data-w="log"><div class="pn pg adlog"><div class="adlh"><div class="adch"></div><button class="eb" data-adlca="1">' + mdi("content-copy") + ' COPY ALL</button><button class="eb" data-adlr="1">' + mdi("refresh") + ' REFRESH</button></div><div class="adrs"></div></div><div class="pn pg add adlov"></div></div>';
+  return '<div class="adw adlw" data-w="log"><div class="pn pg adlog"><div class="adlh"><label class="admsrch">' + mdi("magnify") + '<input type="search" data-adq-log placeholder="Search the log" value="' + esc(ADM.lq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div><button class="eb" data-adlca="1">' + mdi("content-copy") + ' COPY ALL</button><button class="eb" data-adlr="1">' + mdi("refresh") + ' REFRESH</button></div><div class="adrs"></div></div><div class="pn pg add adlov"></div></div>';
 }
 function admLogLoad(force) {
   if (!force && ADM.logs && Date.now() - ADM.logT < 30000) return; ADM.logT = Date.now();
@@ -9293,10 +9545,10 @@ function admLogDraw() {
   const L = (ADM.logs || []).slice().sort((a, b) => admMs(b.timestamp) - admMs(a.timestamp)), E = L.filter(x => admLvl(x.level) === "err"), Wn = L.filter(x => admLvl(x.level) === "warn");
   const chip = (k, t) => '<button class="chip' + (ADM.lf === k ? " on" : "") + '" data-adf="' + k + '">' + t + '</button>';
   $(".adch", w).innerHTML = hsw('<div class="chips tabs">' + chip("all", "ALL " + L.length) + chip("err", "ERRORS " + E.length) + chip("warn", "WARNINGS " + Wn.length) + '</div>');
-  const list0 = ADM.lf === "err" ? E : ADM.lf === "warn" ? Wn : L, list = ADM.li ? list0.filter(x => admInt(x) === ADM.li) : list0;
+  const list0 = ADM.lf === "err" ? E : ADM.lf === "warn" ? Wn : L, list1 = ADM.li ? list0.filter(x => admInt(x) === ADM.li) : list0, lq = ADM.lq.toLowerCase().split(/\s+/).filter(Boolean), list = lq.length ? list1.filter(x => lq.every(t => ([].concat(x.message || []).join(" ") + " " + (x.name || "") + " " + (x.exception || "")).toLowerCase().indexOf(t) > -1)) : list1;
   if (ADM.li) $(".adch .chips", w).insertAdjacentHTML("beforeend", '<button class="chip on adli" data-adli="">' + esc(ADM.li.toUpperCase().replace(/_/g, " ")) + ' ' + mdi("close") + '</button>');
   admLogOv(L, E, Wn);
-  $(".adrs", w).innerHTML = !ADM.logs ? '<div class="adhl">Loading the log…</div>' : ADM.logErr ? admEmpty("Couldn't read Home Assistant's log.") : !list.length ? admEmpty("Nothing logged. All quiet.") : list.slice(0, 100).map((x, i) => {
+  $(".adrs", w).innerHTML = !ADM.logs ? '<div class="adhl">Loading the log…</div>' : ADM.logErr ? admEmpty("Couldn't read Home Assistant's log.") : !list.length ? admEmpty(ADM.lq ? "Nothing matches “" + ADM.lq + "”." : "Nothing logged. All quiet.") : list.slice(0, 100).map((x, i) => {
     const msgs = [].concat(x.message || []), lv = admLvl(x.level), open = ADM.lopen === i, au = (msgs.join(" ") + " " + (x.exception || "")).match(/automation\.[a-z0-9_]+/);
     return '<div class="adlg' + (open ? " open" : "") + '" data-adl="' + i + '"><span class="adlv ' + lv + '">' + (lv === "err" ? "ERROR" : lv === "warn" ? "WARN" : esc(String(x.level || "INFO").slice(0, 5))) + '</span><div class="adlb"><b>' + esc(String(msgs[0] || x.name || "")) + '</b><small>' + esc(String(x.name || "")) + ' · ' + esc(admT(admMs(x.timestamp))) + '</small>' +
       (open ? (msgs.length > 1 || x.exception ? '<pre class="adpre">' + esc(msgs.slice(1).concat(x.exception ? [x.exception] : []).join("\n\n")) + '</pre>' : "") + (x.source ? '<small>' + esc([].concat(x.source).join(":")) + (x.first_occurred ? " · first " + esc(admT(admMs(x.first_occurred))) : "") + '</small>' : "") +
@@ -9363,6 +9615,7 @@ $("#admin").addEventListener("input", e => {
   const t = e.target;
   if (t.hasAttribute("data-adq-ent")) { ADM.eq = t.value; admEntDraw(); }
   else if (t.hasAttribute("data-adq-aut")) { ADM.aq = t.value; admAutDraw(); }
+  else if (t.hasAttribute("data-adq-log")) { ADM.lq = t.value; ADM.lopen = -1; admLogDraw(); }
 });
 $("#admin").addEventListener("change", e => {
   const t = e.target;
@@ -9605,6 +9858,22 @@ function wxaCard(k, x, c, small, exp) {
   if (small) return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, Math.min(x.tier, 1)) + '<div class="wxr"><div class="wxm"><div class="wxt"><i></i>' + esc(P[0]) + '</div><b>' + esc(P[1]) + '</b></div>' + wxaBars(k, x, c, true) + '<div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div><button class="wxmore" tabindex="-1">MORE ' + mdi("chevron-down") + '</button></div>';
   return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, x.tier) + '<div class="wxt"><i></i>' + esc(P[0]) + '</div><div class="wxr"><div class="wxm"><b>' + esc(P[1]) + '</b>' + (P[2] ? '<small>' + esc(P[2]) + '</small>' : "") + '</div><div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div>' + wxaBars(k, x, c, false) + (exp ? '<button class="wxmore wxless" tabindex="-1">LESS ' + mdi("chevron-up") + '</button>' : "") + '</div>';
 }
+// MORE / LESS opens or shrinks one card in place: only that card is swapped (its height eases to the new size, its content fades in) and the other cards, and
+// the list around them, are not rebuilt, so nothing blinks or replays its entrance. Returns false when the card can not be found (the list is redrawn instead).
+function wxaFlip(el) {
+  const k = el.dataset.wxa, w = typeof wxaNow === "function" ? wxaNow() : null; if (!w || !w[k]) return false;
+  const ks = ["wind", "rain", "uv"].filter(q => w[q]).sort((a, b) => w[b].tier - w[a].tier || (w[b].now ? 1 : 0) - (w[a].now ? 1 : 0)), i = ks.indexOf(k); if (i < 1) return false;   // the worst card is always the big one
+  if (el.classList.contains("sm")) WXA_EXP.add(k); else WXA_EXP.delete(k);
+  const t = document.createElement("div"); t.innerHTML = wxaCard(k, w[k], w.cfg, !WXA_EXP.has(k), WXA_EXP.has(k)); const n = t.firstElementChild; if (!n) return false;
+  const calm = !el.animate || matchMedia("(prefers-reduced-motion: reduce)").matches, h0 = el.getBoundingClientRect().height;
+  n.style.animation = "none"; el.replaceWith(n);
+  if (!calm) {
+    const h1 = n.getBoundingClientRect().height;
+    n.animate([{ height: h0 + "px" }, { height: h1 + "px" }], { duration: 360, easing: "cubic-bezier(.22,1,.36,1)" });
+    [...n.children].forEach(c => { if (!c.classList.contains("wxf")) c.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, easing: "ease-out", fill: "backwards" }); });
+  }
+  return true;
+}
 function wxaHtml(w) {
   const ks = ["wind", "rain", "uv"].filter(k => w[k]).sort((a, b) => w[b].tier - w[a].tier || (w[b].now ? 1 : 0) - (w[a].now ? 1 : 0));
   // the worst first and big; the others shrunk, unless opened with MORE (then full size where they are, with LESS)
@@ -9644,7 +9913,7 @@ function notif(full, f) {
   n += LK.length + W2.length; if (f === "leak") sec("Water leak", LK.map(x => '<div class="alert q"><div class="lbl">' + mdi("water-alert") + ' WATER LEAK</div><b>' + esc(x[1]) + '</b><div>' + esc(x[2]) + '</div></div>').join(""), "leak");
   sec("Warnings", LK.map(x => '<div class="alert q"><div class="lbl">' + mdi("water-alert") + ' WATER LEAK</div><b>' + esc(x[1]) + '</b><div>' + esc(x[2]) + '</div></div>').join("") + grid(W2.map(x => npItem(x[0], { name: x[1], sub: x[2], confirm: /rubbish|recycle/.test(x[0]) }))), "warnings");
   const wr = states[E("weatherWarnings")];
-  if (wr && sv(E("weatherWarnings")) && wr.attributes.warnings) { n++; sec("Weather warning", wwHtml(wr.attributes.warnings, ""), "warn"); }
+  if (wr && sv(E("weatherWarnings")) && wr.attributes.warnings) { n++; sec("Weather warning", wwHtml(wr.attributes.warnings, "", true), "warn"); }
   const wxa = wxaNow(); if (wxa) { n++; sec("Weather", wxaHtml(wxa), "wx"); }
   const cwh = typeof cwAlertHtml === "function" ? cwAlertHtml() : ""; if (cwh) { n++; sec("Heat escaping", cwh, "cw"); }
   // the roster card (SYNC NOW) lives on Insights; the pop-up keeps it only when there is no Insights page (insights: false)
@@ -9714,6 +9983,7 @@ function xpDist(h, b) {
 // how far below its heading a group's first row sits
 const xpFirst = (h, r) => r ? r.getBoundingClientRect().top - h.getBoundingClientRect().bottom : 0;
 let XP_PEND = null;
+let NP_KEEP = false;   // set while a card was changed in place (wxaFlip): the list's remembered key moves on, but its nodes are left alone
 // xpBegin does the redraw (fn) and remembers how the groups looked before it; xpEnd runs once the rest of that redraw has finished adjusting the rows
 function xpBegin(host, kind, fn) {
   XP_PEND = null;
@@ -9845,20 +10115,23 @@ function npCams() {
   const ga = typeof galAirGet === "function" && galAirGet(); if (ga && galAirOn(ga.cam) && !out.some(o => o.id === ga.cam)) out.push({ id: ga.cam, name: "Garage", key: "garage" });
   return out;
 }
+const npCamWanted = () => document.body.classList.contains("np-open") || !!document.querySelector("#cmtsh.on .tk-cam");   // the list is open, or a camera is open in the centred pop-up
 const NPCAM = {};   // id -> camera object, made once and moved into the slot each time the list is drawn, so the stream keeps playing
 function npCamStop() { NPC.forEach(c => { clearTimeout(c.rt); c._on = 0; stopCam(c); }); }
 function npCamMount() {
-  const slots = $$("#npc [data-npc]"), want = {};
+  const slots = $$("#cmtsh [data-npc], #npc [data-npc]"), want = {};   // a camera open in the centred pop-up has the live view; its slot in the list stays empty meanwhile
   slots.forEach((sl, i) => {
-    const id = sl.dataset.npc; want[id] = 1; let c = NPCAM[id];
+    const id = sl.dataset.npc; if (want[id]) return; want[id] = 1; let c = NPCAM[id];
     if (!c) { c = NPCAM[id] = { id: id, name: sl.dataset.name, np: true }; NPC.push(c); mkCam(c, document.createElement("div")); c.o.el.onclick = null; }
+    const where = sl.closest("#cmtsh") ? "pop" : "list";
     if (c.o.el.parentNode !== sl) sl.appendChild(c.o.el);
+    if (c._where !== where) { if (c._where && c._on) { clearTimeout(c.rt); stopCam(c); c._on = 0; } c._where = where; }   // from the list to the pop-up and back: the picture starts again in its new place (a video that has been taken out of the page can stop)
     c.o.el.querySelector(".lbl").textContent = sl.dataset.name;
-    if (!c._on) { c._on = 1; camSnap(c); clearTimeout(c.rt); c.rt = setTimeout(() => { if (document.body.classList.contains("np-open") && c._on) { if (isMobile() && CONFIG.mobileLive === false) camSnap(c); else liveCam(c); } }, i * 160); }
+    if (!c._on) { c._on = 1; camSnap(c); clearTimeout(c.rt); c.rt = setTimeout(() => { if (npCamWanted() && c._on) { if (isMobile() && CONFIG.mobileLive === false) camSnap(c); else liveCam(c); } }, i * 160); }
   });
   NPC.forEach(c => { if (!want[c.id] && c._on) { clearTimeout(c.rt); c._on = 0; stopCam(c); } });
 }
-setInterval(() => { if (!document.body.classList.contains("np-open")) npCamStop(); }, 2500);   // closed: no streams running behind the page
+setInterval(() => { if (!npCamWanted()) npCamStop(); }, 2500);   // closed: no streams running behind the page
 function drawNotif() {
   if (typeof cdDraw === "function") cdDraw();
   const open = document.body.classList.contains("np-open");
@@ -9887,7 +10160,7 @@ function drawNotif() {
   if (nc._k !== key) {
     const at = npTab + "|" + npOnly;
     if (nc._t === at) { nc.classList.remove("tx", "txc"); clearTimeout(nc._tx); }   // a list that redraws on the tab it is already showing (a state changed) must not replay the tab's fade-in, or it blinks
-    nc._t = at; nc._k = key; xpBegin(nc, "np", () => { nc.innerHTML = body; }); }
+    nc._t = at; nc._k = key; if (!NP_KEEP) xpBegin(nc, "np", () => { nc.innerHTML = body; }); }
   npGoRun(); npCamMount();
   $$("#npc .ldr").forEach(el => { const t = ldTime(); if (el.textContent !== t) el.textContent = t; });
   if (tc) requestAnimationFrame(hsAll);
@@ -9907,9 +10180,11 @@ $("#hc").onclick = e => {
     // bins, low batteries, pollen and the roster live on the Insights page now: their chip opens that card there
     const nz = ch ? ch.dataset.k : ks.length === 1 ? ks[0][0] : "";
     if (nz === "cd") { cdOpen(); return; }
-    if (nz === "tsu" || nz === "road") { location.hash = nz === "tsu" ? "#hazards/sea" : "#hazards/roads"; return; }
+    if ((nz === "tsu" || nz === "road") && typeof tkOpen === "function") { tkOpen(nz === "tsu" ? "sea" : "road"); return; }   // a centred pop-up over this page (49-takeover.js)
     const ic = m && !npAttn() && { bat: "batt", bins: "bins", pol: "pollen", roster: "roster" }[m[1]];
-    if (ic) { INS.det = ic; location.hash = "#insights"; setTimeout(() => { if (typeof insDetDraw === "function") insDetDraw(); }, 60); return; }
+    if (ic) {
+      if ((INS.last || []).some(v => v.id === ic)) { INS.det = ic; INS.ctr = true; insDetDraw(); return; }   // the Insights card as a centred pop-up, without leaving this page
+      INS.det = ic; location.hash = "#insights"; setTimeout(() => { if (typeof insDetDraw === "function") insDetDraw(); }, 60); return; }
     if (m) { npTab = m[0]; npOnly = m[1] || ""; npGo = null; } }
   document.body.classList.toggle("np-open"); drawNotif();
 };
@@ -9926,12 +10201,14 @@ $("#np").onclick = e => {
   const of = e.target.closest("[data-off]"); if (of) { const ids = actList()[+of.dataset.off].ids; const cl = actList()[+of.dataset.off].c[3] === "close"; if (ids.length) { if (!cl) npDismiss(ids); call(cl ? "cover" : "homeassistant", cl ? "close_cover" : "turn_off", ids); } return; }
   if (e.target.closest("[data-wxatg]")) { WXA_FULL = !WXA_FULL; drawNotif(); return; }   // the combined weather card: one line each, or each as its full card
   // a shrunk weather card opens in place (MORE, or a tap anywhere on it); LESS shrinks it again
-  const wa = e.target.closest("[data-wxa]"); if (wa && (wa.classList.contains("sm") || e.target.closest(".wxless"))) { if (wa.classList.contains("sm")) WXA_EXP.add(wa.dataset.wxa); else WXA_EXP.delete(wa.dataset.wxa); drawNotif(); return; }
-  if (wa) { npClose(); location.hash = "#weather/" + wa.dataset.wxa; return; }   // the weather card opens that forecast chart
+  const wa = e.target.closest("[data-wxa]"); if (wa && (wa.classList.contains("sm") || e.target.closest(".wxless"))) { if (wxaFlip(wa)) { NP_KEEP = true; try { drawNotif(); } finally { NP_KEEP = false; } return; } if (wa.classList.contains("sm")) WXA_EXP.add(wa.dataset.wxa); else WXA_EXP.delete(wa.dataset.wxa); drawNotif(); return; }
+  if (wa) { if (typeof tkOpen === "function") { tkOpen("wx", wa.dataset.wxa); return; } npClose(); location.hash = "#weather/" + wa.dataset.wxa; return; }   // the weather card opens as a centred pop-up (49-takeover.js)
+  const ww = e.target.closest("[data-ww]"); if (ww && !e.target.closest("[data-wwm]") && typeof tkOpen === "function") { tkOpen("ww", ww.dataset.ww); return; }   // a weather warning opens as a centred pop-up (50-takeover-warning.js)
   const up = e.target.closest("[data-up]"); if (up) { upcOpen(up.dataset.up); return; }
   const tg = e.target.closest("[data-togon]"); if (tg) { const id = tg.dataset.togon, g = TOG.find(g => g[3].some(x => x[0] === id)), x = g && g[3].find(x => x[0] === id); if (x && x[2]) send({ type: "call_service", domain: "script", service: x[2] }); else call(id.split(".")[0], "turn_on", id); return; }   // an "alerts are off" reminder: turn it back on   // 33-update-card.js
   const bn = e.target.closest("[data-bn]"); if (bn) { binsTap(bn.dataset.bn); return; }
-  const vw = e.target.closest("[data-vw]"); if (vw) { VW.back = /^#(view|camera|notifications|active|batteries)/.test(location.hash) ? "#home" : (location.hash || "#home"); location.hash = "#view/" + vw.dataset.vw; return; }
+  const vw = e.target.closest("[data-vw]"); if (vw && typeof tkOpen === "function" && !e.target.closest("[data-gclose]")) { tkOpen("cam", vw.dataset.vw); return; }
+  if (vw) { VW.back = /^#(view|camera|notifications|active|batteries)/.test(location.hash) ? "#home" : (location.hash || "#home"); location.hash = "#view/" + vw.dataset.vw; return; }
   const c = e.target.closest("[data-nt]");
   if (c) { if (c.dataset.sc) send({ type: "call_service", domain: "script", service: c.dataset.sc }); else call(c.dataset.nt.split(".")[0], "toggle", c.dataset.nt); return; }
   tapH(e);
@@ -11610,6 +11887,8 @@ function route() {
   document.body.classList.remove("nav-open", "np-open");
   { const h0 = location.hash.slice(1).split("/")[0], lp = RU && PAGE_ON(RU.landing || "") ? RU.landing : (RU_ALL.filter(PAGE_ON)[0] || "home");
     if (h0 === "settings") { location.replace(setHome()); return; }
+    // #popup/warning | alert | road | sea | camera/<name>: the Home page with that centred pop-up open over it (50-takeover-warning.js)
+    if (h0 === "popup") { const q = location.hash.slice(1).split("/"); location.replace("#" + (PAGE_ON("home") ? "home" : lp)); setTimeout(() => { if (typeof tkLink === "function") tkLink(q[1], q[2]); }, 350); return; }
     if (h0 && !PAGE_ON(h0) && h0 !== "home" && !(h0 === "theme" && setOn())) { location.replace("#" + (PAGE_ON("home") ? "home" : lp)); return; }
     if ((!h0 || h0 === "home") && !PAGE_ON("home")) { location.replace("#" + lp); return; }
     if (h0 === "security" && /^#security\/detections/.test(location.hash) && !ruSec("detections")) { location.replace("#security"); return; }
@@ -11641,6 +11920,7 @@ function route() {
   if (p !== "security") secPrev = "";
   if (p === "security") secTogDraw();
   if (p === "security") secTab(h[1] === "detections" && dtCams().length && CONFIG.detections !== false && ruSec("detections") ? "det" : "live");
+  if (p === "weather" && h[1] === "warning") { try { history.replaceState(null, "", "#weather"); } catch (_) {} setTimeout(() => { if (typeof tkLink === "function") tkLink("warning", h[2]); }, 350); }   // #weather/warning[/2]: the Weather page with the warning pop-up over it
   if (p === "weather") {   // #weather/wind | rain | uv opens that forecast tab and scrolls to it, #weather/pollen scrolls to the Pollen card
     const ti = { temp: 0, wind: 1, rain: 2, uv: 3, cloud: 3 }[h[1]];
     if (ti != null) fcTab = ti;
@@ -12449,7 +12729,7 @@ function insdCamMount() {
 setInterval(() => { if (!$("#insd.on [data-npc]")) insdCamStop(); }, 2500);   // closed: no stream running behind the page
 function insDetDraw() {
   let el = $("#insd"); const id = INS.det;
-  if (!id) { insTipHide(); if (el) el.classList.remove("on"); insdCamStop(); return; }
+  if (!id) { insTipHide(); INS.ctr = false; if (el) { el.classList.remove("on", "ctr"); } insdCamStop(); return; }
   const x = (INS.tab === "stats" ? (INS.statL || []).find(v => v.id === id) : null) || (INS.last || []).find(v => v.id === id) || (INS.statL || []).find(v => v.id === id); if (!x) { INS.det = ""; if (el) el.classList.remove("on"); return; }
   if (!el) { el = document.createElement("div"); el.id = "insd"; el.innerHTML = '<div class="idbk" data-insdx></div><div class="idp"></div>'; document.body.appendChild(el); }
   const kick = (insCats[x.cat] || "").toUpperCase() + (x.tile && x.tile[0] ? " · " + x.tile[0] : "");
@@ -12458,10 +12738,10 @@ function insDetDraw() {
     '<div class="ins open ' + (x.tone || "") + '" data-ins="' + esc(x.id) + '"><div class="insb">' + (x.stats && x.stats.length ? x.full().replace(/^<div class="ing">[\s\S]*?<\/div><\/div>/, "") : x.full())   /* the stats row already shows the boxed numbers */ + ((x.acts || []).length ? '<div class="insa">' + x.acts.map((a, i) => '<button class="eb" data-insa="' + i + '">' + esc(a[0]) + '</button>').join("") + '</div>' : "") +
     (x.nogo ? "" : '<a class="insg" href="' + x.go + '">Open ' + esc(insGoLbl(x.go)) + ' ' + mdi("chevron-right") + '</a>') + '</div></div>';
   const p = el.querySelector(".idp"); if (p._h !== h) { p._h = h; p.innerHTML = h; }
-  el.classList.add("on"); insdCamMount();
+  el.classList.toggle("ctr", !!INS.ctr); el.classList.add("on"); insdCamMount();
 }
 document.addEventListener("click", e => {
-  const o = e.target.closest("[data-inso]"); if (o) { INS.det = o.dataset.inso; insDetDraw(); return; }
+  const o = e.target.closest("[data-inso]"); if (o) { INS.det = o.dataset.inso; INS.ctr = false; insDetDraw(); return; }
   if (e.target.closest("[data-insdx]") || e.target.closest("#insd .insg")) { INS.det = ""; insDetDraw(); }
 });
 addEventListener("hashchange", () => { if (INS.det && curPg() !== "insights") { INS.det = ""; insDetDraw(); } });
@@ -12479,7 +12759,7 @@ function insTick() {
   INS.last = insAll();
   insHome();
   const p = curPg();
-  if (p === "insights") drawInsights();
+  if (p === "insights") drawInsights(); else if (INS.det) insDetDraw();
 }
 function insQueue() { if (INS.q) return; INS.q = setTimeout(() => { INS.q = 0; insTick(); }, 250); }
 // the entities that can change an insight
@@ -12512,6 +12792,8 @@ function hplDraw() {
   if (isMobile()) {
     const lv = typeof lvItems === "function" ? lvItems() : [], need = insOn() && PAGE_ON("insights") ? (INS.last || []).filter(x => x.lvl === 2) : [];
     if (lv.length) h += '<span class="wpl lvp" data-lvo>' + mdi("door-open") + esc(lv[0].s + (lv.length > 1 ? " +" + (lv.length - 1) : "")) + '</span>';
+    const un = typeof nbgUpd === "function" ? nbgUpd() : 0;
+    if (un) h += '<span class="wpl upp" data-updgo>' + mdi("download") + un + ' update' + (un > 1 ? "s" : "") + '</span>';
     if (need.length) h += '<span class="wpl inp" data-go="#insights">' + mdi("lightbulb-on") + need.length + ' need' + (need.length > 1 ? "" : "s") + ' you</span>';
   }
   if (el._h !== h) { el._h = h; el.innerHTML = h; }
@@ -13924,12 +14206,16 @@ function rdLoc(v) {
   const s = states[String(v || "").trim()]; return s && s.attributes.latitude != null ? [+s.attributes.latitude, +s.attributes.longitude] : null;
 }
 const rdHw = t => (String(t || "").toUpperCase().match(/\bSH\s*\d+/g) || []).map(x => x.replace(/\s+/g, ""));
+// NZTA sometimes leaves an event "Active" long after the work finished (no end date, and its own expected finish was months ago). Such an event is shown as
+// "possibly out of date" instead of raising the Road problem chip. roads.staleDays (default 3) is the grace after the expected finish or end date.
+const rdExp = v => { const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2}))?/.exec(String(v || "").trim()); return m ? new Date(+m[3], +m[2] - 1, +m[1], +(m[4] || 0), +(m[5] || 0)).getTime() : 0; };
 function rdEvents() {
   const S = rdSens().map(id => states[id]).filter(s => s && s.state !== "unavailable" && s.state !== "unknown"); if (!S.length) return null;
   const now = Date.now(), seen = {};
   return S.reduce((a, s) => a.concat(nzfList(s.attributes.roadevent)), []).filter(e => e && e.status !== "Resolved" && !seen[e.id] && (seen[e.id] = 1)).map(e => {
-    const st = Date.parse(e.startDate) || 0, en = Date.parse(e.endDate) || 0;
-    return { id: e.id, pts: rdWkt(e.geometry), plan: !!e.planned, on: (!st || st <= now) && (!en || en > now), soon: st > now && st - now < 864e5, st: st, en: en,
+    const st = Date.parse(e.startDate) || 0, en = Date.parse(e.endDate) || 0, exp = rdExp(e.expectedResolution), grace = (RDC() && RDC().staleDays != null && !isNaN(+RDC().staleDays) ? Math.max(0, +RDC().staleDays) : 3) * 864e5;
+    const stale = !e.planned && ((en > 0 && now - en > grace) || (!(en > now) && exp > 0 && now - exp > grace));
+    return { stale: stale, exp: exp, id: e.id, pts: rdWkt(e.geometry), plan: !!e.planned, on: (!st || st <= now) && (!en || en > now), soon: st > now && st - now < 864e5, st: st, en: en,
       hw: (e.journey || {}).name || "", area: e.locationArea || "", type: e.eventDescription || e.eventType || "", imp: e.impact || "", txt: String(e.eventComments || "").trim(), alt: e.alternativeRoute && !/not applicable/i.test(e.alternativeRoute) ? e.alternativeRoute : "" };
   }).filter(e => !e.plan || e.on || e.soon);
 }
@@ -13985,22 +14271,27 @@ function rdTrips() {
       on = e => near(e, t.km || 1) || (t.hw && t.hw.length && inBox(e) && t.hw.indexOf(rdHw(e.hw)[0]) > -1); by = () => false;
     }
     const ev = E0.filter(on), nb = E0.filter(e => !on(e) && by(e));
-    return { name: t.name, line: line, via: t.via, own: !!t.own, exact: !!line || !!t.own || !t.via, bad: ev.filter(e => !e.plan), plan: ev.filter(e => e.plan), near: nb.map(e => Object.assign({ km: rdDist(e.pts, via) }, e)) };
+    return { name: t.name, line: line, via: t.via, own: !!t.own, exact: !!line || !!t.own || !t.via, bad: ev.filter(e => !e.plan && !e.stale), old: ev.filter(e => !e.plan && e.stale), plan: ev.filter(e => e.plan), near: nb.filter(e => !e.stale).map(e => Object.assign({ km: rdDist(e.pts, via) }, e)) };
   });
 }
 const rdBad = () => { const T = rdTrips(); return !!T && T.some(t => t.bad.length); };
 const rdCamUrl = id => "https://trafficnz.info/camera/" + encodeURIComponent(id) + ".jpg?t=" + Math.floor(Date.now() / 6e4);
+function rdCamH() {
+  const c = RDC(), cams = ((c && c.cams) || []).map(x => typeof x === "object" ? x : { id: x, name: "Camera " + x }), cam = cams.length ? cams[NZF.rcam % cams.length] : null;
+  return cam ? '<button type="button" class="rds-cam" data-rdc="next"' + (cams.length > 1 ? "" : " disabled") + '><span class="vcam-ph"><img data-rdcam="' + esc(cam.id) + '" src="' + rdCamUrl(cam.id) + '" alt="' + esc(cam.name) + '" loading="lazy" onerror="this.parentNode.classList.add(\'vcam-err\')" onload="this.parentNode.classList.remove(\'vcam-err\')"><span class="vcam-gone">Camera not available</span><span class="vcam-lb">' + esc(cam.name) + '</span></span><span class="vcam-cap"><small>' + (cams.length > 1 ? 'Tap for the next camera (' + (NZF.rcam % cams.length + 1) + ' of ' + cams.length + ')' : "") + '</small><span class="vcam-cr">NZTA</span></span></button>' : "";
+}
 function rdHtml() {
   const c = RDC(); if (!c) return "";
   const T = rdTrips(), cams = (c.cams || []).map(x => typeof x === "object" ? x : { id: x, name: "Camera " + x }), cam = cams.length ? cams[NZF.rcam % cams.length] : null;
   NZF.rdEv = {};
   // every event is a button: tap for the map sheet with a pin where it is
   NZF.rdTrip = T || [];
-  const evRow = (e, red, guess, ti) => { NZF.rdEv[e.id] = e; return '<button type="button" class="rds-e' + (red ? " rds-red" : "") + '" data-rde="' + esc(e.id) + '" data-rdt="' + ti + '"><b>' + esc([e.hw, e.type || e.imp].filter(Boolean).join(" · ")) + (e.imp && e.imp !== "Caution" && e.type ? " · " + esc(e.imp) : "") + '</b><small>' + esc(e.area) + (e.plan && e.st && !e.on ? " · from " + esc(hzWhen(e.st)) : e.en && e.plan ? " · until " + esc(hzWhen(e.en)) : "") + (guess ? " · may not be on your route" : "") + '</small>' + (e.txt && !e.plan ? '<p>' + esc(e.txt.length > 220 ? e.txt.slice(0, 217) + "…" : e.txt) + '</p>' : "") + (e.alt ? '<p>Detour: ' + esc(e.alt) + '</p>' : "") + mdi("map-marker") + '</button>'; };
+  const evRow = (e, red, guess, ti) => { NZF.rdEv[e.id] = e; return '<button type="button" class="rds-e' + (red ? " rds-red" : "") + '" data-rde="' + esc(e.id) + '" data-rdt="' + ti + '"><b>' + esc([e.hw, e.type || e.imp].filter(Boolean).join(" · ")) + (e.imp && e.imp !== "Caution" && e.type ? " · " + esc(e.imp) : "") + '</b><small>' + esc(e.area) + (e.plan && e.st && !e.on ? " · from " + esc(hzWhen(e.st)) : e.en && e.plan ? " · until " + esc(hzWhen(e.en)) : "") + (guess ? " · may not be on your route" : "") + (e.stale ? " · NZTA expected it to end " + esc(hzWhen(e.en || e.exp)) : "") + '</small>' + (e.txt && !e.plan ? '<p>' + esc(e.txt.length > 220 ? e.txt.slice(0, 217) + "…" : e.txt) + '</p>' : "") + (e.alt ? '<p>Detour: ' + esc(e.alt) + '</p>' : "") + mdi("map-marker") + '</button>'; };
   const nearRow = (e, ti) => { NZF.rdEv[e.id] = e; return '<button type="button" class="rds-n" data-rde="' + esc(e.id) + '" data-rdt="' + ti + '"><span><small>Nearby, not on your route</small><b>' + esc([e.hw, e.type || e.imp].filter(Boolean).join(" · ")) + (e.imp && e.imp !== "Caution" && e.type ? " · " + esc(e.imp) : "") + '</b><small>' + (e.km < 1 ? Math.round(e.km * 1000) + " m" : e.km.toFixed(1) + " km") + ' from your route</small></span>' + mdi("map-marker") + '</button>'; };
   const trips = !T ? '<p class="hzempty rds-off">' + mdi("help-circle-outline") + 'No data from NZTA (' + esc(rdSens().join(", ")) + ')</p>' : T.map((t, ti) => '<div class="rds-t' + (t.bad.length ? " rds-bad" : "") + '"><div class="rds-th">' + mdi(t.bad.length ? "alert" : "check-circle-outline") + '<b>' + esc(t.name) + '</b><small>' + (t.bad.length ? t.bad.length + " problem" + (t.bad.length > 1 ? "s" : "") : "No problems") + (t.plan.length ? " · " + t.plan.length + " planned" : "") + '</small></div>' +
-    t.bad.map(e => evRow(e, /closed/i.test(e.imp), !t.exact, ti)).join("") + t.near.map(e => nearRow(e, ti)).join("") + (t.plan.length ? '<details class="rds-pl"><summary>' + mdi("traffic-cone") + t.plan.length + ' planned work' + (t.plan.length > 1 ? "s" : "") + '</summary>' + t.plan.map(e => evRow(e, false, !t.exact, ti)).join("") + '</details>' : "") + '</div>').join("");
-  const camH = cam ? '<button type="button" class="rds-cam" data-rdc="next"' + (cams.length > 1 ? "" : " disabled") + '><span class="vcam-ph"><img data-rdcam="' + esc(cam.id) + '" src="' + rdCamUrl(cam.id) + '" alt="' + esc(cam.name) + '" loading="lazy" onerror="this.parentNode.classList.add(\'vcam-err\')" onload="this.parentNode.classList.remove(\'vcam-err\')"><span class="vcam-gone">Camera not available</span><span class="vcam-lb">' + esc(cam.name) + '</span></span><span class="vcam-cap"><small>' + (cams.length > 1 ? 'Tap for the next camera (' + (NZF.rcam % cams.length + 1) + ' of ' + cams.length + ')' : "") + '</small><span class="vcam-cr">NZTA</span></span></button>' : "";
+    t.bad.map(e => evRow(e, /closed/i.test(e.imp), !t.exact, ti)).join("") + t.near.map(e => nearRow(e, ti)).join("") + (t.plan.length ? '<details class="rds-pl"><summary>' + mdi("traffic-cone") + t.plan.length + ' planned work' + (t.plan.length > 1 ? "s" : "") + '</summary>' + t.plan.map(e => evRow(e, false, !t.exact, ti)).join("") + '</details>' : "") +
+    (t.old.length ? '<details class="rds-pl"><summary>' + mdi("help-circle-outline") + t.old.length + ' possibly out of date</summary>' + t.old.map(e => evRow(e, false, !t.exact, ti)).join("") + '</details>' : "") + '</div>').join("");
+  const camH = rdCamH();
   return '<div class="pn hzpr"><div class="hzlh"><span class="lbl">' + mdi("road-variant") + ' Roads · NZTA</span><small>state highways on your routes</small></div>' + trips + camH + '</div>';
 }
 // the map sheet for one event: a pin at its middle point (the embedded map cannot draw the closed stretch), the details and the detour, Open in Google Maps
@@ -14017,26 +14308,32 @@ function rdStatic(e, t, whole, key) {
   if (!whole) P.push("center=" + ll(mid), "zoom=15");
   return "https://maps.googleapis.com/maps/api/staticmap?" + P.join("&") + "&key=" + encodeURIComponent(key);
 }
-function rdSheet(id, ti, whole) {
-  const e = (NZF.rdEv || {})[id]; if (!e || !e.pts.length) return;
+// one road event as its parts (title, verdict, map, text): the map sheet and the header-chip pop-up (49-takeover.js) both show them
+function rdPane(id, ti, whole) {
+  const e = (NZF.rdEv || {})[id]; if (!e || !e.pts.length) return null;
   const t = (NZF.rdTrip || [])[+ti], p = e.pts[Math.floor(e.pts.length / 2)], q = p[0].toFixed(5) + "," + p[1].toFixed(5), u = "https://www.google.com/maps/search/?api=1&query=" + q, key = typeof gmKey === "function" ? gmKey() : "";
-  if (!key || typeof cmtShow !== "function") return cmtOpen(u);
   const ttl = [e.hw, e.type || e.imp].filter(Boolean).join(" · ") + (e.imp && e.imp !== "Caution" && e.type ? " · " + e.imp : ""), who = t ? t.name.replace(/ · home ↔ work$/, "") : "";
   // the verdict, from the route line itself
   const d = t && t.line ? rdDist(e.pts, t.line) : null;
   const vd = d == null ? (t && !t.own && t.via ? "Route not drawn: allow Routes API for your Google key to see " + (who ? who + "'s" : "the") + " route" : "") : d <= .3 ? "On " + (who ? who + "'s" : "the") + " drive to work" : "Not on " + (who ? who + "'s" : "the") + " drive to work: about " + (d < 1 ? Math.round(d * 10) * 100 + " m" : d.toFixed(1) + " km") + " away";
   const drawn = !RDR.noStatic;
-  const map = drawn ? '<div class="rds-map"><img class="cmf" alt="Map of the event" src="' + esc(rdStatic(e, t, whole, key)) + '" onerror="rdNoStatic(\'' + esc(String(id)) + '\',\'' + esc(String(ti)) + '\')"><div class="rds-mv"><button type="button" class="' + (whole ? "" : "on") + '" data-rdv="0">CLOSE UP</button><button type="button" class="' + (whole ? "on" : "") + '" data-rdv="1">WHOLE TRIP</button></div></div>' +
+  const map = !key ? "" : drawn ? '<div class="rds-map"><img class="cmf" alt="Map of the event" src="' + esc(rdStatic(e, t, whole, key)) + '" onerror="rdNoStatic(\'' + esc(String(id)) + '\',\'' + esc(String(ti)) + '\')"><div class="rds-mv"><button type="button" class="' + (whole ? "" : "on") + '" data-rdv="0">CLOSE UP</button><button type="button" class="' + (whole ? "on" : "") + '" data-rdv="1">WHOLE TRIP</button></div></div>' +
       '<div class="rds-lg"><span><i class="rds-lr"></i>' + (e.pts.length > 1 ? "closed or affected stretch" : "where it is") + '</span>' + (t && t.line ? '<span><i class="rds-lb"></i>' + esc(who ? who + "'s" : "your") + ' route, H home → W work</span>' : "") + '</div>'
     : '<iframe class="cmf" title="Where it is" src="' + esc("https://www.google.com/maps/embed/v1/place?key=" + encodeURIComponent(key) + "&q=" + q + "&zoom=15") + '" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
-  cmtShow('<div class="cmb rds-sheet" role="dialog" aria-label="Road event" data-rde="' + esc(String(id)) + '" data-rdt="' + esc(String(ti)) + '"><div class="cmh"><div><b>' + esc(ttl) + '</b><small>' + esc(e.area) + (e.en ? " · until " + esc(hzWhen(e.en)) : "") + '</small></div><button class="rnd" data-cmx aria-label="Close">' + mdi("close") + '</button></div>' +
-    (vd ? '<div class="rds-vd' + (d != null && d <= .3 ? " on" : d != null ? " off" : "") + '">' + mdi(d != null && d <= .3 ? "alert" : d != null ? "check-circle-outline" : "help-circle-outline") + '<span>' + esc(vd) + '</span></div>' : "") + map +
-    (e.txt || e.alt ? '<div class="sm rds-sh">' + esc(e.txt) + (e.alt ? (e.txt ? " " : "") + "Detour: " + esc(e.alt) : "") + '</div>' : "") +
-    '<button class="cmn" data-cmgo="' + esc(u) + '">' + mdi("map-marker") + '<span>OPEN IN GOOGLE MAPS</span></button><div class="sm cmno">From NZTA' + (drawn ? "" : " · the pin marks the middle of the event; allow Maps Static API to see the stretch and the route drawn") + '</div></div>');
+  return { e: e, t: t, u: u, key: key, ttl: ttl, sub: e.area + (e.en ? " · until " + hzWhen(e.en) : ""), drawn: drawn, map: map,
+    vd: vd ? '<div class="rds-vd' + (d != null && d <= .3 ? " on" : d != null ? " off" : "") + '">' + mdi(d != null && d <= .3 ? "alert" : d != null ? "check-circle-outline" : "help-circle-outline") + '<span>' + esc(vd) + '</span></div>' : "",
+    txt: e.txt || e.alt ? '<div class="sm rds-sh">' + esc(e.txt) + (e.alt ? (e.txt ? " " : "") + "Detour: " + esc(e.alt) : "") + '</div>' : "" };
+}
+function rdSheet(id, ti, whole) {
+  const P = rdPane(id, ti, whole); if (!P) return;
+  if (!P.key || typeof cmtShow !== "function") return cmtOpen(P.u);
+  cmtShow('<div class="cmb rds-sheet" role="dialog" aria-label="Road event" data-rde="' + esc(String(id)) + '" data-rdt="' + esc(String(ti)) + '"><div class="cmh"><div><b>' + esc(P.ttl) + '</b><small>' + esc(P.sub) + '</small></div><button class="rnd" data-cmx aria-label="Close">' + mdi("close") + '</button></div>' +
+    P.vd + P.map + P.txt +
+    '<button class="cmn" data-cmgo="' + esc(P.u) + '">' + mdi("map-marker") + '<span>OPEN IN GOOGLE MAPS</span></button>' + (RDR.fromTk ? '<button class="cmn cms" data-tkroad>' + mdi("road-variant") + '<span>ALL ROAD EVENTS</span></button>' : "") + '<div class="sm cmno">From NZTA' + (P.drawn ? "" : " · the pin marks the middle of the event; allow Maps Static API to see the stretch and the route drawn") + '</div></div>');
 }
 // the key does not allow the Maps Static API: use the pin map from now on (this session)
-function rdNoStatic(id, ti) { if (RDR.noStatic) return; RDR.noStatic = 1; const el = $("#cmtsh"); if (el && el.classList.contains("on")) rdSheet(id, ti); }
-$("#hazards").addEventListener("click", e => { if (e.target.closest("[data-rdc]")) { NZF.rcam++; nzfPanels(); return; } const r = e.target.closest("[data-rde]"); if (r) rdSheet(r.dataset.rde, r.dataset.rdt); });
+function rdNoStatic(id, ti) { if (RDR.noStatic) return; RDR.noStatic = 1; const el = $("#cmtsh"); if (el && el.classList.contains("on")) { if (el.querySelector(".tk-pane")) { if (typeof tkRoadSel === "function") tkRoadSel(id, ti); } else rdSheet(id, ti); } }
+$("#hazards").addEventListener("click", e => { if (e.target.closest("[data-rdc]")) { NZF.rcam++; nzfPanels(); return; } const r = e.target.closest("[data-rde]"); if (r) { RDR.fromTk = false; rdSheet(r.dataset.rde, r.dataset.rdt); } });
 // CLOSE UP / WHOLE TRIP: only the picture changes, and only once the new one has loaded (no redraw of the sheet, so no blink)
 document.addEventListener("click", e => {
   const v = e.target.closest("#cmtsh [data-rdv]"); if (!v) return; const b = v.closest(".rds-sheet"), img = b && b.querySelector(".rds-map img"); if (!img) return;
@@ -14328,7 +14625,7 @@ document.addEventListener("click", e => { const b = e.target.closest("[data-csv]
   csvSave({ last: csvIso(last), km: g("km") ? Math.round(+g("km")) : null, due: csvIso(csvYear(last, +csvCfg().everyMonths || 12)) });
 });
 // ---------- Updates and the tools button (2.5.17) ----------
-// The tools button on Settings opens a sheet listing every update waiting (update.* entities that are on) with a tick box each: INSTALL SELECTED or UPDATE ALL. They install several at once (updatesAtOnce, default 5),
+// The tools button on Settings opens a sheet listing every update waiting (update.* entities that are on) with a tick box each: INSTALL SELECTED or UPDATE ALL. They install several at once (Zigbee and mesh devices updatesAtOnce, default 5; the rest updatesAtOnceOther, default 15; a warning shows before more than 5 or UPDATE ALL),
 // Home Assistant Core / OS / Supervisor last (those restart Home Assistant), with "Back up first" where the update supports it. Tap a name for its card (release notes, skip).
 // On the Settings page admins get a round tools button at the bottom right: a tap pops out two small buttons, Updates and Quick actions, each opening its own sheet,
 // with a count on it while updates wait. It sits above the music mini player or the music button when they show. Not for non-admins.
@@ -14366,14 +14663,35 @@ function updRun(list) {
   list.filter(e => UPD.q.indexOf(e) < 0 && !UPD.run[e]).sort((a, b) => updLast(a) - updLast(b)).forEach(e => UPD.q.push(e));
   UPD.sel.clear(); UPD.msg = ""; updNext(); updDraw();
 }
-// how many install together: config updatesAtOnce (default 5; 0 or "all" = no limit). Home Assistant Core / OS / Supervisor wait until the rest is done, then go one by one
+// how many install together. Zigbee and other mesh devices (ZHA, Zigbee2MQTT, Z-Wave, Matter) are slow and clog the radio, so they go updatesAtOnce at a time (default 5; 0 or "all" = no limit);
+// everything else goes updatesAtOnceOther at a time (default 15). Home Assistant Core / OS / Supervisor wait until the rest is done, then go one by one
 const updMax = () => { const n = CONFIG.updatesAtOnce; return n === "all" || n === 0 ? Infinity : Math.max(1, +n || 5); };
+const updMaxO = () => { const n = CONFIG.updatesAtOnceOther; return n === "all" || n === 0 ? Infinity : Math.max(1, +n || 15); };
+// which integration owns each update entity: asked once from the entity registry (admins only). Until it answers, or if it can't, every update counts as mesh (the careful way)
+function updLoadReg() {
+  if (UPD.reg || UPD.regBusy || !ADMIN_ON()) return; UPD.regBusy = true;
+  send({ type: "config/entity_registry/list_for_display" }, (r, m) => {
+    UPD.regBusy = false; const L = m && m.success !== false && m.result && m.result.entities; if (!L) return;
+    const o = {}; L.forEach(x => { if (x.ei && x.ei.indexOf("update.") === 0) o[x.ei] = x.pl || ""; }); UPD.reg = o; updDraw();
+  });
+}
+const updMeshPl = () => Array.isArray(CONFIG.updatesMesh) ? CONFIG.updatesMesh : ["zha", "mqtt", "zwave_js", "matter", "thread"];
+const updMesh = e => !UPD.reg || !UPD.reg[e] || updMeshPl().indexOf(UPD.reg[e]) >= 0;
+// a warning before a big batch: more than 5 at once, or UPDATE ALL
+function updWarn(A, all, fn) {
+  const big = A.length > 5; if (!big && !all) return fn();
+  const nm = A.filter(updMesh).length, no = A.length - nm, lim = n => n === Infinity ? "all at once" : n + " at a time";
+  insAsk("Install " + (all ? "all " : "") + A.length + " updates?", big ? "Installing this many together can slow or freeze the house for several minutes." : "",
+    (nm ? nm + " Zigbee or mesh device" + (nm === 1 ? "" : "s") + " go " + lim(updMax()) + (no ? "; " : ". ") : "") + (no ? no + " other" + (no === 1 ? "" : "s") + " go " + lim(updMaxO()) + ". " : "") +
+    (A.some(updLast) ? "Home Assistant itself goes last (it restarts). " : "") + "Lights, sensors and automations may stop responding while it runs. Fewer at a time is safer.", all ? "Install all" : "Install", fn);
+}
 function updNext() {
   for (;;) {
-    const n = Object.keys(UPD.run).length; if (!UPD.q.length) break;
-    const e = UPD.q[0], last = updLast(e);
-    if (last ? n > 0 : n >= updMax() || Object.keys(UPD.run).some(updLast)) break;
-    UPD.q.shift(); UPD.run[e] = Date.now(); const sf = +((states[e] || {}).attributes || {}).supported_features || 0;
+    const R = Object.keys(UPD.run); if (!UPD.q.length || R.some(updLast)) break;
+    const nm = R.filter(updMesh).length, no = R.length - nm;
+    let i = UPD.q.findIndex(e => !updLast(e) && (updMesh(e) ? nm < updMax() : no < updMaxO()));
+    if (i < 0) { if (!R.length && !UPD.q.some(e => !updLast(e))) i = 0; else break; }
+    const e = UPD.q.splice(i, 1)[0], last = updLast(e); UPD.run[e] = Date.now(); const sf = +((states[e] || {}).attributes || {}).supported_features || 0;
     send({ type: "call_service", domain: "update", service: "install", service_data: sf & 8 ? { backup: UPD.backup } : {}, target: { entity_id: e } }, (r, m) => {
       if (m && m.success === false) { UPD.msg = "Couldn’t install " + updName(e) + ": " + ((m.error && m.error.message) || "Home Assistant refused it") + "."; delete UPD.run[e]; updNext(); updDraw(); } });
     if (last) break;
@@ -14412,7 +14730,7 @@ function updFabMake() {
   s.addEventListener("click", e => { if (e.target === s || e.target.closest("[data-tlx]")) { UPD.open = ""; updDraw(); return; } const q = e.target.closest("[data-adq]"); if (q && typeof admQa === "function") admQa(q.dataset.adq); });
 }
 function updDraw() {
-  updFabMake();
+  updFabMake(); nbgDraw(); updHome();
   const adm = typeof ADMIN_ON === "function" && ADMIN_ON(), pg = curPg(), n = adm ? updList().length : 0, fab = $("#tlfab");
   fab.hidden = !adm || (pg !== "admin" && pg !== "theme");
   fab.classList.toggle("run", !UPD.dial && (Object.keys(UPD.run).length > 0 || Object.keys(states).some(e => e.startsWith("update.") && upcBusy((states[e] || {}).attributes))));
@@ -14434,13 +14752,391 @@ document.addEventListener("click", e => {
   const b = e.target.closest("[data-upd]"); if (!b) return; const a = b.dataset.upd, L = updList();
   if (a === "bk") { UPD.backup = b.checked; return; }
   if (a === "selall") { if (updAllOn()) UPD.sel.clear(); else updPick().forEach(e2 => UPD.sel.add(e2)); updDraw(); return; }
-  if (a === "sel") { const S = [...UPD.sel]; if (S.length) updRun(S); return; }
-  if (a === "all") { const A = L.filter(e2 => updCan(e2) && !upcBusy(states[e2].attributes)); if (A.length) insAsk("Install all " + A.length + " updates?", "", (updMax() === Infinity ? "All at once" : updMax() + " at a time") + (A.some(updLast) ? ", Home Assistant itself last (it restarts)" : "") + ". Things connected to them may be unavailable for a few minutes.", "Install all", () => updRun(A)); }
+  if (a === "sel") { const S = [...UPD.sel]; if (S.length) updWarn(S, false, () => updRun(S)); return; }
+  if (a === "all") { const A = L.filter(e2 => updCan(e2) && !upcBusy(states[e2].attributes)); if (A.length) updWarn(A, true, () => updRun(A)); }
 }, true);
 document.addEventListener("keydown", e => { if (e.key === "Escape" && (UPD.open || UPD.dial)) { UPD.open = ""; UPD.dial = false; updDraw(); } });
 addEventListener("hashchange", () => { UPD.open = ""; UPD.dial = false; updDraw(); });
 setInterval(() => { if (!document.hidden) updDraw(); }, 2000);
-setTimeout(updDraw, 1500);
+setTimeout(() => { updLoadReg(); updDraw(); }, 1500);
+
+// Important counts: "needs you" from Insights and the pending updates (admins only, since only they can open them). They show as a badge on the menu items
+// (the sidebar and the More sheet), a dot on the More button, and on Home (a pill in the greeting card on a phone, a card in the strip on a tablet).
+const nbgIns = () => (typeof insOn === "function" && insOn() && PAGE_ON("insights")) ? (INS.last || []).filter(x => x.lvl === 2).length : 0;
+const nbgUpd = () => (typeof ADMIN_ON === "function" && ADMIN_ON()) ? updList().length : 0;
+function nbgDraw() {
+  const I = nbgIns(), U = nbgUpd();
+  const put = (a, n, tone) => { let b = a.querySelector(":scope > .nbg"); if (!n) { if (b) b.remove(); return; } if (!b) { b = document.createElement("i"); b.className = "nbg"; a.appendChild(b); } if (b.textContent !== String(n)) b.textContent = n; b.dataset.tone = tone; };
+  $$('nav a[href="#insights"], #mshe a[href="#insights"]').forEach(a => put(a, I, "bad"));
+  $$("#navset, #navset2").forEach(a => put(a, U, "upd"));
+  const m = $("#bmore"); if (m) m.classList.toggle("hasn", I + U > 0);
+}
+function updHome() {
+  const lv = $("#lvc"), n = nbgUpd(); let el = $("#updc");
+  if (!el) { if (!lv) return; el = document.createElement("a"); el.id = "updc"; el.className = "pn pg"; el.href = "#admin"; el.setAttribute("data-updgo", ""); ($("#insc") || lv).after(el); }
+  const L = n ? updList() : [];
+  const h = n ? '<span class="insi">' + mdi("download") + '</span><span class="inst"><b>' + n + ' update' + (n > 1 ? "s" : "") + '</b><small>' + esc(updName(L[0])) + (n > 1 ? " · " + (n - 1) + " more" : "") + '</small></span><span class="insc">' + mdi("chevron-right") + '</span>' : "";
+  if (el._h !== h) { el._h = h; el.innerHTML = h; } el.hidden = !n;
+  if (typeof hsFit === "function") hsFit(); if (typeof hplDraw === "function") hplDraw();
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest && e.target.closest("[data-updgo]"); if (!b) return; e.preventDefault(); e.stopPropagation();
+  if (curPg() !== "admin") location.hash = "#admin";
+  setTimeout(() => { UPD.open = "upd"; UPD.dial = false; updDraw(); }, 200);
+}, true);
+// ---------- Header chips that used to leave the notifications panel now open a centred pop-up ----------
+// Road problem and Tsunami open here, over whatever page you are on. The Insights chips (Low battery, Bins out, Pollen, Roster) open the Insights card the
+// same way (32-notifications-popup.js shows #insd with the "ctr" class). A tablet gets the wide pop-up (events on the left, map and detour on the right),
+// a phone a single column list; a tap on an event there opens the map sheet.
+const TK = { kind: "", sel: null, whole: false, wide: false };
+const tkWideOk = () => innerWidth >= 900;
+const tkOpenNow = () => { const el = $("#cmtsh"); return !!(el && el.classList.contains("on") && el.querySelector(".cmb.tk")); };
+const tkClose = () => { const el = $("#cmtsh"); if (el) { el.classList.remove("on"); el.innerHTML = ""; } };
+function tkEvBtn(e, ti, sel) {
+  const red = /closed/i.test(e.imp), nm = [e.hw, e.type || e.imp].filter(Boolean).join(" · ") + (e.imp && e.imp !== "Caution" && e.type ? " · " + e.imp : "");
+  return '<button type="button" class="tk-ev ' + (red ? "red" : "amb") + (sel ? " sel" : "") + '" data-tkev="' + esc(String(e.id)) + '" data-tkt="' + ti + '"><i class="tk-dot"></i><span><b>' + esc(nm) + '</b><small>' + esc(e.area) +
+    (e.plan && e.st && !e.on ? " · from " + esc(hzWhen(e.st)) : e.en ? " · until " + esc(hzWhen(e.en)) : "") + (e.stale ? " · NZTA expected it to end " + esc(hzWhen(e.en || e.exp)) : "") + '</small></span>' + mdi("chevron-right") + '</button>';
+}
+function tkRoadData() {
+  const T = rdTrips(); NZF.rdEv = {}; NZF.rdTrip = T || [];
+  (T || []).forEach(t => t.bad.concat(t.old, t.plan, t.near).forEach(e => { NZF.rdEv[e.id] = e; }));
+  return T;
+}
+function tkRoadFirst(T) { for (let i = 0; i < (T || []).length; i++) if (T[i].bad.length) return { id: String(T[i].bad[0].id), ti: i }; return null; }
+function tkRoadRail(T, sel) {
+  if (!T) return '<p class="tk-none">' + mdi("help-circle-outline") + '<span>No data from NZTA (' + esc(rdSens().join(", ")) + ')</span></p>';
+  return T.map((t, ti) => '<div class="tk-t"><div class="tk-th">' + esc(t.name) + '</div>' +
+    (t.bad.length ? t.bad.map(e => tkEvBtn(e, ti, !!sel && sel.id === String(e.id) && sel.ti === ti)).join("") : '<div class="tk-ok">' + mdi("check-circle-outline") + '<span>No problems on this route</span></div>') +
+    (t.plan.length ? '<details class="tk-pl"><summary>' + mdi("traffic-cone") + t.plan.length + ' planned work' + (t.plan.length > 1 ? "s" : "") + '</summary>' + t.plan.map(e => tkEvBtn(e, ti, false)).join("") + '</details>' : "") +
+    (t.old.length ? '<details class="tk-pl"><summary>' + mdi("help-circle-outline") + t.old.length + ' possibly out of date</summary>' + t.old.map(e => tkEvBtn(e, ti, false)).join("") + '</details>' : "") + '</div>').join("");
+}
+function tkRoadPane(sel, whole) {
+  const P = sel ? rdPane(sel.id, sel.ti, whole) : null;
+  if (!P) return { html: '<div class="tk-none big">' + mdi("check-circle-outline") + '<span>No road problems on your routes</span></div>', u: "" };
+  return { u: P.u, html: '<div class="tk-pt"><b>' + esc(P.ttl) + '</b><small>' + esc(P.sub) + '</small></div>' + P.vd + P.map + P.txt + '<div class="sm cmno">From NZTA' + (P.map && !P.drawn ? " · the pin marks the middle of the event" : "") + '</div>' };
+}
+const tkBad = T => (T || []).reduce((a, t) => a + t.bad.length, 0);
+const tkSubRoad = T => !T ? "No data from NZTA" : tkBad(T) ? tkBad(T) + " problem" + (tkBad(T) > 1 ? "s" : "") + " on your routes · NZTA" : "No problems on your routes · NZTA";
+function tkShell(kind, icon, tone, ttl, sub, body, foot, wide) {
+  return '<div class="cmb tk tk-' + kind + (wide ? " tkw" : "") + '" role="dialog" aria-label="' + esc(ttl) + '" data-tk="' + kind + '"><div class="tk-h"><span class="tk-ic ' + tone + '">' + mdi(icon) + '</span><div class="tk-ht"><b>' + esc(ttl) + '</b><small class="tk-sub">' + esc(sub) + '</small></div><button class="rnd" data-cmx aria-label="Close">' + mdi("close") + '</button></div>' +
+    body + '<div class="tk-f">' + foot + '</div></div>';
+}
+function tkOpen(kind, key) {
+  if (typeof cmtShow !== "function") return;
+  TK.kind = kind; TK.wide = tkWideOk(); TK.whole = false;
+  if (kind === "wx") return tkWxOpen(key);
+  if (kind === "cam") return tkCamOpen(key);
+  if (kind === "ww") return tkWwOpen(key);
+  if (kind === "road") {
+    const T = tkRoadData(); TK.sel = tkRoadFirst(T); RDR.fromTk = !TK.wide;
+    const hz = '<button class="eb tk-b" data-tka="roads">' + (TK.wide ? "OPEN HAZARDS PAGE" : "ALL ROAD EVENTS") + '</button>';
+    if (TK.wide) {
+      const pane = tkRoadPane(TK.sel, false);
+      cmtShow(tkShell("road", "road-variant", tkBad(T) ? "warn" : "ok", "Road problem", tkSubRoad(T),
+        '<div class="tk-cols"><div class="tk-rail">' + tkRoadRail(T, TK.sel) + rdCamH() + '</div><div class="tk-pane rds-sheet" data-rde="' + esc(TK.sel ? TK.sel.id : "") + '" data-rdt="' + (TK.sel ? TK.sel.ti : "") + '">' + pane.html + '</div></div>',
+        hz + (pane.u ? '<button class="eb tk-b" data-cmgo="' + esc(pane.u) + '">OPEN IN GOOGLE MAPS</button>' : "") + '<button class="eb tk-b pri" data-cmx>DONE</button>', true));
+    } else cmtShow(tkShell("road", "road-variant", tkBad(T) ? "warn" : "ok", "Road problem", tkSubRoad(T), '<div class="tk-rail">' + tkRoadRail(T, null) + '</div>', hz + '<button class="eb tk-b pri" data-cmx>DONE</button>', false));
+  } else {
+    const lv = typeof slvLevel === "function" ? slvLevel() : 0;
+    cmtShow(tkShell("sea", "waves", lv === 2 ? "bad" : "warn", "Sea level", lv === 2 ? "Tsunami · land" : "Tsunami · beach", '<div class="tk-body">' + slvHtml() + '</div>',
+      '<button class="eb tk-b" data-tka="sea">OPEN HAZARDS PAGE</button><button class="eb tk-b pri" data-cmx>DONE</button>', false));
+  }
+}
+// ---------- weather: a tap on an alert card in Notifications opens that alert here (the living card, its facts, and the other alerts to switch to) ----------
+const TKW_TIP = { uv: [0, "Sunscreen if you will be outside for long.", "Sunscreen, a hat and shade through the middle of the day.", "Stay out of the midday sun and cover up."], wind: [0, "", "Secure anything loose outside.", "Secure everything outside and stay clear of trees and signs."], rain: [0, "", "Bring washing in and close the windows.", "Bring washing in, close the windows and check your drains."] };
+const tkwKeys = w => ["wind", "rain", "uv"].filter(k => w[k]).sort((a, b) => w[b].tier - w[a].tier || (w[b].now ? 1 : 0) - (w[a].now ? 1 : 0));
+function tkwFacts(k, x) {
+  const f = (l, v) => v ? '<div><small>' + l + '</small><b>' + esc(v) + '</b></div>' : "";
+  if (k === "uv") { const w = x.win; return f("PEAK", x.fmax != null ? "UV " + Math.round(x.fmax) + (x.fat ? " around " + wxaTime(x.fat) : "") : "") + f(w && w.e ? "UV " + x.t[0] + " OR MORE UNTIL" : "UV " + x.t[0] + " OR MORE FROM", w ? wxaTime(w.e || w.s) : ""); }
+  if (k === "rain") return f("UP TO", +x.max.toFixed(1) + " mm/h") + f(x.now ? "UNTIL" : "STARTS", wxaTime(x.now ? x.to : x.from));
+  return f(x.now ? "NOW" : "AROUND " + wxaTime(x.fat).toUpperCase(), Math.round(x.v) + " km/h") + f(x.gust != null && x.gust > x.v + 1 ? "GUSTS" : "FORECAST PEAK", x.gust != null && x.gust > x.v + 1 ? Math.round(x.gust) + " km/h" : x.fmax != null ? Math.round(x.fmax) + " km/h" : "");
+}
+function tkwPane(k, w) {
+  const x = w[k], tip = (TKW_TIP[k] || [])[x.tier] || "";
+  return '<div class="tk-wxcard">' + wxaCard(k, x, w.cfg, false, false) + '</div><div class="tk-facts">' + tkwFacts(k, x) + '</div>' + (tip ? '<div class="tk-tip">' + esc(tip) + '</div>' : "");
+}
+function tkwRail(ks, w, sel, wide) {
+  return ks.map(k => wide ? '<button type="button" class="tk-wr wt' + w[k].tier + (k === sel ? " sel" : "") + '" data-tkwx="' + k + '"><small>' + esc(wxaParts(k, w[k])[0]) + '</small><b>' + esc(wxaParts(k, w[k])[1]) + '</b>' + wxaBars(k, w[k], w.cfg, true) + '</button>' :
+    '<button type="button" class="tk-wc' + (k === sel ? " on" : "") + '" data-tkwx="' + k + '">' + (k === "uv" ? "UV" : k.toUpperCase()) + '</button>').join("");
+}
+function tkWxOpen(key) {
+  const w = wxaNow(); if (!w) { tkClose(); return; }
+  const ks = tkwKeys(w), k = ks.indexOf(key) >= 0 ? key : ks[0], x = w[k], P = wxaParts(k, x); TK.sel = k;
+  const foot = '<button class="eb tk-b" data-tka="wx">OPEN WEATHER PAGE</button><button class="eb tk-b pri" data-cmx>DONE</button>';
+  const head = [k, x.tier === 3 ? "bad" : "warn", P[1], P[2] || ""];
+  if (TK.wide) cmtShow(tkShell("wx", wxaIc[k](x), head[1], head[2], head[3], '<div class="tk-cols"><div class="tk-rail tk-wxl">' + tkwRail(ks, w, k, true) + '</div><div class="tk-pane">' + tkwPane(k, w) + '</div></div>', foot, true));
+  else cmtShow(tkShell("wx", wxaIc[k](x), head[1], head[2], head[3], '<div class="tk-body">' + (ks.length > 1 ? '<div class="tk-wsw">' + tkwRail(ks, w, k, false) + '</div>' : "") + '<div class="tk-wxp">' + tkwPane(k, w) + '</div></div>', foot, false));
+}
+function tkWxSel(k) {
+  const w = wxaNow(), el = $("#cmtsh .tk-wx"); if (!w || !el || !w[k]) return; TK.sel = k;
+  const x = w[k], P = wxaParts(k, x), ks = tkwKeys(w), pane = el.querySelector(".tk-pane, .tk-wxp");
+  if (pane) pane.innerHTML = tkwPane(k, w);
+  el.querySelectorAll("[data-tkwx]").forEach(b => { b.classList.toggle("sel", b.dataset.tkwx === k); b.classList.toggle("on", b.dataset.tkwx === k); });
+  const t = el.querySelector(".tk-ht b"), sb = el.querySelector(".tk-sub"), ic = el.querySelector(".tk-ic");
+  if (t) t.textContent = P[1]; if (sb) sb.textContent = P[2] || "";
+  if (ic) { ic.className = "tk-ic " + (x.tier === 3 ? "bad" : "warn"); ic.innerHTML = mdi(wxaIc[k](x)); }
+}
+// ---------- cameras: a tap on a camera in Notifications opens it here, live, with the garage door control under it ----------
+function tkCamList() { return typeof npCams === "function" ? npCams() : []; }
+// the camera's own detections, the same recordings as the Detections tab: a bar per hour for the last 24 hours (coloured by what was seen) and the newest clips to tap
+const tkTlItems = c => { const t0 = dtEnd() - 864e5; return dtItems().filter(x => x.cam === c.id && x.ts >= t0 && x.p.tags.some(t => t === "Person" || t === "Vehicle" || t === "Animal" || (DT.types || {})[t])); };
+function tkTlHtml(c) {
+  if (typeof dtItems !== "function" || CONFIG.detections === false || !CONFIG.playback || !CONFIG.playback[c.id]) return "";
+  const end = dtEnd(), t0 = end - 864e5, all = tkTlItems(c), bins = Array.from({ length: 24 }, () => ({}));
+  all.forEach(x => { const b = bins[Math.min(23, Math.floor((x.ts - t0) / 36e5))], t = x.p.tags[0]; b[t] = (b[t] || 0) + 1; });
+  const mx = Math.max(1, Math.max.apply(null, bins.map(b => Object.keys(b).reduce((a, k) => a + b[k], 0))));
+  const bars = bins.map(b => { const n = Object.keys(b).reduce((a, k) => a + b[k], 0), top = Object.keys(b).sort((p, q) => b[q] - b[p])[0]; return '<i style="height:' + (n ? Math.max(12, n / mx * 100) : 4) + '%;' + (n ? "background:" + (DTC[top] || "var(--mint)") : "") + '" title="' + n + '"></i>'; }).join("");
+  const lab = [0, 6, 12, 18].map(h => '<span>' + esc(dtTick(t0 + h * 36e5)) + '</span>').join("") + '<span>now</span>';
+  // like the Detections list: clips from this camera with the same detection, each within 5 minutes of the next (and in the same hour), are one chip with a count
+  const runs = []; all.forEach(x => { const r = runs[runs.length - 1], last = r && r[r.length - 1]; if (r && last.p.tags.join() === x.p.tags.join() && dtHourOf(last.ts) === dtHourOf(x.ts) && last.ts - x.ts <= 5 * 60000) r.push(x); else runs.push([x]); });
+  const chips = runs.slice(0, 10).map(r => { const x = r[r.length - 1], n = r.length, pl = DT_PL[x.p.tags[0]] || x.p.tags[0].toLowerCase(), th = dtThumbUrl(x);   // the oldest clip of the run opens first
+    return '<button type="button" class="tk-tlc" data-tkpl="' + esc(x.mc) + '" data-cam="' + esc(x.cam) + '" data-ts="' + x.ts + '" data-tg="' + esc(x.p.tags.join(",")) + '"><div class="tk-th" data-dth="' + esc(x.mc) + '">' + (th ? '<img alt="" src="' + esc(th) + '">' : "") + (n > 1 ? '<u>' + n + '</u>' : "") + '</div><span><b>' + esc(n > 1 ? dtTm(x.ts) + " to " + dtTm(r[0].ts) : dtTm(x.ts)) + '</b>' + esc(n > 1 ? n + " " + pl : x.p.tags.join(" · ")) + '</span></button>'; }).join("");
+  return '<div class="tk-tl"><div class="tk-tlh"><span>DETECTIONS · LAST 24 HOURS</span><em>' + (DT.busy && !all.length ? "Loading…" : all.length + (all.length === 1 ? " clip" : " clips")) + '</em></div><div class="tk-tlb">' + bars + '</div><div class="tk-tlk">' + lab + '</div>' +
+    (chips ? '<div class="tk-tlr">' + chips + '</div>' : '<div class="tk-tle">' + (DT.busy ? "Loading recordings…" : "Nothing detected in the last 24 hours") + '</div>') + '</div>';
+}
+function tkCamBody(c) {
+  const g = typeof galCfg === "function" && galCfg()[c.id], gc = g && g.opener && typeof galOpen === "function" && galOpen(g);
+  return '<div class="tk-camv snap npcam" data-npc="' + esc(c.id) + '" data-name="' + esc(c.name) + '"></div><div class="tk-tlw">' + tkTlHtml(c) + '</div>' +
+    (g && g.opener ? '<div class="tk-door ' + (gc ? "open" : "shut") + '"><i></i><span><b>Garage door</b><small>' + (gc ? "Open" : "Closed") + '</small></span>' + (gc ? '<button class="eb npgc" data-gclose="' + esc(c.id) + '">CLOSE</button>' : "") + '</div>' : "");
+}
+function tkCamOpen(key) {
+  const L = tkCamList(), c = L.find(x => x.key === key) || (typeof npCamFor === "function" ? npCamFor(key) : null);
+  if (!c) return; if (!L.some(x => x.id === c.id)) L.push(c); TK.sel = c.key; TK.cam = 1;
+  const foot = '<button class="eb tk-b" data-tka="cam">OPEN CAMERA PAGE</button><button class="eb tk-b pri" data-cmx>DONE</button>';
+  if (TK.wide && L.length > 1) cmtShow(tkShell("cam", "video", "ok", c.name, "Live view", '<div class="tk-cols"><div class="tk-rail tk-wxl">' + L.map(x => '<button type="button" class="tk-wr' + (x.key === c.key ? " sel" : "") + '" data-tkcam="' + esc(x.key) + '"><small>' + esc(x.name.toUpperCase()) + '</small><b>Live</b></button>').join("") + '</div><div class="tk-pane tk-campane">' + tkCamBody(c) + '</div></div>', foot, true));
+  else cmtShow(tkShell("cam", "video", "ok", c.name, "Live view", '<div class="tk-body">' + (L.length > 1 ? '<div class="tk-wsw">' + L.map(x => '<button type="button" class="tk-wc' + (x.key === c.key ? " on" : "") + '" data-tkcam="' + esc(x.key) + '">' + esc(x.name.toUpperCase()) + '</button>').join("") + '</div>' : "") + '<div class="tk-campane">' + tkCamBody(c) + '</div></div>', foot, false));
+  if (typeof npCamMount === "function") npCamMount();
+  tkTlLoad();
+}
+function tkTlLoad() { if (typeof THDB !== "undefined" && !DT.stored) { DT.stored = 1; THDB.load(); } if (typeof dtThumbs === "function") setTimeout(dtThumbs, 300); if (typeof dtLoad === "function" && typeof dtCams === "function" && dtCams().length && CONFIG.detections !== false && !DT.busy && Date.now() - (DT.t0 || 0) > 300000) dtLoad(); }
+function tkTlTick() {
+  if (!TK.cam || !tkOpenNow()) return; const el = $("#cmtsh .tk-cam .tk-tlw"); if (!el) return;
+  const c = tkCamList().find(x => x.key === TK.sel) || (typeof npCamFor === "function" ? npCamFor(TK.sel) : null); if (!c) return;
+  const h = tkTlHtml(c); if (el._h !== h) { el._h = h; const sc = el.querySelector(".tk-tlr"), l = sc ? sc.scrollLeft : 0; el.innerHTML = h; const n = el.querySelector(".tk-tlr"); if (n) n.scrollLeft = l; if (typeof dtThumbs === "function") dtThumbs(); }
+}
+setInterval(tkTlTick, 1500);
+function tkCamSel(key) {
+  const L = tkCamList(), c = L.find(x => x.key === key) || (typeof npCamFor === "function" ? npCamFor(key) : null), el = $("#cmtsh .tk-cam"); if (!c || !el) return; TK.sel = c.key;
+  const p = el.querySelector(".tk-campane"); if (p) p.innerHTML = tkCamBody(c);
+  el.querySelectorAll("[data-tkcam]").forEach(b => { b.classList.toggle("sel", b.dataset.tkcam === key); b.classList.toggle("on", b.dataset.tkcam === key); });
+  const t = el.querySelector(".tk-ht b"); if (t) t.textContent = c.name;
+  if (typeof npCamMount === "function") npCamMount();
+  tkTlLoad();
+}
+// when the pop-up closes the live view goes back to its slot in Notifications (or stops if that is closed too)
+setInterval(() => { if (TK.cam && !tkOpenNow()) { TK.cam = 0; if (typeof npCamMount === "function") npCamMount(); } }, 400);
+// pick another event (tablet): only the right side and the list's highlight change, so nothing blinks
+function tkRoadSel(id, ti) {
+  const el = $("#cmtsh .tk-road"); if (!el) return;
+  TK.sel = { id: String(id), ti: +ti }; TK.whole = false;
+  const pane = tkRoadPane(TK.sel, false), p = el.querySelector(".tk-pane");
+  if (p) { p.dataset.rde = TK.sel.id; p.dataset.rdt = String(TK.sel.ti); p.innerHTML = pane.html; }
+  el.querySelectorAll(".tk-ev").forEach(b => b.classList.toggle("sel", b.dataset.tkev === TK.sel.id && +b.dataset.tkt === TK.sel.ti));
+  const g = el.querySelector(".tk-f [data-cmgo]"); if (g && pane.u) g.dataset.cmgo = pane.u;
+}
+// keep an open pop-up current (a problem cleared, a new one, the sea level moving)
+function tkRefresh() {
+  if (!tkOpenNow()) return;
+  const el = $("#cmtsh .cmb.tk"), kind = el.dataset.tk;
+  if (kind === "road") {
+    const T = tkRoadData(); if (TK.sel && !(NZF.rdEv || {})[TK.sel.id]) TK.sel = tkRoadFirst(T);
+    const r = el.querySelector(".tk-rail"), h = tkRoadRail(T, TK.sel);
+    if (r._h !== h) { r._h = h; const camEl = r.querySelector(".rds-cam"); r.innerHTML = h; if (camEl) r.appendChild(camEl); }
+    const s = el.querySelector(".tk-sub"); if (s) s.textContent = tkSubRoad(T);
+  } else if (kind === "wx") {
+    const w = wxaNow(); if (!w) { tkClose(); return; } const ks = tkwKeys(w); if (!w[TK.sel]) { tkWxOpen(ks[0]); return; }
+    const pane = el.querySelector(".tk-pane, .tk-wxp"), h = tkwPane(TK.sel, w); if (pane && pane._h !== h) { pane._h = h; pane.innerHTML = h; }
+  } else if (kind === "ww") {
+    tkWwRefresh();
+  } else if (kind === "cam") {
+    // nothing to redraw: the picture is live
+  } else {
+    const b = el.querySelector(".tk-body"); if (b) { const h = slvHtml(); if (b._h !== h) { b._h = h; b.innerHTML = h; } }
+  }
+}
+setInterval(tkRefresh, 15000);
+document.addEventListener("click", e => {
+  const t = e.target.closest("#cmtsh .cmb.tk"); if (!t) return;
+  const ev = e.target.closest("[data-tkev]"); if (ev) { if (TK.wide) tkRoadSel(ev.dataset.tkev, ev.dataset.tkt); else { RDR.fromTk = true; rdSheet(ev.dataset.tkev, ev.dataset.tkt); } return; }
+  const pl = e.target.closest("[data-tkpl]"); if (pl) { if (typeof dtPlay === "function") { const c = tkCamList().find(x => x.key === TK.sel) || (typeof npCamFor === "function" ? npCamFor(TK.sel) : null); if (c) DT.mom = dtMoments(tkTlItems(c)); dtPlay(pl.dataset.tkpl, pl.dataset.cam, +pl.dataset.ts, (pl.dataset.tg || "").split(",").filter(Boolean)); } return; }
+  const wx = e.target.closest("[data-tkwx]"); if (wx) { tkWxSel(wx.dataset.tkwx); return; }
+  const cm = e.target.closest("[data-tkcam]"); if (cm) { tkCamSel(cm.dataset.tkcam); return; }
+  const a = e.target.closest("[data-tka]"); if (a) {
+    const k = a.dataset.tka; tkClose();
+    if (k === "wx") { document.body.classList.remove("np-open"); location.hash = "#weather/" + (TK.sel || ""); return; }
+    if (k === "cam") { VW.back = /^#(view|camera|notifications|active|batteries)/.test(location.hash) ? "#home" : (location.hash || "#home"); document.body.classList.remove("np-open"); location.hash = "#view/" + (TK.sel || ""); return; }
+    location.hash = k === "sea" ? "#hazards/sea" : "#hazards/roads"; return; }
+  if (e.target.closest("[data-rdc]")) { NZF.rcam++; const r = t.querySelector(".tk-rail"), c = r && r.querySelector(".rds-cam"); if (c) { const n = document.createElement("div"); n.innerHTML = rdCamH(); c.replaceWith(n.firstElementChild); } }
+});
+document.addEventListener("click", e => { if (e.target.closest("#cmtsh [data-tkroad]")) tkOpen("road"); });
+// ---------- weather warnings: a tap on the Weather warning card in Notifications opens it here, as a centred pop-up ----------
+// The warning text comes from the weatherWarnings sensor (MetService wording: "Title, body, 3 hrs from 4pm Wed - 7pm Wed"). The pop-up adds what the dashboard knows around it:
+// how bad (Red / Orange / Yellow from the title), when (a timeline), the forecast for the same hours, what is open or running at home, and the nearby road and sea feeds.
+const WW_KIND = [["thunder", /thunder|lightning/i, "weather-lightning"], ["rain", /rain|flood|downpour/i, "weather-pouring"], ["wind", /wind|gale|storm/i, "weather-windy"], ["snow", /snow|blizzard/i, "weather-snowy"],
+  ["heat", /heat|hot\b/i, "weather-sunny"], ["fire", /fire/i, "fire"], ["frost", /frost|ice\b|icy|cold/i, "snowflake"]];
+const WW_MON = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"], WW_DAY = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+// "4pm Wed", "midnight Fri, 6 Nov", "9:30am" -> a timestamp (0 when the wording is not understood; the pop-up then leaves the timeline out).
+// With no day in the text it takes the day of `ref` (a start like "2pm" next to an end like "7:30pm Wed, 11 Nov"), else today (tomorrow if that is long past).
+function wwTime(s, ref) {
+  s = String(s || "").toLowerCase(); const tm = /(\d{1,2})(?::(\d\d))?\s*(am|pm)|\b(midnight|noon)\b/.exec(s); if (!tm) return 0;
+  const h = tm[4] ? (tm[4] === "noon" ? 12 : 0) : (+tm[1] % 12) + (tm[3] === "pm" ? 12 : 0), mi = tm[4] ? 0 : +(tm[2] || 0), now = Date.now(), d = new Date(ref || now); d.setHours(h, mi, 0, 0);
+  const dm = new RegExp("(\\d{1,2})\\s+(" + WW_MON.join("|") + ")").exec(s), wd = new RegExp("\\b(" + WW_DAY.join("|") + ")").exec(s);
+  if (dm) { d.setMonth(WW_MON.indexOf(dm[2]), +dm[1]); if (d.getTime() < now - 180 * 864e5) d.setFullYear(d.getFullYear() + 1); }
+  else if (wd) { d.setDate(d.getDate() + (WW_DAY.indexOf(wd[1]) - d.getDay() + 7) % 7); if (!ref && d.getTime() < now - 12 * 36e5) d.setDate(d.getDate() + 7); }
+  else if (!ref && d.getTime() < now - 12 * 36e5) d.setDate(d.getDate() + 1);
+  return d.getTime();
+}
+const wwDur = ms => { const m = Math.max(1, Math.round(ms / 6e4)), h = Math.floor(m / 60); return h ? h + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : m + " min"; };
+// which hazards a warning is about, from its wording (used when the summary is not available, and as the icon)
+function wwKinds(txt) {
+  const k = []; if (/thunder|lightning|hail|downpour|torrential|heavy rain|flood|rain/i.test(txt)) k.push("rain"); if (/wind|gale|storm|thunder/i.test(txt)) k.push("wind");
+  if (/heat|hot\b|hot day|scorch/i.test(txt)) k.push("temp", "uv"); else if (/frost|freez|icy|\bice\b|cold|snow/i.test(txt)) k.push("temp"); return k.filter((v, i, q) => q.indexOf(v) === i);
+}
+function wwItems() {
+  const id = E("weatherWarnings"), st = states[id]; if (!st || !sv(id) || !st.attributes.warnings) return [];
+  return wwSplit(st.attributes.warnings).map(x => {
+    const w = wwParse(x), k = String(x.length) + ":" + x.slice(0, 60), ti = w.title || "Weather warning", kd = WW_KIND.find(q => q[1].test(ti)) || WW_KIND.find(q => q[1].test(w.body)) || ["", null, "weather-cloudy-alert"];
+    const col = /\b(red|orange|yellow)\b/i.exec(ti), lvl = /\bwatch\b/i.test(ti) ? "WATCH" : /\badvisory\b/i.test(ti) ? "ADVISORY" : "WARNING";
+    let end = w.t ? wwTime(w.t) : 0, start = w.f ? wwTime(w.f, end || 0) : 0; if (start && end && start > end) start -= 864e5; if (start && (!end || end <= start)) end = start + (w.hrs || 1) * 36e5;
+    return { k: k, w: w, title: ti, sev: col ? col[1].toLowerCase() : lvl === "WARNING" ? "orange" : "yellow", pill: col ? col[1].toUpperCase() : lvl, named: !!col, kind: kd[0], icon: kd[2], kinds: wwKinds(ti + " " + w.body), start: start, end: end };
+  });
+}
+// one small forecast chart (rain, wind, UV or temperature) for the next 12 hours, the warning hours shaded; the data is the hourly forecast the Weather page already loads
+function wwChart(it, kind) {
+  const now = Date.now(), a = (states[W] || {}).attributes || {}, u = a.wind_speed_unit || "km/h", k = /mph/i.test(u) ? 1.609 : /m\/s/i.test(u) ? 3.6 : /kn|kt/i.test(u) ? 1.852 : 1;
+  const val = x => kind === "rain" ? (+x.precipitation || 0) : kind === "wind" ? (x.wind_speed != null ? +x.wind_speed * k : null) : kind === "uv" ? (x.uv_index != null ? +x.uv_index : null) : (x.temperature != null ? +x.temperature : null);
+  const S = (fcH || []).map(x => ({ t: Date.parse(x.datetime), v: val(x) })).filter(s => s.v != null && s.t >= now - 36e5 && s.t <= now + 12 * 36e5);
+  if (S.length < 3) return "";
+  const vs = S.map(s => s.v), lo = kind === "temp" ? Math.min.apply(null, vs) - 2 : 0, mx = Math.max.apply(null, vs.concat(kind === "rain" ? 2 : kind === "wind" ? 30 : kind === "uv" ? 8 : lo + 6)), inw = s => it.start && s.t + 36e5 > it.start && s.t < it.end;
+  const pk = S.reduce((p, s) => s.v > p.v ? s : p, S[0]), cur = S.find(s => s.t + 36e5 > now) || S[0], n = S.length - 1;
+  const un = { rain: " mm/h", wind: " km/h", uv: "", temp: "°" }[kind], fm = v => kind === "rain" || kind === "temp" ? +v.toFixed(1) : Math.round(v), nm = { rain: "RAIN", wind: "WIND", uv: "UV", temp: "TEMPERATURE" }[kind];
+  const bars = S.map(s => '<i class="' + (inw(s) ? "in" : "") + '" style="height:' + Math.max(5, Math.round((s.v - lo) / (mx - lo) * 100)) + '%"></i>').join("");
+  const lb = [0, Math.round(n / 3), Math.round(n * 2 / 3), n].filter((v, i, q) => q.indexOf(v) === i).map(i => '<span>' + (i === 0 ? "now" : esc(wxaTime(S[i].t))) + '</span>').join("");
+  return '<div class="tk-wwc"><div class="tk-wwh">' + nm + ', NEXT ' + S.length + ' HOURS' + (it.start ? " · WARNING SHADED" : "") + '</div><div class="tk-wwb">' + bars + '</div><div class="tk-wwk">' + lb + '</div>' +
+    '<div class="tk-wwp">Peak <b>about ' + fm(pk.v) + un + '</b> around ' + esc(wxaTime(pk.t)) + '. Now <b>' + fm(cur.v) + un + '</b>.</div></div>';
+}
+function wwTl(it) {
+  if (!it.start) return "";
+  const now = Date.now(), r0 = Math.min(now, it.start), r1 = it.end + Math.max(36e5, (it.end - r0) * .25), p = t => (t - r0) / (r1 - r0) * 100;
+  const l = now < it.start ? "Starts in " + wwDur(it.start - now) : now < it.end ? "In effect now" : "Ended", r = now < it.end ? "Ends in " + wwDur(it.end - now) : "";
+  return '<div class="tk-wwt"><div class="tk-wwtb"><i class="w" style="left:' + p(it.start).toFixed(1) + '%;width:' + (p(it.end) - p(it.start)).toFixed(1) + '%"></i><i class="n" style="left:' + p(now).toFixed(1) + '%"></i></div>' +
+    '<div class="tk-wwtr"><b>' + l + '</b><span>' + esc(wxaTime(it.start) + " to " + wxaTime(it.end)) + '</span><span>' + r + '</span></div></div>';
+}
+const wwRow = (ic, t, sub, btn, go) => '<div class="tk-wwr' + (go ? " go" : "") + '"' + (go ? ' data-wwgo="' + go + '"' : "") + '><i>' + mdi(ic) + '</i><span><b>' + esc(t) + '</b>' + (sub ? '<small>' + esc(sub) + '</small>' : "") + '</span>' + (btn || "") + '</div>';
+// what at home matters while the warning is on (each row only when it applies)
+function wwPlace(it) {
+  const R = [], now = Date.now(), wins = [];
+  HOUSE().forEach(r => members(r.windows).forEach(x => { if (isOn(x) && wins.indexOf(x) < 0) wins.push(x); }));
+  if (wins.length) R.push(wwRow("window-open", wins.length > 1 ? wins.length + " windows open" : fname(wins[0]) + " open", wins.length > 1 ? lvNames(wins) : (it.start > now ? "Close before " + wxaTime(it.start) : "")));
+  const lv = typeof lvItems === "function" ? lvItems() : [], dr = lv.find(x => x.k === "doors"), gr = lv.find(x => x.k === "garage");
+  if (dr) R.push(wwRow("door-open", dr.t, dr.sub));
+  if (gr) { const gc = typeof galCfg === "function" ? galCfg() : {}, id = Object.keys(gc).find(i => gc[i].opener && galOpen(gc[i]));
+    R.push(wwRow("garage-open-variant", gr.t, gr.sub, id ? '<button class="eb npgc" data-gclose="' + esc(id) + '">CLOSE</button>' : "")); }
+  const zr = (CONFIG.irrigation || []).filter(z => z.switch && isOn(z.switch));
+  if (zr.length) R.push(wwRow("sprinkler-variant", "Irrigation running", zr.map(z => z.name).join(", ") + (it.kind === "rain" ? " · rain is on the way" : ""), '<button class="eb" data-wwirr>STOP</button>'));
+  if (typeof laundryOn === "function" && laundryOn()) { const rem = (parseInt(sv(E("laundryRemaining"))) || 0) * 1000; R.push(wwRow("washing-machine", "Washing machine running", rem ? "Done in " + wwDur(rem) : "")); }
+  return R.length ? '<div class="tk-wwl">AT YOUR PLACE</div>' + R.join("") : "";
+}
+function wwNear() {
+  const R = [];
+  if (typeof rdSens === "function" && rdSens().length && typeof tkRoadData === "function") { const T = tkRoadData(), n = tkBad(T); R.push(wwRow("road-variant", "Roads", T ? (n ? n + (n > 1 ? " problems" : " problem") : "No problems") : "No data", "", "road")); }
+  if (typeof SLV === "function" && SLV() && typeof slvLevel === "function") { const l = slvLevel(); R.push(wwRow("waves", "Sea level", l === 2 ? "Land threat" : l === 1 ? "Unusual waves" : "Calm", "", "sea")); }
+  return R.length ? '<div class="tk-wwl">NEARBY</div><div class="tk-wwn">' + R.join("") + '</div>' : "";
+}
+// ---- the plain-English summary: Home Assistant's own AI Task (for example the Google Generative AI integration, so the API key stays in Home Assistant, never in this page).
+// config: aiTask: "ai_task.google_ai_task" to pick the entity, false to switch it off; left out, the first ai_task entity found is used. Each warning text is summarised once and kept in this browser.
+const WWAI = (() => { try { return JSON.parse(localStorage.getItem("dashWwAi") || "{}"); } catch (_) { return {}; } })(), WWAI_BUSY = {}, WWAI_ERR = {};
+const wwHash = t => { let h = 5381; for (let i = 0; i < t.length; i++) h = ((h << 5) + h + t.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
+const wwAiKey = it => wwHash(it.w.title + "|" + it.w.body + "|" + it.w.f + "|" + it.w.t);
+const wwAiEnt = () => { const c = CONFIG.aiTask; if (c === false) return ""; if (typeof c === "string" && c) return c; return Object.keys(states).filter(k => k.indexOf("ai_task.") === 0)[0] || ""; };
+const wwAiGet = it => WWAI[wwAiKey(it)] || null;
+const WW_HZ = ["rain", "wind", "uv", "temp"];
+function wwAiAsk(it) {
+  const key = wwAiKey(it), ent = wwAiEnt(); if (!ent || WWAI[key] || WWAI_BUSY[key] || (WWAI_ERR[key] && Date.now() - WWAI_ERR[key] < 6e5)) return;
+  WWAI_BUSY[key] = 1;
+  const f = (d, o) => Object.assign({ description: d, selector: { text: {} } }, o || {});
+  send({ type: "call_service", domain: "ai_task", service: "generate_data", return_response: true, service_data: { entity_id: ent, task_name: "Weather warning summary",
+    instructions: "This is a weather warning from MetService in New Zealand, shown on a household dashboard. Write for a family, in plain English, calm and accurate. Use normal capitalisation (place names are written in capitals in the source; do not copy that). " +
+      "Never invent anything that is not in the text. Fill the fields: summary = one or two short sentences saying what is happening, where and how bad; advice = one short sentence of what to do, only if the text gives a reason to; " +
+      "hazards = which of rain, wind, uv, temp the warning is about (thunderstorms and downpours: rain, plus wind if gusts or severe winds are mentioned; heat or cold: temp; strong sun: uv); places = the main places, at most four, separated by commas.\n\nWarning:\n" + it.w.title + ". " + it.w.body,
+    structure: { summary: f("Short plain-English summary", { required: true }), advice: f("One short sentence of advice"), places: f("Main places, comma separated"),
+      hazards: { description: "Which of rain, wind, uv, temp the warning concerns", selector: { select: { options: WW_HZ, multiple: true } } } } } },
+  (r, m) => {
+    delete WWAI_BUSY[key]; const d = r && r.response && r.response.data;
+    if (!d || !d.summary) { WWAI_ERR[key] = Date.now(); return; }
+    WWAI[key] = { summary: String(d.summary), advice: String(d.advice || ""), places: String(d.places || ""), hazards: [].concat(d.hazards || []).filter(h => WW_HZ.indexOf(h) >= 0), t: Date.now() };
+    const ks = Object.keys(WWAI); if (ks.length > 30) ks.sort((p, q) => WWAI[p].t - WWAI[q].t).slice(0, ks.length - 30).forEach(k => delete WWAI[k]);
+    try { localStorage.setItem("dashWwAi", JSON.stringify(WWAI)); } catch (_) {}
+    if (typeof tkWwRefresh === "function") tkWwRefresh();
+    if (typeof queueNotif === "function" && document.getElementById("np")) queueNotif();
+  });
+}
+const wwSum = it => {
+  const a = wwAiGet(it), key = wwAiKey(it);
+  if (a) return '<div class="tk-wws"><div class="tk-wwsh">SUMMARY<em>AI</em></div><p>' + esc(a.summary) + '</p>' + (a.advice ? '<p class="adv">' + esc(a.advice) + '</p>' : "") + '</div>';
+  if (wwAiEnt() && WWAI_BUSY[key]) return '<div class="tk-wws ld"><div class="tk-wwsh">SUMMARY<em>AI</em></div><p>Summarising…</p></div>';
+  return "";
+};
+function wwPane(it) {
+  const w = it.w, long = w.body.length > 140, open = typeof WWO !== "undefined" && WWO.has(it.k), ai = wwAiGet(it), hz = (ai && ai.hazards.length ? ai.hazards : it.kinds).filter(h => WW_HZ.indexOf(h) >= 0);
+  const ch = WW_HZ.filter(h => hz.indexOf(h) >= 0).slice(0, 2).map(h => wwChart(it, h)).join("");
+  return wwSum(it) + wwTl(it) + ch + wwPlace(it) + wwNear() + '<div class="tk-wwl">' + (ai ? "FULL TEXT" : "WARNING") + '</div><div class="tk-wwx' + (long && !open ? " cl" : "") + '">' + esc(w.body) + '</div>' + (long ? '<button type="button" class="tk-wwm" data-tkwwm>' + (open ? "LESS" : "MORE") + mdi(open ? "chevron-up" : "chevron-down") + '</button>' : "");
+}
+function wwHead(it) {
+  const t = it.named ? it.title.replace(new RegExp("\\s*\\b" + it.pill + "\\b\\s*", "i"), " ").replace(/\s+/g, " ").trim() : it.title;
+  return [t, "MetService" + (it.w.dur ? " · " + it.w.dur + (it.w.f ? " from " + it.w.f.replace(/,\s*\d{1,2}\s+[A-Za-z]{3,}$/, "") : "") : ""), it.sev === "red" ? "bad" : "warn"];
+}
+const wwSevPill = it => '<span class="tk-sev ' + it.sev + '">' + esc(it.pill) + '</span>';
+const wwRail = (L, sel, wide) => L.map(it => wide ? '<button type="button" class="tk-wr' + (it.k === sel ? " sel" : "") + '" data-tkww="' + esc(it.k) + '"><small class="tk-wsv ' + it.sev + '">' + esc(it.pill) + '</small><b>' + esc(wwHead(it)[0]) + '</b><span>' + esc(it.start ? wxaTime(it.start) + " to " + wxaTime(it.end) : "") + '</span></button>' :
+  '<button type="button" class="tk-wc' + (it.k === sel ? " on" : "") + '" data-tkww="' + esc(it.k) + '"><i class="' + it.sev + '"></i>' + esc(it.pill + (L.filter(y => y.pill === it.pill).length > 1 ? " · " + wwHead(it)[0].replace(/\s*(warning|watch|advisory)$/i, "") : "").toUpperCase()) + '</button>').join("");
+function tkWwOpen(key) {
+  const L = wwItems(); if (!L.length) { tkClose(); return; }
+  L.forEach(wwAiAsk);
+  const it = L.find(x => x.k === key) || L[0], H = wwHead(it); TK.sel = ""; TK.ww = it.k;
+  const foot = '<button class="eb tk-b" data-tka="wx">OPEN WEATHER PAGE</button><button class="eb tk-b pri" data-cmx>DONE</button>';
+  if (TK.wide) cmtShow(tkShell("ww", it.icon, H[2], H[0], H[1], '<div class="tk-cols"><div class="tk-rail tk-wxl">' + wwRail(L, it.k, true) + '</div><div class="tk-pane tk-wwp2">' + wwPane(it) + '</div></div>', foot, true));
+  else cmtShow(tkShell("ww", it.icon, H[2], H[0], H[1], '<div class="tk-body">' + (L.length > 1 ? '<div class="tk-wsw">' + wwRail(L, it.k, false) + '</div>' : "") + '<div class="tk-wwp2">' + wwPane(it) + '</div></div>', foot, false));
+  const t = $("#cmtsh .tk-ww .tk-ht b"); if (t) t.insertAdjacentHTML("afterend", wwSevPill(it));
+}
+function tkWwSel(k) {
+  const L = wwItems(), it = L.find(x => x.k === k), el = $("#cmtsh .tk-ww"); if (!it || !el) return; TK.ww = k;
+  const H = wwHead(it), pane = el.querySelector(".tk-wwp2"); if (pane) { pane._h = ""; pane.innerHTML = wwPane(it); }
+  el.querySelectorAll("[data-tkww]").forEach(b => { const on = b.dataset.tkww === k; b.classList.toggle("sel", on); b.classList.toggle("on", on); });
+  const t = el.querySelector(".tk-ht b"), sb = el.querySelector(".tk-sub"), ic = el.querySelector(".tk-ic"), sp = el.querySelector(".tk-ht .tk-sev");
+  if (t) t.textContent = H[0]; if (sb) sb.textContent = H[1]; if (sp) sp.remove(); if (t) t.insertAdjacentHTML("afterend", wwSevPill(it));
+  if (ic) { ic.className = "tk-ic " + H[2]; ic.innerHTML = mdi(it.icon); }
+}
+function tkWwRefresh() {
+  const L = wwItems(), el = $("#cmtsh .tk-ww"); if (!el) return; if (!L.length) { tkClose(); return; }
+  const it = L.find(x => x.k === TK.ww); if (!it) { tkWwOpen(L[0].k); return; }
+  const pane = el.querySelector(".tk-wwp2"), h = wwPane(it); if (pane && pane._h !== h) { pane._h = h; pane.innerHTML = h; }
+}
+document.addEventListener("click", e => {
+  const t = e.target.closest("#cmtsh .tk-ww"); if (!t) return;
+  const r = e.target.closest("[data-tkww]"); if (r) { tkWwSel(r.dataset.tkww); return; }
+  const m = e.target.closest("[data-tkwwm]"); if (m) { const x = t.querySelector(".tk-wwx"), open = x.classList.contains("cl"); x.classList.toggle("cl", !open); m.innerHTML = (open ? "LESS" : "MORE") + mdi(open ? "chevron-up" : "chevron-down"); return; }
+  const g = e.target.closest("[data-wwgo]"); if (g) { tkOpen(g.dataset.wwgo === "sea" ? "sea" : "road"); return; }
+  if (e.target.closest("[data-wwirr]")) { (CONFIG.irrigation || []).filter(z => z.switch && isOn(z.switch)).forEach(z => { call("switch", "turn_off", z.switch); if (z.timer && states[z.timer] && states[z.timer].state !== "idle") call("timer", "cancel", z.timer); }); setTimeout(tkWwRefresh, 600); }
+});
+
+// the warning cards on the Weather page open the same pop-up as the ones in Notifications
+document.addEventListener("click", e => { const c = e.target.closest("#wx .ww.cpt"); if (c) tkOpen("ww", c.dataset.ww); });
+document.addEventListener("keydown", e => { if (e.key !== "Enter" && e.key !== " ") return; const c = e.target.closest && e.target.closest("#wx .ww.cpt"); if (c) { e.preventDefault(); tkOpen("ww", c.dataset.ww); } });
+
+// links that open a centred pop-up: #popup/warning[/2], #popup/alert[/rain], #popup/road, #popup/sea, #popup/camera/<name>, and #weather/warning[/2] (README, "Links for automations").
+// Home Assistant may still be loading when the link opens, so it tries for about 8 seconds
+function tkLink(kind, key, n) {
+  const cams = () => (typeof tkCamList === "function" ? tkCamList() : []), dash = t => String(t || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const go = () => {
+    if (kind === "warning") { const L = wwItems(), it = L[Math.max(0, (+key || 1) - 1)] || L[0]; if (!it) return false; tkOpen("ww", it.k); return true; }
+    if (kind === "alert") { if (!wxaNow()) return false; tkOpen("wx", key || ""); return true; }
+    if (kind === "road") { tkOpen("road"); return true; }
+    if (kind === "sea") { tkOpen("sea"); return true; }
+    if (kind === "camera") { const c = cams().find(x => x.key === key || dash(x.name) === dash(key) || dash(x.id) === dash(key)); if (!c) return false; tkOpen("cam", c.key); return true; }
+    return true;
+  };
+  let tries = 0; (function tick() { if (go() || ++tries > 20) return; setTimeout(tick, 400); })();
+}
 // ---------- Auto update: a new dash.html or config.js on the server is picked up by every screen, no ?v= to bump ----------
 // Every autoUpdateMinutes (5), and when the dashboard comes back on screen, it fetches its own page and config.js past the browser cache.
 // A different build id (DASH_BUILD) in the page, or a different config.js, refreshes the saved copies (cache "reload") and reloads onto them,

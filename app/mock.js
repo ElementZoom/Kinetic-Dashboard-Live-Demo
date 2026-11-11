@@ -1,3 +1,6 @@
+// a warning written the way MetService's sensor words it (invented places): "<title>, <text>, <hrs> from <start> - <end> <day>"
+function demoWarn() { var clk = function (h) { var d = new Date(Date.now() + h * 36e5), H = d.getHours(); return ((H % 12) || 12) + ":" + String(d.getMinutes()).padStart(2, "0") + (H < 12 ? "am" : "pm"); }, e = new Date(Date.now() + 5 * 36e5);
+  return "Severe Thunderstorm Warning, At " + clk(-0.5) + ", MetService weather radar detected severe thunderstorms near RIVERTON, HILLCREST and THE EAST RANGES. These thunderstorms are expected to be accompanied by torrential rain and hail., None\nHeavy Rain Watch, A moderate risk of localised downpours of 25-40 mm per hour this evening. Surface flooding is possible. Driving conditions will be hazardous. , 4hrs 30min from " + clk(0.5) + " - " + clk(5) + " " + ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][e.getDay()] + ", " + e.getDate() + " " + ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][e.getMonth()]; }
 // ElementZoom live demo: a pretend Home Assistant that runs inside the visitor's browser.
 // Loaded after config.js and before the dashboard engine. It replaces WebSocket (HA's API) and fetch (calendars, lyrics)
 // so the real Kinetic dashboard works unchanged, with every tap changing pretend devices only. Nothing leaves the page.
@@ -311,7 +314,7 @@
       push("binary_sensor.demo_front_door_contact", on ? "on" : "off"); push("binary_sensor.demo_patio_door_contact", on ? "on" : "off");
       push("switch.demo_backyard_tap", on ? "on" : "off"); push("input_boolean.demo_rubbish_day", on ? "on" : "off");
       push("binary_sensor.demo_washing_machine_leak", on ? "on" : "off");
-      push("sensor.demo_weather_warnings", on ? "1" : "0", { warnings: on ? "Heavy rain watch for tonight" : [] });
+      push("sensor.demo_weather_warnings", on ? "2" : "0", { warnings: on ? demoWarn() : [] });
       push("weather.home", on ? "windy" : "partlycloudy", { wind_speed: on ? 64 : 12, wind_gust_speed: on ? 80 : 20 });   // Strong wind: the Weather card in Alerts
       garage(!!on); },
     leaving: function (on) {   // heading out: the patio door is open and the alarm is off (off = locked up and armed)
