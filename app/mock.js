@@ -343,7 +343,7 @@ window.__REC = (function () {
     if (!dm) return { title: "Recordings", media_content_id: id, children: [0, 1, 2].map(function (o) { var d = day(o); return { title: d.getFullYear() + "/" + pad(d.getMonth() + 1) + "/" + pad(d.getDate()), media_content_id: id + "|day|" + o, can_expand: true, can_play: false }; }) };
     var d0 = day(+dm[1]).getTime(), d1 = d0 + 864e5, now = Date.now();
     return { title: "Day", media_content_id: id, children: plan[c].map(function (x) { var t = new Date(now - x[0] * 60000); return { t: t, x: x }; }).filter(function (y) { return y.t.getTime() >= d0 && y.t.getTime() < d1; }).map(function (y) {
-      var t = y.t, len = 12 + Math.round((y.x[0] * 7) % 30), pic = c === "driveway" && y.x[1] === P ? "driveway_person" : c;
+      var t = y.t, len = 12 + Math.round((y.x[0] * 7) % 30), pic = c + "_" + y.x[1].toLowerCase();
       return { title: t.getHours() + ":" + pad(t.getMinutes()) + ":" + pad(t.getSeconds()) + " 0:00:" + pad(len) + " " + y.x[1], media_content_id: "demo-clip|" + pic + "|" + t.getTime(), can_play: true, can_expand: false, thumbnail: base + "cams/camera.demo_" + pic + ".jpg" }; }) };
   }
   function resolve(id) { var m = /^demo-clip\|([a-z_]+)\|/.exec(String(id)); var mp4 = !!document.createElement("video").canPlayType('video/mp4; codecs="avc1.42E01E"'); return { url: base + "cams/clips/" + (m ? m[1] : "street") + (mp4 ? ".mp4" : ".webm"), mime_type: mp4 ? "video/mp4" : "video/webm" }; }
