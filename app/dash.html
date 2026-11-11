@@ -3099,6 +3099,7 @@ html:not(#x):not(#y) .tl.lit input[type=range]{accent-color:var(--ltx)}
 .tk-wws.ld p{color:var(--mut);animation:tkwwp 1.4s ease-in-out infinite}@keyframes tkwwp{50%{opacity:.45}}@media(prefers-reduced-motion:reduce){.tk-wws.ld p{animation:none}}
 .tk-wc{display:inline-flex;align-items:center;gap:7px}.tk-wc i{width:9px;height:9px;border-radius:50%;background:#d4a017;flex:none}.tk-wc i.orange{background:#e07a1f}.tk-wc i.red{background:#d64545}.tk-wsw{gap:10px;margin-bottom:14px}
 .ww.cpt{cursor:pointer;position:relative;padding-right:14px}.ww.cpt .wwt{display:flex;align-items:center;justify-content:space-between;gap:8px}.ww.cpt .wwt svg{width:20px;height:20px;fill:currentColor;opacity:.5;flex:none}.ww.cpt .wwb{opacity:.85}
+.tk-wwr .npgc{width:auto;margin:0 0 0 auto}
 /* Header chips (weather alert, pollen, leak ...): the glow is a soft halo around the pill that breathes, not a fading, fuzzy-edged copy of the whole chip. The text and border stay steady. */
 @media(min-width:761px){
 #nacc[data-k] .nai,html[data-mode] #nacc[data-k] .nai{position:relative;animation:none;filter:none;opacity:1}
@@ -4403,7 +4404,7 @@ html:not(#x) .stk:is(.hsw,.secw,.scfh,.admtop,.adlh)::before{opacity:1}
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.5.28";   // the one place to change the version
-window.DASH_BUILD = "668173";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "cc9072";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
