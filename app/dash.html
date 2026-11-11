@@ -2278,6 +2278,14 @@ header.hmerge #wpls .wpl{line-height:1.2}
 /* MORE under a shrunk weather card, like the weather warning's */
 .wxl .wxmore{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin:4px 0 0;padding:4px 0 0;border:0;background:none;color:inherit;opacity:.75;font:600 11px var(--mono);letter-spacing:.1em;cursor:pointer}
 .wxl .wxmore svg{width:16px;height:16px;fill:currentColor}
+
+/* a full-size card opens the full-screen view when tapped: a footer says so (hidden inside that view itself) */
+.wxl .wxft{position:relative;z-index:1;display:flex;align-items:center;gap:8px;margin:10px -16px -12px;padding:9px 16px;border-top:1px solid color-mix(in srgb,var(--k) 28%,transparent);background:color-mix(in srgb,var(--k) 10%,transparent)}
+.wxl .wxft .wxmore{width:auto;margin:0;padding:0;flex:none}
+.wxl .wxopen{margin-left:auto;display:inline-flex;align-items:center;gap:6px;color:var(--k);font:700 11px var(--mono);letter-spacing:.1em}
+.wxl .wxopen svg{width:18px;height:18px;fill:currentColor}
+.tk-wxcard .wxl .wxft{display:none}
+.wxl .wxopen::after{content:"OPEN FULL SCREEN"}
 /* page transition (Theme > Page transition): variants of the .page.enter entrance, set by html[data-pgfx]. "rise" is the original look. */
 @keyframes pgSlide{from{opacity:0;transform:translateX(var(--pgdx,36px))}}
 html[data-pgfx=slide] .page.enter{animation:pgSlide calc(.36s*var(--pgs,1)) cubic-bezier(.2,.8,.2,1) backwards}
@@ -2682,7 +2690,7 @@ html[data-mode=light] #alb.bw{background:rgba(176,112,0,.12);color:#7a4b00;borde
 html[data-mode=light] #alb.ba{color:#a3211a}
 /* slim alarm bar on the Security page (19-alarm-bar.js) */
 #alp.alsl{padding:10px 14px}
-#alp .alsb{display:flex;align-items:center;gap:12px;min-width:0;--sr:95,214,138;border-radius:14px}
+#alp .alsb{position:relative;display:flex;align-items:center;gap:12px;min-width:0;--sr:95,214,138;border-radius:14px}
 html[data-mode=light] #alp .alsb{--sr:31,157,85}
 #alp .alsb.s-on,#alp .alsb.s-al,#alp .alsb.sir{--sr:255,107,107}
 html[data-mode=light] #alp .alsb.s-on,html[data-mode=light] #alp .alsb.s-al,html[data-mode=light] #alp .alsb.sir{--sr:217,58,58}
@@ -2695,13 +2703,24 @@ html[data-mode=light] #alp .alsb.s-wn{--sr:217,138,0}
 #alp .alsb.s-on .alst b,#alp .alsb.s-al .alst b,#alp .alsb.sir .alst b{color:rgb(var(--sr))}
 #alp .alst small{font-size:13px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #alp .alsa{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
-#alp .alsa .chip.ag{margin:0;padding:10px 20px}
-#alp .almo,#alp .alsr{all:unset;box-sizing:border-box;cursor:pointer;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);color:var(--mut);position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;touch-action:none;user-select:none;-webkit-user-select:none}
+#alp .alsa .chip.ag{margin:0;padding:15px 24px}
+#alp .almo,#alp .alsr{all:unset;box-sizing:border-box;cursor:pointer;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);color:var(--mut);position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;touch-action:none;user-select:none;-webkit-user-select:none}
 #alp .almo svg,#alp .alsr svg{width:20px;height:20px;fill:currentColor;position:relative}
 #alp .almo.on{color:inherit;border-color:currentColor}
-#alp .alsr{--rr:217,58,58;color:rgb(var(--rr));border-color:rgba(var(--rr),.45);background:rgba(var(--rr),.08)}
-#alp .alsr i{position:absolute;inset:0;background:rgba(var(--rr),.32);transform:scaleY(0);transform-origin:bottom}
-#alp .alsr.hold i{transform:scaleY(1);transition:transform 2s linear}
+#alp .alsr{--rr:217,58,58;color:rgb(var(--rr));border-color:rgba(var(--rr),.5);background:rgba(var(--rr),.08);width:auto;height:52px;padding:0 20px;border-radius:26px;gap:10px;font-size:13px;font-weight:700;letter-spacing:.1em;white-space:nowrap}
+#alp .alsr svg{width:24px;height:24px}
+#alp .alsr span{position:relative}
+#alp .alsr i{position:absolute;inset:0;background:rgba(var(--rr),.34);transform:scaleX(0);transform-origin:left}
+#alp .alsr.hold i{transform:scaleX(1);transition:transform 2s linear}
+/* while holding: the state text gives way to a big count where a thumb cannot cover it, and a bar runs along the whole card */
+#alp .alhd{display:none;min-width:0;height:44px;flex-direction:column;justify-content:center;gap:0;color:rgb(217,58,58)}
+#alp .alst{min-height:44px;justify-content:center}
+#alp .alhd b{font-weight:700;font-size:11px;line-height:1.2;letter-spacing:.1em;text-transform:uppercase}
+#alp .alsb.holding .alst{display:none}#alp .alsb.holding .alhd{display:flex}
+#alp .alcd{font-size:15px;color:var(--mut)}#alp .alcd em{font-style:normal;font-weight:700;font-size:28px;line-height:1.05;color:rgb(var(--sr,217,58,58));font-variant-numeric:tabular-nums}
+#alp .alhd .alcd{color:rgb(217,58,58)}#alp .alhd .alcd em{color:inherit}
+#alp .alpr{display:none;position:absolute;left:0;right:0;bottom:-6px;height:5px;border-radius:3px;background:rgb(217,58,58);transform:scaleX(0);transform-origin:left}
+#alp .alsb.holding .alpr{display:block;transform:scaleX(1);transition:transform 2s linear}
 #alp .alsr:focus-visible,#alp .almo:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 #alp .alms{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;margin-top:12px}
 #alp .alms button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:12px;border:1px solid var(--line);font-size:12px;letter-spacing:.08em}
@@ -2709,17 +2728,23 @@ html[data-mode=light] #alp .alsb.s-wn{--sr:217,138,0}
 #alp .alms button.on{border-color:rgb(var(--sr,31,157,85));color:rgb(var(--sr,31,157,85))}
 #alp .alsb.sir{background:rgba(var(--sr),.12);margin:-10px -14px;padding:10px 14px}
 #alp .alsb.sir .alsi{--agr:var(--sr);animation:agPulse .7s ease-in-out infinite}
-#alp .alstop{all:unset;box-sizing:border-box;cursor:pointer;margin-left:auto;padding:12px 22px;border-radius:12px;background:rgb(var(--sr));color:#fff;font-weight:700;letter-spacing:.1em;font-size:14px}
+#alp .alstop{all:unset;box-sizing:border-box;cursor:pointer;margin-left:auto;display:flex;align-items:center;justify-content:center;gap:8px;height:56px;padding:0 28px;border-radius:28px;background:rgb(var(--sr));color:#fff;font-weight:700;letter-spacing:.1em;font-size:15px}
+#alp .alstop svg{width:22px;height:22px;fill:currentColor}
 #alp .alhint{margin-top:8px;font-size:12px;color:var(--mut);text-align:right}
-@media(prefers-reduced-motion:reduce){#alp .alsb.sir .alsi{animation:none}#alp .alsr.hold i{transition-duration:0s}}
+@media(prefers-reduced-motion:reduce){#alp .alsb.sir .alsi{animation:none}#alp .alsr.hold i,#alp .alsb.holding .alpr{transition-duration:0s}}
 /* phone: two lines, the buttons under the state */
 @media(max-width:760px){
   #alp .alsb{flex-wrap:wrap;gap:10px}
   #alp .alst{flex:1}
   #alp .alsa{margin-left:0;width:100%}
   #alp .alsa .chip.ag{flex:1;text-align:center}
-  #alp .alsb.sir{flex-wrap:nowrap}
-  #alp .alstop{padding:12px 14px;font-size:13px}
+  #alp .alsa{flex-wrap:wrap}
+  #alp .alsa .chip.ag{height:52px;display:flex;align-items:center;justify-content:center;padding:0 16px}
+  #alp .almo{width:52px;height:52px}
+  #alp .alsr{order:3;flex:1 1 100%;height:60px;border-radius:30px;font-size:14px}
+  #alp .alhd{flex:1}
+  #alp .alsb.sir{flex-wrap:wrap}
+  #alp .alstop{flex:1 1 100%;margin-left:0;height:60px;border-radius:30px}
 }
 /* the open doors and windows, under the bar when its line is tapped */
 #alp .alsub{cursor:pointer;display:inline-flex;align-items:center;gap:4px;text-decoration:underline dotted;text-underline-offset:3px;max-width:100%}
@@ -3022,6 +3047,51 @@ html:not(#x):not(#y) .tl.lit.lc :is(.nm,.tn,.ts2,.st,.tmr){color:#1a1a1a}html:no
 html:not(#x):not(#y) .tl.lit.dim{background:color-mix(in srgb,rgb(var(--lt1)) 62%,var(--bg))}
 html:not(#x):not(#y) .tl.lit.dim .fill{display:block;background:linear-gradient(135deg,rgb(var(--lt1)),rgb(var(--lt2)))}
 html:not(#x):not(#y) .tl.lit input[type=range]{accent-color:var(--ltx)}
+/* 2.8.0 lights only (a power switch keeps its purple tile): a warm glow that is stronger the brighter the light is, white text (dark text in light mode),
+   and a level line along the bottom edge on a dimmable light: the tile's rounded corners cut it, so it hugs the curve from the left. --lv = the brightness */
+html:not(#x):not(#y):not(#z) .tl.lit{--lg:var(--lc,243,167,59);--lv:100%;--ltx:#fff;
+  background:radial-gradient(120% 220% at 0% 50%,color-mix(in srgb,rgb(var(--lg)) calc(18% + var(--lv) * .5),transparent) 0%,color-mix(in srgb,rgb(var(--lg)) 6%,transparent) 70%),color-mix(in srgb,var(--bg),rgb(var(--w)) 7%);
+  border-color:rgba(var(--lg),.55);color:var(--ltx);box-shadow:0 0 22px color-mix(in srgb,rgb(var(--lg)) calc(var(--lv) * .3),transparent)}
+html:not(#x):not(#y):not(#z) .tl.lit.dim{--lv:var(--b,0%);box-shadow:0 0 22px color-mix(in srgb,rgb(var(--lg)) calc(var(--lv) * .3),transparent),inset 0 -5px 0 rgba(var(--w),.1)}
+html:not(#x):not(#y):not(#z) .tl.lit :is(.nm,.tn,.ts2,.st,.tmr){color:var(--ltx)}
+html:not(#x):not(#y):not(#z) .tl.lit svg{fill:color-mix(in srgb,rgb(var(--lg)) 65%,#fff)}
+html:not(#x):not(#y):not(#z) .tl.lit.dim .fill{display:block;left:0;right:auto;top:auto;bottom:0;height:5px;width:var(--b,0%);background:rgb(var(--lg));box-shadow:0 0 10px rgba(var(--lg),.85)}
+html:not(#x):not(#y):not(#z) .tl.lit input[type=range]{accent-color:rgb(var(--lg))}
+html[data-mode=light]:not(#x):not(#y):not(#z) .tl.lit{--ltx:#2a1c0a;background:radial-gradient(120% 220% at 0% 50%,color-mix(in srgb,rgb(var(--lg)) calc(22% + var(--lv) * .4),#fff) 0%,color-mix(in srgb,rgb(var(--lg)) 8%,#fff) 75%)}
+html[data-mode=light]:not(#x):not(#y):not(#z) .tl.lit svg{fill:color-mix(in srgb,rgb(var(--lg)) 55%,#1a1a1a)}
+html[data-mode=light]:not(#x):not(#y):not(#z) .tl.lit.dim .fill{background:color-mix(in srgb,rgb(var(--lg)) 80%,#7a4a00)}
+/* 2.8.0 readability: a power switch that also has a heat / air / water effect keeps that effect's dark tile, so its text must be light (the purple-tile ink was dark navy on dark olive) */
+
+/* 2.8.0 the other "on" tiles match the lights: a glow from the left in the type's colour, white text (dark in light mode), the countdown / level line along the
+   bottom edge. Power switch = lilac, fan = periwinkle, heat (towel rail) = ember, charging = green. */
+html:not(#x):not(#y):not(#z):not(#w) :is(.tl.pwr,.tl.fx-air.on,.tl.fx-heat.on,.tl.fx-charge.on){--ltx:#fff;
+  background:radial-gradient(120% 220% at 0% 50%,color-mix(in srgb,rgb(var(--lg)) 48%,transparent) 0%,color-mix(in srgb,rgb(var(--lg)) 6%,transparent) 70%),color-mix(in srgb,var(--bg),rgb(var(--w)) 7%);
+  border-color:rgba(var(--lg),.6);color:var(--ltx);box-shadow:0 0 22px rgba(var(--lg),.26)}
+html:not(#x):not(#y):not(#z):not(#w) .tl.pwr{--lg:201,179,255}
+html:not(#x):not(#y):not(#z):not(#w) .tl.fx-air.on{--lg:185,182,255}
+html:not(#x):not(#y):not(#z):not(#w) .tl.fx-heat.on,html:not(#x):not(#y):not(#z):not(#w) .tl.pwr.fx-heat{--lg:255,154,115}
+html:not(#x):not(#y):not(#z):not(#w) .tl.fx-charge.on{--lg:127,224,160}
+html:not(#x):not(#y):not(#z):not(#w) :is(.tl.pwr,.tl.fx-air.on,.tl.fx-heat.on,.tl.fx-charge.on) :is(.nm,.tn,.ts2,.st,.tmr){color:var(--ltx)}
+html:not(#x):not(#y):not(#z):not(#w) :is(.tl.pwr,.tl.fx-air.on,.tl.fx-heat.on,.tl.fx-charge.on) .ts2{opacity:.9}
+html:not(#x):not(#y):not(#z):not(#w) :is(.tl.pwr,.tl.fx-air.on,.tl.fx-heat.on,.tl.fx-charge.on) svg{fill:color-mix(in srgb,rgb(var(--lg)) 70%,#fff)}
+html:not(#x):not(#y):not(#z):not(#w) :is(.tl.fx-air.on,.tl.fx-heat.on,.tl.fx-charge.on) .tn svg{filter:none}
+html:not(#x):not(#y):not(#z):not(#w) :is(.tl.pwr,.tl.fx-air.on,.tl.fx-heat.on,.tl.fx-charge.on) .zb{position:absolute;left:0;right:0;bottom:0;margin:0;height:5px;border-radius:0;background:rgba(var(--w),.1);overflow:visible}
+html:not(#x):not(#y):not(#z):not(#w) :is(.tl.pwr,.tl.fx-air.on,.tl.fx-heat.on,.tl.fx-charge.on) .zb>i{background:rgb(var(--lg));box-shadow:0 0 10px rgba(var(--lg),.85)}
+html[data-mode=light]:not(#x):not(#y):not(#z):not(#w) :is(.tl.pwr,.tl.fx-air.on,.tl.fx-heat.on,.tl.fx-charge.on){--ltx:#2a1c0a;
+  background:radial-gradient(120% 220% at 0% 50%,color-mix(in srgb,rgb(var(--lg)) 52%,#fff) 0%,color-mix(in srgb,rgb(var(--lg)) 10%,#fff) 75%)}
+html[data-mode=light]:not(#x):not(#y):not(#z):not(#w) :is(.tl.pwr,.tl.fx-air.on,.tl.fx-heat.on,.tl.fx-charge.on) svg{fill:color-mix(in srgb,rgb(var(--lg)) 45%,#1a1a1a)}
+html[data-mode=light]:not(#x):not(#y):not(#z):not(#w) :is(.tl.pwr,.tl.fx-air.on,.tl.fx-heat.on,.tl.fx-charge.on) .zb>i{background:color-mix(in srgb,rgb(var(--lg)) 75%,#5a2a00)}
+/* 2.8.0 curtains: an open curtain tile glows from the left in orchid like the lights (the slider is its level, so no bottom line); the up / stop / down buttons keep their own look */
+html:not(#x):not(#y):not(#z):not(#w) .tl[data-e^="cover."].on{--lg:197,143,214;--ltx:#fff;
+  background:radial-gradient(120% 220% at 0% 50%,color-mix(in srgb,rgb(var(--lg)) 48%,transparent) 0%,color-mix(in srgb,rgb(var(--lg)) 6%,transparent) 70%),color-mix(in srgb,var(--bg),rgb(var(--w)) 7%);
+  border-color:rgba(var(--lg),.6);color:var(--ltx);box-shadow:0 0 22px rgba(var(--lg),.26)}
+html:not(#x):not(#y):not(#z):not(#w) .tl[data-e^="cover."].on :is(.nm,.tn,.ts2,.st,.tmr){color:var(--ltx)}
+html:not(#x):not(#y):not(#z):not(#w) .tl[data-e^="cover."].on .ts2{opacity:.9}
+html:not(#x):not(#y):not(#z):not(#w) .tl[data-e^="cover."].on .tn svg{fill:color-mix(in srgb,rgb(var(--lg)) 70%,#fff)}
+html:not(#x):not(#y):not(#z):not(#w) .tl[data-e^="cover."].on input[type=range]{accent-color:rgb(var(--lg))}
+html[data-mode=light]:not(#x):not(#y):not(#z):not(#w) .tl[data-e^="cover."].on{--lg:170,100,195;--ltx:#2a1c0a;
+  background:radial-gradient(120% 220% at 0% 50%,color-mix(in srgb,rgb(var(--lg)) 40%,#fff) 0%,color-mix(in srgb,rgb(var(--lg)) 9%,#fff) 75%)}
+html[data-mode=light]:not(#x):not(#y):not(#z):not(#w) .tl[data-e^="cover."].on .tn svg{fill:color-mix(in srgb,rgb(var(--lg)) 60%,#1a1a1a)}
 /* Header-chip pop-ups (49-takeover.js): Road problem and Tsunami, built on the centred #cmtsh card. A tablet gets the wide two column pop-up, a phone one column. */
 #cmtsh .cmb.tk{width:min(560px,100%);max-height:calc(100vh - 32px);padding:0;gap:0;overflow:hidden}
 .tk-h{display:flex;align-items:center;gap:14px;padding:18px 18px 12px}
@@ -3100,6 +3170,10 @@ html:not(#x):not(#y) .tl.lit input[type=range]{accent-color:var(--ltx)}
 .tk-wc{display:inline-flex;align-items:center;gap:7px}.tk-wc i{width:9px;height:9px;border-radius:50%;background:#d4a017;flex:none}.tk-wc i.orange{background:#e07a1f}.tk-wc i.red{background:#d64545}.tk-wsw{gap:10px;margin-bottom:14px}
 .ww.cpt{cursor:pointer;position:relative;padding-right:14px}.ww.cpt .wwt{display:flex;align-items:center;justify-content:space-between;gap:8px}.ww.cpt .wwt svg{width:20px;height:20px;fill:currentColor;opacity:.5;flex:none}.ww.cpt .wwb{opacity:.85}
 .tk-wwr .npgc{width:auto;margin:0 0 0 auto}
+
+.tk-door .eb,.tk-door .npgc{flex:none;width:auto;margin:0;padding:12px 22px}
+.tk-door span{min-width:0}
+.tk-camv{cursor:pointer}
 /* Header chips (weather alert, pollen, leak ...): the glow is a soft halo around the pill that breathes, not a fading, fuzzy-edged copy of the whole chip. The text and border stay steady. */
 @media(min-width:761px){
 #nacc[data-k] .nai,html[data-mode] #nacc[data-k] .nai{position:relative;animation:none;filter:none;opacity:1}
@@ -3270,6 +3344,9 @@ html[data-mode=light] .rsc .rsst{color:#a3211a}
 @media(max-width:760px){.sc .sctg svg{width:15px;height:15px}}
 /* the collapsed scene pill on a phone has room for the name only */
 #scenes .sct.col .sctags,#scenes .sct.col .sck>.sm:not(.scsm){display:none}
+
+/* Scenes page: a group without LED lights has no filter chips; the row is kept but collapsed, and drawScenes (24-scenes.js) eases it open or shut */
+#scenes .scfh.scoff{max-height:0;margin-bottom:0;padding-top:0;padding-bottom:0;border-width:0!important;opacity:0;overflow:hidden;pointer-events:none}
 /* Notifications > Active: groups fold, doors and windows are slim rows, and a chip row jumps to one group */
 #np .npf{cursor:pointer;-webkit-tap-highlight-color:transparent}
 #np .npfr{margin-left:auto;display:flex;align-items:center;gap:8px}
@@ -3667,6 +3744,7 @@ html[data-mode=light] .it.fan{background:#eeedfe;border-color:#cecbf6}html[data-
 .nbg{position:absolute;top:6px;right:8px;min-width:20px;height:20px;padding:0 6px;box-sizing:border-box;border-radius:10px;display:grid;place-items:center;font:700 11px/1 var(--sans);font-style:normal;letter-spacing:0;background:var(--heat);color:#fff;pointer-events:none}
 .nbg[data-tone=upd]{background:var(--cool)}
 #navset .nbg,#navset2 .nbg{position:static;margin-left:auto;flex:none}
+html[data-mode=dark] .nbg{color:#000}   /* dark mode colours are light, so the number is black (white on them was hard to read) */
 #btab #bmore{position:relative}#btab #bmore.hasn::after{content:"";position:absolute;top:10px;left:calc(50% + 6px);width:10px;height:10px;border-radius:50%;background:var(--heat);box-shadow:0 0 0 2px var(--bg)}
 .wpl.upp{background:rgba(var(--cool-rgb,120,170,255),.18);color:var(--cool)}
 /* More button open as a pill (icon and label side by side): the dot goes to the pill's corner, clear of the label */
@@ -4214,6 +4292,7 @@ html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs)>.chip{
 #alp .al-list-fold .allst{margin-top:10px;margin-bottom:0}
 @media(prefers-reduced-motion:reduce){#alp .al-list-fold{transition:none!important}}
 .adlh .admsrch{flex:1 1 100%}
+#irrigation .wrs .wrsu{margin-top:1px;font-size:11px;opacity:.8}
 /* Settings: the search block pins exactly where it sits at rest (just under the tab row), so nothing shifts when scrolling starts;
    on wide screens the overview / detail card pins in place beside the list */
 #admin .admtop,#admin .adlog>.adlh{--admtop:68px}
@@ -4318,6 +4397,114 @@ html:not(#x) .stk:is(.hsw,.secw,.scfh,.admtop,.adlh)::before{opacity:1}
   html[data-style=glass]{--wnr:24px;--wnb:linear-gradient(150deg,rgba(255,255,255,.22),rgba(255,255,255,.03) 42%,rgba(255,255,255,.1)),var(--g1);--wnbd:1px solid var(--gline);--wnsh:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(255,255,255,.08),var(--gsh)}
   html[data-style=material]{--wnr:24px;--wnb:var(--m1);--wnbd:0 none transparent;--wnsh:none}
 }
+/* Search (2.6.0): the header button, the search screen, and the flash on the card or tile a result opens */
+#hsrch{position:relative;display:inline-flex;flex:none;width:30px;height:32px;padding:0;border:0;background:none;color:var(--mint);align-items:center;justify-content:center;cursor:pointer}
+#hsrch svg{width:20px;height:20px;fill:currentColor}
+header .hr>#hsrch{order:11;margin:0 0 0 6px}   /* the last thing on the right, after the clock */
+#hsrch::before{content:"";position:absolute;left:-7px;top:50%;height:18px;margin-top:-9px;border-left:1px solid var(--mut);opacity:.6}
+header .hr>#hsrch{margin-left:14px}   /* a | before the magnifier on every size: time | search on a phone, chip | search on a tablet */
+body.vwb #hsrch{display:none}
+@media(hover:hover){#hsrch:hover{color:var(--ink)}}
+
+#srch{position:fixed;inset:0;z-index:99990;display:flex;justify-content:center;align-items:flex-start;padding:max(8vh,24px) 16px 16px;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#srch[hidden]{display:none}
+.srp{display:flex;flex-direction:column;width:min(760px,100%);max-height:min(680px,100%);border-radius:28px;background:linear-gradient(160deg,var(--bg2),var(--bg));border:1px solid var(--line);box-shadow:0 14px 48px rgba(0,0,0,.55);overflow:hidden;transition:width .22s ease}
+@media(min-width:761px){#srch.srlau{padding-top:max(3vh,16px)}#srch.srlau .srp{width:min(1120px,100%);max-height:min(860px,100%)}}   /* nothing typed: the wide screen to tap through */
+.srhd{display:none}
+.srb{order:0;display:flex;align-items:center;gap:10px;flex:none;padding:12px 12px 12px 18px;border-bottom:1px solid var(--line)}
+.srfs{order:1;display:flex;gap:8px;flex:none;padding:12px 18px 2px;overflow-x:auto;scrollbar-width:none}
+.srfs::-webkit-scrollbar{display:none}
+.srf{flex:none}
+#srl{order:2;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:8px}
+.srft{order:3;display:flex;gap:18px;flex:none;padding:10px 22px;border-top:1px solid var(--line);font-size:12px;color:var(--mut)}
+.srft em{margin-left:auto;font-style:normal}
+.sri{display:inline-flex;flex:none;color:var(--mut)}
+.sri svg{width:22px;height:22px;fill:currentColor}
+#srq{flex:1;min-width:0;height:40px;padding:0;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;font-size:17px;-webkit-appearance:none;appearance:none}
+#srq::placeholder{color:var(--mut);opacity:1}
+#srq::-webkit-search-cancel-button,#srq::-webkit-search-decoration{-webkit-appearance:none;display:none}
+.srn{flex:none;font-size:12px;color:var(--mut)}
+.src{display:inline-flex;flex:none;width:36px;height:36px;padding:0;border-radius:50%;border:0;background:rgba(var(--w),.07);color:var(--ink);align-items:center;justify-content:center;cursor:pointer}
+.src svg{width:20px;height:20px;fill:currentColor}
+.srh{margin:0;padding:10px 12px 6px;font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+/* a result */
+.srr{display:flex;align-items:center;gap:12px;width:100%;padding:9px 12px;border:0;border-radius:14px;background:transparent;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.srr.on{background:rgba(var(--mint-rgb),.13)}
+.sric{display:inline-flex;flex:none;width:36px;height:36px;border-radius:10px;background:rgba(var(--w),.07);align-items:center;justify-content:center}
+.sric svg{width:20px;height:20px;fill:currentColor}
+.srm{display:flex;flex-direction:column;flex:1;min-width:0;gap:2px}
+.srm b{font-weight:600;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.srm small{font-size:12px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+mark.srk{background:rgba(var(--mint-rgb),.3);color:inherit;border-radius:4px}
+.srg{flex:none;font-size:12px;color:var(--mut)}
+.srcv{display:none;flex:none;color:var(--mut)}.srcv svg{width:20px;height:20px;fill:currentColor}
+.sre{display:flex;flex-direction:column;align-items:center;gap:4px;padding:36px 16px;text-align:center}
+.sre small{font-size:12px;color:var(--mut)}
+/* the screen before anything is typed: attention, recent, pages, rooms, cameras */
+/* two columns: recent + pages on the left, attention + rooms + cameras on the right */
+.srlh{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px 32px;padding:10px 14px;align-items:start}
+.srl1,.srl2{display:flex;flex-direction:column;gap:22px;min-width:0}
+.srlh .srh{padding:0 0 8px}
+.srx{font:inherit;color:var(--ink);cursor:pointer;text-align:left}
+.srx.on{background:rgba(var(--mint-rgb),.2);border-color:var(--mint)!important}
+.srcp{display:flex;gap:8px;flex-wrap:wrap}
+.srcc{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--w),.06);font-size:13px;font-weight:600}
+.srtl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.srti{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:14px;border-radius:16px;border:1px solid var(--line);background:rgba(var(--w),.06);font-size:14px;font-weight:600}
+.srti svg{width:20px;height:20px;fill:currentColor}
+.sra{display:flex;flex-direction:column;gap:6px}.sra .srh{padding-bottom:2px}
+.srat{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border-radius:12px;border:1px solid transparent;background:rgba(229,72,59,.14)}
+.srat i{flex:none;width:10px;height:10px;border-radius:50%;background:#e5483b}
+.srat b{flex:1;min-width:0;font-size:14px;font-weight:600}.srat small{font-size:12px;color:var(--mut)}
+.srrl{display:flex;flex-direction:column;gap:2px}
+.srro{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:12px;border:1px solid transparent;background:transparent;font-size:14px}
+.srro b{flex:1;min-width:0;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.srro span{color:var(--ink);font-size:13px}.srro small{font-size:12px;color:var(--mut);min-width:48px;text-align:right}
+.srcl{display:flex;gap:8px}
+.srca{flex:1;min-width:0;height:92px;padding:8px;border-radius:12px;border:1px solid transparent;display:flex;align-items:flex-end;color:#fff;background:linear-gradient(160deg,#6a6f6b,#2b2f2c) center/cover}
+.srca b{font:700 12px var(--sans);text-shadow:0 1px 3px rgba(0,0,0,.7);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:760px){
+  #srch{padding:0;background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none;inset:auto;top:0;left:0;right:0;height:100%}
+  .srp,#srch.srlau .srp{width:100%;max-height:none;height:100%;border:0;border-radius:0;box-shadow:none;transition:none}
+  .srhd{order:0;display:flex;align-items:center;gap:12px;flex:none;padding:calc(12px + env(safe-area-inset-top)) 16px 6px}
+  .srhd b{flex:1;font-size:22px;font-weight:600}
+  .srhd .src{width:44px;height:44px}
+  #srl{order:1;padding:4px 8px}
+  .srfs{order:2;padding:10px 16px 8px}
+  .srb{order:3;flex:none;margin:0 16px calc(10px + env(safe-area-inset-bottom));padding:0 14px;height:52px;border:1px solid var(--line);border-radius:26px;background:rgba(var(--w),.06)}
+  .srb .src,.srb .srn,.srft{display:none}
+  .srr{min-height:44px}
+  .srg{display:none}.srcv{display:inline-flex}
+  .srlh{display:flex;flex-direction:column;gap:18px;padding:4px 8px}
+  .srl1,.srl2{display:contents}.sra{order:0}.srre{order:1}.srpg{order:2}.srrm{order:3}.srcm{order:4}
+  .srtl{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .srti{flex-direction:row;align-items:center;gap:10px;padding:12px;min-height:20px}
+  .srrl{flex-direction:row;gap:8px;overflow-x:auto;margin-right:-8px;padding-right:8px;scrollbar-width:none}
+  .srro{flex:none;width:112px;flex-direction:column;align-items:flex-start;gap:4px;padding:12px;border-radius:16px;border:1px solid var(--line);background:rgba(var(--w),.06)}
+  .srro b{flex:none;max-width:100%;font-size:13px}.srro span{font-size:22px;font-weight:300}.srro small{min-width:0;text-align:left;font-size:11px}
+  .srca{height:78px}
+}
+
+/* the card or tile a result opened */
+.srfl{animation:srfl 1.8s ease-out}
+@keyframes srfl{0%,40%{box-shadow:0 0 0 2px var(--mint),0 0 28px color-mix(in srgb,var(--mint) 45%,transparent)}100%{box-shadow:0 0 0 0 transparent}}
+@media(prefers-reduced-motion:reduce){.srfl{animation:none;outline:2px solid var(--mint);outline-offset:2px}}
+/* What's new sheet (60-whats-new.js): over everything, a centred card (full width on a phone) */
+#wtnew{position:fixed;inset:0;z-index:99995;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .25s}
+#wtnew.on{opacity:1}
+.wtnp{position:relative;display:flex;flex-direction:column;width:min(460px,100%);max-height:min(640px,100%);border-radius:24px;background:linear-gradient(160deg,var(--bg2),var(--bg));border:1px solid var(--line);box-shadow:0 14px 48px rgba(0,0,0,.55);overflow:hidden;transform:translateY(10px);transition:transform .25s}
+#wtnew.on .wtnp{transform:none}
+.wtnh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 20px 8px}
+.wtnh h3{margin:2px 0 0;font-size:24px}
+.wtnb{flex:1 1 auto;min-height:0;overflow:auto;padding:4px 20px 12px;-webkit-overflow-scrolling:touch}
+.wtnb ul{list-style:none;margin:0 0 6px;padding:0}
+.wtnb li{position:relative;padding:8px 0 8px 18px;font-size:15px;line-height:1.4;color:var(--ink)}
+.wtnb li::before{content:"";position:absolute;left:0;top:15px;width:7px;height:7px;border-radius:50%;background:var(--mint)}
+.wtnb li b{color:var(--mint);font-weight:600}
+.wtnv{margin:10px 0 0;font:600 11px/1 var(--mono,monospace);letter-spacing:.12em;color:var(--mut)}
+.wtnf{padding:8px 20px 18px;display:flex}.wtnf .eb{flex:1}
+.wtnt{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--mint);opacity:.7;transform-origin:left;animation:wtnt linear forwards}
+@keyframes wtnt{to{transform:scaleX(0)}}
+@media(prefers-reduced-motion:reduce){#wtnew,.wtnp{transition:none}}
 </style>
 <style>
 /* HA diagnostics stay compact until requested. */
@@ -4395,16 +4582,17 @@ html:not(#x) .stk:is(.hsw,.secw,.scfh,.admtop,.adlh)::before{opacity:1}
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.5.28"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.5.28"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.5.28"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="config.js?v=2.8.0"></script>
+<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.8.0"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.8.0"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "2.5.28";   // the one place to change the version
-window.DASH_BUILD = "cc9072";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_VER = "2.8.0";   // the one place to change the version
+window.DASH_NEW = {"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
+window.DASH_BUILD = "cdf48b";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -4600,7 +4788,7 @@ const MDI = {"directions":"M14,14.5V12H10V15H8V11A1,1 0 0,1 9,10H14V7.5L17.5,11M
 Object.assign(MDI, {"shuffle-variant":"M17,3L22.25,7.5L17,12L22.25,16.5L17,21V18H14.26L11.44,15.18L13.56,13.06L15.5,15H17V12L17,9H15.5L6.5,18H2V15H5.26L14.26,6H17V3M2,6H6.5L9.32,8.82L7.2,10.94L5.26,9H2V6Z","skip-previous":"M6,18V6H8V18H6M9.5,12L18,6V18L9.5,12Z","skip-next":"M16,18H18V6H16M6,18L14.5,12L6,6V18Z","play":"M8,5.14V19.14L19,12.14L8,5.14Z","pause":"M14,19H18V5H14M6,19H10V5H6V19Z","repeat":"M17,17H7V14L3,18L7,22V19H19V13H17M7,7H17V10L21,6L17,2V5H5V11H7V7Z","repeat-once":"M13,15V9H12L10,10V11H11.5V15M17,17H7V14L3,18L7,22V19H19V13H17M7,7H17V10L21,6L17,2V5H5V11H7V7Z","repeat-off":"M2,5.27L3.28,4L20,20.72L18.73,22L15.73,19H7V22L3,18L7,14V17H13.73L7,10.27V11H5V8.27L2,5.27M17,13H19V17.18L17,15.18V13M17,5V2L21,6L17,10V7H8.82L6.82,5H17Z","volume-high":"M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z","volume-off":"M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z","spotify":"M17.9,10.9C14.7,9 9.35,8.8 6.3,9.75C5.8,9.9 5.3,9.6 5.15,9.15C5,8.65 5.3,8.15 5.75,8C9.3,6.95 15.15,7.15 18.85,9.35C19.3,9.6 19.45,10.2 19.2,10.65C18.95,11 18.35,11.15 17.9,10.9M17.8,13.7C17.55,14.05 17.1,14.2 16.75,13.95C14.05,12.3 9.95,11.8 6.8,12.8C6.4,12.9 5.95,12.7 5.85,12.3C5.75,11.9 5.95,11.45 6.35,11.35C10,10.25 14.5,10.8 17.6,12.7C17.9,12.85 18.05,13.35 17.8,13.7M16.6,16.45C16.4,16.75 16.05,16.85 15.75,16.65C13.4,15.2 10.45,14.9 6.95,15.7C6.6,15.8 6.3,15.55 6.2,15.25C6.1,14.9 6.35,14.6 6.65,14.5C10.45,13.65 13.75,14 16.35,15.6C16.7,15.75 16.75,16.15 16.6,16.45M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z","speaker":"M12,12A3,3 0 0,0 9,15A3,3 0 0,0 12,18A3,3 0 0,0 15,15A3,3 0 0,0 12,12M12,20A5,5 0 0,1 7,15A5,5 0 0,1 12,10A5,5 0 0,1 17,15A5,5 0 0,1 12,20M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8C10.89,8 10,7.1 10,6C10,4.89 10.89,4 12,4M17,2H7C5.89,2 5,2.89 5,4V20A2,2 0 0,0 7,22H17A2,2 0 0,0 19,20V4C19,2.89 18.1,2 17,2Z","speaker-multiple":"M14,10A3,3 0 0,0 11,13A3,3 0 0,0 14,16A3,3 0 0,0 17,13A3,3 0 0,0 14,10M14,18A5,5 0 0,1 9,13A5,5 0 0,1 14,8A5,5 0 0,1 19,13A5,5 0 0,1 14,18M14,2A2,2 0 0,1 16,4A2,2 0 0,1 14,6A2,2 0 0,1 12,4A2,2 0 0,1 14,2M19,0H9A2,2 0 0,0 7,2V18A2,2 0 0,0 9,20H19A2,2 0 0,0 21,18V2A2,2 0 0,0 19,0M5,22H17V24H5A2,2 0 0,1 3,22V4H5","close":"M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z","chevron-left":"M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z","chevron-right":"M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z","magnify":"M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z","folder-music":"M22 8V11H16.5V16.11C14.66 16.53 13.26 18.09 13.04 20H4C2.9 20 2 19.11 2 18V6C2 4.89 2.89 4 4 4H10L12 6H20C21.1 6 22 6.89 22 8M18.5 13V18.21C18.19 18.07 17.86 18 17.5 18C16.12 18 15 19.12 15 20.5S16.12 23 17.5 23 20 21.88 20 20.5V15H22V13H18.5Z","sprinkler":"M11 7H13V9H11V7M5 22H9V10H5V22M14 11H16V9H14V11M17 10H19V8H17V10M17 5V7H19V5H17M14 8H16V6H14V8M17 13H19V11H17V13M5 7H5.33L6 9H8L8.67 7H9V6H5V7Z","sprinkler-variant":"M10 10H14V22H10V10M7 9H9V7H7V9M4 8H6V6H4V8M4 11H6V9H4V11M1 13H3V11H1V13M1 7H3V5H1V7M1 10H3V8H1V10M18 11H20V9H18V11M21 10H23V8H21V10M21 5V7H23V5H21M21 13H23V11H21V13M15 9H17V7H15V9M18 8H20V6H18V8M10 7H10.33L11 9H13L13.67 7H14V6H10V7Z","water":"M12,20A6,6 0 0,1 6,14C6,10 12,3.25 12,3.25C12,3.25 18,10 18,14A6,6 0 0,1 12,20Z","water-percent":"M12,3.25C12,3.25 6,10 6,14C6,17.32 8.69,20 12,20A6,6 0 0,0 18,14C18,10 12,3.25 12,3.25M14.47,9.97L15.53,11.03L9.53,17.03L8.47,15.97M9.75,10A1.25,1.25 0 0,1 11,11.25A1.25,1.25 0 0,1 9.75,12.5A1.25,1.25 0 0,1 8.5,11.25A1.25,1.25 0 0,1 9.75,10M14.25,14.5A1.25,1.25 0 0,1 15.5,15.75A1.25,1.25 0 0,1 14.25,17A1.25,1.25 0 0,1 13,15.75A1.25,1.25 0 0,1 14.25,14.5Z","thermometer":"M15 13V5A3 3 0 0 0 9 5V13A5 5 0 1 0 15 13M12 4A1 1 0 0 1 13 5V8H11V5A1 1 0 0 1 12 4Z","timer-outline":"M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z","tune-variant":"M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z","movie-open":"M20.84 2.18L16.91 2.96L19.65 6.5L21.62 6.1L20.84 2.18M13.97 3.54L12 3.93L14.75 7.46L16.71 7.07L13.97 3.54M9.07 4.5L7.1 4.91L9.85 8.44L11.81 8.05L9.07 4.5M4.16 5.5L3.18 5.69A2 2 0 0 0 1.61 8.04L2 10L6.9 9.03L4.16 5.5M2 10V20C2 21.11 2.9 22 4 22H20C21.11 22 22 21.11 22 20V10H2Z","fan":"M12,11A1,1 0 0,0 11,12A1,1 0 0,0 12,13A1,1 0 0,0 13,12A1,1 0 0,0 12,11M12.5,2C17,2 17.11,5.57 14.75,6.75C13.76,7.24 13.32,8.29 13.13,9.22C13.61,9.42 14.03,9.73 14.35,10.13C18.05,8.13 22.03,8.92 22.03,12.5C22.03,17 18.46,17.1 17.28,14.73C16.78,13.74 15.72,13.3 14.79,13.11C14.59,13.59 14.28,14 13.88,14.34C15.87,18.03 15.08,22 11.5,22C7,22 6.91,18.42 9.27,17.24C10.25,16.75 10.69,15.71 10.89,14.79C10.4,14.59 9.97,14.27 9.65,13.87C5.96,15.85 2,15.07 2,11.5C2,7 5.56,6.89 6.74,9.26C7.24,10.25 8.29,10.68 9.22,10.87C9.41,10.39 9.73,9.97 10.14,9.65C8.15,5.96 8.94,2 12.5,2Z","toggle-switch":"M17,7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7M17,15A3,3 0 0,1 14,12A3,3 0 0,1 17,9A3,3 0 0,1 20,12A3,3 0 0,1 17,15Z","power":"M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12C20,9.28 18.64,6.88 16.56,5.44M13,3H11V13H13","link-variant":"M10.59,13.41C11,13.8 11,14.44 10.59,14.83C10.2,15.22 9.56,15.22 9.17,14.83C7.22,12.88 7.22,9.71 9.17,7.76V7.76L12.71,4.22C14.66,2.27 17.83,2.27 19.78,4.22C21.73,6.17 21.73,9.34 19.78,11.29L18.29,12.78C18.3,11.96 18.17,11.14 17.89,10.36L18.36,9.88C19.54,8.71 19.54,6.81 18.36,5.64C17.19,4.46 15.29,4.46 14.12,5.64L10.59,9.17C9.41,10.34 9.41,12.24 10.59,13.41M13.41,9.17C13.8,8.78 14.44,8.78 14.83,9.17C16.78,11.12 16.78,14.29 14.83,16.24V16.24L11.29,19.78C9.34,21.73 6.17,21.73 4.22,19.78C2.27,17.83 2.27,14.66 4.22,12.71L5.71,11.22C5.7,12.04 5.83,12.86 6.11,13.65L5.64,14.12C4.46,15.29 4.46,17.19 5.64,18.36C6.81,19.54 8.71,19.54 9.88,18.36L13.41,14.83C14.59,13.66 14.59,11.76 13.41,10.59C13,10.2 13,9.56 13.41,9.17Z","link-variant-off":"M2,5.27L3.28,4L20,20.72L18.73,22L13.9,17.17L11.29,19.78C9.34,21.73 6.17,21.73 4.22,19.78C2.27,17.83 2.27,14.66 4.22,12.71L5.71,11.22C5.7,12.04 5.83,12.86 6.11,13.65L5.64,14.12C4.46,15.29 4.46,17.19 5.64,18.36C6.81,19.54 8.71,19.54 9.88,18.36L12.5,15.76L10.88,14.15C10.87,14.39 10.77,14.64 10.59,14.83C10.2,15.22 9.56,15.22 9.17,14.83C8.12,13.77 7.63,12.37 7.72,11L2,5.27M12.71,4.22C14.66,2.27 17.83,2.27 19.78,4.22C21.73,6.17 21.73,9.34 19.78,11.29L18.29,12.78C18.3,11.96 18.17,11.14 17.89,10.36L18.36,9.88C19.54,8.71 19.54,6.81 18.36,5.64C17.19,4.46 15.29,4.46 14.12,5.64L10.79,8.97L9.38,7.55L12.71,4.22M13.41,9.17C13.8,8.78 14.44,8.78 14.83,9.17C16.2,10.54 16.61,12.5 16.06,14.23L14.28,12.46C14.23,11.78 13.94,11.11 13.41,10.59C13,10.2 13,9.56 13.41,9.17Z","music-note":"M12 3V13.55C11.41 13.21 10.73 13 10 13C7.79 13 6 14.79 6 17S7.79 21 10 21 14 19.21 14 17V7H18V3H12Z","door-open":"M12,3C10.89,3 10,3.89 10,5H3V19H2V21H22V19H21V5C21,3.89 20.11,3 19,3H12M12,5H19V19H12V5M5,11H7V13H5V11Z","window-open-variant":"M21 20V2H3V20H1V23H23V20M19 4V11H17V4M5 4H7V11H5M5 20V13H7V20M9 20V4H15V20M17 20V13H19V20Z","curtains":"M23 3H1V1H23V3M2 22H6C6 19 4 17 4 17C10 13 11 4 11 4H2V22M22 4H13C13 4 14 13 20 17C20 17 18 19 18 22H22V4Z","garage-variant":"M22 9V20H20V11H4V20H2V9L12 5L22 9M19 12H5V14H19V12M19 18H5V20H19V18M19 15H5V17H19V15Z","hue-lightstrip":"M6.33,12.5c0.41-0.09,0.8,0.17,0.89,0.58c0.09,0.4-0.17,0.8-0.57,0.89c-0.41,0.09-0.8-0.17-0.89-0.57 C5.67,12.99,5.93,12.59,6.33,12.5 M10,11.71c0.4-0.09,0.8,0.17,0.89,0.57c0.09,0.41-0.17,0.8-0.57,0.89 C9.91,13.26,9.51,13,9.42,12.6C9.33,12.2,9.59,11.8,10,11.71 M13.66,10.92c0.41-0.09,0.8,0.17,0.89,0.57 c0.09,0.41-0.17,0.8-0.57,0.89c-0.4,0.09-0.8-0.17-0.89-0.57C13,11.4,13.25,11,13.66,10.92 M17.32,10.12 c0.41-0.09,0.8,0.17,0.89,0.57c0.09,0.4-0.17,0.8-0.57,0.89c-0.41,0.09-0.8-0.17-0.89-0.57C16.66,10.61,16.92,10.21,17.32,10.12 M8,15.48l11.1-2.4c0.81-0.17,1.32-0.97,1.15-1.78c-0.42-1.94-2.33-3.17-4.26-2.75L4.89,10.95c-0.81,0.18-1.32,0.97-1.15,1.78 C4.16,14.66,6.07,15.9,8,15.48 M18.75,19.5c-0.41,0-0.75-0.34-0.75-0.75S18.34,18,18.75,18s0.75,0.34,0.75,0.75 S19.16,19.5,18.75,19.5 M15,19.5c-0.41,0-0.75-0.34-0.75-0.75S14.59,18,15,18s0.75,0.34,0.75,0.75S15.41,19.5,15,19.5 M11.25,19.5 c-0.41,0-0.75-0.34-0.75-0.75S10.84,18,11.25,18S12,18.34,12,18.75S11.66,19.5,11.25,19.5 M7.5,19.5c-0.41,0-0.75-0.34-0.75-0.75 S7.09,18,7.5,18s0.75,0.34,0.75,0.75S7.91,19.5,7.5,19.5 M20.25,16.5H6.75c-3,0-3.75-2.25-3.75-3v3.75C3,19.32,4.68,21,6.75,21h13.5 c0.41,0,0.75-0.34,0.75-0.75v-3C21,16.84,20.66,16.5,20.25,16.5 M16.5,6c-0.41,0-0.75-0.34-0.75-0.75S16.09,4.5,16.5,4.5 s0.75,0.34,0.75,0.75S16.91,6,16.5,6 M12.75,6C12.34,6,12,5.66,12,5.25s0.34-0.75,0.75-0.75s0.75,0.34,0.75,0.75S13.16,6,12.75,6 M9,6C8.59,6,8.25,5.66,8.25,5.25S8.59,4.5,9,4.5s0.75,0.34,0.75,0.75S9.41,6,9,6 M5.25,6C4.84,6,4.5,5.66,4.5,5.25 S4.84,4.5,5.25,4.5S6,4.84,6,5.25S5.66,6,5.25,6 M17.25,3H3.75C3.34,3,3,3.34,3,3.75v3C3,7.16,3.34,7.5,3.75,7.5h13.5 c3,0,3.75,2.25,3.75,3V6.75C21,4.68,19.32,3,17.25,3","m3-lightbulb":{"p":"M422.5-103.5Q399-127 399-161h162q0 34-23.5 57.5T480-80q-34 0-57.5-23.5ZM318-223v-60h324v60H318Zm5-121q-66-43-104.5-107.5T180-597q0-122 89-211t211-89q122 0 211 89t89 211q0 81-38 145.5T637-344H323Z","v":"0 -960 960 960"},"m3-switch":{"p":"M220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h520q24 0 42 18t18 42v680q0 24-18 42t-42 18H220Zm105-205h309v-389H325v389Zm60-60v-187h189v187H385Zm95.47-412q8.46 0 14-5.53 5.53-5.54 5.53-14 0-8.47-5.53-14.47-5.54-6-14-6-8.47 0-14.47 6t-6 14.47q0 8.46 6 14 6 5.53 14.47 5.53Zm0 595q8.46 0 14-5.53 5.53-5.54 5.53-14 0-8.47-5.53-14.47-5.54-6-14-6-8.47 0-14.47 6t-6 14.47q0 8.46 6 14 6 5.53 14.47 5.53Z","v":"0 -960 960 960"},"m3-plug-connect":{"p":"M280-160v-41h-48q-46.67 0-79.33-32.5Q120-266 120-314v-136H40v-60h80v-135q0-48 32.67-80.5Q185.33-758 232-758h48v-42h60v640h-60Zm340 0v-165H440v-60h180v-189H440v-60h180v-166h60v42h48q46.67 0 79.33 32.5Q840-693 840-645v135h80v60h-80v136q0 48-32.67 80.5Q774.67-201 728-201h-48v41h-60Z","v":"0 -960 960 960"}});
 const mdi = n => { const x = MDI[n] || "", o = typeof x === "object"; return '<svg viewBox="' + (o ? x.v : "0 0 24 24") + '"><path d="' + (o ? x.p : x) + '"/></svg>'; };
 Object.assign(MDI, {"alarm-light": "M6,6.9L3.87,4.78L5.28,3.37L7.4,5.5L6,6.9M13,1V4H11V1H13M20.13,4.78L18,6.9L16.6,5.5L18.72,3.37L20.13,4.78M4.5,10.5V12.5H1.5V10.5H4.5M19.5,10.5H22.5V12.5H19.5V10.5M6,20H18A2,2 0 0,1 20,22H4A2,2 0 0,1 6,20M12,5A6,6 0 0,1 18,11V19H6V11A6,6 0 0,1 12,5Z", "timer-alert": "M18.45 5.97C18 5.46 17.55 5 17.04 4.56L15.62 6C14.07 4.74 12.12 4 10 4C5.03 4 1 8.03 1 13S5.03 22 10 22C15 22 19 17.97 19 13C19 10.88 18.26 8.93 17.03 7.39L18.45 5.97M11 14H9V7H11V14M13 3H7V1H13V3M23 7V13H21V7H23M21 15H23V17H21V15Z"});
-Object.assign(MDI, {"menu":"M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z","bell":"M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21","bell-outline":"M10 21H14C14 22.1 13.1 23 12 23S10 22.1 10 21M21 19V20H3V19L5 17V11C5 7.9 7 5.2 10 4.3V4C10 2.9 10.9 2 12 2S14 2.9 14 4V4.3C17 5.2 19 7.9 19 11V17L21 19M17 11C17 8.2 14.8 6 12 6S7 8.2 7 11V18H17V11Z","shield-home":"M11,13H13V16H16V11H18L12,6L6,11H8V16H11V13M12,1L21,5V11C21,16.55 17.16,21.74 12,23C6.84,21.74 3,16.55 3,11V5L12,1Z","fire":"M17.66 11.2C17.43 10.9 17.15 10.64 16.89 10.38C16.22 9.78 15.46 9.35 14.82 8.72C13.33 7.26 13 4.85 13.95 3C13 3.23 12.17 3.75 11.46 4.32C8.87 6.4 7.85 10.07 9.07 13.22C9.11 13.32 9.15 13.42 9.15 13.55C9.15 13.77 9 13.97 8.8 14.05C8.57 14.15 8.33 14.09 8.14 13.93C8.08 13.88 8.04 13.83 8 13.76C6.87 12.33 6.69 10.28 7.45 8.64C5.78 10 4.87 12.3 5 14.47C5.06 14.97 5.12 15.47 5.29 15.97C5.43 16.57 5.7 17.17 6 17.7C7.08 19.43 8.95 20.67 10.96 20.92C13.1 21.19 15.39 20.8 17.03 19.32C18.86 17.66 19.5 15 18.56 12.72L18.43 12.46C18.22 12 17.66 11.2 17.66 11.2M14.5 17.5C14.22 17.74 13.76 18 13.4 18.1C12.28 18.5 11.16 17.94 10.5 17.28C11.69 17 12.4 16.12 12.61 15.23C12.78 14.43 12.46 13.77 12.33 13C12.21 12.26 12.23 11.63 12.5 10.94C12.69 11.32 12.89 11.7 13.13 12C13.9 13 15.11 13.44 15.37 14.8C15.41 14.94 15.43 15.08 15.43 15.23C15.46 16.05 15.1 16.95 14.5 17.5H14.5Z","snowflake":"M20.79,13.95L18.46,14.57L16.46,13.44V10.56L18.46,9.43L20.79,10.05L21.31,8.12L19.54,7.65L20,5.88L18.07,5.36L17.45,7.69L15.45,8.82L13,7.38V5.12L14.71,3.41L13.29,2L12,3.29L10.71,2L9.29,3.41L11,5.12V7.38L8.5,8.82L6.5,7.69L5.92,5.36L4,5.88L4.47,7.65L2.7,8.12L3.22,10.05L5.55,9.43L7.55,10.56V13.45L5.55,14.58L3.22,13.96L2.7,15.89L4.47,16.36L4,18.12L5.93,18.64L6.55,16.31L8.55,15.18L11,16.62V18.88L9.29,20.59L10.71,22L12,20.71L13.29,22L14.7,20.59L13,18.88V16.62L15.5,15.17L17.5,16.3L18.12,18.63L20,18.12L19.53,16.35L21.3,15.88L20.79,13.95M9.5,10.56L12,9.11L14.5,10.56V13.44L12,14.89L9.5,13.44V10.56Z","fan":"M12,11A1,1 0 0,0 11,12A1,1 0 0,0 12,13A1,1 0 0,0 13,12A1,1 0 0,0 12,11M12.5,2C17,2 17.11,5.57 14.75,6.75C13.76,7.24 13.32,8.29 13.13,9.22C13.61,9.42 14.03,9.73 14.35,10.13C18.05,8.13 22.03,8.92 22.03,12.5C22.03,17 18.46,17.1 17.28,14.73C16.78,13.74 15.72,13.3 14.79,13.11C14.59,13.59 14.28,14 13.88,14.34C15.87,18.03 15.08,22 11.5,22C7,22 6.91,18.42 9.27,17.24C10.25,16.75 10.69,15.71 10.89,14.79C10.4,14.59 9.97,14.27 9.65,13.87C5.96,15.85 2,15.07 2,11.5C2,7 5.56,6.89 6.74,9.26C7.24,10.25 8.29,10.68 9.22,10.87C9.41,10.39 9.73,9.97 10.14,9.65C8.15,5.96 8.94,2 12.5,2Z","power":"M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12C20,9.28 18.64,6.88 16.56,5.44M13,3H11V13H13","water-percent":"M12,3.25C12,3.25 6,10 6,14C6,17.32 8.69,20 12,20A6,6 0 0,0 18,14C18,10 12,3.25 12,3.25M14.47,9.97L15.53,11.03L9.53,17.03L8.47,15.97M9.75,10A1.25,1.25 0 0,1 11,11.25A1.25,1.25 0 0,1 9.75,12.5A1.25,1.25 0 0,1 8.5,11.25A1.25,1.25 0 0,1 9.75,10M14.25,14.5A1.25,1.25 0 0,1 15.5,15.75A1.25,1.25 0 0,1 14.25,17A1.25,1.25 0 0,1 13,15.75A1.25,1.25 0 0,1 14.25,14.5Z","chevron-up":"M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z","chevron-down":"M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z","stop":"M18,18H6V6H18V18Z","circle":"M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z","volcano":"M18 8H11L9 13H6L2 22H22L18 8M13 1H15V5H13V1M16.12 5.47L18.95 2.64L20.36 4.05L17.54 6.88L16.12 5.47M7.64 4.05L9.05 2.64L11.88 5.46L10.47 6.88L7.64 4.05Z","alert-circle":"M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z","play":"M8,5.14V19.14L19,12.14L8,5.14Z","weather-sunny":"M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65,7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.83 14.37,18.56L12,22Z","weather-night":"M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.64 6.35,17.66C9.37,20.67 14.19,20.78 17.33,17.97Z","weather-cloudy":"M6,19A5,5 0 0,1 1,14A5,5 0 0,1 6,9C7,6.65 9.3,5 12,5C15.43,5 18.24,7.66 18.5,11.03L19,11A4,4 0 0,1 23,15A4,4 0 0,1 19,19H6M19,13H17V12A5,5 0 0,0 12,7C9.5,7 7.45,8.82 7.06,11.19C6.73,11.07 6.37,11 6,11A3,3 0 0,0 3,14A3,3 0 0,0 6,17H19A2,2 0 0,0 21,15A2,2 0 0,0 19,13Z","weather-partly-cloudy":"M12.74,5.47C15.1,6.5 16.35,9.03 15.92,11.46C17.19,12.56 18,14.19 18,16V16.17C18.31,16.06 18.65,16 19,16A3,3 0 0,1 22,19A3,3 0 0,1 19,22H6A4,4 0 0,1 2,18A4,4 0 0,1 6,14H6.27C5,12.45 4.6,10.24 5.5,8.26C6.72,5.5 9.97,4.24 12.74,5.47M11.93,7.3C10.16,6.5 8.09,7.31 7.31,9.07C6.85,10.09 6.93,11.22 7.41,12.13C8.5,10.83 10.16,10 12,10C12.7,10 13.38,10.12 14,10.34C13.94,9.06 13.18,7.86 11.93,7.3M13.55,3.64C13,3.4 12.45,3.23 11.88,3.12L14.37,1.82L15.27,4.71C14.76,4.29 14.19,3.93 13.55,3.64M6.09,4.44C5.6,4.79 5.17,5.19 4.8,5.63L4.91,2.82L7.87,3.5C7.25,3.71 6.65,4.03 6.09,4.44M18,9.71C17.91,9.12 17.78,8.55 17.59,8L19.97,9.5L17.92,11.73C18.03,11.08 18.05,10.4 18,9.71M3.04,11.3C3.11,11.9 3.24,12.47 3.43,13L1.06,11.5L3.1,9.28C3,9.93 2.97,10.61 3.04,11.3M19,18H16V16A4,4 0 0,0 12,12A4,4 0 0,0 8,16H6A2,2 0 0,0 4,18A2,2 0 0,0 6,20H19A1,1 0 0,0 20,19A1,1 0 0,0 19,18Z","weather-rainy":"M6,14.03A1,1 0 0,1 7,15.03C7,15.58 6.55,16.03 6,16.03C3.24,16.03 1,13.79 1,11.03C1,8.27 3.24,6.03 6,6.03C7,3.68 9.3,2.03 12,2.03C15.43,2.03 18.24,4.69 18.5,8.06L19,8.03A4,4 0 0,1 23,12.03C23,14.23 21.21,16.03 19,16.03H18C17.45,16.03 17,15.58 17,15.03C17,14.47 17.45,14.03 18,14.03H19A2,2 0 0,0 21,12.03A2,2 0 0,0 19,10.03H17V9.03C17,6.27 14.76,4.03 12,4.03C9.5,4.03 7.45,5.84 7.06,8.21C6.73,8.09 6.37,8.03 6,8.03A3,3 0 0,0 3,11.03A3,3 0 0,0 6,14.03M12,14.15C12.18,14.39 12.37,14.66 12.56,14.94C13,15.56 14,17.03 14,18C14,19.11 13.1,20 12,20A2,2 0 0,1 10,18C10,17.03 11,15.56 11.44,14.94C11.63,14.66 11.82,14.4 12,14.15M12,11.03L11.5,11.59C11.5,11.59 10.65,12.55 9.79,13.81C8.93,15.06 8,16.56 8,18A4,4 0 0,0 12,22A4,4 0 0,0 16,18C16,16.56 15.07,15.06 14.21,13.81C13.35,12.55 12.5,11.59 12.5,11.59","weather-pouring":"M9,12C9.53,12.14 9.85,12.69 9.71,13.22L8.41,18.05C8.27,18.59 7.72,18.9 7.19,18.76C6.65,18.62 6.34,18.07 6.5,17.54L7.78,12.71C7.92,12.17 8.47,11.86 9,12M13,12C13.53,12.14 13.85,12.69 13.71,13.22L11.64,20.95C11.5,21.5 10.95,21.8 10.41,21.66C9.88,21.5 9.56,20.97 9.7,20.43L11.78,12.71C11.92,12.17 12.47,11.86 13,12M17,12C17.53,12.14 17.85,12.69 17.71,13.22L16.41,18.05C16.27,18.59 15.72,18.9 15.19,18.76C14.65,18.62 14.34,18.07 14.5,17.54L15.78,12.71C15.92,12.17 16.47,11.86 17,12M17,10V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11C3,12.11 3.6,13.08 4.5,13.6V13.59C5,13.87 5.14,14.5 4.87,14.96C4.59,15.43 4,15.6 3.5,15.32V15.33C2,14.47 1,12.85 1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12C23,13.5 22.2,14.77 21,15.46V15.46C20.5,15.73 19.91,15.57 19.63,15.09C19.36,14.61 19.5,14 20,13.72V13.73C20.6,13.39 21,12.74 21,12A2,2 0 0,0 19,10H17Z","weather-lightning":"M6,16A5,5 0 0,1 1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12A4,4 0 0,1 19,16H18A1,1 0 0,1 17,15A1,1 0 0,1 18,14H19A2,2 0 0,0 21,12A2,2 0 0,0 19,10H17V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11A3,3 0 0,0 6,14H7A1,1 0 0,1 8,15A1,1 0 0,1 7,16H6M12,11H15L13,15H15L11.25,22L12,17H9.5L12,11Z","weather-lightning-rainy":"M4.5,13.59C5,13.87 5.14,14.5 4.87,14.96C4.59,15.44 4,15.6 3.5,15.33V15.33C2,14.47 1,12.85 1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12A4,4 0 0,1 19,16A1,1 0 0,1 18,15A1,1 0 0,1 19,14A2,2 0 0,0 21,12A2,2 0 0,0 19,10H17V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11C3,12.11 3.6,13.08 4.5,13.6V13.59M9.5,11H12.5L10.5,15H12.5L8.75,22L9.5,17H7L9.5,11M17.5,18.67C17.5,19.96 16.5,21 15.25,21C14,21 13,19.96 13,18.67C13,17.12 15.25,14.5 15.25,14.5C15.25,14.5 17.5,17.12 17.5,18.67Z","weather-snowy":"M6,14A1,1 0 0,1 7,15A1,1 0 0,1 6,16A5,5 0 0,1 1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12A4,4 0 0,1 19,16H18A1,1 0 0,1 17,15A1,1 0 0,1 18,14H19A2,2 0 0,0 21,12A2,2 0 0,0 19,10H17V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11A3,3 0 0,0 6,14M7.88,18.07L10.07,17.5L8.46,15.88C8.07,15.5 8.07,14.86 8.46,14.46C8.85,14.07 9.5,14.07 9.88,14.46L11.5,16.07L12.07,13.88C12.21,13.34 12.76,13.03 13.29,13.17C13.83,13.31 14.14,13.86 14,14.4L13.41,16.59L15.6,16C16.14,15.86 16.69,16.17 16.83,16.71C16.97,17.24 16.66,17.79 16.12,17.93L13.93,18.5L15.54,20.12C15.93,20.5 15.93,21.15 15.54,21.54C15.15,21.93 14.5,21.93 14.12,21.54L12.5,19.93L11.93,22.12C11.79,22.66 11.24,22.97 10.71,22.83C10.17,22.69 9.86,22.14 10,21.6L10.59,19.41L8.4,20C7.86,20.14 7.31,19.83 7.17,19.29C7.03,18.76 7.34,18.21 7.88,18.07Z","weather-snowy-rainy":"M18.5,18.67C18.5,19.96 17.5,21 16.25,21C15,21 14,19.96 14,18.67C14,17.12 16.25,14.5 16.25,14.5C16.25,14.5 18.5,17.12 18.5,18.67M4,17.36C3.86,16.82 4.18,16.25 4.73,16.11L7,15.5L5.33,13.86C4.93,13.46 4.93,12.81 5.33,12.4C5.73,12 6.4,12 6.79,12.4L8.45,14.05L9.04,11.8C9.18,11.24 9.75,10.92 10.29,11.07C10.85,11.21 11.17,11.78 11,12.33L10.42,14.58L12.67,14C13.22,13.83 13.79,14.15 13.93,14.71C14.08,15.25 13.76,15.82 13.2,15.96L10.95,16.55L12.6,18.21C13,18.6 13,19.27 12.6,19.67C12.2,20.07 11.54,20.07 11.15,19.67L9.5,18L8.89,20.27C8.75,20.83 8.18,21.14 7.64,21C7.08,20.86 6.77,20.29 6.91,19.74L7.5,17.5L5.26,18.09C4.71,18.23 4.14,17.92 4,17.36M1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12A4,4 0 0,1 19,16A1,1 0 0,1 18,15A1,1 0 0,1 19,14A2,2 0 0,0 21,12A2,2 0 0,0 19,10H17V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11C3,11.85 3.35,12.61 3.91,13.16C4.27,13.55 4.26,14.16 3.88,14.54C3.5,14.93 2.85,14.93 2.47,14.54C1.56,13.63 1,12.38 1,11Z","weather-fog":"M3,15H13A1,1 0 0,1 14,16A1,1 0 0,1 13,17H3A1,1 0 0,1 2,16A1,1 0 0,1 3,15M16,15H21A1,1 0 0,1 22,16A1,1 0 0,1 21,17H16A1,1 0 0,1 15,16A1,1 0 0,1 16,15M1,12A5,5 0 0,1 6,7C7,4.65 9.3,3 12,3C15.43,3 18.24,5.66 18.5,9.03L19,9C21.19,9 22.97,10.76 23,13H21A2,2 0 0,0 19,11H17V10A5,5 0 0,0 12,5C9.5,5 7.45,6.82 7.06,9.19C6.73,9.07 6.37,9 6,9A3,3 0 0,0 3,12C3,12.35 3.06,12.69 3.17,13H1.1L1,12M3,19H5A1,1 0 0,1 6,20A1,1 0 0,1 5,21H3A1,1 0 0,1 2,20A1,1 0 0,1 3,19M8,19H21A1,1 0 0,1 22,20A1,1 0 0,1 21,21H8A1,1 0 0,1 7,20A1,1 0 0,1 8,19Z","weather-windy":"M4,10A1,1 0 0,1 3,9A1,1 0 0,1 4,8H12A2,2 0 0,0 14,6A2,2 0 0,0 12,4C11.45,4 10.95,4.22 10.59,4.59C10.2,5 9.56,5 9.17,4.59C8.78,4.2 8.78,3.56 9.17,3.17C9.9,2.45 10.9,2 12,2A4,4 0 0,1 16,6A4,4 0 0,1 12,10H4M19,12A1,1 0 0,0 20,11A1,1 0 0,0 19,10C18.72,10 18.47,10.11 18.29,10.29C17.9,10.68 17.27,10.68 16.88,10.29C16.5,9.9 16.5,9.27 16.88,8.88C17.42,8.34 18.17,8 19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14H5A1,1 0 0,1 4,13A1,1 0 0,1 5,12H19M18,18H4A1,1 0 0,1 3,17A1,1 0 0,1 4,16H18A3,3 0 0,1 21,19A3,3 0 0,1 18,22C17.17,22 16.42,21.66 15.88,21.12C15.5,20.73 15.5,20.1 15.88,19.71C16.27,19.32 16.9,19.32 17.29,19.71C17.47,19.89 17.72,20 18,20A1,1 0 0,0 19,19A1,1 0 0,0 18,18Z","weather-hail":"M6,14A1,1 0 0,1 7,15A1,1 0 0,1 6,16A5,5 0 0,1 1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12A4,4 0 0,1 19,16H18A1,1 0 0,1 17,15A1,1 0 0,1 18,14H19A2,2 0 0,0 21,12A2,2 0 0,0 19,10H17V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11A3,3 0 0,0 6,14M10,18A2,2 0 0,1 12,20A2,2 0 0,1 10,22A2,2 0 0,1 8,20A2,2 0 0,1 10,18M14.5,16A1.5,1.5 0 0,1 16,17.5A1.5,1.5 0 0,1 14.5,19A1.5,1.5 0 0,1 13,17.5A1.5,1.5 0 0,1 14.5,16M10.5,12A1.5,1.5 0 0,1 12,13.5A1.5,1.5 0 0,1 10.5,15A1.5,1.5 0 0,1 9,13.5A1.5,1.5 0 0,1 10.5,12Z","weather-night-partly-cloudy":"M22,10.28C21.74,10.3 21.5,10.31 21.26,10.31C19.32,10.31 17.39,9.57 15.91,8.09C14.25,6.44 13.5,4.19 13.72,2C13.77,1.53 13.22,1 12.71,1C12.57,1 12.44,1.04 12.32,1.12C12,1.36 11.66,1.64 11.36,1.94C9.05,4.24 8.55,7.66 9.84,10.46C8.31,11.11 7.13,12.43 6.69,14.06L6,14A4,4 0 0,0 2,18A4,4 0 0,0 6,22H19A3,3 0 0,0 22,19A3,3 0 0,0 19,16C18.42,16 17.88,16.16 17.42,16.45L17.5,15.5C17.5,15.28 17.5,15.05 17.46,14.83C19.14,14.67 20.77,13.94 22.06,12.64C22.38,12.34 22.64,12 22.88,11.68C23.27,11.13 22.65,10.28 22.04,10.28M19,18A1,1 0 0,1 20,19A1,1 0 0,1 19,20H6A2,2 0 0,1 4,18A2,2 0 0,1 6,16H8.5V15.5C8.5,13.94 9.53,12.64 10.94,12.18C11.1,12.13 11.26,12.09 11.43,12.06C11.61,12.03 11.8,12 12,12C12.23,12 12.45,12.03 12.66,12.07C12.73,12.08 12.8,12.1 12.87,12.13C13,12.16 13.15,12.2 13.28,12.25C13.36,12.28 13.44,12.32 13.5,12.36C13.63,12.41 13.74,12.47 13.84,12.54C13.92,12.59 14,12.64 14.07,12.7C14.17,12.77 14.25,12.84 14.34,12.92C14.41,13 14.5,13.05 14.55,13.12C14.63,13.2 14.69,13.29 14.76,13.37C14.82,13.45 14.89,13.53 14.94,13.62C15,13.71 15.04,13.8 15.09,13.9C15.14,14 15.2,14.08 15.24,14.18C15.41,14.59 15.5,15.03 15.5,15.5V18M16.83,12.86C15.9,11.16 14.08,10 12,10H11.87C11.41,9.19 11.14,8.26 11.14,7.29C11.14,6.31 11.39,5.37 11.86,4.55C12.21,6.41 13.12,8.14 14.5,9.5C15.86,10.88 17.58,11.79 19.45,12.14C18.66,12.6 17.76,12.84 16.83,12.86Z","weather-hurricane":"M15,6.79C16.86,7.86 18,9.85 18,12C18,22 6,22 6,22C7.25,21.06 8.38,19.95 9.34,18.71C9.38,18.66 9.41,18.61 9.44,18.55C9.69,18.06 9.5,17.46 9,17.21C7.14,16.14 6,14.15 6,12C6,2 18,2 18,2C16.75,2.94 15.62,4.05 14.66,5.29C14.62,5.34 14.59,5.39 14.56,5.45C14.31,5.94 14.5,6.54 15,6.79M12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14Z","weather-sunny-alert":"M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.83 14.37,18.56M19,13V7H21V13H19M19,17V15H21V17","weather-windy-variant":"M6,6L6.69,6.06C7.32,3.72 9.46,2 12,2A5.5,5.5 0 0,1 17.5,7.5L17.42,8.45C17.88,8.16 18.42,8 19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14H6A4,4 0 0,1 2,10A4,4 0 0,1 6,6M6,8A2,2 0 0,0 4,10A2,2 0 0,0 6,12H19A1,1 0 0,0 20,11A1,1 0 0,0 19,10H15.5V7.5A3.5,3.5 0 0,0 12,4A3.5,3.5 0 0,0 8.5,7.5V8H6M18,18H4A1,1 0 0,1 3,17A1,1 0 0,1 4,16H18A3,3 0 0,1 21,19A3,3 0 0,1 18,22C17.17,22 16.42,21.66 15.88,21.12C15.5,20.73 15.5,20.1 15.88,19.71C16.27,19.32 16.9,19.32 17.29,19.71C17.47,19.89 17.72,20 18,20A1,1 0 0,0 19,19A1,1 0 0,0 18,18Z","close":"M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z","chevron-left":"M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z","chevron-right":"M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z","lightbulb":"M12,2A7,7 0 0,0 5,9C5,11.38 6.19,13.47 8,14.74V17A1,1 0 0,0 9,18H15A1,1 0 0,0 16,17V14.74C17.81,13.47 19,11.38 19,9A7,7 0 0,0 12,2M9,21A1,1 0 0,0 10,22H14A1,1 0 0,0 15,21V20H9V21Z","door-open":"M12,3C10.89,3 10,3.89 10,5H3V19H2V21H22V19H21V5C21,3.89 20.11,3 19,3H12M12,5H19V19H12V5M5,11H7V13H5V11Z","thermometer":"M15 13V5A3 3 0 0 0 9 5V13A5 5 0 1 0 15 13M12 4A1 1 0 0 1 13 5V8H11V5A1 1 0 0 1 12 4Z","autorenew":"M12,6V9L16,5L12,1V4A8,8 0 0,0 4,12C4,13.57 4.46,15.03 5.24,16.26L6.7,14.8C6.25,13.97 6,13 6,12A6,6 0 0,1 12,6M18.76,7.74L17.3,9.2C17.74,10.04 18,11 18,12A6,6 0 0,1 12,18V15L8,19L12,23V20A8,8 0 0,0 20,12C20,10.43 19.54,8.97 18.76,7.74Z"});
+Object.assign(MDI, {"fullscreen":"M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z","menu":"M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z","bell":"M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21","bell-outline":"M10 21H14C14 22.1 13.1 23 12 23S10 22.1 10 21M21 19V20H3V19L5 17V11C5 7.9 7 5.2 10 4.3V4C10 2.9 10.9 2 12 2S14 2.9 14 4V4.3C17 5.2 19 7.9 19 11V17L21 19M17 11C17 8.2 14.8 6 12 6S7 8.2 7 11V18H17V11Z","shield-home":"M11,13H13V16H16V11H18L12,6L6,11H8V16H11V13M12,1L21,5V11C21,16.55 17.16,21.74 12,23C6.84,21.74 3,16.55 3,11V5L12,1Z","fire":"M17.66 11.2C17.43 10.9 17.15 10.64 16.89 10.38C16.22 9.78 15.46 9.35 14.82 8.72C13.33 7.26 13 4.85 13.95 3C13 3.23 12.17 3.75 11.46 4.32C8.87 6.4 7.85 10.07 9.07 13.22C9.11 13.32 9.15 13.42 9.15 13.55C9.15 13.77 9 13.97 8.8 14.05C8.57 14.15 8.33 14.09 8.14 13.93C8.08 13.88 8.04 13.83 8 13.76C6.87 12.33 6.69 10.28 7.45 8.64C5.78 10 4.87 12.3 5 14.47C5.06 14.97 5.12 15.47 5.29 15.97C5.43 16.57 5.7 17.17 6 17.7C7.08 19.43 8.95 20.67 10.96 20.92C13.1 21.19 15.39 20.8 17.03 19.32C18.86 17.66 19.5 15 18.56 12.72L18.43 12.46C18.22 12 17.66 11.2 17.66 11.2M14.5 17.5C14.22 17.74 13.76 18 13.4 18.1C12.28 18.5 11.16 17.94 10.5 17.28C11.69 17 12.4 16.12 12.61 15.23C12.78 14.43 12.46 13.77 12.33 13C12.21 12.26 12.23 11.63 12.5 10.94C12.69 11.32 12.89 11.7 13.13 12C13.9 13 15.11 13.44 15.37 14.8C15.41 14.94 15.43 15.08 15.43 15.23C15.46 16.05 15.1 16.95 14.5 17.5H14.5Z","snowflake":"M20.79,13.95L18.46,14.57L16.46,13.44V10.56L18.46,9.43L20.79,10.05L21.31,8.12L19.54,7.65L20,5.88L18.07,5.36L17.45,7.69L15.45,8.82L13,7.38V5.12L14.71,3.41L13.29,2L12,3.29L10.71,2L9.29,3.41L11,5.12V7.38L8.5,8.82L6.5,7.69L5.92,5.36L4,5.88L4.47,7.65L2.7,8.12L3.22,10.05L5.55,9.43L7.55,10.56V13.45L5.55,14.58L3.22,13.96L2.7,15.89L4.47,16.36L4,18.12L5.93,18.64L6.55,16.31L8.55,15.18L11,16.62V18.88L9.29,20.59L10.71,22L12,20.71L13.29,22L14.7,20.59L13,18.88V16.62L15.5,15.17L17.5,16.3L18.12,18.63L20,18.12L19.53,16.35L21.3,15.88L20.79,13.95M9.5,10.56L12,9.11L14.5,10.56V13.44L12,14.89L9.5,13.44V10.56Z","fan":"M12,11A1,1 0 0,0 11,12A1,1 0 0,0 12,13A1,1 0 0,0 13,12A1,1 0 0,0 12,11M12.5,2C17,2 17.11,5.57 14.75,6.75C13.76,7.24 13.32,8.29 13.13,9.22C13.61,9.42 14.03,9.73 14.35,10.13C18.05,8.13 22.03,8.92 22.03,12.5C22.03,17 18.46,17.1 17.28,14.73C16.78,13.74 15.72,13.3 14.79,13.11C14.59,13.59 14.28,14 13.88,14.34C15.87,18.03 15.08,22 11.5,22C7,22 6.91,18.42 9.27,17.24C10.25,16.75 10.69,15.71 10.89,14.79C10.4,14.59 9.97,14.27 9.65,13.87C5.96,15.85 2,15.07 2,11.5C2,7 5.56,6.89 6.74,9.26C7.24,10.25 8.29,10.68 9.22,10.87C9.41,10.39 9.73,9.97 10.14,9.65C8.15,5.96 8.94,2 12.5,2Z","power":"M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12C20,9.28 18.64,6.88 16.56,5.44M13,3H11V13H13","water-percent":"M12,3.25C12,3.25 6,10 6,14C6,17.32 8.69,20 12,20A6,6 0 0,0 18,14C18,10 12,3.25 12,3.25M14.47,9.97L15.53,11.03L9.53,17.03L8.47,15.97M9.75,10A1.25,1.25 0 0,1 11,11.25A1.25,1.25 0 0,1 9.75,12.5A1.25,1.25 0 0,1 8.5,11.25A1.25,1.25 0 0,1 9.75,10M14.25,14.5A1.25,1.25 0 0,1 15.5,15.75A1.25,1.25 0 0,1 14.25,17A1.25,1.25 0 0,1 13,15.75A1.25,1.25 0 0,1 14.25,14.5Z","chevron-up":"M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z","chevron-down":"M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z","stop":"M18,18H6V6H18V18Z","circle":"M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z","volcano":"M18 8H11L9 13H6L2 22H22L18 8M13 1H15V5H13V1M16.12 5.47L18.95 2.64L20.36 4.05L17.54 6.88L16.12 5.47M7.64 4.05L9.05 2.64L11.88 5.46L10.47 6.88L7.64 4.05Z","alert-circle":"M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z","play":"M8,5.14V19.14L19,12.14L8,5.14Z","weather-sunny":"M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65,7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.83 14.37,18.56L12,22Z","weather-night":"M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.64 6.35,17.66C9.37,20.67 14.19,20.78 17.33,17.97Z","weather-cloudy":"M6,19A5,5 0 0,1 1,14A5,5 0 0,1 6,9C7,6.65 9.3,5 12,5C15.43,5 18.24,7.66 18.5,11.03L19,11A4,4 0 0,1 23,15A4,4 0 0,1 19,19H6M19,13H17V12A5,5 0 0,0 12,7C9.5,7 7.45,8.82 7.06,11.19C6.73,11.07 6.37,11 6,11A3,3 0 0,0 3,14A3,3 0 0,0 6,17H19A2,2 0 0,0 21,15A2,2 0 0,0 19,13Z","weather-partly-cloudy":"M12.74,5.47C15.1,6.5 16.35,9.03 15.92,11.46C17.19,12.56 18,14.19 18,16V16.17C18.31,16.06 18.65,16 19,16A3,3 0 0,1 22,19A3,3 0 0,1 19,22H6A4,4 0 0,1 2,18A4,4 0 0,1 6,14H6.27C5,12.45 4.6,10.24 5.5,8.26C6.72,5.5 9.97,4.24 12.74,5.47M11.93,7.3C10.16,6.5 8.09,7.31 7.31,9.07C6.85,10.09 6.93,11.22 7.41,12.13C8.5,10.83 10.16,10 12,10C12.7,10 13.38,10.12 14,10.34C13.94,9.06 13.18,7.86 11.93,7.3M13.55,3.64C13,3.4 12.45,3.23 11.88,3.12L14.37,1.82L15.27,4.71C14.76,4.29 14.19,3.93 13.55,3.64M6.09,4.44C5.6,4.79 5.17,5.19 4.8,5.63L4.91,2.82L7.87,3.5C7.25,3.71 6.65,4.03 6.09,4.44M18,9.71C17.91,9.12 17.78,8.55 17.59,8L19.97,9.5L17.92,11.73C18.03,11.08 18.05,10.4 18,9.71M3.04,11.3C3.11,11.9 3.24,12.47 3.43,13L1.06,11.5L3.1,9.28C3,9.93 2.97,10.61 3.04,11.3M19,18H16V16A4,4 0 0,0 12,12A4,4 0 0,0 8,16H6A2,2 0 0,0 4,18A2,2 0 0,0 6,20H19A1,1 0 0,0 20,19A1,1 0 0,0 19,18Z","weather-rainy":"M6,14.03A1,1 0 0,1 7,15.03C7,15.58 6.55,16.03 6,16.03C3.24,16.03 1,13.79 1,11.03C1,8.27 3.24,6.03 6,6.03C7,3.68 9.3,2.03 12,2.03C15.43,2.03 18.24,4.69 18.5,8.06L19,8.03A4,4 0 0,1 23,12.03C23,14.23 21.21,16.03 19,16.03H18C17.45,16.03 17,15.58 17,15.03C17,14.47 17.45,14.03 18,14.03H19A2,2 0 0,0 21,12.03A2,2 0 0,0 19,10.03H17V9.03C17,6.27 14.76,4.03 12,4.03C9.5,4.03 7.45,5.84 7.06,8.21C6.73,8.09 6.37,8.03 6,8.03A3,3 0 0,0 3,11.03A3,3 0 0,0 6,14.03M12,14.15C12.18,14.39 12.37,14.66 12.56,14.94C13,15.56 14,17.03 14,18C14,19.11 13.1,20 12,20A2,2 0 0,1 10,18C10,17.03 11,15.56 11.44,14.94C11.63,14.66 11.82,14.4 12,14.15M12,11.03L11.5,11.59C11.5,11.59 10.65,12.55 9.79,13.81C8.93,15.06 8,16.56 8,18A4,4 0 0,0 12,22A4,4 0 0,0 16,18C16,16.56 15.07,15.06 14.21,13.81C13.35,12.55 12.5,11.59 12.5,11.59","weather-pouring":"M9,12C9.53,12.14 9.85,12.69 9.71,13.22L8.41,18.05C8.27,18.59 7.72,18.9 7.19,18.76C6.65,18.62 6.34,18.07 6.5,17.54L7.78,12.71C7.92,12.17 8.47,11.86 9,12M13,12C13.53,12.14 13.85,12.69 13.71,13.22L11.64,20.95C11.5,21.5 10.95,21.8 10.41,21.66C9.88,21.5 9.56,20.97 9.7,20.43L11.78,12.71C11.92,12.17 12.47,11.86 13,12M17,12C17.53,12.14 17.85,12.69 17.71,13.22L16.41,18.05C16.27,18.59 15.72,18.9 15.19,18.76C14.65,18.62 14.34,18.07 14.5,17.54L15.78,12.71C15.92,12.17 16.47,11.86 17,12M17,10V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11C3,12.11 3.6,13.08 4.5,13.6V13.59C5,13.87 5.14,14.5 4.87,14.96C4.59,15.43 4,15.6 3.5,15.32V15.33C2,14.47 1,12.85 1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12C23,13.5 22.2,14.77 21,15.46V15.46C20.5,15.73 19.91,15.57 19.63,15.09C19.36,14.61 19.5,14 20,13.72V13.73C20.6,13.39 21,12.74 21,12A2,2 0 0,0 19,10H17Z","weather-lightning":"M6,16A5,5 0 0,1 1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12A4,4 0 0,1 19,16H18A1,1 0 0,1 17,15A1,1 0 0,1 18,14H19A2,2 0 0,0 21,12A2,2 0 0,0 19,10H17V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11A3,3 0 0,0 6,14H7A1,1 0 0,1 8,15A1,1 0 0,1 7,16H6M12,11H15L13,15H15L11.25,22L12,17H9.5L12,11Z","weather-lightning-rainy":"M4.5,13.59C5,13.87 5.14,14.5 4.87,14.96C4.59,15.44 4,15.6 3.5,15.33V15.33C2,14.47 1,12.85 1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12A4,4 0 0,1 19,16A1,1 0 0,1 18,15A1,1 0 0,1 19,14A2,2 0 0,0 21,12A2,2 0 0,0 19,10H17V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11C3,12.11 3.6,13.08 4.5,13.6V13.59M9.5,11H12.5L10.5,15H12.5L8.75,22L9.5,17H7L9.5,11M17.5,18.67C17.5,19.96 16.5,21 15.25,21C14,21 13,19.96 13,18.67C13,17.12 15.25,14.5 15.25,14.5C15.25,14.5 17.5,17.12 17.5,18.67Z","weather-snowy":"M6,14A1,1 0 0,1 7,15A1,1 0 0,1 6,16A5,5 0 0,1 1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12A4,4 0 0,1 19,16H18A1,1 0 0,1 17,15A1,1 0 0,1 18,14H19A2,2 0 0,0 21,12A2,2 0 0,0 19,10H17V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11A3,3 0 0,0 6,14M7.88,18.07L10.07,17.5L8.46,15.88C8.07,15.5 8.07,14.86 8.46,14.46C8.85,14.07 9.5,14.07 9.88,14.46L11.5,16.07L12.07,13.88C12.21,13.34 12.76,13.03 13.29,13.17C13.83,13.31 14.14,13.86 14,14.4L13.41,16.59L15.6,16C16.14,15.86 16.69,16.17 16.83,16.71C16.97,17.24 16.66,17.79 16.12,17.93L13.93,18.5L15.54,20.12C15.93,20.5 15.93,21.15 15.54,21.54C15.15,21.93 14.5,21.93 14.12,21.54L12.5,19.93L11.93,22.12C11.79,22.66 11.24,22.97 10.71,22.83C10.17,22.69 9.86,22.14 10,21.6L10.59,19.41L8.4,20C7.86,20.14 7.31,19.83 7.17,19.29C7.03,18.76 7.34,18.21 7.88,18.07Z","weather-snowy-rainy":"M18.5,18.67C18.5,19.96 17.5,21 16.25,21C15,21 14,19.96 14,18.67C14,17.12 16.25,14.5 16.25,14.5C16.25,14.5 18.5,17.12 18.5,18.67M4,17.36C3.86,16.82 4.18,16.25 4.73,16.11L7,15.5L5.33,13.86C4.93,13.46 4.93,12.81 5.33,12.4C5.73,12 6.4,12 6.79,12.4L8.45,14.05L9.04,11.8C9.18,11.24 9.75,10.92 10.29,11.07C10.85,11.21 11.17,11.78 11,12.33L10.42,14.58L12.67,14C13.22,13.83 13.79,14.15 13.93,14.71C14.08,15.25 13.76,15.82 13.2,15.96L10.95,16.55L12.6,18.21C13,18.6 13,19.27 12.6,19.67C12.2,20.07 11.54,20.07 11.15,19.67L9.5,18L8.89,20.27C8.75,20.83 8.18,21.14 7.64,21C7.08,20.86 6.77,20.29 6.91,19.74L7.5,17.5L5.26,18.09C4.71,18.23 4.14,17.92 4,17.36M1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12A4,4 0 0,1 19,16A1,1 0 0,1 18,15A1,1 0 0,1 19,14A2,2 0 0,0 21,12A2,2 0 0,0 19,10H17V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11C3,11.85 3.35,12.61 3.91,13.16C4.27,13.55 4.26,14.16 3.88,14.54C3.5,14.93 2.85,14.93 2.47,14.54C1.56,13.63 1,12.38 1,11Z","weather-fog":"M3,15H13A1,1 0 0,1 14,16A1,1 0 0,1 13,17H3A1,1 0 0,1 2,16A1,1 0 0,1 3,15M16,15H21A1,1 0 0,1 22,16A1,1 0 0,1 21,17H16A1,1 0 0,1 15,16A1,1 0 0,1 16,15M1,12A5,5 0 0,1 6,7C7,4.65 9.3,3 12,3C15.43,3 18.24,5.66 18.5,9.03L19,9C21.19,9 22.97,10.76 23,13H21A2,2 0 0,0 19,11H17V10A5,5 0 0,0 12,5C9.5,5 7.45,6.82 7.06,9.19C6.73,9.07 6.37,9 6,9A3,3 0 0,0 3,12C3,12.35 3.06,12.69 3.17,13H1.1L1,12M3,19H5A1,1 0 0,1 6,20A1,1 0 0,1 5,21H3A1,1 0 0,1 2,20A1,1 0 0,1 3,19M8,19H21A1,1 0 0,1 22,20A1,1 0 0,1 21,21H8A1,1 0 0,1 7,20A1,1 0 0,1 8,19Z","weather-windy":"M4,10A1,1 0 0,1 3,9A1,1 0 0,1 4,8H12A2,2 0 0,0 14,6A2,2 0 0,0 12,4C11.45,4 10.95,4.22 10.59,4.59C10.2,5 9.56,5 9.17,4.59C8.78,4.2 8.78,3.56 9.17,3.17C9.9,2.45 10.9,2 12,2A4,4 0 0,1 16,6A4,4 0 0,1 12,10H4M19,12A1,1 0 0,0 20,11A1,1 0 0,0 19,10C18.72,10 18.47,10.11 18.29,10.29C17.9,10.68 17.27,10.68 16.88,10.29C16.5,9.9 16.5,9.27 16.88,8.88C17.42,8.34 18.17,8 19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14H5A1,1 0 0,1 4,13A1,1 0 0,1 5,12H19M18,18H4A1,1 0 0,1 3,17A1,1 0 0,1 4,16H18A3,3 0 0,1 21,19A3,3 0 0,1 18,22C17.17,22 16.42,21.66 15.88,21.12C15.5,20.73 15.5,20.1 15.88,19.71C16.27,19.32 16.9,19.32 17.29,19.71C17.47,19.89 17.72,20 18,20A1,1 0 0,0 19,19A1,1 0 0,0 18,18Z","weather-hail":"M6,14A1,1 0 0,1 7,15A1,1 0 0,1 6,16A5,5 0 0,1 1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12A4,4 0 0,1 19,16H18A1,1 0 0,1 17,15A1,1 0 0,1 18,14H19A2,2 0 0,0 21,12A2,2 0 0,0 19,10H17V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11A3,3 0 0,0 6,14M10,18A2,2 0 0,1 12,20A2,2 0 0,1 10,22A2,2 0 0,1 8,20A2,2 0 0,1 10,18M14.5,16A1.5,1.5 0 0,1 16,17.5A1.5,1.5 0 0,1 14.5,19A1.5,1.5 0 0,1 13,17.5A1.5,1.5 0 0,1 14.5,16M10.5,12A1.5,1.5 0 0,1 12,13.5A1.5,1.5 0 0,1 10.5,15A1.5,1.5 0 0,1 9,13.5A1.5,1.5 0 0,1 10.5,12Z","weather-night-partly-cloudy":"M22,10.28C21.74,10.3 21.5,10.31 21.26,10.31C19.32,10.31 17.39,9.57 15.91,8.09C14.25,6.44 13.5,4.19 13.72,2C13.77,1.53 13.22,1 12.71,1C12.57,1 12.44,1.04 12.32,1.12C12,1.36 11.66,1.64 11.36,1.94C9.05,4.24 8.55,7.66 9.84,10.46C8.31,11.11 7.13,12.43 6.69,14.06L6,14A4,4 0 0,0 2,18A4,4 0 0,0 6,22H19A3,3 0 0,0 22,19A3,3 0 0,0 19,16C18.42,16 17.88,16.16 17.42,16.45L17.5,15.5C17.5,15.28 17.5,15.05 17.46,14.83C19.14,14.67 20.77,13.94 22.06,12.64C22.38,12.34 22.64,12 22.88,11.68C23.27,11.13 22.65,10.28 22.04,10.28M19,18A1,1 0 0,1 20,19A1,1 0 0,1 19,20H6A2,2 0 0,1 4,18A2,2 0 0,1 6,16H8.5V15.5C8.5,13.94 9.53,12.64 10.94,12.18C11.1,12.13 11.26,12.09 11.43,12.06C11.61,12.03 11.8,12 12,12C12.23,12 12.45,12.03 12.66,12.07C12.73,12.08 12.8,12.1 12.87,12.13C13,12.16 13.15,12.2 13.28,12.25C13.36,12.28 13.44,12.32 13.5,12.36C13.63,12.41 13.74,12.47 13.84,12.54C13.92,12.59 14,12.64 14.07,12.7C14.17,12.77 14.25,12.84 14.34,12.92C14.41,13 14.5,13.05 14.55,13.12C14.63,13.2 14.69,13.29 14.76,13.37C14.82,13.45 14.89,13.53 14.94,13.62C15,13.71 15.04,13.8 15.09,13.9C15.14,14 15.2,14.08 15.24,14.18C15.41,14.59 15.5,15.03 15.5,15.5V18M16.83,12.86C15.9,11.16 14.08,10 12,10H11.87C11.41,9.19 11.14,8.26 11.14,7.29C11.14,6.31 11.39,5.37 11.86,4.55C12.21,6.41 13.12,8.14 14.5,9.5C15.86,10.88 17.58,11.79 19.45,12.14C18.66,12.6 17.76,12.84 16.83,12.86Z","weather-hurricane":"M15,6.79C16.86,7.86 18,9.85 18,12C18,22 6,22 6,22C7.25,21.06 8.38,19.95 9.34,18.71C9.38,18.66 9.41,18.61 9.44,18.55C9.69,18.06 9.5,17.46 9,17.21C7.14,16.14 6,14.15 6,12C6,2 18,2 18,2C16.75,2.94 15.62,4.05 14.66,5.29C14.62,5.34 14.59,5.39 14.56,5.45C14.31,5.94 14.5,6.54 15,6.79M12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14Z","weather-sunny-alert":"M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.83 14.37,18.56M19,13V7H21V13H19M19,17V15H21V17","weather-windy-variant":"M6,6L6.69,6.06C7.32,3.72 9.46,2 12,2A5.5,5.5 0 0,1 17.5,7.5L17.42,8.45C17.88,8.16 18.42,8 19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14H6A4,4 0 0,1 2,10A4,4 0 0,1 6,6M6,8A2,2 0 0,0 4,10A2,2 0 0,0 6,12H19A1,1 0 0,0 20,11A1,1 0 0,0 19,10H15.5V7.5A3.5,3.5 0 0,0 12,4A3.5,3.5 0 0,0 8.5,7.5V8H6M18,18H4A1,1 0 0,1 3,17A1,1 0 0,1 4,16H18A3,3 0 0,1 21,19A3,3 0 0,1 18,22C17.17,22 16.42,21.66 15.88,21.12C15.5,20.73 15.5,20.1 15.88,19.71C16.27,19.32 16.9,19.32 17.29,19.71C17.47,19.89 17.72,20 18,20A1,1 0 0,0 19,19A1,1 0 0,0 18,18Z","close":"M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z","chevron-left":"M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z","chevron-right":"M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z","lightbulb":"M12,2A7,7 0 0,0 5,9C5,11.38 6.19,13.47 8,14.74V17A1,1 0 0,0 9,18H15A1,1 0 0,0 16,17V14.74C17.81,13.47 19,11.38 19,9A7,7 0 0,0 12,2M9,21A1,1 0 0,0 10,22H14A1,1 0 0,0 15,21V20H9V21Z","door-open":"M12,3C10.89,3 10,3.89 10,5H3V19H2V21H22V19H21V5C21,3.89 20.11,3 19,3H12M12,5H19V19H12V5M5,11H7V13H5V11Z","thermometer":"M15 13V5A3 3 0 0 0 9 5V13A5 5 0 1 0 15 13M12 4A1 1 0 0 1 13 5V8H11V5A1 1 0 0 1 12 4Z","autorenew":"M12,6V9L16,5L12,1V4A8,8 0 0,0 4,12C4,13.57 4.46,15.03 5.24,16.26L6.7,14.8C6.25,13.97 6,13 6,12A6,6 0 0,1 12,6M18.76,7.74L17.3,9.2C17.74,10.04 18,11 18,12A6,6 0 0,1 12,18V15L8,19L12,23V20A8,8 0 0,0 20,12C20,10.43 19.54,8.97 18.76,7.74Z"});
 document.querySelectorAll("[data-i]").forEach(b => { b.innerHTML = mdi(b.dataset.i); });
 Object.assign(MDI, {"hue-recessed-ceiling":"M12,8.25c-2.57,0-5.03,0.46-6.9,1.3c-0.9,0.4-1.58,0.85-2.09,1.3C2.95,9.78,3.85,8.7,5.7,7.89 c3.5-1.52,9.09-1.52,12.59,0c1.86,0.8,2.76,1.89,2.71,2.96c-0.51-0.45-1.19-0.9-2.1-1.3C17.02,8.71,14.57,8.25,12,8.25z M18.29,10.17c3.54,1.58,3.66,4.19,0.17,5.83c-3.54,1.66-9.35,1.66-12.89,0c-3.49-1.64-3.39-4.25,0.15-5.83 C9.21,8.61,14.8,8.61,18.29,10.17z M16.84,15.18c2.62-0.75,2.53-1.93-0.12-2.65c-2.62-0.71-6.81-0.71-9.43,0 c-2.65,0.72-2.73,1.91-0.11,2.65C9.84,15.94,14.19,15.94,16.84,15.18z","m3-door-open":{"p":"M120-120v-60h80v-590q0-24.75 17.63-42.38Q235.25-830 260-830h440q24.75 0 42.38 17.62Q760-794.75 760-770v590h80v60H120Zm480-60h100v-590H526v-14q32 5 53 29.9t21 58.1v516ZM461.5-458.68q8.5-8.67 8.5-21.5 0-12.82-8.68-21.32-8.67-8.5-21.5-8.5-12.82 0-21.32 8.68-8.5 8.67-8.5 21.5 0 12.82 8.68 21.32 8.67 8.5 21.5 8.5 12.82 0 21.32-8.68Z","v":"0 -960 960 960"},"m3-window-open":{"p":"M160-120v-720h640v720H160Zm90-390h190v-40h80v40h190v-240H250v240Zm-30 330h520v-600H220v600Z","v":"0 -960 960 960"},"m3-water-drop":{"p":"M479-208q16 0 24.5-5.5T512-230q0-11-8.5-17t-25.5-6q-42 0-85.5-26.5T337-373q-2-9-9-14.5t-15-5.5q-11 0-17 8.5t-4 17.5q15 84 71 121.5T479-208Zm-227.5 34Q160-268 160-408q0-100 79.5-217.5T480-880q161 137 240.5 254.5T800-408q0 140-91.5 234T480-80q-137 0-228.5-94Z","v":"0 -960 960 960"},"lightbulb-on":"M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z","heat-pump":"M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M12.75 7.08C13.57 7.2 14.32 7.5 14.95 8L12.75 10.19V7.08M11.25 7.08V10.19L9.05 8C9.68 7.5 10.43 7.2 11.25 7.08M8 9.05L10.19 11.25H7.08C7.2 10.43 7.5 9.68 8 9.05M7.08 12.75H10.19L8 14.95C7.5 14.32 7.2 13.57 7.08 12.75M11.25 16.92C10.43 16.8 9.68 16.5 9.05 16L11.25 13.81V16.92M12 13C11.45 13 11 12.55 11 12S11.45 11 12 11 13 11.45 13 12 12.55 13 12 13M12.75 16.92V13.81L14.95 16C14.32 16.5 13.57 16.8 12.75 16.92M16 14.95L13.81 12.75H16.92C16.8 13.57 16.5 14.32 16 14.95M13.81 11.25L16 9.05C16.5 9.69 16.8 10.44 16.92 11.25H13.81Z","teddy-bear":"M15.75 19.13C14.92 19.13 14.25 18.29 14.25 17.25C14.25 16.22 14.92 15.38 15.75 15.38C16.58 15.38 17.25 16.22 17.25 17.25C17.25 18.29 16.58 19.13 15.75 19.13M12 11.25C10.76 11.25 9.75 10.41 9.75 9.38C9.75 8.34 10.76 7.5 12 7.5C13.24 7.5 14.25 8.34 14.25 9.38C14.25 10.41 13.24 11.25 12 11.25M8.25 19.13C7.42 19.13 6.75 18.29 6.75 17.25C6.75 16.22 7.42 15.38 8.25 15.38C9.08 15.38 9.75 16.22 9.75 17.25C9.75 18.29 9.08 19.13 8.25 19.13M12 8.25C12.41 8.25 12.75 8.59 12.75 9C12.75 9.41 12.41 9.75 12 9.75C11.59 9.75 11.25 9.41 11.25 9C11.25 8.59 11.59 8.25 12 8.25M18.75 12C18.43 12 18.12 12.07 17.84 12.2C17.36 11.59 16.71 11.07 15.93 10.67C16.5 9.87 16.84 8.9 16.84 7.85C16.84 7.83 16.84 7.81 16.84 7.79C17.93 7.56 18.75 6.59 18.75 5.42C18.75 4.09 17.66 3 16.33 3C15.64 3 15 3.29 14.58 3.75C13.83 3.28 12.95 3 12 3C11.05 3 10.16 3.28 9.42 3.75C9 3.29 8.36 3 7.67 3C6.34 3 5.25 4.09 5.25 5.42C5.25 6.58 6.07 7.55 7.15 7.79C7.15 7.81 7.15 7.83 7.15 7.85C7.15 8.9 7.5 9.88 8.06 10.67C7.29 11.07 6.64 11.59 6.16 12.2C5.88 12.07 5.57 12 5.25 12C4 12 3 13 3 14.25C3 15.5 4 16.5 5.25 16.5C5.27 16.5 5.29 16.5 5.31 16.5C5.27 16.74 5.25 17 5.25 17.25C5.25 19.32 6.59 21 8.25 21C9.26 21 10.15 20.37 10.7 19.41C11.12 19.47 11.55 19.5 12 19.5C12.45 19.5 12.88 19.47 13.3 19.41C13.85 20.37 14.74 21 15.75 21C17.41 21 18.75 19.32 18.75 17.25C18.75 17 18.73 16.74 18.69 16.5C18.71 16.5 18.73 16.5 18.75 16.5C20 16.5 21 15.5 21 14.25C21 13 20 12 18.75 12","fan":"M12,11A1,1 0 0,0 11,12A1,1 0 0,0 12,13A1,1 0 0,0 13,12A1,1 0 0,0 12,11M12.5,2C17,2 17.11,5.57 14.75,6.75C13.76,7.24 13.32,8.29 13.13,9.22C13.61,9.42 14.03,9.73 14.35,10.13C18.05,8.13 22.03,8.92 22.03,12.5C22.03,17 18.46,17.1 17.28,14.73C16.78,13.74 15.72,13.3 14.79,13.11C14.59,13.59 14.28,14 13.88,14.34C15.87,18.03 15.08,22 11.5,22C7,22 6.91,18.42 9.27,17.24C10.25,16.75 10.69,15.71 10.89,14.79C10.4,14.59 9.97,14.27 9.65,13.87C5.96,15.85 2,15.07 2,11.5C2,7 5.56,6.89 6.74,9.26C7.24,10.25 8.29,10.68 9.22,10.87C9.41,10.39 9.73,9.97 10.14,9.65C8.15,5.96 8.94,2 12.5,2Z","spotify":"M17.9,10.9C14.7,9 9.35,8.8 6.3,9.75C5.8,9.9 5.3,9.6 5.15,9.15C5,8.65 5.3,8.15 5.75,8C9.3,6.95 15.15,7.15 18.85,9.35C19.3,9.6 19.45,10.2 19.2,10.65C18.95,11 18.35,11.15 17.9,10.9M17.8,13.7C17.55,14.05 17.1,14.2 16.75,13.95C14.05,12.3 9.95,11.8 6.8,12.8C6.4,12.9 5.95,12.7 5.85,12.3C5.75,11.9 5.95,11.45 6.35,11.35C10,10.25 14.5,10.8 17.6,12.7C17.9,12.85 18.05,13.35 17.8,13.7M16.6,16.45C16.4,16.75 16.05,16.85 15.75,16.65C13.4,15.2 10.45,14.9 6.95,15.7C6.6,15.8 6.3,15.55 6.2,15.25C6.1,14.9 6.35,14.6 6.65,14.5C10.45,13.65 13.75,14 16.35,15.6C16.7,15.75 16.75,16.15 16.6,16.45M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z","window-open":"M6,8H10V6H14V8H18V4H6V8M18,10H6V15H18V10M6,20H18V17H6V20M6,2H18A2,2 0 0,1 20,4V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2Z","check-circle":"M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z","power":"M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12C20,9.28 18.64,6.88 16.56,5.44M13,3H11V13H13"});
 Object.assign(MDI, {"motion-sensor":"M10,0.2C9,0.2 8.2,1 8.2,2C8.2,3 9,3.8 10,3.8C11,3.8 11.8,3 11.8,2C11.8,1 11,0.2 10,0.2M15.67,1A7.33,7.33 0 0,0 23,8.33V7A6,6 0 0,1 17,1H15.67M18.33,1C18.33,3.58 20.42,5.67 23,5.67V4.33C21.16,4.33 19.67,2.84 19.67,1H18.33M21,1A2,2 0 0,0 23,3V1H21M7.92,4.03C7.75,4.03 7.58,4.06 7.42,4.11L2,5.8V11H3.8V7.33L5.91,6.67L2,22H3.8L6.67,13.89L9,17V22H10.8V15.59L8.31,11.05L9.04,8.18L10.12,10H15V8.2H11.38L9.38,4.87C9.08,4.37 8.54,4.03 7.92,4.03Z","theme-light-dark":"M7.5,2C5.71,3.15 4.5,5.18 4.5,7.5C4.5,9.82 5.71,11.85 7.53,13C4.46,13 2,10.54 2,7.5A5.5,5.5 0 0,1 7.5,2M19.07,3.5L20.5,4.93L4.93,20.5L3.5,19.07L19.07,3.5M12.89,5.93L11.41,5L9.97,6L10.39,4.3L9,3.24L10.75,3.12L11.33,1.47L12,3.1L13.73,3.13L12.38,4.26L12.89,5.93M9.59,9.54L8.43,8.81L7.31,9.59L7.65,8.27L6.56,7.44L7.92,7.35L8.37,6.06L8.88,7.33L10.24,7.36L9.19,8.23L9.59,9.54M19,13.5A5.5,5.5 0 0,1 13.5,19C12.28,19 11.15,18.6 10.24,17.93L17.93,10.24C18.6,11.15 19,12.28 19,13.5M14.6,20.08L17.37,18.93L17.13,22.28L14.6,20.08M18.93,17.38L20.08,14.61L22.28,17.15L18.93,17.38M20.08,12.42L18.94,9.64L22.28,9.88L20.08,12.42M9.63,18.93L12.4,20.08L9.87,22.27L9.63,18.93Z","sleep":"M23,12H17V10L20.39,6H17V4H23V6L19.62,10H23V12M15,16H9V14L12.39,10H9V8H15V10L11.62,14H15V16M7,20H1V18L4.39,14H1V12H7V14L3.62,18H7V20Z","radiator":"M7.95,3L6.53,5.19L7.95,7.4H7.94L5.95,10.5L4.22,9.6L5.64,7.39L4.22,5.19L6.22,2.09L7.95,3M13.95,2.89L12.53,5.1L13.95,7.3L13.94,7.31L11.95,10.4L10.22,9.5L11.64,7.3L10.22,5.1L12.22,2L13.95,2.89M20,2.89L18.56,5.1L20,7.3V7.31L18,10.4L16.25,9.5L17.67,7.3L16.25,5.1L18.25,2L20,2.89M2,22V14A2,2 0 0,1 4,12H20A2,2 0 0,1 22,14V22H20V20H4V22H2M6,14A1,1 0 0,0 5,15V17A1,1 0 0,0 6,18A1,1 0 0,0 7,17V15A1,1 0 0,0 6,14M10,14A1,1 0 0,0 9,15V17A1,1 0 0,0 10,18A1,1 0 0,0 11,17V15A1,1 0 0,0 10,14M14,14A1,1 0 0,0 13,15V17A1,1 0 0,0 14,18A1,1 0 0,0 15,17V15A1,1 0 0,0 14,14M18,14A1,1 0 0,0 17,15V17A1,1 0 0,0 18,18A1,1 0 0,0 19,17V15A1,1 0 0,0 18,14Z","heating-coil":"M19 17C20.21 17 22 16.2 22 14S20.21 11 19 11H17V9H19C21.2 9 22 7.21 22 6C22 3.8 20.21 3 19 3H17V2H16V3H8V2H7V3H2V5H7V7H5C3.79 7 2 7.8 2 10S3.79 13 5 13H7V15H5C3.79 15 2 15.8 2 18S3.79 21 5 21H7V22H8V21H16V22H17V21H22V19H17V17H19M19 13C19.45 13 20 13.19 20 14S19.45 15 19 15H17V13H19M16 11H8V9H16V11M19 5C19.45 5 20 5.2 20 6C20 6.45 19.81 7 19 7H17V5H19M8 5H16V7H8V5M5 11C4.55 11 4 10.81 4 10S4.55 9 5 9H7V11H5M8 13H16V15H8V13M5 19C4.55 19 4 18.81 4 18S4.55 17 5 17H7V19H5M16 19H8V17H16V19Z","lightbulb-fluorescent-tube":"M7.05 2.81L6.5 3.34L5.11 1.92L3.87 3.16L5.28 4.58L4.58 5.28L3.16 3.87L1.92 5.11L3.34 6.5L2.81 7.05L16.95 21.19L17.5 20.66L18.89 22.08L20.13 20.84L18.72 19.43L19.42 18.72L20.84 20.13L22.08 18.9L20.66 17.5L21.19 16.95L7.05 2.81Z","access-point-network":"M4.93,3.93C3.12,5.74 2,8.24 2,11C2,13.76 3.12,16.26 4.93,18.07L6.34,16.66C4.89,15.22 4,13.22 4,11C4,8.79 4.89,6.78 6.34,5.34L4.93,3.93M19.07,3.93L17.66,5.34C19.11,6.78 20,8.79 20,11C20,13.22 19.11,15.22 17.66,16.66L19.07,18.07C20.88,16.26 22,13.76 22,11C22,8.24 20.88,5.74 19.07,3.93M7.76,6.76C6.67,7.85 6,9.35 6,11C6,12.65 6.67,14.15 7.76,15.24L9.17,13.83C8.45,13.11 8,12.11 8,11C8,9.89 8.45,8.89 9.17,8.17L7.76,6.76M16.24,6.76L14.83,8.17C15.55,8.89 16,9.89 16,11C16,12.11 15.55,13.11 14.83,13.83L16.24,15.24C17.33,14.15 18,12.65 18,11C18,9.35 17.33,7.85 16.24,6.76M12,9A2,2 0 0,0 10,11A2,2 0 0,0 12,13A2,2 0 0,0 14,11A2,2 0 0,0 12,9M11,15V19H10A1,1 0 0,0 9,20H2V22H9A1,1 0 0,0 10,23H14A1,1 0 0,0 15,22H22V20H15A1,1 0 0,0 14,19H13V15H11Z","monitor-cellphone":"M23,11H18A1,1 0 0,0 17,12V21A1,1 0 0,0 18,22H23A1,1 0 0,0 24,21V12A1,1 0 0,0 23,11M23,20H18V13H23V20M20,2H2C0.89,2 0,2.89 0,4V16A2,2 0 0,0 2,18H9V20H7V22H15V20H13V18H15V16H2V4H20V9H22V4C22,2.89 21.1,2 20,2Z","cellphone":"M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z","video":"M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z","laptop":"M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z","washing-machine":"M14.83,11.17C16.39,12.73 16.39,15.27 14.83,16.83C13.27,18.39 10.73,18.39 9.17,16.83L14.83,11.17M6,2H18A2,2 0 0,1 20,4V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2M7,4A1,1 0 0,0 6,5A1,1 0 0,0 7,6A1,1 0 0,0 8,5A1,1 0 0,0 7,4M10,4A1,1 0 0,0 9,5A1,1 0 0,0 10,6A1,1 0 0,0 11,5A1,1 0 0,0 10,4M12,8A6,6 0 0,0 6,14A6,6 0 0,0 12,20A6,6 0 0,0 18,14A6,6 0 0,0 12,8Z","garage-variant":"M22 9V20H20V11H4V20H2V9L12 5L22 9M19 12H5V14H19V12M19 18H5V20H19V18M19 15H5V17H19V15Z","curtains":"M23 3H1V1H23V3M2 22H6C6 19 4 17 4 17C10 13 11 4 11 4H2V22M22 4H13C13 4 14 13 20 17C20 17 18 19 18 22H22V4Z","shower":"M21,14V15C21,16.91 19.93,18.57 18.35,19.41L19,22H17L16.5,20C16.33,20 16.17,20 16,20H8C7.83,20 7.67,20 7.5,20L7,22H5L5.65,19.41C4.07,18.57 3,16.91 3,15V14H2V12H20V5A1,1 0 0,0 19,4C18.5,4 18.12,4.34 18,4.79C18.63,5.33 19,6.13 19,7H13A3,3 0 0,1 16,4C16.06,4 16.11,4 16.17,4C16.58,2.84 17.69,2 19,2A3,3 0 0,1 22,5V14H21V14M19,14H5V15A3,3 0 0,0 8,18H16A3,3 0 0,0 19,15V14Z","fan-off":"M12.5,2C9.64,2 8.57,4.55 9.29,7.47L15,13.16C15.87,13.37 16.81,13.81 17.28,14.73C18.46,17.1 22.03,17 22.03,12.5C22.03,8.92 18.05,8.13 14.35,10.13C14.03,9.73 13.61,9.42 13.13,9.22C13.32,8.29 13.76,7.24 14.75,6.75C17.11,5.57 17,2 12.5,2M3.28,4L2,5.27L4.47,7.73C3.22,7.74 2,8.87 2,11.5C2,15.07 5.96,15.85 9.65,13.87C9.97,14.27 10.4,14.59 10.89,14.79C10.69,15.71 10.25,16.75 9.27,17.24C6.91,18.42 7,22 11.5,22C13.8,22 14.94,20.36 14.94,18.21L18.73,22L20,20.72L3.28,4Z","m3-curtains":{"p":"M80-120v-60h80v-660h640v660h80v60H80Zm162-360q94 29 146.5 117.5T449-180h62q8-94 60-182.5T717-480q-94-29-146-117.5T511-780h-63q-8 94-60 182.5T242-480Z","v":"0 -960 960 960"}});
@@ -6687,17 +6875,17 @@ function alList() {
 function alBar(s, m, c, arm) {
   const st = s.state, sir = alSirTiles().length ? sirenSt() : { any: false }, dis = st === "disarmed";
   ALB.sir = sir.any;
-  if (sir.any) return '<div class="alsb sir"><span class="alsi">' + mdi("alarm-light") + '</span><div class="alst"><b>Siren sounding</b><small>' + (sir.timed ? "Stops in " + sir.left + " s" : "Tap to stop it") + '</small></div><button class="alstop" data-alsr="stop">STOP SIREN</button></div>';
+  if (sir.any) return '<div class="alsb sir"><span class="alsi">' + mdi("alarm-light") + '</span><div class="alst"><b>Siren sounding</b>' + (sir.timed ? '<span class="alcd"><em>' + sir.left + '</em> s left</span>' : "<small>Tap to stop it</small>") + '</div><button class="alstop" data-alsr="stop">' + mdi("close") + 'STOP SIREN</button></div>';
   const pri = dis ? (arm.filter(x => x[1] === "arm_away")[0] || arm[0]) : null, rest = dis ? arm : [];
   const sub = alSub(s), ag = { arming: "wn", disarming: "wn", pending: "wn", triggered: "al" }[st] || "on";
   const btn = dis ? (pri ? '<button class="chip ag" data-ag="ok" data-m="' + pri[1] + '">ARM ' + pri[2] + '</button>' : "")
     : '<button class="chip on ag" data-ag="' + ag + '" data-m="disarm">' + (st === "arming" ? "CANCEL" : "DISARM") + '</button>';
-  const sb = alSirTiles().length ? '<button class="alsr" data-alsr="hold" aria-label="Siren: hold 2 seconds to sound it" title="Siren: hold 2 s">' + mdi("alarm-light") + '<i></i></button>' : "";
+  const sb = alSirTiles().length ? '<button class="alsr" data-alsr="hold" aria-label="Siren: hold 2 seconds to sound it" title="Siren: hold 2 s"><i></i>' + mdi("alarm-light") + '<span>HOLD 2 SEC &middot; SIREN</span></button>' : "";
   const mo = dis && rest.length > 1 ? '<button class="almo' + (ALB.more ? " on" : "") + '" data-almo aria-label="Other arm modes" aria-expanded="' + ALB.more + '">' + mdi(ALB.more ? "chevron-up" : "chevron-down") + '</button>' : "";
   const modes = dis && ALB.more && rest.length > 1 ? '<div class="alms">' + rest.map(x => '<button class="' + (x === pri ? "on" : "") + '" data-m="' + x[1] + '">' + mdi({ arm_home: "shield-home", arm_night: "weather-night", arm_away: "shield-lock" }[x[1]] || "shield-lock") + '<span>ARM ' + x[2] + '</span></button>').join("") + '</div>' : "";
   const other = (CONFIG.alarmTiles || []).filter(t => t && !t.siren);
-  return '<div class="alsb ' + c + '"><span class="alsi">' + mdi(ALI[st] || "shield-outline") + '</span><div class="alst"><b>' + esc(m[0].charAt(0) + m[0].slice(1).toLowerCase()) + '</b>' + (sub ? (dis && alOpen().length ? '<small class="alsub" data-allist role="button" tabindex="0" aria-expanded="' + ALB.list + '">' + esc(sub) + mdi(ALB.list ? "chevron-up" : "chevron-down") + '</small>' : '<small>' + esc(sub) + '</small>') : "") + '</div>' +
-    '<div class="alsa">' + sb + btn + mo + '</div></div>' + (dis ? alList() : "") + modes + (other.length ? '<div class="tg3" style="margin-top:10px">' + other.map(tileHtml).join("") + '</div>' : "") + '<div class="alhint" hidden>Hold for 2 seconds to sound the siren</div>';
+  return '<div class="alsb ' + c + '"><span class="alsi">' + mdi(ALI[st] || "shield-outline") + '</span><div class="alhd" aria-hidden="true"><b>Keep holding</b><span class="alcd"><em class="alhn">2.0</em> s</span></div><div class="alst"><b>' + esc(m[0].charAt(0) + m[0].slice(1).toLowerCase()) + '</b>' + (sub ? (dis && alOpen().length ? '<small class="alsub" data-allist role="button" tabindex="0" aria-expanded="' + ALB.list + '">' + esc(sub) + mdi(ALB.list ? "chevron-up" : "chevron-down") + '</small>' : '<small>' + esc(sub) + '</small>') : "") + '</div>' +
+    '<div class="alsa">' + sb + btn + mo + '</div><i class="alpr"></i></div>' + (dis ? alList() : "") + modes + (other.length ? '<div class="tg3" style="margin-top:10px">' + other.map(tileHtml).join("") + '</div>' : "") + '<div class="alhint" hidden>Hold for 2 seconds to sound the siren</div>';
 }
 // Animate the security card's open door/window list without replacing its DOM.
 function alToggleList() {
@@ -6717,8 +6905,8 @@ function alToggleList() {
 function alSirGo() { const t = alSirTiles(), k = t.some(x => x.siren === "timed") ? "timed" : "toggle"; sirenTap(k); setTimeout(drawAlarm, 300); }
 (function () {
   const p = $("#alp"); if (!p) return; let tm = null, el = null;
-  const stop = () => { clearTimeout(tm); tm = null; if (el) el.classList.remove("hold"); el = null; };
-  p.addEventListener("pointerdown", e => { const b = e.target.closest("[data-alsr=hold]"); if (!b) return; e.preventDefault(); el = b; b.classList.add("hold"); tm = setTimeout(() => { stop(); if (navigator.vibrate) try { navigator.vibrate(60); } catch (_) {} alSirGo(); }, 2000); });
+  const stop = () => { clearTimeout(tm); tm = null; if (el) { el.classList.remove("hold"); const bar = el.closest(".alsb"); if (bar) bar.classList.remove("holding"); } el = null; };
+  p.addEventListener("pointerdown", e => { const b = e.target.closest("[data-alsr=hold]"); if (!b) return; e.preventDefault(); el = b; b.classList.add("hold"); const bar = b.closest(".alsb"), t0 = Date.now(); if (bar) { bar.classList.add("holding"); const n = $(".alhn", bar), step = () => { if (el !== b) return; if (n) n.textContent = Math.max(0, (2000 - (Date.now() - t0)) / 1000).toFixed(1); requestAnimationFrame(step); }; step(); } tm = setTimeout(() => { stop(); if (navigator.vibrate) try { navigator.vibrate(60); } catch (_) {} alSirGo(); }, 2000); });
   ["pointerup", "pointercancel", "pointerleave"].forEach(ev => p.addEventListener(ev, e => { if (!el) return; const short = tm; stop(); if (short && ev === "pointerup") { const h = $(".alhint", p); if (h) { h.hidden = false; clearTimeout(h._t); h._t = setTimeout(() => { h.hidden = true; }, 2600); } } }));
   p.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.closest("[data-allist]")) { e.preventDefault(); alToggleList(); const b = $("[data-allist]", p); if (b) b.focus(); } });
   p.addEventListener("contextmenu", e => { if (e.target.closest("[data-alsr]")) e.preventDefault(); });
@@ -7826,10 +8014,16 @@ function irrBar() {
   return '<div class="zbk" data-zsh="1"></div><div class="pn zsx' + (col ? " col" : "") + '"><div class="sch" data-zsh="1"><i class="schi' + (act.length ? " on" : "") + '">' + mdi("sprinkler-variant") + '</i><div class="sck"><span class="lbl">Irrigation</span><b class="h3">' + esc(title) + '</b><div class="sm">Pick a zone, then start it or set a timer</div><div class="sm scsm">' + esc(sum) + '</div></div><span class="schc">' + mdi("chevron-down") + '<i class="schx">' + mdi("close") + '</i></span></div>' +
     '<div class="scb">' + hsw('<div class="chips tabs sctb">' + Z.map((z, i) => '<button class="chip' + (i === zTab ? " on" : "") + '" data-zt="' + i + '">' + mdi("sprinkler-variant") + '<span>' + esc(z.name) + '</span></button>').join("") + '</div>') + '<div class="zsb">' + irrZone(Z[zTab]) + '</div></div></div>';
 }
+// when the restriction level last changed: the newest change among the entities it is read from
+function wrsUpd() {
+  const ids = ["input_select.water_restriction_level", "input_text.water_restrictions", "input_boolean.no_water_restriction", "input_boolean.water_level_1", "input_boolean.water_level_2", "input_boolean.water_level_3", "input_boolean.water_level_4"];
+  const t = Math.max.apply(null, ids.map(i => states[i] ? Date.parse(states[i].last_changed || states[i].last_updated || "") || 0 : 0));
+  return t ? '<div class="sm wrsu">' + (typeof LANG !== "undefined" && LANG === "zh" ? "更新于 " : "Last updated ") + esc(agoFull(Date.now() - t)) + "</div>" : "";
+}
 function drawIrr() {
   loadIrrH();
   if (Date.now() - irrSc < 600) { if (!irrT) irrT = setTimeout(() => { irrT = 0; if (curPg() === "irrigation") drawIrr(); }, 650); return; }
-  let h = '<div class="pn pg wrs"><div class="wrs-icon">' + mdi("water-check") + '</div><div class="wrs-copy"><div class="lbl">Water restriction</div><div class="h3">' + esc(sv("sensor.current_water_restriction") || "--") + '</div><div class="sm">' + esc(sv("sensor.current_water_restriction_description") || "") + '</div></div></div>' + irrPair();
+  let h = '<div class="pn pg wrs"><div class="wrs-icon">' + mdi("water") + '</div><div class="wrs-copy"><div class="lbl">Water restriction</div><div class="h3">' + esc(sv("sensor.current_water_restriction") || "--") + '</div><div class="sm">' + esc(sv("sensor.current_water_restriction_description") || "") + '</div>' + wrsUpd() + '</div></div>' + irrPair();
   const bar = isMobile(), pg = $("#irrigation"), keep = bar ? $("#irrigation .zsx") : null, kst = keep ? keep.scrollTop : 0;
   if (bar) { h += irrBar(); pg.classList.toggle("zop", zSheet); document.body.classList.toggle("pill-open", zSheet); }
   else { h += '<div class="zg">' + CONFIG.irrigation.map(irrZone).join("") + '</div><div class="dots">' + CONFIG.irrigation.map((z, i) => '<i data-zi="' + i + '" title="' + esc(z.name) + '"' + (i === irrI ? ' class="on"' : "") + '></i>').join("") + '</div>'; pg.classList.remove("zop"); }
@@ -7977,9 +8171,18 @@ function scPanel() {   // the room tabs, each with its zones and its LED lights 
   body = '<div class="lbl scpk">Scene</div>' + hsw('<div class="scstp">' + scGroupLib(scFilter).map(c => c[1].map(scTile).join("")).join("") + '</div>') + '<div class="lbl scpk">Apply to</div>' + body;
   return '<div class="scbk" data-sch="1"></div><div class="pn sct' + (col ? " col" : "") + '"><div class="sch" data-sch="1"><i class="schi" id="scth">' + mdi("palette") + '</i><div class="sck"><span class="lbl">Scene</span><b class="h3" id="scn">--</b><div class="sctags" id="sctags"></div><div class="sm">Tap a light to play this scene</div><div class="sm scsm" id="scsum"></div></div><span class="schc">' + mdi("chevron-down") + '<i class="schx">' + mdi("close") + '</i></span></div><div class="scb">' + body + ctl + '</div></div>';
 }
+let scBarWas, scBarH = 44;   // whether the filter chips were showing at the last draw, and their height
 function drawScenes() {
   // the filter chips sit over the pictures only, so the scene panel starts at the top beside them (the picked scene is in the panel, not repeated here)
-  $("#scenes").innerHTML = '<div class="scl"><div class="scll">' + (scGroupHasLed() && scChips(scFilter, "data-md") ? '<div class="eh scfh">' + scChips(scFilter, "data-md") + '</div>' : "") + '<div class="sclib">' + scGroupLib(scFilter).map(c => '<div class="lbl" style="margin:6px 0 10px">' + esc(c[0]) + '</div><div class="gal" style="margin-bottom:16px">' + c[1].map(scTile).join("") + '</div>').join("") + '</div></div>' + scPanel() + '</div>';
+  // a group with no LED lights has no chips: the row stays in the page (collapsed) and is eased open or shut, so the pictures slide instead of jumping when you change group
+  const chips = scChips(scFilter, "data-md"), want = !!(scGroupHasLed() && chips), was = scBarWas === undefined ? want : scBarWas; scBarWas = want;
+  $("#scenes").innerHTML = '<div class="scl"><div class="scll">' + (chips ? '<div class="eh scfh' + (want ? "" : " scoff") + '">' + chips + '</div>' : "") + '<div class="sclib">' + scGroupLib(scFilter).map(c => '<div class="lbl" style="margin:6px 0 10px">' + esc(c[0]) + '</div><div class="gal" style="margin-bottom:16px">' + c[1].map(scTile).join("") + '</div>').join("") + '</div></div>' + scPanel() + '</div>';
+  const bar = chips && $("#scenes .scfh");
+  if (bar && want) scBarH = bar.getBoundingClientRect().height || scBarH;
+  if (bar && was !== want && bar.animate && !(window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches)) {
+    const o = { maxHeight: scBarH + "px", opacity: 1, marginBottom: "12px", overflow: "hidden" }, s = { maxHeight: "0px", opacity: 0, marginBottom: "0px", overflow: "hidden" };
+    bar.animate(want ? [s, o] : [o, s], { duration: 300, easing: "ease" });   // drawn in its new state, played from the old look
+  }
   updScenes(); scdLoad();
 }
 function updScenes() {
@@ -8801,10 +9004,16 @@ function drawHaz() {
   const ql = (qN.length ? qN.map(qrow).join("") : '<p class="hzempty">' + mdi("check-circle-outline") + ' Nothing within ' + fk + ' km' + (hzMin() ? ' (M' + hzMin() + '+)' : '') + '.</p>') + (qF.length ? '<div class="hzsub">' + fk + '-' + hzRad() + ' km</div>' + qF.map(qrow).join("") : "");
   const vl = d.v.length ? d.v.map(v => { const L = HZ_VAL[v.lvl || 0]; const th = v.lvl > 0 && typeof vcamThumbs === "function" ? vcamThumbs(v) : ""; return '<button class="hzrow' + (HZ.sel === v.id ? " on" : "") + (v.lvl > 0 ? "" : " q") + (th ? " vcam-row" : "") + '" data-hz="s" data-v="' + v.id + '"><i class="hzb hztri">' + hzTri(L[1], v.lvl == null ? "?" : v.lvl) + '</i><span><b>' + esc(v.name) + '</b><small>' + esc(v.lvl > 0 ? (v.act || L[0]) : L[0]) + (hzOn(v) ? "" : " · off the map") + '</small></span>' + (v.lvl > 0 ? '<em style="--c:' + L[1] + '">Level ' + v.lvl + '</em>' : typeof vcamMark === "function" ? vcamMark(v) : "") + th + '</button>'; }).join("") : '<p class="hzempty">No GeoNet volcano sensors found.</p>';
   pg.innerHTML = '<div class="hsw hztw"><div class="chips tabs hztabs">' + [["map", "MAP"], ["quake", "EARTHQUAKES"], ["volc", "VOLCANOES"]].concat(typeof RDC === "function" && RDC() ? [["roads", "ROADS"]] : []).map(t => '<button class="chip' + (HZ.tab === t[0] ? " on" : "") + '" data-hz="tab" data-v="' + t[0] + '">' + t[1] + '</button>').join("") + '</div><span class="hsm l" aria-hidden="true">' + mdi("chevron-left") + '</span><span class="hsm r" aria-hidden="true">' + mdi("chevron-right") + '</span></div><div class="hzg" data-tab="' + HZ.tab + '"><div class="pn hzm' + (HZ.sel ? " dop" : "") + '"><div class="hzh"><div><span class="lbl">' + mdi("pulse") + ' GeoNet · live</span><b class="hzs">' + esc(sum) + '</b></div><div class="chips tabs hzseg">' + chip("nz", "NZ") + chip("ni", "NORTH ISLAND") + (d.home ? chip("home", fk + " KM") : "") + '</div></div>' +
-    '<div class="hzmap"><svg id="hzsvg" viewBox="' + HZ.vb.join(" ") + '" preserveAspectRatio="xMidYMid meet"><path class="hzl" d="' + NZP + '"/>' + hzMarks(d) + '</svg><div class="hzzb"><button data-hz="in" aria-label="Zoom in">' + mdi("plus") + '</button><button data-hz="out" aria-label="Zoom out">' + mdi("minus") + '</button><button class="hzlb" data-hz="pg" data-v="1" aria-label="Lists">' + mdi("format-list-bulleted") + '</button></div><div class="hzd' + (HZ.sel ? " on" : "") + '" id="hzd">' + hzDetail(d) + '</div></div>' + leg + '</div>' +
+    '<div class="hzmap"><i id="hzslot"></i><div class="hzzb"><button data-hz="in" aria-label="Zoom in">' + mdi("plus") + '</button><button data-hz="out" aria-label="Zoom out">' + mdi("minus") + '</button><button class="hzlb" data-hz="pg" data-v="1" aria-label="Lists">' + mdi("format-list-bulleted") + '</button></div><div class="hzd' + (HZ.sel ? " on" : "") + '" id="hzd">' + hzDetail(d) + '</div></div>' + leg + '</div>' +
     '<div class="hzside"><div class="pn hzpq"><div class="hzlh"><span class="lbl">' + mdi("pulse") + ' Earthquakes</span><small>' + (hzMin() ? "M" + hzMin() + "+ · " : "") + 'within ' + hzRad() + ' km</small></div>' + ql + '</div>' + (typeof slvHtml === "function" ? slvHtml() + rdHtml() : "") + '<div class="pn hzpv"><div class="hzlh"><span class="lbl">' + mdi("volcano") + ' Volcanoes</span><small>' + (act.length ? act.length + " above level 0" : "all at level 0") + '</small></div>' + vl + '</div></div></div><div class="dots hzdots"><i data-hz="pg" data-v="0" class="on"></i><i data-hz="pg" data-v="1"></i></div>';
   hzFit(); setTimeout(hzFit, 500); 
-  hzBind($("#hzsvg")); hzApply();
+  // one map element for the life of the page: it is made and bound once and put back in its place on every draw. Making a new one each time left every old copy (and its listeners) in memory
+  if (!HZ.svg) { HZ.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); HZ.svg.id = "hzsvg"; HZ.svg.setAttribute("preserveAspectRatio", "xMidYMid meet"); hzBind(HZ.svg); }
+  const vbs = HZ.vb.join(" "), inner = '<path class="hzl" d="' + NZP + '"/>' + hzMarks(d);   // only what changed is written, so a redraw with the same data touches nothing
+  if (HZ.svg.getAttribute("viewBox") !== vbs) HZ.svg.setAttribute("viewBox", vbs);
+  if (HZ.svg._in !== inner) { HZ.svg._in = inner; HZ.svg.innerHTML = inner; }
+  const slot = $("#hzslot"); if (slot) slot.replaceWith(HZ.svg);
+  hzApply();
 }
 function hzFit() {   // phone: the map page and the lists page each fill the space between the header and the tab bar
   const g = $("#hazards .hzg"); if (!g) return;
@@ -8870,7 +9079,7 @@ const logoPref = () => { try { const v = localStorage.getItem("dashLogo"); retur
 function drawPalette() {
   const m = palMode(), P = PAL[m];
   // phones: one tab per group of cards, so a short card isn't a near-empty page of its own (31-section-pills.js reads data-tab)
-  const TB = { "Mode": "Display", "Clock": "Display", "Page transition": "Animation", "Start-up logo": "Animation" }, tb = t => /Language/.test(t) ? "Display" : /^Seasonal/.test(t) ? "Seasons" : TB[t] || "";
+  const TB = { "Mode": "Display", "Clock": "Display", "Page transition": "Animation", "Start-up logo": "Animation", "What\u2019s new": "Animation" }, tb = t => /Language/.test(t) ? "Display" : /^Seasonal/.test(t) ? "Seasons" : TB[t] || "";
   const sec = (t, inner) => '<div class="pn pg"' + (tb(t) ? ' data-tab="' + tb(t) + '"' : "") + '><div class="lbl">' + t + '</div>' + inner + '</div>';
   const preOn = Object.keys(PAL_PRE).filter(n => PAL.dark.accent === PAL_PRE[n].dark.accent && PAL.light.accent === PAL_PRE[n].light.accent)[0];
   const fnt = (FONTS.filter(x => x[0] === FONT)[0] || FONTS[0])[1].replace(/^Plus /, "").split(/[ (]/)[0] + (/mono/i.test(FONT) ? " mono" : ""), sum = [preOn || "Custom", fnt, { dark: "Dark", light: "Light", auto: "Auto", sun: "Sun", time: "Schedule" }[PAL.mode] || ""].join(" · ");
@@ -8883,6 +9092,7 @@ function drawPalette() {
     sec("Clock", '<div class="seg" style="margin-top:12px">' + [["auto", "DEVICE"], ["12", "12-HOUR"], ["24", "24-HOUR"]].map(x => '<button class="eb' + (CLOCK === x[0] ? " on" : "") + '" data-clock="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">How times are shown on this dashboard. DEVICE follows the language of this phone or tablet. Saved on this device only.</div>') +
     sec(LANG === "zh" ? "语言 · Language" : "Language", '<div class="seg" style="margin-top:12px" data-notr>' + [["en", "English"], ["zh", "中文（简体）"]].map(x => '<button class="eb' + (LANG === x[0] ? " on" : "") + '" data-lang="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">' + (LANG === "zh" ? "标签、标题、按钮和日期显示为中文；Home Assistant 中的名称保持不变。切换后页面会重新加载。" : "Labels, headings, buttons and dates. Names from Home Assistant stay as they are. The page reloads to switch.") + '</div>') +
     (brandOn() ? sec("Start-up logo", '<div class="seg" style="margin-top:12px">' + [["on", "LOGO + INTRO"], ["load", "WHILE LOADING ONLY"], ["off", "OFF"]].map(x => '<button class="eb' + (logoPref() === x[0] ? " on" : "") + '" data-logo="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">Applies the next time the dashboard starts. Saved on this device only.</div>') : "") +
+    (CONFIG.whatsNew === false ? "" : sec("What\u2019s new", '<div class="seg" style="margin-top:12px"><button class="eb" data-whatsnew>SHOW WHAT\u2019S NEW</button></div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">The notes for the latest updates. They also appear once after an update.</div>')) +
     ('<div class="pn pg thab" data-tab="Display"><span class="lbl">Kinetic ' + esc(ENGINE_VERSION) + ' · build ' + esc(window.DASH_BUILD || "") + '</span></div>');
   // Settings: DISPLAY (these cards) and ACCOUNT (sign out, change password) share this page; the admin tabs live on #admin (30-settings.js)
   const acc = setTab() === "account";
@@ -9226,13 +9436,9 @@ function setTabsHtml() {
   const T = setTabs(), k = setTab(); if (T.length < 2) return "";
   return hsw('<div class="chips tabs setchips">' + T.map(x => '<button class="chip' + (x[0] === k ? " on" : "") + '" data-set="' + x[2] + '">' + x[1] + '</button>').join("") + '</div>');
 }
-// switching tabs slides the cards in from the side of the tab you picked, like the other pages' tabs (Display and Account are on #theme, the admin tabs on
-// #admin: the page underneath changes, but the tab row stays and only the cards move). Opening Settings from the menu plays the usual page entrance.
-let SETPREV = "";
-function setSlide(host) {
-  const k = setTab(), o = setTabs().map(x => x[0]), was = SETPREV; SETPREV = k;
-  if (host && was && was !== k) txGo(host, o.indexOf(k) > o.indexOf(was) ? 1 : -1, true);
-}
+// switching Settings tabs plays the usual page entrance (route() in 38-energy.js), like every other page; SETTAB is the tab last shown
+let SETTAB = "";
+function setSlide() {}
 // where the Settings item in the menu goes: the first tab this person has
 const setHome = () => PAGE_ON("theme") ? "#theme" : setAcct() ? "#theme/account" : "#admin";
 document.addEventListener("click", e => {
@@ -9857,7 +10063,7 @@ function wxaParts(k, x) {   // [tag, title, sub, value, unit]
 function wxaCard(k, x, c, small, exp) {
   const P = wxaParts(k, x), cls = "wxl wxl-" + k + " wt" + x.tier + (small ? " sm" : "");
   if (small) return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, Math.min(x.tier, 1)) + '<div class="wxr"><div class="wxm"><div class="wxt"><i></i>' + esc(P[0]) + '</div><b>' + esc(P[1]) + '</b></div>' + wxaBars(k, x, c, true) + '<div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div><button class="wxmore" tabindex="-1">MORE ' + mdi("chevron-down") + '</button></div>';
-  return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, x.tier) + '<div class="wxt"><i></i>' + esc(P[0]) + '</div><div class="wxr"><div class="wxm"><b>' + esc(P[1]) + '</b>' + (P[2] ? '<small>' + esc(P[2]) + '</small>' : "") + '</div><div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div>' + wxaBars(k, x, c, false) + (exp ? '<button class="wxmore wxless" tabindex="-1">LESS ' + mdi("chevron-up") + '</button>' : "") + '</div>';
+  return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, x.tier) + '<div class="wxt"><i></i>' + esc(P[0]) + '</div><div class="wxr"><div class="wxm"><b>' + esc(P[1]) + '</b>' + (P[2] ? '<small>' + esc(P[2]) + '</small>' : "") + '</div><div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div>' + wxaBars(k, x, c, false) + '<div class="wxft">' + (exp ? '<button class="wxmore wxless" tabindex="-1">LESS ' + mdi("chevron-up") + '</button>' : "") + '<span class="wxopen">' + mdi("fullscreen") + '</span></div></div>';
 }
 // MORE / LESS opens or shrinks one card in place: only that card is swapped (its height eases to the new size, its content fades in) and the other cards, and
 // the list around them, are not rebuilt, so nothing blinks or replays its entrance. Returns false when the card can not be found (the list is redrawn instead).
@@ -10000,7 +10206,7 @@ function xpBegin(host, kind, fn) {
 }
 function xpEnd() {
   const P = XP_PEND; XP_PEND = null; if (!P || !P.host.isConnected) return;
-  const host = P.host, kind = P.kind, snap = P.snap, K = XPK[kind], MS = 360, EASE = "cubic-bezier(.22,1,.36,1)";
+  const host = P.host, kind = P.kind, snap = P.snap, K = XPK[kind], MS = 440, EASE = "cubic-bezier(.3,0,.1,1)";   // 2.8.0: softer and longer than the old 360 ms ease-out, which was nearly finished in the first 100 ms and so looked like a pop
   const jobs = [];
   host.querySelectorAll(K.head).forEach(h => {   // measure the new layout of every changed group first, then build the wrappers
     const s = snap.get(K.key(h)), exp = h.getAttribute("aria-expanded") === "true";
@@ -10022,10 +10228,10 @@ function xpEnd() {
     const c0 = grid ? parseFloat(getComputedStyle(cmpEl)[cmpProp]) || 0 : 0, sM = hasOld ? 0 : s0, eM = hasNew ? 0 : e1;
     const anims = [], fin = () => { if (ow) ow.remove(); if (nw && nw.parentNode) { while (nw.firstChild) nw.before(nw.firstChild); nw.remove(); } if (ta) ta.cancel(); };
     let ta = null;
-    if (ow) anims.push(ow.animate([{ height: Math.max(0, s0 + (hasNew ? dN : dO)) + "px", opacity: 1, marginTop: -dO + "px" }, { height: "0px", opacity: 0, marginTop: (grid ? 0 : hasNew ? -dO : eM) + "px" }], o));
+    if (ow) anims.push(ow.animate([{ height: Math.max(0, s0 + (hasNew ? dN : dO)) + "px", opacity: 1, marginTop: -dO + "px" }, { opacity: 0, offset: .3 }, { height: "0px", opacity: 0, marginTop: (grid ? 0 : hasNew ? -dO : eM) + "px" }], o)   /* the old rows are gone by 30 % so they never ghost under the new ones */);
     // opening a group that showed a summary line: the new rows start under the heading, over the fading summary, instead of below it (they used to slide up as it shrank)
     const ov = !grid && hasOld && hasNew && j.exp ? Math.max(0, s0 + dN) : 0;
-    if (nw) anims.push(nw.animate([{ height: ov + "px", opacity: 0, marginTop: (grid ? 0 : hasOld ? dO - dN - ov : sM) + "px" }, { height: Math.max(0, e1 + dN) + "px", opacity: 1, marginTop: (hasOld ? dO - dN : -dN) + "px" }], o));
+    if (nw) anims.push(nw.animate([{ height: ov + "px", opacity: 0, marginTop: (grid ? 0 : hasOld ? dO - dN - ov : sM) + "px" }, { opacity: 0, offset: .12 }, { opacity: 1, offset: .65 }, { height: Math.max(0, e1 + dN) + "px", opacity: 1, marginTop: (hasOld ? dO - dN : -dN) + "px" }], o));
     if (grid && (sM || eM)) ta = cmpEl.animate([{ [cmpProp]: (c0 + sM) + "px" }, { [cmpProp]: (c0 + eM) + "px" }], o);
     anims[0].onfinish = fin;
     const cv = K.chev(h); if (cv) { cv.classList.toggle("open", s.exp); void cv.offsetWidth; cv.classList.toggle("open", j.exp); }   // the chevron turns with the group
@@ -10120,7 +10326,7 @@ const npCamWanted = () => document.body.classList.contains("np-open") || !!docum
 const NPCAM = {};   // id -> camera object, made once and moved into the slot each time the list is drawn, so the stream keeps playing
 function npCamStop() { NPC.forEach(c => { clearTimeout(c.rt); c._on = 0; stopCam(c); }); }
 function npCamMount() {
-  const slots = $$("#cmtsh [data-npc], #npc [data-npc]"), want = {};   // a camera open in the centred pop-up has the live view; its slot in the list stays empty meanwhile
+  const slots = $$("#cmtsh [data-npc]").concat($$("#npc [data-npc]")), want = {};   // a camera open in the centred pop-up has the live view (its slots are listed first: the list sits earlier in the page, so one query in page order gave the picture to the list and left the pop-up black); its slot in the list stays empty meanwhile
   slots.forEach((sl, i) => {
     const id = sl.dataset.npc; if (want[id]) return; want[id] = 1; let c = NPCAM[id];
     if (!c) { c = NPCAM[id] = { id: id, name: sl.dataset.name, np: true }; NPC.push(c); mkCam(c, document.createElement("div")); c.o.el.onclick = null; }
@@ -11900,10 +12106,11 @@ function route() {
   ["home", "climate", "events", "roomspg", "security", "weather", "energy", "irrigation", "scenes", "media", "theme", "vehicle", "hazards", "insights", "admin"].forEach(x => $("#" + x).classList.toggle("on", x === pg));
   { const t = $("#ttl"), back = p === "home" || !PAGE_ON("home") ? "" : p === "rooms" && h[1] ? "#rooms" : p === "view" ? (VW.back && VW.back !== location.hash ? VW.back : "#home") : "#home";   // phone: the page title is the back button (room -> Rooms, any other page -> Home)
     t.innerHTML = (back ? '<svg class="tbc" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>' : "") + "<span>" + (p === "theme" || p === "admin" ? "Settings" : p.charAt(0).toUpperCase() + p.slice(1)) + "</span>"; t.dataset.back = back; t.classList.toggle("bk", !!back); }
-  // between Settings tabs on its two pages (#theme, #admin) the tab row stays put and only the cards slide (setSlide), no page entrance
-  { const el = $("#" + pg), stp = x => !!x && (x.id === "theme" || x.id === "admin"), inSet = stp(el) && stp(lastPg);
-    if (!stp(el)) SETPREV = ""; else if (!inSet || !bootDone) SETPREV = "";
-    if (el && el !== lastPg && bootDone && !inSet) { if (pg === "energy" && !en.data) pgHold(el, 900); else pgEnter(el); } lastPg = el; if (el) lazyIn(el); }
+  // Settings tabs (Display, Account, Status, Entities ...) are pages of their own: switching between them plays the same page entrance as every other page (the chosen Page transition), sliding the way the tab order goes
+  { const el = $("#" + pg), stp = x => !!x && (x.id === "theme" || x.id === "admin"), tk = stp(el) ? setTab() : "", tabGo = !!tk && !!SETTAB && tk !== SETTAB && bootDone;
+    let dir = 0; if (tabGo) { const o = setTabs().map(x => x[0]); dir = o.indexOf(tk) >= o.indexOf(SETTAB) ? 1 : -1; }
+    SETTAB = tk;
+    if (el && bootDone && (el !== lastPg || tabGo)) { if (pg === "energy" && !en.data) pgHold(el, 900); else { pgEnter(el); if (tabGo) { el.style.setProperty("--pgdx", dir * 36 + "px"); el.style.setProperty("--pgdr", dir * 16 + "deg"); } } } lastPg = el; if (el) lazyIn(el); }
   const setP = p === "theme" || p === "admin", onA = a => a.getAttribute("href") === "#" + p || (setP && a.getAttribute("href") === "#settings");
   $$("nav a").forEach(a => a.classList.toggle("on", onA(a)));
   document.body.classList.remove("more-open");
@@ -12139,6 +12346,9 @@ function galOnState(id, s) {
   });
 }
 setInterval(() => { try { Object.keys(galCfg()).forEach(k => { galStep(k, false); galAirTick(k); }); } catch (e) {} }, 1000);
+// the Security page: a garage camera whose door is open moves to the top of the cameras
+function galSecOrder() { const m = galCfg(); (typeof CAMREG === "undefined" ? [] : CAMREG).forEach(r => { const g = m[r.id]; if (!g || !r.el.parentNode || r.el.parentNode.id !== "scams") return; const o = g.sensor && galOpen(g) ? "-1" : ""; if (r.el.style.order !== o) r.el.style.order = o; }); }
+setInterval(() => { try { galSecOrder(); } catch (e) {} }, 1000);
 
 // ----- air out the garage (the humid card's OPEN GARAGE DOOR): open the door and pause the automations in garageAlert.holdOpen (the one that closes it after a while),
 // then turn them back on as soon as the door is shut again, whoever shuts it. Remembered on this device (localStorage kinetic-gair) so a reload doesn't lose it;
@@ -12678,7 +12888,17 @@ function insMore(a) {
       // a row: the label on the left; the value on the right with its own line right under it, as on a tile ("~$2.13" / "a night · ~$41.60 this bill")
       (op ? L.map(x => '<button class="insr' + (x.tone ? " " + x.tone : "") + '" data-inso="' + esc(x.id) + '"><span class="ilm"><b>' + esc(insNm(x)) + '</b></span><span class="insv2r"><em>' + esc((x.tile && x.tile[1]) || x.title) + '</em>' + (x.tile && x.tile[2] ? '<small>' + esc(x.tile[2]) + '</small>' : "") + '</span></button>').join("") : "") + '</div>'; }).join("");
 }
-document.addEventListener("click", e => { const g = e.target.closest && e.target.closest("[data-insgp]"); if (!g) return; INS.gopen = INS.gopen || new Set(); const c = g.dataset.insgp; INS.gopen.has(c) ? INS.gopen.delete(c) : INS.gopen.add(c); drawInsights(); });
+document.addEventListener("click", e => {
+  const g = e.target.closest && e.target.closest("[data-insgp]"); if (!g) return; INS.gopen = INS.gopen || new Set(); const c = g.dataset.insgp;
+  const box0 = g.closest(".insgp"), h0 = box0 ? box0.getBoundingClientRect().height : 0;   // only the group that was tapped animates (its height, old to new); the ones below ride along
+  INS.gopen.has(c) ? INS.gopen.delete(c) : INS.gopen.add(c); drawInsights();
+  const nb = $('#insights [data-insgp="' + c + '"]'), box = nb && nb.closest(".insgp"); if (!box || !box.animate || !h0 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const h1 = box.getBoundingClientRect().height; if (Math.abs(h1 - h0) < 4) return;
+  const ov = box.style.overflow; box.style.overflow = CSS.supports("overflow", "clip") ? "clip" : "hidden";   // clip keeps the box's margins as they were
+  const an = box.animate([{ height: h0 + "px" }, { height: h1 + "px" }], { duration: 420, easing: "cubic-bezier(.3,0,.1,1)" }), rows = [...box.querySelectorAll(".insr")];
+  rows.forEach((r, i) => { if (h1 > h0 && r.animate) r.animate([{ opacity: 0, transform: "translateY(-6px)" }, { opacity: 1, transform: "none" }], { duration: 300, delay: 60 + i * 28, easing: "ease-out", fill: "backwards" }); });
+  an.onfinish = an.oncancel = () => { box.style.overflow = ov; };
+});
 function drawInsights() {
   const pg = $("#insights"); if (!pg) return; const all = insAll(); INS.last = all;
   const need = all.filter(x => x.lvl === 2), cats = Object.keys(insCats).filter(c => all.some(x => x.cat === c));
@@ -14897,13 +15117,13 @@ function tkTlHtml(c) {
 }
 function tkCamBody(c) {
   const g = typeof galCfg === "function" && galCfg()[c.id], gc = g && g.opener && typeof galOpen === "function" && galOpen(g);
-  return '<div class="tk-camv snap npcam" data-npc="' + esc(c.id) + '" data-name="' + esc(c.name) + '"></div><div class="tk-tlw">' + tkTlHtml(c) + '</div>' +
+  return '<div class="tk-camv snap npcam" data-tkfs="' + esc(c.key || TK.sel || "") + '" data-npc="' + esc(c.id) + '" data-name="' + esc(c.name) + '"></div><div class="tk-tlw">' + tkTlHtml(c) + '</div>' +
     (g && g.opener ? '<div class="tk-door ' + (gc ? "open" : "shut") + '"><i></i><span><b>Garage door</b><small>' + (gc ? "Open" : "Closed") + '</small></span>' + (gc ? '<button class="eb npgc" data-gclose="' + esc(c.id) + '">CLOSE</button>' : "") + '</div>' : "");
 }
 function tkCamOpen(key) {
   const L = tkCamList(), c = L.find(x => x.key === key) || (typeof npCamFor === "function" ? npCamFor(key) : null);
   if (!c) return; if (!L.some(x => x.id === c.id)) L.push(c); TK.sel = c.key; TK.cam = 1;
-  const foot = '<button class="eb tk-b" data-tka="cam">OPEN CAMERA PAGE</button><button class="eb tk-b pri" data-cmx>DONE</button>';
+  const foot = '<button class="eb tk-b" data-tka="sec">OPEN SECURITY PAGE</button><button class="eb tk-b pri" data-cmx>DONE</button>';
   if (TK.wide && L.length > 1) cmtShow(tkShell("cam", "video", "ok", c.name, "Live view", '<div class="tk-cols"><div class="tk-rail tk-wxl">' + L.map(x => '<button type="button" class="tk-wr' + (x.key === c.key ? " sel" : "") + '" data-tkcam="' + esc(x.key) + '"><small>' + esc(x.name.toUpperCase()) + '</small><b>Live</b></button>').join("") + '</div><div class="tk-pane tk-campane">' + tkCamBody(c) + '</div></div>', foot, true));
   else cmtShow(tkShell("cam", "video", "ok", c.name, "Live view", '<div class="tk-body">' + (L.length > 1 ? '<div class="tk-wsw">' + L.map(x => '<button type="button" class="tk-wc' + (x.key === c.key ? " on" : "") + '" data-tkcam="' + esc(x.key) + '">' + esc(x.name.toUpperCase()) + '</button>').join("") + '</div>' : "") + '<div class="tk-campane">' + tkCamBody(c) + '</div></div>', foot, false));
   if (typeof npCamMount === "function") npCamMount();
@@ -14962,8 +15182,10 @@ document.addEventListener("click", e => {
   const pl = e.target.closest("[data-tkpl]"); if (pl) { if (typeof dtPlay === "function") { const c = tkCamList().find(x => x.key === TK.sel) || (typeof npCamFor === "function" ? npCamFor(TK.sel) : null); if (c) DT.mom = dtMoments(tkTlItems(c)); dtPlay(pl.dataset.tkpl, pl.dataset.cam, +pl.dataset.ts, (pl.dataset.tg || "").split(",").filter(Boolean)); } return; }
   const wx = e.target.closest("[data-tkwx]"); if (wx) { tkWxSel(wx.dataset.tkwx); return; }
   const cm = e.target.closest("[data-tkcam]"); if (cm) { tkCamSel(cm.dataset.tkcam); return; }
+  const fs = e.target.closest("[data-tkfs]"); if (fs && !e.target.closest("button,a")) { tkClose(); VW.back = /^#(view|camera|notifications|active|batteries)/.test(location.hash) ? "#home" : (location.hash || "#home"); document.body.classList.remove("np-open"); location.hash = "#view/" + fs.dataset.tkfs; return; }   // the live picture opens full screen, like the camera cards
   const a = e.target.closest("[data-tka]"); if (a) {
     const k = a.dataset.tka; tkClose();
+    if (k === "sec") { document.body.classList.remove("np-open"); location.hash = "#security"; return; }
     if (k === "wx") { document.body.classList.remove("np-open"); location.hash = "#weather/" + (TK.sel || ""); return; }
     if (k === "cam") { VW.back = /^#(view|camera|notifications|active|batteries)/.test(location.hash) ? "#home" : (location.hash || "#home"); document.body.classList.remove("np-open"); location.hash = "#view/" + (TK.sel || ""); return; }
     location.hash = k === "sea" ? "#hazards/sea" : "#hazards/roads"; return; }
@@ -15207,6 +15429,321 @@ if (auOn()) {
   addEventListener("online", () => auCheck(false));
 }
 auNote();
+// ---------- Search (2.6.0) ----------
+// A magnifier in the header opens a search over the whole dashboard: a full screen on a phone, a centred panel on a tablet or computer
+// (Ctrl/Cmd+K opens it too, and so does "/" when you are not typing in a box). It finds
+//   - pages (the menu), and the views inside them that have their own link (Weather > Rain, Security > Detections, Hazards > Earthquakes ...),
+//   - rooms and their cards (the sections of config.js house), every device listed there by the name the room shows, and the cameras,
+//   - the card titles of pages already opened on this device (kept per page, so a card is found without opening its page first).
+// Matching ignores case and accents, takes the start of any word, forgives one typo, and in Chinese also matches the Chinese label.
+// Picking a result goes there, opens the phone tab that holds the card, scrolls to the card or tile and flashes it.
+// Search only moves around: it never arms the alarm or switches a device. config.js: search: false switches it off.
+(function () {
+  if (CONFIG.search === false || !$("header .hr") || !$("#hc")) return;
+  const LSK = "dashSrch", LSR = "dashSrchRecent";
+  const rd = k => { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch (e) { return null; } };
+  const wr = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+  const zh = s => { try { return LANG === "zh" && window.__zhTr ? window.__zhTr(String(s)) : s; } catch (e) { return s; } };
+  const norm = s => String(s == null ? "" : s).toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9\u3400-\u9fff]+/g, " ").trim();
+  if (!MDI.magnify) MDI.magnify = "M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z";
+  if (!MDI.close) MDI.close = "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z";
+
+  // Chinese for the words this adds (only where the dictionary has none yet)
+  { const D = (window.__ZHD || (window.__ZHD = { D: {}, P: [] })).D, add = o => Object.keys(o).forEach(k => { if (!Object.prototype.hasOwnProperty.call(D, k)) D[k] = o[k]; });
+    add({ "search": "搜索", "search pages, rooms, devices…": "搜索页面、房间、设备…", "recent": "最近", "pages": "页面", "no results": "没有结果", "try a page, a room, a device or a camera": "试试页面、房间、设备或摄像头",
+      "settings": "设置", "pop-up": "弹窗",
+      "temperature forecast": "气温预报", "wind forecast": "风力预报", "rain forecast": "降雨预报", "uv & cloud forecast": "紫外线与云量预报", "pollen": "花粉", "weather radar": "天气雷达", "weather now": "当前天气", "next 7 days": "未来 7 天",
+      "detections": "检测", "earthquakes": "地震", "volcanoes": "火山", "notifications": "通知", "active devices": "运行中的设备", "batteries": "电池", "language": "语言", "theme & colours": "主题与颜色" }); }
+
+  // words that find a page or a kind of device when its own name does not say it
+  const PGK = { home: "dashboard overview start main", rooms: "room house", climate: "heat pump air conditioning ac thermostat heating cooling temperature", security: "alarm cameras cctv gate", weather: "forecast rain wind sun",
+    energy: "power electricity solar usage cost bill", irrigation: "garden watering sprinkler soil lawn", scenes: "scene mood", media: "music tv speakers playing", events: "calendar schedule diary", vehicle: "car ev charging",
+    hazards: "earthquake volcano tsunami", insights: "tips stats alerts" };
+  const DOM = { light: "light lamp", switch: "switch", cover: "curtain blind cover", climate: "climate heat cool ac", fan: "fan", lock: "lock", media_player: "music tv speaker", script: "script", scene: "scene", input_boolean: "toggle", binary_sensor: "sensor door window", sensor: "sensor", automation: "automation", select: "select" };
+  const WT = { Page: 60, Room: 50, View: 34, Camera: 30, Card: 14, Device: 6 };   // a tie goes to the bigger thing
+  const pgName = p => { const a = $('nav a[href="#' + p + '"]'), t = p === "theme" || p === "admin" ? "settings" : a ? [...a.childNodes].filter(n => n.nodeType === 3 || !(n.classList && n.classList.contains("nbg"))).map(n => n.textContent).join("").trim() : p; return t.charAt(0).toUpperCase() + t.slice(1).toLowerCase(); };
+  const pgEl = () => { const p = curPg(); return $("#" + (p === "rooms" ? "roomspg" : p)) || document.body; };
+
+  // ----- the index: built each time the search opens (names from Home Assistant arrive after the page starts) -----
+  function prep(e) {
+    const z = zh(e.l), zs = zh(e.s || "");
+    e.nl = norm(e.l); e.nw = e.nl.split(" "); e.zl = z !== e.l ? norm(z) : ""; e.nkw = norm([e.s, zs !== e.s ? zs : "", e.kw || ""].join(" ")).split(" ").filter(Boolean); e.nk = e.nkw.join(" ");
+    return e;
+  }
+  const mk = (t, l, s, h, o) => Object.assign({ t: t, l: String(l), s: s || "", h: h }, o || {});
+  const key = e => e.h + "|" + e.l + "|" + (e.e || "");
+  function build() {
+    const out = [], seen = new Set(), on = p => PAGE_ON(p), add = e => { const k = e.h + "|" + norm(e.l) + "|" + (e.e || "") + "|" + e.t; if (!e.l.trim() || seen.has(k)) return; seen.add(k); out.push(prep(e)); };
+    $$("nav a[data-g]").forEach(a => { const p = (a.getAttribute("href") || "").slice(1); if (p && p !== "settings" && on(p)) add(mk("Page", pgName(p), "", "#" + p, { kw: PGK[p] || "", pg: p })); });
+    if (setOn()) add(mk("Page", "Settings", "", setHome(), { kw: "appearance colours language system logs entities automations account", pg: "theme" }));
+    // views with a link of their own (the table in DEVELOPING.md); each needs its page to be on for this person
+    const det = on("security") && CONFIG.detections !== false && (typeof ruSec !== "function" || ruSec("detections"));
+    [["Temperature forecast", "#weather/temp", "weather", "temp hot cold degrees"], ["Wind forecast", "#weather/wind", "weather", "gust breeze windy"], ["Rain forecast", "#weather/rain", "weather", "precipitation shower umbrella"],
+      ["UV & cloud forecast", "#weather/uv", "weather", "sun sunburn cloudy"], ["Weather radar", "#weather/radar", "weather", "map rain clouds"], ["Weather now", "#weather/now", "weather", "current conditions today"],
+      ["Next 7 days", "#weather/week", "weather", "week forecast seven days"], ["Pollen", "#weather/pollen", CONFIG.pollen ? "weather" : "", "hayfever allergy"],
+      ["Detections", "#security/detections", det ? "security" : "", "person vehicle animal motion snapshots events"],
+      ["Earthquakes", "#hazards/earthquakes", "hazards", "quake seismic shake"], ["Volcanoes", "#hazards/volcanoes", "hazards", "volcano eruption ash"],
+      ["Notifications", "#notifications", "*", "alerts bell"], ["Active devices", "#active", "*", "on now running left on"], ["Batteries", "#batteries", "*", "battery low flat"]
+    ].forEach(v => { if (v[2] === "" || (v[2] !== "*" && !on(v[2]))) return; add(mk("View", v[0], v[2] === "*" ? "Pop-up" : pgName(v[2]), v[1], { kw: v[3], pg: v[2] === "*" ? "" : v[2], done: 1 })); });
+    if (setOn()) { add(mk("View", "Language", "Settings", setHome(), { kw: "english chinese 中文", card: "Language", pg: "theme" })); add(mk("View", "Theme & colours", "Settings", setHome(), { kw: "dark light mode palette style appearance", pg: "theme" })); }
+    // rooms: the room, its doors and windows, its cards, and every device it lists
+    if (on("rooms")) (CONFIG.house || []).forEach(r => {
+      if (!r || !r.id || !roomOK(r.id)) return;
+      const rn = r.name || r.id, h = "#rooms/" + r.id, items = [], got = new Set();
+      add(mk("Room", rn, "Rooms", h, { kw: r.id, pg: "rooms" }));
+      if ((r.doors || []).length || (r.windows || []).length) add(mk("View", rn + " doors & windows", "Rooms", h + "/doors", { kw: "door window open closed contact", pg: "rooms", done: 1 }));
+      (r.sections || []).forEach(sec => { if (!sec || !sec.name) return; if (norm(sec.name) !== norm(rn)) add(mk("Card", sec.name, rn, h, { card: sec.name, pg: "rooms" })); (sec.items || []).forEach(it => items.push([it, sec.name])); });
+      ["lights", "lightSwitches", "covers", "windows", "doors"].forEach(k => (r[k] || []).forEach(it => items.push([it, ""])));
+      [].concat(r.climate || []).forEach(it => items.push([it, ""]));
+      items.forEach(x => {
+        const it = x[0], id = typeof it === "string" ? it : it && it.entity; if (typeof id !== "string") return; const e0 = id.split("#")[0]; if (e0.indexOf(".") < 1 || got.has(e0)) return; got.add(e0);
+        const st = states[e0], nm = (it && it.name) || (st && st.attributes && st.attributes.friendly_name) || fname(e0);
+        add(mk("Device", nm, x[1] && norm(x[1]) !== norm(rn) ? rn + " · " + x[1] : rn, h, { e: e0, kw: DOM[e0.split(".")[0]] || e0.split(".")[0], pg: "rooms" }));
+      });
+    });
+    if (on("climate")) (CONFIG.rooms || []).forEach(r => { if (r && r.name) add(mk("Card", r.name, "Climate", "#climate", { card: r.name, kw: "climate heat cool ac", pg: "climate" })); });
+    if (on("security")) (CONFIG.security || []).forEach(c => { if (c && c.name) add(mk("Camera", c.name, "Security", "#camera/" + slug(c.name), { kw: "camera cctv", pg: "security", done: 1, cid: c.id })); });
+    // card titles of pages opened before on this device
+    const L = rd(LSK) || {};
+    Object.keys(L).forEach(h => {
+      const s = h.slice(1).split("/"), p = s[0], rm = p === "rooms" && s[1] ? (CONFIG.house || []).filter(r => r && r.id === s[1])[0] : null;
+      if (!on(p) || (p === "rooms" && s[1] && (!rm || !roomOK(s[1])))) return;
+      (Array.isArray(L[h]) ? L[h] : []).forEach(l => add(mk("Card", l, rm ? rm.name || rm.id : pgName(p), h, { card: l, pg: p })));
+    });
+    return out;
+  }
+  // remember the card titles on the page that is open (the next search can then find them without opening the page)
+  function learn() {
+    const s = location.hash.slice(1).split("/"), p = s[0] || "home", pg = pgEl();
+    if (!pg || pg === document.body || /^(view|camera|popup|settings)$/.test(p)) return;
+    const k = p === "rooms" && s[1] ? "#rooms/" + s[1] : "#" + p, L = rd(LSK) || {}, old = Array.isArray(L[k]) ? L[k] : [], now = [];
+    $$(".pn", pg).forEach(c => { const l = $(".lbl,h2,h3", c); if (!l) return; const t = l.textContent.split("·")[0].replace(/\s+/g, " ").trim(); if (t.length >= 3 && t.length <= 36 && !/\d/.test(t) && now.indexOf(t) < 0) now.push(t); });
+    const all = old.concat(now.filter(t => old.indexOf(t) < 0)).slice(-40);
+    if (all.join("|") !== old.join("|")) { L[k] = all; wr(LSK, L); }
+  }
+
+  // ----- matching -----
+  const ed1 = (a, b) => {   // at most one letter added, dropped, changed, or two neighbours swapped
+    if (a === b) return true; const la = a.length, lb = b.length; if (Math.abs(la - lb) > 1) return false;
+    let i = 0; while (i < la && i < lb && a[i] === b[i]) i++;
+    if (la === lb) return a.slice(i + 1) === b.slice(i + 1) || (a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(i + 2) === b.slice(i + 2));
+    return la > lb ? a.slice(i + 1) === b.slice(i) : b.slice(i + 1) === a.slice(i);
+  };
+  const near = (t, w) => ed1(t, w) || ed1(t, w.slice(0, t.length)) || ed1(t, w.slice(0, t.length + 1)) || ed1(t, w.slice(0, t.length - 1));
+  function tok(e, t) {
+    if (e.nl === t) return 100;
+    if (e.zl && e.zl.indexOf(t) > -1) return e.zl.indexOf(t) === 0 ? 85 : 55;
+    if (e.nl.indexOf(t) === 0) return 80;
+    if (e.nw.some(w => w.indexOf(t) === 0)) return 60;
+    if (e.nl.indexOf(t) > -1) return 40;
+    if (e.nkw.some(w => w.indexOf(t) === 0)) return 25;
+    if (e.nk.indexOf(t) > -1) return 15;
+    if (t.length > 3 && /^[a-z0-9]+$/.test(t)) { if (e.nw.some(w => near(t, w))) return 30; if (e.nkw.some(w => near(t, w))) return 8; }   // a typo in the name counts for more than one in a hidden keyword
+    return 0;
+  }
+  function find(q) {
+    const T = norm(q).split(" ").filter(Boolean); if (!T.length) return [];
+    const r = [];
+    idx.forEach(e => { let s = 0; for (let i = 0; i < T.length; i++) { const x = tok(e, T[i]); if (!x) return; s += x; } r.push([s * 1.5 + (WT[e.t] || 0), e]); });   // how well it matches counts for more than what kind of thing it is
+    return r.sort((a, b) => b[0] - a[0] || a[1].l.length - b[1].l.length || a[1].l.localeCompare(b[1].l)).slice(0, 80).map(x => x[1]);
+  }
+
+  // ----- going there: open the phone tab that holds it, scroll to it, flash it -----
+  function target(e) {
+    const root = pgEl();
+    if (e.e) { const el = $('[data-e="' + e.e.replace(/["\\]/g, "\\$&") + '"]', root); if (el) return el; }
+    if (e.card) { const w = norm(e.card); return $$(".pn", root).filter(c => { const l = $(".lbl,h2,h3", c); return l && norm(l.textContent.split("·")[0]) === w; })[0] || null; }
+    return null;
+  }
+  function reveal(el) {   // on a phone a card in another section tab is display:none: tap that tab (the pills keep their cards in row._items)
+    if (el.getClientRects().length) return;
+    const row = $(".secw .secnav", pgEl()), card = el.closest(".pn") || el; if (!row || !row._items) return;
+    const i = row._items.findIndex(x => x.els.some(c => c === card || c.contains(card))); if (i > -1 && row.children[i]) row.children[i].click();
+  }
+  function locate(e, wait) {
+    const t0 = Date.now(), tick = () => {
+      const el = target(e);
+      if (el) { reveal(el); setTimeout(() => { el.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth" }); el.classList.remove("srfl"); void el.offsetWidth; el.classList.add("srfl"); setTimeout(() => el.classList.remove("srfl"), 2000); }, 160); return; }
+      if (Date.now() - t0 < 4500) setTimeout(tick, 200);
+    };
+    setTimeout(tick, wait || 0);
+  }
+  function pick(e) {
+    const o = { t: e.t, l: e.l, s: e.s, h: e.h }; ["e", "card", "kw", "pg", "done"].forEach(k => { if (e[k]) o[k] = e[k]; });
+    wr(LSR, [o].concat((rd(LSR) || []).filter(x => key(x) !== key(e))).slice(0, 8));
+    shut(); const same = location.hash === e.h; if (!same) location.hash = e.h;
+    if (!e.done && (e.e || e.card)) locate(e, same ? 0 : 450);
+  }
+
+  // ----- the overlay -----
+  let box, inp, lst, fl, idx = [], res = [], sel = 0, flt = "all", T = [];
+  const TN = t => LANG === "zh" ? { Page: "页面", View: "视图", Room: "房间", Card: "卡片", Device: "设备", Camera: "摄像头" }[t] || t : t;   // the kind, translated here so plain words like "Room" are not added to the dictionary for the whole dashboard
+  const LZ = { "All": "全部", "Pages": "页面", "Rooms": "房间", "Devices": "设备", "Cameras": "摄像头", "Cards": "卡片", "Recent": "最近", "Jump to": "前往", "Needs attention": "需要关注", "Search": "搜索",
+    "Go to page": "前往页面", "Open": "打开", "Go to room": "前往房间", "Open camera": "打开摄像头", "Notifications": "通知", "on": "已开", "off": "关闭", "No results": "没有结果" };
+  const L = s => LANG === "zh" && LZ[s] ? LZ[s] : s;
+  const hintOf = e => e.t === "Page" ? L("Go to page") : e.t === "View" ? L("Open") : e.t === "Room" ? L("Go to room") : e.t === "Camera" ? L("Open camera") : (LANG === "zh" ? "在 " : "Show in ") + (e.t === "Device" ? String(e.s || "").split(" · ")[0] || "" : e.s || "") + (LANG === "zh" ? " 中显示" : "");
+  const PGI = { home: "n-home", rooms: "n-rooms", climate: "n-climate", security: "n-cam", energy: "n-energy", scenes: "n-scenes", weather: "n-weather", irrigation: "n-irr", events: "n-events", vehicle: "car", hazards: "alert-octagon", insights: "lightbulb-on", media: "video", theme: "n-set", admin: "n-set" };
+  const DI = { light: "lightbulb", switch: "lightning-bolt", climate: "thermometer", fan: "fan", binary_sensor: "door-open", cover: "garage-open-variant" };
+  const iconOf = e => { const n = e.t === "Room" ? "sofa" : e.t === "Camera" ? "video" : e.t === "Device" ? DI[String(e.e || "").split(".")[0]] || "lightning-bolt" : e.t === "Card" ? "n-rooms" : PGI[e.pg] || "magnify"; return MDI[n] ? mdi(n) : ""; };
+  if (!MDI["chevron-right"]) MDI["chevron-right"] = "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z";
+  // the chips: what each one holds
+  const GR = [["all", "All", null], ["page", "Pages", { Page: 1, View: 1 }], ["room", "Rooms", { Room: 1 }], ["dev", "Devices", { Device: 1 }], ["cam", "Cameras", { Camera: 1 }], ["card", "Cards", { Card: 1 }]];
+  const inGr = (e, g) => !g[2] || !!g[2][e.t];
+  const hl = (s, ts) => {   // the typed letters in bold (a typo or a hidden keyword has nothing to mark)
+    const lo = s.toLowerCase(), rg = []; ts.forEach(x => { const i = x ? lo.indexOf(x) : -1; if (i > -1) rg.push([i, i + x.length]); });
+    if (!rg.length) return esc(s); rg.sort((p, q) => p[0] - q[0]); const m = []; rg.forEach(r => { const l = m[m.length - 1]; if (l && r[0] <= l[1]) l[1] = Math.max(l[1], r[1]); else m.push(r.slice()); });
+    let o = "", p = 0; m.forEach(r => { o += esc(s.slice(p, r[0])) + '<mark class="srk">' + esc(s.slice(r[0], r[1])) + "</mark>"; p = r[1]; }); return o + esc(s.slice(p));
+  };
+  const row = (e, i) => '<button type="button" class="srr' + (i === sel ? " on" : "") + '" role="option" aria-selected="' + (i === sel) + '" data-n="' + i + '" data-k="' + e.t + '"><span class="sric">' + iconOf(e) + '</span><span class="srm"><b>' + hl(e.l, T) + '</b>' + (e.s ? "<small>" + esc(e.s) + "</small>" : "") + '</span><span class="srg">' + esc(hintOf(e)) + '</span><span class="srcv">' + mdi("chevron-right") + "</span></button>";
+  const houseOf = e => (CONFIG.house || []).filter(r => r && "#rooms/" + r.id === e.h)[0];
+  const roomLine = e => {   // the temperature and the lights that are on, for a room's launcher tile
+    const r = houseOf(e); let tp = "", n = 0; if (!r) return ["", ""];
+    try { const v = roomTemp(r); if (v != null && v !== "" && !isNaN(+v)) tp = f1(+v) + "°"; } catch (x) {}
+    try { (r.lights || []).forEach(it => { const id = typeof it === "string" ? it : it && it.entity; if (typeof id === "string" && isOn(id.split("#")[0])) n++; }); } catch (x) {}
+    return [tp, n ? n + " " + L("on") : L("off")];
+  };
+  function attention() {   // what the notification strip is showing right now (Garage door open, Water leak ...)
+    const o = []; try { if (typeof NSK !== "undefined") NSK.filter(k => k[3]()).slice(0, 3).forEach(k => o.push(mk("View", typeof k[2] === "function" ? k[2]() : k[2], L("Notifications"), "#notifications", { done: 1, att: 1 }))); } catch (x) {}
+    return o;
+  }
+  function launcher() {   // before anything is typed: a screen to tap through
+    const at = attention(), rc = (rd(LSR) || []).map(r => idx.filter(e => key(e) === key(r))[0]).filter(Boolean).slice(0, 6), pg = idx.filter(e => e.t === "Page"), rm = idx.filter(e => e.t === "Room").slice(0, 8), cm = idx.filter(e => e.t === "Camera").slice(0, 4);
+    res = at.concat(rc, pg, rm, cm); let i = 0; const n = () => i++;
+    const att = at.length ? '<div class="sra"><p class="srh">' + esc(L("Needs attention")) + "</p>" + at.map(e => '<button type="button" class="srx srat" data-n="' + n() + '"><i></i><b>' + esc(e.l) + "</b><small>" + esc(e.s) + "</small></button>").join("") + "</div>" : "";
+    const rec = rc.length ? '<div class="srre"><p class="srh">' + esc(L("Recent")) + '</p><div class="srcp">' + rc.map(e => '<button type="button" class="srx srcc" data-n="' + n() + '">' + esc(e.l) + "</button>").join("") + "</div></div>" : "";
+    const pgs = '<div class="srpg"><p class="srh">' + esc(L("Jump to")) + '</p><div class="srtl">' + pg.map(e => '<button type="button" class="srx srti" data-n="' + n() + '">' + iconOf(e) + "<span>" + esc(e.l) + "</span></button>").join("") + "</div></div>";
+    const rms = rm.length ? '<div class="srrm"><p class="srh">' + esc(L("Rooms")) + '</p><div class="srrl">' + rm.map(e => { const ln = roomLine(e); return '<button type="button" class="srx srro" data-n="' + n() + '"><b>' + esc(e.l) + "</b>" + (ln[0] ? "<span>" + esc(ln[0]) + "</span>" : "") + "<small>" + esc(ln[1]) + "</small></button>"; }).join("") + "</div></div>" : "";
+    const cms = cm.length ? '<div class="srcm"><p class="srh">' + esc(L("Cameras")) + '</p><div class="srcl">' + cm.map(e => { const st = camMem.get(e.cid || ""); return '<button type="button" class="srx srca" data-n="' + n() + '"' + (st ? ' style="background-image:url(' + st + ')"' : "") + "><b>" + esc(e.l) + "</b></button>"; }).join("") + "</div></div>" : "";
+    return '<div class="srlh"><div class="srl1">' + rec + pgs + '</div><div class="srl2">' + att + rms + cms + "</div></div>";
+  }
+  function draw() {
+    const q = inp.value.trim(), g = GR.filter(x => x[0] === flt)[0] || GR[0]; let html = "", cnt = null; T = norm(q).split(" ").filter(Boolean);
+    box.classList.toggle("srlau", !q && flt === "all");
+    if (q) {
+      const all = find(q); cnt = {}; GR.forEach(x => { cnt[x[0]] = all.filter(e => inGr(e, x)).length; });
+      if (!all.length) { res = []; html = '<div class="sre"><b>' + esc(L("No results")) + '</b><small>Try a page, a room, a device or a camera</small></div>'; }
+      else if (flt !== "all") { res = all.filter(e => inGr(e, g)); html = res.length ? res.map(row).join("") : '<div class="sre"><b>' + esc(L("No results")) + "</b><small>" + esc(L(g[1])) + "</small></div>"; }
+      else {   // grouped, the best matches of each kind first
+        res = []; [2, 4, 3, 5, 1].map(i => GR[i]).forEach(x => { const m = all.filter(e => inGr(e, x)).slice(0, 6); if (!m.length) return; html += '<div class="srh">' + esc(L(x[1])) + "</div>"; m.forEach(e => { html += row(e, res.length); res.push(e); }); });
+      }
+    } else if (flt !== "all") {   // a kind chosen with nothing typed: all of it, A to Z
+      res = idx.filter(e => inGr(e, g)).sort((p, q2) => p.l.localeCompare(q2.l)).slice(0, 80); html = res.map(row).join("");
+    } else html = launcher();
+    if (sel >= res.length) sel = Math.max(0, res.length - 1);
+    lst.innerHTML = html; lst.scrollTop = 0;
+    fl.innerHTML = GR.map(x => '<button type="button" class="chip srf' + (x[0] === flt ? " on" : "") + '" data-f="' + x[0] + '">' + esc(L(x[1])) + (cnt ? '<span class="cn">' + cnt[x[0]] + "</span>" : "") + "</button>").join("");
+    const nt = cnt && flt === "all" ? cnt.all + (LANG === "zh" ? " 个结果" : cnt.all === 1 ? " result" : " results") : ""; $$(".srn", box).forEach(x => { x.textContent = nt; });
+    mark();
+  }
+  function mark(scroll) { $$("[data-n]", lst).forEach(b => { const on = +b.dataset.n === sel; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); if (on && scroll) b.scrollIntoView({ block: "nearest" }); }); }
+  function fit() {   // a phone's keyboard: the screen is the part that is still visible (the search box sits at the bottom of it)
+    const v = window.visualViewport; if (!box || box.hidden || !v || !matchMedia("(max-width:760px)").matches) { if (box) { box.style.top = box.style.height = ""; } return; }
+    box.style.top = v.offsetTop + "px"; box.style.height = v.height + "px";
+  }
+  function make() {
+    if (box) return;
+    box = document.createElement("div"); box.id = "srch"; box.hidden = true; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("aria-label", "Search");
+    const cl = '<button type="button" class="src" aria-label="' + (LANG === "zh" ? "关闭" : "Close") + '">' + mdi("close") + "</button>";
+    box.innerHTML = '<div class="srp"><div class="srhd"><b>' + esc(L("Search")) + '</b><span class="srn"></span>' + cl + '</div><div class="srb"><span class="sri">' + mdi("magnify") + '</span><input id="srq" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go"><span class="srn"></span>' + cl + '</div><div class="srfs" id="srfs"></div><div id="srl" role="listbox"></div><div class="srft"><span>↵ go</span><span>↑↓ move</span><span>Esc close</span><em>Search only moves around. It never switches anything.</em></div></div>';
+    document.body.appendChild(box); inp = $("#srq", box); lst = $("#srl", box); fl = $("#srfs", box);
+    inp.placeholder = zh("Search pages, rooms, devices…"); inp.setAttribute("aria-label", zh("Search"));   // the Chinese layer leaves inputs alone, so these two are translated here
+    inp.addEventListener("input", () => { sel = 0; draw(); });
+    inp.addEventListener("keydown", e => {
+      const go = d => { if (res.length) { sel = (sel + d + res.length) % res.length; mark(true); } };
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); go(e.key === "ArrowDown" ? 1 : -1); }
+      else if ((e.key === "ArrowRight" || e.key === "ArrowLeft") && !inp.value) { e.preventDefault(); go(e.key === "ArrowRight" ? 1 : -1); }   // on the launcher the arrows walk through the tiles
+      else if (e.key === "Enter") { e.preventDefault(); if (res[sel]) pick(res[sel]); }
+    });
+    lst.addEventListener("click", e => { const b = e.target.closest("[data-n]"); if (b && res[+b.dataset.n]) pick(res[+b.dataset.n]); });
+    lst.addEventListener("pointermove", e => { const b = e.target.closest("[data-n]"); if (b && +b.dataset.n !== sel) { sel = +b.dataset.n; mark(); } });
+    fl.addEventListener("click", e => { const b = e.target.closest("[data-f]"); if (!b) return; flt = b.dataset.f; sel = 0; draw(); if (matchMedia("(pointer:fine)").matches) inp.focus({ preventScroll: true }); });
+    box.addEventListener("click", e => { if (e.target === box || e.target.closest(".src")) shut(); });
+    if (window.visualViewport) { visualViewport.addEventListener("resize", fit); visualViewport.addEventListener("scroll", fit); }
+  }
+  function show() {
+    make(); learn(); idx = build(); inp.value = ""; sel = 0; flt = "all"; draw(); box.hidden = false; fit();
+    // a screen you tap through is the first thing to see: only a device with a keyboard (a mouse pointer) starts in the box; on a phone or tablet the keyboard would cover it until you tap the box
+    if (matchMedia("(pointer:fine)").matches) { inp.focus({ preventScroll: true }); setTimeout(() => { if (!box.hidden) inp.focus({ preventScroll: true }); }, 60); }
+  }
+  function shut() { if (!box || box.hidden) return; box.hidden = true; inp.blur(); box.style.top = box.style.height = ""; }
+
+  // the header button sits right before the notification icon and the clock
+  const btn = document.createElement("button"); btn.id = "hsrch"; btn.type = "button"; btn.setAttribute("aria-label", "Search"); btn.innerHTML = mdi("magnify");
+  $("header .hr").insertBefore(btn, $("#hc")); btn.addEventListener("click", show);
+  document.addEventListener("keydown", e => {
+    const open = !!box && !box.hidden;
+    if (e.key === "Escape" && open) { e.preventDefault(); shut(); return; }
+    if ((e.key === "k" || e.key === "K") && (e.ctrlKey || e.metaKey) && !e.altKey) { e.preventDefault(); if (open) shut(); else show(); return; }
+    const t = e.target || {};
+    if (e.key === "/" && !open && !e.ctrlKey && !e.metaKey && !e.altKey && !/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName || "") && !t.isContentEditable) { e.preventDefault(); show(); }
+  });
+  window.addEventListener("hashchange", () => { shut(); setTimeout(learn, 1800); });
+  setTimeout(learn, 3000);
+})();
+// ---------- What's new (2.7.0) ----------
+// After the dashboard has been updated to a new feature release, a short sheet says what changed before you use Home. The notes are written for the family in WHATSNEW.md
+// (build.mjs puts them in window.DASH_NEW), the version this device last showed is kept in its browser storage ("dashSeenVer").
+//   - a device that has never opened the dashboard just records the version and shows nothing
+//   - a patch release (2.6.1 -> 2.6.2) is quiet; its notes come with the next feature release (a "## 2.6.2 !" heading in WHATSNEW.md makes it show)
+//   - phones keep the sheet until it is dismissed; a tablet or computer (a wall display has nobody to tap it) lets it fade out after 20 seconds, and touching it keeps it
+//   - Settings > Theme has a WHAT'S NEW button to read the latest notes again
+// config.js: whatsNew: false switches it all off.   (An automated browser, i.e. the tests, only gets it with whatsNew: true.)
+(function () {
+  if (CONFIG.whatsNew === false) return;
+  if (navigator.webdriver && CONFIG.whatsNew !== true) return;   // an automated browser (the test suite) is not shown the sheet unless a test asks for it with whatsNew: true
+  const NEW = window.DASH_NEW || {}, CUR = String(window.DASH_VER || ""), K = "dashSeenVer", SECS = +CONFIG.whatsNewSecs || 20;
+  const vp = v => String(v).split(".").map(n => +n || 0);
+  const cmp = (a, b) => { a = vp(a); b = vp(b); for (let i = 0; i < 4; i++) { const d = (a[i] || 0) - (b[i] || 0); if (d) return d; } return 0; };
+  const zh = s => { try { return LANG === "zh" && window.__zhTr ? window.__zhTr(String(s)) : s; } catch (e) { return s; } };
+  const list = since => Object.keys(NEW).filter(v => cmp(v, CUR) <= 0 && (!since || cmp(v, since) > 0)).sort((a, b) => cmp(b, a));
+  const line = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+  let el = null, tm = 0, bar = 0;
+
+  function shut() { clearTimeout(tm); if (!el) return; const e = el; el = null; e.classList.remove("on"); setTimeout(() => e.remove(), 260); document.removeEventListener("keydown", key, true); }
+  function key(e) { if (e.key === "Escape") { e.stopPropagation(); shut(); } }
+  function show(vs, auto) {
+    if (el || !vs.length) return;
+    const minor = vp(CUR).slice(0, 2).join(".");
+    const body = vs.map(v => (vs.length > 1 ? '<div class="wtnv">' + esc(v) + '</div>' : "") + '<ul>' + NEW[v].n.map(t => "<li>" + line(t) + "</li>").join("") + "</ul>").join("");
+    el = document.createElement("div"); el.id = "wtnew"; el.setAttribute("role", "dialog"); el.setAttribute("aria-label", zh("What's new"));
+    el.innerHTML = '<div class="wtnp"><div class="wtnh"><div><div class="lbl">' + esc(zh("What's new")) + '</div><h3>Kinetic ' + esc(minor) + '</h3></div><button class="rnd" data-wtnx aria-label="' + esc(zh("Close")) + '">' + mdi("close") + '</button></div>' +
+      '<div class="wtnb">' + body + '</div><div class="wtnf"><button class="eb pri" data-wtnx>' + esc(zh("GOT IT")) + '</button></div>' + (auto && !isMobile() ? '<i class="wtnt" style="animation-duration:' + SECS + 's"></i>' : "") + '</div>';
+    document.body.appendChild(el);
+    el.addEventListener("click", e => { if (e.target === el || e.target.closest("[data-wtnx]")) shut(); });
+    document.addEventListener("keydown", key, true);
+    requestAnimationFrame(() => el && el.classList.add("on"));
+    // an unattended screen: the sheet goes by itself; touching it (or a key) keeps it until it is dismissed
+    if (auto && !isMobile()) {
+      tm = setTimeout(shut, SECS * 1000);
+      const keep = () => { clearTimeout(tm); const t = el && el.querySelector(".wtnt"); if (t) t.remove(); };
+      ["pointerdown", "wheel", "touchstart"].forEach(n => el.addEventListener(n, keep, { once: true, passive: true }));
+    }
+  }
+
+  // after a click on WHAT'S NEW in Settings: the latest notes
+  document.addEventListener("click", e => { if (e.target.closest && e.target.closest("[data-whatsnew]")) show(list().slice(0, 4), false); });
+
+  // on start: show when this device has seen an older feature release
+  let seen = null, store = true; try { seen = localStorage.getItem(K); } catch (e) { store = false; }
+  const save = () => { try { localStorage.setItem(K, CUR); } catch (e) {} };
+  if (!store || !CUR) return;
+  if (!seen) {
+    // no version stored: a brand new device records the version and shows nothing; a device that was updated from before this existed (it already has choices saved, such as a colour or the clock) gets the notes
+    let used = false; try { used = ["dashPal", "dashStyle", "dashFont", "dashClock", "dashLogo", "dashLang", "dashSeason", "dashSunDark", "dashTablet", "dashLyr", "dashLyTab"].some(k => localStorage.getItem(k) != null); } catch (e) {}
+    if (!used) { save(); return; }
+    seen = "0.0.0";
+  }
+  if (cmp(CUR, seen) <= 0) return;
+  const vs = list(seen).slice(0, 4), a = vp(CUR), b = vp(seen), feature = a[0] !== b[0] || a[1] !== b[1] || vs.some(v => NEW[v].f);
+  if (!feature) return;   // a patch release: stays quiet, its notes wait for the next feature release (seen is not moved)
+  if (!vs.length) { save(); return; }
+  // wait until the start-up logo and the first load are done, so the sheet comes before Home rather than over the splash
+  let n = 0; const t = setInterval(() => {
+    if (++n > 100) { clearInterval(t); return; }
+    if (typeof bootDone === "undefined" || !bootDone || document.documentElement.classList.contains("boot") || $("#lg:not([hidden])")) return;
+    clearInterval(t); save(); show(vs, true);
+  }, 300);
+})();
 // ---------- start-up: runs last, once every module above has been defined ----------
 // This used to sit at the end of 38-energy.js. A page opened from a notification link (#active/doors, #batteries ...) draws the notifications pop-up
 // straight away, and that code reaches things defined in later files (galCfg in 40-garage-alert.js): "Cannot access 'galCfg' before initialization"
@@ -15255,7 +15792,6 @@ route(); drawGsum(); authReturn().then(r => { if (r !== "fail") connect(); });
     ['#np [data-npt]','#npc'],
     ['#np [data-npchip]','#npc'],
     ['#np [data-npall]','#npc'],
-    ['[data-insgp]','#insbody'],
     ['#cpp .lsv','#cpp']
   ];
   const ongoing=new WeakMap();
@@ -15271,7 +15807,7 @@ route(); drawGsum(); authReturn().then(r => { if (r !== "fail") connect(); });
       const next=host.getBoundingClientRect().height;
       if(Math.abs(next-old)<2)return;
       const oldOverflow=host.style.overflow;
-      host.style.overflow='hidden';
+      host.style.overflow=CSS.supports('overflow','clip')?'clip':'hidden';   /* clip, not hidden: hidden makes the host its own layout box, so the first child's top margin stops collapsing out of it and the whole list drops ~20px for the animation, then jumps back when it ends */
       const anim=host.animate([{height:old+'px',opacity:.92},{height:next+'px',opacity:1}],{duration,easing:ease});
       ongoing.set(host,anim);
       const clean=()=>{if(ongoing.get(host)!==anim)return;ongoing.delete(host);host.style.overflow=oldOverflow;};
