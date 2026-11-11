@@ -196,8 +196,7 @@ window.DASH_CONFIG = {
       lightSwitches: ["switch.demo_bedside_left", "switch.demo_bedside_right"], climate: "climate.demo_master",
       lights: ["light.demo_master_lights"], windows: ["binary_sensor.demo_master_window"], covers: ["cover.demo_master_curtain_left", "cover.demo_master_curtain_right"],
       sections: [
-        { name: "Lights", items: [{ entity: "light.demo_master_lights", name: "Room lights" }, "switch.demo_bedside_left", "switch.demo_bedside_right"] },
-        { name: "Curtains", items: ["cover.demo_master_curtain_left", "cover.demo_master_curtain_right"] }
+        { name: "Lights", items: [{ entity: "light.demo_master_lights", name: "Room lights" }, "switch.demo_bedside_left", "switch.demo_bedside_right"] }
       ] },
     { id: "kids", name: "Kids room", icon: "teddy-bear", temp: "sensor.demo_kids_temperature", hum: "sensor.demo_kids_humidity", occ: [],
       climate: "climate.demo_kids", lights: ["light.demo_kids_lights"], windows: ["binary_sensor.demo_kids_window"], doors: ["binary_sensor.demo_kids_door_contact"],
