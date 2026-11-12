@@ -65,22 +65,22 @@ html.lockup #lg .lgb svg{width:250px}
 @keyframes blTs{from{opacity:0;transform:translateY(34px)}}
 @keyframes blWp{from{transform:scaleX(0)}}
 .cw{transform-box:fill-box;transform-origin:0 50%}
-html.intro .bl .mk{animation:blRs 1.1s cubic-bezier(.2,.7,.2,1) backwards}
-html.intro .bl .cw{animation:blWp 1.1s cubic-bezier(.3,.7,.2,1) backwards}
-html.intro .bl .nm{animation:blTs .6s ease .55s backwards}
-html.intro .bl .tg{animation:blTs .6s ease .75s backwards}
-html.intro .bl .bv{animation:blTs .6s ease .95s backwards}
+html.intro #bootld .bl .mk{animation:blRs 1.1s cubic-bezier(.2,.7,.2,1) backwards}
+html.intro #bootld .bl .cw{animation:blWp 1.1s cubic-bezier(.3,.7,.2,1) backwards}
+html.intro #bootld .bl .nm{animation:blTs .6s ease .55s backwards}
+html.intro #bootld .bl .tg{animation:blTs .6s ease .75s backwards}
+html.intro #bootld .bl .bv{animation:blTs .6s ease .95s backwards}
 @keyframes blPulse{50%{opacity:.8}}
 @keyframes blR{from{opacity:0;transform:translateY(16px)}}
 @keyframes blT{from{opacity:0;transform:translateY(8px)}}
 @keyframes blS{from{transform:translateX(-120px)}to{transform:translateX(560px)}}
 html.intro #bootld{animation:none}
-html.intro .bl{animation:none!important}
+html.intro #bootld .bl{animation:none!important}
 
-html.intro .bl .r2{animation:blR 1.1s cubic-bezier(.2,.7,.2,1) .12s backwards}
-html.intro .bl b{animation:blT .5s ease .5s backwards}
-html.intro .bl small{animation:blT .5s ease .65s backwards}
-html.intro .bl .sw{opacity:1;animation:blS .9s ease-in-out .35s both}
+html.intro #bootld .bl .r2{animation:blR 1.1s cubic-bezier(.2,.7,.2,1) .12s backwards}
+html.intro #bootld .bl b{animation:blT .5s ease .5s backwards}
+html.intro #bootld .bl small{animation:blT .5s ease .65s backwards}
+html.intro #bootld .bl .sw{opacity:1;animation:blS .9s ease-in-out .35s both}
 #lg .lgb{display:flex;flex-direction:column;align-items:center;gap:8px;margin:0 0 22px}
 #lg .lgb svg{width:170px}
 #lg .lgb b{display:block;font:500 17px var(--sans);letter-spacing:.2em}
@@ -392,7 +392,6 @@ body.m-tabs .main{padding-bottom:72px}
 }
 @media(max-width:760px){
   #eadd{position:fixed;right:16px;bottom:calc(var(--dock) + 8px);z-index:43;width:56px;height:56px;padding:0;border-radius:50%;font-size:0;display:flex;align-items:center;justify-content:center;background:var(--mint);color:var(--bg);border:0;box-shadow:0 6px 18px rgba(0,0,0,.28);transition:bottom .25s}
-  #eadd::before{content:"+";font:300 34px/1 var(--sans,system-ui);margin-top:-3px}
   body.np-on:not(.np-home):not(.np-media) #eadd{bottom:calc(var(--dock) + 86px)}
   #events .cg.ag{padding-bottom:90px}
 }
@@ -644,6 +643,11 @@ nav a.nset{margin-top:auto}
 @keyframes enold{to{opacity:.4}}#energy .enold{animation:enold .25s ease forwards;pointer-events:none}@media(prefers-reduced-motion:reduce){#energy .enold{animation:none;opacity:.4}}
 @keyframes enin{from{opacity:.4;transform:translate(var(--tx,0px),var(--ty,10px))}}#energy .enin{animation:enin .5s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--i,0)*60ms)}@media(prefers-reduced-motion:reduce){#energy .enin{animation:none}}
 .rnd svg:only-child,.bi svg:only-child{display:block;margin:0 auto;vertical-align:baseline}   /* an icon alone in a round button sits dead centre (the text baseline used to push it down ~2.5 px) */
+/* Access: who sees what, as two plain choices instead of an unlabeled switch */
+.accsg{display:inline-flex;flex:none;gap:2px;padding:3px;border-radius:99px;background:rgba(var(--w),.1)}
+.accsg button{border:0;background:transparent;color:var(--mut);font:700 12px var(--mono,inherit);letter-spacing:.06em;text-transform:uppercase;padding:9px 16px;min-height:36px;border-radius:99px;cursor:pointer;transition:background .2s,color .2s}
+.accsg button.on{background:var(--mint);color:var(--onmint,#07241a)}
+.accsg button[disabled]{opacity:.4;cursor:not-allowed}
 /* touch: no blue tap box, no text selection on the UI */
 *{-webkit-tap-highlight-color:transparent}
 a,button,.tl,.rc,.cam,.chip,.eb,.card,.bd,.sc,.pbi,[data-e],[data-k]{-webkit-touch-callout:none;touch-action:manipulation}
@@ -712,6 +716,7 @@ html[data-mode=light] .fcc b{color:color-mix(in srgb,var(--hc) 55%,#1d1d2b)}html
 .fcc>div.fcs em.no{background:none;padding:0}
 .fcc>div.fcs em svg{fill:#8fd0ff}
 .fcc>div.fcs.td{box-shadow:inset 0 0 0 2px rgba(255,255,255,.75)}
+#fcp #fc>.hsw{flex:1;min-width:0;display:flex}#fcp #fc>.hsw>.fcc{flex:1;min-width:0}
 /* tablet / desktop Home: cameras + climate column on top, the six rooms spread underneath */
 @media(min-width:761px){
 .hm .left{display:contents}
@@ -1894,6 +1899,8 @@ html:not(#x) .zc:fullscreen>.mkt,html:not(#x) .zc.zfull>.mkt{top:calc(14px + env
 .zc>video,.zc>.mkl,.zc>.mkt,.zc>.zx,.zc>.pbe{transition:opacity .22s ease}
 .zc.zfade{background:#000}.zc.zfade>*{opacity:0!important;transition:opacity .14s ease!important}.zc.zfnow>*{transition:none!important}
 @media(prefers-reduced-motion:reduce){.zc>*{transition:none!important}}
+.cam.zm,.zm>img,.zm>video{cursor:grab}.cam.zm:active,.zm:active>img,.zm:active>video{cursor:grabbing}
+.pbf>.hsw{flex:1 1 0;min-width:0}   /* playback / detection filter chips: the animated side arrows show when the row scrolls */
 /* artist info: the Artist tab beside the lyrics (Media page, and the lyrics sheet on a phone) and the Artist page in the Now Playing sheet */
 .aitabs{display:inline-flex;gap:2px;padding:4px;border-radius:99px;background:rgba(var(--w),.1);text-transform:none}.aitabs .chip{border:0;background:transparent;box-shadow:none;padding:8px 18px;min-height:0;font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}.aitabs .chip.on{background:var(--mint);color:var(--bg)}
 .lyh .aitabs{margin:-6px 0}
@@ -1916,7 +1923,7 @@ body.ly-open .mlay.hasly .ar{flex:1;max-height:none;min-height:0}
 @media(max-width:760px){.lyh .lyx{margin-left:auto;flex:none}}
 /* seasonal themes (40-seasons.js): the decorations sit in one layer above the page and below pop-ups and full-screen cameras. They never take a tap.
    The falling / floating bits (.fx) are switched off while any camera is live and under reduced motion; the rest stands still then. */
-#szn{position:fixed;inset:0;z-index:20;pointer-events:none;overflow:hidden}
+#szn{position:fixed;inset:0;z-index:27;pointer-events:none;overflow:hidden}
 #szn[hidden]{display:none}
 #szn i,#szn svg{position:absolute;display:block;pointer-events:none}
 #szn i{font-style:normal}
@@ -2497,6 +2504,8 @@ html[data-style] #grid>.card.rm[data-open][data-hm]{background-image:none;box-sh
 #grid>.rmph{pointer-events:none;flex:none;box-sizing:border-box}
 
 body.cl-sheet.cl-out #clbk{animation:thOut .24s ease both}@keyframes thOut{from{opacity:1}to{opacity:0}}
+/* phone: a room opens as a sheet that rises from the bottom, not in place, so its arrow points right (›) instead of down */
+@media(max-width:760px){#grid>.card.rm:not([data-open]) .lbl.il::after{transform:rotate(-45deg)}}
 /* Events: view switch, tablet week + list, phone week + month */
 .evvw{gap:0;padding:4px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--w),.05)}
 .evvw .eb{padding:9px 16px;border:0;background:transparent;border-radius:999px;font-size:12px}
@@ -2508,7 +2517,7 @@ body.cl-sheet.cl-out #clbk{animation:thOut .24s ease both}@keyframes thOut{from{
 .cg.ag .ah.t{color:var(--mint)}
 .cg.ag .ah.ps{opacity:.45}
 .cg.ag .ce.ps{opacity:.42;filter:saturate(.35)}
-.cg.ag .agn{font-size:14px;color:var(--mut);padding:4px 8px 2px}
+.cg.ag .agn{font-size:14px;color:var(--mut);padding:0 0 4px}   /* lines up with the TODAY heading (it used to sit 8px in)*/
 /* tablet week */
 .cg.evwk{display:block}
 .wk{border:1px solid var(--line);border-radius:22px;overflow:hidden;background:linear-gradient(160deg,rgba(var(--w),.05),rgba(var(--w),.015))}
@@ -2609,7 +2618,7 @@ html:not(#x) #bat{font-size:11px;padding:3px 9px 3px 7px}
 html:not(#x) #hc{padding:2px 0}
 body.np-hdr header{padding-bottom:6px}
 .main{gap:10px}
-#cauto small{display:none}
+#cauto small{white-space:normal;line-height:1.3}   /* the description shows on phones too, like the tablet */
 }
 /* a compact heat pump card (on tablets the side column is narrow and shares its height with Forecast; on phones it keeps Home short) */
 @media all{
@@ -2642,7 +2651,8 @@ html:not(#x) #mini .chip{padding:7px 0}
 body.ca-off .ctr,body.ca-off .cbar .mk{display:none!important}
 /* Chart readout: the box that follows a mouse or finger on a chart (svg elements ignore pointers by default, charts opt in) */
 svg[data-cr]{pointer-events:auto;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
-svg[data-crs]{touch-action:pan-y}
+svg[data-cr],svg[data-crs]{touch-action:pan-y}
+.fcs svg[data-cr],.ims svg[data-cr],.hsw svg[data-cr]{touch-action:pan-x pan-y}   /* charts inside a list that scrolls sideways keep that scroll: hold the finger to scrub those */
 #crtip{position:fixed;z-index:9999;pointer-events:none;min-width:120px;max-width:min(340px,calc(100vw - 16px));box-sizing:border-box;padding:9px 12px 10px;border-radius:12px;background:var(--bg2,#222);color:var(--ink);border:1px solid var(--line,rgba(255,255,255,.14));box-shadow:0 8px 28px rgba(0,0,0,.35);font-size:13px;line-height:1.35;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 #crtip[hidden]{display:none}
 #crtip .crh{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:4px;white-space:nowrap}
@@ -3092,6 +3102,8 @@ html:not(#x):not(#y):not(#z):not(#w) .tl[data-e^="cover."].on input[type=range]{
 html[data-mode=light]:not(#x):not(#y):not(#z):not(#w) .tl[data-e^="cover."].on{--lg:170,100,195;--ltx:#2a1c0a;
   background:radial-gradient(120% 220% at 0% 50%,color-mix(in srgb,rgb(var(--lg)) 40%,#fff) 0%,color-mix(in srgb,rgb(var(--lg)) 9%,#fff) 75%)}
 html[data-mode=light]:not(#x):not(#y):not(#z):not(#w) .tl[data-e^="cover."].on .tn svg{fill:color-mix(in srgb,rgb(var(--lg)) 60%,#1a1a1a)}
+/* in the notifications pop-up the curtain glow sits inside the tile: an outer glow is clipped while the rows slide / fold and then pops out when they settle */
+html:not(#x):not(#y):not(#z):not(#w) #np .tl[data-e^="cover."].on{box-shadow:inset 0 0 20px rgba(var(--lg),.3)}
 /* Header-chip pop-ups (49-takeover.js): Road problem and Tsunami, built on the centred #cmtsh card. A tablet gets the wide two column pop-up, a phone one column. */
 #cmtsh .cmb.tk{width:min(560px,100%);max-height:calc(100vh - 32px);padding:0;gap:0;overflow:hidden}
 .tk-h{display:flex;align-items:center;gap:14px;padding:18px 18px 12px}
@@ -3236,6 +3248,7 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 .hzzb button{display:flex;align-items:center;justify-content:center;padding:0;line-height:1}.hzzb button svg{width:20px;height:20px;fill:currentColor;display:block}
 .lyo .chip svg{width:16px;height:16px;fill:currentColor}
 #eadd svg{width:20px;height:20px;fill:currentColor}
+@media(max-width:760px){#eadd svg{width:34px;height:34px;display:block}}   /* the round add button on phones: one big plus, centred */
 /* Admin page: Config editor */
 .ce-s{margin-top:12px;border:1px solid var(--line);border-radius:14px;background:rgba(var(--w),.04);padding:0 14px}
 .ce-s>summary{cursor:pointer;padding:14px 0;font-weight:600;font-size:15px;display:flex;align-items:center;gap:10px;list-style:none}
@@ -3413,6 +3426,9 @@ html[data-mode=light] #sectog .chip.off{color:#a3211a}
 /* Attention: "Person alerts are off" with a TURN ON pill */
 #np .nrow[data-togon]{cursor:pointer}
 #np .at-on{flex:none;margin-left:auto;font:600 11px var(--mono);letter-spacing:.1em;padding:6px 10px;border-radius:10px;background:var(--mint);color:var(--onmint,#07241a)}
+
+#np .nofx,#np .nofx *{transition:none!important}
+#npc.txc>.npchips{animation:none!important}
 /* 2.5.0 phones: a full-screen camera keeps its garage door / light tiles folded away behind a CONTROLS pill at the bottom (12-init.js mkCam), so the picture is clear */
 .ctb{display:none}
 @media(max-width:760px),(max-height:520px){
@@ -3749,6 +3765,12 @@ html[data-mode=dark] .nbg{color:#000}   /* dark mode colours are light, so the n
 .wpl.upp{background:rgba(var(--cool-rgb,120,170,255),.18);color:var(--cool)}
 /* More button open as a pill (icon and label side by side): the dot goes to the pill's corner, clear of the label */
 #btab #bmore.hasn.on::after{left:auto;right:18px;top:7px}
+.ilr.lowb small{color:var(--heat);font-weight:600}
+/* every tile opens its detail sheet: a small chevron on the right edge says so (the cross at the top hides it for today) */
+.it::after{content:"";position:absolute;right:15px;top:calc(50% + 6px);width:7px;height:7px;margin-top:-4px;border:solid var(--mut);border-width:2px 2px 0 0;transform:rotate(45deg);opacity:.75;transition:transform .15s,opacity .15s;pointer-events:none}
+.it .itv{padding-right:22px;box-sizing:border-box}
+@media(hover:hover){.it:hover::after{opacity:1;transform:translateX(2px) rotate(45deg)}}
+@media(prefers-reduced-motion:reduce){.it::after{transition:none}}
 /* ---------- Weather page scenes (20-weather-scenes.js): the animated skies, their sliders and the Forecast week explorer ---------- */
 .wsc{position:relative;overflow:hidden;border-radius:14px;margin:10px 0 0;background:#2d3f78;isolation:isolate}
 .wsc>canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-1}
@@ -3766,7 +3788,7 @@ html[data-mode=dark] .nbg{color:#000}   /* dark mode colours are light, so the n
 .wsl input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:0;box-shadow:0 1px 6px rgba(0,0,0,.4)}
 .wsnow{flex:none;border:1px solid var(--line);background:rgba(var(--w),.06);color:var(--ink);font:10.5px var(--mono);letter-spacing:.12em;padding:6px 10px;border-radius:99px;cursor:pointer}
 .wsnow[hidden]{display:none}
-.wscap{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;margin-top:8px;font-size:13px;color:var(--mut)}
+.wscap{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;margin:10px 0 18px;font-size:13px;color:var(--mut)}   /* room above and below, so the time line does not crowd the sunrise / sunset tiles */
 .wscap b{color:var(--ink);font-size:15px;font-weight:600}
 .wsro{position:absolute;left:0;right:0;bottom:0;margin:0;padding:22px 14px 10px;color:rgba(255,255,255,.9);background:linear-gradient(0deg,rgba(0,0,0,.45),rgba(0,0,0,0));text-shadow:0 1px 4px rgba(0,0,0,.5)}
 .wsro b{color:#fff}.wsro .wsmet{color:#e3c6ff}
@@ -3780,7 +3802,7 @@ button.wnp.on{border-color:var(--acc,#6ab7ff);background:rgba(106,183,255,.16)}
 .wsdl{position:absolute;left:0;right:0;bottom:0;height:14px;font:9.5px var(--mono);letter-spacing:.1em;color:var(--mut)}
 .wsdl span{position:absolute;top:0;padding-left:4px;white-space:nowrap}
 .wsh{margin-top:4px}
-.wdy[data-wday]{cursor:pointer}.wdy.sel{outline:1.5px solid var(--acc,#6ab7ff);outline-offset:-1.5px;border-radius:12px}
+.wdy[data-wday]{cursor:pointer;outline:1.5px solid transparent;outline-offset:-1.5px}.wdy.sel{outline-color:var(--acc,#6ab7ff);border-radius:12px}   /* the outline is always there, just clear, so it can fade in on the chosen day */
 .wspd{display:flex;gap:6px;margin-top:6px}
 .wspd span{flex:1;min-width:0;text-align:center;font:10px var(--mono);letter-spacing:.06em;color:var(--mut);text-transform:uppercase}
 .wspd span i{display:block;height:5px;border-radius:5px;margin:4px 6px 0;background:var(--c);opacity:.5}
@@ -3818,6 +3840,22 @@ button.wnp.on{border-color:var(--acc,#6ab7ff);background:rgba(106,183,255,.16)}
 /* the warning cards on the Weather page are the compact ones: a level colour on the left, two lines, tap for the pop-up */
 #wx .ww.cpt{padding:12px 14px 12px 16px;border-left:4px solid #d4a017}#wx .ww.cpt.orange{border-left-color:#e07a1f}#wx .ww.cpt.red{border-left-color:#d64545}
 #wx .ww.cpt .wwt{font-size:15px;margin:0 0 6px}#wx .ww.cpt .wwb.cl{-webkit-line-clamp:2}
+/* Forecast · the week shares the Now card's metric pills; the find chips become a quiet "Jump to" row */
+.wkp{margin:2px 0 4px}.wkp .wnp{flex:none}
+.wkl{margin:6px 0 0}
+.wkf{align-items:center;gap:14px}.wkf .wkj{font-size:12px;color:var(--mut);flex:none}
+.wkf .chip{background:none;border:0;border-radius:0;padding:4px 0;color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
+.wkf .chip.on{text-decoration-color:var(--acc,#6ab7ff);color:var(--acc,#6ab7ff)}
+.wkf .chip svg{width:15px;height:15px;opacity:.7}
+.wkp .wnp.on,.wkp .wnp.on svg{color:var(--ink)}.wkp .wnp.on small{color:var(--mut)}
+/* the Weather page buttons are smooth: colours and outlines ease between states, a press dips a little, the NOW button and a pill's chart fade in, new words fade */
+button.wnp,.wdy[data-wday],.wkd,.wsnow{transition:border-color .22s ease,background-color .22s ease,color .22s ease,outline-color .25s ease,border-radius .25s ease,transform .16s cubic-bezier(.2,.85,.3,1),width .22s ease}
+button.wnp:active,.wdy[data-wday]:active,.wkd:active,.wsnow:active{transform:scale(.95)}
+@keyframes wxFade{from{opacity:0}}@keyframes wxTxt{from{opacity:.2}}@keyframes wxRise{from{opacity:0;transform:translateY(6px)}}
+.wsnow:not([hidden]){animation:wxFade .25s ease both}
+.wfade{animation:wxRise .32s cubic-bezier(.2,.85,.3,1) both}
+.wsfx{animation:wxTxt .28s ease both}
+@media(prefers-reduced-motion:reduce){button.wnp:active,.wdy[data-wday]:active,.wkd:active,.wsnow:active{transform:none}.wsnow:not([hidden]),.wfade,.wsfx{animation:none}}
 /* Heat escaping (42-heat-escaping.js): the Alerts card - every room, one PAUSE button - and the header chip's thermometer with a dropping arrow */
 .alert.cw,#np .alert.cw{padding:14px 16px;text-align:left}
 .alert.cw{background:rgba(255,122,69,.13);border:1px solid rgba(255,122,69,.35)}
@@ -3825,7 +3863,7 @@ html[data-mode=light] .alert.cw{background:#faece7;border-color:#f5c4b3;color:#4
 .alert.cw .lbl{display:flex;align-items:center;gap:6px;color:#ff8a5c}html[data-mode=light] .alert.cw .lbl{color:#993c1d}
 .alert.cw .lbl svg{width:15px;height:15px;fill:currentColor}
 .alert.cw>b{display:block;margin:4px 0 6px;font-size:16px;text-align:left}
-.cwr{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid rgba(255,122,69,.28)}
+.cwr{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid rgba(255,122,69,.28)}
 .cwr span{font-size:14.5px}.cwr small{font-size:12.5px;color:var(--mut);text-align:right}
 html[data-mode=light] .cwr small{color:#993c1d}.cwr.cwp small{color:var(--mint)}html[data-mode=light] .cwr.cwp small{color:#17703d}
 .cwb{display:flex;gap:8px;margin-top:10px}.cwb .eb{background:#d85a30;border-color:#d85a30;color:#fff}
@@ -3833,6 +3871,7 @@ html[data-mode=light] .cwr small{color:#993c1d}.cwr.cwp small{color:var(--mint)}
 @keyframes cwdrop{0%,100%{transform:translateY(-2px)}50%{transform:translateY(2px)}}
 .nai[data-k=cw] svg.cwi{width:1.25em;color:#ff7a45;fill:currentColor}html[data-mode=light] .nai[data-k=cw] svg.cwi{color:#d85a30}
 @media(prefers-reduced-motion:reduce){.cwi .cwa{animation:none}}
+.cwr .cwn{flex:0 0 100%;font-style:normal;font-size:13px;line-height:1.35;color:var(--ink);opacity:.82}
 /* Room cards: the card is tinted by the room's temperature colour (--tc), and each colour band has its own movement (13-rooms.js fillCard sets data-fx, 0-6):
    freezing frost + snow, cold snow, cool a breeze, comfortable still, pleasant a sun glow, warm air rising, hot heat waves + embers + a hot glow.
    Everything stays in the empty area beside and above the temperature, so nothing passes over the (see-through) badges. */
@@ -4152,23 +4191,23 @@ html[data-style=material] :is(button,a,input,select,textarea,[role=button]):focu
   position:sticky;top:0;z-index:24;
   isolation:isolate;margin-bottom:12px;
 }
-#scenes .scfh {
+#scenes .scfh,#energy > .ehc {
   position:sticky;top:0;z-index:24;
   isolation:isolate;margin-bottom:12px;
 }
 /* Kinetic: an opaque but softly edged navigation backing prevents card text
    showing through the tabs when scrolling. Glass and Material remain unchanged. */
-html:not([data-style=glass]):not([data-style=material]) :is(#theme > .hsw:has(> .setchips),#admin > .hsw:has(> .setchips),.page > .secw,#roomspg > #rtabs,#security > #stabs,#insights > .inschips,#scenes .scfh){
+html:not([data-style=glass]):not([data-style=material]) :is(#theme > .hsw:has(> .setchips),#admin > .hsw:has(> .setchips),.page > .secw,#roomspg > #rtabs,#security > #stabs,#insights > .inschips,#scenes .scfh,#energy > .ehc){
   background:color-mix(in srgb,var(--bg) 94%,transparent);
   -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
   border-radius:12px;
 }
-html[data-style=glass] :is(#insights > .inschips,#scenes .scfh){
+html[data-style=glass] :is(#insights > .inschips,#scenes .scfh,#energy > .ehc){
   background:color-mix(in srgb,var(--bg) 86%,transparent);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   border-radius:14px;
 }
-html[data-style=material] :is(#insights > .inschips,#scenes .scfh){
+html[data-style=material] :is(#insights > .inschips,#scenes .scfh,#energy > .ehc){
   background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none;
   border-radius:14px;
 }
@@ -4179,7 +4218,7 @@ html[data-style=material] :is(#insights > .inschips,#scenes .scfh){
 :is(#theme,#admin) > .hsw:has(> .setchips),
 #theme > .secw,.page > .secw,
 #roomspg > #rtabs,#security > #stabs,
-#insights > .inschips,#scenes .scfh{
+#insights > .inschips,#scenes .scfh,#energy > .ehc{
   position:sticky;top:0;z-index:24;
   background:var(--bg)!important;
   border-radius:0!important;
@@ -4195,11 +4234,11 @@ html[data-style=material] :is(#insights > .inschips,#scenes .scfh){
 :is(#theme,#admin) > .hsw:has(> .setchips)::before,
 #theme > .secw::before,.page > .secw::before,
 #roomspg > #rtabs::before,#security > #stabs::before,
-#insights > .inschips::before,#scenes .scfh::before,
+#insights > .inschips::before,#scenes .scfh::before,#energy > .ehc::before,
 :is(#theme,#admin) > .hsw:has(> .setchips)::after,
 #theme > .secw::after,.page > .secw::after,
 #roomspg > #rtabs::after,#security > #stabs::after,
-#insights > .inschips::after,#scenes .scfh::after{
+#insights > .inschips::after,#scenes .scfh::after,#energy > .ehc::after{
   content:none!important;display:none!important;
 }
 /* Liquid Glass retains its individual glass controls, but no see-through
@@ -4214,7 +4253,7 @@ html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs)>.chip{
   /* All themes use the same clean clipping boundary. */
   :is(#theme,#admin) > .hsw:has(> .setchips),
   #theme > .secw,.page > .secw,#roomspg > #rtabs,
-  #security > #stabs,#insights > .inschips,#scenes .scfh{
+  #security > #stabs,#insights > .inschips,#scenes .scfh,#energy > .ehc{
     background:transparent!important;
     -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
     border-radius:0!important;box-shadow:none!important;
@@ -4235,7 +4274,7 @@ html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs)>.chip{
 :is(#theme,#admin) > .hsw:has(> .setchips),
 #theme > .secw,.page > .secw,
 #roomspg > #rtabs,#security > #stabs,
-#insights > .inschips,#scenes .scfh{
+#insights > .inschips,#scenes .scfh,#energy > .ehc{
   background:transparent!important;
   background-image:none!important;
   box-shadow:none!important;
@@ -4246,7 +4285,7 @@ html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs)>.chip{
   :is(#theme,#admin) > .hsw:has(> .setchips),
   #theme > .secw,.page > .secw,
   #roomspg > #rtabs,#security > #stabs,
-  #insights > .inschips,#scenes .scfh{
+  #insights > .inschips,#scenes .scfh,#energy > .ehc{
     background:transparent!important;
     background-image:none!important;
   }
@@ -4319,12 +4358,12 @@ html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs)>.chip{
 
 /* The same single opaque card on the other pages' sticky tab rows (Weather and the pages with section pills, Rooms, Security, Insights, Scenes): the title bar and the tab row share one surface */
 @media(min-width:761px){
-  .page:not(#admin):not(#theme) > .secw,#security > #stabs,#insights > .inschips,#scenes .scfh{background:var(--snc)!important;border:1px solid var(--snb);border-radius:18px!important;box-shadow:none!important}
+  .page:not(#admin):not(#theme) > .secw,#security > #stabs,#insights > .inschips,#scenes .scfh,#energy > .ehc{background:var(--snc)!important;border:1px solid var(--snb);border-radius:18px!important;box-shadow:none!important}
 }
 
 /* no outlines on the joined card: the title bar, tab row and search block are one surface with no seams; the card's lower edge is a soft shadow */
 html{--snb:transparent}
-:is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#security > #stabs,#insights > .inschips,#scenes .scfh,#admin .admtop,#admin .adlog>.adlh{border-color:transparent!important}
+:is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#security > #stabs,#insights > .inschips,#scenes .scfh,#energy > .ehc,#admin .admtop,#admin .adlog>.adlh{border-color:transparent!important}
 /* one flat colour, so the title bar and the rows below it can never show a seam where two gradients meet */
 html{--snc:var(--bg2)}html[data-style=material]{--snc:var(--m1)}
 /* wide screens: the tab rows look like the title bar above them (same radius, outline and shadow per style); opaque, so the list can't show through */
@@ -4333,7 +4372,7 @@ html{--snc:var(--bg2)}html[data-style=material]{--snc:var(--m1)}
   html[data-mode=dark]{--wnb:color-mix(in srgb,#fff 3%,var(--bg));--wnbd:1px solid rgba(255,255,255,.1);--wnsh:none}
   html[data-style=glass]{--wnr:30px;--wnb:linear-gradient(150deg,rgba(255,255,255,.22),rgba(255,255,255,.03) 42%,rgba(255,255,255,.1)),var(--g1);--wnbd:1px solid var(--gline);--wnsh:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(255,255,255,.08),var(--gsh)}
   html[data-style=material]{--wnr:30px;--wnb:var(--m1);--wnbd:0 none transparent;--wnsh:none}
-  .page > .secw,#security > #stabs,#insights > .inschips,#scenes .scfh,
+  .page > .secw,#security > #stabs,#insights > .inschips,#scenes .scfh,#energy > .ehc,
   :is(#admin,#theme):not(:has(.admtop,.adlog>.adlh)) > .hsw:has(> .setchips){background:var(--wnb)!important;border:var(--wnbd)!important;border-radius:var(--wnr)!important;box-shadow:var(--wnsh)!important}
   :is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips){background:var(--wnb)!important;border:var(--wnbd)!important;border-bottom:0!important;border-radius:var(--wnr) var(--wnr) 0 0!important;box-shadow:none!important}
   #admin .admtop,#admin .adlog>.adlh{background:var(--wnb)!important;border:var(--wnbd)!important;border-top:0!important;border-radius:0 0 var(--wnr) var(--wnr)!important;box-shadow:var(--wnsh)!important}
@@ -4341,13 +4380,13 @@ html{--snc:var(--bg2)}html[data-style=material]{--snc:var(--m1)}
 /* wide screens: the wallpaper behind the tab rows. Like the greeting card, the tab row sits on the page's own background, so the list scrolling underneath never shows
    around it: a layer with the same gradient as the page extends past the row's edges, and the row's own surface sits on top of it */
 @media(min-width:0px){
-  :is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#admin .admtop,#admin .adlog>.adlh{position:relative;isolation:isolate}
-  :is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#admin .admtop,#admin .adlog>.adlh{position:sticky;background:transparent!important;border-color:transparent!important;box-shadow:none!important}
-  :is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#admin .admtop::before,#admin .adlog>.adlh::before{content:""!important;display:block!important;position:absolute;z-index:-2;left:-14px;right:-14px;top:-14px;bottom:-12px;background:var(--wbg);background-repeat:no-repeat;background-size:var(--ww,100vw) var(--wh,100vh);background-position:var(--wx,0) var(--wy,0);pointer-events:none}
+  :is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#energy > .ehc,#admin .admtop,#admin .adlog>.adlh{position:relative;isolation:isolate}
+  :is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#energy > .ehc,#admin .admtop,#admin .adlog>.adlh{position:sticky;background:transparent!important;border-color:transparent!important;box-shadow:none!important}
+  :is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#energy > .ehc::before,#admin .admtop::before,#admin .adlog>.adlh::before{content:""!important;display:block!important;position:absolute;z-index:-2;left:-14px;right:-14px;top:-14px;bottom:-12px;background:var(--wbg);background-repeat:no-repeat;background-size:var(--ww,100vw) var(--wh,100vh);background-position:var(--wx,0) var(--wy,0);pointer-events:none}
   :is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips)::before{bottom:-3px}
   #admin .admtop::before,#admin .adlog>.adlh::before{bottom:0}
   #admin .admtop::before,#admin .adlog>.adlh::before{top:0}
-  :is(#admin,#theme) > .hsw:has(> .setchips)::after,.page > .secw::after,#scenes .scfh::after,#admin .admtop::after,#admin .adlog>.adlh::after{content:""!important;display:block!important;position:absolute;inset:0;z-index:-1;background:var(--wnb);border:var(--wnbd);border-radius:var(--wnr);box-shadow:var(--wnsh);pointer-events:none}
+  :is(#admin,#theme) > .hsw:has(> .setchips)::after,.page > .secw::after,#scenes .scfh::after,#energy > .ehc::after,#admin .admtop::after,#admin .adlog>.adlh::after{content:""!important;display:block!important;position:absolute;inset:0;z-index:-1;background:var(--wnb);border:var(--wnbd);border-radius:var(--wnr);box-shadow:var(--wnsh);pointer-events:none}
   :is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips)::after{border-bottom:0;border-radius:var(--wnr) var(--wnr) 0 0;box-shadow:none}
   #admin .admtop::after,#admin .adlog>.adlh::after{border-top:0;border-radius:0 0 var(--wnr) var(--wnr)}
 }
@@ -4358,22 +4397,22 @@ html{--snc:var(--bg2)}html[data-style=material]{--snc:var(--m1)}
   html[data-style=glass]{--wbg:radial-gradient(55% 45% at 12% 8%,rgba(var(--mint-rgb),.5),transparent 62%),radial-gradient(50% 45% at 92% 18%,rgba(var(--cool-rgb),.5),transparent 62%),radial-gradient(55% 50% at 72% 100%,rgba(var(--heat-rgb),.38),transparent 62%),linear-gradient(160deg,var(--bg2),var(--bg))}
   html[data-style=glass][data-mode=dark]{--wbg:radial-gradient(55% 45% at 12% 8%,rgba(var(--mint-rgb),.3),transparent 62%),radial-gradient(50% 45% at 92% 18%,rgba(var(--cool-rgb),.3),transparent 62%),radial-gradient(55% 50% at 72% 100%,rgba(var(--heat-rgb),.24),transparent 62%),linear-gradient(160deg,var(--bg2),var(--bg))}
   html[data-style=glass][data-mode=light]{--wbg:radial-gradient(55% 45% at 12% 8%,rgba(var(--mint-rgb),.4),transparent 62%),radial-gradient(50% 45% at 92% 18%,rgba(var(--cool-rgb),.4),transparent 62%),radial-gradient(55% 50% at 72% 100%,rgba(var(--heat-rgb),.3),transparent 62%),linear-gradient(160deg,var(--bg2),var(--bg))}
-  html[data-style=glass] :is(#admin,#theme) > .hsw:has(> .setchips)::after,html[data-style=glass] .page > .secw::after,html[data-style=glass] #scenes .scfh::after,html[data-style=glass] #admin .admtop::after,html[data-style=glass] #admin .adlog>.adlh::after{-webkit-backdrop-filter:var(--gb);backdrop-filter:var(--gb)}
+  html[data-style=glass] :is(#admin,#theme) > .hsw:has(> .setchips)::after,html[data-style=glass] .page > .secw::after,html[data-style=glass] #scenes .scfh::after,html[data-style=glass] #energy > .ehc::after,html[data-style=glass] #admin .admtop::after,html[data-style=glass] #admin .adlog>.adlh::after{-webkit-backdrop-filter:var(--gb);backdrop-filter:var(--gb)}
   html[data-style=glass] #admin .admtop::after,html[data-style=glass] #admin .adlog>.adlh::after{box-shadow:inset 0 -1px 0 rgba(255,255,255,.08),var(--gsh)}
 }
 /* wide screens, final: no card behind the tabs. The tabs are loose pills on the wallpaper (like the Rooms page), and the row stays pinned on scroll with a wallpaper layer so nothing shows around them */
 @media(min-width:0px){
-  :is(#admin,#theme) > .hsw:has(> .setchips)::after,.page > .secw::after,#scenes .scfh::after,#admin .admtop::after,#admin .adlog>.adlh::after{content:none!important;display:none!important}
-  #security > #stabs,#insights > .inschips{background:var(--wbg)!important;background-repeat:no-repeat!important;background-size:var(--ww,100vw) var(--wh,100vh)!important;background-position:var(--wx,0) var(--wy,0)!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+  :is(#admin,#theme) > .hsw:has(> .setchips)::after,.page > .secw::after,#scenes .scfh::after,#energy > .ehc::after,#admin .admtop::after,#admin .adlog>.adlh::after{content:none!important;display:none!important}
+  #security > #stabs,#insights > .inschips,#energy > .ehc{background:var(--wbg)!important;background-repeat:no-repeat!important;background-size:var(--ww,100vw) var(--wh,100vh)!important;background-position:var(--wx,0) var(--wy,0)!important;border:0!important;border-radius:0!important;box-shadow:none!important}
 }
 @media(max-width:760px){
-  :is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#admin .admtop::before,#admin .adlog>.adlh::before{left:-10px;right:-10px}
+  :is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#energy > .ehc::before,#admin .admtop::before,#admin .adlog>.adlh::before{left:-10px;right:-10px}
 }
 /* the wallpaper layer shows only while the page is scrolled (class set in 31-section-pills.js); at rest there is nothing under the row, so nothing can show a seam */
-:is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#admin .admtop::before,#admin .adlog>.adlh::before{opacity:0}
+:is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#energy > .ehc::before,#admin .admtop::before,#admin .adlog>.adlh::before{opacity:0}
 html:not(#x) .stk:is(.hsw,.secw,.scfh,.admtop,.adlh)::before{opacity:1}
 /* the rows' own surfaces are off in every state (the earlier card rules have higher specificity, so they are repeated here at that strength) */
-:is(#admin,#theme):not(:has(.admtop,.adlog>.adlh)) > .hsw:has(> .setchips),:is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips),#admin .admtop,#admin .adlog>.adlh,.page > .secw,#scenes .scfh{background:transparent!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+:is(#admin,#theme):not(:has(.admtop,.adlog>.adlh)) > .hsw:has(> .setchips),:is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips),#admin .admtop,#admin .adlog>.adlh,.page > .secw,#scenes .scfh,#energy > .ehc{background:transparent!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 /* the search block sits on top of the list's own card at rest, so its layer is always on */
 #admin .admtop::before,#admin .adlog>.adlh::before,:is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips)::before{opacity:1}
 
@@ -4397,6 +4436,20 @@ html:not(#x) .stk:is(.hsw,.secw,.scfh,.admtop,.adlh)::before{opacity:1}
   html[data-style=glass]{--wnr:24px;--wnb:linear-gradient(150deg,rgba(255,255,255,.22),rgba(255,255,255,.03) 42%,rgba(255,255,255,.1)),var(--g1);--wnbd:1px solid var(--gline);--wnsh:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(255,255,255,.08),var(--gsh)}
   html[data-style=material]{--wnr:24px;--wnb:var(--m1);--wnbd:0 none transparent;--wnsh:none}
 }
+/* Energy: the DAY / WEEK / MONTH / YEAR row and its date bar stay pinned, painted with the page's own wallpaper so nothing scrolls through them */
+html:not(#x) #energy > .ehc::after{content:none!important;display:none!important}
+html:not(#x) #energy > .ehc{background:transparent!important;border-radius:0!important;box-shadow:none!important}
+/* every pinned row: a soft shadow under it once the page has scrolled, faded in with the backdrop */
+html:not(#x) :is(#admin,#theme) > .hsw:has(> .setchips)::before,html:not(#x) .page > .secw::before,html:not(#x) #scenes .scfh::before,html:not(#x) #energy > .ehc::before,html:not(#x) #admin .admtop::before,html:not(#x) #admin .adlog>.adlh::before{transition:opacity .28s ease,box-shadow .28s ease}
+html:not(#x) :is(.hsw,.secw,.scfh,.admtop,.adlh,.ehc).stk::before{box-shadow:0 8px 14px -10px rgba(0,0,0,.45)!important}
+html:not(#x) #energy > .ehc.stk::before{opacity:1;background-color:var(--bg)}
+html:not(#x) :is(#security > #stabs,#insights > .inschips){transition:box-shadow .28s ease}
+html:not(#x) :is(#security > #stabs,#insights > .inschips).stk{box-shadow:0 8px 14px -10px rgba(0,0,0,.45)!important}
+
+/* two-tier headers (tab row + a second row): only the lower row carries the shadow */
+html:not(#x) :is(#admin,#theme):has(> .secw,.admtop,.adlog>.adlh) > .hsw:has(> .setchips).stk::before{box-shadow:none!important}
+/* Settings tabs with a second pinned row (search card): the top row's backdrop stops at its own edge, so it never paints over the card's top */
+html:not(#x) #admin:has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips)::before{bottom:0!important}
 /* Search (2.6.0): the header button, the search screen, and the flash on the card or tile a result opens */
 #hsrch{position:relative;display:inline-flex;flex:none;width:30px;height:32px;padding:0;border:0;background:none;color:var(--mint);align-items:center;justify-content:center;cursor:pointer}
 #hsrch svg{width:20px;height:20px;fill:currentColor}
@@ -4405,9 +4458,23 @@ header .hr>#hsrch{order:11;margin:0 0 0 6px}   /* the last thing on the right, a
 header .hr>#hsrch{margin-left:14px}   /* a | before the magnifier on every size: time | search on a phone, chip | search on a tablet */
 body.vwb #hsrch{display:none}
 @media(hover:hover){#hsrch:hover{color:var(--ink)}}
+/* the button itself is smooth: the colour eases on hover, it dips a little when pressed, and it stays lit while the search is open */
+#hsrch{transition:color .2s ease,transform .16s cubic-bezier(.2,.85,.3,1)}
+#hsrch:active{transform:scale(.86)}
+#hsrch.on{color:var(--ink)}
+@media(prefers-reduced-motion:reduce){#hsrch:active{transform:none}}
 
 #srch{position:fixed;inset:0;z-index:99990;display:flex;justify-content:center;align-items:flex-start;padding:max(8vh,24px) 16px 16px;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 #srch[hidden]{display:none}
+/* opens and closes like the Insights detail sheet: the backdrop fades in (.2 s) and the panel fades in with a small rise (.3 s, the same curve); on the way out both fade (.2 s, .out) */
+@keyframes srUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+@keyframes srPop{from{transform:translateY(12px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+#srch{animation:pbgi .2s ease both}
+#srch .srp{animation:srPop .3s cubic-bezier(.2,.85,.3,1) both}
+#srch.out{animation:pbgo .2s ease both}
+#srch.out .srp{animation:ppo .2s ease both}
+@media(max-width:760px){#srch .srp{animation-name:srUp}}   /* the phone sheet rises like the Insights one */
+@media(prefers-reduced-motion:reduce){#srch .srp{animation-name:ppi}}   /* reduced motion: a plain fade, no movement */
 .srp{display:flex;flex-direction:column;width:min(760px,100%);max-height:min(680px,100%);border-radius:28px;background:linear-gradient(160deg,var(--bg2),var(--bg));border:1px solid var(--line);box-shadow:0 14px 48px rgba(0,0,0,.55);overflow:hidden;transition:width .22s ease}
 @media(min-width:761px){#srch.srlau{padding-top:max(3vh,16px)}#srch.srlau .srp{width:min(1120px,100%);max-height:min(860px,100%)}}   /* nothing typed: the wide screen to tap through */
 .srhd{display:none}
@@ -4505,6 +4572,116 @@ mark.srk{background:rgba(var(--mint-rgb),.3);color:inherit;border-radius:4px}
 .wtnt{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--mint);opacity:.7;transform-origin:left;animation:wtnt linear forwards}
 @keyframes wtnt{to{transform:scaleX(0)}}
 @media(prefers-reduced-motion:reduce){#wtnew,.wtnp{transition:none}}
+/* ---------- Header status pill (phones and tablets): the clock is gone on a phone and the alert strip becomes one flat, tinted pill: icon, name, a +N count for the rest, a chevron.
+   The colour follows the condition (--nk, set by 32-notifications-popup.js); the most urgent one wins. With nothing urgent but notifications waiting it is a quiet "N new" pill.
+   Wide screens (1180px and up) keep the glowing chips. ---------- */
+@media(max-width:1179px){
+html:not(#x) #clk{display:none}
+html:not(#x) #hc{gap:0;min-height:40px}
+html:not(#x) #nacc[data-k]{position:relative;display:flex;align-items:center;gap:7px;height:40px;box-sizing:border-box;width:auto;max-width:min(52vw,300px);padding:0 11px 0 12px;border-radius:20px;background:color-mix(in srgb,var(--nk) 22%,transparent);color:color-mix(in srgb,var(--nk) 70%,#fff);animation:none;filter:none;transition:background .25s,color .25s}
+html[data-mode=light]:not(#x) #nacc[data-k]{background:color-mix(in srgb,var(--nk) 26%,transparent);color:color-mix(in srgb,var(--nk) 30%,#1b1405)}
+html:not(#x) #nacc[data-k] .nai{order:1;display:flex;align-items:center;min-width:0;gap:7px;padding:0;border:0;border-radius:0;background:none;color:inherit;animation:none;filter:none}
+html:not(#x) #nacc[data-k] .nai::before{display:none}
+html:not(#x) #nacc[data-k] .nai.nai2{display:none!important}
+html:not(#x) #nacc[data-k] .nai svg{width:19px;height:19px;flex:none;fill:currentColor}
+html:not(#x) #nacc[data-k] .nai[data-k=laundry] svg{fill:none}
+html:not(#x) #nacc[data-k] .nal{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:inherit;font-style:normal;font-weight:600;font-size:12px;line-height:1.1;letter-spacing:0;text-transform:none}
+/* the count of the other conditions: a small filled badge inside the pill */
+html:not(#x) #nacc[data-more]:not([data-more=""])::after{position:static;order:2;flex:none;content:attr(data-more);min-width:20px;height:20px;box-sizing:border-box;padding:0 5px;border-radius:10px;background:var(--nk);color:#10161c;font-family:inherit;font-style:normal;font-weight:700;font-size:11px;line-height:20px;text-align:center}
+html[data-mode=light]:not(#x) #nacc[data-more]:not([data-more=""])::after{background:color-mix(in srgb,var(--nk) 70%,#000);color:#fff}
+html:not(#x) #nacc[data-k]::before{content:"";order:3;flex:none;width:14px;height:14px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 5l7 7-7 7'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 5l7 7-7 7'/%3E%3C/svg%3E") center/contain no-repeat}
+/* a squeezed tablet header (41-start.js) drops the name and the chevron: icon and count only */
+header.hcmp #nacc[data-k]{padding:0 10px}
+header.hcmp #nacc[data-k]::before{display:none}
+/* nothing urgent, notifications waiting: a quiet pill instead of the thin glowing bar */
+html:not(#x) #nacc:not([data-k]){width:auto;height:auto;background:none;box-shadow:none;animation:none}
+html:not(#x) #nacc:not([data-k]):not([data-all]){display:none}
+html:not(#x) #nacc:not([data-k])[data-all]::after{content:attr(data-all) " new";display:block;height:32px;box-sizing:border-box;padding:0 13px;border-radius:16px;background:rgba(var(--ink-rgb),.08);color:var(--ink);font-family:inherit;font-style:normal;font-weight:600;font-size:12px;line-height:32px}
+/* phone: a narrower pill, no chevron, so the page title keeps its room; the name is cut with an ellipsis */
+@media(max-width:760px){
+html:not(#x) #nacc[data-k]{flex:0 1 auto;min-width:0;max-width:38vw;padding:0 9px 0 10px;gap:6px}
+html:not(#x) #nacc[data-k]::before{display:none}
+html:not(#x) #nacc[data-k] .nai{gap:6px}
+/* with others waiting too, only the icon and the +N (a name cut to a few letters says little) */
+html:not(#x) #nacc[data-more]:not([data-more=""]) .nal{display:none}
+}
+/* the lock merges into the pill: while a condition shows (header.hmg, set by 32-notifications-popup.js) the lock disc sits inside the pill's left end - one capsule, the disc arms / disarms, the rest opens the notifications */
+header.hmg{--alw:36px;--hrg:16px}
+header.hmg #al{z-index:3}
+header.hmg #hc{margin-left:calc(-1 * (var(--alw) + var(--hrg) + 4px))}
+html:not(#x) header.hmg #nacc[data-k]{padding-left:calc(var(--alw) + 14px)}
+html:not(#x) header.hmg #al{background:var(--alc)!important;border-color:transparent!important}
+html[data-mode=light]:not(#x) header.hmg #al{color:#fff}
+html[data-mode=light]:not(#x) header.hmg[data-al=wn] #al{color:#3b2700}
+html[data-mode=light]:not(#x) header.hmg:not([data-al=on]):not([data-al=wn]):not([data-al=al]) #al{background:rgba(0,0,0,.12)!important;color:#4b5146}
+@media(max-width:760px){
+header.hmg{--alw:32px;--hrg:8px}
+html:not(#x) header.hmg #nacc[data-k]{padding-left:calc(var(--alw) + 12px)}
+}
+}
+/* ---------- Rooms page (13-rooms.js): one list, every group under a header (the old tab name); each room is one slim row (1 column on phones, 2 on tablets, 3 on wide screens) ---------- */
+#rl .rgh{grid-column:1/-1;margin:12px 4px 0}
+#rl .rgh:first-child{margin-top:0}
+@media all{
+html:not(#x) #rl.rooms2{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(min-width:1180px){html:not(#x) #rl.rooms2{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){html:not(#x) #rl.rooms2{grid-template-columns:minmax(0,1fr)}}
+html:not(#x) #rl.rooms2 .rgh{margin:10px 4px 0}
+html:not(#x) #rl.rooms2 .rgh:first-child{margin-top:0}
+/* the row: icon disc | name, then the badges | temperature, then humidity */
+html:not(#x) #rl.rooms2 a.rc{display:grid;grid-template-columns:46px minmax(0,1fr) auto;grid-template-areas:"ic nm tp" "ic ts md";grid-template-rows:1fr 1fr;column-gap:14px;row-gap:0;align-items:center;min-height:84px;padding:12px 18px 12px 14px;border-radius:26px}
+html:not(#x) #rl.rooms2 a.rc::after{display:none}
+html:not(#x) #rl.rooms2 a.rc>.lbl:first-child{display:contents}
+html:not(#x) #rl.rooms2 a.rc>.lbl:first-child svg{grid-area:ic;align-self:center;width:46px;height:46px;padding:11px;box-sizing:border-box;margin:0;border-radius:50%;background:rgba(var(--ink-rgb),.08);vertical-align:baseline}
+html:not(#x) #rl.rooms2 a.rc .rcn{grid-area:nm;align-self:end;padding-bottom:3px;min-width:0;display:flex;align-items:center;gap:2px;overflow:hidden;font:500 18px/1.1 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink)}
+html:not(#x) #rl.rooms2 a.rc .temp{grid-area:tp;align-self:end;justify-self:end;font-size:30px;font-weight:300;line-height:1}
+html:not(#x) #rl.rooms2 a.rc .md{grid-area:md;align-self:start;padding-top:3px;justify-self:end;margin:0;font-size:12px;letter-spacing:0;color:var(--mut)}
+html:not(#x) #rl.rooms2 a.rc .ts{grid-area:ts;align-self:start;padding-top:3px;min-height:0;gap:5px 6px;align-items:center}
+html:not(#x) #rl.rooms2 a.rc .ts:empty::before{content:"All quiet";font:13px var(--sans);letter-spacing:0;text-transform:none;color:var(--mut)}
+html:not(#x) #rl.rooms2 a.rc .ts{flex-wrap:nowrap;overflow:hidden}
+html:not(#x) #rl.rooms2 a.rc .ts .cb2.cB{display:none}
+html:not(#x) #rl.rooms2 a.rc .ts .cb2.cA{display:inline-flex;align-items:center;gap:4px;flex:none;height:26px;font-size:12px;padding:0 9px 0 7px}
+html:not(#x) #rl.rooms2 a.rc .ts .cb2.cA svg{width:15px;height:15px}
+/* the temperature colour still tints the row; the drifting snow / heat particles belong to the tall tiles, so they are off in a row */
+html:not(#x) #rl.rooms2 a.rc>.rg>s,html:not(#x) #rl.rooms2 a.rc>.rg>b{display:none!important}
+}
+@media(min-width:761px){html:not(#x) #rl.rooms2 a.rc .temp{font-size:26px}html:not(#x) #rl.rooms2 a.rc{column-gap:12px;padding-right:14px}}
+/* the name is followed by a chevron so a row reads as tappable; the badges scroll sideways when there are more than fit */
+html:not(#x) #rl.rooms2 a.rc .rcl{line-height:1.3;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html:not(#x) #rl.rooms2 a.rc .rcn::after{content:"";flex:none;width:18px;height:18px;background:currentColor;opacity:.5;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center/contain no-repeat}
+html:not(#x) #rl.rooms2 a.rc .ts{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x pan-y;-webkit-mask:linear-gradient(90deg,#000 calc(100% - 22px),transparent);mask:linear-gradient(90deg,#000 calc(100% - 22px),transparent)}
+html:not(#x) #rl.rooms2 a.rc .ts::-webkit-scrollbar{display:none}
+/* no humidity reading: the temperature alone sits on the icon's midline */
+html:not(#x) #rl.rooms2 a.rc:has(.md:empty) .temp{grid-row:1/3;align-self:center}
+/* temperature (taller) over humidity (shorter) meet at the row's midline, so the pair is shifted down by half the difference to sit centred on the icon */
+@media all{html:not(#x) #rl.rooms2 a.rc:has(.md:not(:empty)) :is(.temp,.md){transform:translateY(7px)}}
+/* the heat-pump chip (COOL / HEAT) is the same size as the other badges */
+html:not(#x) #rl.rooms2 a.rc .ts .cb2.hvc{display:inline-flex;align-items:center;flex:none;height:26px;padding:0 9px 0 7px;gap:4px;font-size:11px}
+html:not(#x) #rl.rooms2 a.rc .ts .cb2.hvc svg{width:15px;height:15px}
+/* the badge strip can be dragged sideways with the mouse too */
+html:not(#x) #rl.rooms2 a.rc .ts{cursor:grab}
+html:not(#x) #rl.rooms2 a.rc .ts.drg{cursor:grabbing;user-select:none}
+
+/* the title bar of a page without a pinned tab row: the same soft shadow the pinned rows get, once the page has scrolled under it (31-section-pills.js sets .hstk) */
+html:not(#x) .main > header{transition:box-shadow .28s ease}
+html:not(#x) .main > header.hstk{box-shadow:0 8px 14px -10px rgba(0,0,0,.45)!important;z-index:30}
+/* Camera full screen on a big screen: the Security-page camera and the camera view (#view) look the same.
+   One card inset 14px with round corners; the name at the left; LIVE, PLAYBACK and the X in one row at the right (LIVE keeps its place while the picture is still connecting,
+   so the buttons never slide up against the name); the sound buttons on a second row at the left. */
+@media(min-width:761px){
+  /* the camera view: LIVE holds its slot until the stream is live */
+  html:not(#x) #vw .cam.vf:not(.ls):not(.live) .vh>.lv{display:block!important;visibility:hidden}
+  /* the Security camera: the same card as the view */
+  html:not(#x) .cam.fs:not(.ls):not(.nfs){inset:14px;border-radius:22px;overflow:hidden;box-shadow:0 0 0 100vmax var(--bg)}
+  html:not(#x) .cam.fs:not(.ls) .lbl{left:14px;top:34px;transform:translateY(-50%);font-size:15px;letter-spacing:2.1px}
+  html:not(#x) .cam.fs:not(.ls) .dl{left:15px;top:56px}
+  html:not(#x) .cam.fs:not(.ls) .cx{right:14px;top:12px}
+  html:not(#x) .cam.fs:not(.ls) .px{right:67px;top:12px;left:auto;width:132px;box-sizing:border-box;transform:none}
+  html:not(#x) .cam.fs:not(.ls) .lv{right:calc(67px + 132px + 7px);top:34px;transform:translateY(-50%)}
+  html:not(#x) .cam.fs:not(.ls):not(:has(>.px)) .lv{right:66px}
+  html:not(#x) .cam.fs:not(.ls) .aud{left:14px;top:72px}
+  html:not(#x) .cam.fs:not(.ls) .cpanel{padding:44px 14px 14px}
+}
 </style>
 <style>
 /* HA diagnostics stay compact until requested. */
@@ -4592,7 +4769,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.0";   // the one place to change the version
 window.DASH_NEW = {"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "cdf48b";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "adb2bd";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -4893,7 +5070,7 @@ Object.assign(window.__ZHD.D, {"close up": "近景", "whole trip": "整段行程
 Object.assign(window.__ZHD.D, {"loading clip…": "正在加载片段…"});
 Object.assign(window.__ZHD.D, {"tide removed · last 6 hours": "已去除潮汐 · 最近 6 小时"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^not on (.+)'s drive to work: about (.+) away$", "不在 $1 的上班路线上：相距约 $2"], ["^on (.+)'s drive to work$", "在 $1 的上班路线上"], ["^biggest swing in the last hour · newest reading (\\S+) \\((.+)\\)$", "过去一小时最大波动 · 最新读数 $1（{2}）"]]);
 // 2.5.17 stale sensors
-Object.assign(window.__ZHD.D, {"not reporting": "未上报", "same value": "数值不变", "stuck": "卡住", "longest": "最长", "mute": "静音", "home assistant keeps showing the last value it got. usually a flat battery, or the device is out of range. mute hides one on this screen; stalesensors.ignore in config.js hides it everywhere.": "Home Assistant 会一直显示收到的最后一个值。通常是电池没电或设备超出范围。静音只在此屏幕上隐藏；在 config.js 的 staleSensors.ignore 中可在所有地方隐藏。", "still reporting, but the very same number. temperature, humidity and soil moisture normally move every day, so the probe may be stuck or dirty.": "仍在上报，但数值完全相同。温度、湿度和土壤湿度通常每天都会变化，探头可能卡住或脏了。"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^(\\d+) sensors? not reporting$", "$1 个传感器未上报"], ["^(\\d+) sensors? stuck on the same value$", "$1 个传感器数值一直不变"], ["^(.+) · nothing for (\\d+) h or more$", "$1 · $2 小时以上无数据"], ["^(.+) · unchanged for (\\d+) h or more$", "$1 · $2 小时以上未变化"], ["^(.+) · last heard from (.+)$", "$1 · 最后上报 {2}"], ["^(.+) · same since (.+) · still reporting$", "$1 · 自 $2 起未变 · 仍在上报"]]);
+Object.assign(window.__ZHD.D, {"not reporting": "未上报", "same value": "数值不变", "stuck": "卡住", "longest": "最长", "mute": "静音", "home assistant keeps showing the last value it got. usually a flat battery, or the device is out of range. mute hides one on this screen; stalesensors.ignore in config.js hides it everywhere.": "Home Assistant 会一直显示收到的最后一个值。通常是电池没电或设备超出范围。静音只在此屏幕上隐藏；在 config.js 的 staleSensors.ignore 中可在所有地方隐藏。", "still reporting, but the very same number. temperature, humidity and soil moisture normally move every day, so the probe may be stuck or dirty.": "仍在上报，但数值完全相同。温度、湿度和土壤湿度通常每天都会变化，探头可能卡住或脏了。"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^(.+) · battery (\\d+)%$", "{1} · 电量 $2%"], ["^(\\d+) sensors? not reporting$", "$1 个传感器未上报"], ["^(\\d+) sensors? stuck on the same value$", "$1 个传感器数值一直不变"], ["^(.+) · nothing for (\\d+) h or more$", "$1 · $2 小时以上无数据"], ["^(.+) · unchanged for (\\d+) h or more$", "$1 · $2 小时以上未变化"], ["^(.+) · last heard from (.+)$", "$1 · 最后上报 {2}"], ["^(.+) · same since (.+) · still reporting$", "$1 · 自 $2 起未变 · 仍在上报"]]);
 // 2.5.17 vehicle service
 Object.assign(window.__ZHD.D, {"service": "保养", "next service": "下次保养", "last service": "上次保养", "next service km": "下次保养里程", "due by": "截止日期", "serviced today": "今天已保养", "due now": "现在到期", "overdue": "已逾期", "not set": "未设置", "fill in the last service below": "在下方填写上次保养", "book a service now.": "现在就预约保养。", "saved.": "已保存。", "fill in the last service date.": "请填写上次保养日期。", "distance": "里程", "time": "时间", "km not set": "里程未设置"}); window.__ZHD.P.unshift.apply(window.__ZHD.P, [["^or at (\\S+) km, whichever comes first$", "或在 $1 公里时，以先到者为准"], ["^the odometer passed (\\S+) km$", "里程表已超过 $1 公里"], ["^was due (.+)$", "原定 $1 到期"], ["^book a service when the odometer reaches (.+) or by (.+), whichever comes first\\.$", "当里程表达到 $1 或在 $2 之前预约保养，以先到者为准。"], ["^(\\S+) km left · (\\S+) km now$", "剩余 $1 公里 · 当前 $2 公里"], ["^(\\d+) days? left · due (.+)$", "剩余 $1 天 · $2 到期"], ["^(\\d+) days over · due (.+)$", "已超 $1 天 · $2 到期"]]);
 // 2.5.17 clearer Insights tiles
@@ -5380,7 +5557,7 @@ function fcCols(l) {
       '<span class="th"><u style="bottom:' + ((l0 - lo) / rg * 100) + '%;height:' + Math.max(12, (h - l0) / rg * 100) + '%"></u></span><small>' + Math.round(l0) + '°</small>' + rain + '</div>';
   }).join("") + '</div>';
 }
-function drawFc() { $("#fc").innerHTML = fc.length ? fcCols(fc.slice(0, 10)) : ""; if (typeof fcsKick === "function") fcsKick(true); }
+function drawFc() { $("#fc").innerHTML = fc.length ? hsw(fcCols(fc.slice(0, 10))) : ""; requestAnimationFrame(hsAll); if (typeof fcsKick === "function") fcsKick(true); }   // the days scroll sideways: the animated arrow (hsw) shows there is more
 const EVPAL = ["#ff6b6b", "#ff9f7a", "#f0d36b", "#8ff0c4", "#4fd1c5", "#6bb8ff", "#8d7bff", "#c79bff", "#ff8fc7", "#b8c0cc"];
 let EVCOL = (() => { try { return JSON.parse(localStorage.dashEvCol || "{}") || {}; } catch (e) { return {}; } })(), evColSynced = false;
 const evKey = (cal, t) => cal + "|" + (t || "").trim().toLowerCase();
@@ -6256,19 +6433,19 @@ function roomTabs() {
   return RU && Array.isArray(RU.rooms) ? t.filter(x => x[1].length) : t;
 }
 let rlq = 0; const queueRl = () => { if (!rlq) rlq = requestAnimationFrame(() => { rlq = 0; if (onRooms && !curRoom) drawRooms(); }); };
-$("#rtabs").onclick = e => { const b = e.target.closest("[data-rt]"); if (!b) return; const old = rtab; rtab = +b.dataset.rt; rtabName = (roomTabs()[rtab] || [])[0] || ""; drawRooms(); if (rtab !== old) txGo($("#rl"), rtab > old ? 1 : -1, true); };
+// the Rooms page is one list: every group under its own header (the old tab name), no tabs. The Occupied group (rooms with someone in) still comes first.
 function drawRooms() {
-  curRoom = null; rvCamStop(); $("#cpp").classList.remove("on"); $("#rl").style.display = ""; $("#rv").style.display = "none"; $("#rtabs").style.display = "";
-  const tabs = roomTabs(); if (!tabs.length) tabs.push(["Rooms", [], "No rooms"]); if (rEnter) { rtab = 0; rtabName = ""; rEnter = false; } else if (rtabName) { const ix = tabs.findIndex(x => x[0] === rtabName); rtab = ix < 0 ? 0 : ix; } if (rtab >= tabs.length) rtab = 0; rtabName = tabs[rtab] ? tabs[rtab][0] : "";
-  const th = tabs.map((t, i) => '<button class="chip' + (i === rtab ? " on" : "") + '" data-rt="' + i + '">' + esc(t[0]) + '</button>').join(""), rs = tabs[rtab][1].map(ROOM).filter(Boolean);
-  const key = th + "|" + rs.map(r => r.id + "," + r.name + "," + r.icon).join(";") + "|" + (tabs[rtab][1].length ? "" : tabs[rtab][2] || "No rooms");
-  if ($("#rl")._k === key && $("#rl").firstChild) { updRooms(); return; }   // same tabs and cards (a motion sensor changed): keep them, only refresh the live values
-  $("#rl")._k = key; $("#rtabs").innerHTML = th;
-  $("#rl").innerHTML = tabs[rtab][1].length ? "" : '<div class="lbl" style="grid-column:1/-1;margin:18px 4px">' + esc(tabs[rtab][2] || "No rooms") + '</div>';
-  rs.forEach(r => {
-    const a = document.createElement("a"); a.className = "rc"; a.href = "#rooms/" + r.id; a.dataset.r = r.id;
-    a.innerHTML = cardHtml(r.name, r.icon);
-    $("#rl").appendChild(a);
+  curRoom = null; rvCamStop(); $("#cpp").classList.remove("on"); $("#rl").style.display = ""; $("#rv").style.display = "none";
+  const tb = $("#rtabs"); tb.style.display = "none"; if (tb.firstChild) tb.innerHTML = "";
+  rEnter = false;
+  const secs = roomTabs().map(t => [t[0], t[1].map(ROOM).filter(Boolean)]).filter(x => x[1].length);
+  const key = secs.map(x => x[0] + ":" + x[1].map(r => r.id + "," + r.name + "," + r.icon).join(";")).join("|") || "none";
+  if ($("#rl")._k === key && $("#rl").firstChild) { updRooms(); return; }   // same groups and cards (a motion sensor changed): keep them, only refresh the live values
+  $("#rl")._k = key;
+  $("#rl").innerHTML = secs.length ? "" : '<div class="lbl" style="grid-column:1/-1;margin:18px 4px">No rooms</div>';
+  secs.forEach(x => {
+    if (secs.length > 1) { const h = document.createElement("div"); h.className = "lbl rgh"; h.textContent = x[0]; $("#rl").appendChild(h); }   // one group only: no header to tell apart
+    x[1].forEach(r => { const a = document.createElement("a"); a.className = "rc"; a.href = "#rooms/" + r.id; a.dataset.r = r.id; a.innerHTML = cardHtml(r.name, r.icon); $("#rl").appendChild(a); });
   });
   updRooms();
 }
@@ -6280,7 +6457,7 @@ function roomBand(r) {
   if (lo == null) lo = val(H.heatBelow); if (hi == null) hi = val(H.coolAbove);
   return [lo == null ? 18 : lo, hi == null ? 25 : hi];
 }
-function cardHtml(n, i) { return '<div class="lbl">' + mdi(i) + esc(n) + '</div><div class="md">--</div><div class="temp"><span class="tm">--</span></div><div class="lbl ts">--</div><i class="rg"><s></s><b></b><b></b><b></b><b></b><b></b><b></b></i><div class="hvb"></div>'; }
+function cardHtml(n, i) { return '<div class="lbl">' + mdi(i) + '<span class="rcn"><span class="rcl">' + esc(n) + '</span></span></div><div class="md">--</div><div class="temp"><span class="tm">--</span></div><div class="lbl ts">--</div><i class="rg"><s></s><b></b><b></b><b></b><b></b><b></b><b></b></i><div class="hvb"></div>'; }
 // room-card badges: use your own count sensors (r.counts) when set, else count members that are on / open
 const roomLights = r => { const o = []; const add = x => { if (x && o.indexOf(x) < 0) o.push(x); };   // every light in the room: its lights, its light switches, and any light.* shown in its sections
   members(r.lights).concat(members(r.lightSwitches || [])).forEach(add); (r.sections || []).forEach(sec => (sec.items || []).forEach(i => { const e = typeof i === "string" ? i : i.entity; if (e && e.indexOf("light.") === 0) add(e); })); return o; };
@@ -6321,6 +6498,16 @@ function roomTemp(r) {
   const cl = [].concat(r.climate || [])[0], c = cl && states[cl], s = r.temp && (r.temp.indexOf("#") > 0 ? (sv(r.temp) != null ? { state: sv(r.temp) } : null) : states[r.temp]);
   return s && s.state !== "unavailable" ? s.state : (c ? c.attributes.current_temperature : null);
 }
+// the badge strip of a room row: press and drag sideways with the mouse (touch scrolls natively); a drag never opens the room
+(() => {
+  let d = null;
+  document.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse" || e.button !== 0) return; const t = e.target.closest && e.target.closest("#rl .ts"); if (!t || t.scrollWidth <= t.clientWidth) return; d = { t, x: e.clientX, l: t.scrollLeft, m: false }; });
+  document.addEventListener("pointermove", e => { if (!d) return; const dx = e.clientX - d.x; if (!d.m && Math.abs(dx) > 4) { d.m = true; d.t.classList.add("drg"); } if (d.m) d.t.scrollLeft = d.l - dx; });
+  const end = () => { if (!d) return; const m = d.m, t = d.t; d = null; t.classList.remove("drg"); if (m) { t._nc = Date.now(); } };
+  document.addEventListener("pointerup", end); document.addEventListener("pointercancel", end);
+  document.addEventListener("click", e => { const t = e.target.closest && e.target.closest("#rl .ts"); if (t && t._nc && Date.now() - t._nc < 300) { e.preventDefault(); e.stopPropagation(); } }, true);
+  document.addEventListener("dragstart", e => { if (e.target.closest && e.target.closest("#rl .ts")) e.preventDefault(); });
+})();
 function updRooms() {
   if (curRoom || camOpen() || onSec()) updTiles();
   if (curRoom) return;
@@ -7180,7 +7367,7 @@ const hr = x => new Date(x.datetime).toLocaleTimeString([], tmo({ hour: "numeric
 function fcPanel(a, wu) {
   const wk0 = wxsOn() && WXS.H.length >= 6, sl = wk0 ? [] : [tempInner(a), windInner(a, wu), rainInner(a), uvInner(a)];
   const wk = wxsOn() ? wxsWeek() : "", chips = hsw('<div class="chips tabs fct">' + FCT.map((t, i) => '<button class="chip' + (i === fcTab ? " on" : "") + '" data-ft="' + i + '">' + mdi(t[1]) + '<span>' + t[0] + '</span></button>').join("") + '</div>');
-  if (wk) return '<div class="pn pg fcp fcw"><div class="lbl fch">' + mdi("weather-partly-cloudy") + ' Forecast · the week</div>' + chips + wk + '</div>';   // scenes on: each category is an animation, no charts
+  if (wk) return '<div class="pn pg fcp fcw"><div class="lbl fch">' + mdi("weather-partly-cloudy") + ' Forecast · the week</div>' + wk + '</div>';   // scenes on: each category is an animation, no charts
   return '<div class="pn pg fcp"><div class="lbl fch">' + mdi("weather-partly-cloudy") + ' Forecast · next 36 h</div>' + hsw('<div class="chips tabs fct">' + FCT.map((t, i) => '<button class="chip' + (i === fcTab ? " on" : "") + '" data-ft="' + i + '">' + mdi(t[1]) + '<span>' + t[0] + '</span></button>').join("") + '</div>') + '<div class="fcs">' + sl.map(x => '<div class="fcl">' + x + '</div>').join("") + '</div></div>';
 }
 function fcFit() { const s = $("#wx .fcs"); if (!s) return; let m = 0; Array.prototype.forEach.call(s.children, c => { m = Math.max(m, c.offsetHeight); }); if (m) s.style.height = m + "px"; }   // every tab gets the tallest height so the card never resizes or scrolls vertically
@@ -7204,7 +7391,7 @@ function drawWeather() {
   let h = wxsOn() ? wxsNowCard({ head: nowHead, wxl: wxl, wu: wu, wdy: wdy, wnm: wnm, cd: cd[1] }) : '<div class="pn pg wnow' + (wnMore ? " open" : "") + '"><div class="lbl">Now · ' + cd[1] + '</div><div class="wnh"><div><span class="big2">' + f1(ot != null ? ot : a.temperature) + '°</span><div class="wns">' + (fd[0] != null ? "Feels " + f1(fd[0]) + "°" : "") + (fd[0] != null && d0 ? " · " : "") + (d0 ? "H " + Math.round(d0.temperature) + "° L " + Math.round(lo0) + "°" : "") + '</div></div><span class="wbig">' + wic(w && w.state) + '</span></div>' +
     '<div class="wnr">' + pill(mdi("weather-windy"), n(a.wind_speed, wu), wxl ? " wnd wt" + wxl : "") + pill("HUM", n(a.humidity, "%")) + pill("RAIN", fcH.length ? f1(+fcH[0].precipitation || 0) + " mm" : "--") + pill("UV", a.uv_index != null ? a.uv_index : "--") + '</div>' +
     '<button class="wnb" data-wnmore aria-label="More conditions">MORE ' + mdi("chevron-down") + '</button><div class="wnm wg">' + wnm + '</div>' +
-    (wdy ? '<div class="wn7"><div class="lbl">Next 7 days</div><div class="wn7s">' + wdy + '</div></div>' : "") + '</div>';
+    (wdy ? '<div class="wn7"><div class="lbl">Next 7 days</div>' + hsw('<div class="wn7s">' + wdy + '</div>') + '</div>' : "") + '</div>';
   h += fcPanel(a, wu);   // order (and the phone tabs): Now, Forecast, Sun and moon, Pollen, Weather map
   h += wxSunCard();
   h += polCard();   // Pollen (config.js pollen)
@@ -7379,9 +7566,17 @@ function wxsLive() {
 function wxsPrep() {
   const n = Date.now(); WXS.H = (fcH || []).filter(x => Date.parse(x.datetime) > n - 3600000).slice(0, 168).map(wxsRec).filter(r => !isNaN(r.t) && !isNaN(r.temp));
   const mx = Math.max(0, WXS.H.length - 1); WXS.now = Math.min(WXS.now, mx); WXS.wk = Math.min(WXS.wk, mx);
+  if (WXS.ddT) { WXS.dd = wxsDayRec(WXS.ddT); if (WXS.dd) WXS.now = mx; else WXS.ddT = 0; }   // a day past the hourly forecast stays chosen when the data refreshes
 }
 function wxsNear(ms) { const H = WXS.H; let b = null, bd = 54e5; H.forEach(r => { const d = Math.abs(r.t + 18e5 - ms); if (d < bd) { bd = d; b = r; } }); return b || wxsLive(); }
 const wxsAt = i => i && WXS.H[i] ? WXS.H[i] : wxsLive();
+// The hourly forecast stops a few days out, but the Next 7 days strip goes on to day 7. A tap on one of those later days shows that day's daily forecast instead
+// (its high, its sky and rain, the day's average wind and top UV, painted at 1 pm: the same record the Home forecast card paints), kept in WXS.dd while it is chosen.
+function wxsDayRec(t) {
+  const L = typeof fc !== "undefined" ? fc || [] : [], ds = new Date(t).toDateString(), i = L.findIndex(d => new Date(d.datetime).toDateString() === ds); if (i < 0) return null;
+  const r = fcsRec(fcDay(L[i], i), i); r.t = t; r.day = 1; r.hum = L[i].humidity != null ? +L[i].humidity : null; r.cloud = L[i].cloud_coverage != null ? +L[i].cloud_coverage : null; return r;
+}
+const wxsNowRec = () => WXS.dd || wxsAt(WXS.now);
 function wxsCloud(r) {
   const m = { sunny: 5, "clear-night": 5, partlycloudy: 45, cloudy: 92, rainy: 90, pouring: 100, fog: 100, lightning: 90, "lightning-rainy": 100, snowy: 90, "snowy-rainy": 95, windy: 35, "windy-variant": 65, hail: 95, exceptional: 60 };
   const c = r.cloud != null ? r.cloud : (m[r.cond] != null ? m[r.cond] : 50); return /rain|pour|snow|hail/.test(r.cond || "") ? Math.max(c, 80) : c;
@@ -7433,10 +7628,11 @@ function wxsPaint(cv, S, tm, ph) {
   const dpr = Math.min(2, window.devicePixelRatio || 1), w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
   const pw = Math.round(w * dpr), pxh = Math.round(h * dpr); if (cv.width !== pw || cv.height !== pxh) { cv.width = pw; cv.height = pxh; }
   const c = cv.getContext("2d"); if (!c) return; c.setTransform(dpr, 0, 0, dpr, 0, 0);
-  const r = S.rec || {}, sn = wxsSun(S.ms), el = sn.el, cond = r.cond || "", snow = /snow/.test(cond), wet = !snow && (/rain|pour|hail/.test(cond) || r.rain >= 0.2), fog = cond === "fog";
-  const cl = Math.max(0, Math.min(100, wxsCloud(r))) / 100 * (S.kind === "sun" ? 0.6 : 1), wind = Math.max(0, ph.wind), gy = h * 0.8, top = h * 0.13, day = Math.max(0, Math.min(1, (el + 6) / 16));
+  // D = what is on screen now: it eases towards the chosen moment (wxsEase), so a change of day, hour or pill plays as a glide, not a cut
+  const r = S.rec || {}, D = ph.d || (ph.d = wxsTgt(S)), sn = wxsSun(D.ms), el = sn.el, cond = r.cond || "", wetK = D.wet, snowK = D.snow, wet = wetK > 0.5, snow = snowK > 0.5, fogK = D.fog;
+  const cl = D.cl, wind = Math.max(0, ph.wind), gy = h * 0.8, top = h * 0.13, day = Math.max(0, Math.min(1, (el + 6) / 16));
   // sky, greyed by cloud
-  let sk = wxsSky(el); const grey = el > 0 ? wxsHex("#8a93a3") : wxsHex("#252a36"), gk = cl * (wet || snow ? 0.75 : 0.45);
+  let sk = wxsSky(el); const grey = el > 0 ? wxsHex("#8a93a3") : wxsHex("#252a36"), gk = cl * (0.45 + 0.3 * Math.max(wetK, snowK));
   sk = [wxsMix(sk[0], grey, gk), wxsMix(sk[1], grey, gk)];
   const g = c.createLinearGradient(0, 0, 0, gy); g.addColorStop(0, wxsRgb(sk[0])); g.addColorStop(1, wxsRgb(sk[1])); c.fillStyle = g; c.fillRect(0, 0, w, h);
   // stars
@@ -7460,8 +7656,9 @@ function wxsPaint(cv, S, tm, ph) {
     S.sunXY = [x, y, R, el];
   }
   // clouds, drifting with the wind
-  const nc = Math.round(cl * 6 + (wet ? 1 : 0)), sp = 5 + wind * 0.7, cc = day > 0.5 ? (wet || snow ? [150, 158, 172] : [250, 252, 255]) : wxsMix([60, 68, 90], [150, 158, 172], day * 2);
-  for (let i = 0; i < nc; i++) { const s = 0.6 + wxsR(i + 20) * 0.7, span = w + 200, x = ((wxsR(i + 30) * span + ph.cloud * (0.6 + s * 0.4)) % span) - 100, y = top * 0.5 + wxsR(i + 40) * gy * 0.42; wxsCloudDraw(c, x, y, h * 0.1 * s, cc, 0.6 + 0.35 * cl); }
+  // D.nc is the number of clouds (it eases between whole numbers), so the next cloud fades in or out while the count changes; the colour goes from white to grey with the wet / snow amount
+  const dayCol = wxsMix([250, 252, 255], [150, 158, 172], Math.max(wetK, snowK)), cc = wxsMix(wxsMix([60, 68, 90], [150, 158, 172], Math.min(1, day * 2)), dayCol, Math.max(0, Math.min(1, (day - 0.35) / 0.3)));
+  for (let i = 0; i < 7; i++) { const pres = Math.max(0, Math.min(1, D.nc - i)); if (pres < 0.01) continue; const s = 0.6 + wxsR(i + 20) * 0.7, span = w + 200, x = ((wxsR(i + 30) * span + ph.cloud * (0.6 + s * 0.4)) % span) - 100, y = top * 0.5 + wxsR(i + 40) * gy * 0.42; wxsCloudDraw(c, x, y, h * 0.1 * s, cc, (0.6 + 0.35 * cl) * pres); }
   // far hill, near hill
   const gA = wxsMix([20, 38, 34], [92, 150, 104], day), gB = wxsMix([14, 28, 22], [60, 120, 74], day);
   c.fillStyle = wxsRgb(wxsMix(gA, sk[1], 0.35)); c.beginPath(); c.moveTo(0, gy - 6); c.bezierCurveTo(w * 0.25, gy - 22, w * 0.45, gy - 4, w * 0.7, gy - 16); c.bezierCurveTo(w * 0.85, gy - 24, w * 0.95, gy - 10, w, gy - 12); c.lineTo(w, h); c.lineTo(0, h); c.fill();
@@ -7477,19 +7674,25 @@ function wxsPaint(cv, S, tm, ph) {
     const tc = wxsMix([18, 40, 30], [56, 132, 78], day); c.fillStyle = wxsRgb(tc); c.beginPath(); [[0, -th - R * 0.5, 1], [-R * 0.7, -th - R * 0.05, 0.75], [R * 0.7, -th - R * 0.1, 0.78]].forEach(p => { c.moveTo(p[0] + R * p[2], p[1]); c.arc(p[0], p[1], R * p[2], 0, 2 * Math.PI); }); c.fill(); c.restore(); }
   // pollen in the air
   if (S.pol) { const n = S.pol * 16; for (let i = 0; i < n; i++) { const s = 0.5 + wxsR(i + 400), x = (wxsR(i + 410) * (w + 20) + ph.pol * s) % (w + 20) - 10, y = gy * 0.3 + wxsR(i + 420) * gy * 0.65 + Math.sin(tm * 1.3 + i) * 7, rr = 1.1 + wxsR(i + 430) * 1.6; c.fillStyle = "rgba(255,214,102,.22)"; c.beginPath(); c.arc(x, y, rr * 2.6, 0, 2 * Math.PI); c.fill(); c.fillStyle = "rgba(255,222,120,.9)"; c.beginPath(); c.arc(x, y, rr, 0, 2 * Math.PI); c.fill(); } }
-  // rain or snow
-  if (wet || snow) {
-    // how hard it rains (mm an hour; r.rate = the day's average while it rains, on the Home forecast card) sets how many drops, how fast and how bright:
-    // drizzle (0.2 mm/h) is a few slow faint drops, 1 mm/h steady rain, 4 mm/h and up a downpour
-    const mmh = Math.max(0, r.rate != null ? r.rate : r.rain || 0), k = Math.min(1, Math.sqrt(mmh / 4));
-    const n = snow ? Math.min(170, Math.round(40 + mmh * 30)) : Math.round(12 + k * 110), sl = Math.max(0.22, Math.min(0.6, 0.22 + wind / 90));
-    c.strokeStyle = "rgba(196,220,255," + (snow ? 0.6 : (0.32 + k * 0.3).toFixed(2)) + ")"; c.fillStyle = "rgba(255,255,255,.88)"; c.lineWidth = 1 + k * 0.4; c.beginPath();
-    for (let i = 0; i < n; i++) { const v = snow ? 26 + wxsR(i) * 20 : 150 + k * 170 + wxsR(i) * (90 + k * 80), y = (wxsR(i + 50) * (h + 20) + tm * v) % (h + 20) - 10, x = ((wxsR(i + 60) * (w + 60) + y * sl + (snow ? Math.sin(tm + i) * 6 : 0)) % (w + 60)) - 30;
-      if (snow) { c.moveTo(x + 1.7, y); c.arc(x, y, 1.7, 0, 2 * Math.PI); } else { c.moveTo(x, y); c.lineTo(x + sl * 10, y + 10); } }
-    if (snow) c.fill(); else c.stroke();
+  // rain and snow each fade with their own amount, so a change from one to the other (or to dry) cross-fades instead of cutting
+  // how hard it rains (mm an hour; r.rate = the day's average while it rains, on the Home forecast card) sets how many drops, how fast and how bright:
+  // drizzle (0.2 mm/h) is a few slow faint drops, 1 mm/h steady rain, 4 mm/h and up a downpour
+  const rk = D.k, sl = Math.max(0.22, Math.min(0.6, 0.22 + wind / 90));
+  if (wetK > 0.01) {
+    const n = Math.round(12 + rk * 110);
+    c.strokeStyle = "rgba(196,220,255," + ((0.32 + rk * 0.3) * wetK).toFixed(3) + ")"; c.lineWidth = 1 + rk * 0.4; c.beginPath();
+    for (let i = 0; i < n; i++) { const R = wxsR(i), y = (wxsR(i + 50) * (h + 20) + ph.fa * (150 + R * 90) + ph.fb * (170 + R * 80)) % (h + 20) - 10, x = ((wxsR(i + 60) * (w + 60) + y * sl) % (w + 60)) - 30; c.moveTo(x, y); c.lineTo(x + sl * 10, y + 10); }
+    c.stroke();
   }
-  if (fog) for (let i = 0; i < 4; i++) { c.fillStyle = "rgba(220,226,235,.18)"; const y = gy * (0.35 + i * 0.17), x = ((tm * 8 * (i + 1)) % (w * 2)) - w; c.fillRect(x, y, w * 1.6, 16 + i * 4); c.fillRect(x - w * 2, y, w * 1.6, 16 + i * 4); }
-  if (S.cat) { c.save(); try { wxsCatPaint(c, w, h, gy, S, tm, wet, day, ph); } catch (e) {} c.restore(); }
+  if (snowK > 0.01) {
+    const n = Math.min(170, Math.round(40 + D.mmh * 30));
+    c.fillStyle = "rgba(255,255,255," + (0.88 * snowK).toFixed(3) + ")"; c.beginPath();
+    for (let i = 0; i < n; i++) { const v = 26 + wxsR(i) * 20, y = (wxsR(i + 50) * (h + 20) + tm * v) % (h + 20) - 10, x = ((wxsR(i + 60) * (w + 60) + y * sl + Math.sin(tm + i) * 6) % (w + 60)) - 30; c.moveTo(x + 1.7, y); c.arc(x, y, 1.7, 0, 2 * Math.PI); }
+    c.fill();
+  }
+  if (fogK > 0.01) for (let i = 0; i < 4; i++) { c.fillStyle = "rgba(220,226,235," + (0.18 * fogK).toFixed(3) + ")"; const y = gy * (0.35 + i * 0.17), x = ((tm * 8 * (i + 1)) % (w * 2)) - w; c.fillRect(x, y, w * 1.6, 16 + i * 4); c.fillRect(x - w * 2, y, w * 1.6, 16 + i * 4); }
+  // the Forecast card's gauges read the eased numbers too, so the thermometer, rain gauge and UV dial slide to the new value
+  if (S.cat) { c.save(); try { wxsCatPaint(c, w, h, gy, Object.assign({}, S, { rec: Object.assign({}, r, { temp: D.temp, uv: r.uv != null ? D.uv : r.uv, rain: D.rain, pp: D.pp }) }), tm, wet, day, ph); } catch (e) {} c.restore(); }
   if (S.amb) { c.save(); try { wxsAmb(c, w, h, gy, S, tm, ph, wet || snow); } catch (e) {} c.restore(); }
   if (/lightning/.test(cond) && tm % 5.3 < 0.12) { c.fillStyle = "rgba(255,255,255,.35)"; c.fillRect(0, 0, w, h); }
 }
@@ -7560,7 +7763,7 @@ function wxsCatPaint(c, w, h, gy, S, tm, wet, day, ph) {
 
 // ----- what each scene shows -----
 function wxsState(k) {
-  if (k === "now") { const r = wxsAt(WXS.now); return { kind: k, ms: r.live ? Date.now() : r.t + 18e5, rec: r }; }
+  if (k === "now") { const r = wxsNowRec(); return { kind: k, ms: r.live ? Date.now() : r.t + 18e5, rec: r }; }
   if (k === "wk") { const r = wxsAt(WXS.wk); return { kind: k, ms: r.live ? Date.now() : r.t + 18e5, rec: r, cat: wxsCatK() }; }
   if (k === "sun") { const ms = wxsSunMs(); return { kind: k, ms: ms, rec: Math.abs(ms - Date.now()) < 36e5 ? wxsLive() : wxsNear(ms) }; }
   if (k === "pol") { const P = wxsPolDays(), d = P ? P.d.find(x => x.o === WXS.polD) : null, today = !d || d.o === 0, ms = today ? Date.now() : d.t + 13 * 36e5; return { kind: k, ms: ms, rec: today || d.o < 0 ? wxsLive() : wxsNear(ms), pol: d ? d.l : (polNow() || {}).l }; }
@@ -7569,28 +7772,46 @@ function wxsState(k) {
 // Motion is integrated, not computed from the clock: each scene keeps phases (rotor angle, cloud drift, sway...) that advance by speed × the time since
 // the last frame, and the wind it shows eases towards the forecast's (and into and out of gusts). A change of speed - a gust, the slider - then
 // speeds things up or slows them down smoothly instead of making them jump.
-function wxsPh0(S) { const r = (S && S.rec) || {}; return { wind: Math.max(0, r.wind || 0), gustV: 0, g: 0, gt: 0, cloud: 0, sway: 0, pol: 0, streak: 0, rot: 0, flap: 0 }; }
+function wxsPh0(S) { const r = (S && S.rec) || {}; return { wind: Math.max(0, r.wind || 0), gustV: 0, g: 0, gt: 0, cloud: 0, sway: 0, pol: 0, streak: 0, rot: 0, flap: 0, fa: 0, fb: 0, d: wxsTgt(S || {}) }; }
+// Smooth changes: wxsPaint draws from ph.d, the values on screen, not straight from the chosen moment. Picking a day, sliding or switching a pill only moves the target (wxsTgt);
+// every frame ph.d closes in on it (wxsEase): the sun and moon glide along their path (the short way round the clock), clouds fade in and out one by one, rain, snow and fog
+// fade, the sky colours and the gauges slide. Reduced motion, a first paint and coming back to the page snap to the target (wxsSnap) instead.
+function wxsTgt(S) {
+  const r = S.rec || {}, cond = r.cond || "", snow = /snow/.test(cond), wet = !snow && (/rain|pour|hail/.test(cond) || r.rain >= 0.2);
+  const cl = Math.max(0, Math.min(100, wxsCloud(r))) / 100 * (S.kind === "sun" ? 0.6 : 1), mmh = Math.max(0, r.rate != null ? r.rate : r.rain || 0);
+  return { ms: S.ms || Date.now(), cl: cl, nc: Math.round(cl * 6 + (wet ? 1 : 0)), wet: wet ? 1 : 0, snow: snow ? 1 : 0, fog: cond === "fog" ? 1 : 0, mmh: mmh, k: Math.min(1, Math.sqrt(mmh / 4)), temp: +r.temp || 0, uv: r.uv != null && !isNaN(r.uv) ? +r.uv : 0, rain: +r.rain || 0, pp: +r.pp || 0 };
+}
+const WXS_EASE = ["cl", "nc", "wet", "snow", "fog", "mmh", "k", "temp", "uv", "rain", "pp"];
+function wxsEase(ph, S, dt) {
+  const T = wxsTgt(S), D = ph.d || (ph.d = T), k = 1 - Math.exp(-dt * 3.4);
+  WXS_EASE.forEach(n => { const x = T[n] - D[n]; D[n] = Math.abs(x) < 0.004 ? T[n] : D[n] + x * k; });
+  let d = T.ms - D.ms; d -= Math.round(d / 864e5) * 864e5;   // whole days snap, the time of day takes the short way round
+  const left = d * (1 - k); D.ms = Math.abs(left) < 6e4 ? T.ms : T.ms - left;
+}
+function wxsSnap(ph, S) { ph.d = wxsTgt(S); ph.wind = Math.max(0, (S.rec || {}).wind || 0); }
 function wxsStep(ph, S, dt) {
+  wxsEase(ph, S, dt);
   const r = S.rec || {}, k = 1 - Math.exp(-dt * 2.2), tw = Math.max(0, r.wind || 0), tg = r.gust != null ? Math.max(tw, r.gust) : tw;
   ph.wind += (tw - ph.wind) * k; ph.gustV += (tg - ph.gustV) * k;
   ph.gt += dt; const gustOn = tg > tw + 8 && (ph.gt % 6) < 1.8; ph.g += ((gustOn ? 1 : 0) - ph.g) * (1 - Math.exp(-dt * 2.5));
   const w = ph.wind, vv = w + (ph.gustV - w) * ph.g;
   ph.cloud += dt * (5 + w * 0.7); ph.sway += dt * (1.3 + w / 40); ph.pol += dt * (6 + w * 0.6);
+  ph.fa += dt; ph.fb += dt * ph.d.k;   // rain: how far the drops have fallen, kept as sums so a change of rain strength speeds them up smoothly instead of scrambling them
   ph.streak += dt * (70 + vv * 7); ph.rot += dt * Math.min(14, 0.4 + vv / 6); ph.flap += dt * (3 + vv / 6);
 }
-function wxsFrame(tm, all, dt) {
+function wxsFrame(tm, all, dt, snap) {   // snap: first frame after the page or tab comes back, so the sky shows the chosen moment at once instead of gliding from where it was left
   $$("#wx canvas[data-sc]").forEach(cv => {
     if (!cv.offsetParent) return; if (!all) { const b = cv.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight) return; }
-    try { const S = wxsState(cv.dataset.sc), k = cv.dataset.sc, ph = WXS.ph[k] || (WXS.ph[k] = wxsPh0(S)); if (dt) wxsStep(ph, S, dt); else if (reducedMotion()) { const r = S.rec || {}; ph.wind = Math.max(0, r.wind || 0); } wxsPaint(cv, S, tm, ph); } catch (e) {}
+    try { const S = wxsState(cv.dataset.sc), k = cv.dataset.sc, ph = WXS.ph[k] || (WXS.ph[k] = wxsPh0(S)); if (dt) wxsStep(ph, S, dt); else if (snap || reducedMotion()) wxsSnap(ph, S); wxsPaint(cv, S, tm, ph); } catch (e) {}
   });
 }
 function wxsLoop(ts) {
   WXS.raf = 0; if (curPg() !== "weather" || document.hidden || !wxsOn()) { WXS.last = 0; return; }
   const rm = reducedMotion(); if (ts - WXS.last < (rm ? 1000 : 14)) { WXS.raf = requestAnimationFrame(wxsLoop); return; }
-  const dt = WXS.last && !rm ? Math.min(0.1, (ts - WXS.last) / 1000) : 0; WXS.last = ts; wxsFrame(rm ? 0 : ts / 1000, rm, dt); WXS.raf = requestAnimationFrame(wxsLoop);
+  const first = !WXS.last, dt = WXS.last && !rm ? Math.min(0.1, (ts - WXS.last) / 1000) : 0; WXS.last = ts; wxsFrame(rm ? 0 : ts / 1000, rm, dt, first); WXS.raf = requestAnimationFrame(wxsLoop);
 }
 function wxsKick() { if (!WXS.raf && wxsOn()) WXS.raf = requestAnimationFrame(wxsLoop); }
-function wxsMount() { if (!wxsOn()) return; if ($("#wxpol") && WXS.polD !== 0) wxsPolApply(); wxsFrame(reducedMotion() ? 0 : performance.now() / 1000, true); wxsKick(); }
+function wxsMount() { if (!wxsOn()) return; if ($("#wxpol") && WXS.polD !== 0) wxsPolApply(); wxsFrame(reducedMotion() ? 0 : performance.now() / 1000, true, 0, !WXS.last); wxsKick(); }
 document.addEventListener("visibilitychange", () => { if (!document.hidden && curPg() === "weather") wxsKick(); });
 window.addEventListener("hashchange", () => setTimeout(() => { if (curPg() === "weather") wxsKick(); }, 50));
 
@@ -7619,7 +7840,7 @@ function fcsRec(d, i) {
 function fcsFrame(tm, dt) {
   $$("#fc canvas[data-fd]").forEach(cv => {
     if (!cv.offsetParent) return; const b = cv.getBoundingClientRect(); if (b.right < 0 || b.left > innerWidth || b.bottom < 0 || b.top > innerHeight) return;
-    try { const i = +cv.dataset.fd, d = fcDay((fc || [])[i], i); if (!d) return; const r = fcsRec(d, i), S = { kind: "now", ms: r.t, rec: r, amb: 1 }, ph = FCS.ph[i] || (FCS.ph[i] = wxsPh0(S)); if (dt) wxsStep(ph, S, dt); wxsPaint(cv, S, tm, ph); } catch (e) {}
+    try { const i = +cv.dataset.fd, d = fcDay((fc || [])[i], i); if (!d) return; const r = fcsRec(d, i), S = { kind: "now", ms: r.t, rec: r, amb: 1 }, ph = FCS.ph[i] || (FCS.ph[i] = wxsPh0(S)); if (dt) wxsStep(ph, S, dt); else wxsSnap(ph, S); wxsPaint(cv, S, tm, ph); } catch (e) {}
   });
 }
 function fcsLoop(ts) {
@@ -7647,29 +7868,29 @@ function wxsSpark(k, H, i) {
   H.forEach((r, j) => { const d = new Date(r.t); if (j && d.getHours() === 0) g += '<line x1="' + (j * 6) + '" x2="' + (j * 6) + '" y1="0" y2="' + Hh + '" stroke="currentColor" stroke-opacity=".18" vector-effect="non-scaling-stroke" stroke-dasharray="2 3"/>'; });
   if (k === "rain") H.forEach((r, j) => { const v = r.rain || 0, pp = r.pp || 0; if (v > 0) g += '<rect x="' + (j * 6 + 1) + '" width="4" y="' + y(v) + '" height="' + (Hh - 4 - y(v)) + '" fill="' + col + '"/>'; else if (pp >= 20) g += '<rect x="' + (j * 6 + 1) + '" width="4" y="' + (Hh - 4 - pp / 100 * 14) + '" height="' + (pp / 100 * 14) + '" fill="' + col + '" opacity=".35"/>'; });
   else { let p = ""; V.forEach((v, j) => { if (v == null || isNaN(v)) return; p += (p ? " L" : "M") + x(j) + "," + y(v).toFixed(1); }); g += '<path d="' + p + '" fill="none" stroke="' + col + '" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>'; }
-  g += '<line class="wsmk" x1="' + x(i) + '" x2="' + x(i) + '" y1="0" y2="' + Hh + '" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/>';
+  if (i >= 0) g += '<line class="wsmk" x1="' + x(i) + '" x2="' + x(i) + '" y1="0" y2="' + Hh + '" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/>';   // no marker while a day past the hourly forecast is chosen
   const days = H.map((r, j) => [r, j]).filter(q => new Date(q[0].t).getHours() === 0).map(q => '<span style="left:' + (q[1] / n * 100).toFixed(1) + '%">' + new Date(q[0].t).toLocaleDateString([], { weekday: "short" }).toUpperCase() + '</span>').join("");
   return '<div class="wspk" data-wsdrag="now"><svg viewBox="0 0 ' + W + " " + Hh + '" preserveAspectRatio="none" style="color:var(--ink)">' + g + '</svg><div class="wsdl">' + days + '</div></div><div class="sm wsh">' + ({ temp: "Temperature", wind: "Wind", rain: "Rain", uv: "UV index", hum: "Humidity" })[k] + ' · drag along the line</div>';
 }
 
 // ----- Now card -----
 function wxsNowParts() {
-  const L = WXS.live || {}, i = WXS.now, r = wxsAt(i), wu = L.wu || "km/h", n = (v, u) => v != null && !isNaN(v) ? Math.round(v) + (u ? " " + u : "") : "--";
+  const L = WXS.live || {}, r = wxsNowRec(), wu = L.wu || "km/h", n = (v, u) => v != null && !isNaN(v) ? Math.round(v) + (u ? " " + u : "") : "--";
   const pill = (k, l, v, c) => '<button class="wnp' + (c || "") + (WXS.pill === k ? " on" : "") + '" data-wpill="' + k + '"><small>' + l + '</small>' + v + '</button>';
-  const head = r.live ? L.head : '<div><span class="big2">' + f1(r.temp) + '°</span><div class="wns">' + esc(wxsCondName(r.cond)) + (r.pp >= 10 ? " · " + Math.round(r.pp) + "% rain" : "") + '</div></div>';
-  const pills = pill("wind", mdi("weather-windy"), n(r.wind, wu), r.live && L.wxl ? " wnd wt" + L.wxl : "") + pill("hum", "HUM", n(r.hum, "%")) + pill("rain", "RAIN", f1(r.rain || 0) + " mm") + pill("uv", "UV", r.uv != null ? r.uv : "--");
-  return { head: head, pills: pills, tag: r.live ? "NOW" : wxsWhen(r.t).toUpperCase() };
+  const head = r.live ? L.head : '<div><span class="big2">' + f1(r.temp) + '°</span><div class="wns">' + esc(wxsCondName(r.cond)) + (r.pp >= 10 ? " · " + Math.round(r.pp) + "% rain" : "") + (r.day && r.low != null && !isNaN(r.low) ? " · L " + Math.round(r.low) + "°" : "") + '</div></div>';
+  const pills = pill("temp", "TEMP", f1(r.temp) + "°") + pill("wind", mdi("weather-windy"), n(r.wind, wu), r.live && L.wxl ? " wnd wt" + L.wxl : "") + pill("hum", "HUM", n(r.hum, "%")) + pill("rain", "RAIN", f1(r.rain || 0) + " mm") + pill("uv", "UV", r.uv != null ? r.uv : "--");
+  return { head: head, pills: pills, tag: r.live ? "NOW" : r.day ? new Date(r.t).toLocaleDateString([], { weekday: "short" }).toUpperCase() + " · HIGH" : wxsWhen(r.t).toUpperCase() };
 }
 function wxsNowCard(o) {
   // o: the live pieces drawWeather already made: head (big temperature + feels / high-low), wxl, wu, wdy (the 7-day strip), wnm (more), cd (condition)
-  WXS.live = o; const P = wxsNowParts(), H = WXS.H, sel = new Date(wxsAt(WXS.now).t).toDateString();
+  WXS.live = o; const P = wxsNowParts(), H = WXS.H, sel = new Date(wxsNowRec().t).toDateString();
   const wdy = o.wdy.replace(/<div class="wdy([^"]*)" data-wday="(\d+)"/g, (m, c, t) => '<div class="wdy' + c + (new Date(+t).toDateString() === sel ? " sel" : "") + '" data-wday="' + t + '"');
   return '<div class="pn pg wnow' + (wnMore ? " open" : "") + '"><div class="lbl">Now · ' + o.cd + '</div>' +
     '<div class="wsc wscn"><canvas data-sc="now" aria-hidden="true"></canvas><div class="wnh" data-wsn data-wpill="temp" title="Temperature chart">' + P.head + '</div><span class="wstag" data-wst>' + P.tag + '</span></div>' +
-    (H.length > 2 ? wxsSlider("now", H.length - 1, WXS.now, { a: "Hours ahead" }, WXS.now > 0) : "") +
-    '<div class="wnr" data-wsp>' + P.pills + '</div><div class="wsch" data-wsc>' + (WXS.pill ? wxsSpark(WXS.pill, H, WXS.now) : "") + '</div>' +
+    (H.length > 2 ? wxsSlider("now", H.length - 1, WXS.now, { a: "Hours ahead" }, WXS.now > 0 || WXS.dd) : "") +
+    '<div class="wnr" data-wsp>' + P.pills + '</div><div class="wsch" data-wsc>' + (WXS.pill ? wxsSpark(WXS.pill, H, WXS.dd ? -1 : WXS.now) : "") + '</div>' +
     '<button class="wnb" data-wnmore aria-label="More conditions">MORE ' + mdi("chevron-down") + '</button><div class="wnm wg">' + o.wnm + '</div>' +
-    (wdy ? '<div class="wn7"><div class="lbl">Next 7 days</div><div class="wn7s">' + wdy + '</div></div>' : "") + '</div>';
+    (wdy ? '<div class="wn7"><div class="lbl">Next 7 days</div>' + hsw('<div class="wn7s">' + wdy + '</div>') + '</div>' : "") + '</div>';
 }
 
 // ----- Sun and moon card -----
@@ -7777,27 +7998,64 @@ function wxsWkDays() {
     return '<button class="wkd' + (ds === sel ? " on" : "") + '" data-wkd="' + (td ? 0 : j) + '"><span class="lbl">' + (td ? "Today" : dt.toLocaleDateString([], { weekday: "short" })) + '</span><i class="wb">' + wic(d.condition) + '</i><b>' + Math.round(d.temperature) + '°</b><small>' + Math.round(lw) + '°' + (p != null && p >= 30 ? ' · ' + Math.round(p) + '%' : '') + '</small></button>';
   }).join("");
 }
+function wxsWkPills() {
+  const r = wxsAt(WXS.wk), wu = (WXS.live && WXS.live.wu) || "km/h", v = [f1(r.temp) + "°", Math.round(r.wind || 0) + " " + wu, Math.round(r.pp || 0) + "%", r.uv != null ? Math.round(r.uv) : "--"], lb = ["TEMP", mdi("weather-windy"), "RAIN", "UV"];
+  return FCT.map((t, i) => '<button class="chip wnp' + (i === fcTab ? " on" : "") + '" data-ft="' + i + '" aria-label="' + t[0] + '"><small>' + lb[i] + '</small>' + v[i] + '</button>').join("");
+}
 function wxsWeek() {
   const H = WXS.H; if (H.length < 6) return "";
   const F = WXS.find ? wxsFind(WXS.find) : null, met = !!wxsMetHours();
   return '<div class="wwk"><div class="wsc wscw"><canvas data-sc="wk" aria-hidden="true"></canvas></div><div class="wscap wswk" data-wsr>' + wxsWkRead() + '</div>' +
     wxsSlider("wk", H.length - 1, WXS.wk, { a: "Forecast hour" }, WXS.wk > 0).replace('<input', '<span class="wsin"><span class="wsbd" data-wsbd>' + wxsBands() + '</span><input').replace('<button class="wsnow"', '</span><button class="wsnow"') +
-    '<div class="wkds">' + wxsWkDays() + '</div>' +
-    hsw('<div class="chips wkf">' + WXS_FIND.filter(f => f[0] !== "cmp" || met).map(f => '<button class="chip' + (WXS.find === f[0] ? " on" : "") + '" data-wsf="' + f[0] + '">' + mdi(f[1]) + '<span>' + f[2] + '</span></button>').join("") + '</div>') +
+    '<div class="wnr fct wkp" data-wkp>' + wxsWkPills() + '</div>' + '<div class="lbl wkl">Next 7 days</div><div class="wkds">' + wxsWkDays() + '</div>' +
+    hsw('<div class="chips wkf"><span class="wkj">Jump to</span>' + WXS_FIND.filter(f => f[0] !== "cmp" || met).map(f => '<button class="chip' + (WXS.find === f[0] ? " on" : "") + '" data-wsf="' + f[0] + '">' + mdi(f[1]) + '<span>' + f[2] + '</span></button>').join("") + '</div>') +
     '<div class="sm wsh" data-wsft>' + (F ? esc(F.txt) : "Slide through the week · tap a day to jump to it") + '</div></div>';
 }
 
+// ----- smooth buttons and words -----
+// A row of buttons is updated in place: a button that is still there keeps its element, so its colours and outline can ease to the new state (only a row whose buttons changed is rebuilt).
+function wxsPatch(e, html) {
+  if (!e) return; const t = document.createElement("div"); t.innerHTML = html; const o = e.children, n = t.children;
+  if (o.length !== n.length || [].some.call(n, (b, i) => b.dataset.wpill !== o[i].dataset.wpill || b.dataset.ft !== o[i].dataset.ft)) { e.innerHTML = html; return; }
+  [].forEach.call(n, (b, i) => { const x = o[i], w0 = x.offsetWidth; if (x.className !== b.className) x.className = b.className;
+    if (x.innerHTML === b.innerHTML) return;
+    // a pill whose number changes width eases to the new width, so its neighbours slide over instead of jumping (a drag keeps restarting from the width it is at)
+    x.style.width = ""; x.innerHTML = b.innerHTML; const w1 = x.offsetWidth; clearTimeout(x._wt);
+    if (w0 && w1 && Math.abs(w0 - w1) > 1 && !reducedMotion()) {
+      x.style.transition = "none"; x.style.overflow = "hidden"; x.style.width = w0 + "px"; void x.offsetWidth; x.style.transition = ""; x.style.width = w1 + "px";
+      x._wt = setTimeout(() => { x.style.width = x.style.overflow = ""; }, 260);
+    }
+  });
+}
+const wxsFade = e => { if (!e || reducedMotion()) return; e.classList.remove("wsfx"); void e.offsetWidth; e.classList.add("wsfx"); };
+// The big temperature counts from the number on screen to its new one (so a slider drag or a day tap runs through the values) and the words under it fade; the tag fades too.
+function wxsHead(P) {
+  const h = $("#wx [data-wsn]"), tg = $("#wx [data-wst]"); if (!h) return;
+  const ob = h.querySelector(".big2"), ow = h.querySelector(".wns"), from = ob ? parseFloat(ob.textContent) : NaN, oldW = ow ? ow.textContent : "";
+  cancelAnimationFrame(WXS.cnt);
+  if (h.innerHTML !== P.head) {
+    h.innerHTML = P.head; const nb = h.querySelector(".big2"), nw = h.querySelector(".wns"), to = nb ? parseFloat(nb.textContent) : NaN;
+    if (nw && nw.textContent !== oldW) wxsFade(nw);
+    if (nb && !isNaN(from) && !isNaN(to) && from !== to && !reducedMotion()) {
+      const t0 = performance.now(), D = 380; nb.textContent = f1(from) + "°";
+      const f = ts => { const k = Math.min(1, (ts - t0) / D), e = 1 - Math.pow(1 - k, 3); nb.textContent = f1(from + (to - from) * e) + "°"; if (k < 1) WXS.cnt = requestAnimationFrame(f); }; WXS.cnt = requestAnimationFrame(f);
+    }
+  }
+  if (tg && tg.textContent !== P.tag) { tg.textContent = P.tag; wxsFade(tg); }
+}
 // ----- updates while the user drags (no full page redraw, so the slider keeps the finger) -----
 function wxsUpd(k) {
   const q = s => $("#wx " + s), set = (s, h) => { const e = q(s); if (e) e.innerHTML = h; }, back = (kk, on) => { const b = q('[data-wsback="' + kk + '"]'); if (b) b.hidden = !on; }, val = (kk, v) => { const s = q('[data-ws="' + kk + '"]'); if (s && +s.value !== v) s.value = v; };
   if (k === "now") {
-    const P = wxsNowParts(); set("[data-wsn]", P.head); set("[data-wst]", P.tag); set("[data-wsp]", P.pills); set("[data-wsc]", WXS.pill ? wxsSpark(WXS.pill, WXS.H, WXS.now) : ""); back("now", WXS.now > 0); val("now", WXS.now);
-    const sel = new Date(wxsAt(WXS.now).t).toDateString(); $$("#wx .wdy[data-wday]").forEach(d => d.classList.toggle("sel", new Date(+d.dataset.wday).toDateString() === sel));
+    const P = wxsNowParts(); wxsHead(P); wxsPatch(q("[data-wsp]"), P.pills); set("[data-wsc]", WXS.pill ? wxsSpark(WXS.pill, WXS.H, WXS.dd ? -1 : WXS.now) : "");
+    if (WXS.pf) { WXS.pf = 0; const c = q("[data-wsc]"); if (c) [].forEach.call(c.children, x => x.classList.add("wfade")); }   // a pill's chart rises in when it opens (not on every slider step)
+    back("now", WXS.now > 0 || !!WXS.dd); val("now", WXS.now);
+    const sel = new Date(wxsNowRec().t).toDateString(); $$("#wx .wdy[data-wday]").forEach(d => d.classList.toggle("sel", new Date(+d.dataset.wday).toDateString() === sel));
   }
   if (k === "sun") { set("[data-wss]", wxsSunCap()); back("sun", WXS.sun != null); if (WXS.sun == null) { const d = new Date(); val("sun", d.getHours() * 60 + d.getMinutes()); } }
   if (k === "pol") { wxsPolApply(); back("pol", WXS.polD !== 0); val("pol", WXS.polD); }
   if (k === "wk") {
-    set("[data-wsr]", wxsWkRead()); set("[data-wsbd]", wxsBands()); back("wk", WXS.wk > 0); val("wk", WXS.wk);
+    set("[data-wsr]", wxsWkRead()); wxsPatch(q("[data-wkp]"), wxsWkPills()); set("[data-wsbd]", wxsBands()); back("wk", WXS.wk > 0); val("wk", WXS.wk);
     const sel = new Date(wxsAt(WXS.wk).t).toDateString(); $$("#wx .wkd").forEach(b => { const j = +b.dataset.wkd; b.classList.toggle("on", new Date(wxsAt(j).t).toDateString() === sel); });
   }
   if (reducedMotion()) wxsFrame(0, true);
@@ -7805,7 +8063,7 @@ function wxsUpd(k) {
 function wxsDragAt(el, e) {
   const k = el.dataset.wsdrag, b = el.getBoundingClientRect(), n = WXS.H.length; if (!b.width || n < 2) return;
   const j = Math.max(0, Math.min(n - 1, Math.floor((e.clientX - b.left) / b.width * n)));
-  if (WXS[k] !== j) { WXS[k] = j; wxsUpd(k); }
+  if (WXS[k] !== j || (k === "now" && WXS.dd)) { WXS[k] = j; if (k === "now") WXS.dd = null, WXS.ddT = 0; wxsUpd(k); }
 }
 (() => {
   const wx = $("#wx"); if (!wx) return;
@@ -7813,6 +8071,7 @@ function wxsDragAt(el, e) {
     const s = e.target.closest && e.target.closest("[data-ws]"); if (!s) return; const k = s.dataset.ws, v = +s.value;
     if (k === "sun") { const d = new Date(), nm = d.getHours() * 60 + d.getMinutes(); WXS.sun = Math.abs(v - nm) < 5 ? null : v; }
     else if (k === "pol") WXS.polD = v; else WXS[k] = v;
+    if (k === "now") WXS.dd = null, WXS.ddT = 0;   // the slider takes over from a chosen later day
     wxsUpd(k);
   });
   wx.addEventListener("pointerdown", e => {
@@ -7825,9 +8084,14 @@ function wxsDragAt(el, e) {
   window.addEventListener("pointerup", up); window.addEventListener("pointercancel", up); wx.addEventListener("change", up);
   wx.addEventListener("click", e => {
     if (!e.target.closest) return; let b;
-    if ((b = e.target.closest("[data-wsback]"))) { const k = b.dataset.wsback; if (k === "sun") WXS.sun = null; else if (k === "pol") WXS.polD = 0; else WXS[k] = 0; wxsUpd(k); return; }
-    if ((b = e.target.closest("[data-wpill]"))) { const k = b.dataset.wpill; WXS.pill = WXS.pill === k ? "" : k; wxsUpd("now"); return; }
-    if ((b = e.target.closest(".wdy[data-wday]"))) { const t = +b.dataset.wday, ds = new Date(t).toDateString(); if (ds === new Date().toDateString()) WXS.now = 0; else { let j = WXS.H.findIndex(r => new Date(r.t).toDateString() === ds && new Date(r.t).getHours() >= 13); if (j < 0) j = WXS.H.findIndex(r => new Date(r.t).toDateString() === ds); if (j < 0) return; WXS.now = j; } wxsUpd("now"); return; }
+    if ((b = e.target.closest("[data-wsback]"))) { const k = b.dataset.wsback; if (k === "sun") WXS.sun = null; else if (k === "pol") WXS.polD = 0; else WXS[k] = 0; if (k === "now") WXS.dd = null, WXS.ddT = 0; wxsUpd(k); return; }
+    if ((b = e.target.closest("[data-wpill]"))) { const k = b.dataset.wpill; WXS.pill = WXS.pill === k ? "" : k; WXS.pf = WXS.pill ? 1 : 0; wxsUpd("now"); return; }
+    if ((b = e.target.closest(".wdy[data-wday]"))) { const t = +b.dataset.wday, ds = new Date(t).toDateString(); WXS.dd = null; WXS.ddT = 0;
+      if (ds === new Date().toDateString()) WXS.now = 0;
+      else { let j = WXS.H.findIndex(r => new Date(r.t).toDateString() === ds && new Date(r.t).getHours() >= 13); if (j < 0) j = WXS.H.findIndex(r => new Date(r.t).toDateString() === ds);
+        if (j >= 0) WXS.now = j;
+        else { const dr = wxsDayRec(t); if (!dr) return; WXS.dd = dr; WXS.ddT = t; WXS.now = Math.max(0, WXS.H.length - 1); } }   // past the hourly forecast: that day's daily forecast, with the slider parked at the end
+      wxsUpd("now"); return; }
     if ((b = e.target.closest("[data-wkd]"))) { WXS.wk = +b.dataset.wkd; wxsUpd("wk"); return; }
     if (e.target.closest("[data-ft]") && $("#wx [data-wsr]")) { wxsUpd("wk"); return; }
     if ((b = e.target.closest("[data-wsf]"))) {
@@ -8509,7 +8773,7 @@ function pbList(c) {
   const kinds = ["Person", "Vehicle", "Animal"].filter(k => P.some(p => p && p.tags.indexOf(k) > -1));
   if (pb.filter !== "all" && kinds.indexOf(pb.filter) < 0) pb.filter = "all";
   f.style.display = playable ? "" : "none";
-  f.innerHTML = playable ? '<div class="pbc">' + ["all"].concat(kinds).map(k => '<button class="chip' + (pb.filter === k ? " on" : "") + '" data-pf="' + k + '">' + (k === "all" ? "ALL" : k.toUpperCase()) + '</button>').join("") + '</div><button class="eb pbvw" data-pview="1" aria-label="Change layout">' + mdi(pb.view === "grid" ? "format-list-bulleted" : "view-grid") + '</button>' : "";
+  f.innerHTML = playable ? hsw('<div class="pbc">' + ["all"].concat(kinds).map(k => '<button class="chip' + (pb.filter === k ? " on" : "") + '" data-pf="' + k + '">' + (k === "all" ? "ALL" : k.toUpperCase()) + '</button>').join("") + '</div>') + '<button class="eb pbvw" data-pview="1" aria-label="Change layout">' + mdi(pb.view === "grid" ? "format-list-bulleted" : "view-grid") + '</button>' : "";
   l.className = "pbl" + (playable && pb.view === "grid" ? " pbg" : "");
   const rows = pb.items.map((x, i) => {
     const p = P[i]; if (pb.filter !== "all" && !(p && p.tags.indexOf(pb.filter) > -1)) return "";
@@ -8702,9 +8966,9 @@ function dtDraw(soft) {
   const keepX = [...P.querySelectorAll(".dtf")].map(r => r.scrollLeft), smo = dtSmBefore(P);
   DT.hasAnimal = cnt("Animal") > 0;
   P.innerHTML = '<div class="lbl dthd">Recent detections<button class="eb" data-dt="refresh" aria-label="Refresh">' + mdi("refresh") + '</button></div>' +
-    '<div class="pbc dtf">' + [["Person", "PERSON"], ["Vehicle", "VEHICLE"], ["Animal", "ANIMAL"], ["Motion", "OTHER MOTION"]].filter(x => x[0] === "Person" || x[0] === "Vehicle" || cnt(x[0]) > 0).map(x => '<button class="chip' + (DT.types[x[0]] ? " on" : "") + '" data-dt="type" data-v="' + x[0] + '">' + x[1] + (all.length ? chipN(cnt(x[0])) : "") + '</button>').join("") + '</div>' +
-    '<div class="pbc dtf"><button class="chip' + (DT.cam === "all" ? " on" : "") + '" data-dt="cam" data-v="all">ALL CAMERAS</button>' + dtCams().map(id => '<button class="chip' + (DT.cam === id ? " on" : "") + '" data-dt="cam" data-v="' + esc(id) + '">' + esc(dtName(id)).toUpperCase() + '</button>').join("") + '</div>' +
-    '<div class="pbc dtf">' + DT_R.map((x, i) => '<button class="chip' + (DT.range === i + 1 ? " on" : "") + '" data-dt="range" data-v="' + (i + 1) + '">' + x[2] + '</button>').join("") + '</div>' +
+    hsw('<div class="pbc dtf">' + [["Person", "PERSON"], ["Vehicle", "VEHICLE"], ["Animal", "ANIMAL"], ["Motion", "OTHER MOTION"]].filter(x => x[0] === "Person" || x[0] === "Vehicle" || cnt(x[0]) > 0).map(x => '<button class="chip' + (DT.types[x[0]] ? " on" : "") + '" data-dt="type" data-v="' + x[0] + '">' + x[1] + (all.length ? chipN(cnt(x[0])) : "") + '</button>').join("") + '</div>') +
+    hsw('<div class="pbc dtf"><button class="chip' + (DT.cam === "all" ? " on" : "") + '" data-dt="cam" data-v="all">ALL CAMERAS</button>' + dtCams().map(id => '<button class="chip' + (DT.cam === id ? " on" : "") + '" data-dt="cam" data-v="' + esc(id) + '">' + esc(dtName(id)).toUpperCase() + '</button>').join("") + '</div>') +
+    hsw('<div class="pbc dtf">' + DT_R.map((x, i) => '<button class="chip' + (DT.range === i + 1 ? " on" : "") + '" data-dt="range" data-v="' + (i + 1) + '">' + x[2] + '</button>').join("") + '</div>') +
     (vis.length ? (isMobile() ? '<div class="dtcv">' + dtMomHtml() + '</div>' : dtTlHtml()) : "") +
     '<div class="dtgw">' + dtGrid() + '</div>' + loading;
   P.querySelectorAll(".dtf").forEach((r, i) => { if (keepX[i]) r.scrollLeft = keepX[i]; });
@@ -8832,7 +9096,7 @@ function dtMomHtml() {
   const g = M[DTL.mi], x = g[Math.min(DTL.mci, g.length - 1)], th = dtThumbUrl(x), n = new Set(g.map(y => y.cam)).size;
   return '<div class="dtbig" data-dt="play" data-k="' + esc(x.mc) + '" data-cam="' + esc(x.cam) + '" data-ts="' + x.ts + '" data-tg="' + esc(x.p.tags.join(",")) + '" role="button" tabindex="0"><div class="pbth" data-dth="' + esc(x.mc) + '">' + (th ? '<img alt="" src="' + esc(th) + '">' : "") + '<b>' + mdi("play") + '</b></div>' +
     '<span class="dtbc">' + esc(dtName(x.cam)) + '</span>' + (g.length > 1 ? '<span class="dtbn">' + (n > 1 ? n + " cameras" : g.length + " clips") + '</span>' : "") + '<strong>' + esc(x.p.tags.join(" · ") + " · " + dtWhen(x.ts)) + '</strong></div>' +
-    (g.length > 1 ? '<div class="dtal">' + g.map((y, i) => { const t = dtThumbUrl(y); return '<button class="dtat' + (y === x ? " on" : "") + '" data-dtmc="' + i + '"><div class="pbth" data-dth="' + esc(y.mc) + '">' + (t ? '<img alt="" src="' + esc(t) + '">' : "") + '</div><span>' + esc(dtName(y.cam)) + '</span></button>'; }).join("") + '</div>' : "") +
+    (g.length > 1 ? hsw('<div class="dtal">' + g.map((y, i) => { const t = dtThumbUrl(y); return '<button class="dtat' + (y === x ? " on" : "") + '" data-dtmc="' + i + '"><div class="pbth" data-dth="' + esc(y.mc) + '">' + (t ? '<img alt="" src="' + esc(t) + '">' : "") + '</div><span>' + esc(dtName(y.cam)) + '</span></button>'; }).join("") + '</div>') : "") +
     '<div class="dttk">' + M.map((m, i) => '<i class="' + (m.length > 1 ? "g" : "") + (i === DTL.mi ? " on" : "") + '" style="left:' + (M.length > 1 ? (i / (M.length - 1) * 100).toFixed(2) : 50) + '%"></i>').join("") + '</div>' +
     '<input type="range" class="dtmr" data-dtm min="0" max="' + (M.length - 1) + '" step="1" value="' + DTL.mi + '" aria-label="Pick a moment">' +
     '<div class="dtax"><span>older</span><span>moment ' + (DTL.mi + 1) + ' of ' + M.length + '</span><span>newer</span></div>';
@@ -9160,10 +9424,10 @@ function accSec(sec) {
   h += ACC.users.map(u => {
     const k = u.id.slice(0, 8), n = M[k], on = n != null, fixed = !on && ruFind(u.name, ""), cnt = on ? ACC_PAGE_KEYS.filter(p => n & (1 << RU_ALL.indexOf(p))).length : 0;
     const rms = accRooms(), nr = on ? rms.filter((r, q) => !accBit(n, 17 + q)).length : 0, rsum = on && nr < rms.length ? " · " + nr + (nr === 1 ? " room" : " rooms") : "";
-    const op = ACC.fold[k] !== false;
-    return '<div class="acc-u' + (on && op ? " open" : "") + '"><div class="acc-r"><div class="acc-l"><span><b>' + esc(u.name) + '</b><small>' + (on ? cnt + (cnt === 1 ? " page" : " pages") + rsum : fixed ? "Fixed in config.js" : "Can see all pages") + '</small></span>' +
+    const op = ACC.fold[k] === true;   // people with rules start folded away
+    return '<div class="acc-u' + (on && op ? " open" : "") + '"><div class="acc-r"><div class="acc-l"><span><b>' + esc(u.name) + '</b><small>' + (on ? "Limited · " + cnt + (cnt === 1 ? " page" : " pages") + rsum : fixed ? "Fixed in config.js" : "Can see all pages") + '</small></span>' +
       (on ? '<button class="acf" data-acc="fold" data-u="' + k + '" aria-expanded="' + op + '" aria-label="Show or hide ' + esc(u.name) + ' settings"><i class="acct">' + mdi(op ? "chevron-up" : "chevron-down") + '</i></button>' : "") + '</div>' +
-      (fixed ? "" : '<button class="accsw' + (on ? " on" : "") + '"' + (ent ? "" : " disabled") + ' data-acc="r" data-u="' + k + '" aria-label="Restrict ' + esc(u.name) + '"></button>') + '</div>' +
+      (fixed ? "" : '<div class="accsg" role="group" aria-label="What ' + esc(u.name) + ' can see"><button type="button" class="' + (on ? "" : "on") + '"' + (ent ? "" : " disabled") + ' data-acc="r" data-want="all" data-u="' + k + '" aria-pressed="' + !on + '">All</button><button type="button" class="' + (on ? "on" : "") + '"' + (ent ? "" : " disabled") + ' data-acc="r" data-want="lim" data-u="' + k + '" aria-pressed="' + on + '">Limited</button></div>') + '</div>' +
       (on ? '<div class="accb"><div class="acci"><div class="chips acc-c">' + pages.map(p => '<button class="chip' + (n & (1 << RU_ALL.indexOf(p)) ? " on" : "") + '" data-acc="p" data-u="' + k + '" data-v="' + RU_ALL.indexOf(p) + '">' + RU_NAME[p].toUpperCase() + '</button>').join("") + '</div>' +
         ((n & (1 << RU_ALL.indexOf("rooms"))) || (n & (1 << RU_ALL.indexOf("home"))) || (n & (1 << RU_ALL.indexOf("climate"))) ? '<div class="lbl acc-s">Rooms they can see</div><div class="acc-n">A room that is switched off is hidden everywhere for them: its tile, its climate control, and its lights, doors and windows in lists and alerts.</div><div class="chips acc-c">' + rms.map((r, q) => '<button class="chip' + (accBit(n, 17 + q) ? "" : " on") + '" data-acc="p" data-u="' + k + '" data-v="' + (17 + q) + '">' + esc(r.name).toUpperCase() + '</button>').join("") + '</div>' : "") +
         (n & (1 << RU_ALL.indexOf("security")) ? '<div class="lbl acc-s">Security</div><div class="chips acc-c">' + RU_SEC.map((x, j) => '<button class="chip' + (n & (1 << (13 + j)) ? " on" : "") + '" data-acc="p" data-u="' + k + '" data-v="' + (13 + j) + '">' + x[1].toUpperCase() + '</button>').join("") + '</div>' : "") + '</div></div>' : "") + '</div>';
@@ -9176,7 +9440,7 @@ function accClick(b) {
   if (b.dataset.acc === "fold") { const k = b.dataset.u, w = b.closest(".acc-u"), o = !w.classList.contains("open"); ACC.fold[k] = o; w.classList.toggle("open", o); b.setAttribute("aria-expanded", o); $(".acct", b).innerHTML = mdi(o ? "chevron-up" : "chevron-down"); return; }
   if (!states[E("access")]) return;
   const M = accMap(), k = b.dataset.u, v = +b.dataset.v, kind = b.dataset.acc;
-  if (kind === "r") { if (M[k] != null) delete M[k]; else M[k] = 1 << RU_ALL.indexOf("home"); }   // a newly restricted person starts with Home only and no Security extras
+  if (kind === "r") { const want = b.dataset.want; if ((want === "lim") === (M[k] != null)) return; if (M[k] != null) delete M[k]; else { M[k] = 1 << RU_ALL.indexOf("home"); ACC.fold[k] = true; } }   // a newly restricted person starts with Home only and no Security extras
   else { const n = M[k]; if (n == null) return; const nn = n ^ (1 << v); if ((v < 13 && !(nn & ((1 << 13) - 1))) || (v > 16 && accRooms().every((r, q) => accBit(nn, 17 + q)))) { b.classList.add("acc-no"); setTimeout(() => b.classList.remove("acc-no"), 600); return; } M[k] = nn; }   // at least one page stays on
   if (!accSave(M)) { const l = $("#admin .acc-h"); if (l) { l.textContent = "The access list is full (about 14 people). Remove someone first."; } }
 }
@@ -9282,7 +9546,7 @@ function secPills(page, host, anchor, min) {
 // The wallpaper behind a pinned tab row. The row carries a copy of the page's own wallpaper so the list never shows around it. Instead of relying on
 // background-attachment:fixed (browsers treat it differently inside scrollers), each row is given the exact offset of the page background in its own
 // coordinates (--wx, --wy) and the size of the page (--ww, --wh). The row also gets the class "stk" while its page is scrolled off the top.
-const WP_ROWS = ":is(#admin,#theme) > .hsw:has(> .setchips), .page > .secw, #scenes .scfh, #admin .admtop, #admin .adlog > .adlh, #security > #stabs, #insights > .inschips";
+const WP_ROWS = ":is(#admin,#theme) > .hsw:has(> .setchips), .page > .secw, #scenes .scfh, #energy > .ehc, #admin .admtop, #admin .adlog > .adlh, #security > #stabs, #insights > .inschips";
 const wpScroller = e => { for (let p = e.parentElement; p; p = p.parentElement) { const o = getComputedStyle(p).overflowY; if ((o === "auto" || o === "scroll") && p.scrollHeight > p.clientHeight) return p; } return null; };
 function wpSync() {
   const R = document.documentElement.getBoundingClientRect(), st = document.documentElement.style;
@@ -9293,6 +9557,8 @@ function wpSync() {
     e.style.setProperty("--wx", (R.left - r.left - l) + "px"); e.style.setProperty("--wy", (R.top - r.top - t) + "px");
     const sc = wpScroller(e); e.classList.toggle("stk", !!sc && sc.scrollTop > 1);
   });
+  // a page with no pinned tab row: the title bar itself gets the soft shadow once the page has scrolled under it
+  { const pg = document.querySelector(".page.on"), hd = document.querySelector(".main > header"); if (pg && hd) { const po = getComputedStyle(pg).overflowY, sc = (po === "auto" || po === "scroll") && pg.scrollHeight > pg.clientHeight ? pg : wpScroller(pg); hd.classList.toggle("hstk", !!sc && sc.scrollTop > 1 && !pg.querySelector(".stk")); } }
 }
 let wpQ = 0;
 const wpGo = () => { if (wpQ) return; wpQ = requestAnimationFrame(() => { wpQ = 0; wpSync(); }); };
@@ -10351,9 +10617,11 @@ function drawNotif() {
   const pn = polNow(), nkc = k => k[0] === "pollen" ? (pn ? pn.col : "") : k[0] === "wind" || k[0] === "rain" || k[0] === "uv" || k[0] === "wx" ? wxaCol(k[0]) : k[0] === "cw" ? "#ff7a45" : k[0] === "cd" ? "#e5483b" : k[0] === "tsu" ? (slvLevel() === 2 ? "#e5483b" : "#e89a2c") : k[0] === "road" ? "#e89a2c" : "", nsn = k => typeof k[2] === "function" ? k[2]() : k[2], nai = (k, c) => '<span class="nai' + c + '" data-k="' + k[0] + '"' + (nkc(k) ? ' style="--nk:' + nkc(k) + '"' : "") + '>' + (k[0] === "laundry" ? DRUM : k[0] === "cw" ? CWICO() : mdi(k[1])) + '<b class="nal">' + esc(k[0] === "pollen" && pn ? "Pollen · " + pn.name : k[0] === "battery" && lowBattChip().length > 1 ? lowBattChip().length + " low batteries" : nsn(k)) + '</b></span>';
   const sig = ks.slice(0, 2).map((k, i) => nai(k, i ? " nai2" : "")).join("");
   if ((nacc.dataset.k || "") !== (top ? top[0] : "") || nacc._sig !== sig) { nacc._sig = sig; if (top) nacc.dataset.k = top[0]; else nacc.removeAttribute("data-k"); nacc.innerHTML = sig; if (top && nkc(top)) nacc.style.setProperty("--nk", nkc(top)); else nacc.style.removeProperty("--nk"); }
+  { const hd = $("header"); if (hd) hd.classList.toggle("hmg", !!top); }   // phones and tablets: the lock merges into the pill while a condition shows (70-header-status-pill.css)
   nacc.dataset.n = ks.length;   // 3+ conditions: one chip + "+N" (see 28-pollen.css)
   if (ks.length > 1) nacc.dataset.more = "+" + (ks.length - 1); else nacc.removeAttribute("data-more");
   if (ks.length > 2) nacc.dataset.more2 = "+" + (ks.length - 2); else if (ks.length > 1) nacc.dataset.more2 = ""; else nacc.removeAttribute("data-more2");
+  if (r.all) nacc.dataset.all = r.all; else nacc.removeAttribute("data-all");   // phones and tablets: no condition but notifications waiting = a quiet "N new" pill (70-header-status-pill.css)
   nacc.classList.toggle("on", !!r.all || !!top);
   $("#hc").title = ks.length ? ks.map(nsn).join(" · ") + (r.all ? " · " : "") + (r.all ? r.all + " notification" + (r.all > 1 ? "s" : "") : "") : r.all ? r.all + " notification" + (r.all > 1 ? "s" : "") : "Notifications";
   if (!open) { npCamStop(); return; }
@@ -10367,7 +10635,7 @@ function drawNotif() {
   if (nc._k !== key) {
     const at = npTab + "|" + npOnly;
     if (nc._t === at) { nc.classList.remove("tx", "txc"); clearTimeout(nc._tx); }   // a list that redraws on the tab it is already showing (a state changed) must not replay the tab's fade-in, or it blinks
-    nc._t = at; nc._k = key; if (!NP_KEEP) xpBegin(nc, "np", () => { nc.innerHTML = body; }); }
+    nc._t = at; nc._k = key; if (!NP_KEEP) { nc.classList.add("nofx"); xpBegin(nc, "np", () => { nc.innerHTML = body; }); requestAnimationFrame(() => requestAnimationFrame(() => nc.classList.remove("nofx"))); } }   // tiles made fresh take their state straight away: no fill, glow or slider sliding in from zero (the card looked like it was redrawing itself)
   npGoRun(); npCamMount();
   $$("#npc .ldr").forEach(el => { const t = ldTime(); if (el.textContent !== t) el.textContent = t; });
   if (tc) requestAnimationFrame(hsAll);
@@ -10401,8 +10669,10 @@ $("#nbd").onclick = npClose;
 $("#np").addEventListener("keydown", e => { const wx = e.target.closest && e.target.closest(".wxl[data-wxa]"); if (wx && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); wx.click(); return; } const r = e.target.closest && e.target.closest("[data-up]"); if (r && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); upcOpen(r.dataset.up); } });
 $("#np").onclick = e => {
   if (e.target.closest("[data-close]")) { npClose(); return; }
-  if (e.target.closest("[data-npall]")) { npOnly = ""; drawNotif(); return; }
-  const ch = e.target.closest("[data-npchip]"); if (ch) { npOnly = ch.dataset.npchip; drawNotif(); return; }
+  // the chips (All / Curtains / Windows ...) play the same slide-and-rise as the tabs: the list below slides in from the side of the chip you picked, the chip row stays still
+  const npSlide = to => { const cs = $$("#np [data-npchip]").map(c => c.dataset.npchip), was = npOnly; npOnly = to; drawNotif(); if (was !== to) txGo($("#npc"), cs.indexOf(to) > cs.indexOf(was) ? 1 : -1, true); };
+  if (e.target.closest("[data-npall]")) { npSlide(""); return; }
+  const ch = e.target.closest("[data-npchip]"); if (ch) { npSlide(ch.dataset.npchip); return; }
   const fo = e.target.closest("[data-npf]"); if (fo && !e.target.closest(".eb")) { const k = fo.dataset.npf, was = fo.getAttribute("aria-expanded") === "true"; if (!npOnly) { NPF[k] = !was; drawNotif(); } return; }   // while one group is picked with a chip it stays open
   const tb = e.target.closest("[data-npt]"); if (tb) { npOnly = ""; const ord = ["alerts", "attention", "active"], was = npTab; npTab = tb.dataset.npt; drawNotif(); if (was !== npTab) txGo($("#npc"), ord.indexOf(npTab) > ord.indexOf(was) ? 1 : -1, true); return; }
   const of = e.target.closest("[data-off]"); if (of) { const ids = actList()[+of.dataset.off].ids; const cl = actList()[+of.dataset.off].c[3] === "close"; if (ids.length) { if (!cl) npDismiss(ids); call(cl ? "cover" : "homeassistant", cl ? "close_cover" : "turn_off", ids); } return; }
@@ -11541,13 +11811,14 @@ const czTarget = e => {   // the card / player a touch landed on, or null
   const el = v.closest(".cam"); return el && v.parentElement === el && czOk(el) ? el : null;
 };
 document.addEventListener("pointerdown", e => {
-  if (e.pointerType === "mouse") return;
+  if (e.pointerType === "mouse" && e.button !== 0) return;   // the mouse drags a zoomed picture too (hold the left button and move), like a finger
   const el = czTarget(e); if (!el) return;
   if (CZ.el && CZ.el !== el) { CZ.pts.clear(); } CZ.el = el;
   CZ.pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (CZ.pts.size === 1) CZ.moved = 0; else CZ.moved = 1;
   czBase(el);
 }, true);
 document.addEventListener("pointermove", e => {
+  if (e.pointerType === "mouse" && !e.buttons && CZ.pts.has(e.pointerId)) { czUp(e); return; }   // the button was let go outside the window
   const el = CZ.el, p = el && CZ.pts.get(e.pointerId); if (!p || (el.classList.contains("cam") && !czOk(el))) return;
   const z = czState(el), prev = { x: p.x, y: p.y }; p.x = e.clientX; p.y = e.clientY;
   if (CZ.pts.size >= 2) {
@@ -11631,6 +11902,8 @@ czScan(); if (window.MutationObserver) { let q = 0; new MutationObserver(() => {
 ["loadstart"].forEach(n => document.addEventListener(n, e => { const p = e.target && e.target.tagName === "VIDEO" ? e.target.parentElement : null; if (p && czPlayer(p)) czEnhance(p); }, true));
 ["fullscreenchange", "webkitfullscreenchange"].forEach(n => document.addEventListener(n, () => { document.querySelectorAll(".zc.zfade").forEach(czFadeIn); document.querySelectorAll(".zm").forEach(czReset); document.querySelectorAll(".zc").forEach(e => { if (e._zui) czUi(e); }); }));
 document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll(".zc.zfull").forEach(czFull); });
+
+document.addEventListener("dragstart", e => { if (CZ.pts.size && czTarget(e)) e.preventDefault(); });   // a mouse drag moves the picture, it does not pick the image up
 // ---------- Playback / Detections: mark the person or car that moves ----------
 // Needs no extra software: the picture is compared with the one a moment ago, and a box follows whatever changed. It only runs for clips the camera tagged Person / Vehicle / Animal, so wind and shadows in plain "Motion" clips are left alone.
 // config.js: detectMark: "brackets" (default) | "box" | "glow" | false
@@ -12245,7 +12518,7 @@ const mq = window.matchMedia("(max-width:760px)"); if (mq.addEventListener) mq.a
 //   options: { dot: draw a dot on the line at y, scrub: a finger dragged along the chart reads along it (only for charts that do not scroll sideways),
 //              at: x => point  instead of a list, for a chart with a lot of points }
 // Everything is looked up when you point, so a chart that is redrawn keeps working, and a readout open on a redrawn chart reopens on the new one.
-const CRD = {}; let crOn = null, crDn = null, crTm = 0;
+const CRD = {}; let crOn = null, crDn = null, crTm = 0, crHold = 0;
 function chartReadout(name, pts, o) { CRD[name] = { p: pts || [], o: o || {} }; return ' data-cr="' + name + '"' + (o && o.scrub ? ' data-crs="1"' : ""); }
 const crWhen = (x, day) => { const d = new Date(x.datetime || x); return (day === false ? "" : d.toLocaleDateString([], { weekday: "short" }) + " ") + d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })).replace(" ", "").toLowerCase(); };
 function crX(svg, ev) { const m = svg.getScreenCTM(); if (!m) return null; const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY; return p.matrixTransform(m.inverse()).x; }
@@ -12269,12 +12542,13 @@ function crShow(svg, q, ev) {
   const t = crTip(); t.innerHTML = '<div class="crh">' + esc(q.t || "") + '</div>' + (q.r || []).map(r => '<div class="crr">' + (r[2] ? '<i style="background:' + r[2] + '"></i>' : "<i></i>") + '<span>' + esc(r[0]) + '</span><b>' + esc(r[1]) + '</b></div>').join("");
   t.hidden = false;
   const m = svg.getScreenCTM(), p = svg.createSVGPoint(); p.x = q.x; p.y = 0; const ax = m ? p.matrixTransform(m).x : (ev ? ev.clientX : 0), rc = svg.getBoundingClientRect(), tw = t.offsetWidth, th = t.offsetHeight;
-  if (d.o.inside) {   // a chart with a legend / figures right above it: the card stays on the chart, beside the pointed-at bar, so it never covers them
+  if (d.o.inside && !crTouch) {   // a chart with a legend / figures right above it: with a mouse the card stays on the chart, beside the pointed-at bar, so it never covers them
     const right = ax + 14 + tw <= innerWidth - 8; t.style.left = Math.max(8, right ? ax + 14 : ax - tw - 14) + "px";
     t.style.top = Math.max(8, Math.min(innerHeight - th - 8, rc.top + 6)) + "px";
   } else {
+  // above the chart; no room above: below it; no room either: on it. (With a finger the card must not sit on the bars, the finger is already there and the chart is what is being read)
   t.style.left = Math.max(8, Math.min(innerWidth - tw - 8, ax - tw / 2)) + "px";
-  t.style.top = (rc.top - th - 8 < 8 ? Math.min(innerHeight - th - 8, rc.top + 8) : rc.top - th - 8) + "px";   // above the chart, or on it when there is no room above
+  t.style.top = (rc.top - th - 8 >= 8 ? rc.top - th - 8 : rc.bottom + 8 + th <= innerHeight - 8 ? rc.bottom + 8 : Math.min(innerHeight - th - 8, rc.top + 8)) + "px";
   }
   crOn = { n: svg.dataset.cr, x: q.x }; clearInterval(crTm);
   crTm = setInterval(() => {   // the chart was redrawn (Home Assistant sent news): show the same place on the new one, or close
@@ -12286,20 +12560,34 @@ const crSvg = e => e.target && e.target.closest ? e.target.closest("svg[data-cr]
 function crPoint(svg, e) { const d = CRD[svg.dataset.cr], x = crX(svg, e); return d && x != null ? crPick(d, x) : null; }
 document.addEventListener("pointermove", e => {
   const s = crSvg(e);
-  if (e.pointerType === "touch") { if (s && crDn && crDn.s === s && crDn.scrub) { const q = crPoint(s, e); if (q) crShow(s, q, e); } return; }
-  if (s) { const q = crPoint(s, e); if (q) crShow(s, q, e); } else if (crOn) crHide();
+  if (e.pointerType === "touch") {
+    crTouch = true;
+    if (crDn) {
+      crDn.lx = e.clientX; crDn.ly = e.clientY;
+      if (!crDn.scrub) {
+        const dx = e.clientX - crDn.x, dy = e.clientY - crDn.y;
+        if (Math.hypot(dx, dy) > 8) { clearTimeout(crHold); if (Math.abs(dx) > Math.abs(dy) && getComputedStyle(crDn.s).touchAction === "pan-y") crDn.scrub = true; }   // a chart that leaves sideways drags to the page: sliding along it moves the readout at once, no hold needed
+      }
+    }
+    if (crDn && crDn.scrub && crDn.s.isConnected) { const q = crPoint(crDn.s, e); if (q) crShow(crDn.s, q, e); } return;   // follows the finger even when it slides off the chart's edge
+  }
+  crTouch = false; if (s) { const q = crPoint(s, e); if (q) crShow(s, q, e); } else if (crOn) crHide();
 }, { passive: true });
 document.addEventListener("pointerdown", e => {
   const s = crSvg(e); if (!s) { crDn = null; if (crOn) crHide(); return; }
-  const d = CRD[s.dataset.cr]; crDn = { s: s, x: e.clientX, y: e.clientY, scrub: !!(d && d.o.scrub) };
+  crTouch = e.pointerType === "touch";
+  const d = CRD[s.dataset.cr]; crDn = { s: s, x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY, scrub: !!(d && d.o.scrub) };
   if (e.pointerType !== "touch" || crDn.scrub) { const q = crPoint(s, e); if (q) crShow(s, q, e); }
+  // any chart, on a touch screen: hold the finger on it (still) and the readout then follows the finger along the chart, like the hold on a camera or tile
+  clearTimeout(crHold); if (e.pointerType === "touch" && !crDn.scrub) { const dn = crDn; crHold = setTimeout(() => { if (crDn !== dn) return; dn.scrub = true; const q = crPoint(s, { target: s, clientX: dn.lx, clientY: dn.ly }); if (q) crShow(s, q, { clientX: dn.lx, clientY: dn.ly }); try { navigator.vibrate && navigator.vibrate(8); } catch (x) {} }, 260); }
 }, { passive: true });
+document.addEventListener("touchmove", e => { if (crDn && crDn.scrub && e.cancelable) e.preventDefault(); }, { passive: false });   // while scrubbing the page must not scroll under the finger
 document.addEventListener("pointerup", e => {
-  const dn = crDn; crDn = null; if (!dn || e.pointerType !== "touch" || dn.scrub) return;
+  clearTimeout(crHold); const dn = crDn; crDn = null; if (!dn || e.pointerType !== "touch" || dn.scrub) return;
   if (Math.hypot(e.clientX - dn.x, e.clientY - dn.y) > 10) return;   // it was a swipe along a chart that scrolls sideways, not a tap
   const q = crPoint(dn.s, e); if (q) crShow(dn.s, q, e);
 }, { passive: true });
-document.addEventListener("pointercancel", () => { crDn = null; }, { passive: true });
+document.addEventListener("pointercancel", () => { clearTimeout(crHold); crDn = null; }, { passive: true });
 document.addEventListener("scroll", () => { if (crOn && !crDn) crHide(); }, { capture: true, passive: true });
 document.documentElement.addEventListener("mouseleave", () => { if (crOn) crHide(); });
 // ---------- garage door alert: red frame + band on the garage camera while the door is open, amber while it moves ----------
@@ -12457,7 +12745,7 @@ function sznSec(sec) {
 }
 function sznClick(e) {
   const m = e.target.closest("button[data-sznm]"), p = e.target.closest("button[data-szn]");
-  if (m) { try { localStorage.setItem("dashSeason", m.dataset.sznm); } catch (_) {} sznApply(); drawPalette(); return true; }
+  if (m) { try { localStorage.setItem("dashSeason", m.dataset.sznm); } catch (_) {} SZN_PREV = ""; SZN_CUR = "\0"; sznApply(); drawPalette(); return true; }
   if (p) { SZN_PREV = SZN_PREV === p.dataset.szn ? "" : p.dataset.szn; SZN_CUR = "\0"; sznApply(); drawPalette(); return true; }
   return false;
 }
@@ -13082,7 +13370,7 @@ function cwRefresh() { try { if (typeof drawNotif === "function") drawNotif(); }
 function cwAlertHtml() {
   const L = cwRooms(), P = HOUSE().filter(r => r.climate && cwIsPaused(r)); if (!L.length && !P.length) return "";
   const n = L.reduce((p, x) => p + x.op.length, 0), cool = L.length && L.every(x => x.hp.k === "cool"), verb = cool ? "cooling" : L.some(x => x.hp.k === "heat") ? "heating" : "running", zs = L.reduce((p, x) => p + [].concat(x.r.climate).filter(z => states[z] && !isOff(states[z])).length, 0);
-  const rows = L.map(x => '<div class="cwr"><span>' + esc(x.r.name) + '</span><small>' + x.op.length + ' open · ' + (x.ms > 6e4 ? attnAgo(x.ms) : "just now") + '</small></div>').join("") +
+  const rows = L.map(x => '<div class="cwr"><span>' + esc(x.r.name) + '</span><small>' + x.op.length + ' open · ' + (x.ms > 6e4 ? attnAgo(x.ms) : "just now") + '</small><em class="cwn">' + x.op.map(id => esc(fname(id))).join(" · ") + '</em></div>').join("") +
     P.map(r => { const o = cwOpen(r).length; return '<div class="cwr cwp"><span>' + esc(r.name) + '</span><small>' + (o ? "Paused · back on 3 s after it's shut" : "Shut · back on in a moment") + '</small></div>'; }).join("");
   return '<div class="alert cw"><div class="lbl">' + mdi(cool ? "snowflake" : "fire") + ' ' + (cool ? "COOL" : "HEAT") + ' ESCAPING' + (L.length + P.length > 1 ? " · " + (L.length + P.length) + " ROOMS" : "") + '</div>' +
     (L.length ? '<b>' + n + ' open while ' + verb + '</b>' : '<b>Paused until it\'s shut</b>') + rows +
@@ -14750,10 +15038,20 @@ setTimeout(() => stlRefresh(true), 20000);
 const stlDur = ms => { const h = Math.round(ms / 36e5); return h >= 48 ? Math.round(h / 24) + " days" : h + " h"; };
 const stlWhen = t => { const d = new Date(t), today = new Date().toDateString() === d.toDateString(); return today ? d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })) : d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" }) + " " + d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })); };
 const stlVal = s => { const a = s.attributes || {}, v = parseFloat(s.state); return (Math.abs(v) >= 100 ? Math.round(v) : +v.toFixed(1)) + (a.unit_of_measurement ? (a.unit_of_measurement === "%" ? "%" : /^°/.test(a.unit_of_measurement) ? "°" : " " + a.unit_of_measurement) : ""); };
+// the battery of the device a sensor belongs to, in %: Battery Notes' sensor.<device>_battery_plus (or the device's own _battery), found by trimming the sensor's own name back
+// ("sensor.soil_sensor_two_drw_moisture" -> "sensor.soil_sensor_two_drw_battery_plus"). Nothing is shown when no battery is found or it has no number.
+function stlBatt(id) {
+  const o = id.split(".")[1].split("_");
+  for (let cut = 1; cut <= Math.min(3, o.length - 1); cut++) {
+    const b = o.slice(0, o.length - cut).join("_");
+    for (const k of ["sensor." + b + "_battery_plus", "sensor." + b + "_battery"]) { const v = states[k] ? parseFloat(states[k].state) : NaN; if (!isNaN(v)) return Math.round(v); }
+  }
+  return null;
+}
 // one row: name, value and when it was last heard from / last changed; MUTE (this device); tap the name: Settings > Entities (admins)
 function stlRows(L, dead) {
-  return '<div class="ils stl-ls">' + L.map(x => { const s = states[x.id]; return '<div class="ilr ' + (dead ? "bad" : "w") + '"><i></i><span class="ilm">' + (typeof ADMIN_ON === "function" && ADMIN_ON() ? '<button type="button" class="stl-go" data-stgo="' + esc(x.id) + '">' + esc(fname(x.id)) + '</button>' : '<b>' + esc(fname(x.id)) + '</b>') +
-    '<small>' + esc(stlVal(s) + " · " + (dead ? "last heard from " + hzAgo(x.rep) : "same since " + stlWhen(x.ch) + " · still reporting")) + '</small></span><button type="button" class="eb stl-mu" data-stmute="' + esc(x.id) + '">MUTE</button></div>'; }).join("") + '</div>';
+  return '<div class="ils stl-ls">' + L.map(x => { const s = states[x.id]; const bt = stlBatt(x.id), lowb = bt != null && bt < (CONFIG.derived && CONFIG.derived.batteryAlertBelow != null ? +CONFIG.derived.batteryAlertBelow : 20); return '<div class="ilr ' + (dead ? "bad" : "w") + (lowb ? " lowb" : "") + '"><i></i><span class="ilm">' + (typeof ADMIN_ON === "function" && ADMIN_ON() ? '<button type="button" class="stl-go" data-stgo="' + esc(x.id) + '">' + esc(fname(x.id)) + '</button>' : '<b>' + esc(fname(x.id)) + '</b>') +
+    '<small>' + esc(stlVal(s) + " · " + (dead ? "last heard from " + hzAgo(x.rep) : "same since " + stlWhen(x.ch) + " · still reporting") + (bt != null ? " · battery " + bt + "%" : "")) + '</small></span><button type="button" class="eb stl-mu" data-stmute="' + esc(x.id) + '">MUTE</button></div>'; }).join("") + '</div>';
 }
 function insxStale() {
   const c = stlCfg(), L = stlList(); if (!c || !L) return [];
@@ -14891,13 +15189,19 @@ const updMaxO = () => { const n = CONFIG.updatesAtOnceOther; return n === "all" 
 // which integration owns each update entity: asked once from the entity registry (admins only). Until it answers, or if it can't, every update counts as mesh (the careful way)
 function updLoadReg() {
   if (UPD.reg || UPD.regBusy || !ADMIN_ON()) return; UPD.regBusy = true;
-  send({ type: "config/entity_registry/list_for_display" }, (r, m) => {
-    UPD.regBusy = false; const L = m && m.success !== false && m.result && m.result.entities; if (!L) return;
-    const o = {}; L.forEach(x => { if (x.ei && x.ei.indexOf("update.") === 0) o[x.ei] = x.pl || ""; }); UPD.reg = o; updDraw();
+  // the device registry says what each device really is: an MQTT update is mesh only when the device is a Zigbee2MQTT one (a Shelly or Tasmota on MQTT is plain Wi-Fi)
+  send({ type: "config/device_registry/list" }, (r2, m2) => {
+    const D = m2 && m2.success !== false && Array.isArray(m2.result) ? m2.result : [], z2m = {};
+    D.forEach(d => { if ((d.identifiers || []).concat(d.connections || []).some(x => x && (x[0] === "zigbee" || /^zigbee2mqtt/i.test(String(x[1])) || /^zigbee2mqtt/i.test(String(x[0]))))) z2m[d.id] = 1; });
+    UPD.z2m = D.length ? z2m : null;
+    send({ type: "config/entity_registry/list_for_display" }, (r, m) => {
+      UPD.regBusy = false; const L = m && m.success !== false && m.result && m.result.entities; if (!L) return;
+      const o = {}; L.forEach(x => { if (x.ei && x.ei.indexOf("update.") === 0) { o[x.ei] = x.pl || ""; if (x.pl === "mqtt" && x.di) { UPD.dev = UPD.dev || {}; UPD.dev[x.ei] = x.di; } } }); UPD.reg = o; updDraw();
+    });
   });
 }
 const updMeshPl = () => Array.isArray(CONFIG.updatesMesh) ? CONFIG.updatesMesh : ["zha", "mqtt", "zwave_js", "matter", "thread"];
-const updMesh = e => !UPD.reg || !UPD.reg[e] || updMeshPl().indexOf(UPD.reg[e]) >= 0;
+const updMesh = e => { if (!UPD.reg || !UPD.reg[e]) return true; const pl = UPD.reg[e]; if (pl === "mqtt" && UPD.dev && UPD.dev[e] && UPD.z2m && Array.isArray(CONFIG.updatesMesh) === false) return !!UPD.z2m[UPD.dev[e]]; return updMeshPl().indexOf(pl) >= 0; };
 // a warning before a big batch: more than 5 at once, or UPDATE ALL
 function updWarn(A, all, fn) {
   const big = A.length > 5; if (!big && !all) return fn();
@@ -14960,9 +15264,9 @@ function updDraw() {
   fab.classList.toggle("dial", UPD.dial); const fh = mdi(UPD.dial ? "close" : "wrench") + '<span class="tlc"' + (n && !UPD.dial ? "" : " hidden") + '>' + (n || "") + '</span>'; if (fab._k !== fh) { fab._k = fh; fab.innerHTML = fh; }   // only when it changed (no needless rebuilds) fab.setAttribute("aria-expanded", UPD.dial ? "true" : "false");
   const dl = $("#tldial"); dl.classList.toggle("on", UPD.dial); $("#tlscrim").classList.toggle("on", UPD.dial);
   if (UPD.dial) { const r = fab.getBoundingClientRect(); dl.style.right = Math.round(innerWidth - r.right + (r.width - 44) / 2) + "px"; dl.style.bottom = Math.round(innerHeight - r.top + 10) + "px";
-    const h = '<button type="button" data-tld="qa"><span>Quick actions</span><i>' + mdi("lightning-bolt") + '</i></button><button type="button" data-tld="upd"><span>Updates' + (n ? " · " + n : "") + '</span><i>' + mdi("download") + '</i></button>';
+    const h = '<button type="button" data-tld="upd"><span>Updates' + (n ? " · " + n : "") + '</span><i>' + mdi("download") + '</i></button><button type="button" data-tld="qa"><span>Quick actions</span><i>' + mdi("lightning-bolt") + '</i></button>';   // Updates on top, Quick actions below it (nearest the button)
     if (dl._k !== h) { dl._k = h; dl.innerHTML = h; } }
-  const sh = $("#tlsh"), on = adm && UPD.open && !fab.hidden; sh.classList.toggle("on", on); sh.setAttribute("aria-hidden", on ? "false" : "true"); document.body.classList.toggle("tl-open", on);
+  const sh = $("#tlsh"), on = adm && !!UPD.open; sh.classList.toggle("on", on); sh.setAttribute("aria-hidden", on ? "false" : "true"); document.body.classList.toggle("tl-open", on);
   if (on) { const qa = UPD.open === "qa", h = '<div class="tlx' + (qa ? " qa" : "") + '" role="dialog" aria-modal="true" aria-label="' + (qa ? "Quick actions" : "Updates") + '"><div class="tlh"><span class="lbl">' + mdi(qa ? "lightning-bolt" : "download") + (qa ? " Quick actions" : " Updates") + '</span><button class="evx" data-tlx aria-label="Close">' + mdi("close") + '</button></div><div class="tlb">' + (qa ? (typeof admQaHtml === "function" ? admQaHtml() : "") : updHtml()) + '</div>' + (qa ? "" : updBar()) + '</div>';
     if (sh._k !== h) { const sc = sh.querySelector(".tlb"), y = sc ? sc.scrollTop : 0; sh._k = h; sh.innerHTML = h; const n2 = sh.querySelector(".tlb"); if (n2) n2.scrollTop = y; } }
   else if (sh._k) { sh._k = ""; sh.innerHTML = ""; }
@@ -15002,8 +15306,7 @@ function updHome() {
 }
 document.addEventListener("click", e => {
   const b = e.target.closest && e.target.closest("[data-updgo]"); if (!b) return; e.preventDefault(); e.stopPropagation();
-  if (curPg() !== "admin") location.hash = "#admin";
-  setTimeout(() => { UPD.open = "upd"; UPD.dial = false; updDraw(); }, 200);
+  UPD.open = "upd"; UPD.dial = false; updDraw();   // straight to the pop-up, no Settings detour
 }, true);
 // ---------- Header chips that used to leave the notifications panel now open a centred pop-up ----------
 // Road problem and Tsunami open here, over whatever page you are on. The Insights chips (Low battery, Bins out, Pollen, Roster) open the Insights card the
@@ -15113,7 +15416,7 @@ function tkTlHtml(c) {
   const chips = runs.slice(0, 10).map(r => { const x = r[r.length - 1], n = r.length, pl = DT_PL[x.p.tags[0]] || x.p.tags[0].toLowerCase(), th = dtThumbUrl(x);   // the oldest clip of the run opens first
     return '<button type="button" class="tk-tlc" data-tkpl="' + esc(x.mc) + '" data-cam="' + esc(x.cam) + '" data-ts="' + x.ts + '" data-tg="' + esc(x.p.tags.join(",")) + '"><div class="tk-th" data-dth="' + esc(x.mc) + '">' + (th ? '<img alt="" src="' + esc(th) + '">' : "") + (n > 1 ? '<u>' + n + '</u>' : "") + '</div><span><b>' + esc(n > 1 ? dtTm(x.ts) + " to " + dtTm(r[0].ts) : dtTm(x.ts)) + '</b>' + esc(n > 1 ? n + " " + pl : x.p.tags.join(" · ")) + '</span></button>'; }).join("");
   return '<div class="tk-tl"><div class="tk-tlh"><span>DETECTIONS · LAST 24 HOURS</span><em>' + (DT.busy && !all.length ? "Loading…" : all.length + (all.length === 1 ? " clip" : " clips")) + '</em></div><div class="tk-tlb">' + bars + '</div><div class="tk-tlk">' + lab + '</div>' +
-    (chips ? '<div class="tk-tlr">' + chips + '</div>' : '<div class="tk-tle">' + (DT.busy ? "Loading recordings…" : "Nothing detected in the last 24 hours") + '</div>') + '</div>';
+    (chips ? hsw('<div class="tk-tlr">' + chips + '</div>') : '<div class="tk-tle">' + (DT.busy ? "Loading recordings…" : "Nothing detected in the last 24 hours") + '</div>') + '</div>';
 }
 function tkCamBody(c) {
   const g = typeof galCfg === "function" && galCfg()[c.id], gc = g && g.opener && typeof galOpen === "function" && galOpen(g);
@@ -15661,17 +15964,19 @@ auNote();
     if (window.visualViewport) { visualViewport.addEventListener("resize", fit); visualViewport.addEventListener("scroll", fit); }
   }
   function show() {
-    make(); learn(); idx = build(); inp.value = ""; sel = 0; flt = "all"; draw(); box.hidden = false; fit();
+    make(); learn(); idx = build(); inp.value = ""; sel = 0; flt = "all"; draw(); clearTimeout(box._t); box.classList.remove("out"); box.hidden = false; btn.classList.add("on"); fit();   // (a search being closed comes straight back)
     // a screen you tap through is the first thing to see: only a device with a keyboard (a mouse pointer) starts in the box; on a phone or tablet the keyboard would cover it until you tap the box
     if (matchMedia("(pointer:fine)").matches) { inp.focus({ preventScroll: true }); setTimeout(() => { if (!box.hidden) inp.focus({ preventScroll: true }); }, 60); }
   }
-  function shut() { if (!box || box.hidden) return; box.hidden = true; inp.blur(); box.style.top = box.style.height = ""; }
+  // closing fades out (.2 s, the .out class) before the box is hidden; the keyboard is dropped and the phone fit reset only once it is gone
+  const isOpen = () => !!box && !box.hidden && !box.classList.contains("out");
+  function shut() { if (!isOpen()) return; inp.blur(); btn.classList.remove("on"); box.classList.add("out"); clearTimeout(box._t); box._t = setTimeout(() => { box.hidden = true; box.classList.remove("out"); box.style.top = box.style.height = ""; }, 200); }
 
   // the header button sits right before the notification icon and the clock
   const btn = document.createElement("button"); btn.id = "hsrch"; btn.type = "button"; btn.setAttribute("aria-label", "Search"); btn.innerHTML = mdi("magnify");
   $("header .hr").insertBefore(btn, $("#hc")); btn.addEventListener("click", show);
   document.addEventListener("keydown", e => {
-    const open = !!box && !box.hidden;
+    const open = isOpen();
     if (e.key === "Escape" && open) { e.preventDefault(); shut(); return; }
     if ((e.key === "k" || e.key === "K") && (e.ctrlKey || e.metaKey) && !e.altKey) { e.preventDefault(); if (open) shut(); else show(); return; }
     const t = e.target || {};
@@ -15789,11 +16094,9 @@ route(); drawGsum(); authReturn().then(r => { if (r !== "fail") connect(); });
   const ease='cubic-bezier(.22,1,.36,1)', duration=360;
   const reduce=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const specs=[
-    ['#np [data-npt]','#npc'],
-    ['#np [data-npchip]','#npc'],
-    ['#np [data-npall]','#npc'],
     ['#cpp .lsv','#cpp']
   ];
+  /* (notifications chips / tabs: the list is no longer height-eased here; they play the slide-and-rise from txGo) */
   const ongoing=new WeakMap();
   document.addEventListener('click',e=>{
     if(reduce()||!e.target.closest)return;
