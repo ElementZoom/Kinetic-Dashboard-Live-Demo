@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Detections_Light_v6', hash: '#security', async run(p, c) {
+export default { file: 'EZ_Loop_Detections_Light_v7', hash: '#security', async run(p, c) {
   await c.wait(1500);
   await c.tap([140, 95]); await c.wait(1800);
   await c.spot([20, 195, 500, 175], 4, 20); await c.wait(3200);
