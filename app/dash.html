@@ -2318,21 +2318,16 @@ html .txc>*{animation-duration:calc(.46s*var(--pgs,1));animation-delay:calc(var(
 html #energy .enin{animation-duration:calc(.5s*var(--pgs,1))}
 @media(prefers-reduced-motion:reduce){html:is([data-pgfx=slide],[data-pgfx=zoom],[data-pgfx=flip],[data-pgfx=blur],[data-pgfx=tilt]){--mx-t:none;--mx-f:none}}
 
-/* Settings pages: the tab row stays put while the page enters (the page-level animation is dropped, the content below the row keeps its own entrance) */
-html:not(#x) .page.enter:is(:has(>.hsw>.setchips),#events){animation:none!important}
-html:not(#x) #events.enter>.eh{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}
+/* Settings pages: the first tab row stays put while the page enters; everything else rises like on the other pages */
 html:not(#x) .page.enter>.hsw:has(>.setchips){animation:none!important;opacity:1!important;transform:none!important;filter:none!important}
-/* Settings pages: the same entrance as the other pages, applied to everything except the tab row */
-html[data-pgfx=slide]:not(#x) .page.enter:is(:has(>.hsw>.setchips),#events)>:not(.hsw,.eh){animation:pgSlide calc(.36s*var(--pgs,1)) cubic-bezier(.2,.8,.2,1) backwards}
-html[data-pgfx=blur]:not(#x) .page.enter:is(:has(>.hsw>.setchips),#events)>:not(.hsw,.eh){animation:pgBlur calc(.36s*var(--pgs,1)) ease backwards}
-html[data-pgfx=zoom]:not(#x) .page.enter:is(:has(>.hsw>.setchips),#events)>:not(.hsw,.eh){animation:pgZoom calc(.36s*var(--pgs,1)) cubic-bezier(.2,.8,.2,1) backwards}
-html[data-pgfx=flip]:not(#x) .page.enter:is(:has(>.hsw>.setchips),#events)>:not(.hsw,.eh){animation:pgFlip calc(.36s*var(--pgs,1)) cubic-bezier(.2,.8,.2,1) backwards}
-html[data-pgfx=tilt]:not(#x) .page.enter:is(:has(>.hsw>.setchips),#events)>:not(.hsw,.eh){animation:pgTilt calc(.36s*var(--pgs,1)) cubic-bezier(.2,.8,.2,1) backwards}
-@media(prefers-reduced-motion:reduce){html:is([data-pgfx=slide],[data-pgfx=blur],[data-pgfx=zoom],[data-pgfx=flip],[data-pgfx=tilt]):not(#x) .page.enter:is(:has(>.hsw>.setchips),#events)>:not(.hsw,.eh){animation:pgFade .2s ease}}
-/* the slide must not widen the page: a phone browser then resizes its layout viewport and the fixed bottom bar jumps */
-@media(max-width:760px){html{overflow:clip}}
-/* Home on a phone: the wrappers around the Today card are display:contents (no box to animate), so the card gets the rise itself */
-@media(max-width:760px){html:not(#x) .page.enter .camcol>.sch{animation:cdIn calc(.5s*var(--pgs,1)) cubic-bezier(.2,.7,.2,1) calc(.1s*var(--pgs,1)) both}}
+/* the second sticky row (Settings sub-tabs, Security / Insights rows) leads the rise: no delay, like the first row of the other pages */
+html:not(#x) .page.enter :is(.secw,.scfh,.admtop,.adlh){animation-delay:0s!important}
+/* Home on a phone: the wrappers around the Today card are display:contents (no box to animate), so the cards rise themselves, top to bottom */
+@media(max-width:760px){
+html:not(#x) .page.enter .camcol>.sch{animation:cdIn calc(.5s*var(--pgs,1)) cubic-bezier(.2,.7,.2,1) calc(.05s*var(--pgs,1)) both}
+html:not(#x) #home.enter .side>.mini{animation-delay:calc(.1s*var(--pgs,1))}
+html:not(#x) #home.enter .side>.fcp{animation-delay:calc(.15s*var(--pgs,1))}
+}
 /* scene pictures fade in when they have loaded instead of popping in */
 html:not(#x) .sc img.scfi{opacity:0;transition:opacity .5s ease}html:not(#x) .sc img.scfi.ld{opacity:1}
 /* Leaving: the Home card (#lvc, styled with the strip row in 32-attention.css) and its sheet */
@@ -4824,7 +4819,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.0";   // the one place to change the version
 window.DASH_NEW = {"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "76f6ba";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "3a7d50";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -12352,7 +12347,8 @@ function enCost(sp) {   // grid import split into the tariff periods + daily cha
   return { per: per, use: use, fixed: fixed, days: days, total: total, kwh: per.reduce((s, x) => s + x.kwh, 0), cols: cols, est: est, real: !!en.gridCost };
 }
 function drawEnergy() { if (en.anim && Date.now() < en.anim) { clearTimeout(en.at); en.at = setTimeout(drawEnergy, en.anim - Date.now() + 30); return; }   // late answers wait until the slide-in has finished, so they do not cut it off
-  enDraw(); const pg = $("#energy"); if (pg && pg.classList.contains("hold") && (en.data || en.err)) pgEnter(pg); }
+  enDraw(); const pg = $("#energy"); if (pg && pg.classList.contains("hold") && enReady()) pgEnter(pg); }
+const enReady = () => !!en.err || !!(en.data && en.prefs && en.grid !== undefined && en.gridCost !== undefined && en.gas !== undefined && en.gasCost !== undefined);   // everything the page shows is here: it enters once, complete, not as a "Calculating cost…" card that is then replaced
 function enCheapLine(T) {   // tariff hint: which hours are cheapest (and on which days), and whether now is one of them (only when the tariff has more than one rate)
   const R = tarRun(T); if (!R) return "";
   const hr = h => h === 0 || h === 24 ? "midnight" : h === 12 ? "noon" : (h % 12 || 12) + (h < 12 ? "am" : "pm"), cheap = tarLoHi(T).P.filter(p => +p.rate === R.lo);
@@ -12481,7 +12477,7 @@ function route() {
   { const el = $("#" + pg), stp = x => !!x && (x.id === "theme" || x.id === "admin"), tk = stp(el) ? setTab() : "", tabGo = !!tk && !!SETTAB && tk !== SETTAB && bootDone;
     let dir = 0; if (tabGo) { const o = setTabs().map(x => x[0]); dir = o.indexOf(tk) >= o.indexOf(SETTAB) ? 1 : -1; }
     SETTAB = tk;
-    if (el && bootDone && (el !== lastPg || tabGo)) { if (pg === "energy" && !en.data) pgHold(el, 900); else { pgEnter(el); if (tabGo) { el.style.setProperty("--pgdx", dir * 36 + "px"); el.style.setProperty("--pgdr", dir * 16 + "deg"); } } } lastPg = el; if (el) lazyIn(el); }
+    if (el && bootDone && (el !== lastPg || tabGo)) { if (pg === "energy" && !enReady()) pgHold(el, 1500); else { pgEnter(el); if (tabGo) { el.style.setProperty("--pgdx", dir * 36 + "px"); el.style.setProperty("--pgdr", dir * 16 + "deg"); } } } lastPg = el; if (el) lazyIn(el); }
   const setP = p === "theme" || p === "admin", onA = a => a.getAttribute("href") === "#" + p || (setP && a.getAttribute("href") === "#settings");
   $$("nav a").forEach(a => a.classList.toggle("on", onA(a)));
   document.body.classList.remove("more-open");
