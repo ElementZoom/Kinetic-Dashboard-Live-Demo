@@ -2319,6 +2319,9 @@ html .txc>*{animation-duration:calc(.46s*var(--pgs,1));animation-delay:calc(var(
 html #energy .enin{animation-duration:calc(.5s*var(--pgs,1))}
 @media(prefers-reduced-motion:reduce){html:is([data-pgfx=slide],[data-pgfx=zoom],[data-pgfx=flip],[data-pgfx=blur],[data-pgfx=tilt]){--mx-t:none;--mx-f:none}}
 
+/* Settings pages: the tab row stays put while the page enters (the page-level animation is dropped, the content below the row keeps its own entrance) */
+html:not(#x) .page.enter:has(>.hsw>.setchips){animation:none!important}
+html:not(#x) .page.enter>.hsw:has(>.setchips){animation:none!important;opacity:1!important;transform:none!important;filter:none!important}
 /* Leaving: the Home card (#lvc, styled with the strip row in 32-attention.css) and its sheet */
 #lvc .at-x small{font-size:inherit;color:var(--mut)}
 #lvsheet{display:block;position:fixed;inset:0;z-index:85;visibility:hidden;pointer-events:none;transition:visibility 0s .36s}body.lv-open #lvsheet{visibility:visible;pointer-events:auto;transition:none}
@@ -4798,8 +4801,8 @@ html[data-style=glass][data-mode=light]:not(#x) :where(.pn,.card,.rc,.cd,.ws,.zf
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.8.0"></script>
-<script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.8.1"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.8.0"><\/script><script src="zh.js?v=1"><\/script>')</script>
+<script src="config.js?v=1"></script>
+<script src="brand-logo.js?v=1"></script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
@@ -4808,7 +4811,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.0";   // the one place to change the version
 window.DASH_NEW = {"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "b9d70b";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "3d57fd";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -4991,7 +4994,7 @@ const camList = () => onView() ? VWC : onSec() ? CONFIG.security : CONFIG.camera
 const hsw = h => '<div class="hsw">' + h + '<span class="hsm l" aria-hidden="true">' + mdi("chevron-left") + '</span><span class="hsm r" aria-hidden="true">' + mdi("chevron-right") + '</span></div>';
 /* the arrows sit level with the visible row, not the middle of the wrapper (tab rows carry extra padding for their shadow, so those two differ) */
 function hsMid(w, s) { const k = Array.prototype.filter.call(s.children, c => c.offsetHeight); if (!k.length) return; let a = 1e9, b = -1e9; k.forEach(c => { const r = c.getBoundingClientRect(); if (r.top < a) a = r.top; if (r.bottom > b) b = r.bottom; }); w.style.setProperty("--hsy", Math.round(((a + b) / 2 - w.getBoundingClientRect().top) * 10) / 10 + "px"); }
-function hsUpd(w) { const s = w.firstElementChild; if (!s) return; hsMid(w, s); const o = s.scrollWidth > s.clientWidth + 4; w.style.setProperty("--hsd", "-" + Math.round(document.timeline.currentTime % 1400) + "ms"); w.classList.toggle("more", o && s.scrollLeft + s.clientWidth < s.scrollWidth - 4); w.classList.toggle("moreL", o && s.scrollLeft > 4); }
+function hsUpd(w) { const s = w.firstElementChild; if (!s) return; hsMid(w, s); const o = s.scrollWidth > s.clientWidth + 4; const m = o && s.scrollLeft + s.clientWidth < s.scrollWidth - 4, l = o && s.scrollLeft > 4; if ((m || l) && !w.style.getPropertyValue("--hsd")) w.style.setProperty("--hsd", "-" + Math.round(document.timeline.currentTime % 1400) + "ms"); w.classList.toggle("more", m); w.classList.toggle("moreL", l); }
 const hsRO = typeof ResizeObserver === "function" ? new ResizeObserver(es => es.forEach(e => { const w = e.target.closest(".hsw"); if (w) hsUpd(w); })) : null, hsSeen = new WeakSet();
 const hsObs = w => { if (!hsRO || hsSeen.has(w)) return; hsSeen.add(w); const s = w.firstElementChild; if (!s) return; hsRO.observe(s); Array.prototype.forEach.call(s.children, c => hsRO.observe(c)); };   // a row that was laid out while hidden or still sliding in gets its edge arrows as soon as it has a size
 const hsAll = () => $$(".hsw").forEach(w => { hsObs(w); hsUpd(w); });
@@ -8916,8 +8919,8 @@ async function dtLoad(force) {
     // 2) the newest `want` days of each
     const jobs = []; dtCams().forEach(id => (DT.cache["d|" + id] || []).slice(0, want).forEach(day => { const k = "c|" + day.id; if (!DT.cache[k] || (Date.now() - DT.cache[k].t > 600000 && Date.now() - day.d < 2 * 864e5)) jobs.push({ cam: id, day: day }); }));
     if (snapRoot()) await dtPace(async id => { const k = "s|" + id; if (DT.cache[k] && Date.now() - DT.cache[k].t < 60000 && !force) return; const r = await dtBrowse(snapRoot() + "/" + id.replace(/^camera\./, "")).catch(() => null); DT.cache[k] = { t: Date.now(), l: r ? (r.children || []).map(x => ({ ts: snapTs(x.title || x.media_content_id), id: x.media_content_id })).filter(x => x.ts).sort((a, b) => a.ts - b.ts) : [] }; }, dtCams(), 3);
-    await dtPace(async j => { const r = await dtBrowse(j.day.id).catch(() => null); if (r) DT.cache["c|" + j.day.id] = { t: Date.now(), kids: r.children || [] }; DT.loaded++; dtDraw(true); }, jobs, 3);
-  } finally { DT.busy = false; DT.t0 = Date.now(); dtDraw(); if (DT.again) { const f = DT.again === true; DT.again = 0; dtLoad(f); } }
+    await dtPace(async j => { const r = await dtBrowse(j.day.id).catch(() => null); if (r) DT.cache["c|" + j.day.id] = { t: Date.now(), kids: r.children || [] }; DT.loaded++; dtDrawLater(); }, jobs, 3);
+  } finally { DT.busy = false; DT.t0 = Date.now(); clearTimeout(DT.lt); DT.lt = 0; dtDraw(); if (DT.again) { const f = DT.again === true; DT.again = 0; dtLoad(f); } }
 }
 function dtItems() {
   const R0 = DT_R[DT.range - 1] || DT_R[0], want = R0[1], since = Date.now() - R0[0] * 36e5, out = [];
@@ -8994,6 +8997,9 @@ function dtSmAfter(P, o) {
   if (bars.length) { bars.forEach((el, i) => { const from = o.bars && o.bars.length === bars.length ? o.bars[i] : "3%"; if (from !== to[i]) { el.style.transition = "none"; el.style.height = from; } });
     void P.offsetHeight; bars.forEach((el, i) => { el.style.transition = ""; el.style.height = to[i]; }); }
   P.querySelectorAll(".dtln").forEach((l, i) => l.querySelectorAll(".dtdot").forEach(d => { if (!o.dots.has(i + "|" + d.style.left)) d.classList.add("dtpop"); }));
+}
+function dtDrawLater() {   // while loading: one redraw per ~1.2s instead of one per day folder
+  if (DT.lt) return; DT.lt = setTimeout(() => { DT.lt = 0; dtDraw(true); }, 1200);
 }
 function dtDraw(soft) {
   const P = $("#dtp"); if (!P) return; if (!dtCams().length || CONFIG.detections === false) { P.style.display = "none"; return; } P.style.display = "";
