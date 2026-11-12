@@ -4818,7 +4818,7 @@ html:not(#x) :is(#kp,#sp,#bd,#grp,#grpw,#cmtsh,#rsp,#insq,#evq,#dtm,#tlsh,#tlscr
 <div id="cpp"></div>
 <div id="vw"></div>
 <div id="kp"></div><div id="sp"></div>
-<script src="config.js?v=2.8.0"></script>
+<script src="config.js?v=1"></script>
 <script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.8.1"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.8.0"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
@@ -4828,7 +4828,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "066a78";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "2e26a5";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -5921,10 +5921,10 @@ $("#cg").addEventListener("click", e => {
   if (ce) { const x = EVS[+ce.dataset.ev]; if (x) evOpen({ ev: x }); }
   else if (cd && evWritable().length) evOpen({ date: cd.dataset.d });
 });
-function evScrollTo(g, f) {   // scroll only the agenda list (scrollIntoView also scrolled the page around it, so the sticky header jumped up and back): today's card (or the next event day) goes to the top, with a little room under the fade
+function evScrollTo(g, f) {   // scroll only the agenda list (scrollIntoView also scrolled the page around it, so the sticky header jumped up and back): today's card (or the next event day) goes to the top, with room under the fade
   if (innerWidth > 760 && g.scrollHeight <= g.clientHeight + 1) { f.scrollIntoView({ block: "start" }); return; }   // tablet / PC: the page itself scrolls
   let c = f; while (c.parentElement && c.parentElement !== g) c = c.parentElement;   // the list item that holds the day heading (the Today card, or the heading itself)
-  g.scrollTop = Math.max(0, c.offsetTop - g.offsetTop - 16);   // layout offsets: the entrance animation moves the boxes, their screen position would be off
+  g.scrollTop = Math.max(0, c.offsetTop - g.offsetTop - 30);   // layout offsets: the entrance animation moves the boxes, their screen position would be off
 }
 function shiftMonth(d) { txGo($("#cg"), d, false); evJump = true; if (evView() === "week") { evw = new Date(evw.getFullYear(), evw.getMonth(), evw.getDate() + 7 * d); evSel = null; cy = evw.getFullYear(); cm = evw.getMonth(); loadEvents(); return; } evSel = null; cm += d; if (cm < 0) { cm = 11; cy--; } if (cm > 11) { cm = 0; cy++; } loadEvents(); }
 $("#ep").onclick = () => shiftMonth(-1); $("#en").onclick = () => shiftMonth(1);
