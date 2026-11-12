@@ -3771,6 +3771,9 @@ html[data-mode=dark] .nbg{color:#000}   /* dark mode colours are light, so the n
 .it .itv{padding-right:22px;box-sizing:border-box}
 @media(hover:hover){.it:hover::after{opacity:1;transform:translateX(2px) rotate(45deg)}}
 @media(prefers-reduced-motion:reduce){.it::after{transition:none}}
+
+.wpl.zbp{background:rgba(var(--heat-rgb),.2);color:var(--heat);font-weight:600}
+html[data-mode=light] .wpl.zbp{color:#b3261e;background:rgba(179,38,30,.12)}
 /* ---------- Weather page scenes (20-weather-scenes.js): the animated skies, their sliders and the Forecast week explorer ---------- */
 .wsc{position:relative;overflow:hidden;border-radius:14px;margin:10px 0 0;background:#2d3f78;isolation:isolate}
 .wsc>canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-1}
@@ -4806,7 +4809,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.0";   // the one place to change the version
 window.DASH_NEW = {"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "cad7f2";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "8b23fb";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -10423,7 +10426,7 @@ function notif(full, f) {
   let n = 0, h = "";
   const sec = (t, b, k) => { if (full && b && npFocus(k, f)) h += '<div class="lbl np2">' + t + '</div>' + b; };
   const grid = a => a.length ? '<div class="tg3">' + a.map(tileHtml).join("") + '</div>' : "";
-  const al = volcHtml().concat(quakeHtml() || []), pa = !attnCfg() && npAttn() && polAlert(); if (pa) al.push(pa); n += al.length; sec("Alerts", al.join(""), "haz");
+  const al = volcHtml().concat(quakeHtml() || []), pa = !attnCfg() && npAttn() && polAlert(); if (pa) al.push(pa); if (typeof zbAlertHtml === "function") zbAlertHtml().forEach(x => al.unshift(x)); n += al.length; sec("Alerts", al.join(""), "haz");
   const dr = doorsOpen();
   if (dr) { n++; sec("Doors", '<div class="alert q"><b>' + (dr.length || 1) + ' open</b><div>' + dr.map(x => esc(fname(x))).join(" · ") + '</div></div>', "door"); }
   const LK = LEAKS().filter(x => isOn(x[0])), dup = npDupIds(), W2 = (CONFIG.alerts || []).filter(x => isOn(x[0]) && !entHidden(x[0]) && !dup[x[0]]);   // leak sensors first, as red cards
@@ -10480,7 +10483,7 @@ const NSK = [
   ["laundry", "washing-machine", "Laundry running", laundryOn],
   ["towel", "radiator", "Towel heating on", towelsOn]
 ];
-const nskRel = id => (typeof nzfRel === "function" && nzfRel(id)) || attnRel(id) || polRel(id) || binsIds().includes(id) || /^sensor\..*battery_plus$/.test(id) || LEAKS().some(x => x[0] === id) || id === E("weatherWarnings") || id === W || id === E("doorsGroup") || id === E("laundryState") || id === E("laundryRemaining") || id === E("towelGroup") || members(E("towelGroup")).includes(id) || members(E("doorsGroup")).includes(id) || /^switch\..*water_tap$/.test(id) || Object.keys(galCfg()).some(k => (galCfg()[k] || {}).sensor === id) || (CONFIG.irrigation || []).some(z => z.switch === id);
+const nskRel = id => (typeof nzfRel === "function" && nzfRel(id)) || (typeof zbRel === "function" && zbRel(id)) || attnRel(id) || polRel(id) || binsIds().includes(id) || /^sensor\..*battery_plus$/.test(id) || LEAKS().some(x => x[0] === id) || id === E("weatherWarnings") || id === W || id === E("doorsGroup") || id === E("laundryState") || id === E("laundryRemaining") || id === E("towelGroup") || members(E("towelGroup")).includes(id) || members(E("doorsGroup")).includes(id) || /^switch\..*water_tap$/.test(id) || Object.keys(galCfg()).some(k => (galCfg()[k] || {}).sensor === id) || (CONFIG.irrigation || []).some(z => z.switch === id);
 // ---------- smooth fold / unfold of groups that a redraw rebuilds with innerHTML ----------
 // Notifications > Active groups and Security > Detections grouped clips are redrawn as HTML, so the group itself cannot be transitioned.
 // Around that redraw: note each group's state and rows; right after it (same frame, before anything is painted) put a copy of the old rows and the
@@ -10861,6 +10864,34 @@ $("#upc").addEventListener("click", ev => {
   }
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && UPC.e) { e.stopPropagation(); upcClose(); } });
+// ---------- Zigbee network down ----------
+// The Zigbee2MQTT bridge connection sensors (binary_sensor.zigbee2mqtt_bridge_connection_state, ..._state_3) go off when a bridge drops and every device on it stops reporting. Once one has been down for
+// zigbee.minutes (5, like a "down for 5 minutes" automation) the dashboard says so in three places: a red "Zigbee down" pill on the Home greeting card, a red card in Notifications > Alerts (which also
+// counts on the bell and the header pill), and Insights "Needs you" (insxDrops). Admins only, since it is a system fault.
+// Config (all optional): zigbee: { bridges: ["binary_sensor.zigbee2mqtt_bridge_connection_state", "..."], minutes: 5 }   or   zigbee: false   to turn it off.
+// Without bridges it watches every binary_sensor.*zigbee2mqtt / z2m *_bridge_connection_state[_N] it can see.
+function zbCfg() { const c = CONFIG.zigbee; return c === false ? null : Object.assign({ bridges: null, minutes: 5 }, c && typeof c === "object" ? c : {}); }
+function zbIds() {
+  const c = zbCfg(); if (!c) return [];
+  return c.bridges && c.bridges.length ? c.bridges.filter(id => states[id]) : Object.keys(states).filter(id => /^binary_sensor\..*(zigbee2mqtt|z2m)_bridge_connection_state(_\d+)?$/.test(id));
+}
+function zbName(id) {
+  const t = typeof sysGroups === "function" ? [].concat.apply([], sysGroups().map(g => g[1])).find(x => x.id === id) : null; if (t && t.name) return t.name;
+  const n = ((states[id] || {}).attributes || {}).friendly_name; return (n ? String(n).replace(/\s*bridge connection state.*$/i, "") : fname(id)) || id;
+}
+// bridges that have been down for the whole grace period: [[id, ms down, name], ...], longest first
+function zbDown() {
+  if (typeof ADMIN_ON === "function" && !ADMIN_ON()) return [];
+  const c = zbCfg(); if (!c) return []; const now = Date.now(), min = (+c.minutes >= 0 ? +c.minutes : 5) * 6e4;
+  return zbIds().filter(id => /^(off|offline|unavailable|disconnected)$/.test(String(states[id].state))).map(id => [id, now - (Date.parse(states[id].last_changed || "") || now), zbName(id)]).filter(x => x[1] >= min).sort((a, b) => b[1] - a[1]);
+}
+const zbRel = id => zbIds().indexOf(id) > -1 || /^binary_sensor\..*(zigbee2mqtt|z2m)_bridge_connection_state(_\d+)?$/.test(id);
+const zbAgo = ms => ms < 36e5 ? Math.max(1, Math.round(ms / 6e4)) + " min" : ms < 864e5 ? Math.round(ms / 36e5) + " h" : Math.round(ms / 864e5) + " days";
+function zbAlertHtml() {   // red cards for Notifications > Alerts
+  return zbDown().map(x => '<div class="alert q" data-go="#admin" style="--qc:var(--heat)"><div class="lbl">' + mdi("access-point-network") + ' ZIGBEE NETWORK DOWN</div><b>' + esc(x[2]) + '</b><div>Down for ' + zbAgo(x[1]) + ' · the devices on it are not reporting</div></div>');
+}
+function zbPill() { const d = zbDown(); return d.length ? '<span class="wpl zbp" data-go="#admin">' + mdi("access-point-network") + 'Zigbee down' + (d.length > 1 ? " · " + d.length : "") + '</span>' : ""; }
+setInterval(() => { if (typeof queueNotif === "function") queueNotif(); if (typeof hplDraw === "function") hplDraw(); }, 30000);   // the grace period needs a clock, not only state changes
 // ---------- Leaving: what is still on or open before you go ----------
 // The card on Home (it took the place of the old Attention card; Attention lives on in Notifications) lists lights left on, the garage door, open doors and a disarmed alarm. Tap it for the list, with Lights off and Arm away.
 // Config: leaving: false | { lights: true, garage: true, doors: true, alarm: true, lightEntities: [], ignore: ["light.hall_lamp"] } (see config.example.js). Lights default to the lights of the rooms on the Rooms page.
@@ -11617,7 +11648,11 @@ const pillIn = el => { if (isMobile()) rmAfter(el, "pin", 450); };
 function shShut(el, bk, fn) { if (!el || !isMobile()) return fn(); if (el.classList.contains("shut")) return; el.classList.add("shut"); if (bk) bk.classList.add("shut"); setTimeout(() => { el.classList.remove("shut"); if (bk) bk.classList.remove("shut"); fn(); }, 260); }
 // a tab row that scrolls sideways always keeps the selected tab in view
 const tabsSeen = new WeakMap();
-let tabsQ = 0; new MutationObserver(() => { if (!tabsQ) tabsQ = requestAnimationFrame(tabsFix); }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
+let tabsQ = 0;
+// a tab row that has just been drawn or shown (a page switch) is fixed in this same microtask, before the frame is painted: the selected tab scrolled into view and the edge arrows / fade set. Done a frame
+// (and, for the arrows, 120 ms) later it showed as a blink and a jump every time you moved between tabs.
+const tabsNew = m => m.type === "attributes" ? (m.target.classList && (m.target.classList.contains("page") || m.target.classList.contains("hsw") || m.target.classList.contains("on")) && !!(m.target.querySelector && m.target.querySelector(".hsw,.chips.tabs"))) : Array.prototype.some.call(m.addedNodes, n => n.nodeType === 1 && (n.matches(".hsw,.chips.tabs,.page") || !!n.querySelector(".hsw,.chips.tabs")));
+new MutationObserver(ms => { if (ms.some(tabsNew)) { tabsFix(); if (typeof hsAll === "function") hsAll(); } if (!tabsQ) tabsQ = requestAnimationFrame(tabsFix); }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
 function tabsFix() { tabsQ = 0; $$(".chips.tabs").forEach(t => { const on = t.querySelector(".chip.on"); if (!on || tabsSeen.get(t) === on || t.scrollWidth <= t.clientWidth + 1) return; tabsSeen.set(t, on); const l = on.offsetLeft - t.offsetLeft, r = l + on.offsetWidth; if (l < t.scrollLeft || r > t.scrollLeft + t.clientWidth) t.scrollLeft = Math.max(0, l - (t.clientWidth - on.offsetWidth) / 2); }); }
 function scStripGo() { const t = $("#scenes .scstp"), on = t && $(".sc.on", t); if (on) t.scrollLeft = Math.max(0, on.offsetLeft - t.offsetLeft - (t.clientWidth - on.offsetWidth) / 2); }
 const MPK = {};
@@ -13341,7 +13376,7 @@ setInterval(() => { if (document.visibilityState === "visible") insTick(); }, 30
 function hplDraw() {
   const hs = $(".hs"), w = $("#wpls"); if (!hs || !w) return;
   let el = $("#hpls"); if (!el) { el = document.createElement("span"); el.id = "hpls"; w.after(el); }
-  let h = "";
+  let h = typeof zbPill === "function" ? zbPill() : "";   // 33-zigbee-alert.js: red, first, on every screen size
   if (isMobile()) {
     const lv = typeof lvItems === "function" ? lvItems() : [], need = insOn() && PAGE_ON("insights") ? (INS.last || []).filter(x => x.lvl === 2) : [];
     if (lv.length) h += '<span class="wpl lvp" data-lvo>' + mdi("door-open") + esc(lv[0].s + (lv.length > 1 ? " +" + (lv.length - 1) : "")) + '</span>';
