@@ -2331,6 +2331,10 @@ html[data-pgfx=tilt]:not(#x) .page.enter:is(:has(>.hsw>.setchips),#events)>:not(
 @media(prefers-reduced-motion:reduce){html:is([data-pgfx=slide],[data-pgfx=blur],[data-pgfx=zoom],[data-pgfx=flip],[data-pgfx=tilt]):not(#x) .page.enter:is(:has(>.hsw>.setchips),#events)>:not(.hsw,.eh){animation:pgFade .2s ease}}
 /* the slide must not widen the page: a phone browser then resizes its layout viewport and the fixed bottom bar jumps */
 @media(max-width:760px){html{overflow:clip}}
+/* Home on a phone: the wrappers around the Today card are display:contents (no box to animate), so the card gets the rise itself */
+@media(max-width:760px){html:not(#x) .page.enter .camcol>.sch{animation:cdIn calc(.5s*var(--pgs,1)) cubic-bezier(.2,.7,.2,1) calc(.1s*var(--pgs,1)) both}}
+/* scene pictures fade in when they have loaded instead of popping in */
+html:not(#x) .sc img.scfi{opacity:0;transition:opacity .5s ease}html:not(#x) .sc img.scfi.ld{opacity:1}
 /* Leaving: the Home card (#lvc, styled with the strip row in 32-attention.css) and its sheet */
 #lvc .at-x small{font-size:inherit;color:var(--mut)}
 #lvsheet{display:block;position:fixed;inset:0;z-index:85;visibility:hidden;pointer-events:none;transition:visibility 0s .36s}body.lv-open #lvsheet{visibility:visible;pointer-events:auto;transition:none}
@@ -4820,7 +4824,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.0";   // the one place to change the version
 window.DASH_NEW = {"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "121a24";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "76f6ba";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -8445,7 +8449,7 @@ function scTags(v, full) { const both = (CONFIG.scenes.lights || []).length && (
 function scTile(x) {   // one picture (or a colour tile from the name when there is no picture)
   let h = 0; for (const ch of x.v) h = (h * 31 + ch.charCodeAt(0)) % 360;
   const both = (CONFIG.scenes.lights || []).length && (CONFIG.scenes.rooms || []).length;
-  return '<div class="sc' + (x.img ? "" : " scgen") + '" data-v="' + esc(x.v) + '"' + (x.img ? "" : ' style="--h1:' + h + ';--h2:' + ((h + 70) % 360) + '"') + '>' + (x.img ? '<img loading="lazy" alt="" src="' + x.img + '">' : "") + (both ? '<i class="sctg">' + (x.room ? mdi("lightbulb") : "") + (x.led ? mdi("led-strip") : "") + '</i>' : "") + '<span>' + esc(title(x.v)) + '</span></div>';
+  return '<div class="sc' + (x.img ? "" : " scgen") + '" data-v="' + esc(x.v) + '"' + (x.img ? "" : ' style="--h1:' + h + ';--h2:' + ((h + 70) % 360) + '"') + '>' + (x.img ? '<img class="scfi" loading="lazy" alt="" src="' + x.img + '" onload="this.classList.add(\'ld\')" onerror="this.classList.add(\'ld\')">' : "") + (both ? '<i class="sctg">' + (x.room ? mdi("lightbulb") : "") + (x.led ? mdi("led-strip") : "") + '</i>' : "") + '<span>' + esc(title(x.v)) + '</span></div>';
 }
 const scZoneCan = v => !v || scRoomHas(v);   // a room zone can play the picked scene
 const scLedCan = (i, v) => { v = v == null ? sv(E("dynSelected")) || "" : v; return !v || !!scOpt(i, v); };
@@ -9338,7 +9342,8 @@ function hzFit() {   // phone: the map page and the lists page each fill the spa
   const g = $("#hazards .hzg"); if (!g) return;
   if (innerWidth > 1000) { const hd = $("header"), top = hd ? hd.getBoundingClientRect().bottom + 14 : g.getBoundingClientRect().top; g.style.setProperty("--hzH", Math.max(520, innerHeight - top - 18) + "px"); return; }   // tablet / PC: both columns end at the bottom of the screen
   if (innerWidth > 760) { g.style.removeProperty("--hzH"); return; }
-  const bt = $("#btab"), br = bt ? bt.getBoundingClientRect() : null, bot = br && br.height ? br.top : innerHeight, hd = $("header"), tw = $("#hazards .hztw"), top = tw && tw.offsetHeight ? tw.getBoundingClientRect().bottom + 8 : hd ? hd.getBoundingClientRect().bottom + 12 : g.getBoundingClientRect().top, h = Math.max(360, bot - top - 54);
+  const bt = $("#btab"), br = bt ? bt.getBoundingClientRect() : null, bot = br && br.height ? br.top : innerHeight, hd = $("header"), tw = $("#hazards .hztw"), oy = e => { let y = 0; for (; e && e !== document.body; e = e.offsetParent) y += e.offsetTop; return y; },   // layout position: the entrance animation moves the boxes, so measuring their screen position gave a map height that then changed
+      top = tw && tw.offsetHeight ? oy(tw) + tw.offsetHeight + 8 : hd ? hd.getBoundingClientRect().bottom + 12 : g.getBoundingClientRect().top, h = Math.max(360, bot - top - 54);
   g.style.setProperty("--hzH", h + "px");
 }
 function hzTab(t) { const ord = ["map", "quake", "volc", "roads"], was = HZ.tab; HZ.tab = t; if (was !== t && was && $("#hazards .hzg")) txGo($("#hazards .hzg"), ord.indexOf(t) > ord.indexOf(was) ? 1 : -1, true); const g = $("#hazards .hzg"); if (g) g.dataset.tab = t; $$("#hazards .hztabs .chip").forEach(c => c.classList.toggle("on", c.dataset.v === t)); hzFit(); }
