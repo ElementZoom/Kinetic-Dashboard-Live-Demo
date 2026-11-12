@@ -4682,6 +4682,17 @@ html:not(#x) .main > header.hstk{box-shadow:0 8px 14px -10px rgba(0,0,0,.45)!imp
   html:not(#x) .cam.fs:not(.ls) .aud{left:14px;top:72px}
   html:not(#x) .cam.fs:not(.ls) .cpanel{padding:44px 14px 14px}
 }
+/* phones: the title bar and a pinned tab row sit on one frosted band once a page has scrolled. The page scrolls from the top of the screen (the 66px is the title bar and its gap), so its content slides under the band and shows through it, blurred. #fband is placed and shown by wpSync (31-section-pills.js). */
+#fband{display:none}
+@media(max-width:760px){
+  html:not(#x) .main > .page{margin-top:-66px;padding-top:66px}
+  #fband{display:block;position:fixed;left:0;right:0;top:0;height:76px;z-index:20;pointer-events:none;opacity:0;border-radius:0 0 22px 22px;background:color-mix(in srgb,var(--bg) 52%,transparent);-webkit-backdrop-filter:blur(44px) saturate(1.7);backdrop-filter:blur(44px) saturate(1.7);box-shadow:0 8px 18px -10px rgba(0,0,0,.55);transition:opacity .28s ease,height .22s ease}
+  #fband.on{opacity:1}
+  /* the pinned rows stop painting the wallpaper over what scrolls under them; the band does that now, and carries the shadow */
+  html:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.admtop,.adlh,.ehc,#stabs,.inschips).stk{background:transparent!important;box-shadow:none!important}
+  html:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.admtop,.adlh,.ehc,#stabs,.inschips).stk::before{opacity:0!important;box-shadow:none!important}
+  html.fbon:not(#x) .main > header.hstk{box-shadow:none!important}
+}
 </style>
 <style>
 /* HA diagnostics stay compact until requested. */
@@ -4769,7 +4780,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.0";   // the one place to change the version
 window.DASH_NEW = {"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "fc8799";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "21b3d7";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -9559,7 +9570,13 @@ function wpSync() {
     const sc = wpScroller(e); e.classList.toggle("stk", !!sc && sc.scrollTop > 1);
   });
   // a page with no pinned tab row: the title bar itself gets the soft shadow once the page has scrolled under it
-  { const pg = document.querySelector(".page.on"), hd = document.querySelector(".main > header"); if (pg && hd) { const po = getComputedStyle(pg).overflowY, sc = (po === "auto" || po === "scroll") && pg.scrollHeight > pg.clientHeight ? pg : wpScroller(pg); hd.classList.toggle("hstk", !!sc && sc.scrollTop > 1 && !pg.querySelector(".stk")); } }
+  // a page scrolled under its title bar: one frosted band (#fband) sits behind the title bar and any pinned tab row (73-frosted-header.css); the page itself scrolls from the top of the screen on phones, so its content slides under the band
+  { const pg = document.querySelector(".page.on"), hd = document.querySelector(".main > header"); if (pg && hd) { const po = getComputedStyle(pg).overflowY, sc = (po === "auto" || po === "scroll") && pg.scrollHeight > pg.clientHeight ? pg : wpScroller(pg), moved = !!sc && sc.scrollTop > 1;
+    hd.classList.toggle("hstk", moved && !pg.querySelector(".stk"));
+    const own = sc === pg, fb = document.getElementById("fband") || document.body.appendChild(Object.assign(document.createElement("div"), { id: "fband" }));
+    document.querySelectorAll(".page.fbp").forEach(x => { if (x !== pg) x.classList.remove("fbp"); }); pg.classList.toggle("fbp", own);
+    const hb = hd.getBoundingClientRect().bottom; let bt = hb + 6; pg.querySelectorAll(".stk").forEach(e => { const r = e.getBoundingClientRect(); if (r.width && r.top < hb + 24) bt = Math.max(bt, r.bottom + 2); });
+    fb.style.height = Math.round(bt) + "px"; fb.classList.toggle("on", own && moved); document.documentElement.classList.toggle("fbon", own && moved); } }
 }
 let wpQ = 0;
 const wpGo = () => { if (wpQ) return; wpQ = requestAnimationFrame(() => { wpQ = 0; wpSync(); }); };
