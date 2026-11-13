@@ -1900,6 +1900,13 @@ html:not(#x) .zc:fullscreen>.mkt,html:not(#x) .zc.zfull>.mkt{top:calc(14px + env
 @media(prefers-reduced-motion:reduce){.zc>*{transition:none!important}}
 .cam.zm,.zm>img,.zm>video{cursor:grab}.cam.zm:active,.zm:active>img,.zm:active>video{cursor:grabbing}
 .pbf>.hsw{flex:1 1 0;min-width:0}   /* playback / detection filter chips: the animated side arrows show when the row scrolls */
+
+/* a player's full screen on a phone held upright turns to landscape like the live camera (37-camera-zoom.js czLand): the card is turned with CSS when the phone will not turn */
+html:not(#x) .zc.zls:fullscreen,html:not(#x) .zc.zls.zfull{inset:auto;top:0;left:0;width:100vh;height:100vw;width:100dvh;height:100dvw;transform:translateX(100vw) rotate(90deg);transform-origin:top left}
+/* the live camera opening: a spinner and a message until the first picture (12-init.js .cld) */
+.cam .cld{display:none}
+.cam:is(.fs,.vf):not(.live):not(.pb) .cld{display:flex;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);flex-direction:column;align-items:center;gap:12px;z-index:3;pointer-events:none;color:rgba(255,255,255,.8);font:13px var(--mono);letter-spacing:.04em;text-shadow:0 1px 6px rgba(0,0,0,.6);white-space:nowrap}
+html.camsw .cam .cld .dtsp{animation:none}
 /* artist info: the Artist tab beside the lyrics (Media page, and the lyrics sheet on a phone) and the Artist page in the Now Playing sheet */
 .aitabs{display:inline-flex;gap:2px;padding:4px;border-radius:99px;background:rgba(var(--w),.1);text-transform:none}.aitabs .chip{border:0;background:transparent;box-shadow:none;padding:8px 18px;min-height:0;font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}.aitabs .chip.on{background:var(--mint);color:var(--bg)}
 .lyh .aitabs{margin:-6px 0}
@@ -5326,7 +5333,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "60970f";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "a61567";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -6886,7 +6893,8 @@ function mkCam(c, host) {
     o.img.addEventListener("load", () => { if (!c.live) ar(o.img); }); o.vid.addEventListener("loadedmetadata", () => ar(o.vid)); o.vid.addEventListener("resize", () => ar(o.vid)); }
   const cp = $(".cpanel", el); cp.onclick = tapH; cp.onchange = chgH;
   // phones: the garage door / light tiles under a full-screen camera stay folded away (they covered the bottom of the picture); this pill brings them up and puts them away
-  const ctb = document.createElement("button"); ctb.className = "ctb"; ctb.setAttribute("aria-expanded", "false"); ctb.innerHTML = mdi("chevron-up") + "<span>CONTROLS</span>"; el.appendChild(ctb);
+  const ctb = document.createElement("button"); ctb.className = "ctb"; ctb.setAttribute("aria-expanded", "false"); ctb.innerHTML = mdi("chevron-up") + "<span>CONTROLS</span>"; el.appendChild(ctb); el.insertAdjacentHTML("beforeend", '<div class="cld"><i class="dtsp"></i>Connecting to camera…</div>');   // full screen / camera view: a spinner and a message until the first picture
+
   el._ctb = () => { const o = !el.classList.contains("cpo"); el.classList.toggle("cpo", o); ctb.setAttribute("aria-expanded", o); ctb.innerHTML = mdi(o ? "chevron-down" : "chevron-up") + "<span>" + (o ? "HIDE" : "CONTROLS") + "</span>"; };
   if (host.id === "vw") {   // the camera view's top controls share one wrapper, so the layout can put them in one row (tablets) or two (phones)
     const vh = document.createElement("div"); vh.className = "vh"; ["lbl", "dl", "lv", "aud", "px", "cx", "fsb"].forEach(k => { const n = el.querySelector("." + k); if (n) vh.appendChild(n); }); el.appendChild(vh); el.dataset.k = c.k;
@@ -12397,7 +12405,7 @@ WFX.c = document.getElementById("wfx"); requestAnimationFrame(wfxFrame);
 // one finger moves the zoomed picture, a tap while zoomed puts it back (a tap on the unzoomed live picture still closes the card; on a zoomed recording a tap shows the round play / pause button and a double tap puts it back). Turn it off with  camZoom: false  in config.js.
 const CZ = { pts: new Map(), el: null, s0: 1, d0: 0, x0: 0, y0: 0, fx: 0, fy: 0, px: 0, py: 0, moved: 0, t: 0, max: 6 };
 const czOk = el => CONFIG.camZoom !== false && !!el && (el.classList.contains("fs") || el.classList.contains("vf")) && !el.classList.contains("pb") && !el.classList.contains("fclose");
-const czRot = el => !!el.closest(".cam.ls");   // turned with CSS (not by the phone): the card's x axis runs down the screen
+const czRot = el => !!el.closest(".cam.ls") || el.classList.contains("zls");   // turned with CSS (not by the phone): the card's x axis runs down the screen
 const czState = el => el._z || (el._z = { s: 1, x: 0, y: 0 });
 function czApply(el, s, x, y) {
   const z = czState(el); s = Math.max(1, Math.min(CZ.max, s));
@@ -12486,14 +12494,23 @@ function czPpShow(el, on) { if (!el._zui) return; clearTimeout(el._ztm); el._zsh
 // so the moment the browser re-lays out the page (the picture jumping across a black screen) is never seen
 const czRm = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 function czFadeIn(el) { clearTimeout(el._zfT); el._zfT = setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(() => el.classList.remove("zfade", "zfnow"))), 90); }
+// a phone held upright: the player's full screen turns to landscape like a live camera does (the phone is asked to turn; when it will not, the player is turned with CSS)
+function czLandOff(el) { el.classList.remove("zls"); if (el._zlk) { el._zlk = 0; try { screen.orientation.unlock(); } catch (_) {} } }
+function czLand(el) {
+  if (!isMobile() || innerHeight <= innerWidth || el.classList.contains("zls")) return;
+  const on = () => czFsNow() === el || el.classList.contains("zfull");
+  const css = () => { if (!on() || innerHeight <= innerWidth || el.classList.contains("zls")) return; clearTimeout(el._zfT); el.classList.add("zfade", "zfnow"); setTimeout(() => { if (!on()) return; czReset(el); el.classList.add("zls"); czUi(el); czFadeIn(el); }, 30); };
+  const o = screen.orientation;
+  if (o && o.lock && czFsNow() === el) { try { o.lock("landscape").then(() => { el._zlk = 1; }, () => {}); } catch (_) {} setTimeout(css, 350); } else css();
+}
 function czFull(el) {
   const rm = czRm();
-  if (czFsNow() === el) { const go = () => { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }; if (rm) return go(); clearTimeout(el._zfT); el.classList.add("zfade"); el._zfT = setTimeout(go, 150); return; }
-  if (el.classList.contains("zfull")) { const go = () => { el.classList.remove("zfull"); czReset(el); czUi(el); if (!rm) czFadeIn(el); }; if (rm) return go(); clearTimeout(el._zfT); el.classList.add("zfade"); el._zfT = setTimeout(go, 150); return; }
+  if (czFsNow() === el) { const go = () => { czLandOff(el); (document.exitFullscreen || document.webkitExitFullscreen).call(document); }; if (rm) return go(); clearTimeout(el._zfT); el.classList.add("zfade"); el._zfT = setTimeout(go, 150); return; }
+  if (el.classList.contains("zfull")) { const go = () => { czLandOff(el); el.classList.remove("zfull"); czReset(el); czUi(el); if (!rm) czFadeIn(el); }; if (rm) return go(); clearTimeout(el._zfT); el.classList.add("zfade"); el._zfT = setTimeout(go, 150); return; }
   if (!rm) { clearTimeout(el._zfT); el.classList.add("zfade", "zfnow"); clearTimeout(el._zfS); el._zfS = setTimeout(() => { if (el.classList.contains("zfade")) czFadeIn(el); }, 1500); }   // hidden at once: the request has to happen inside the tap, so there is no time to fade out first
   const rf = el.requestFullscreen || el.webkitRequestFullscreen; let p; if (rf) { try { p = rf.call(el); } catch (x) { p = Promise.reject(x); } }
-  const pseudo = () => { el.classList.add("zfull"); czReset(el); czUi(el); if (!rm) czFadeIn(el); };   // no real full screen here (an iPhone, an iframe that does not allow it): fill the page instead
-  if (!rf) pseudo(); else Promise.resolve(p).catch(pseudo);
+  const pseudo = () => { el.classList.add("zfull"); czReset(el); czUi(el); if (!rm) czFadeIn(el); czLand(el); };   // no real full screen here (an iPhone, an iframe that does not allow it): fill the page instead
+  if (!rf) pseudo(); else Promise.resolve(p).then(() => czLand(el), pseudo);
 }
 function czEnhance(el) {
   if (el._zui || CONFIG.camZoom === false) return; const v = el.querySelector("video"); if (!v) return; el._zui = 1;
@@ -12515,10 +12532,12 @@ function czEnhance(el) {
 const czScan = () => document.querySelectorAll(".pbv,.dtv").forEach(czEnhance);
 czScan(); if (window.MutationObserver) { let q = 0; new MutationObserver(() => { if (!q) q = requestAnimationFrame(() => { q = 0; czScan(); }); }).observe(document.body, { childList: true, subtree: true }); }
 ["loadstart"].forEach(n => document.addEventListener(n, e => { const p = e.target && e.target.tagName === "VIDEO" ? e.target.parentElement : null; if (p && czPlayer(p)) czEnhance(p); }, true));
-["fullscreenchange", "webkitfullscreenchange"].forEach(n => document.addEventListener(n, () => { document.querySelectorAll(".zc.zfade").forEach(czFadeIn); document.querySelectorAll(".zm").forEach(czReset); document.querySelectorAll(".zc").forEach(e => { if (e._zui) czUi(e); }); }));
+["fullscreenchange", "webkitfullscreenchange"].forEach(n => document.addEventListener(n, () => { document.querySelectorAll(".zc.zfade").forEach(czFadeIn); document.querySelectorAll(".zm").forEach(czReset); document.querySelectorAll(".zc").forEach(e => { if ((e.classList.contains("zls") || e._zlk) && czFsNow() !== e && !e.classList.contains("zfull")) czLandOff(e); if (e._zui) czUi(e); }); }));
 document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll(".zc.zfull").forEach(czFull); });
 
 document.addEventListener("dragstart", e => { if (CZ.pts.size && czTarget(e)) e.preventDefault(); });   // a mouse drag moves the picture, it does not pick the image up
+
+addEventListener("resize", () => { if (innerWidth > innerHeight) document.querySelectorAll(".zc.zls").forEach(e => { e.classList.remove("zls"); czReset(e); }); });
 // ---------- Playback / Detections: mark the person or car that moves ----------
 // Needs no extra software: the picture is compared with the one a moment ago, and a box follows whatever changed. It only runs for clips the camera tagged Person / Vehicle / Animal, so wind and shadows in plain "Motion" clips are left alone.
 // config.js: detectMark: "brackets" (default) | "box" | "glow" | false
