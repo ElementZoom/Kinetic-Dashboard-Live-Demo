@@ -1905,7 +1905,7 @@ html:not(#x) .zc:fullscreen>.mkt,html:not(#x) .zc.zfull>.mkt{top:calc(14px + env
 html:not(#x) .zc.zls:fullscreen,html:not(#x) .zc.zls.zfull{inset:auto;top:0;left:0;width:100vh;height:100vw;width:100dvh;height:100dvw;transform:translateX(100vw) rotate(90deg);transform-origin:top left}
 /* the live camera opening: a spinner and a message until the first picture (12-init.js .cld) */
 .cam .cld{display:none}
-.cam:is(.fs,.vf):not(.live):not(.pb) .cld{display:flex;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);flex-direction:column;align-items:center;gap:12px;z-index:3;pointer-events:none;color:rgba(255,255,255,.8);font:13px var(--mono);letter-spacing:.04em;text-shadow:0 1px 6px rgba(0,0,0,.6);white-space:nowrap}
+.cam:is(.fs,.vf):is(.cwait,:not(.live)):not(.pb) .cld{display:flex;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);flex-direction:column;align-items:center;gap:12px;z-index:3;pointer-events:none;color:rgba(255,255,255,.8);font:13px var(--mono);letter-spacing:.04em;text-shadow:0 1px 6px rgba(0,0,0,.6);white-space:nowrap}
 html.camsw .cam .cld .dtsp{animation:none}
 /* artist info: the Artist tab beside the lyrics (Media page, and the lyrics sheet on a phone) and the Artist page in the Now Playing sheet */
 .aitabs{display:inline-flex;gap:2px;padding:4px;border-radius:99px;background:rgba(var(--w),.1);text-transform:none}.aitabs .chip{border:0;background:transparent;box-shadow:none;padding:8px 18px;min-height:0;font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}.aitabs .chip.on{background:var(--mint);color:var(--bg)}
@@ -5333,7 +5333,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "a61567";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "7be85b";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -6511,15 +6511,16 @@ function stopCam(c) {
   if (c.sub) { delete subs[c.sub]; c.sub = 0; }
   // the last live frame becomes the tile's picture (and the kept still), so the next visit opens on it instead of an older one
   if (c.live && c.o && c.o.vid.videoWidth) { const u = camMem.put(c.id, c.o.vid, true); if (u) c.o.img.src = u; }
-  const o = c.o; c.live = false; o.el.classList.remove("live"); o.vid.classList.remove("on"); o.vid.srcObject = null; camLiveSync();
+  const o = c.o; c.live = false; o.el.classList.remove("live", "cwait"); o.vid.classList.remove("on"); o.vid.srcObject = null; camLiveSync();
 }
 function stopCams() { CONFIG.cameras.concat(CONFIG.security, VWC, NPC, RVC, INSC).forEach(c => { clearTimeout(c.rt); c._on = c.rv || c.ins ? 0 : c._on; stopCam(c); micOff(c); }); }
 function startCams() { if (onView()) { VW.mode = ""; applyView(); return; } if (onHome() && !camsOn()) return; cams(); camList().forEach((c, i) => { if (!isMobile() || (CONFIG.mobileLive !== false && c.o.el._vis !== false)) { clearTimeout(c.rt); c.rt = setTimeout(() => { if (camPage()) liveCam(c); }, i * 160); } }); }   // staggered so several streams do not negotiate and decode at once   // phones: live too, but only for tiles on screen (CONFIG.mobileLive:false = snapshots, live on tap)
-function retryCam(c, ms) { stopCam(c); clearTimeout(c.rt); c.rt = setTimeout(() => { if ((c.np && document.body.classList.contains("np-open")) || (c.rv && c._on && curRoom && onRooms) || (c.ins && c._on && INS.det) || camPage() && (onSec() || camsOn() || onView()) && (!isMobile() || c.o.el.classList.contains("fs") || (CONFIG.mobileLive !== false && c.o.el._vis !== false))) liveCam(c); }, ms); }
+function retryCam(c, ms) { stopCam(c); c.o.el.classList.add("cwait"); clearTimeout(c.rt); c.rt = setTimeout(() => { if ((c.np && document.body.classList.contains("np-open")) || (c.rv && c._on && curRoom && onRooms) || (c.ins && c._on && INS.det) || camPage() && (onSec() || camsOn() || onView()) && (!isMobile() || c.o.el.classList.contains("fs") || (CONFIG.mobileLive !== false && c.o.el._vis !== false))) liveCam(c); }, ms); }
 function liveCam(c, up) {   // HA built-in WebRTC (go2rtc); falls back to snapshots if it fails. up = a switch between the light and the clear stream: the picture that is playing keeps playing until the new one has its first picture
   const o = c.o, sid = { v: null }, q = [], eid = camEnt(c);
   dropOld(c); if (up && c.live && c.pc && o.vid.srcObject && c.eid && c.eid !== eid) { c.old = { pc: c.pc, sub: c.sub }; c.pc = null; c.sub = 0; clearTimeout(c.rt); } else stopCam(c);
   clearTimeout(c.rt); c.eid = eid;
+  if (!(up && c.old)) o.el.classList.add("cwait");   // the spinner and message show until the first picture (12-init.js onplaying)
   o.vid.muted = !(c.snd && (o.el.classList.contains("fs") || o.el.classList.contains("vf")));
   send({ type: "camera/webrtc/get_client_config", entity_id: eid }, cfg => {
     try {
@@ -6888,7 +6889,7 @@ function mkCam(c, host) {
       if (fresh) { c.snd = true; o.vid.muted = false; snd.classList.add("on"); snd.innerHTML = AUD.on; liveCam(c); }   // reconnect once with a send channel
     } catch (x) { mic.dataset.e = "Mic blocked: " + (x && x.name || "error"); mic.classList.add("err"); setTimeout(() => mic.classList.remove("err"), 4500); }
   };
-  o.vid.onplaying = () => { c.live = true; el.classList.add("live"); o.vid.classList.add("on"); camLiveSync(); setTimeout(() => { if (c.live) camMem.put(c.id, o.vid); }, 1500); };
+  o.vid.onplaying = () => { c.live = true; el.classList.add("live"); el.classList.remove("cwait"); o.vid.classList.add("on"); camLiveSync(); setTimeout(() => { if (c.live) camMem.put(c.id, o.vid); }, 1500); };
   { const ar = m => { const w = m.videoWidth || m.naturalWidth, h = m.videoHeight || m.naturalHeight; if (w > 0 && h > 0) el.style.setProperty("--ar", w + " / " + h); };   // the two-feed landscape view sizes each picture from this
     o.img.addEventListener("load", () => { if (!c.live) ar(o.img); }); o.vid.addEventListener("loadedmetadata", () => ar(o.vid)); o.vid.addEventListener("resize", () => ar(o.vid)); }
   const cp = $(".cpanel", el); cp.onclick = tapH; cp.onchange = chgH;
