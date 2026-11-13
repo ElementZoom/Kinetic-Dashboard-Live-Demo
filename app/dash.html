@@ -5064,7 +5064,7 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #home .hs .wpl{background
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs::after{display:none!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs #wfx{border-radius:inherit!important;clip-path:none!important}
 /* tablet: in the header the greeting + weather is one sky capsule and the chips sit in a separate grey card beside it */
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) header.hmerge>.hs.pn{background:none!important;border-radius:0!important;padding:0!important;margin:0 0 0 6px!important;display:flex!important;align-items:center;gap:10px;overflow:hidden!important;position:static!important;margin-left:-23px!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) header.hmerge>.hs.pn{background:none!important;border-radius:0!important;padding:0!important;margin:0 0 0 6px!important;display:flex!important;align-items:center;gap:10px;overflow:hidden!important;position:static!important;margin-left:-23px!important;margin-right:10px!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) header.hmerge>.hs .hsw{display:flex;align-items:center;gap:16px;position:relative;z-index:0;overflow:hidden;flex:1 0 auto;min-width:max-content;height:46px;padding:0 112px 0 22px;border-radius:23px;background:var(--sk)}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) header.hmerge>.hs .hsw #wfx{-webkit-mask-image:none!important;mask-image:none!important;border-radius:inherit!important;clip-path:none!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) header.hmerge>.hs #wpls:not(:empty){display:flex;align-items:center;gap:6px;flex:none;height:46px;padding:0 7px;border-radius:23px;background:var(--gg)}
@@ -5108,6 +5108,41 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) #home .hs
   html[data-style=glass]:not(#x):not(#y):not(#z) nav a.nset{text-transform:none}
   html[data-style=glass]:not(#x):not(#y):not(#z) nav a:not(.nset){position:relative;padding-left:40px}
   html[data-style=glass]:not(#x):not(#y):not(#z) nav a:not(.nset)>svg{display:block;position:absolute;left:12px;top:50%;transform:translateY(-50%);width:19px;height:19px;fill:currentColor;opacity:.85}
+}
+/* the controls on a camera picture (garage door, lights): one readable style in every look and mode.
+   The picture can be bright or dark, so the tiles are dark frosted glass with white text; a tile that is on turns light with dark text. */
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl{background:rgba(14,16,22,.58)!important;border:1px solid rgba(255,255,255,.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2);border-radius:16px;--ink:#fff;--mut:rgba(255,255,255,.74);--w:255,255,255;--ink-rgb:255,255,255;color:#fff}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl :is(.tn,.nm,.tmr){color:#fff!important}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl .ts2{color:rgba(255,255,255,.74)!important}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl .tn svg{fill:rgba(255,255,255,.85)!important;filter:none!important}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl::before{display:none!important}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.on{background:rgba(255,255,255,.93)!important;border-color:transparent!important;--ink:#16181d;--mut:#5b616b;--w:22,24,29;--ink-rgb:22,24,29;color:#16181d}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.on :is(.tn,.nm,.tmr){color:#16181d!important}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.on .ts2{color:#5b616b!important}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.on .tn svg{fill:color-mix(in srgb,rgb(var(--tcx,224,150,40)) 70%,#000)!important}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dim.on .fill{background:rgba(var(--tcx,224,150,40),.28)!important}
+/* the garage door: green line while closed, red tile while open */
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr:not(.on) .ts2{color:#b6ddb8!important}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr:not(.on) .tn svg{fill:#b6ddb8!important}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr.on{background:linear-gradient(135deg,#e5523f,#b92a22)!important;border-color:#ff8a7a!important;box-shadow:0 4px 20px rgba(229,82,63,.45)!important;color:#fff}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr.on :is(.tn,.nm,.ts2){color:#fff!important}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr.on .tn svg{fill:#fff!important}
+/* Liquid Glass tiles are a grid (icon left, two text lines): the garage icon sits in that grid instead of floating over the text */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr{display:grid!important;padding:12px 14px!important;white-space:normal;border-radius:22px}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl:not(.sir){border-radius:22px}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr .tn svg{position:static!important;transform:none!important;left:auto;width:38px;height:38px}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl:not(.dr) .tn svg{background:rgba(255,255,255,.16)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.on:not(.dr) .tn svg{background:color-mix(in srgb,rgb(var(--tcx,224,150,40)) 62%,#d98400)!important;fill:#fff!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr:not(.on) .tn svg{background:rgba(255,255,255,.16)}
+@media(max-width:760px),(max-height:520px){
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam.hasc .cpanel .tg3{grid-auto-columns:minmax(196px,230px)}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl .tn svg,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr .tn svg{width:34px;height:34px;padding:8px}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl{padding:10px 12px!important;column-gap:10px}
+}
+/* phones in landscape: the opened tiles stop above the HIDE pill instead of running under it */
+@media(max-width:760px),(max-height:520px){
+  html:not(#x):not(#y) .cam.cpo .cpanel,html:not(#x):not(#y) .cam.cpo.ls .cpanel{padding-bottom:calc(60px + env(safe-area-inset-bottom,0px))}
+  html:not(#x):not(#y) .cam.cpo[data-gal] .cpanel{padding-bottom:calc(var(--galh,26px) + 60px + env(safe-area-inset-bottom,0px))}
 }
 </style>
 <style>
@@ -5197,7 +5232,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "435bf9";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "63a68e";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -6696,14 +6731,14 @@ function camLand(el) {
   if (fsEl()) go(); else if (camNative(el)) setTimeout(go, 500); else go();
 }
 // The #view page (opened from a notification, or a camera link): on a phone it fills the screen like a Security camera does.
-// Real full screen needs a touch in some browsers, so when the first request is refused the first tap on the page asks again.
+// Real full screen needs a touch in some browsers, so when the first request is refused the first tap on the page asks again (a tap on a button, such as CONTROLS or a tile, does its own job and keeps the retry armed).
 const VWF = { on: 0, arm: 0 };
 function vwFull() {
   if (!isMobile()) return;
   document.body.classList.add("vwm");
   const root = document.documentElement, rf = root.requestFullscreen || root.webkitRequestFullscreen; if (!rf || fsEl()) return;
   const ask = retry => { let p; try { p = rf.call(root, { navigationUI: "hide" }); } catch (e) { p = Promise.reject(e); }
-    Promise.resolve(p).then(() => { VWF.on = 1; }, () => { if (retry && !VWF.arm) { VWF.arm = 1; $("#vw").addEventListener("pointerdown", () => { VWF.arm = 0; if (onView() && !fsEl()) ask(false); }, { once: true }); } }); };
+    Promise.resolve(p).then(() => { VWF.on = 1; }, () => { if (retry && !VWF.arm) { VWF.arm = 1; const vw = $("#vw"), h = e => { if (e.target.closest(".ctb, .cpanel, button")) return; vw.removeEventListener("pointerdown", h); VWF.arm = 0; if (onView() && !fsEl()) ask(false); }; vw.addEventListener("pointerdown", h); } }); };
   ask(true);
 }
 function vwFullOff() { document.body.classList.remove("vwm"); if (VWF.on) { VWF.on = 0; if (fsEl()) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (_) {} } try { screen.orientation.unlock(); } catch (_) {} } }
