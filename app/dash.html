@@ -5326,7 +5326,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "ceb69a";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "b3d30b";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -16318,11 +16318,13 @@ const auHash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h <
 // the config.js this page loaded, as written in its script tag (config.js?v=1, or ?v=2.5.6 on the demo)
 const auCfgSrc = () => { const s = [...document.scripts].find(x => /(^|\/)config\.js(\?|$)/.test(x.getAttribute("src") || "")); return s ? s.src : ""; };
 ["pointerdown", "keydown", "wheel"].forEach(t => addEventListener(t, () => { AU.touch = Date.now(); }, { passive: true, capture: true }));
+// a long pinch or drag on a camera keeps the page from reloading under the finger (a finger or a pressed button moving; a mouse just hovering doesn't count)
+addEventListener("pointermove", e => { if (e.pointerType !== "mouse" || e.buttons) AU.touch = Date.now(); }, { passive: true, capture: true });
 function auBusy() {
   const b = document.body.classList, a = document.activeElement;
   if (Date.now() - AU.touch < 60000) return "touched";
   if (b.contains("np-open") || b.contains("more-open") || b.contains("lv-open")) return "pop-up";
-  if (document.querySelector("#insd.on, #insq.on, #evq.on, #cpp.on, .cam.fs, #sp.on, #kp.on")) return "open";
+  if (document.querySelector("#insd.on, #insq.on, #evq.on, #cpp.on, .cam.fs, .cam.zm, #sp.on, #kp.on")) return "open";
   if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return "typing";
   if (/^#admin/.test(location.hash)) return "settings";
   return "";
