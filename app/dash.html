@@ -4172,12 +4172,12 @@ html[data-style=glass] :is(header,#mshe,#btab,nav){-webkit-backdrop-filter:var(-
 /* The main weather header must remain a single continuous surface. */
 html[data-style=glass] header.hmerge>.hs,html[data-style=material] header.hmerge>.hs{background:transparent!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 /* Glass tabs share one visual language in Settings, Weather and Security. */
-html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs)>.chip{
+html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip{
  background:var(--g1);color:var(--ink);border:1px solid var(--gline);
  border-radius:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
  -webkit-backdrop-filter:blur(10px) saturate(125%);backdrop-filter:blur(10px) saturate(125%);
 }
-html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs)>.chip.on{
+html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on{
  background:var(--gsel);color:var(--mint);border-color:var(--gline);
  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 2px 8px rgba(0,0,0,.10);
 }
@@ -4193,8 +4193,8 @@ html[data-style=material]{--m-low:var(--bg2);--m-high:var(--bg2)}
 }
 html[data-style=material] :is(.pn,.card,.rc,.cd,.ws,.zf,.kpb,.spb,#cpp .cpsh){background:var(--m-low);border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
 html[data-style=material] :is(header,#mshe,#btab,nav,#np){background:var(--m-low);-webkit-backdrop-filter:none;backdrop-filter:none}
-html[data-style=material] :is(.setchips,.secnav,#rtabs,#stabs)>.chip{background:var(--m-high);border:0;border-radius:16px;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
-html[data-style=material] :is(.setchips,.secnav,#rtabs,#stabs)>.chip.on{background:var(--mp);color:var(--ink)}
+html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip{background:var(--m-high);border:0;border-radius:16px;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on{background:var(--mp);color:var(--ink)}
 html[data-style=material] #theme > .hsw:has(> .setchips),html[data-style=material] #admin > .hsw:has(> .setchips),
 html[data-style=material] .page > .secw,html[data-style=material] #roomspg > #rtabs,html[data-style=material] #security > #stabs{background:var(--bg);border-radius:16px}
 /* No oversized blurred blocks around the greeting or inside its weather strip. */
@@ -4263,7 +4263,7 @@ html[data-style=material] :is(#insights > .inschips,#scenes .scfh,#energy > .ehc
 }
 /* Liquid Glass retains its individual glass controls, but no see-through
    backing behind them. Material keeps its existing tonal tabs. */
-html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs)>.chip{
+html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip{
   -webkit-backdrop-filter:none;backdrop-filter:none;
 }
 /* 2.5.19 - Home-style sticky navigation. Material is the structural
@@ -4283,9 +4283,16 @@ html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs)>.chip{
   .main > header{z-index:30}
   /* Kinetic uses its warm button styling; glass keeps individual glass pills.
      Neither depends on a see-through shared navigation plate. */
-  html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs) > .chip{
-    background:color-mix(in srgb,var(--bg2) 88%,transparent);
-    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs) > .chip{
+    background:rgba(255,255,255,.30);border-color:rgba(255,255,255,.55);
+    -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
+  }
+  /* Apple-style: unselected glass is mostly clear; the selected capsule is brighter and carries the accent label. */
+  html[data-style=glass][data-mode=dark] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs) > .chip{
+    background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);
+  }
+  html[data-style=glass][data-mode=dark]:not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs) > .chip.on{
+    background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.35);
   }
 }
 /* 2.5.19: tab navigation has no painted rectangular backing.
@@ -4352,6 +4359,39 @@ html[data-style=glass] :is(.setchips,.secnav,#rtabs,#stabs)>.chip{
 @media(prefers-reduced-motion:reduce){#alp .al-list-fold{transition:none!important}}
 .adlh .admsrch{flex:1 1 100%}
 #irrigation .wrs .wrsu{margin-top:1px;font-size:11px;opacity:.8}
+/* Material 3 tabs (primary): flat row, quiet labels, a 3px indicator under the selected tab. */
+html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs):not(#x){gap:0}
+html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs):not(#x)>.chip{
+  position:relative;flex:1 0 auto;background:transparent;border:0;border-radius:0;
+  box-shadow:inset 0 -1px 0 var(--line);color:var(--mut);padding:13px 16px 12px;
+  text-transform:none;letter-spacing:.01em;font-family:var(--sans);font-size:14px;font-weight:500;
+}
+html[data-style=material]:not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on{
+  background:transparent;color:var(--mint);box-shadow:inset 0 -1px 0 var(--line)
+}
+html[data-style=material]:not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on::after{
+  content:"";position:absolute;left:18%;right:18%;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--mint)
+}
+html[data-style=material][data-mode=light]:not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on{color:var(--ink)}
+html[data-style=material][data-mode=light]:not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on::after{background:var(--ink)}
+/* Material 3 uses sentence case: labels are written in capitals in markup, so lowercase them and re-capitalise the first letter. */
+html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs):not(#x)>.chip{display:block;text-align:center;text-transform:lowercase;white-space:nowrap}
+html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs):not(#x)>.chip::first-letter{text-transform:uppercase}
+/* Kinetic tabs: numbered channels with a glowing bar over the active one. */
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs){gap:14px;counter-reset:kt}
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip{
+  counter-increment:kt;display:block;text-align:left;flex:1 0 auto;min-height:0;
+  background:transparent;border:0;border-top:1.5px solid rgba(var(--ink-rgb),.28);border-radius:0;box-shadow:none;
+  padding:10px 2px 6px;color:var(--mut);transition:color .2s,border-color .2s,box-shadow .2s
+}
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip::before{
+  content:counter(kt,decimal-leading-zero);display:block;font-size:10px;letter-spacing:.12em;margin-bottom:5px;color:var(--mut)
+}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on{
+  background:transparent;color:var(--ink);font-weight:600;border-top:3px solid var(--mint);margin-top:-1px;
+  box-shadow:0 -6px 12px -8px var(--mint)
+}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on::before{color:var(--mint)}
 /* Settings: the search block pins exactly where it sits at rest (just under the tab row), so nothing shifts when scrolling starts;
    on wide screens the overview / detail card pins in place beside the list */
 #admin .admtop,#admin .adlog>.adlh{--admtop:68px}
@@ -4651,38 +4691,38 @@ html:not(#x) #rl.rooms2{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 html:not(#x) #rl.rooms2 .rgh{margin:10px 4px 0}
 html:not(#x) #rl.rooms2 .rgh:first-child{margin-top:0}
 /* the row: icon disc | name, then the badges | temperature, then humidity */
-html:not(#x) #rl.rooms2 a.rc{display:grid;grid-template-columns:46px minmax(0,1fr) auto;grid-template-areas:"ic nm tp" "ic ts md";grid-template-rows:1fr 1fr;column-gap:14px;row-gap:0;align-items:center;min-height:84px;padding:12px 18px 12px 14px;border-radius:26px}
-html:not(#x) #rl.rooms2 a.rc::after{display:none}
-html:not(#x) #rl.rooms2 a.rc>.lbl:first-child{display:contents}
-html:not(#x) #rl.rooms2 a.rc>.lbl:first-child svg{grid-area:ic;align-self:center;width:46px;height:46px;padding:11px;box-sizing:border-box;margin:0;border-radius:50%;background:rgba(var(--ink-rgb),.08);vertical-align:baseline}
-html:not(#x) #rl.rooms2 a.rc .rcn{grid-area:nm;align-self:end;padding-bottom:3px;min-width:0;display:flex;align-items:center;gap:2px;overflow:hidden;font:500 18px/1.1 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink)}
-html:not(#x) #rl.rooms2 a.rc .temp{grid-area:tp;align-self:end;justify-self:end;font-size:30px;font-weight:300;line-height:1}
-html:not(#x) #rl.rooms2 a.rc .md{grid-area:md;align-self:start;padding-top:3px;justify-self:end;margin:0;font-size:12px;letter-spacing:0;color:var(--mut)}
-html:not(#x) #rl.rooms2 a.rc .ts{grid-area:ts;align-self:start;padding-top:3px;min-height:0;gap:5px 6px;align-items:center}
-html:not(#x) #rl.rooms2 a.rc .ts:empty::before{content:"All quiet";font:13px var(--sans);letter-spacing:0;text-transform:none;color:var(--mut)}
-html:not(#x) #rl.rooms2 a.rc .ts{flex-wrap:nowrap;overflow:hidden}
-html:not(#x) #rl.rooms2 a.rc .ts .cb2.cB{display:none}
-html:not(#x) #rl.rooms2 a.rc .ts .cb2.cA{display:inline-flex;align-items:center;gap:4px;flex:none;height:26px;font-size:12px;padding:0 9px 0 7px}
-html:not(#x) #rl.rooms2 a.rc .ts .cb2.cA svg{width:15px;height:15px}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc{display:grid;grid-template-columns:46px minmax(0,1fr) auto;grid-template-areas:"ic nm tp" "ic ts md";grid-template-rows:1fr 1fr;column-gap:14px;row-gap:0;align-items:center;min-height:84px;padding:12px 18px 12px 14px;border-radius:26px}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc::after{display:none}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.lbl:first-child{display:contents}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.lbl:first-child svg{grid-area:ic;align-self:center;width:46px;height:46px;padding:11px;box-sizing:border-box;margin:0;border-radius:50%;background:rgba(var(--ink-rgb),.08);vertical-align:baseline}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .rcn{grid-area:nm;align-self:end;padding-bottom:3px;min-width:0;display:flex;align-items:center;gap:2px;overflow:hidden;font:500 18px/1.1 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink)}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{grid-area:tp;align-self:end;justify-self:end;font-size:30px;font-weight:300;line-height:1}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .md{grid-area:md;align-self:start;padding-top:3px;justify-self:end;margin:0;font-size:12px;letter-spacing:0;color:var(--mut)}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .ts{grid-area:ts;align-self:start;padding-top:3px;min-height:0;gap:5px 6px;align-items:center}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .ts:empty::before{content:"All quiet";font:13px var(--sans);letter-spacing:0;text-transform:none;color:var(--mut)}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .ts{flex-wrap:nowrap;overflow:hidden}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .ts .cb2.cB{display:none}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .ts .cb2.cA{display:inline-flex;align-items:center;gap:4px;flex:none;height:26px;font-size:12px;padding:0 9px 0 7px}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .ts .cb2.cA svg{width:15px;height:15px}
 /* the temperature colour still tints the row; the drifting snow / heat particles belong to the tall tiles, so they are off in a row */
-html:not(#x) #rl.rooms2 a.rc>.rg>s,html:not(#x) #rl.rooms2 a.rc>.rg>b{display:none!important}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.rg>s,html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.rg>b{display:none!important}
 }
-@media(min-width:761px){html:not(#x) #rl.rooms2 a.rc .temp{font-size:26px}html:not(#x) #rl.rooms2 a.rc{column-gap:12px;padding-right:14px}}
+@media(min-width:761px){html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{font-size:26px}html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc{column-gap:12px;padding-right:14px}}
 /* the name is followed by a chevron so a row reads as tappable; the badges scroll sideways when there are more than fit */
-html:not(#x) #rl.rooms2 a.rc .rcl{line-height:1.3;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-html:not(#x) #rl.rooms2 a.rc .rcn::after{content:"";flex:none;width:18px;height:18px;background:currentColor;opacity:.5;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center/contain no-repeat}
-html:not(#x) #rl.rooms2 a.rc .ts{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x pan-y;-webkit-mask:linear-gradient(90deg,#000 calc(100% - 22px),transparent);mask:linear-gradient(90deg,#000 calc(100% - 22px),transparent)}
-html:not(#x) #rl.rooms2 a.rc .ts::-webkit-scrollbar{display:none}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .rcl{line-height:1.3;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .rcn::after{content:"";flex:none;width:18px;height:18px;background:currentColor;opacity:.5;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center/contain no-repeat}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .ts{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x pan-y;-webkit-mask:linear-gradient(90deg,#000 calc(100% - 22px),transparent);mask:linear-gradient(90deg,#000 calc(100% - 22px),transparent)}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .ts::-webkit-scrollbar{display:none}
 /* no humidity reading: the temperature alone sits on the icon's midline */
-html:not(#x) #rl.rooms2 a.rc:has(.md:empty) .temp{grid-row:1/3;align-self:center}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc:has(.md:empty) .temp{grid-row:1/3;align-self:center}
 /* temperature (taller) over humidity (shorter) meet at the row's midline, so the pair is shifted down by half the difference to sit centred on the icon */
-@media all{html:not(#x) #rl.rooms2 a.rc:has(.md:not(:empty)) :is(.temp,.md){transform:translateY(7px)}}
+@media all{html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc:has(.md:not(:empty)) :is(.temp,.md){transform:translateY(7px)}}
 /* the heat-pump chip (COOL / HEAT) is the same size as the other badges */
-html:not(#x) #rl.rooms2 a.rc .ts .cb2.hvc{display:inline-flex;align-items:center;flex:none;height:26px;padding:0 9px 0 7px;gap:4px;font-size:11px}
-html:not(#x) #rl.rooms2 a.rc .ts .cb2.hvc svg{width:15px;height:15px}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .ts .cb2.hvc{display:inline-flex;align-items:center;flex:none;height:26px;padding:0 9px 0 7px;gap:4px;font-size:11px}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .ts .cb2.hvc svg{width:15px;height:15px}
 /* the badge strip can be dragged sideways with the mouse too */
-html:not(#x) #rl.rooms2 a.rc .ts{cursor:grab}
-html:not(#x) #rl.rooms2 a.rc .ts.drg{cursor:grabbing;user-select:none}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .ts{cursor:grab}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .ts.drg{cursor:grabbing;user-select:none}
 
 /* the title bar of a page without a pinned tab row: the same soft shadow the pinned rows get, once the page has scrolled under it (31-section-pills.js sets .hstk) */
 html:not(#x) .main > header{transition:box-shadow .28s ease}
@@ -4706,8 +4746,7 @@ html:not(#x) .main > header.hstk{box-shadow:0 8px 14px -10px rgba(0,0,0,.45)!imp
 }
 /* LIQUID GLASS STYLE ONLY (html[data-style=glass]); the other styles keep the original solid title bar and pinned rows.  phones: the title bar and a pinned tab row sit on one frosted band once a page has scrolled. The page scrolls from the top of the screen (the 66px is the title bar and its gap), so its content slides under the band and shows through it, blurred. #fband is placed and shown by wpSync (31-section-pills.js). */
 #fband{display:none}
-@media(max-width:760px){
-  html[data-style=glass]:not(#x) .main > .page{margin-top:-66px;padding-top:66px}
+@media(max-width:760px){html[data-style=glass]:not(#x) .main > .page{margin-top:-66px;padding-top:66px}}
   /* progressive blur like iOS 26's scroll edge effect: five stacked backdrop layers, blurrier toward the top, each masked so it fades out downwards. No edge, border, radius or shadow. Opacity follows the scroll distance (--fbo, set by wpSync); it sits on each layer, not on #fband, because a parent with opacity would stop the backdrop blur seeing the page. */
   html[data-style=glass] #fband{display:block;position:fixed;left:0;right:0;top:0;height:100px;z-index:20;pointer-events:none;--fbo:0;transition:height .22s ease}
   #fband i{position:absolute;inset:0;opacity:var(--fbo);-webkit-backdrop-filter:blur(var(--b));backdrop-filter:blur(var(--b));-webkit-mask-image:var(--mk);mask-image:var(--mk)}
@@ -4735,8 +4774,7 @@ html:not(#x) .main > header.hstk{box-shadow:0 8px 14px -10px rgba(0,0,0,.45)!imp
   /* Security's and Insights' tab rows have their own, more specific shadow rule (67-settings-nav-card.css): it drew the hard line under the tabs */
   html[data-style=glass]:not(#x) :is(#security > #stabs,#insights > .inschips).stk{box-shadow:none!important}
   /* the title bar never has its own card on phones: title and chips sit straight on the page, and on the blur once it scrolls */
-  html[data-style=glass]:not(#x) .main > header,html[data-style=glass]:not(#x) .main > header.hstk{background:transparent!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
-}
+@media(max-width:760px){html[data-style=glass]:not(#x) .main > header,html[data-style=glass]:not(#x) .main > header.hstk{background:transparent!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}
 /* LIQUID GLASS STYLE ONLY: cards become see-through like the Today card (light mint tint + soft mint border, no shadow) so the wallpaper and the frosted header blur read through them. Heat / cool tinted cards keep their own gradient. Kinetic and Material are untouched. */
 html[data-style=glass]:not(#x) :where(.pn,.card,.rc,.cd,.ws,.zf,.tl,.bd,.kpb,.spb):not(.heat):not(.cool){background:rgba(var(--mint-rgb),.085);border:1px solid rgba(var(--mint-rgb),.4);box-shadow:none}
 html[data-style=glass][data-mode=light]:not(#x) :where(.pn,.card,.rc,.cd,.ws,.zf,.tl,.bd,.kpb,.spb):not(.heat):not(.cool){background:rgba(255,255,255,.4);border:1px solid rgba(var(--mint-rgb),.55);box-shadow:none}
@@ -4747,6 +4785,297 @@ html[data-style=material]:not(#x) .cd.t{box-shadow:inset 0 0 0 2px var(--mint)}
 /* One look behind every pop-up, sheet and keypad: the same dim and the same blur as the Notifications pop-up, so what is behind is never readable */
 html:not(#x) :is(#kp,#sp,#bd,#grp,#grpw,#cmtsh,#rsp,#insq,#evq,#dtm,#tlsh,#tlscrim,#srch,#wtnew,#upc,#lsh .lbk,#scenes.scop .scbk,#irrigation.zop .zbk,.npbk,.lvbk,#clbk,#insd .idbk,.adw.det .admbk,body.ly-open::after){background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 @media(max-width:760px){html:not(#x) #srch{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}}   /* the phone search is a full screen of its own */
+/* PHONE "GLANCE" HOME: one screen, no scroll. Greeting + status, heat pump, four room tiles, compact forecast strip.
+   Today/schedule lives on the Events page; the full room list on Rooms. Phone only (<=760px). */
+@media(max-width:760px){
+.hm{gap:10px!important;margin-bottom:0!important}
+.hm #rooms.rooms{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-auto-flow:row!important;gap:8px!important;order:2;margin:0!important}
+.hm #mini{order:1}.hm #fcp{order:3}
+.hm #rooms .rc:nth-child(n+5){display:none!important}
+#home #sch{display:none!important}
+#home #hstrip{margin-bottom:10px}
+.hm #mini{padding:12px 14px!important}
+.hm #mini .mleg{display:none!important}
+.hm #mini .mtop{margin-bottom:0}
+.hm #fcp{padding:10px 12px!important}
+.hm #fcp .fcs{height:84px!important}
+.hm #fcp .fcc{margin-top:6px!important}
+.hm #fcp .fcc>div{padding:6px 2px!important;gap:2px!important}
+.hm #fcp .fcc small,.hm #fcp .fcc em{display:none!important}
+}
+@media(max-width:760px){
+.hm #mini{grid-column:1;grid-row:1}.hm #rooms.rooms{grid-column:1;grid-row:2}.hm #fcp{grid-column:1;grid-row:3}
+#home .hs{padding:10px 14px!important;min-height:0!important;height:auto!important;row-gap:6px!important}
+#home .hs #dt,#home .hs #wwind{display:none!important}
+#home .hs #gr{font-size:20px!important}
+.hm #mini .mrow b,.hm #mini .big{font-size:inherit}
+.hm #fcp .fcs{height:68px!important}
+.hm #fcp .fcc{margin-top:4px!important}
+}
+@media(max-width:760px){.hm #fcp .fcc>div.fcs{min-height:100px!important;height:100px!important}.hm #fcp #fc,.hm #fcp .fcc{height:auto!important;min-height:0!important}}
+@media(max-width:760px) and (max-height:680px){.hm #fcp{display:none!important}}
+/* phone search launcher: sections use the full width, rooms are a 2-column grid (no sideways scroller) */
+@media(max-width:760px){
+.srlh{align-items:stretch!important}
+.srlh>*,.srl1>*,.srl2>*{min-width:0}
+.srrm,.srcm,.srpg,.sra{width:100%}
+.srrl{display:grid!important;grid-template-columns:1fr 1fr;gap:8px;overflow:visible!important;margin:0!important;padding:0!important}
+.srro{width:auto!important;min-width:0}
+.srcl{display:grid;grid-template-columns:1fr 1fr}
+.srca{height:70px}
+}
+@media(max-width:760px) and (max-height:860px){body.np-on .hm #fcp{display:none!important}}
+
+/* LIQUID GLASS: the bottom bar gets the same progressive blur as the title bar. #bband sits behind #btab and fades upward, so whatever scrolls under the bar blurs out; the bar itself turns to clear glass. */
+#bband{display:none}
+@media(max-width:760px) and (orientation:portrait){
+  html[data-style=glass] #bband{display:block;position:fixed;left:0;right:0;bottom:0;height:112px;z-index:44;pointer-events:none}
+  #bband i{position:absolute;inset:0;-webkit-backdrop-filter:blur(var(--b));backdrop-filter:blur(var(--b));-webkit-mask-image:var(--mk);mask-image:var(--mk)}
+  #bband i:nth-child(1){--b:1px;--mk:linear-gradient(to top,#000 40%,rgba(0,0,0,.5) 70%,transparent 100%)}
+  #bband i:nth-child(2){--b:2.5px;--mk:linear-gradient(to top,#000 32%,rgba(0,0,0,.5) 60%,transparent 88%)}
+  #bband i:nth-child(3){--b:6px;--mk:linear-gradient(to top,#000 24%,rgba(0,0,0,.5) 50%,transparent 76%)}
+  #bband i:nth-child(4){--b:12px;--mk:linear-gradient(to top,#000 16%,rgba(0,0,0,.5) 40%,transparent 62%)}
+  #bband i:nth-child(5){--b:22px;--mk:linear-gradient(to top,#000 8%,rgba(0,0,0,.5) 28%,transparent 50%)}
+  #bband i:nth-child(6){--b:36px;--mk:linear-gradient(to top,#000 0%,rgba(0,0,0,.5) 20%,transparent 38%)}
+  html[data-style=glass] #btab{background:rgba(var(--w),.10)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),inset 0 0 0 1px rgba(255,255,255,.06)!important;-webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5)}
+  body.vwb #bband{display:none!important}
+}
+@media(max-width:760px) and (orientation:portrait){
+  html[data-style=glass] body.np-on #bband{height:205px}
+  html[data-style=glass] #npmini{background:rgba(var(--w),.10)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.22)!important;-webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5)}
+}
+@media(max-width:760px) and (orientation:portrait){
+  html[data-style=glass] .main>.page{margin-bottom:-84px;padding-bottom:84px}
+  html[data-style=glass] body.np-on .main>.page{margin-bottom:-160px;padding-bottom:160px}
+}
+/* Room cards on the Rooms page, one design per style (iOS = calm surface, Material = neutral tonal card, Kinetic = outline + glow edge + mono caption).
+   The temperature tint (--tc) no longer floods the card; each style shows state in its own, quieter way. */
+#rl.rooms2{counter-reset:rn}
+:is(#rl.rooms2,.hm #rooms.rooms) a.rc{counter-increment:rn}
+html:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.rg{display:none}
+
+/* Kinetic */
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc{
+  border-radius:16px;background:rgba(var(--w),.05);border:1px solid color-mix(in srgb,var(--tc) 45%,transparent);
+  box-shadow:inset 16px 0 20px -16px var(--tc);overflow:hidden
+}
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc::before{
+  content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:0 3px 3px 0;background:var(--tc);box-shadow:0 0 10px var(--tc)
+}
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .rcn{font:500 11px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .rcn::before{content:counter(rn,decimal-leading-zero) " \00b7  ";white-space:pre}
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color:color-mix(in srgb,var(--tc) 75%,var(--ink))}
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.lbl:first-child svg{background:transparent;border:1px solid var(--mut)}
+
+/* Material 3: filled neutral tonal card, 12-16px corners, no state tint */
+html[data-style=material]:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc{border-radius:16px;background:var(--m-high);border:0;box-shadow:none}
+html[data-style=material]:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color:var(--ink)}
+
+/* iOS (Liquid Glass): a calm, near-opaque rounded surface; glass stays on the navigation */
+html[data-style=glass]:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc{border-radius:22px;background:rgba(var(--w),.10);border:1px solid rgba(var(--w),.16);box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-style=glass][data-mode=light]:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc{background:rgba(255,255,255,.72);border-color:#fff}
+html[data-style=glass]:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color:var(--ink)}
+
+/* Home: the room tiles are the same row cards. Counter for the Kinetic index; tablet = 3 columns x 2 rows (first six tiles, config order) */
+.hm #rooms.rooms{counter-reset:rn}
+.hm #rooms.rooms a.rc{counter-increment:rn}
+@media(min-width:761px){
+html:not(#x) .hm #rooms.rooms{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-auto-flow:row!important;grid-auto-columns:auto;gap:12px}
+.hm #rooms.rooms a.rc:nth-child(n+7){display:none!important}
+}
+/* Card design per style: iOS = calm surface, Material = neutral tonal, Kinetic = fine outline + glow. Additive: shape, outline and tint only, no layout. */
+/* Kinetic */
+html:not([data-style=glass]):not([data-style=material]):not(#x) .pn:not(#npw):not(#npmini):not(header .hs){border-radius:18px;border:1px solid color-mix(in srgb,var(--mint) 32%,transparent)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#mini .chip,#mini .chips .chip){border-radius:10px;background:transparent;border:1px solid transparent;box-shadow:none}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #mini .chip.on{border-color:var(--mint);color:var(--mint);background:transparent;box-shadow:0 0 12px -4px var(--mint)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .fcc>div{border-radius:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .cam{border-radius:18px;border:1px solid color-mix(in srgb,var(--mint) 32%,transparent)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .cam>.lbl{width:fit-content;border:1px solid rgba(255,255,255,.5);border-radius:7px;padding:3px 8px}
+html:not([data-style=glass]):not([data-style=material]):not(#x) #npw .mpb i{box-shadow:0 0 8px var(--mint)}
+
+/* Material 3: 16px corners, tonal controls, no outline */
+html[data-style=material]:not(#x) .pn:not(#npw):not(#npmini):not(header .hs){border-radius:16px}
+html[data-style=material]:not(#x) #mini .chip{border:0;border-radius:999px;background:color-mix(in srgb,var(--ink) 12%,transparent);color:var(--ink)}
+html[data-style=material]:not(#x):not(#y) #mini .chip.on{background:var(--mint);color:var(--bg)}
+html[data-style=material]:not(#x) .fcc>div{border-radius:10px}
+html[data-style=material]:not(#x) .cam{border-radius:16px}
+
+/* iOS (Liquid Glass): calm near-opaque surfaces; glass stays on controls (mode switch, player, bars) */
+html[data-style=glass]:not(#x) .pn:not(#npw):not(#npmini):not(header .hs){border-radius:22px;background:rgba(var(--w),.10);border:1px solid rgba(var(--w),.16);box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-style=glass][data-mode=light]:not(#x) .pn:not(#npw):not(#npmini):not(header .hs){background:rgba(255,255,255,.72);border-color:#fff}
+html[data-style=glass]:not(#x) .fcc>div{border-radius:14px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+html[data-style=glass]:not(#x) .cam{border-radius:22px}
+html[data-style=glass]:not(#x) .cam>.lbl{width:fit-content;background:rgba(255,255,255,.26);border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:3px 10px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+
+/* While a pop-up sheet is open its scrim hides the page, so the page's stacked blur layers are switched off: fewer layers for the browser to repaint behind it (the sheet flickered on some phones). */
+html:has(#cpp.on) :is(#fband,#bband){display:none!important}
+
+/* ---- Alerts (all variants) and the Climate page's heat / cool / auto cards ---- */
+.alert{--al:#e0763a}.alert.q,.alert[data-go]{--al:var(--qc,#cf3a34)}.alert.fr{--al:#8fd3ff}.alert.cw{--al:#ff7a45}
+.card.heat{--cs:var(--heat)}.card.cool{--cs:var(--cool)}.card.auto{--cs:var(--mint)}
+
+/* Kinetic: neutral card, fine outline in the alert / state colour, glowing edge bar */
+html:not([data-style=glass]):not([data-style=material]):not(#x) .alert{background:rgba(var(--w),.05)!important;color:var(--ink);border:1px solid color-mix(in srgb,var(--al) 55%,transparent);border-left-width:1px;border-radius:16px;box-shadow:inset 16px 0 22px -16px var(--al);position:relative;overflow:hidden}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .alert::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:var(--al);box-shadow:0 0 10px var(--al)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .alert .lbl{color:var(--al)!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .alert .lbl svg{fill:var(--al)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .card:is(.heat,.cool,.auto){background:rgba(var(--w),.05)!important;border:1px solid color-mix(in srgb,var(--cs) 45%,transparent);box-shadow:inset 16px 0 22px -16px var(--cs)}
+
+/* Material 3: container fill (soft tint of the colour), no outline or bar */
+html[data-style=material]:not(#x) .alert{background:color-mix(in srgb,var(--al) 22%,var(--bg))!important;color:var(--ink);border:0;border-radius:16px;box-shadow:none}
+html[data-style=material][data-mode=light]:not(#x) .alert{background:color-mix(in srgb,var(--al) 18%,#fff)!important}
+html[data-style=material]:not(#x) .alert::before{display:none}
+html[data-style=material]:not(#x) .alert .lbl{color:var(--ink)!important;opacity:.8}
+html[data-style=material]:not(#x) .alert .lbl svg{fill:currentColor}
+html[data-style=material]:not(#x) .card:is(.heat,.cool,.auto){background:var(--m1)!important;box-shadow:none}
+
+/* iOS (Liquid Glass): calm surface, the colour lives in the icon only */
+html[data-style=glass]:not(#x) .alert{background:rgba(var(--w),.10)!important;color:var(--ink);border:1px solid rgba(var(--w),.16);border-radius:22px;box-shadow:none}
+html[data-style=glass][data-mode=light]:not(#x) .alert{background:rgba(255,255,255,.72)!important;border-color:#fff}
+html[data-style=glass]:not(#x) .alert::before{display:none}
+html[data-style=glass]:not(#x) .alert .lbl{color:var(--mut)!important}
+html[data-style=glass]:not(#x) .alert .lbl svg{fill:var(--al)}
+html[data-style=glass]:not(#x) .card:is(.heat,.cool,.auto){background:rgba(var(--w),.10)!important;border:1px solid rgba(var(--w),.16);box-shadow:none}
+html[data-style=glass][data-mode=light]:not(#x) .card:is(.heat,.cool,.auto){background:rgba(255,255,255,.72)!important;border-color:#fff}
+html:is([data-style=material],[data-style=glass]):not(#x) .card:is(.heat,.cool,.auto){background-image:none!important}
+/* iOS: soft red tint on alerts (colour from --al), still calm and near-opaque */
+html[data-style=glass]:not(#x) .alert{background:color-mix(in srgb,var(--al) 20%,rgba(var(--w),.08))!important;border-color:color-mix(in srgb,var(--al) 28%,rgba(var(--w),.12))}
+html[data-style=glass][data-mode=light]:not(#x) .alert{background:color-mix(in srgb,var(--al) 16%,rgba(255,255,255,.8))!important;border-color:color-mix(in srgb,var(--al) 22%,#fff)}
+
+/* iOS: every pop-up sheet gets the same calm surface (the Automations sheet look), so none picks up the page tint */
+html[data-style=glass]:not(#x) :is(#np,#cpp .cpsh,#lsh .lb,#lvsheet #lvbody,#evm #evp,#npsheet #npbody){background:var(--gc)!important;background-image:none!important;border:1px solid var(--gcl);-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-style=glass][data-mode=light]:not(#x) :is(#np,#cpp .cpsh,#lsh .lb,#lvsheet #lvbody,#evm #evp,#npsheet #npbody){background:#f6f7f7!important}
+
+/* Pop-up sheets in the other two looks: one consistent surface each */
+html[data-style=material]:not(#x) :is(#np,#cpp .cpsh,#lsh .lb,#lvsheet #lvbody,#evm #evp,#npsheet #npbody){background:var(--m-high)!important;background-image:none!important;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#np,#cpp .cpsh,#lsh .lb,#lvsheet #lvbody,#evm #evp,#npsheet #npbody){background-image:none!important;background-color:var(--bg2)!important;border:1px solid color-mix(in srgb,var(--mint) 32%,transparent);box-shadow:0 -1px 24px -10px var(--mint);-webkit-backdrop-filter:none;backdrop-filter:none}
+
+/* Kinetic + Material: thinner pinned-row plate, same height in both looks */
+html:not([data-style=glass]):not(#x):not(#y) :is(#admin,#theme) > .hsw:has(> .setchips)::before,html:not([data-style=glass]):not(#x):not(#y) .page > .secw::before,html:not([data-style=glass]):not(#x):not(#y) #scenes .scfh::before,html:not([data-style=glass]):not(#x):not(#y) #energy > .ehc::before,html:not([data-style=glass]):not(#x):not(#y) #admin .admtop::before,html:not([data-style=glass]):not(#x):not(#y) #admin .adlog>.adlh::before{top:-8px!important;bottom:-4px!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .setchips .chip{padding-top:6px;padding-bottom:3px}
+
+/* sidebar link icons are only shown by Liquid Glass on tablet (81-tablet-frosted.css) */
+html:not(#x) nav a:not(.nset)>svg{display:none}
+@media(min-width:761px){
+  html:not([data-style=glass]):not(#x):not(#y) nav a:not(.nset){position:relative;padding-left:42px}
+  html:not([data-style=glass]):not(#x):not(#y) nav a:not(.nset)>svg{display:block;position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;fill:currentColor}
+  html[data-style=material]:not(#x):not(#y) nav a:not(.nset)>svg{width:20px;height:20px}
+  html:not([data-style=glass]):not(#x):not(#y) nav a.nset>svg{margin-right:8px}
+}
+/* Device tiles (lights, switches, covers, fans, heating): same layout as before, one state treatment per look.
+   --tcx is the tile's own colour (light colour, or mint for climate, warm for doors). */
+.tl:not(.wt):not(.sir){--tcx:var(--lc,var(--lit-rgb))}
+.tl.cl:not(.wt){--tcx:var(--mint-rgb)}.tl.dr:not(.wt){--tcx:var(--heat-rgb)}
+
+/* Kinetic: fine outline, mono caption, glowing edge bar and coloured glyph when on */
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tl:not(.wt):not(.sir){border-radius:16px;background:rgba(var(--w),.04)!important;border:1px solid rgba(var(--w),.16)!important;box-shadow:none!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tl:not(.wt):not(.sir) .tn{font:500 12px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tl:not(.wt):not(.sir) .tn svg{fill:var(--mut)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tl.on:not(.wt):not(.sir){border-color:color-mix(in srgb,rgb(var(--tcx)) 55%,transparent)!important;box-shadow:inset 16px 0 22px -16px rgb(var(--tcx))!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tl.on:not(.wt):not(.sir) .tn{color:var(--ink)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tl.on:not(.wt):not(.sir) .tn svg{fill:rgb(var(--tcx))!important;filter:drop-shadow(0 0 6px rgb(var(--tcx)))}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tl.on:not(.wt):not(.sir) .ts2{color:rgb(var(--tcx))!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tl.on:not(.wt):not(.sir):not(#cpp .tl)::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:rgb(var(--tcx));box-shadow:0 0 10px rgb(var(--tcx));z-index:2}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tl.dim.on .fill{background:linear-gradient(90deg,rgba(var(--tcx),.05),rgba(var(--tcx),.16))}
+
+/* Material 3: neutral tonal tile; on = accent-container fill, glyph in the accent */
+html[data-style=material]:not(#x) .tl:not(.wt):not(.sir){border-radius:16px;background:var(--m-high)!important;border:0!important;box-shadow:none!important}
+html[data-style=material]:not(#x) .tl.on:not(.wt):not(.sir){background:color-mix(in srgb,var(--mint) 30%,var(--m-high))!important}
+html[data-style=material]:not(#x) .tl.on:not(.wt):not(.sir) .tn svg{fill:var(--mint)!important}
+html[data-style=material][data-mode=light]:not(#x) .tl.on:not(.wt):not(.sir) .tn svg{fill:color-mix(in srgb,var(--mint) 80%,#000)!important}
+html[data-style=material]:not(#x) .tl.on:not(.wt):not(.sir) .ts2{color:var(--ink)!important}
+html[data-style=material]:not(#x) .tl.dim.on .fill{background:rgba(var(--mint-rgb),.22)}
+
+html[data-style=material]:not(#x) .tl:not(.wt):not(.sir){border-radius:16px;background:var(--m-high)!important;border:0!important;box-shadow:none!important}
+html[data-style=material]:not(#x) .tl.on:not(.wt):not(.sir){background:color-mix(in srgb,var(--mint) 30%,var(--m-high))!important}
+html[data-style=material]:not(#x) .tl.on:not(.wt):not(.sir) .tn svg{fill:var(--mint)!important}
+html[data-style=material][data-mode=light]:not(#x) .tl.on:not(.wt):not(.sir) .tn svg{fill:color-mix(in srgb,var(--mint) 80%,#000)!important}
+html[data-style=material]:not(#x) .tl.on:not(.wt):not(.sir) .ts2{color:var(--ink)!important}
+html[data-style=material]:not(#x) .tl.dim.on .fill{background:rgba(var(--mint-rgb),.22)}
+html[data-style=material]:not(#x) .tl.lc input[type=range]{accent-color:var(--mint)}
+html[data-style=material]:not(#x):not(#y):not(#z) .tl.lit.dim .fill,html[data-style=material][data-mode=light]:not(#x):not(#y):not(#z) .tl.lit.dim .fill{background:var(--mint);box-shadow:none}
+
+/* iOS (Liquid Glass), modelled on Apple Home: no group card, tiles are the only surfaces.
+   Off = translucent frosted tile with a muted disc. On = bright white tile (both modes), icon in a colour disc, dark text. */
+html[data-style=glass]:not(#x) #rv .pn.pg{background:transparent!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none;backdrop-filter:none;padding-left:0;padding-right:0}
+html[data-style=glass]:not(#x) #rv .pn.pg>.lbl.hd{font:600 20px/1.2 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink)}
+html[data-style=glass]:not(#x) .tl:not(.wt):not(.sir):not(.cl){border-radius:22px;background:rgba(var(--w),.12)!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;row-gap:1px;align-items:center;padding:12px 14px}
+html[data-style=glass][data-mode=light]:not(#x) .tl:not(.wt):not(.sir):not(.cl){background:rgba(60,70,90,.12)!important}
+html[data-style=glass]:not(#x) .tl:not(.wt):not(.sir):not(.cl)>.tn{display:contents}
+html[data-style=glass]:not(#x) .tl:not(.wt):not(.sir):not(.cl)>.tn svg{grid-row:1/span 2;grid-column:1;width:38px;height:38px;padding:9px;box-sizing:border-box;border-radius:50%;background:rgba(var(--w),.14);fill:var(--mut)!important}
+html[data-style=glass]:not(#x) .tl:not(.wt):not(.sir):not(.cl)>.tn .nm{grid-column:2;grid-row:1;align-self:end;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html[data-style=glass]:not(#x) .tl:not(.wt):not(.sir):not(.cl)>.ts2{grid-column:2;grid-row:2;align-self:start;font:13px var(--sans);letter-spacing:0;text-transform:none}
+html[data-style=glass]:not(#x) .tl:not(.wt):not(.sir):not(.cl)>:not(.fill):not(.tn):not(.ts2){grid-column:1/-1}
+html[data-style=glass]:not(#x) .tl.on:not(.wt):not(.sir):not(.cl){background:rgba(255,255,255,.94)!important;--ink:#16181d;--mut:#5b616b;--ink-rgb:22,24,29;--w:22,24,29;color:#16181d}
+html[data-style=glass]:not(#x) .tl.on:not(.wt):not(.sir):not(.cl)>.tn svg{background:color-mix(in srgb,rgb(var(--tcx)) 62%,#d98400);fill:#fff!important}
+html[data-style=glass]:not(#x) .tl.on:not(.wt):not(.sir):not(.cl) :is(.tn,.nm,.ts2,.tmr){color:#16181d!important}
+html[data-style=glass]:not(#x) .tl.on:not(.wt):not(.sir):not(.cl) .ts2{color:#5b616b!important}
+html[data-style=glass]:not(#x) .tl.dim.on .fill{background:rgba(var(--tcx),.22)}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.lit.dim .fill{background:rgb(var(--tcx));box-shadow:none}
+html[data-style=glass]:not(#x) .tl.cl.on{background:color-mix(in srgb,var(--mint) 22%,rgba(var(--w),.10))!important;border:0!important;border-radius:22px}
+/* iOS look: Apple's grey frosted material for every content surface (cards, panels, tiles, alerts, sheets).
+   White stays reserved for "active": on-tiles, the selected tab and nav pill. Navigation keeps a lighter grey frost. */
+html[data-style=glass]{--gg:rgba(120,120,128,.26);--gcl:transparent;--g1:rgba(110,110,122,.34);--gline:rgba(255,255,255,.18)}
+html[data-style=glass][data-mode=light]{--gg:rgba(120,120,128,.16);--gcl:transparent;--g1:rgba(232,232,238,.62);--gline:rgba(255,255,255,.7)}
+html[data-style=glass]:not(#x):not(#y){--gc:var(--gg)}
+
+html[data-style=glass]:not(#x):not(#y) :is(.pn:not(#npw):not(#npmini):not(header .hs),:is(#rl.rooms2,.hm #rooms.rooms) a.rc){background:var(--gg);border:0;box-shadow:none}
+html[data-style=glass]:not(#x):not(#y) .alert{background:color-mix(in srgb,var(--al) 18%,var(--gg))!important;border:0}
+html[data-style=glass]:not(#x):not(#y) .card:is(.heat,.cool,.auto){background:color-mix(in srgb,var(--cs) 20%,var(--gg))!important;border:0}
+html[data-style=glass]:not(#x):not(#y) .tl:not(.wt):not(.sir):not(.cl):not(.on){background:var(--gg)!important}
+html[data-style=glass]:not(#x):not(#y) .tl.cl.on{background:color-mix(in srgb,var(--mint) 22%,var(--gg))!important}
+html[data-style=glass]:not(#x):not(#y) :is(#np,#cpp .cpsh,#lsh .lb,#lvsheet #lvbody,#evm #evp,#npsheet #npbody){background:rgba(46,46,52,.97)!important;border:0}
+html[data-style=glass][data-mode=light]:not(#x):not(#y) :is(#np,#cpp .cpsh,#lsh .lb,#lvsheet #lvbody,#evm #evp,#npsheet #npbody){background:#ececf0!important}
+/* Liquid Glass: panels are just a heading + their controls (no outer card) */
+html[data-style=glass]:not(#x):not(#y):not(#z) .pn:not(#npw):not(#npmini):not(header .hs){background:transparent!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;padding-left:0!important;padding-right:0!important}
+html[data-style=glass]:not(#x):not(#y):not(#z) .pn:not(#npw):not(#npmini):not(header .hs)::before,html[data-style=glass]:not(#x):not(#y):not(#z) .pn:not(#npw):not(#npmini):not(header .hs)::after{display:none!important}
+/* Liquid Glass: tighter rhythm now that panels have no card */
+html[data-style=glass]:not(#x):not(#y):not(#z) .pn:not(#npw):not(#npmini):not(header .hs){padding-top:6px!important;padding-bottom:6px!important}
+html[data-style=glass]:not(#x):not(#y):not(#z) .pn:is(.pg,.sectg,#alp,#dtp){margin-bottom:6px!important}
+/* Liquid Glass: panels that keep their card (only where asked) */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(#alp,#mini,#fcp,#energy .pn,#weather .pn,#hazards .pn,.pn.wrs,.pn.rn12,.pn.imc,#vehicle .pn.csv-card,#vehicle .pn:has(.veco),#vehicle .pn:has(.vhr)):not(#npw):not(#npmini){background:var(--gg)!important;padding:18px!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(#lvc,#insc,#updc):not(#npw){background:var(--gg)!important;padding:10px 16px!important}
+/* Liquid Glass: Climate cards use the same grey surface as the other pages */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #climate .card{background:var(--gg)!important;border:0!important;box-shadow:none!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #climate .card::before,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #climate .card::after{display:none!important}
+/* iOS look, tablet and desktop: the title pill floats and the page scrolls under it, with the same progressive blur band as the phone
+   (73-frosted-header.css). The page runs up to the top of the main area; its own padding keeps the layout where it was. */
+@media(min-width:761px){
+  html[data-style=glass]:not(#x) .main > .page{margin-top:-82px;padding-top:82px}
+  html[data-style=glass]:not(#x) .main > header{position:relative;z-index:26}
+  html[data-style=glass]:not(#x) #fband{left:var(--fbl,0px);right:var(--fbr,0px)}
+  /* tab pills: the phone's glass capsules (mostly clear when idle, brighter when selected), no card behind the row */
+  html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs) > .chip{background:rgba(255,255,255,.30);border-color:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%)}
+  html[data-style=glass][data-mode=dark] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs) > .chip{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}
+  html[data-style=glass][data-mode=dark]:not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs) > .chip.on{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.35)}
+  html[data-style=glass]:not(#x) :is(#admin,#theme) > .hsw:has(> .setchips)::after,html[data-style=glass]:not(#x) :is(.page > .secw,#scenes .scfh,#energy > .ehc,#security > #stabs,#insights > .inschips,#roomspg > #rtabs)::after{display:none!important}
+  /* the wallpaper-matching plate behind pinned rows is retired in this look: the blur band does that job, and the plate showed as a rectangle */
+  html[data-style=glass]:not(#x):not(#y) :is(:is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#energy > .ehc,#admin .admtop,#admin .adlog>.adlh,#security > #stabs,#insights > .inschips,#roomspg > #rtabs)::before{display:none!important;content:none!important}
+  html[data-style=glass]:not(#x):not(#y) :is(:is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#energy > .ehc,#admin .admtop,#admin .adlog>.adlh,#security > #stabs,#insights > .inschips,#roomspg > #rtabs){background:transparent!important;box-shadow:none!important}
+  /* title bar and sidebar: no card, like Apple Home on iPad. The sidebar is just rows on the wallpaper; the selected row is the one bright capsule. */
+  html[data-style=glass]:not(#x):not(#y) .main > header{background:transparent!important;background-image:none!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  html[data-style=glass]:not(#x):not(#y) nav{background:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  html[data-style=glass]:not(#x):not(#y) nav a{background:transparent!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  html[data-style=glass][data-mode=dark]:not(#x):not(#y) nav a:not(.on){color:rgba(255,255,255,.86)}
+  html[data-style=glass]:not(#x):not(#y) nav a.on{background:rgba(255,255,255,.92)!important;color:#16181d!important}
+  html[data-style=glass][data-mode=light]:not(#x):not(#y) nav a.on{background:rgba(120,120,128,.22)!important;color:var(--ink)!important}
+  /* sidebar as in Apple Home on iPad: a full-height frosted panel flush with the screen edge, sentence-case rows, section titles in grey, the selected row a white capsule */
+  html[data-style=glass]:not(#x):not(#y) nav{margin:-14px 0 -14px -14px;width:236px;padding:24px 14px 18px 22px;border-radius:0!important;background:rgba(112,118,140,.14)!important;border-right:0!important;-webkit-backdrop-filter:blur(44px) saturate(190%)!important;backdrop-filter:blur(44px) saturate(190%)!important;gap:2px}
+  html[data-style=glass][data-mode=light]:not(#x):not(#y) nav{background:rgba(255,255,255,.26)!important;border-right:0!important}
+  html[data-style=glass]:not(#x):not(#y) nav .t{text-align:left;padding:2px 8px 0}
+  html[data-style=glass]:not(#x):not(#y) nav #nclk{font:600 30px/1.15 var(--sans);letter-spacing:0;padding-bottom:12px}
+  html[data-style=glass]:not(#x):not(#y) nav .ngh{display:block;font:600 16px/1.25 var(--sans);letter-spacing:0;text-transform:lowercase;color:rgba(255,255,255,.72);padding:12px 8px 3px}
+  html[data-style=glass]:not(#x):not(#y) nav .ngh::first-letter,html[data-style=glass]:not(#x):not(#y) nav a::first-letter{text-transform:uppercase}
+  html[data-style=glass][data-mode=light]:not(#x):not(#y) nav .ngh{color:rgba(30,34,44,.62)}
+  html[data-style=glass]:not(#x):not(#y) nav a{font:400 15px/1.2 var(--sans);letter-spacing:0;text-transform:lowercase;opacity:1;padding:8px 12px;border-radius:12px;color:rgba(255,255,255,.92)}
+  html[data-style=glass][data-mode=light]:not(#x):not(#y) nav a{color:var(--ink)}
+  html[data-style=glass]:not(#x):not(#y) nav a.on{font-weight:500;background:rgba(255,255,255,.94)!important;color:#16181d!important}
+  html[data-style=glass][data-mode=light]:not(#x):not(#y) nav a.on{background:rgba(255,255,255,.9)!important;color:#16181d!important;box-shadow:0 1px 3px rgba(0,0,0,.08)!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z) nav a.on,html[data-style=glass]:not(#x):not(#y):not(#z) nav a.on *{filter:none!important;opacity:1!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z) nav a.nset{text-transform:none}
+  html[data-style=glass]:not(#x):not(#y):not(#z) nav a:not(.nset){position:relative;padding-left:40px}
+  html[data-style=glass]:not(#x):not(#y):not(#z) nav a:not(.nset)>svg{display:block;position:absolute;left:12px;top:50%;transform:translateY(-50%);width:19px;height:19px;fill:currentColor;opacity:.85}
+}
 </style>
 <style>
 /* HA diagnostics stay compact until requested. */
@@ -4759,8 +5088,9 @@ html:not(#x) :is(#kp,#sp,#bd,#grp,#grpw,#cmtsh,#rsp,#insq,#evq,#dtm,#tlsh,#tlscr
 <div id="bd"></div>
 <nav>
   <div class="t" id="outs">--°C</div><div class="t" id="nclk" role="button" aria-label="Notifications">--:--</div>
-  <div class="ngh" data-g="home">HOME</div><a href="#home" data-g="home" class="on">HOME</a><a href="#rooms" data-g="home">ROOMS</a><a href="#climate" data-g="home">CLIMATE</a><a href="#security" data-g="home">SECURITY</a><a href="#energy" data-g="home">ENERGY</a><a href="#scenes" data-g="home">SCENES</a><div class="ngh" data-g="outside">OUTSIDE</div><a href="#weather" data-g="outside">WEATHER</a><a href="#irrigation" data-g="outside">IRRIGATION</a><a href="#vehicle" data-g="outside">VEHICLE</a><a href="#hazards" data-g="outside">HAZARDS</a><div class="ngh" data-g="info">INFO</div><a href="#insights" data-g="info">INSIGHTS</a><a href="#media" data-g="info">MEDIA</a><a href="#events" data-g="info">EVENTS</a><a href="#settings" id="navset" class="nset" data-i2="n-set">SETTINGS</a>
+  <div class="ngh" data-g="home">HOME</div><a href="#home" data-i2="n-home" data-g="home" class="on">HOME</a><a href="#rooms" data-i2="n-rooms" data-g="home">ROOMS</a><a href="#climate" data-i2="n-climate" data-g="home">CLIMATE</a><a href="#security" data-i2="n-cam" data-g="home">SECURITY</a><a href="#energy" data-i2="n-energy" data-g="home">ENERGY</a><a href="#scenes" data-i2="n-scenes" data-g="home">SCENES</a><div class="ngh" data-g="outside">OUTSIDE</div><a href="#weather" data-i2="n-weather" data-g="outside">WEATHER</a><a href="#irrigation" data-i2="n-irr" data-g="outside">IRRIGATION</a><a href="#vehicle" data-i2="car" data-g="outside">VEHICLE</a><a href="#hazards" data-i2="alert-circle" data-g="outside">HAZARDS</a><div class="ngh" data-g="info">INFO</div><a href="#insights" data-i2="lightbulb-on" data-g="info">INSIGHTS</a><a href="#media" data-i2="video" data-g="info">MEDIA</a><a href="#events" data-i2="n-events" data-g="info">EVENTS</a><a href="#settings" id="navset" class="nset" data-i2="n-set">Settings</a>
 </nav>
+<div id="bband" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <div id="btab"><a href="#home" data-i2="n-home"><span>Home</span></a><a href="#rooms" data-i2="n-rooms"><span>Rooms</span></a><a href="#climate" data-i2="n-climate"><span>Climate</span></a><a href="#security" data-i2="n-cam"><span>Camera</span></a><button id="bmore" data-i2="n-more"><span>More</span></button></div>
 <div id="npmini" class="npoff"></div><div id="npfab"></div>
 <div id="lvsheet"><div class="lvbk" data-lv="close"></div><div class="pn lvb" id="lvbody"></div></div>
@@ -4834,7 +5164,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "90c907";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "33ce99";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -6642,8 +6972,9 @@ function lsSch() {
     const lx = c.lux && states[c.lux] ? parseFloat(states[c.lux].state) : NaN, dk = c.dark ? lsN(c.dark) : NaN, br = c.bright ? lsN(c.bright) : NaN;
     if (!isNaN(lx) && !isNaN(dk)) { const dd = lx < dk; res.push(dd); rows.push(ok(dd, (dd ? "Dark enough" : "Too bright") + ": " + Math.round(lx) + " lux now, comes on below " + dk + (!isNaN(br) ? ", off above " + br : ""))); }
     const go = res.every(Boolean); if (res.length) rows.push(ok(go, go ? "Lights will turn on when someone is in the room" : "Lights won't turn on right now"));
-    $(".lss", cd).innerHTML = rows.join("");
-    sm.innerHTML = (res.length ? '<span class="' + (go ? "y" : "n") + '">' + mdi(go ? "check" : "close") + (go ? "On now" : "Not now") + '</span>' : "") + '<span class="lsx">' + [win, !isNaN(dk) ? "under " + dk + " lx" : ""].filter(Boolean).join(" · ") + '</span>';
+    { const lh = rows.join(""), le = $(".lss", cd); if (le._h !== lh) { le._h = lh; le.innerHTML = lh; } }   // only touch the DOM when the text changed, so an idle state update does not repaint the open pop-up (it flickered)
+    const smh = (res.length ? '<span class="' + (go ? "y" : "n") + '">' + mdi(go ? "check" : "close") + (go ? "On now" : "Not now") + '</span>' : "") + '<span class="lsx">' + [win, !isNaN(dk) ? "under " + dk + " lx" : ""].filter(Boolean).join(" · ") + '</span>';
+    if (sm._h !== smh) { sm._h = smh; sm.innerHTML = smh; }
   });
 }
 setInterval(() => { if (curRoom) lsSch(); }, 30000);   // the time window moves on without any state change
@@ -6704,13 +7035,13 @@ function updTiles() {
     if (!s) { el.classList.add("na"); return; }
     const a = s.attributes, st = s.state, on = (st === "on" || st === "open" || st === "opening") && !npGone(e);
     if (!el.dataset.c && !el.classList.contains("bd")) tmrSync(el, e, on);   // the countdown of the entity's timer, shown in its tile while it is on
-    if (n && !el.dataset.n) n.textContent = a.friendly_name || e.split(".")[1].replace(/_/g, " ");
-    if (n && el.dataset.nf) n.textContent = sv(el.dataset.nf) || "Curtains";
+    if (n && !el.dataset.n) { const nt = a.friendly_name || e.split(".")[1].replace(/_/g, " "); if (n.textContent !== nt) n.textContent = nt; }
+    if (n && el.dataset.nf) { const nt = sv(el.dataset.nf) || "Curtains"; if (n.textContent !== nt) n.textContent = nt; }
     if (el.dataset.si) { const si = JSON.parse(el.dataset.si), ic = on ? si.open : si.closed, sv0 = $(".tn svg", el); if (ic && sv0 && el.dataset.ic !== ic) { el.dataset.ic = ic; sv0.outerHTML = mdi(ic); } }
     if (el.dataset.s) {   // door-style tile: shows the contact sensor's open / closed
       const q = states[el.dataset.s], o = isOn(el.dataset.s);
       el.classList.toggle("na", !q || q.state === "unavailable"); el.classList.toggle("on", o);
-      if (!el.dataset.arm) $(".ts2", el).textContent = !q ? "--" : o ? "OPEN" : "CLOSED";
+      if (!el.dataset.arm) { const t2 = $(".ts2", el), tv = !q ? "--" : o ? "OPEN" : "CLOSED"; if (t2.textContent !== tv) t2.textContent = tv; }
       return;
     }
     el.classList.toggle("na", st === "unavailable"); el.classList.toggle("on", el.dataset.c ? st !== "off" : on);
@@ -6724,7 +7055,7 @@ function updTiles() {
     else if (d === "cover") { const p = a.current_position, mv = covMove(e); el.classList.toggle("dim", p != null); el.classList.toggle("mv", !!mv); t = (mv || st).toUpperCase() + (p != null ? "  ·  " + p + "%" : ""); if (idle && p != null) rg.value = p; if (mv) covTick(); }
     else if (d === "select") t = st;
     if (!on && st === "on") t = "OFF";
-    if (!(el._d && el._d > Date.now()) && !(d === "cover" && rg && !idle)) $(".ts2", el).textContent = el.dataset.sub || t;   // a curtain slider being dragged keeps showing the dragged value, not the positions HA reports on the way
+    if (!(el._d && el._d > Date.now()) && !(d === "cover" && rg && !idle)) { const t2 = $(".ts2", el), tv = el.dataset.sub || t; if (t2.textContent !== tv) t2.textContent = tv; }   // a curtain slider being dragged keeps showing the dragged value, not the positions HA reports on the way
   });
   if (curRoom) $$("#rv .pg[data-pi]").forEach(pn => {   // per-panel counts, and ALL OFF only while something in that light section is on
     const m = curPanels[+pn.dataset.pi]; if (!m || m.k === "scene" || m.k === "cam") return;   // the Scene card counts its own zones (rsUpd)
@@ -9641,6 +9972,7 @@ function wpSync() {
     const own = sc === pg, fb = document.getElementById("fband") || document.body.appendChild(Object.assign(document.createElement("div"), { id: "fband", innerHTML: "<i></i><i></i><i></i><i></i><i></i><i></i>" }));
     document.querySelectorAll(".page.fbp").forEach(x => { if (x !== pg) x.classList.remove("fbp"); }); pg.classList.toggle("fbp", own);
     const hb = hd.getBoundingClientRect().bottom; let bt = hb + 6, nr = 0; pg.querySelectorAll(".stk").forEach(e => { const r = e.getBoundingClientRect(); if (r.width && r.top < hb + 24) { bt = Math.max(bt, r.bottom + 2); nr += e.matches(".ehc") ? 2 : 1; } });   // nr: pinned rows in the stack (Energy's two-line header counts as two)
+    { const mr = document.querySelector(".main").getBoundingClientRect(); fb.style.setProperty("--fbl", Math.max(0, Math.round(mr.left)) + "px"); fb.style.setProperty("--fbr", Math.max(0, Math.round(innerWidth - mr.right)) + "px"); }
     fb.style.height = Math.round(bt + 44) + "px"; fb.style.setProperty("--fh", Math.round(bt + 44) + "px"); fb.classList.toggle("fb2", nr > 1); fb.style.setProperty("--fbo", own && sc ? (t => (t * t * (3 - 2 * t)).toFixed(3))(Math.min(1, sc.scrollTop / 36)) : 0); } }
 }
 let wpQ = 0;
@@ -12312,6 +12644,7 @@ function loadEnergy() {
   send({ type: "energy/get_prefs" }, (P, raw) => {
     if (lt !== en.lt) return;   // read every time, so a source added in Home Assistant shows up without reloading
     if (!P) { en.busy = false; en.err = "Energy isn’t configured: " + (raw && raw.error ? raw.error.message : "no response"); en.data = {}; drawEnergy(); return; }
+    en.quiet = !!en.body && en.key === en.r + en.o;   // same period already on screen: refresh in the background and swap once, no dimmed placeholder or second redraw
     en.prefs = P; en.err = ""; en.data = {}; en.key = en.r + en.o; en.prev = undefined;
     const sp = enSpan(), gid = enGridIds(P); en.gridIds = gid; enExtra(sp);
     if (!gid.length) { en.busy = false; en.grid = null; en.err = "Home Assistant’s Energy settings have no grid electricity set up (Settings > Dashboards > Energy > Electricity grid)."; drawEnergy(); return; }
@@ -12368,7 +12701,8 @@ function enCost(sp) {   // grid import split into the tariff periods + daily cha
   }
   return { per: per, use: use, fixed: fixed, days: days, total: total, kwh: per.reduce((s, x) => s + x.kwh, 0), cols: cols, est: est, real: !!en.gridCost };
 }
-function drawEnergy() { if (en.anim && Date.now() < en.anim) { clearTimeout(en.at); en.at = setTimeout(drawEnergy, en.anim - Date.now() + 30); return; }   // late answers wait until the slide-in has finished, so they do not cut it off
+function drawEnergy() { if (en.quiet) { if (!enReady()) return; const q = $("#energy"); if (q && q.classList.contains("enter")) { clearTimeout(en.qt); en.qt = setTimeout(drawEnergy, 250); return; } en.quiet = false; }   // wait for the page-in to finish, then swap the fresh numbers in without animating
+  if (en.anim && Date.now() < en.anim) { clearTimeout(en.at); en.at = setTimeout(drawEnergy, en.anim - Date.now() + 30); return; }   // late answers wait until the slide-in has finished, so they do not cut it off
   enDraw(); const pg = $("#energy"); if (pg && pg.classList.contains("hold") && enReady()) pgEnter(pg); }
 const enReady = () => !!en.err || !!(en.data && en.prefs && en.grid !== undefined && en.gridCost !== undefined && en.gas !== undefined && en.gasCost !== undefined);   // everything the page shows is here: it enters once, complete, not as a "Calculating cost…" card that is then replaced
 function enCheapLine(T) {   // tariff hint: which hours are cheapest (and on which days), and whether now is one of them (only when the tariff has more than one rate)
@@ -12438,10 +12772,11 @@ function enDraw() {
     const et = hasGas && CS ? (en.tab === "g" ? "g" : "e") : "e";
     h = h.slice(0, h0) + (hasGas && CS ? '<div class="ensw"><button class="' + (et === "e" ? "on" : "") + '" data-et="e">ELECTRICITY</button><button class="' + (et === "g" ? "on" : "") + '" data-et="g">GAS</button></div>' : "") + '<div class="ensl" data-t="' + et + '" data-n="' + (hasGas && CS ? 3 : 2) + '">' + h.slice(h0) + '</div>'; en.body = h.slice(h0);
   }
-  pg.innerHTML = h;
+  if (en.tx == null && pg.__eh === h && pg.firstChild) return;   // same page as already drawn (fresh data with the same numbers): keep it, so the cards do not redraw and re-animate
+  pg.__eh = h; pg.innerHTML = h;
   if (en.tx != null && en.data && !pg.querySelector(".enold") && pg.querySelector(".ensl")) { const d = en.tx, els = pg.querySelectorAll(".ensw,.ensl>.pn"); en.tx = null; if (!(window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches)) { els.forEach((c, k) => { c.style.setProperty("--tx", "0px"); c.style.setProperty("--ty", "20px"); c.style.setProperty("--i", k); c.classList.add("enin"); }); en.anim = Date.now() + 700; setTimeout(() => els.forEach(c => c.classList.remove("enin")), 800); } }
 }
-$("#energy").onclick = e => {
+$("#energy").onclick = e => { en.quiet = false;
   const dt = e.target.closest("[data-et]"); if (dt) { en.tab = dt.dataset.et; en.anim = 0; drawEnergy(); return; }
   const r = e.target.closest("[data-er]"), o = e.target.closest("[data-eo]"), m = e.target.closest("[data-em]"), u = e.target.closest("[data-eu]");
   if (u) { en.unit = u.dataset.eu; en.anim = 0; drawEnergy(); }
