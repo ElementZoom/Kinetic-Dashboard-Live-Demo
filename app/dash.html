@@ -504,7 +504,7 @@ button,input,select,textarea{font-family:inherit}
 .kpd{display:flex;gap:14px;min-height:22px}.kpd i{width:16px;height:16px;border-radius:50%;border:2px solid var(--mut)}.kpd i.f{background:var(--mint);border-color:var(--mint)}
 .kpg{display:grid;grid-template-columns:repeat(3,72px);gap:14px;justify-content:center;width:100%}.kpg button{width:72px;height:72px;aspect-ratio:1;padding:0;justify-self:center;border-radius:50%;border:1px solid var(--line);background:rgba(var(--w),.07);color:var(--ink);font:400 28px var(--sans);cursor:pointer}.kpg button:active{background:rgba(var(--w),.2)}.kpg button svg{width:26px;height:26px;fill:currentColor}.kpg .ok{background:var(--mint);color:var(--onmint,#07241a);border-color:var(--mint)}
 .kpc{width:100%}
-.hs{position:relative;overflow:hidden;min-height:64px}.hs>*:not(canvas){position:relative;z-index:1}#wfx{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.hs{position:relative;overflow:hidden;min-height:64px}.hsw{display:contents}.hs>*:not(canvas),.hs .hsw>*:not(canvas){position:relative;z-index:1}#wfx{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .wch svg{width:1.2em;height:1.2em;fill:currentColor;vertical-align:-.22em}
 .enc{font-weight:500;opacity:.75;margin-left:2px}.enb{display:flex;flex-direction:column;gap:10px;margin-top:14px}.enr{display:flex;align-items:center;gap:12px;font-size:14px}.enr .enn{flex:0 0 190px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.enr b{margin-left:auto;font-weight:500;min-width:84px;text-align:right}.enbar{flex:1;height:12px;border-radius:6px;background:rgba(var(--w),.08);overflow:hidden}.enbar i{display:block;height:100%;border-radius:6px}
 @media(max-width:760px){
@@ -1690,7 +1690,7 @@ html.camsw .cam.lf{opacity:0;transition:opacity .13s linear}
 @media(prefers-reduced-motion:reduce){html.camsw .cam{transition:none}}
 /* the #view page on a phone: edge to edge like a full-screen Security camera (the garage frame follows the square corners) */
 body.vwm #vw.one{padding:0;gap:0}
-body.vwm #vw.one .cam{border:0;border-radius:0;clip-path:none}
+body.vwm:not(#x) #vw.one .cam{border:0;border-radius:0;clip-path:none}
 body.vwm #vw.one .cam .gal,body.vwm #vw.one .cam .gal b{border-radius:0}
 body.vwm #vw.two{padding:8px;gap:8px}
 /* two feeds side by side (landscape): the garage frame hugs the picture, not the picture plus its control row */
@@ -2278,8 +2278,8 @@ header.hmerge #wpls{align-self:center}
 @media(min-width:761px){.hs #dt{display:none}}
 /* the tablet greeting bar: every item (greeting, weather, wind, the pills) on one centre line, nothing riding high or low */
 header.hmerge>.hs{align-items:center}
-header.hmerge>.hs>#gr,header.hmerge>.hs>.wch{display:inline-flex;align-items:center;gap:6px;line-height:1.2}
-header.hmerge>.hs>.wch svg{vertical-align:0;flex:none}
+header.hmerge>.hs #gr,header.hmerge>.hs .wch{display:inline-flex;align-items:center;gap:6px;line-height:1.2}
+header.hmerge>.hs .wch svg{vertical-align:0;flex:none}
 header.hmerge #wpls .wpl{line-height:1.2}
 /* MORE under a shrunk weather card, like the weather warning's */
 .wxl .wxmore{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin:4px 0 0;padding:4px 0 0;border:0;background:none;color:inherit;opacity:.75;font:600 11px var(--mono);letter-spacing:.1em;cursor:pointer}
@@ -4597,9 +4597,9 @@ mark.srk{background:rgba(var(--mint-rgb),.3);color:inherit;border-radius:4px}
   .srhd{order:0;display:flex;align-items:center;gap:12px;flex:none;padding:calc(12px + env(safe-area-inset-top)) 16px 6px}
   .srhd b{flex:1;font-size:22px;font-weight:600}
   .srhd .src{width:44px;height:44px}
-  #srl{order:1;padding:4px 8px}
+  .srb{order:1;flex:none;margin:6px 16px 4px;padding:0 14px;height:52px;border:1px solid var(--line);border-radius:26px;background:rgba(var(--w),.06)}
   .srfs{order:2;padding:10px 16px 8px}
-  .srb{order:3;flex:none;margin:0 16px calc(10px + env(safe-area-inset-bottom));padding:0 14px;height:52px;border:1px solid var(--line);border-radius:26px;background:rgba(var(--w),.06)}
+  #srl{order:3;padding:4px 8px calc(8px + env(safe-area-inset-bottom))}
   .srb .src,.srb .srn,.srft{display:none}
   .srr{min-height:44px}
   .srg{display:none}.srcv{display:inline-flex}
@@ -4883,6 +4883,17 @@ html[data-style=glass]:not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color
 html:not(#x) .hm #rooms.rooms{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-auto-flow:row!important;grid-auto-columns:auto;gap:12px}
 .hm #rooms.rooms a.rc:nth-child(n+7){display:none!important}
 }
+
+/* Temperature cue, stronger and per look (--tcs = the room's temperature colour at full strength) */
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc{background:color-mix(in srgb,var(--tcs) 12%,rgba(var(--w),.05));border-color:color-mix(in srgb,var(--tcs) 60%,transparent);box-shadow:inset 30px 0 30px -22px var(--tcs)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc::before{top:12px;bottom:12px;width:4px;background:var(--tcs);box-shadow:0 0 14px var(--tcs)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color:var(--tcs);text-shadow:0 0 14px color-mix(in srgb,var(--tcs) 45%,transparent)}
+html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color:color-mix(in srgb,var(--tcs) 62%,var(--ink));text-shadow:none}
+html[data-style=material]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc{background:color-mix(in srgb,var(--tcs) 24%,var(--m-high))}
+html[data-style=material]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.lbl:first-child svg{background:color-mix(in srgb,var(--tcs) 50%,var(--m-high));color:var(--ink)}
+html[data-style=glass]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.lbl:first-child svg{background:color-mix(in srgb,var(--tcs) 70%,#4a4f5c);color:#fff;border:0}
+html[data-style=glass]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color:var(--tcs)}
+html[data-style=glass][data-mode=light]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color:color-mix(in srgb,var(--tcs) 58%,var(--ink))}
 /* Card design per style: iOS = calm surface, Material = neutral tonal, Kinetic = fine outline + glow. Additive: shape, outline and tint only, no layout. */
 /* Kinetic */
 html:not([data-style=glass]):not([data-style=material]):not(#x) .pn:not(#npw):not(#npmini):not(header .hs){border-radius:18px;border:1px solid color-mix(in srgb,var(--mint) 32%,transparent)}
@@ -5038,6 +5049,28 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(#lvc,#insc,#updc):not
 /* Liquid Glass: Climate cards use the same grey surface as the other pages */
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #climate .card{background:var(--gg)!important;border:0!important;box-shadow:none!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #climate .card::before,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #climate .card::after{display:none!important}
+/* Liquid Glass: the selected option's outline is drawn inside the card, so the page edge does not clip it */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .eb.sty.sel{outline-offset:-2px}
+/* Liquid Glass: the greeting is one sky hero card (colour follows the live weather, set as data-wk on .hs), white text, frosted white chips */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .hs.pn{--sk:linear-gradient(165deg,#4f93d4 0%,#86bde6 58%,#efcf94 100%);background:var(--sk)!important;border:0!important;box-shadow:none!important;border-radius:26px!important;color:#fff;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs[data-wk=partly]{--sk:linear-gradient(165deg,#5a93c9 0%,#8db8d8 60%,#e3cc9c 100%)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs:is([data-wk=cloudy],[data-wk=fog],[data-wk=windy],[data-wk=exceptional]){--sk:linear-gradient(165deg,#6f8499 0%,#93a6b8 100%)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs:is([data-wk=rainy],[data-wk=pouring],[data-wk=lightning],[data-wk=lightning-rainy],[data-wk=hail]){--sk:linear-gradient(165deg,#4d5f78 0%,#71849c 100%)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs:is([data-wk=snowy],[data-wk=snowy-rainy]){--sk:linear-gradient(165deg,#7f95ad 0%,#b4c4d4 100%)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs:is([data-wk=night],[data-wk=pnight]){--sk:linear-gradient(165deg,#161d3d 0%,#2b3a6b 100%)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs :is(#gr,#dt,#wchip,#wwind,.lbl){color:#fff!important;text-shadow:none!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #home .hs .wpl,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #home .hs .wpl *{color:#fff!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #home .hs .wpl{background:rgba(255,255,255,.26)!important;border:0!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs::after{display:none!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs #wfx{border-radius:inherit!important;clip-path:none!important}
+/* tablet: in the header the greeting + weather is one sky capsule and the chips sit in a separate grey card beside it */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) header.hmerge>.hs.pn{background:none!important;border-radius:0!important;padding:0!important;margin:0 0 0 6px!important;display:flex!important;align-items:center;gap:10px;overflow:hidden!important;position:static!important;margin-left:-23px!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) header.hmerge>.hs .hsw{display:flex;align-items:center;gap:16px;position:relative;z-index:0;overflow:hidden;flex:1 0 auto;min-width:max-content;height:46px;padding:0 112px 0 22px;border-radius:23px;background:var(--sk)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) header.hmerge>.hs .hsw #wfx{-webkit-mask-image:none!important;mask-image:none!important;border-radius:inherit!important;clip-path:none!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) header.hmerge>.hs #wpls:not(:empty){display:flex;align-items:center;gap:6px;flex:none;height:46px;padding:0 7px;border-radius:23px;background:var(--gg)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) header.hmerge>.hs #wpls .wpl{background:rgba(255,255,255,.6)!important;border:0!important}
+html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w) header.hmerge>.hs #wpls .wpl{background:rgba(235,235,245,.14)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) #home .hs.pn{padding:14px 16px!important}
 /* iOS look, tablet and desktop: the title pill floats and the page scrolls under it, with the same progressive blur band as the phone
    (73-frosted-header.css). The page runs up to the top of the main area; its own padding keeps the layout where it was. */
 @media(min-width:761px){
@@ -5102,7 +5135,7 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #climate .card::before,ht
   <div id="cdb" hidden></div>
 
   <div id="home" class="page on">
-    <div class="pn hs"><canvas id="wfx"></canvas><b id="gr"></b><span id="dt" class="lbl"></span><span id="wchip" class="wch">--</span><span id="wwind" class="wch"></span><span id="wpls"></span></div>
+    <div class="pn hs"><span class="hsw"><canvas id="wfx"></canvas><b id="gr"></b><span id="dt" class="lbl"></span><span id="wchip" class="wch">--</span><span id="wwind" class="wch"></span></span><span id="wpls"></span></div>
     <div id="hstrip" hidden><div class="pn" id="lvc" hidden></div></div>
     <div class="hm">
       <div class="left"><div class="camcol"><div class="cams" id="cams"></div><div class="pn sch" id="sch" hidden></div></div><div class="rooms" id="rooms"></div></div>
@@ -5164,7 +5197,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "33ce99";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "435bf9";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -5749,6 +5782,7 @@ function queueHome() { if (!hq) hq = requestAnimationFrame(() => { hq = 0; home(
 function drawGsum() {
   const e = CONFIG.houseAvg || CONFIG.indoor, v = sv(e), el = $("#gsum"); if (!el) return;
   el.style.setProperty("--tc", v != null ? tempColor(parseFloat(v)) : "rgba(245,245,245,.5)");
+  el.style.setProperty("--tcs", v != null ? tempColor(parseFloat(v)).replace(/,0\.7\)$/, ",1)") : "rgb(245,245,245)");   // the same colour at full strength, for the room cards' stronger temperature cues
   el.innerHTML = '<div><div class="lbl">' + mdi("thermometer") + ' House average</div></div><div class="gv">' + (v != null ? f1(v) : "--") + '<small>°C</small></div>';
 }
 function setState(s) {
@@ -6877,7 +6911,7 @@ function fillCard(el, r) {
   const tv = roomTemp(r), hv = roomHum(r), C = r.counts || {};
   const num = (k, list) => { const v = C[k] ? sv(C[k]) : null; return v != null && !isNaN(+v) ? Math.round(+v) : members(list).filter(isOn).length; };
   const n = { lights: C.lights ? num("lights", r.lights) : roomLights(r).filter(isOn).length, doors: num("doors", r.doors), windows: num("windows", r.windows), covers: num("covers", r.covers), fans: num("fans", r.fans) };
-  el.style.setProperty("--tc", tempColor(parseFloat(tv))); el.style.setProperty("--tg", glowColor(parseFloat(tv)));
+  el.style.setProperty("--tc", tempColor(parseFloat(tv))); el.style.setProperty("--tg", glowColor(parseFloat(tv))); el.style.setProperty("--tcs", tempColor(parseFloat(tv)).replace(/,0\.7\)$/, ",1)"));
   { const t = parseFloat(tv); if (isNaN(t)) delete el.dataset.tt; else el.dataset.tt = "1"; el.style.setProperty("--ts", isNaN(t) ? "4s" : (Math.round(Math.max(2.5, Math.min(6, 2.2 + (24 - t) * 0.35)) * 2) / 2).toFixed(1) + "s"); }   // warmer room = faster glow
   { const t = parseFloat(tv), B = roomBand(r), z = isNaN(t) ? "" : t < B[0] ? "cold" : t > B[1] ? "warm" : "ok"; if (el.dataset.tz !== z) el.dataset.tz = z;
     // the card's animation follows its colour band (55-room-tint.css)
@@ -12171,6 +12205,7 @@ function wfxSet(state, raining, wind) {
   if (raining && (k === "cloudy" || k === "partly" || k === "pnight" || k === "sun" || k === "night")) k = "rainy";
   if (k === "exceptional" || !k) k = "cloudy";
   WFX.wind = Math.min(1.6, wind / 30);
+  { const hs = document.querySelector(".hs"); if (hs && hs.dataset.wk !== k) hs.dataset.wk = k; }
   if (WFX.k !== k) { WFX.k = k; WFX.parts = []; wfxInit(); }
 }
 function wfxInit() {
@@ -12701,6 +12736,11 @@ function enCost(sp) {   // grid import split into the tariff periods + daily cha
   }
   return { per: per, use: use, fixed: fixed, days: days, total: total, kwh: per.reduce((s, x) => s + x.kwh, 0), cols: cols, est: est, real: !!en.gridCost };
 }
+function wxTop(f) {   // a Weather card opened from a link: on phones each tab shows one card, so go to the top of the page (scrollIntoView left the top of the card under the pinned title bar and tabs)
+  if (!isMobile()) { f.scrollIntoView({ block: "start" }); return; }
+  let e = f.parentElement; while (e && e !== document.body && !(e.scrollHeight > e.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(e).overflowY))) e = e.parentElement;
+  if (e && e !== document.body) e.scrollTop = 0; else scrollTo(0, 0);
+}
 function drawEnergy() { if (en.quiet) { if (!enReady()) return; const q = $("#energy"); if (q && q.classList.contains("enter")) { clearTimeout(en.qt); en.qt = setTimeout(drawEnergy, 250); return; } en.quiet = false; }   // wait for the page-in to finish, then swap the fresh numbers in without animating
   if (en.anim && Date.now() < en.anim) { clearTimeout(en.at); en.at = setTimeout(drawEnergy, en.anim - Date.now() + 30); return; }   // late answers wait until the slide-in has finished, so they do not cut it off
   enDraw(); const pg = $("#energy"); if (pg && pg.classList.contains("hold") && enReady()) pgEnter(pg); }
@@ -12849,6 +12889,7 @@ function route() {
   { const el = $("#" + pg), stp = x => !!x && (x.id === "theme" || x.id === "admin"), tk = stp(el) ? setTab() : "", tabGo = !!tk && !!SETTAB && tk !== SETTAB && bootDone;
     let dir = 0; if (tabGo) { const o = setTabs().map(x => x[0]); dir = o.indexOf(tk) >= o.indexOf(SETTAB) ? 1 : -1; }
     SETTAB = tk;
+    if (el && el !== lastPg) el.scrollTop = 0;   // arriving on a page always starts at its top (each page is its own scroller and kept the old position)
     if (el && bootDone && (el !== lastPg || tabGo)) { if (pg === "energy" && !enReady()) pgHold(el, 1500); else { pgEnter(el); if (tabGo) { el.style.setProperty("--pgdx", dir * 36 + "px"); el.style.setProperty("--pgdr", dir * 16 + "deg"); } } } lastPg = el; if (el) lazyIn(el); }
   const setP = p === "theme" || p === "admin", onA = a => a.getAttribute("href") === "#" + p || (setP && a.getAttribute("href") === "#settings");
   $$("nav a").forEach(a => a.classList.toggle("on", onA(a)));
@@ -12876,10 +12917,10 @@ function route() {
     const wk = h[1] === "now" || h[1] === "week"; if (wk) { wcI = h[1] === "week" ? 1 : 0; SECP.want = { page: "weather", q: ".wnow" }; }   // #weather/now = the Now card, #weather/week = the Next 7 days card (both on the Now tab)   // phones: open the tab that holds that card
     drawWeather();
     if (wk) [0, 80, 400].forEach(ms => setTimeout(() => { const wc = $("#wx .wcols"); if (curPg() === "weather" && wc && wc.clientWidth) { wc.scrollLeft = wcI * (wc.clientWidth + 12); $$("#wx .wdots i").forEach((d, k) => d.classList.toggle("on", k === wcI)); } }, ms));
-    if (h[1] === "radar" || h[1] === "map") [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wxmap"); if (f) f.scrollIntoView({ block: "start" }); } }, ms));
+    if (h[1] === "radar" || h[1] === "map") [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wxmap"); if (f) wxTop(f); } }, ms));
     if (h[1] === "forecast" && !isMobile()) [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wx .fcp"); if (f) f.scrollIntoView({ block: "start" }); } }, ms));
-    if (h[1] === "pollen") [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wxpol"); if (f) f.scrollIntoView({ block: "start" }); } }, ms));   // #weather/pollen scrolls to the Pollen card
-    if (ti != null) [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { fcSync(); const f = $("#wx .fcp"); if (f) f.scrollIntoView({ block: "start" }); } }, ms));
+    if (h[1] === "pollen") [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wxpol"); if (f) wxTop(f); } }, ms));   // #weather/pollen scrolls to the Pollen card
+    if (ti != null) [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { fcSync(); const f = $("#wx .fcp"); if (f) { wxTop(f); } } }, ms));
   }
   if (p === "energy") { if (en.key !== en.r + en.o) en.data = null; drawEnergy(); loadEnergy(); }   // same period as last time: show it straight away and refresh quietly
   if (p === "irrigation") { zSheet = false; $("#irrigation").classList.remove("zop"); }
