@@ -5144,6 +5144,100 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.
   html:not(#x):not(#y) .cam.cpo .cpanel,html:not(#x):not(#y) .cam.cpo.ls .cpanel{padding-bottom:calc(60px + env(safe-area-inset-bottom,0px))}
   html:not(#x):not(#y) .cam.cpo[data-gal] .cpanel{padding-bottom:calc(var(--galh,26px) + 60px + env(safe-area-inset-bottom,0px))}
 }
+/* Weather alerts and take-overs, one design per look (the 2026-11 mockups): the alert cards (31-weather-alerts.js wxaCard) and the pop-up sheets (49-takeover.js tkShell).
+   Kinetic: a signal channel (glowing bar, mono tags, block bars). Liquid Glass: Apple Weather tiles and iOS sheets (grabber, segmented control, grouped list).
+   Material: tonal containers, round icon, app-bar sheets with tabs. The markup carries the parts of every look; each look hides the ones it does not use. */
+.wxico,.wxcap,.tk-tg,.tk-gr,.tk-dn{display:none}
+.tn-warn{--tkc:#e08a00}.tn-bad{--tkc:#e5483b}.tn-ok{--tkc:var(--mint)}
+.wxl-uv{--grad:linear-gradient(90deg,#34c759,#ffd60a,#ff9f0a,#ff453a,#bf5af2)}.wxl-wind{--grad:linear-gradient(90deg,#34c759,#ffd60a,#ff9f0a,#ff453a)}.wxl-rain{--grad:linear-gradient(90deg,#9ad0f5,#4aa3f0,#1f5fd0)}
+
+/* ===== Kinetic: cards ===== */
+html:not([data-style=glass]):not([data-style=material]):not(#x) .wxl{--k:var(--wc);background:color-mix(in srgb,var(--wc) 8%,rgba(var(--w),.04));border-color:color-mix(in srgb,var(--wc) 30%,var(--line));border-radius:16px;padding-left:20px}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .wxl::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:0 3px 3px 0;background:var(--wc);box-shadow:0 0 10px var(--wc);z-index:1}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .wxt i{order:-1}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .wxt::before{content:"CH " attr(data-ch) " \00b7";margin-right:-1px}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .wxt{color:var(--wc)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .wxv em{font:500 40px/1 var(--mono)}html:not([data-style=glass]):not([data-style=material]):not(#x) .wxl.sm .wxv em{font-size:22px}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .wxm b{font-weight:500}html:not([data-style=glass]):not([data-style=material]):not(#x) .wxm small{font:400 12px var(--mono);letter-spacing:.04em;text-transform:uppercase}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .wxb span{border-radius:2px}html:not([data-style=glass]):not([data-style=material]):not(#x) .wxb span.on{box-shadow:0 0 8px -2px var(--wc)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .wxl .wxft{margin-left:-20px}
+/* ===== Kinetic: sheets ===== */
+html:not([data-style=glass]):not([data-style=material]):not(#x) #cmtsh .cmb.tk{border-radius:20px;position:relative}
+html:not([data-style=glass]):not([data-style=material]):not(#x) #cmtsh .cmb.tk::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:3px;border-radius:0 3px 3px 0;background:var(--tkc);box-shadow:0 0 12px var(--tkc);z-index:2}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tk-tg{display:block;font:500 10px var(--mono);letter-spacing:.14em;color:var(--tkc);margin-bottom:3px}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tk-ic{border-radius:12px}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tk-ht small.tk-sub{font:400 12px var(--mono);letter-spacing:.03em}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tk-wc{border-width:1px;border-radius:8px;font:500 11px var(--mono)}html:not([data-style=glass]):not([data-style=material]):not(#x) .tk-wc.on{background:none;border-color:var(--tkc);color:var(--tkc);box-shadow:inset 0 0 10px -4px var(--tkc)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(.tk-facts>div,.tk-ev,.tk-door,.tk-tl,.tk-wwc,.tk-wwr,.tk-wr,.tk-tlc){border-radius:12px}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tk-facts b{font:500 17px var(--mono)}html:not([data-style=glass]):not([data-style=material]):not(#x) .tk-facts small{font-size:10px;letter-spacing:.14em}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tk-tip{background:color-mix(in srgb,var(--tkc) 14%,transparent);border-radius:12px}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tk-b{text-transform:uppercase;border-width:1px;border-radius:12px;font:500 11px var(--mono);letter-spacing:.12em}html:not([data-style=glass]):not([data-style=material]):not(#x) .tk-b.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+html:not([data-style=glass]):not([data-style=material]):not(#x) .tk-wr.sel{border-color:var(--tkc);background:color-mix(in srgb,var(--tkc) 10%,transparent)}
+
+/* ===== Liquid Glass: cards (Apple Weather tiles) ===== */
+html[data-style=glass]:not(#x) .wxl{--k:var(--wc);background:color-mix(in srgb,var(--wc) 8%,var(--gg));border:0;border-radius:22px;padding:16px 18px}
+html[data-style=glass]:not(#x) .wxf{display:none}
+html[data-style=glass]:not(#x) .wxt{font-size:0;letter-spacing:0;color:var(--mut);margin-bottom:2px}html[data-style=glass]:not(#x) .wxt::after{content:attr(data-gl);font:500 13px var(--sans)}
+html[data-style=glass]:not(#x) .wxl:not(.sm) .wxr{flex-direction:column;align-items:flex-start;gap:4px}
+html[data-style=glass]:not(#x) .wxl:not(.sm) .wxv{order:-1;display:flex;align-items:baseline;gap:8px;text-align:left}
+html[data-style=glass]:not(#x) .wxl:not(.sm) .wxv em{font:500 40px/1 var(--sans);color:var(--ink)}html[data-style=glass]:not(#x) .wxv small{font-size:14px;color:var(--mut)}
+html[data-style=glass]:not(#x) .wxl:not(.sm) .wxm b{font-size:17px}html[data-style=glass]:not(#x) .wxm small{font-size:14px}
+html[data-style=glass]:not(#x) .wxl-uv:not(.sm) .wxv{margin-right:0}
+html[data-style=glass]:not(#x) .wxl:not(.sm) .wxcap{display:block;position:relative;align-self:stretch;height:6px;border-radius:3px;margin:12px 0 6px;background:var(--grad)}
+html[data-style=glass]:not(#x) .wxcap b{position:absolute;top:-3px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#fff;border:2px solid #6c6c70;box-sizing:border-box}
+html[data-style=glass]:not(#x) .wxb,html[data-style=glass]:not(#x) .wxk{display:none}
+html[data-style=glass]:not(#x) .wxl .wxft{background:none;border-top:.5px solid var(--line);margin:12px -18px -12px;padding:11px 18px}
+html[data-style=glass]:not(#x) .wxl .wxopen{margin-left:0;color:#0a84ff;font:500 15px var(--sans);letter-spacing:0}html[data-style=glass]:not(#x) .wxl .wxopen svg{display:none}html[data-style=glass]:not(#x) .wxl .wxopen::after{content:"Open full screen  \203A"}
+html[data-style=glass]:not(#x) .wxl.sm{border-radius:20px;padding:10px 14px}
+/* ===== Liquid Glass: sheets (iOS) ===== */
+html[data-style=glass]:not(#x) #cmtsh .cmb.tk{--tkw:#fff;background:#f2f2f7!important;background-image:none!important;border:0;border-radius:30px;color:var(--ink)}
+html[data-style=glass][data-mode=dark]:not(#x) #cmtsh .cmb.tk{background:#2c2c2e!important}
+html[data-style=glass][data-mode=dark]:not(#x) #cmtsh .cmb.tk{--tkw:rgba(255,255,255,.09)}
+html[data-style=glass]:not(#x) .tk-gr{display:block;width:40px;height:5px;border-radius:3px;background:rgba(var(--w),.3);margin:8px auto 0}
+html[data-style=glass]:not(#x) .tk-ic{border-radius:50%;background:var(--tkc);color:#fff}
+html[data-style=glass]:not(#x) .tk-h .rnd{display:none}html[data-style=glass]:not(#x) .tk-dn{display:block;flex:none;border:0;background:none;color:#0a84ff;font:500 17px var(--sans);padding:6px;cursor:pointer}
+html[data-style=glass]:not(#x) .tk-ht small.tk-sub{font-size:14px}
+html[data-style=glass]:not(#x) .tk-wsw{flex-wrap:nowrap;gap:0;background:rgba(118,118,128,.18);border-radius:10px;padding:2px}
+html[data-style=glass]:not(#x) .tk-wc{flex:1;justify-content:center;border:0;border-radius:8px;padding:7px 4px;font:500 13px var(--sans);letter-spacing:0}
+html[data-style=glass]:not(#x) .tk-wc.on{background:#fff;color:#1c1c1e;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+html[data-style=glass][data-mode=dark]:not(#x) .tk-wc.on{background:#636366;color:#fff}
+html[data-style=glass]:not(#x) .tk-facts{display:block;background:var(--tkw);border-radius:14px;margin:12px 0}
+html[data-style=glass]:not(#x) .tk-facts>div{display:flex;justify-content:space-between;align-items:center;border:0;border-radius:0;background:none;padding:12px 14px}html[data-style=glass]:not(#x) .tk-facts>div+div{border-top:.5px solid var(--line)}
+html[data-style=glass]:not(#x) .tk-facts small{font:400 15px var(--sans);letter-spacing:0;color:var(--mut)}html[data-style=glass]:not(#x) .tk-facts b{margin:0;font:500 15px var(--sans)}
+html[data-style=glass]:not(#x) .tk-tip{background:color-mix(in srgb,#ff453a 12%,transparent);border-radius:14px}
+html[data-style=glass]:not(#x) :is(.tk-ev,.tk-door,.tk-wwr,.tk-wwc,.tk-tl,.tk-wr,.tk-tlc){border:0;background:var(--tkw);border-radius:14px}
+html[data-style=glass]:not(#x) .tk-wr.sel{outline:2px solid var(--tkc);outline-offset:-2px}
+html[data-style=glass]:not(#x) .tk-f{flex-direction:column;gap:8px;padding:6px 18px 22px}
+html[data-style=glass]:not(#x) .tk-b{border:0;border-radius:14px;background:var(--tkw);color:#0a84ff;font:500 16px var(--sans);letter-spacing:0;padding:13px;}html[data-style=glass]:not(#x) .tk-b.pri{display:none}
+@media(max-width:760px){html[data-style=glass]:not(#x) #cmtsh{align-items:flex-end;padding:0}html[data-style=glass]:not(#x) #cmtsh .cmb.tk{width:100%;max-width:none;border-radius:30px 30px 0 0}}
+
+/* ===== Material: cards (tonal containers) ===== */
+html[data-style=material]:not(#x) .wxl{--k:var(--wc);background:color-mix(in srgb,var(--wc) 20%,var(--m-low));border:0;border-radius:24px;padding:16px 16px 10px}
+html[data-style=material]:not(#x) .wxt{display:none}
+html[data-style=material]:not(#x) .wxico{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:50%;background:color-mix(in srgb,var(--wc) 38%,transparent);color:var(--ink)}html[data-style=material]:not(#x) .wxico svg{width:21px;height:21px;fill:currentColor}
+html[data-style=material]:not(#x) .wxv em{font-size:22px;font-weight:500}
+html[data-style=material]:not(#x) .wxb span{border-radius:6px 6px 2px 2px}html[data-style=material]:not(#x) .wxb span.on{background:var(--wc)}
+html[data-style=material]:not(#x) .wxl .wxft{background:none;border-top:0;margin:4px -16px -10px;padding:0 16px 6px}
+html[data-style=material]:not(#x) .wxl .wxopen{color:var(--mint);font:500 14px var(--sans);letter-spacing:0}html[data-style=material]:not(#x) .wxl .wxopen svg{display:none}html[data-style=material]:not(#x) .wxl .wxopen::after{content:"Open full screen"}
+html[data-style=material]:not(#x) .wxl.sm{border-radius:20px;padding:10px 14px}html[data-style=material]:not(#x) .wxl.sm .wxico{width:32px;height:32px}
+/* ===== Material: sheets (app bar, tabs, outlined cards) ===== */
+html[data-style=material]:not(#x) #cmtsh .cmb.tk{background:var(--m-high);border:0;border-radius:28px}
+html[data-style=material]:not(#x) .tk-ic{display:none}
+html[data-style=material]:not(#x) .tk-h{padding:12px 12px 6px 8px;gap:6px}html[data-style=material]:not(#x) .tk-h .rnd{order:-1;width:40px;height:40px;background:none;border:0;box-shadow:none}
+html[data-style=material]:not(#x) .tk-ht b{font-size:20px;font-weight:500}
+html[data-style=material]:not(#x) .tk-wsw{gap:0;margin:6px -18px 12px;padding:0 8px;border-bottom:1px solid var(--line)}
+html[data-style=material]:not(#x) .tk-wc{flex:1;justify-content:center;border:0;border-bottom:3px solid transparent;border-radius:0;background:none;padding:12px 0;font:500 14px var(--sans);letter-spacing:0;color:var(--mut)}html[data-style=material]:not(#x) .tk-wc.on{background:none;border-color:var(--mint);color:var(--mint)}
+html[data-style=material]:not(#x) :is(.tk-facts>div,.tk-ev,.tk-door,.tk-wwr,.tk-wr,.tk-tlc){border-radius:12px;background:none;border:1px solid var(--line)}
+html[data-style=material]:not(#x) :is(.tk-tl,.tk-wwc){border-radius:16px}
+html[data-style=material]:not(#x) .tk-facts small{font:400 12px var(--sans);letter-spacing:0}html[data-style=material]:not(#x) .tk-facts b{font-size:16px}
+html[data-style=material]:not(#x) .tk-tip{background:color-mix(in srgb,var(--tkc) 20%,var(--m-low));border-radius:16px}
+html[data-style=material]:not(#x) .tk-wr.sel{border-color:var(--mint);background:color-mix(in srgb,var(--mint) 12%,transparent)}
+html[data-style=material]:not(#x) .tk-b{border-width:1px;font:500 14px var(--sans);letter-spacing:0;color:var(--mint)}html[data-style=material]:not(#x) .tk-b.pri{background:var(--mint);color:var(--onmint,#fff);border-color:transparent}
+@media(min-width:761px){html[data-style=glass]:not(#x) .tk-gr{display:none}html[data-style=glass]:not(#x) .tk-f{flex-direction:row}}
+/* Liquid Glass and Material write the footer buttons in sentence case (the text stays capitals; Kinetic shows them as written) */
+html[data-style=glass]:not(#x) .tk-b span,html[data-style=material]:not(#x) .tk-b span{display:block;text-transform:lowercase}
+html[data-style=glass]:not(#x) .tk-b span::first-letter,html[data-style=material]:not(#x) .tk-b span::first-letter{text-transform:uppercase}
+html[data-style=glass]:not(#x) .tk-b span i,html[data-style=material]:not(#x) .tk-b span i{font-style:normal;text-transform:capitalize}
 </style>
 <style>
 /* HA diagnostics stay compact until requested. */
@@ -5232,7 +5326,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "63a68e";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "ceb69a";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -10809,11 +10903,15 @@ function wxaParts(k, x) {   // [tag, title, sub, value, unit]
   if (k === "wind") return [(x.now ? "WIND NOW · " : "WIND FORECAST · ") + WXA_W[x.tier].toUpperCase(), WXA_NAME.wind(x) + (x.now ? " now" : " around " + wxaTime(x.fat)), wxaWindSub(x).filter(t => !/^Around /.test(t)).join(" · "), Math.round(x.v), "km/h"];
   return [(x.now ? "UV NOW · " : "UV · ") + wxaUvName(x).toUpperCase(), wxaUvName(x) + " UV" + (x.now ? " now" : " from " + wxaTime(x.from || x.fat)), wxaUvSub(x).join(" · "), Math.round(x.v), "UV index"];
 }
+// the parts only some looks show (Kinetic: channel number, Liquid Glass: plain label + scale marker, Material: round icon); the others hide them in CSS
+const WXA_CH = { uv: "03", wind: "04", rain: "05" }, WXA_GL = { uv: "UV index", wind: "Wind", rain: "Rain" }, WXA_MX = { uv: 11, wind: 100, rain: 10 };
+const wxaCap = (k, v) => '<div class="wxcap"><b style="left:' + Math.max(2, Math.min(96, v / WXA_MX[k] * 100)).toFixed(0) + '%"></b></div>';
+const wxaTA = k => ' data-ch="' + WXA_CH[k] + '" data-gl="' + WXA_GL[k] + '"';   // read by CSS (attr()): Kinetic prints the channel, Liquid Glass the plain label
 // a shrunk card (small) carries MORE: tapping it, or anywhere on the card, opens it in place, full size, with LESS under it (32-notifications-popup.js)
 function wxaCard(k, x, c, small, exp) {
   const P = wxaParts(k, x), cls = "wxl wxl-" + k + " wt" + x.tier + (small ? " sm" : "");
-  if (small) return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, Math.min(x.tier, 1)) + '<div class="wxr"><div class="wxm"><div class="wxt"><i></i>' + esc(P[0]) + '</div><b>' + esc(P[1]) + '</b></div>' + wxaBars(k, x, c, true) + '<div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div><button class="wxmore" tabindex="-1">MORE ' + mdi("chevron-down") + '</button></div>';
-  return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, x.tier) + '<div class="wxt"><i></i>' + esc(P[0]) + '</div><div class="wxr"><div class="wxm"><b>' + esc(P[1]) + '</b>' + (P[2] ? '<small>' + esc(P[2]) + '</small>' : "") + '</div><div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div>' + wxaBars(k, x, c, false) + '<div class="wxft">' + (exp ? '<button class="wxmore wxless" tabindex="-1">LESS ' + mdi("chevron-up") + '</button>' : "") + '<span class="wxopen">' + mdi("fullscreen") + '</span></div></div>';
+  if (small) return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, Math.min(x.tier, 1)) + '<div class="wxr"><span class="wxico">' + mdi(wxaIc[k](x)) + '</span><div class="wxm"><div class="wxt"' + wxaTA(k) + '><i></i>' + esc(P[0]) + '</div><b>' + esc(P[1]) + '</b></div>' + wxaBars(k, x, c, true) + '<div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div><button class="wxmore" tabindex="-1">MORE ' + mdi("chevron-down") + '</button></div>';
+  return '<div class="' + cls + '" data-wxa="' + k + '" role="button" tabindex="0">' + wxaFx(k, x.tier) + '<div class="wxt"' + wxaTA(k) + '><i></i>' + esc(P[0]) + '</div><div class="wxr"><span class="wxico">' + mdi(wxaIc[k](x)) + '</span><div class="wxm"><b>' + esc(P[1]) + '</b>' + (P[2] ? '<small>' + esc(P[2]) + '</small>' : "") + '</div><div class="wxv"><em>' + P[3] + '</em><small>' + P[4] + '</small></div></div>' + wxaCap(k, +P[3]) + wxaBars(k, x, c, false) + '<div class="wxft">' + (exp ? '<button class="wxmore wxless" tabindex="-1">LESS ' + mdi("chevron-up") + '</button>' : "") + '<span class="wxopen">' + mdi("fullscreen") + '</span></div></div>';
 }
 // MORE / LESS opens or shrinks one card in place: only that card is swapped (its height eases to the new size, its content fades in) and the other cards, and
 // the list around them, are not rebuilt, so nothing blinks or replays its entrance. Returns false when the card can not be found (the list is redrawn instead).
@@ -15883,9 +15981,10 @@ function tkRoadPane(sel, whole) {
 }
 const tkBad = T => (T || []).reduce((a, t) => a + t.bad.length, 0);
 const tkSubRoad = T => !T ? "No data from NZTA" : tkBad(T) ? tkBad(T) + " problem" + (tkBad(T) > 1 ? "s" : "") + " on your routes · NZTA" : "No problems on your routes · NZTA";
+const TK_CH = { wx: "CH 03 · WEATHER ALERT", ww: "CH 06 · WEATHER WARNING", cam: "CH 01 · CAMERA", road: "CH 07 · ROADS", sea: "CH 08 · SEA" };   // the channel line Kinetic shows above the title (hidden in the other looks)
 function tkShell(kind, icon, tone, ttl, sub, body, foot, wide) {
-  return '<div class="cmb tk tk-' + kind + (wide ? " tkw" : "") + '" role="dialog" aria-label="' + esc(ttl) + '" data-tk="' + kind + '"><div class="tk-h"><span class="tk-ic ' + tone + '">' + mdi(icon) + '</span><div class="tk-ht"><b>' + esc(ttl) + '</b><small class="tk-sub">' + esc(sub) + '</small></div><button class="rnd" data-cmx aria-label="Close">' + mdi("close") + '</button></div>' +
-    body + '<div class="tk-f">' + foot + '</div></div>';
+  return '<div class="cmb tk tk-' + kind + " tn-" + tone + (wide ? " tkw" : "") + '" role="dialog" aria-label="' + esc(ttl) + '" data-tk="' + kind + '"><div class="tk-gr"></div><div class="tk-h"><span class="tk-ic ' + tone + '">' + mdi(icon) + '</span><div class="tk-ht"><span class="tk-tg">' + (TK_CH[kind] || "") + '</span><b>' + esc(ttl) + '</b><small class="tk-sub">' + esc(sub) + '</small></div><button class="rnd" data-cmx aria-label="Close">' + mdi("close") + '</button><button class="tk-dn" data-cmx>Done</button></div>' +
+    body + '<div class="tk-f">' + foot.replace(/(<button[^>]*>)([^<]+)(<\/button>)/g, (m, a, t, c) => a + "<span>" + t.replace("GOOGLE MAPS", "<i>GOOGLE MAPS</i>") + "</span>" + c) + '</div></div>';
 }
 function tkOpen(kind, key) {
   if (typeof cmtShow !== "function") return;
@@ -15941,6 +16040,7 @@ function tkWxSel(k) {
   const t = el.querySelector(".tk-ht b"), sb = el.querySelector(".tk-sub"), ic = el.querySelector(".tk-ic");
   if (t) t.textContent = P[1]; if (sb) sb.textContent = P[2] || "";
   if (ic) { ic.className = "tk-ic " + (x.tier === 3 ? "bad" : "warn"); ic.innerHTML = mdi(wxaIc[k](x)); }
+  el.classList.remove("tn-warn", "tn-bad", "tn-ok"); el.classList.add(x.tier === 3 ? "tn-bad" : "tn-warn");
 }
 // ---------- cameras: a tap on a camera in Notifications opens it here, live, with the garage door control under it ----------
 function tkCamList() { return typeof npCams === "function" ? npCams() : []; }
@@ -16173,6 +16273,7 @@ function tkWwSel(k) {
   const t = el.querySelector(".tk-ht b"), sb = el.querySelector(".tk-sub"), ic = el.querySelector(".tk-ic"), sp = el.querySelector(".tk-ht .tk-sev");
   if (t) t.textContent = H[0]; if (sb) sb.textContent = H[1]; if (sp) sp.remove(); if (t) t.insertAdjacentHTML("afterend", wwSevPill(it));
   if (ic) { ic.className = "tk-ic " + H[2]; ic.innerHTML = mdi(it.icon); }
+  el.classList.remove("tn-warn", "tn-bad", "tn-ok"); el.classList.add("tn-" + H[2]);
 }
 function tkWwRefresh() {
   const L = wwItems(), el = $("#cmtsh .tk-ww"); if (!el) return; if (!L.length) { tkClose(); return; }
