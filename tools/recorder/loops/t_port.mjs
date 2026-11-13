@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Tablet_Portrait_v2', hash: '#security', size: { w: 800, h: 1280, mobile: false, dsf: 1 }, async run(p, c) {
+export default { file: 'EZ_Loop_Tablet_Portrait_v3', hash: '#security', size: { w: 800, h: 1280, mobile: false, dsf: 1 }, async run(p, c) {
   await c.wait(1500);
   await c.spot([198, 166, 574, 152], 4, 22); await c.wait(3000);
   await p.evaluate(() => window.DEMO.person(true)); await c.wait(1200);

@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Lighting_Light_v5', hash: '#rooms/living', async run(p, c) {
+export default { file: 'EZ_Loop_Lighting_Light_v6', hash: '#rooms/living', async run(p, c) {
   await c.wait(1500);
   await c.spot('.tl[data-e="light.demo_living_lights"],.tl[data-e="light.demo_kitchen_lights"]', 8); await c.wait(2600);
   await c.tap('.tl[data-e="light.demo_living_lights"]'); await c.wait(2400);

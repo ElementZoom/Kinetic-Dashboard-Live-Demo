@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Tablet_Landscape_v2', hash: '#home', size: { w: 1280, h: 800, mobile: false, dsf: 1 }, async run(p, c) {
+export default { file: 'EZ_Loop_Tablet_Landscape_v3', hash: '#home', size: { w: 1280, h: 800, mobile: false, dsf: 1 }, async run(p, c) {
   await c.wait(1500);
   await c.spot([198, 14, 1053, 68], 6, 22); await c.wait(2600);
   await p.evaluate(() => window.DEMO.garage(true)); await c.wait(2600);

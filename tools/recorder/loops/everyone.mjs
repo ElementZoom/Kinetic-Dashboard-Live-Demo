@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Everyone_Light_v5', hash: '#home', async run(p, c) {
+export default { file: 'EZ_Loop_Everyone_Light_v6', hash: '#home', async run(p, c) {
   await c.wait(1200);
   await c.tap([500, 917]); await c.wait(1600);
   await c.spot([10, 433, 520, 435], 0, 26); await c.wait(3600);
