@@ -1902,12 +1902,16 @@ html:not(#x) .zc:fullscreen>.mkt,html:not(#x) .zc.zfull>.mkt{top:calc(14px + env
 .pbf>.hsw{flex:1 1 0;min-width:0}   /* playback / detection filter chips: the animated side arrows show when the row scrolls */
 
 /* a player's full screen on a phone held upright turns to landscape like the live camera (37-camera-zoom.js czLand): the card is turned with CSS when the phone will not turn */
-html:not(#x) .zc.zls:fullscreen,html:not(#x) .zc.zls.zfull{inset:auto;top:0;left:0;width:100vh;height:100vw;width:100dvh;height:100dvw;transform:translateX(100vw) rotate(90deg);transform-origin:top left}
+html:not(#x):not(#y) .zc.zls:fullscreen,html:not(#x):not(#y) .zc.zls.zfull{flex:none;min-height:0;inset:auto;top:0;left:0;width:100vh;height:100vw;width:100dvh;height:100dvw;transform:translateX(100vw) rotate(90deg);transform-origin:top left}
 /* the live camera opening: a spinner and a message until the first picture (12-init.js .cld) */
 .cam .cld{display:none}
 .cam:is(.fs,.vf):is(.cwait,:not(.live)):not(.pb) .cld{display:flex;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);flex-direction:column;align-items:center;gap:12px;z-index:3;pointer-events:none;color:rgba(255,255,255,.8);font:13px var(--mono);letter-spacing:.04em;text-shadow:0 1px 6px rgba(0,0,0,.6);white-space:nowrap}
 html.camsw .cam .cld .dtsp{animation:none}
 html:not(#x) .zup{transform:none!important;clip-path:none!important;filter:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;contain:none!important;perspective:none!important;will-change:auto!important;animation:none!important;overflow:visible!important}
+html:not(#x):not(#y) .zc.zfull{flex:none;min-height:0;aspect-ratio:auto;height:100vh;height:100dvh}
+html:not(#x):not(#y) .zc.zls.zfull{height:100vw;height:100dvw}
+.zcv{position:fixed;inset:0;background:#000;opacity:0;z-index:2147483600;pointer-events:none;transition:opacity .16s linear}
+.zcv.on{opacity:1}
 /* artist info: the Artist tab beside the lyrics (Media page, and the lyrics sheet on a phone) and the Artist page in the Now Playing sheet */
 .aitabs{display:inline-flex;gap:2px;padding:4px;border-radius:99px;background:rgba(var(--w),.1);text-transform:none}.aitabs .chip{border:0;background:transparent;box-shadow:none;padding:8px 18px;min-height:0;font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}.aitabs .chip.on{background:var(--mint);color:var(--bg)}
 .lyh .aitabs{margin:-6px 0}
@@ -5334,7 +5338,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "98c4e7";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "4d9ac7";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -12503,11 +12507,10 @@ const czPhone = () => isMobile() && innerHeight > innerWidth && !document.queryS
 function czHost(el, on) { for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) n.classList.toggle("zup", on); }
 function czLandOff(el) { el.classList.remove("zls"); if (el._zlk) { el._zlk = 0; try { screen.orientation.unlock(); } catch (_) {} } }
 // landscape <-> portrait like the live camera (camSwap in 12-init.js): the page fades out over black, the switch happens unseen, then it fades back in
-function czSwap(el, fn) {
-  const card = el.closest(".cam") || el, h = document.documentElement;
+function czSwap(el, fn) {   // a black cover over everything fades in, fn switches unseen, the cover fades out (a cover of its own: the player may sit in a pop-up or a card that is not the page)
   if (czRm() || el._sw) { fn(() => {}); return; }
-  el._sw = 1; h.classList.add("camsw"); card.classList.add("lf");
-  setTimeout(() => fn(() => requestAnimationFrame(() => requestAnimationFrame(() => { card.classList.remove("lf"); setTimeout(() => { h.classList.remove("camsw"); el._sw = 0; }, 200); }))), 130);
+  el._sw = 1; const cv = document.createElement("div"); cv.className = "zcv"; document.body.appendChild(cv); requestAnimationFrame(() => requestAnimationFrame(() => cv.classList.add("on")));
+  setTimeout(() => fn(() => requestAnimationFrame(() => requestAnimationFrame(() => { cv.classList.remove("on"); setTimeout(() => { cv.remove(); el._sw = 0; }, 260); }))), 190);
 }
 function czLand(el, done) {   // turns the full-screen player to landscape (the phone is asked to turn; still upright after 350 ms means turn it with CSS), then calls done
   const css = () => { if (el.classList.contains("zfull") && innerHeight > innerWidth && !el.classList.contains("zls")) { czReset(el); el.classList.add("zls"); czUi(el); } done(); };
