@@ -5084,6 +5084,13 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) header.hmerge>.hs #wpls:n
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) header.hmerge>.hs #wpls .wpl{background:rgba(255,255,255,.6)!important;border:0!important}
 html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w) header.hmerge>.hs #wpls .wpl{background:rgba(235,235,245,.14)!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) #home .hs.pn{padding:14px 16px!important}
+/* Insights, Home "More": the groups have no card behind them in Liquid Glass, so the rows sit closer (a 6px pad and margin on each group, a 10px gap and 11px inside the row were left over from the cards) */
+@media(max-width:760px){
+html[data-style=glass]:not(#x):not(#y):not(#z) .insm{gap:0}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .insm>.insgp.pn{margin-bottom:0!important;padding-top:0!important;padding-bottom:0!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .insm>.insgp.pn.open{padding-bottom:4px!important}
+html[data-style=glass]:not(#x):not(#y):not(#z) .insgh{padding:8px 0}
+}
 /* iOS look, tablet and desktop: the title pill floats and the page scrolls under it, with the same progressive blur band as the phone
    (73-frosted-header.css). The page runs up to the top of the main area; its own padding keeps the layout where it was. */
 @media(min-width:761px){
@@ -5339,7 +5346,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "471f0d";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "2e8bc5";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -5413,7 +5420,8 @@ function ruApply(o) {   // hides what this person may not use; the engine also s
   if (RU) {
     off.forEach(p => { css += 'nav a[href="#' + p + '"],#btab a[href="#' + p + '"],#mshe a[href="#' + p + '"]{display:none!important}'; });
     try { if (Array.isArray(RU.rooms)) { hideT = 0; css += "#grid{--nr:" + Math.max(1, CONFIG.rooms.filter(r => !r.main && !entHidden(r.id)).length) + "}"; CONFIG.rooms.forEach((r, i) => { if (!r.main && entHidden(r.id)) css += '#grid>.card[data-cl="' + r.id + '"]{display:none!important}#gdots i[data-i="' + i + '"]{display:none}'; }); } } catch (_) {}   // a room hidden from this person has no climate control either (not ready yet on the very first call: ruRefresh applies again)
-    css += "#outs,#hnp{display:none!important}#hc{pointer-events:none}#nacc{display:none!important}";   // no notification pop-up (it holds the "all off" switches and admin toggles); the Settings item stays (their Account tab, and Display if allowed)
+    // the header pill and the notifications pop-up stay for a restricted person: what they list already skips the rooms hidden from them, and the admin-only actions (updates) are checked where they run. Only the music strip and the outside tiles go
+    css += "#outs,#hnp{display:none!important}";
     if (!PAGE_ON("security") || !ruSec("alarm")) css += "#al,#alb{display:none!important}";
     if (!["climate", "weather", "energy", "irrigation", "media", "events", "vehicle", "hazards", "insights", "theme"].some(PAGE_ON) && !(typeof setAcct === "function" && setAcct())) css += "#bmore{display:none!important}";   // More holds Settings (their Account tab)
     if (off.indexOf("media") > -1) css += "#npmini,#npfab,#npsheet,#hnote{display:none!important}";
@@ -11214,7 +11222,8 @@ function drawNotif() {
   const pn = polNow(), nkc = k => k[0] === "pollen" ? (pn ? pn.col : "") : k[0] === "wind" || k[0] === "rain" || k[0] === "uv" || k[0] === "wx" ? wxaCol(k[0]) : k[0] === "cw" ? "#ff7a45" : k[0] === "cd" ? "#e5483b" : k[0] === "tsu" ? (slvLevel() === 2 ? "#e5483b" : "#e89a2c") : k[0] === "road" ? "#e89a2c" : "", nsn = k => typeof k[2] === "function" ? k[2]() : k[2], nai = (k, c) => '<span class="nai' + c + '" data-k="' + k[0] + '"' + (nkc(k) ? ' style="--nk:' + nkc(k) + '"' : "") + '>' + (k[0] === "laundry" ? DRUM : k[0] === "cw" ? CWICO() : mdi(k[1])) + '<b class="nal">' + esc(k[0] === "pollen" && pn ? "Pollen · " + pn.name : k[0] === "battery" && lowBattChip().length > 1 ? lowBattChip().length + " low batteries" : nsn(k)) + '</b></span>';
   const sig = ks.slice(0, 2).map((k, i) => nai(k, i ? " nai2" : "")).join("");
   if ((nacc.dataset.k || "") !== (top ? top[0] : "") || nacc._sig !== sig) { nacc._sig = sig; if (top) nacc.dataset.k = top[0]; else nacc.removeAttribute("data-k"); nacc.innerHTML = sig; if (top && nkc(top)) nacc.style.setProperty("--nk", nkc(top)); else nacc.style.removeProperty("--nk"); }
-  { const hd = $("header"); if (hd) hd.classList.toggle("hmg", !!top); }   // phones and tablets: the lock merges into the pill while a condition shows (70-header-status-pill.css)
+  // phones and tablets: the lock merges into the pill while a condition shows (70-header-status-pill.css); a person without the alarm has no lock to merge
+  { const hd = $("header"), lk = $("#al"); if (hd) hd.classList.toggle("hmg", !!top && !!lk && lk.getClientRects().length > 0); }
   nacc.dataset.n = ks.length;   // 3+ conditions: one chip + "+N" (see 28-pollen.css)
   if (ks.length > 1) nacc.dataset.more = "+" + (ks.length - 1); else nacc.removeAttribute("data-more");
   if (ks.length > 2) nacc.dataset.more2 = "+" + (ks.length - 2); else if (ks.length > 1) nacc.dataset.more2 = ""; else nacc.removeAttribute("data-more2");
