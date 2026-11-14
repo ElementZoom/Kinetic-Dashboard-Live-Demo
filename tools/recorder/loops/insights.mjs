@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Insights_Light_v6', hash: '#insights', async run(p, c) {
+export default { file: 'EZ_Loop_Insights_Light_v7', hash: '#insights', async run(p, c) {
   await c.wait(1500);
   await c.spot([10, 150, 262, 120], 4); await c.wait(2800);
   await c.tap([140, 210]); await c.wait(1400);

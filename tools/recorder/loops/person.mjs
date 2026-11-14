@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Person_Light_v5', hash: '#security', async run(p, c) {
+export default { file: 'EZ_Loop_Person_Light_v6', hash: '#security', async run(p, c) {
   await c.wait(1500);
   await c.spot([10, 345, 520, 62], 4, 20); await c.wait(2600);
   await p.evaluate(() => window.DEMO.person(true)); await c.wait(1200);

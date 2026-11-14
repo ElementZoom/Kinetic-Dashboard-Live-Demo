@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Garage_Light_v6', hash: '#home', async run(p, c) {
+export default { file: 'EZ_Loop_Garage_Light_v7', hash: '#home', async run(p, c) {
   await c.wait(1200);
   await p.evaluate(() => window.DEMO.garage(true)); await c.wait(3500);
   await c.spot('.main > header', 6, 22); await c.wait(2400);

@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_OneLook_Light_v4', hash: '#home', async run(p, c) {
+export default { file: 'EZ_Loop_OneLook_Light_v5', hash: '#home', async run(p, c) {
   await c.wait(1200);
   await c.spot([360, 14, 114, 50], 6, 24); await c.wait(2000);
   await c.tap([430, 38]); await c.wait(1600);
