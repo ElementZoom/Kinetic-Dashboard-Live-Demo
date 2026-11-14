@@ -588,7 +588,7 @@ html[data-mode=light] .rooms2 .rc{background:rgba(255,255,255,.72)}
 #nacc[data-k]{position:relative;width:26px;height:26px;border-radius:0;background:none;box-shadow:none;color:var(--nk);display:flex;align-items:center;justify-content:center;animation:nkglow 2.2s ease-in-out infinite}
 #nacc[data-k] svg{width:26px;height:26px;fill:currentColor}
 #nacc .nai{display:flex;align-items:center;justify-content:center;color:var(--nk)}#nacc .nai2,#nacc .nal{display:none}   /* phone: only the top icon */
-#nacc[data-k=leak],#nacc .nai[data-k=leak]{--nk:#ff4d5e}#nacc[data-k=warn],#nacc .nai[data-k=warn]{--nk:#ffb04a}#nacc[data-k=garage],#nacc .nai[data-k=garage]{--nk:#ff7a6b}#nacc[data-k=door],#nacc .nai[data-k=door]{--nk:#ffc857}#nacc[data-k=laundry],#nacc .nai[data-k=laundry]{--nk:#8fa8ff}#nacc[data-k=towel],#nacc .nai[data-k=towel]{--nk:#ff9f43}#nacc[data-k=water],#nacc .nai[data-k=water]{--nk:#5cc8ff}#nacc[data-k=battery],#nacc .nai[data-k=battery]{--nk:#c8e04a}#nacc[data-k=pollen]{--nk:#f2c261}
+#nacc[data-k=leak],#nacc .nai[data-k=leak]{--nk:#ff4d5e}#nacc[data-k=warn],#nacc .nai[data-k=warn]{--nk:#ffb04a}#nacc[data-k=garage],#nacc .nai[data-k=garage]{--nk:#ff7a6b}#nacc[data-k=door],#nacc .nai[data-k=door]{--nk:#ffc857}#nacc[data-k=lights],#nacc .nai[data-k=lights]{--nk:#f7e163}#nacc[data-k=windows],#nacc .nai[data-k=windows]{--nk:#6fd8c0}#nacc[data-k=curtains],#nacc .nai[data-k=curtains]{--nk:#c4a1ff}#nacc[data-k=laundry],#nacc .nai[data-k=laundry]{--nk:#8fa8ff}#nacc[data-k=towel],#nacc .nai[data-k=towel]{--nk:#ff9f43}#nacc[data-k=water],#nacc .nai[data-k=water]{--nk:#5cc8ff}#nacc[data-k=battery],#nacc .nai[data-k=battery]{--nk:#c8e04a}#nacc[data-k=pollen]{--nk:#f2c261}
 #nacc[data-more]:not([data-more=""])::after{content:attr(data-more);position:absolute;top:-8px;right:-11px;min-width:16px;height:16px;box-sizing:border-box;padding:0 4px;border-radius:8px;background:var(--nk);color:#10161c;font:700 10px/16px var(--mono);text-align:center}
 /* tablet and wider: each condition is a glowing chip with its name (and the pollen level); a wide screen shows the two most urgent, "+n" counts the rest */
 @media(min-width:761px){
@@ -826,8 +826,8 @@ html:not(#x) .tl.sir.on .tn svg{fill:#ff4d5e}html:not(#x) .tl.sir.on .ts2{color:
 /* garage door: wide tile in camera panels */
 .cpanel .tl.dr{grid-column:span 2;display:block;padding:14px 16px 14px 64px;position:relative;border-radius:16px;white-space:nowrap}
 .cpanel .tl.dr .tn{display:block;position:static;font:500 15px var(--sans,inherit);letter-spacing:0;text-transform:none;color:var(--ink)}
-.cpanel .tl.dr .tn svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:34px;height:34px;fill:#b6ddb8}
-.cpanel .tl.dr .ts2{display:block;font:600 12px var(--mono);letter-spacing:.08em;color:#b6ddb8;margin:5px 0 0}
+.cpanel .tl.dr .tn svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:34px;height:34px;fill:#a3d9ad}
+.cpanel .tl.dr .ts2{display:block;font:600 12px var(--mono);letter-spacing:.08em;color:#a3d9ad;margin:5px 0 0}
 .cpanel .tl.dr .ts2::after{content:"  \00b7  TAP TO OPEN"}
 .cpanel .tl.dr.on{background:linear-gradient(135deg,#e5523f,#b92a22);border-color:#ff8a7a;box-shadow:0 4px 20px rgba(229,82,63,.45)}
 .cpanel .tl.dr.on .tn,.cpanel .tl.dr.on .tn svg,.cpanel .tl.dr.on .ts2{color:#fff;fill:#fff}
@@ -2362,6 +2362,9 @@ html[data-style=material] .lvb{background:var(--bg2)!important}
 @media(max-width:760px){.lvb{left:0;right:0;bottom:0;max-height:88dvh;border-radius:24px 24px 0 0;padding:16px 16px 26px;transform:translateY(102%)}body.lv-open .lvb{transform:none}}
 @media(min-width:761px){.lvb{top:0;right:0;bottom:0;width:min(400px,92vw);border-radius:24px 0 0 24px;padding:20px;transform:translateX(102%)}body.lv-open .lvb{transform:none}}
 @media(prefers-reduced-motion:reduce){.lvb,.lvbk{transition:none}}
+/* Leaving, Needs you and Updates share one row: all three are the same single-line height, whatever look or text is inside */
+#hstrip>:is(#lvc,#insc,#updc){height:46px;min-height:46px;box-sizing:border-box;align-self:start;align-items:center;overflow:hidden}
+#lvc .at-l,#lvc .at-x{line-height:1.3}#lvc .at-h{line-height:1}
 /* Climate page: auto climate switch */
 #cauto{display:flex;align-items:center;gap:14px;padding:14px 18px;margin-bottom:14px}
 #cauto[hidden]{display:none}
@@ -3256,7 +3259,7 @@ nav a{padding:8px 10px;font-size:11px;flex:none}
 }
 /* Temperature bars use the same seven colours as the forecast and the room cards (Theme page > temperature colours, --tp0 to --tp6), blended from one to the next.
    Each colour sits in the middle of its band (below 13, 13-16, 16-19, 19-22, 22-24, 24-27, above 27). */
-:root{--tp0:#ccc2dc;--tp1:#a8c7fa;--tp2:#9ed6f0;--tp3:#b6ddb8;--tp4:#f9de8e;--tp5:#ffb88c;--tp6:#f2a09b}
+:root{--tp0:#c4b8e4;--tp1:#9dbdf5;--tp2:#8ccdea;--tp3:#a3d9ad;--tp4:#f5dc8e;--tp5:#fbb68a;--tp6:#f4a39e}
 /* room comfort bar (Climate page and room cards): 14° to 30° across */
 .cbar{background:linear-gradient(90deg,var(--tp0) 0,var(--tp1) 3%,var(--tp2) 22%,var(--tp3) 41%,var(--tp4) 56%,var(--tp5) 72%,var(--tp6) 87.5%,var(--tp6) 100%)}
 /* heat pump card on Home: 10° to 30° across */
@@ -4185,12 +4188,12 @@ html[data-style=glass] :is(header,#mshe,#btab,nav){-webkit-backdrop-filter:var(-
 /* The main weather header must remain a single continuous surface. */
 html[data-style=glass] header.hmerge>.hs,html[data-style=material] header.hmerge>.hs{background:transparent!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 /* Glass tabs share one visual language in Settings, Weather and Security. */
-html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip{
+html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip{
  background:var(--g1);color:var(--ink);border:1px solid var(--gline);
  border-radius:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
  -webkit-backdrop-filter:blur(10px) saturate(125%);backdrop-filter:blur(10px) saturate(125%);
 }
-html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on{
+html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip.on{
  background:var(--gsel);color:var(--mint);border-color:var(--gline);
  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 2px 8px rgba(0,0,0,.10);
 }
@@ -4206,8 +4209,8 @@ html[data-style=material]{--m-low:var(--bg2);--m-high:var(--bg2)}
 }
 html[data-style=material] :is(.pn,.card,.rc,.cd,.ws,.zf,.kpb,.spb,#cpp .cpsh){background:var(--m-low);border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
 html[data-style=material] :is(header,#mshe,#btab,nav,#np){background:var(--m-low);-webkit-backdrop-filter:none;backdrop-filter:none}
-html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip{background:var(--m-high);border:0;border-radius:16px;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
-html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on{background:var(--mp);color:var(--ink)}
+html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip{background:var(--m-high);border:0;border-radius:16px;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip.on{background:var(--mp);color:var(--ink)}
 html[data-style=material] #theme > .hsw:has(> .setchips),html[data-style=material] #admin > .hsw:has(> .setchips),
 html[data-style=material] .page > .secw,html[data-style=material] #roomspg > #rtabs,html[data-style=material] #security > #stabs{background:var(--bg);border-radius:16px}
 /* No oversized blurred blocks around the greeting or inside its weather strip. */
@@ -4276,7 +4279,7 @@ html[data-style=material] :is(#insights > .inschips,#scenes .scfh,#energy > .ehc
 }
 /* Liquid Glass retains its individual glass controls, but no see-through
    backing behind them. Material keeps its existing tonal tabs. */
-html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip{
+html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip{
   -webkit-backdrop-filter:none;backdrop-filter:none;
 }
 /* 2.5.19 - Home-style sticky navigation. Material is the structural
@@ -4296,15 +4299,15 @@ html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip{
   .main > header{z-index:30}
   /* Kinetic uses its warm button styling; glass keeps individual glass pills.
      Neither depends on a see-through shared navigation plate. */
-  html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs) > .chip{
+  html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs) > .chip{
     background:rgba(255,255,255,.30);border-color:rgba(255,255,255,.55);
     -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
   }
   /* Apple-style: unselected glass is mostly clear; the selected capsule is brighter and carries the accent label. */
-  html[data-style=glass][data-mode=dark] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs) > .chip{
+  html[data-style=glass][data-mode=dark] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs) > .chip{
     background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);
   }
-  html[data-style=glass][data-mode=dark]:not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs) > .chip.on{
+  html[data-style=glass][data-mode=dark]:not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs) > .chip.on{
     background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.35);
   }
 }
@@ -4373,38 +4376,38 @@ html[data-style=glass] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip{
 .adlh .admsrch{flex:1 1 100%}
 #irrigation .wrs .wrsu{margin-top:1px;font-size:11px;opacity:.8}
 /* Material 3 tabs (primary): flat row, quiet labels, a 3px indicator under the selected tab. */
-html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs):not(#x){gap:0}
-html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs):not(#x)>.chip{
+html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs):not(#x){gap:0}
+html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs):not(#x)>.chip{
   position:relative;flex:1 0 auto;background:transparent;border:0;border-radius:0;
   box-shadow:inset 0 -1px 0 var(--line);color:var(--mut);padding:13px 16px 12px;
   text-transform:none;letter-spacing:.01em;font-family:var(--sans);font-size:14px;font-weight:500;
 }
-html[data-style=material]:not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on{
+html[data-style=material]:not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip.on{
   background:transparent;color:var(--mint);box-shadow:inset 0 -1px 0 var(--line)
 }
-html[data-style=material]:not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on::after{
+html[data-style=material]:not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip.on::after{
   content:"";position:absolute;left:18%;right:18%;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--mint)
 }
-html[data-style=material][data-mode=light]:not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on{color:var(--ink)}
-html[data-style=material][data-mode=light]:not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on::after{background:var(--ink)}
+html[data-style=material][data-mode=light]:not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip.on{color:var(--ink)}
+html[data-style=material][data-mode=light]:not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip.on::after{background:var(--ink)}
 /* Material 3 uses sentence case: labels are written in capitals in markup, so lowercase them and re-capitalise the first letter. */
-html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs):not(#x)>.chip{display:block;text-align:center;text-transform:lowercase;white-space:nowrap}
-html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs):not(#x)>.chip::first-letter{text-transform:uppercase}
+html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs):not(#x)>.chip{display:block;text-align:center;text-transform:lowercase;white-space:nowrap}
+html[data-style=material] :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs):not(#x)>.chip::first-letter{text-transform:uppercase}
 /* Kinetic tabs: numbered channels with a glowing bar over the active one. */
-html:not([data-style=glass]):not([data-style=material]):not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs){gap:14px;counter-reset:kt}
-html:not([data-style=glass]):not([data-style=material]):not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip{
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs){gap:14px;counter-reset:kt}
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip{
   counter-increment:kt;display:block;text-align:left;flex:1 0 auto;min-height:0;
   background:transparent;border:0;border-top:1.5px solid rgba(var(--ink-rgb),.28);border-radius:0;box-shadow:none;
   padding:10px 2px 6px;color:var(--mut);transition:color .2s,border-color .2s,box-shadow .2s
 }
-html:not([data-style=glass]):not([data-style=material]):not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip::before{
+html:not([data-style=glass]):not([data-style=material]):not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip::before{
   content:counter(kt,decimal-leading-zero);display:block;font-size:10px;letter-spacing:.12em;margin-bottom:5px;color:var(--mut)
 }
-html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on{
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip.on{
   background:transparent;color:var(--ink);font-weight:600;border-top:3px solid var(--mint);margin-top:-1px;
   box-shadow:0 -6px 12px -8px var(--mint)
 }
-html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs)>.chip.on::before{color:var(--mint)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip.on::before{color:var(--mint)}
 /* Settings: the search block pins exactly where it sits at rest (just under the tab row), so nothing shifts when scrolling starts;
    on wide screens the overview / detail card pins in place beside the list */
 #admin .admtop,#admin .adlog>.adlh{--admtop:68px}
@@ -4876,7 +4879,6 @@ html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#rl.rooms2,.
   content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:0 3px 3px 0;background:var(--tc);box-shadow:0 0 10px var(--tc)
 }
 html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .rcn{font:500 11px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
-html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .rcn::before{content:counter(rn,decimal-leading-zero) " \00b7  ";white-space:pre}
 html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color:color-mix(in srgb,var(--tc) 75%,var(--ink))}
 html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.lbl:first-child svg{background:transparent;border:1px solid var(--mut)}
 
@@ -4904,9 +4906,23 @@ html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(#rl.
 html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color:color-mix(in srgb,var(--tcs) 62%,var(--ink));text-shadow:none}
 html[data-style=material]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc{background:color-mix(in srgb,var(--tcs) 24%,var(--m-high))}
 html[data-style=material]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.lbl:first-child svg{background:color-mix(in srgb,var(--tcs) 50%,var(--m-high));color:var(--ink)}
-html[data-style=glass]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.lbl:first-child svg{background:color-mix(in srgb,var(--tcs) 70%,#4a4f5c);color:#fff;border:0}
+html[data-style=glass]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.lbl:first-child svg{background:none;border:0;border-radius:0;padding:0;width:40px;height:40px;fill:var(--tcs);color:var(--tcs)}   /* no disc, just the glyph in the room's temperature colour */
+html[data-style=glass][data-mode=light]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc>.lbl:first-child svg{fill:color-mix(in srgb,var(--tcs) 72%,#14161c);color:color-mix(in srgb,var(--tcs) 72%,#14161c)}
 html[data-style=glass]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color:var(--tcs)}
-html[data-style=glass][data-mode=light]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color:color-mix(in srgb,var(--tcs) 58%,var(--ink))}
+html[data-style=glass][data-mode=light]:not(#x):not(#y) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .temp{color:color-mix(in srgb,var(--tcs) 60%,#14161c)}
+
+/* Kinetic: the temperature cue follows the tab accent. A thin bar on the card's edge with a soft glow bleeding inward (like the glowing bar over the active tab), a quiet neutral outline, and the index numeral in the room's colour. */
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#rl.rooms2,.hm #rooms.rooms) a.rc{
+  background:rgba(var(--w),.05);border-color:rgba(var(--ink-rgb),.16);
+  box-shadow:inset 22px 0 22px -20px color-mix(in srgb,var(--tcs) 38%,transparent)
+}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#rl.rooms2,.hm #rooms.rooms) a.rc::before{
+  display:block;position:absolute;top:0;bottom:0;left:0;width:3px;height:auto;margin:0;border-radius:0;background:var(--tcs);
+  box-shadow:8px 0 14px -8px var(--tcs)
+}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .rcn::before{color:var(--tcs)}
+html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#rl.rooms2,.hm #rooms.rooms) a.rc{background:rgba(255,255,255,.72);border-color:rgba(var(--ink-rgb),.14)}
+html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#rl.rooms2,.hm #rooms.rooms) a.rc .rcn::before{color:color-mix(in srgb,var(--tcs) 55%,var(--ink))}
 /* Card design per style: iOS = calm surface, Material = neutral tonal, Kinetic = fine outline + glow. Additive: shape, outline and tint only, no layout. */
 /* Kinetic */
 html:not([data-style=glass]):not([data-style=material]):not(#x) .pn:not(#npw):not(#npmini):not(header .hs){border-radius:18px;border:1px solid color-mix(in srgb,var(--mint) 32%,transparent)}
@@ -5066,11 +5082,11 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #climate .card::before,ht
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .eb.sty.sel{outline-offset:-2px}
 /* Liquid Glass: the greeting is one sky hero card (colour follows the live weather, set as data-wk on .hs), white text, frosted white chips */
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .hs.pn{--sk:linear-gradient(165deg,#4f93d4 0%,#86bde6 58%,#efcf94 100%);background:var(--sk)!important;border:0!important;box-shadow:none!important;border-radius:26px!important;color:#fff;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs[data-wk=partly]{--sk:linear-gradient(165deg,#5a93c9 0%,#8db8d8 60%,#e3cc9c 100%)}
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs:is([data-wk=cloudy],[data-wk=fog],[data-wk=windy],[data-wk=exceptional]){--sk:linear-gradient(165deg,#6f8499 0%,#93a6b8 100%)}
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs:is([data-wk=rainy],[data-wk=pouring],[data-wk=lightning],[data-wk=lightning-rainy],[data-wk=hail]){--sk:linear-gradient(165deg,#4d5f78 0%,#71849c 100%)}
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs:is([data-wk=snowy],[data-wk=snowy-rainy]){--sk:linear-gradient(165deg,#7f95ad 0%,#b4c4d4 100%)}
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs:is([data-wk=night],[data-wk=pnight]){--sk:linear-gradient(165deg,#161d3d 0%,#2b3a6b 100%)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .hs[data-wk=partly]{--sk:linear-gradient(165deg,#5a93c9 0%,#8db8d8 60%,#e3cc9c 100%)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .hs:is([data-wk=cloudy],[data-wk=fog],[data-wk=windy],[data-wk=exceptional]){--sk:linear-gradient(165deg,#6f8499 0%,#93a6b8 100%)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .hs:is([data-wk=rainy],[data-wk=pouring],[data-wk=lightning],[data-wk=lightning-rainy],[data-wk=hail]){--sk:linear-gradient(165deg,#4d5f78 0%,#71849c 100%)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .hs:is([data-wk=snowy],[data-wk=snowy-rainy]){--sk:linear-gradient(165deg,#7f95ad 0%,#b4c4d4 100%)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .hs:is([data-wk=night],[data-wk=pnight]){--sk:linear-gradient(165deg,#161d3d 0%,#2b3a6b 100%)}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .hs :is(#gr,#dt,#wchip,#wwind,.lbl){color:#fff!important;text-shadow:none!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #home .hs .wpl,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #home .hs .wpl *{color:#fff!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #home .hs .wpl{background:rgba(255,255,255,.26)!important;border:0!important}
@@ -5142,8 +5158,8 @@ html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.on .ts2{color:#5b6
 html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.on .tn svg{fill:color-mix(in srgb,rgb(var(--tcx,224,150,40)) 70%,#000)!important}
 html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dim.on .fill{background:rgba(var(--tcx,224,150,40),.28)!important}
 /* the garage door: green line while closed, red tile while open */
-html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr:not(.on) .ts2{color:#b6ddb8!important}
-html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr:not(.on) .tn svg{fill:#b6ddb8!important}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr:not(.on) .ts2{color:#a3d9ad!important}
+html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr:not(.on) .tn svg{fill:#a3d9ad!important}
 html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr.on{background:linear-gradient(135deg,#e5523f,#b92a22)!important;border-color:#ff8a7a!important;box-shadow:0 4px 20px rgba(229,82,63,.45)!important;color:#fff}
 html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr.on :is(.tn,.nm,.ts2){color:#fff!important}
 html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr.on .tn svg{fill:#fff!important}
@@ -5258,6 +5274,310 @@ html[data-style=material]:not(#x) .tk-b{border-width:1px;font:500 14px var(--san
 html[data-style=glass]:not(#x) .tk-b span,html[data-style=material]:not(#x) .tk-b span{display:block;text-transform:lowercase}
 html[data-style=glass]:not(#x) .tk-b span::first-letter,html[data-style=material]:not(#x) .tk-b span::first-letter{text-transform:uppercase}
 html[data-style=glass]:not(#x) .tk-b span i,html[data-style=material]:not(#x) .tk-b span i{font-style:normal;text-transform:capitalize}
+/* Room AUTOMATIONS pop-up in Liquid Glass and Material: a real switch on the right instead of Kinetic's glowing round tick.
+   Liquid Glass follows an iOS grouped list (one rounded block, hairline dividers, 51x31 green switch); Material follows an M3 list
+   (separate rounded rows, 52x32 switch with a bigger thumb when on). Kinetic keeps its own look. */
+html[data-style=glass]:not(#x) #cpp .cpl{--sw-w:51px;--sw-h:31px;--sw-off:27px;--sw-on:27px;--sw-po:2px;--sw-pn:2px;--sw-on-bg:#34c759;--sw-off-bg:rgba(120,120,128,.32);--sw-off-bd:transparent;--sw-th-off:#fff;--sw-th-on:#fff}
+html[data-style=material]:not(#x) #cpp .cpl{--sw-w:52px;--sw-h:32px;--sw-off:16px;--sw-on:24px;--sw-po:8px;--sw-pn:4px;--sw-on-bg:var(--mint);--sw-off-bg:transparent;--sw-off-bd:rgba(var(--w),.45);--sw-th-off:rgba(var(--w),.55);--sw-th-on:var(--onmint,#fff)}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl{--rh:54px;flex-direction:row;justify-content:flex-start;align-items:flex-start;min-height:56px;padding:12px 16px;box-shadow:none;border:0;animation:none}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl.on{box-shadow:none}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .tn{flex:1;min-height:30px;align-items:center;padding:0 calc(var(--sw-w) + 14px) 0 0;box-sizing:border-box;font:500 16px var(--sans,inherit);color:var(--ink);letter-spacing:0}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl[data-ls]>.tn{padding:0 calc(var(--sw-w) + 14px) 0 0;min-height:30px}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .tn svg{width:22px;height:22px;color:var(--mut)}
+/* the switch: ::after is the track, ::before the thumb */
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl::after{position:absolute;left:auto;right:16px;top:calc(var(--rh) / 2);margin-top:calc(var(--sw-h) / -2);width:var(--sw-w);height:var(--sw-h);border-radius:calc(var(--sw-h) / 2);border:2px solid var(--sw-off-bd);background:var(--sw-off-bg);box-shadow:none;animation:none;transition:background .2s,border-color .2s}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl::before{left:auto;right:calc(16px + var(--sw-w) - var(--sw-po) - var(--sw-off) - 2px);top:calc(var(--rh) / 2);width:var(--sw-off);height:var(--sw-off);border:0;border-radius:50%;background:var(--sw-th-off);opacity:1;transform:translateY(-50%);z-index:1;transition:right .2s,width .2s,height .2s,background .2s}
+html[data-style=glass]:not(#x):not(#y):not(#z) #cpp .cpl .tl::before{box-shadow:0 2px 4px rgba(0,0,0,.25)}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl.on::after{background:var(--sw-on-bg);border-color:var(--sw-on-bg);box-shadow:none;animation:none}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl.on::before{right:calc(16px + var(--sw-pn) + 2px - 2px);width:var(--sw-on);height:var(--sw-on);background:var(--sw-th-on);opacity:1;transform:translateY(-50%)}
+/* the summary line ("On now · all day · under 20 lx") sits right under the name, with the chevron at its right end */
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm{border-top:0;margin:0;padding:0 0 2px;min-height:20px;font:400 13px var(--sans,inherit);color:var(--mut)}
+/* Liquid Glass: one grouped block, hairline dividers inset from the left */
+html[data-style=glass]:not(#x):not(#y):not(#z) #cpp .cpl{gap:0;border-radius:22px;overflow:hidden;flex:none;background:rgba(255,255,255,.09);padding:0}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z) #cpp .cpl{background:#fff}
+html[data-style=glass]:not(#x):not(#y):not(#z) #cpp .cpl>.tl{border-radius:0;background:transparent!important;min-height:56px}
+html[data-style=glass]:not(#x):not(#y):not(#z) #cpp .cpl>.tl+.tl{background:linear-gradient(rgba(var(--w),.16),rgba(var(--w),.16)) 16px 0/calc(100% - 16px) .5px no-repeat!important}
+html[data-style=glass]:not(#x):not(#y):not(#z) #cpp .cpl .tl .tn{font-weight:400;font-size:17px}
+/* Material: separate rounded rows on the sheet */
+html[data-style=material]:not(#x):not(#y):not(#z) #cpp .cpl{gap:8px}
+html[data-style=material]:not(#x):not(#y):not(#z) #cpp .cpl>.tl{border-radius:20px;background:rgba(var(--w),.07)!important}
+html[data-style=material]:not(#x):not(#y):not(#z) #cpp .cpl>.tl.on{background:rgba(var(--w),.07)!important}
+/* the name keeps the normal ink whether the row is on or off (the switch is the on / off cue), and the icon badge stays neutral */
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .tn{color:var(--ink)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z) #cpp .cpl .tl .tn svg{width:32px;height:32px;padding:7px;box-sizing:border-box;border-radius:50%;background:rgba(var(--w),.12)!important;fill:var(--mut)!important;filter:none}
+html[data-style=material]:not(#x):not(#y):not(#z) #cpp .cpl .tl .tn svg{fill:var(--mut)!important;filter:none}
+html[data-style=glass]:not(#x):not(#y):not(#z) #cpp .cpl{margin-top:2px}
+/* an "on" tile redefines --ink / --mut for its own white tile; take the sheet's values from the list instead */
+html:not(#x):not(#y):not(#z) #cpp .cpl{--ci:var(--ink);--cm:var(--mut)}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .tn{color:var(--ci)!important}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm,html:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsv{color:var(--cm)}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .tn svg{fill:var(--cm)!important}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl :is(.tn,.nm){color:var(--ci)!important}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl{display:flex;flex-wrap:wrap;column-gap:6px;row-gap:0}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl :is(.tn,.nm){white-space:normal;text-overflow:clip;overflow:visible;-webkit-line-clamp:unset;display:flex}
+/* plain-sentence summary: "Lights come on when someone's in the room, any time, if it's darker than 20 lx. Dark enough now."  Tap it, or Edit, for the schedule */
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm>span:not(.lsn),html:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsv{display:none!important}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm{display:block;margin:2px 0 0;padding:0 0 2px;min-height:0;font:400 13px/1.4 var(--sans,inherit);color:var(--cm)}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm .lsn{display:inline}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm .st{font-weight:500;white-space:nowrap}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm .st.y{color:#2fa56b}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm .st.n{color:#e5544a}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm::after{content:"Edit";margin-left:8px;font-weight:500;color:var(--acc,#0a84ff);white-space:nowrap}
+html[data-style=material]:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm::after{color:var(--mint)}
+html[data-style=material][data-mode=light]:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm::after{color:color-mix(in srgb,var(--mint) 70%,#000)}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm.open::after{content:"Close"}
+html:not(#x):not(#y):not(#z) #cpp .cpl .tl[data-ls]>.tn{padding:0 calc(var(--sw-w) + 14px) 0 0;min-height:30px}
+/* Kinetic: the same layout and sentence, with a neon switch (outlined track, glowing when on) */
+html:not([data-style=glass]):not([data-style=material]):not(#x) #cpp .cpl{--sw-w:48px;--sw-h:28px;--sw-off:16px;--sw-on:20px;--sw-po:6px;--sw-pn:4px;--sw-on-bg:var(--mint);--sw-off-bg:transparent;--sw-off-bd:rgba(var(--w),.4);--sw-th-off:rgba(var(--w),.55);--sw-th-on:#06130c}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) #cpp .cpl .tl.on::after{box-shadow:0 0 12px color-mix(in srgb,var(--mint) 55%,transparent)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) #cpp .cpl .tl .lsm::after{color:var(--mint)}
+/* Settings: the first tab row (Display / Account / Status ...) is a box again so it can pin under the title bar; the wrapper was display:contents, which cannot be sticky */
+:is(#admin,#theme) > .hsw:has(> .setchips){display:block}
+/* the first row is a box now, and it is a few px taller than the 62px the second row pins at: keep the second row above it, so it covers the overlap instead of its accent bars being hidden */
+html:not(#x) :is(#admin,#theme) > .hsw:has(> .setchips){z-index:22}
+html:not(#x) :is(#admin .admtop,#admin .adlog>.adlh){z-index:23}
+/* Settings > Status: Restart button on a Zigbee2MQTT tile. First tap arms it (amber), second restarts. */
+.sys-st .syrs{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--w),.08);color:var(--ink);font:600 12px var(--sans,inherit);letter-spacing:.02em;text-transform:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sys-st .syrs svg{width:16px;height:16px;fill:currentColor}
+.sys-st .syrs.arm{border-color:rgba(242,163,58,.6);background:rgba(242,163,58,.16);color:#f2a33a}
+.sys-st .syrs.busy{opacity:.7;cursor:default}.sys-st .syrs.busy svg{animation:syspin 1s linear infinite}
+html[data-mode=light] .sys-st .syrs.arm{color:#9a5a00}
+@keyframes syspin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.sys-st .syrs.busy svg{animation:none}}
+/* Camera recordings (the playback screen), one design per look. The screen stays dark in every mode, like the live picture. */
+.cam.pb .pbi.pbc2{--pk:#8aa}
+.cam.pb .pbi.pbc2:has(.pbt2.person){--pk:#5eead4}.cam.pb .pbi.pbc2:has(.pbt2.vehicle){--pk:#fbbf24}.cam.pb .pbi.pbc2:has(.pbt2.animal){--pk:#8be0ae}
+
+/* ---------- Kinetic: mono captions, numbered channel tabs, an edge bar per recording ---------- */
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb{--pkk:var(--mint)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbk{background:linear-gradient(180deg,#07121a,#050d13)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbh{border-bottom:1px solid rgba(var(--ink-rgb),.14)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbh .eb{background:transparent;border:1px solid rgba(var(--ink-rgb),.24);border-radius:10px;box-shadow:none;font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbh .pbt{font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbc{counter-reset:pk;gap:16px}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbc .chip{counter-increment:pk;display:block;text-align:left;background:transparent;border:0;border-top:1.5px solid rgba(var(--ink-rgb),.28);border-radius:0;box-shadow:none;padding:9px 2px 5px;min-height:0;font:600 11px var(--mono);letter-spacing:.12em;color:var(--mut)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbc .chip::before{content:counter(pk,decimal-leading-zero);display:block;font-size:10px;margin-bottom:4px}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbc .chip.on{background:transparent;color:var(--ink);border-top:3px solid var(--mint);margin-top:-1px;box-shadow:0 -6px 12px -8px var(--mint)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbc .chip.on::before{color:var(--mint)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbvw{background:transparent;border:1px solid rgba(var(--ink-rgb),.24);border-radius:10px;box-shadow:none}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbtr{height:6px;border-radius:3px;background:rgba(var(--ink-rgb),.12);overflow:visible}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbs{border-radius:2px;top:-3px;bottom:-3px;min-width:4px}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbs.person{box-shadow:0 0 8px -1px rgba(94,234,212,.7)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbs.vehicle{box-shadow:0 0 8px -1px rgba(251,191,36,.7)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbtl{padding-top:8px}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbi.pbc2{position:relative;border-radius:14px;border:1px solid rgba(var(--ink-rgb),.16);background:rgba(var(--w),.04);padding:10px 10px 10px 16px}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbi.pbc2::before{content:"";position:absolute;left:-1px;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;background:var(--pk);box-shadow:0 0 12px var(--pk)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbi.pbc2.on{border-color:color-mix(in srgb,var(--mint) 65%,transparent);background:color-mix(in srgb,var(--mint) 9%,rgba(var(--w),.04))}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbc2 .pbx strong{font:500 15px var(--mono);letter-spacing:.04em;color:color-mix(in srgb,var(--pk) 70%,var(--ink))}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbt2{background:transparent;border:1px solid currentColor;border-radius:6px;letter-spacing:.12em}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbth{border-radius:8px}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbth b{background:rgba(0,0,0,.35);border:1.5px solid rgba(255,255,255,.85)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .cam.pb .pbth u{border-radius:4px}
+
+/* ---------- Liquid Glass: frosted capsules, big soft rows, a segmented filter ---------- */
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbk{background:linear-gradient(165deg,rgb(38,46,64),rgb(13,17,27))}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbh{border-bottom:1px solid rgba(255,255,255,.1)}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbh .eb{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:99px;box-shadow:inset 0 1px 0 rgba(255,255,255,.2);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%)}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbh .pbt{font:600 17px var(--sans)}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbc{background:rgba(255,255,255,.1);padding:3px;border-radius:99px;gap:2px}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbc .chip{background:transparent;border:0;border-radius:99px;box-shadow:none;padding:7px 16px;min-height:0;font:600 13px var(--sans);letter-spacing:0;text-transform:lowercase;color:rgba(255,255,255,.75)}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbc .chip::first-letter{text-transform:uppercase}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbc .chip.on{background:rgba(255,255,255,.26);color:#fff;box-shadow:0 1px 8px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.35)}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbvw{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:99px;box-shadow:none}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbtr{height:10px;border-radius:5px;background:rgba(255,255,255,.12)}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbs{border-radius:5px;opacity:.9}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbi.pbc2{border-radius:22px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);padding:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbi.pbc2.on{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.32)}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbc2 .pbx strong{font:600 17px var(--sans);letter-spacing:0}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbth{border-radius:14px}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbth b{background:rgba(255,255,255,.28);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbth u{border-radius:99px;padding:2px 8px;background:rgba(0,0,0,.4);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+html[data-style=glass]:not(#x):not(#y) .cam.pb .pbt2{border-radius:99px;font:600 11px var(--sans);letter-spacing:0;text-transform:none;padding:3px 10px}
+
+/* ---------- Material 3: tonal surfaces, filter chips, a filled play button ---------- */
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbk{background:color-mix(in srgb,var(--mint) 7%,#0f1316)}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbh{border-bottom:0;background:color-mix(in srgb,var(--mint) 12%,#0f1316)}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbh .eb{background:transparent;border:0;border-radius:20px;box-shadow:none;color:var(--mint);font:500 14px var(--sans);letter-spacing:.02em;text-transform:none}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbh .pbt{font:400 18px var(--sans)}
+/* the filter is a Material 3 primary tab row (same as the page tabs): flat labels, a divider, a rounded 3px indicator under the selected one */
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbc{gap:0;width:100%}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbc .chip{position:relative;flex:1 1 0;text-align:center;background:transparent;border:0;border-radius:0;box-shadow:inset 0 -1px 0 rgba(var(--ink-rgb),.16);padding:13px 18px 12px;min-height:0;font:500 14px var(--sans);letter-spacing:.01em;text-transform:lowercase;color:var(--mut)}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbc .chip::first-letter{text-transform:uppercase}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbc .chip.on{background:transparent;border:0;color:var(--mint);box-shadow:inset 0 -1px 0 rgba(var(--ink-rgb),.16)}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbc .chip.on::after{content:"";position:absolute;left:18%;right:18%;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--mint)}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbvw{background:color-mix(in srgb,var(--mint) 14%,#0f1316);border:0;border-radius:12px;box-shadow:none}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbtr{height:8px;border-radius:4px;background:color-mix(in srgb,var(--mint) 16%,#0f1316)}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbs{border-radius:4px}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbi.pbc2{border-radius:16px;border:0;background:color-mix(in srgb,var(--mint) 12%,#10151a);padding:10px}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbi.pbc2.on{background:color-mix(in srgb,var(--mint) 26%,#10151a)}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbc2 .pbx strong{font:500 16px var(--sans);letter-spacing:0}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbth{border-radius:12px}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbth b{background:var(--mint);color:var(--onmint,#07241a)}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbth b svg{fill:currentColor}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbth u{border-radius:6px}
+html[data-style=material]:not(#x):not(#y) .cam.pb .pbt2{border-radius:8px;font:500 12px var(--sans);letter-spacing:.02em;text-transform:none;padding:3px 9px}
+
+/* list view: a smaller play button so it never sits on the duration badge */
+html:not(#x):not(#y) .cam.pb .pbl:not(.pbg) .pbth b{width:28px;height:28px}html:not(#x):not(#y) .cam.pb .pbl:not(.pbg) .pbth b svg{width:14px;height:14px}
+
+/* rows keep their height inside the scrolling list (overflow:hidden would otherwise let a flex column squash them) */
+.cam.pb .pbl>.pbi{flex:none}
+/* 2.8.2 the effect tiles (water tap, charging, fan, heating) and the laundry card, one treatment per look.
+   They use the same tile as every other switch in that look (79-tile-styles.css), so each type only brings its colour: --tcx is the tile's colour, --tdisc the glass disc.
+   Kinetic: glowing edge bar + coloured glyph; Liquid Glass: white tile + colour disc; Material: tonal container in the type's colour. The animation (haze, cells, breeze, waves) stays, tuned to the tile. */
+html:not(#x):not(#y) .tl.fx-heat{--tcx:255,122,70;--tdisc:255,138,48}
+html:not(#x):not(#y) .tl.fx-charge{--tcx:52,211,130;--tdisc:52,199,89}
+html:not(#x):not(#y) .tl.fx-air{--tcx:132,152,255;--tdisc:120,140,255}
+html:not(#x):not(#y) :is(.tl.wt,.ldt.run){--tcx:54,169,226;--tdisc:40,150,230}
+html[data-mode=light]:not(#x):not(#y) .tl.fx-heat{--tcx:214,86,28}html[data-mode=light]:not(#x):not(#y) .tl.fx-charge{--tcx:24,150,84}html[data-mode=light]:not(#x):not(#y) .tl.fx-air{--tcx:78,96,214}html[data-mode=light]:not(#x):not(#y) :is(.tl.wt,.ldt.run){--tcx:20,120,190}
+html:not(#x):not(#y) .tl.fx.on{--ax:var(--tcx)}
+/* the animated layers follow the tile colour */
+html:not(#x):not(#y) .tl.fx-charge>.bt{border-color:rgba(var(--tcx),.85)}html:not(#x):not(#y) .tl.fx-charge>.bt::after{background:rgba(var(--tcx),.85)}html:not(#x):not(#y) .tl.fx-charge>.bt b{background:rgb(var(--tcx))}
+html:not(#x):not(#y) .tl.fx-heat .hz i{background:radial-gradient(ellipse at 50% 100%,rgba(var(--tcx),.55),transparent 70%)}
+html:not(#x):not(#y) .tl.fx-air.on .tn svg{filter:none}
+
+/* ---- Kinetic ---- */
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.wt{border-radius:16px;background:rgba(var(--w),.04)!important;border:1px solid rgba(var(--w),.16)!important;box-shadow:none!important;overflow:hidden}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.wt.on{border-color:color-mix(in srgb,rgb(var(--tcx)) 55%,transparent)!important;box-shadow:inset 16px 0 22px -16px rgb(var(--tcx))!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.wt .tn{font:500 12px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.wt.on .tn svg{fill:rgb(var(--tcx))!important;filter:drop-shadow(0 0 6px rgb(var(--tcx)))}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.wt.on .ts2{color:rgb(var(--tcx))!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.wt.on::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:rgb(var(--tcx));box-shadow:0 0 10px rgb(var(--tcx));z-index:2}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.wt>.zwv{opacity:.55}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.fx.on>:is(.hz,.bt,.ar){opacity:.8}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.fx.on{animation:none}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on) .tmr{color:var(--mut)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on) .zb{background:rgba(var(--w),.12);height:3px;border-radius:2px}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on) .zb>i{background:rgb(var(--tcx));box-shadow:0 0 8px rgb(var(--tcx))}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .ldt.run{background:rgba(var(--w),.04);border:1px solid color-mix(in srgb,rgb(var(--tcx)) 55%,transparent);box-shadow:inset 16px 0 22px -16px rgb(var(--tcx));color:var(--ink);animation:none;position:relative;overflow:hidden}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .ldt.run::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:rgb(var(--tcx));box-shadow:0 0 10px rgb(var(--tcx))}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .ldt.run :is(b,span,em){color:var(--ink)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .ldt.run>div>span{font:500 12px var(--mono);letter-spacing:.1em;color:rgb(var(--tcx))}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .ldt.run .ldi{color:rgb(var(--tcx));filter:drop-shadow(0 0 6px rgb(var(--tcx)))}
+
+/* ---- Liquid Glass (Apple Home): white tile, colour disc ---- */
+/* Apple Home has no disc behind the glyph: the glyph itself carries the colour (every tile in this look, 2.8.2) */
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl:not(.sir):not(.cl)>.tn svg{background:none!important;padding:0;width:30px;height:30px;border-radius:0}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.on:not(.sir):not(.cl)>.tn svg{fill:color-mix(in srgb,rgb(var(--tcx)) 62%,#d98400)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on):not(.sir):not(.cl)>.tn svg{fill:rgb(var(--tdisc))!important}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.wt{border-radius:22px;background:rgba(255,255,255,.94)!important;border:0!important;box-shadow:none!important;overflow:hidden;--ink:#16181d;--mut:#5b616b;--ink-rgb:22,24,29;--w:22,24,29;color:#16181d;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;row-gap:1px;align-items:center;padding:12px 14px}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.wt>.tn{display:contents}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.wt>.tn svg{grid-row:1/span 2;grid-column:1;box-sizing:border-box}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.wt>.tn .nm{grid-column:2;grid-row:1;align-self:end;font-weight:500;color:#16181d;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.wt>.ts2{grid-column:2;grid-row:2;align-self:start;font:13px var(--sans);letter-spacing:0;text-transform:none;color:#5b616b!important}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.wt>:not(.zwv):not(.tn):not(.ts2){grid-column:1/-1;color:#5b616b}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.wt>.zwv{opacity:.45}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.fx.on>:is(.hz,.bt,.ar){opacity:.9}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.fx.on{animation:none}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.fx.on .tmr{color:#5b616b!important}
+html[data-style=glass]:not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on) .zb{background:rgba(22,24,29,.1);height:4px;border-radius:2px}
+html[data-style=glass]:not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on) .zb>i{background:rgb(var(--tdisc));box-shadow:none;border-radius:2px}
+html[data-style=glass]:not(#x):not(#y):not(#z) .ldt.run{background:rgba(255,255,255,.94);border:0;box-shadow:none;color:#16181d;animation:none;border-radius:22px;--ink:#16181d}
+html[data-style=glass]:not(#x):not(#y):not(#z) .ldt.run :is(b,span,em){color:#16181d}
+html[data-style=glass]:not(#x):not(#y):not(#z) .ldt.run>div>span{color:#5b616b}
+html[data-style=glass]:not(#x):not(#y):not(#z) .ldt.run .ldi{color:rgb(var(--tdisc));filter:none}
+html[data-style=glass]:not(#x):not(#y):not(#z) .ldt.run .ldi svg{width:30px;height:30px;fill:rgb(var(--tdisc))}
+
+/* ---- Material 3: tonal container in the type's colour ---- */
+html[data-style=material]:not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on){background:color-mix(in srgb,rgb(var(--tcx)) 26%,var(--m-high))!important;border:0!important;box-shadow:none!important;animation:none;overflow:hidden}
+html[data-style=material]:not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on) .tn svg{fill:rgb(var(--tcx))!important;filter:none}
+html[data-style=material][data-mode=light]:not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on) .tn svg{fill:color-mix(in srgb,rgb(var(--tcx)) 85%,#000)!important}
+html[data-style=material]:not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on) :is(.nm,.tn){color:var(--ink)}
+html[data-style=material]:not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on) :is(.ts2,.tmr){color:var(--mut)!important}
+html[data-style=material]:not(#x):not(#y):not(#z) .tl.wt{border-radius:16px;border:0!important;box-shadow:none!important;overflow:hidden}
+html[data-style=material]:not(#x):not(#y):not(#z) .tl.wt>.zwv{opacity:.5}
+html[data-style=material]:not(#x):not(#y):not(#z) .tl.fx.on>:is(.hz,.bt,.ar){opacity:.85}
+html[data-style=material]:not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on) .zb{background:rgba(var(--tcx),.24);height:4px;border-radius:2px}
+html[data-style=material]:not(#x):not(#y):not(#z) :is(.tl.fx.on,.tl.wt.on) .zb>i{background:rgb(var(--tcx));box-shadow:none;border-radius:2px}
+html[data-style=material]:not(#x):not(#y):not(#z) .ldt.run{background:color-mix(in srgb,rgb(var(--tcx)) 26%,var(--m-high));border:0;box-shadow:none;color:var(--ink);animation:none;border-radius:16px}
+html[data-style=material]:not(#x):not(#y):not(#z) .ldt.run :is(b,em){color:var(--ink)}
+html[data-style=material]:not(#x):not(#y):not(#z) .ldt.run>div>span{color:var(--mut)}
+html[data-style=material]:not(#x):not(#y):not(#z) .ldt.run .ldi{color:rgb(var(--tcx));filter:none}
+@media(prefers-reduced-motion:reduce){.tl.fx.on>.hz i,.tl.fx.on>.bt b{animation:none}}
+
+/* Liquid Glass: fan and curtain tiles get room to breathe (the controls sat right under the caption and the fan blades ran across the name) */
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl:is(.fx-air,[data-e^="cover."]):not(.sir):not(.cl){padding:16px 18px;row-gap:1px;column-gap:14px}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl[data-e^="cover."]:not(.sir):not(.cl)>.tn .nm{align-self:end;padding-bottom:1px}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl[data-e^="cover."] .cb{gap:10px;margin-top:12px}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl[data-e^="cover."] .cb button{min-height:42px;padding:10px;border-radius:14px}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl[data-e^="cover."] input[type=range]{margin:12px 0 2px}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.fx-air:not(.sir):not(.cl)>.tn .nm{padding-right:42px}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl.fx-air.on>.ar{opacity:.35;inset:0 0 0 auto;width:64px}
+/* 2.8.2 the search screen, one treatment per look (the base layout is in 68-search.css).
+   The filter row (All, Pages, Rooms...) is the same tab navigation as Settings in Kinetic and Material (58-nav-groups-settings.css lists #srfs); only Liquid Glass styles it here.
+   Kinetic: outline field and tiles, mono captions, glowing edge bar on the selected row. Liquid Glass: frosted capsule field, frosted tiles, plain sans headings, soft-red attention card.
+   Material 3: search bar (pill), filter chips with an 8 px radius, tonal tiles, round tonal icons in the list. */
+
+/* ---- Kinetic ---- */
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .srb{border:1px solid rgba(var(--w),.16);border-radius:16px;background:rgba(var(--w),.04);transition:border-color .2s,box-shadow .2s}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .srb:focus-within{border-color:color-mix(in srgb,var(--mint) 55%,transparent);box-shadow:inset 16px 0 22px -16px var(--mint)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .sri{color:var(--mint)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .srcc{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;background:rgba(var(--w),.04);border-color:rgba(var(--w),.16)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch :is(.srti,.srro){position:relative;border-radius:16px;border:1px solid rgba(var(--w),.16);background:rgba(var(--w),.04)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .srti{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .srti svg{color:var(--mint)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch :is(.srti,.srro,.srr,.srat).on{background:rgba(var(--w),.05);border-color:color-mix(in srgb,var(--mint) 55%,transparent)!important;box-shadow:inset 16px 0 22px -16px var(--mint)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch :is(.srti,.srro,.srr,.srat).on::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:var(--mint);box-shadow:0 0 10px var(--mint)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .srr{position:relative;border:1px solid transparent}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .sric{border-radius:12px;background:none;border:1px solid rgba(var(--w),.16);color:var(--mint)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .srat{position:relative;background:rgba(var(--w),.04);border:1px solid rgba(229,72,59,.45);border-radius:14px;box-shadow:inset 16px 0 22px -16px #e5483b}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .srat::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;background:#e5483b;box-shadow:0 0 10px #e5483b}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .srat.on{border-color:rgba(229,72,59,.8)!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .srat.on::before{background:#e5483b}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .srat i{display:none}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) #srch .srat b{padding-left:6px}
+
+/* ---- Liquid Glass ---- */
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srp{background:rgba(var(--w),.1);-webkit-backdrop-filter:blur(30px) saturate(1.4);backdrop-filter:blur(30px) saturate(1.4);border:0}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srb{border:0;border-radius:999px;background:rgba(var(--w),.12);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+@media(min-width:761px){html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srb{margin:14px 16px 4px;border-bottom:0;padding:8px 14px}}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srf{font:500 14px var(--sans);letter-spacing:0;text-transform:none;background:rgba(var(--w),.12);border:0;border-radius:999px;color:var(--ink)}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srf.on{background:rgba(255,255,255,.94);color:#16181d}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srh{font:600 20px/1.2 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink)}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srlh .srh{padding:0 4px 8px}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srcc{font:500 14px var(--sans);border:0;background:rgba(var(--w),.12)}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch :is(.srti,.srro){border:0;border-radius:22px;background:rgba(var(--w),.12);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srti{font:500 15px var(--sans);padding:14px 16px}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srti svg{width:26px;height:26px;color:var(--mint)}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch :is(.srti,.srro,.srcc):is(.on,:active){background:rgba(255,255,255,.94);color:#16181d}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch :is(.srti,.srro).on :is(small,span,b){color:#16181d}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srr.on{background:rgba(var(--w),.14)}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .sric{border-radius:9px;background:var(--mint);color:#fff;width:34px;height:34px}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srat{border:0;border-radius:18px;background:rgba(229,72,59,.16)}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srat.on{background:rgba(229,72,59,.28)}
+html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srca{border-radius:20px}
+
+/* ---- Material 3 ---- */
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .srp{background:var(--bg);border:0;box-shadow:0 8px 28px rgba(0,0,0,.28)}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .srb{height:56px;border:0;border-radius:28px;background:var(--m-high);padding:0 16px}
+@media(min-width:761px){html[data-style=material]:not(#x):not(#y):not(#z) #srch .srb{margin:14px 16px 4px;border-bottom:0}}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch #srq{font-size:16px}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .sri{color:var(--ink)}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .srhd b{font:400 24px var(--sans)}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .srh{font:500 14px var(--sans);letter-spacing:.1px;text-transform:none;color:var(--mut)}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .srcc{font:500 14px var(--sans);border-radius:8px;background:transparent;border:1px solid rgba(var(--ink-rgb),.28)}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch :is(.srti,.srro){border:0;border-radius:16px;background:var(--m-high)}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .srti{font:500 14px var(--sans);letter-spacing:.1px}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .srti svg{color:var(--mint)}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch :is(.srti,.srro,.srcc).on{background:color-mix(in srgb,var(--mint) 24%,var(--m-high));border-color:transparent!important}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .srr{border-radius:28px;min-height:56px}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .srr.on{background:rgba(var(--ink-rgb),.08)}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .sric{width:40px;height:40px;border-radius:50%;background:color-mix(in srgb,var(--mint) 22%,var(--m-high));color:var(--mint)}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .srat{border:0;border-radius:16px;background:color-mix(in srgb,#e5483b 16%,var(--m-high))}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .srat.on{background:color-mix(in srgb,#e5483b 28%,var(--m-high))}
+html[data-style=material]:not(#x):not(#y):not(#z) #srch .srca{border-radius:16px}
+/* phone, Liquid Glass: the search is a screen of its own, so it sits on the page colour and the frosted panel is not tinted by the dark scrim behind it */
+@media(max-width:760px){html[data-style=glass]:not(#x):not(#y):not(#z) #srch{background:var(--bg)}html[data-style=glass]:not(#x):not(#y):not(#z) #srch .srp{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}}
+/* 2.8.2 Kinetic: a tile's glowing edge bar, glow, glyph and caption take the colour of the thing it is. 79-tile-styles.css colours every tile from --tcx; until now only lights (their own colour), climate (mint), sensors (warm) and the effect tiles (87) had one, so a curtain was amber while its controls were purple. */
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .tl[data-e^="cover."]{--tcx:190,140,255}
+html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .tl[data-e^="cover."]{--tcx:142,72,196}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .tl[data-e^="cover."] input[type=range]{accent-color:rgb(var(--tcx))}
+/* power switches are lavender (the 2.8.0 rule: lights amber, power switches light purple) */
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .tl.pwr:not(.fx){--tcx:201,179,255}
+html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .tl.pwr:not(.fx){--tcx:118,96,200}
+
+/* the curtain group header keeps OPEN ALL + CLOSE ALL inside the card while a curtain moves (they used to run off the edge) */
+#rv .pg .lbl.hd [data-rcv]{flex:0 1 auto;min-width:0;padding-left:12px;padding-right:12px;font-size:11px;white-space:nowrap}
 </style>
 <style>
 /* HA diagnostics stay compact until requested. */
@@ -5346,7 +5666,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "6ec08d";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "4cb790";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -5464,7 +5784,7 @@ const PAL_PRE = {
 const hsl = (h, s, l) => { s /= 100; l /= 100; const k = n => (n + h / 30) % 12, a = s * Math.min(l, 1 - l), f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))); return "#" + [f(0), f(8), f(4)].map(x => Math.round(x * 255).toString(16).padStart(2, "0")).join(""); };
 const GEN = (h, s, la) => ({ dark: C([hsl(h, 8 * s, 9), hsl(h, 42 * s, 17), hsl(h, 12 * s, 89), hsl(h, 88 * s, 78), "#f2b8b5", "#a8c7fa", "#f9de8e", hsl(h, 28 * s, 78), hsl(h, 22 * s, 64)]), light: C([hsl(h, 100 * s, 98.5), hsl(h, 75 * s, 91), hsl(h, 12 * s, 11), hsl(h, 70 * s, la || 34), "#b3261e", "#0b57d0", "#e3a600", hsl(h, 75 * s, 86), hsl(h, 70 * s, 76)]) });
 Object.assign(PAL_PRE, { Magenta: GEN(315, 1), Plum: GEN(290, .8), Lavender: GEN(268, .75), Mint: GEN(152, 1, 27), Sage: GEN(125, .45), Gold: GEN(48, 1, 27), Sand: GEN(38, .5), Rose: GEN(350, .7), Slate: GEN(212, .35), Graphite: GEN(0, 0) });
-const PAL_DEF = { mode: "dark", dark: Object.assign({}, PAL_PRE.Violet.dark), light: Object.assign({}, PAL_PRE.Violet.light), temp: ["#ccc2dc", "#a8c7fa", "#9ed6f0", "#b6ddb8", "#f9de8e", "#ffb88c", "#f2a09b"] };
+const PAL_DEF = { tv: 2, mode: "dark", dark: Object.assign({}, PAL_PRE.Violet.dark), light: Object.assign({}, PAL_PRE.Violet.light), temp: ["#c4b8e4", "#9dbdf5", "#8ccdea", "#a3d9ad", "#f5dc8e", "#fbb68a", "#f4a39e"] };
 let PAL = JSON.parse(JSON.stringify(PAL_DEF));
 let SEASON = null;   // the seasonal theme that is on right now (see 40-seasons.js): its colours replace the palette while it lasts
 try {
@@ -5473,7 +5793,7 @@ try {
   if (o.mode) PAL.mode = o.mode;
   if (o.from) PAL.from = o.from; if (o.to) PAL.to = o.to;
   Object.assign(PAL.dark, o.dark || {}); Object.assign(PAL.light, o.light || {});
-  if (Array.isArray(o.temp) && o.temp.length === 7) PAL.temp = o.temp;
+  if (Array.isArray(o.temp) && o.temp.length === 7 && o.tv === PAL_DEF.tv) PAL.temp = o.temp;   // a palette saved before the temperature colours were redone (version 2) takes the new colours once; after that your own picks stay
 } catch (x) {}
 // AUTO follows the device; SUN follows sun.sun in Home Assistant (dark while it is below the horizon); SCHEDULE is dark between two times. The last two do not depend on the tablet's own dark-mode setting.
 const palMin = x => { const a = String(x || "").split(":"); return (+a[0] || 0) * 60 + (+a[1] || 0); };
@@ -5919,7 +6239,7 @@ function openWs(tk) {
     else if (m.type === "auth_invalid") authBad();
     else if (m.type === "auth_ok") {
       wsAuthed = true; setStatus(true); hideLogin();
-      send({ type: "get_states" }, list => { list.forEach(setState); loadFc(); loadFcH(); calFix(); palTick(); schLoad(); vGroups(); buildDep(); drawGsum(); if (cards[MAIN]) render(MAIN); if (!identDone) identify(); batTick(); tick(); bootMark("s"); LV.t = null; lvQ(); queueNotif(); setTimeout(bootGo, 1400); if (camPage()) startCams(); if (onRooms) { if (curRoom) drawRoom(curRoom.id); else updRooms(); } });
+      send({ type: "get_states" }, list => { list.forEach(setState); if (typeof LV !== "undefined") LV.t = null; loadFc(); loadFcH(); calFix(); palTick(); schLoad(); vGroups(); buildDep(); drawGsum(); if (cards[MAIN]) render(MAIN); if (!identDone) identify(); batTick(); tick(); bootMark("s"); LV.t = null; lvQ(); queueNotif(); setTimeout(bootGo, 1400); if (camPage()) startCams(); if (onRooms) { if (curRoom) drawRoom(curRoom.id); else updRooms(); } });
       send({ type: "subscribe_events", event_type: "state_changed" }); cfgFetch();
       evBtn(); if (curPg() === "energy") { en.busy = false; loadEnergy(); }
     } else if (m.type === "result" && pending[m.id]) { try { pending[m.id](m.result, m); } catch (x) {} delete pending[m.id]; }
@@ -6975,7 +7295,7 @@ $("#mm").onclick = e => {
 // ---------- rooms ----------
 const AIRW = '<svg viewBox="0 0 400 26" preserveAspectRatio="none"><path d="M0 13Q25 0 50 13T100 13T150 13T200 13T250 13T300 13T350 13T400 13"/></svg>';   // one wavy breeze line for the fan tile (tile effect "air")
 const members = (id, d) => { d = d == null ? 3 : d; const o = []; [].concat(id || []).forEach(x => { const a = states[x] && states[x].attributes.entity_id; (d > 0 && Array.isArray(a) ? members(a, d - 1) : [x]).forEach(y => { if (o.indexOf(y) < 0) o.push(y); }); }); return o; };
-const isOn = id => { const s = states[id]; return !!s && (s.state === "on" || s.state === "open" || s.state === "opening"); };
+const isOn = id => { const s = states[id]; return !!s && (s.state === "on" || s.state === "open" || s.state === "opening" || (s.state === "closing" && id.indexOf("cover.") === 0)); };   // a curtain that is closing is still open until it gets there
 const roomOK = id => !RU || !Array.isArray(RU.rooms) || RU.rooms.indexOf(id) > -1;   // a restricted person may be limited to some rooms (RU.rooms)
 const HOUSE = () => CONFIG.house.filter(r => roomOK(r.id));
 const ROOM = id => HOUSE().filter(r => r.id === id)[0];
@@ -7154,12 +7474,14 @@ function lsSch() {
     $$("[data-ln]", tl).forEach(i => { const e = i.dataset.ln, st = states[e], a = st ? st.attributes || {} : {}; i.disabled = !st || st.state === "unavailable"; i.step = a.step || 1; if (a.min != null) i.min = a.min; if (a.max != null) i.max = a.max; if (document.activeElement !== i) { const v = lsN(e); i.value = isNaN(v) ? "" : v; } });
     const ok = (y, t) => '<div class="lsr ' + (y ? "y" : "n") + '">' + mdi(y ? "check" : "close") + '<span>' + t + '</span></div>', rows = [], res = [];
     const f = c.from ? lsT(c.from) : "", u = c.until ? lsT(c.until) : "", all = f && u && f === u, win = f && u ? (all ? "all day" : f + " - " + u) : "";
-    if (f && u) { const d = new Date(), n = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2), w = all ? true : f < u ? n >= f && n < u : n >= f || n < u; res.push(w); rows.push(ok(w, all ? "No time limit (all day)" : (w ? "Inside the time window" : "Outside the time window") + " (" + win + ")")); }
+    let tOk = true, lOk = true; if (f && u) { const d = new Date(), n = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2), w = all ? true : f < u ? n >= f && n < u : n >= f || n < u; tOk = w; res.push(w); rows.push(ok(w, all ? "No time limit (all day)" : (w ? "Inside the time window" : "Outside the time window") + " (" + win + ")")); }
     const lx = c.lux && states[c.lux] ? parseFloat(states[c.lux].state) : NaN, dk = c.dark ? lsN(c.dark) : NaN, br = c.bright ? lsN(c.bright) : NaN;
-    if (!isNaN(lx) && !isNaN(dk)) { const dd = lx < dk; res.push(dd); rows.push(ok(dd, (dd ? "Dark enough" : "Too bright") + ": " + Math.round(lx) + " lux now, comes on below " + dk + (!isNaN(br) ? ", off above " + br : ""))); }
+    if (!isNaN(lx) && !isNaN(dk)) { const dd = lx < dk; lOk = dd; res.push(dd); rows.push(ok(dd, (dd ? "Dark enough" : "Too bright") + ": " + Math.round(lx) + " lux now, comes on below " + dk + (!isNaN(br) ? ", off above " + br : ""))); }
     const go = res.every(Boolean); if (res.length) rows.push(ok(go, go ? "Lights will turn on when someone is in the room" : "Lights won't turn on right now"));
     { const lh = rows.join(""), le = $(".lss", cd); if (le._h !== lh) { le._h = lh; le.innerHTML = lh; } }   // only touch the DOM when the text changed, so an idle state update does not repaint the open pop-up (it flickered)
-    const smh = (res.length ? '<span class="' + (go ? "y" : "n") + '">' + mdi(go ? "check" : "close") + (go ? "On now" : "Not now") + '</span>' : "") + '<span class="lsx">' + [win, !isNaN(dk) ? "under " + dk + " lx" : ""].filter(Boolean).join(" · ") + '</span>';
+    // Liquid Glass / Material show the plain sentence (.lsn); Kinetic keeps the tick + short summary (CSS picks one)
+    const lsn = "Lights come on when someone\u2019s in the room" + (all ? ", any time" : f && u ? ", between " + f + " and " + u : "") + (!isNaN(dk) ? ", if it\u2019s darker than " + dk + " lx" : "") + "." + (res.length ? ' <span class="st ' + (go ? "y" : "n") + '">' + (go ? (!isNaN(dk) ? "Dark enough now." : "On now.") : !tOk ? "Outside the time window now." : "Too bright now.") + '</span>' : "");
+    const smh = '<span class="lsn">' + lsn + '</span>' + (res.length ? '<span class="' + (go ? "y" : "n") + '">' + mdi(go ? "check" : "close") + (go ? "On now" : "Not now") + '</span>' : "") + '<span class="lsx">' + [win, !isNaN(dk) ? "under " + dk + " lx" : ""].filter(Boolean).join(" · ") + '</span>';
     if (sm._h !== smh) { sm._h = smh; sm.innerHTML = smh; }
   });
 }
@@ -7219,7 +7541,7 @@ function updTiles() {
     if (el.dataset.sir) { sirenUpd(el); return; }
     const e = el.dataset.e || el.dataset.c, d = e.split(".")[0], s = states[e] || (VIRT[e] ? { state: String(sv(e) == null ? "unavailable" : sv(e)), attributes: {} } : undefined), n = $(".nm", el);   // a value the dashboard works out itself stands in when HA has no such entity
     if (!s) { el.classList.add("na"); return; }
-    const a = s.attributes, st = s.state, on = (st === "on" || st === "open" || st === "opening") && !npGone(e);
+    const a = s.attributes, st = s.state, on = (st === "on" || st === "open" || st === "opening" || (st === "closing" && d === "cover")) && !npGone(e);   // closing curtains keep their tile lit
     if (!el.dataset.c && !el.classList.contains("bd")) tmrSync(el, e, on);   // the countdown of the entity's timer, shown in its tile while it is on
     if (n && !el.dataset.n) { const nt = a.friendly_name || e.split(".")[1].replace(/_/g, " "); if (n.textContent !== nt) n.textContent = nt; }
     if (n && el.dataset.nf) { const nt = sv(el.dataset.nf) || "Curtains"; if (n.textContent !== nt) n.textContent = nt; }
@@ -7238,10 +7560,11 @@ function updTiles() {
     let t = st.toUpperCase(); const rg = $("input", el), idle = rg && document.activeElement !== rg && !(rg._d && rg._d > Date.now());   // not while a finger is on it, nor for 1.5s after (HA echoes the old value first)
     if (el.dataset.c) { showT(e); t = (a.current_temperature != null ? f1(a.current_temperature) + "°  ·  " : "") + (st === "off" ? "OFF" : hfx ? hfx[3] + "  ·  ON" : (MODE[st] || st).toUpperCase()); }
     else if (d === "light") { const rc = on && a.rgb_color; el.classList.toggle("lc", !!rc); if (rc) el.style.setProperty("--lc", rc.join(",")); const dm = (a.supported_color_modes || []).some(m => m !== "onoff"), b = a.brightness != null ? Math.round(a.brightness / 2.55) : 0; el.classList.toggle("dim", dm); t = on ? (dm ? b + "%" : "ON") : "OFF"; if (!(el._d && el._d > Date.now())) el.style.setProperty("--b", b + "%"); }
-    else if (d === "cover") { const p = a.current_position, mv = covMove(e); el.classList.toggle("dim", p != null); el.classList.toggle("mv", !!mv); t = (mv || st).toUpperCase() + (p != null ? "  ·  " + p + "%" : ""); if (idle && p != null) rg.value = p; if (mv) covTick(); }
+    else if (d === "cover") { const p0 = a.current_position, mv = covMove(e); let tg = rg ? rg._tgt : null; if (tg != null && (p0 == null || Math.abs(p0 - tg) <= 2 || Date.now() - rg._tgtT > (mv ? 40000 : 8000))) { delete rg._tgt; tg = null; }   // after you let go the slider stays on the place you chose until the curtain reports it (HA first echoes the old position, which made the slider jump back and forth)
+      const p = tg != null ? tg : p0; el.classList.toggle("dim", p != null); el.classList.toggle("mv", !!mv); t = ((mv || st) + "").toUpperCase() + (p != null ? "  ·  " + p + "%" : ""); if ((idle || tg != null) && p != null) rg.value = p; if (mv) covTick(); }
     else if (d === "select") t = st;
     if (!on && st === "on") t = "OFF";
-    if (!(el._d && el._d > Date.now()) && !(d === "cover" && rg && !idle)) { const t2 = $(".ts2", el), tv = el.dataset.sub || t; if (t2.textContent !== tv) t2.textContent = tv; }   // a curtain slider being dragged keeps showing the dragged value, not the positions HA reports on the way
+    if (!(el._d && el._d > Date.now()) && !(d === "cover" && rg && !idle && rg._tgt == null)) { const t2 = $(".ts2", el), tv = el.dataset.sub || t; if (t2.textContent !== tv) t2.textContent = tv; }   // a curtain slider being dragged keeps showing the dragged value, not the positions HA reports on the way
   });
   if (curRoom) $$("#rv .pg[data-pi]").forEach(pn => {   // per-panel counts, and ALL OFF only while something in that light section is on
     const m = curPanels[+pn.dataset.pi]; if (!m || m.k === "scene" || m.k === "cam") return;   // the Scene card counts its own zones (rsUpd)
@@ -7435,7 +7758,7 @@ function chgH(e) {
   const w = t.closest("[data-e]"); if (!w) return;   // other inputs in the page (the lights schedule time boxes) have their own handler
   const id = w.dataset.e, d = id.split(".")[0];
   if (d === "light") call("light", "turn_on", id, { brightness_pct: +t.value });
-  else if (d === "cover") { const cur = (states[id] && states[id].attributes.current_position) || 0; call("cover", "set_cover_position", id, { position: +t.value }); if (+t.value !== cur) covMark(id, +t.value > cur ? "opening" : "closing"); }
+  else if (d === "cover") { const cur = (states[id] && states[id].attributes.current_position) || 0; t._tgt = +t.value; t._tgtT = Date.now(); call("cover", "set_cover_position", id, { position: +t.value }); if (+t.value !== cur) covMark(id, +t.value > cur ? "opening" : "closing"); }
 };
 $("#rl").className = "rooms rooms2"; $("#rv").onclick = e => { if (typeof rsClick === "function" && rsClick(e)) return; tapH(e); };   // the Scene card (24-room-scenes.js) first, then the tiles
 $("#rv").addEventListener("input", e => { const r = e.target; if (r.dataset && r.dataset.nb && r.closest(".rsc")) $(".nbv", r.parentNode).textContent = Math.round(r.value); });
@@ -10219,11 +10542,23 @@ const sysEnt = (d, k) => {
 };
 function sysIds() { const ids = new Set(); sysGroups().forEach(g => { g[1].forEach(x => ids.add(x.id)); g[2].forEach(d => Object.keys(SYSD).filter(k => !["swap", "diskfree", "mempressure", "iopressure", "load", "netin", "netout", "diskconfig"].includes(k) || sysHaVm(d)).forEach(k => { const e = sysEnt(d, k); if (e) ids.add(e); })); }); return ids; }
 const SYSW = { on: ["ok", "Connected"], online: ["ok", "Online"], connected: ["ok", "Connected"], off: ["bad", "Disconnected"], offline: ["bad", "Offline"], disconnected: ["bad", "Disconnected"] };
+// A Zigbee2MQTT bridge tile gets a Restart button. It presses that bridge's own "Restart" button entity (button.zigbee2mqtt_bridge_restart, _2 ... found from the tile's
+// bridge_connection_state sensor), or restarts the Home Assistant app: systemStatus tile { id, name, restart: { addon: "45df7312_zigbee2mqtt" } } (needs an admin; slug is in the app's address),
+// or { restart: { button: "button.my_restart" } }; restart: false hides it.
+function sysRestart(x) {
+  if (x.restart === false) return null; const r = x.restart && typeof x.restart === "object" ? x.restart : typeof x.restart === "string" ? { button: x.restart } : {};
+  if (r.addon) return { addon: r.addon }; if (r.button) return states[r.button] ? { button: r.button } : null;
+  const m = /^binary_sensor\.(.*)bridge_connection_state(_\d+)?$/.exec(x.id || ""); if (!m) return null;
+  const b = "button." + m[1] + "bridge_restart" + (m[2] || ""); if (states[b]) return { button: b };
+  const f = Object.keys(states).find(k => /^button\./.test(k) && k.indexOf(m[1]) > 0 && new RegExp("restart" + (m[2] || "") + "$").test(k)); return f ? { button: f } : null;
+}
+Object.assign(MDI, { restart: "M12,4C14.1,4 16.1,4.8 17.6,6.3C20.7,9.4 20.7,14.5 17.6,17.6C15.8,19.4 13.2,20.2 10.7,19.8L11.2,17.8C13,18.1 14.9,17.6 16.2,16.2C18.3,14.1 18.3,10.8 16.2,8.7C15.2,7.7 13.6,7.1 12,7.1V11L7,6L12,1V4M6.3,17.6C3.7,15 3.3,11 5.1,7.9L6.6,9.4C5.5,11.6 5.9,14.4 7.8,16.2C8.3,16.7 8.9,17.1 9.5,17.4L9,19.4C8,19 7.1,18.4 6.3,17.6Z" });
+const SYRS = {};   // tile id -> "arm" (first tap done) | "busy"
 function sysTiles(tl) {
   return tl.map(x => {
     const s = states[x.id], st = s ? String(s.state) : "", w = s ? SYSW[st] : null, k = w ? w[0] : "syw", t = !s ? "Not found" : w ? w[1] : st ? st.charAt(0).toUpperCase() + st.slice(1) : "Unknown";
     const ms = s ? Date.now() - Date.parse(s.last_changed || "") : NaN, nm = x.name || (s && s.attributes && s.attributes.friendly_name) || x.id;
-    return '<div class="' + k + '"><small>' + esc(nm) + '</small><b>' + esc(t) + '</b>' + (isNaN(ms) ? "" : '<small class="sy">changed ' + attnAgo(ms) + ' ago</small>') + '</div>';
+    return '<div class="' + k + '"><small>' + esc(nm) + '</small><b>' + esc(t) + '</b>' + (isNaN(ms) ? "" : '<small class="sy">changed ' + attnAgo(ms) + ' ago</small>') + (rs => rs ? '<button class="syrs' + (SYRS[x.id] ? " " + SYRS[x.id] : "") + '" data-syrs="' + esc(x.id) + '">' + mdi("restart") + (SYRS[x.id] === "busy" ? "Restarting…" : SYRS[x.id] === "arm" ? "Tap to confirm" : "Restart") + '</button>' : "")(sysRestart(x)) + '</div>';
   }).join("");
 }
 const sysOk = e => { const s = states[e]; return !!s && !/^(unavailable|unknown)$/.test(s.state); };
@@ -10273,6 +10608,16 @@ function sysSec(sec) { return sysGroups().length ? sec("System status", '<div cl
 function sysUpd() { const b = $("#admin .sysw"); if (b) { const h = sysHtml(); if (b.innerHTML !== h) b.innerHTML = h; } }   // only the System status block is redrawn, so the rest of the page (access list, config editor) is left alone
 // drawAdmin(): the Settings page's admin tabs, in 30-admin-tools.js
 $("#admin").addEventListener("click", e => { const ac = e.target.closest("[data-acc]"); if (ac) accClick(ac); });
+
+// Restart button on a system status tile: the first tap arms it (3 s), the second restarts; it shows "Restarting…" for 30 s
+document.addEventListener("click", e => {
+  const b = e.target.closest && e.target.closest("[data-syrs]"); if (!b) return; e.stopPropagation(); const id = b.dataset.syrs;
+  if (SYRS[id] === "busy") return;
+  if (SYRS[id] !== "arm") { SYRS[id] = "arm"; sysUpd(); setTimeout(() => { if (SYRS[id] === "arm") { delete SYRS[id]; sysUpd(); } }, 3000); return; }
+  const t = (CONFIG.systemStatus ? [].concat(Array.isArray(CONFIG.systemStatus) ? CONFIG.systemStatus : [].concat(CONFIG.systemStatus.network || [], CONFIG.systemStatus.hardware || [])) : []).map(sysTile).find(x => x && x.id === id), r = t && sysRestart(t); if (!r) { delete SYRS[id]; sysUpd(); return; }
+  SYRS[id] = "busy"; sysUpd(); setTimeout(() => { delete SYRS[id]; sysUpd(); }, 30000);
+  if (r.addon) send({ type: "supervisor/api", endpoint: "/addons/" + r.addon + "/restart", method: "post", timeout: null }); else call("button", "press", r.button);
+}, true);
 // ---------- Settings: one page with tabs ----------
 // DISPLAY (the old Theme page) and ACCOUNT live on #theme; an admin also gets STATUS, ENTITIES, AUTOMATIONS, LOGS, ACCESS and SETUP on #admin.
 // The same tab row sits on top of both, so it reads as one page. Links: #settings, #theme, #theme/account, #admin, #admin/<tab>.
@@ -11030,6 +11375,10 @@ const NSK = [
   ["uv", "weather-sunny-alert", wxaName("uv"), () => wxaChip("uv", true)],   // Very high UV
   ["wx", "weather-partly-lightning", wxaName("wx"), () => wxaChip("wx", true)],   // two or more weather alerts, one of them urgent: one chip instead of several
   ["door", "door-open", "Door open", () => !!doorsOpen()],
+  // lights, windows and curtains left open: the same lists the Leaving chip uses (33-leaving.js); named by how many
+  ["lights", "lightbulb-on", () => { const n = lvLights().filter(isOn).length; return n > 1 ? n + " lights on" : "Light on"; }, () => { const c = lvCfg(); return !!c && !!c.lights && lvLights().some(isOn); }],
+  ["windows", "m3-window-open", () => { const w = lvWins(); return w.length > 1 ? w.length + " windows open" : "Window open"; }, () => { const c = lvCfg(); return !!c && !!c.windows && lvWins().length > 0; }],
+  ["curtains", "m3-curtains", () => { const u = lvCurt(); return u.length > 1 ? u.length + " curtains open" : "Curtain open"; }, () => { const c = lvCfg(); return !!c && !!c.curtains && lvCurt().length > 0; }],
   ["water", "m3-water-drop", "Water on", () => Object.keys(states).some(k => /^switch\..*water_tap$/.test(k) && states[k].state === "on") || (CONFIG.irrigation || []).some(z => z.switch && states[z.switch] && states[z.switch].state === "on")],
   ["bins", "recycle", "Bins out", binsWaiting],   // a bin is due and not out yet (config bins)
   ["battery", "battery-low", "Low battery", () => lowBattChip().length > 0],   // under 20 % by default (derived.batteryAlertBelow)
@@ -11041,7 +11390,7 @@ const NSK = [
   ["laundry", "washing-machine", "Laundry running", laundryOn],
   ["towel", "radiator", "Towel heating on", towelsOn]
 ];
-const nskRel = id => (typeof nzfRel === "function" && nzfRel(id)) || (typeof zbRel === "function" && zbRel(id)) || attnRel(id) || polRel(id) || binsIds().includes(id) || /^sensor\..*battery_plus$/.test(id) || LEAKS().some(x => x[0] === id) || id === E("weatherWarnings") || id === W || id === E("doorsGroup") || id === E("laundryState") || id === E("laundryRemaining") || id === E("towelGroup") || members(E("towelGroup")).includes(id) || members(E("doorsGroup")).includes(id) || /^switch\..*water_tap$/.test(id) || Object.keys(galCfg()).some(k => (galCfg()[k] || {}).sensor === id) || (CONFIG.irrigation || []).some(z => z.switch === id);
+const nskRel = id => (typeof lvRel === "function" && lvRel(id)) || (typeof nzfRel === "function" && nzfRel(id)) || (typeof zbRel === "function" && zbRel(id)) || attnRel(id) || polRel(id) || binsIds().includes(id) || /^sensor\..*battery_plus$/.test(id) || LEAKS().some(x => x[0] === id) || id === E("weatherWarnings") || id === W || id === E("doorsGroup") || id === E("laundryState") || id === E("laundryRemaining") || id === E("towelGroup") || members(E("towelGroup")).includes(id) || members(E("doorsGroup")).includes(id) || /^switch\..*water_tap$/.test(id) || Object.keys(galCfg()).some(k => (galCfg()[k] || {}).sensor === id) || (CONFIG.irrigation || []).some(z => z.switch === id);
 // ---------- smooth fold / unfold of groups that a redraw rebuilds with innerHTML ----------
 // Notifications > Active groups and Security > Detections grouped clips are redrawn as HTML, so the group itself cannot be transitioned.
 // Around that redraw: note each group's state and rows; right after it (same frame, before anything is painted) put a copy of the old rows and the
@@ -11210,6 +11559,13 @@ function npCamMount() {
   NPC.forEach(c => { if (!want[c.id] && c._on) { clearTimeout(c.rt); c._on = 0; stopCam(c); } });
 }
 setInterval(() => { if (!npCamWanted()) npCamStop(); }, 2500);   // closed: no streams running behind the page
+// a rebuild of the list keeps what the person is reading where it is: the first row on screen is found again afterwards and the pop-up is scrolled by however far it moved (a group above, like a light turning on, used to push everything down for a moment)
+function npKeep(nc, body) {
+  const np = $("#np"), top = np.getBoundingClientRect().top; let a = null, at = 0, k = "";
+  if (np.scrollTop > 2) { const el = [...nc.querySelectorAll("[data-e]")].find(n => n.getBoundingClientRect().top >= top + 4); if (el) { a = el; at = el.getBoundingClientRect().top; k = '[data-e="' + el.dataset.e + '"]'; } }
+  nc.innerHTML = body;
+  if (a) { const b = nc.querySelector(k); if (b) { const d = b.getBoundingClientRect().top - at; if (Math.abs(d) > 1) np.scrollTop += d; } }
+}
 function drawNotif() {
   if (typeof cdDraw === "function") cdDraw();
   const open = document.body.classList.contains("np-open");
@@ -11241,7 +11597,7 @@ function drawNotif() {
   if (nc._k !== key) {
     const at = npTab + "|" + npOnly;
     if (nc._t === at) { nc.classList.remove("tx", "txc"); clearTimeout(nc._tx); }   // a list that redraws on the tab it is already showing (a state changed) must not replay the tab's fade-in, or it blinks
-    nc._t = at; nc._k = key; if (!NP_KEEP) { nc.classList.add("nofx"); xpBegin(nc, "np", () => { nc.innerHTML = body; }); requestAnimationFrame(() => requestAnimationFrame(() => nc.classList.remove("nofx"))); } }   // tiles made fresh take their state straight away: no fill, glow or slider sliding in from zero (the card looked like it was redrawing itself)
+    nc._t = at; nc._k = key; if (!NP_KEEP) { nc.classList.add("nofx"); xpBegin(nc, "np", () => npKeep(nc, body)); requestAnimationFrame(() => requestAnimationFrame(() => nc.classList.remove("nofx"))); } }   // tiles made fresh take their state straight away: no fill, glow or slider sliding in from zero (the card looked like it was redrawing itself)
   npGoRun(); npCamMount();
   $$("#npc .ldr").forEach(el => { const t = ldTime(); if (el.textContent !== t) el.textContent = t; });
   if (tc) requestAnimationFrame(hsAll);
@@ -11252,7 +11608,7 @@ function queueNotif() { if (!nq) nq = requestAnimationFrame(() => { nq = 0; draw
 // Tapping the strip while exactly one condition shows opens the tab (and Active section) that holds it: Bins out / Low battery -> Attention, Laundry / Towel heating / Water on -> Active at that group, the rest -> Alerts.
 // With two or more conditions (or none) the pop-up opens on the tab it was last on, as before.
 // Tapping one of the chips (or the only one) opens just that item, with SHOW ALL to see the rest of the tab.
-const NPK = { leak: ["alerts", "leak"], warn: ["alerts", "warn"], garage: ["alerts", "garage"], roster: ["alerts", "roster"], cw: ["alerts", "cw"], wind: ["alerts", "wx"], rain: ["alerts", "wx"], uv: ["alerts", "wx"], wx: ["alerts", "wx"], door: ["alerts", "door"],
+const NPK = { leak: ["alerts", "leak"], warn: ["alerts", "warn"], garage: ["alerts", "garage"], roster: ["alerts", "roster"], cw: ["alerts", "cw"], wind: ["alerts", "wx"], rain: ["alerts", "wx"], uv: ["alerts", "wx"], wx: ["alerts", "wx"], door: ["alerts", "door"], lights: ["active"], windows: ["active"], curtains: ["active"],
   water: ["active", "water-taps"], bins: ["attention", "bins"], battery: ["attention", "bat"], pollen: ["attention", "pol"], laundry: ["active", "laundry"], towel: ["active", "towel-heating"] };
 $("#hc").onclick = e => {
   const open = document.body.classList.contains("np-open");
@@ -11453,30 +11809,42 @@ function zbPill() { const d = zbDown(); return d.length ? '<span class="wpl zbp"
 setInterval(() => { if (typeof queueNotif === "function") queueNotif(); if (typeof hplDraw === "function") hplDraw(); }, 30000);   // the grace period needs a clock, not only state changes
 // ---------- Leaving: what is still on or open before you go ----------
 // The card on Home (it took the place of the old Attention card; Attention lives on in Notifications) lists lights left on, the garage door, open doors and a disarmed alarm. Tap it for the list, with Lights off and Arm away.
-// Config: leaving: false | { lights: true, garage: true, doors: true, alarm: true, lightEntities: [], ignore: ["light.hall_lamp"] } (see config.example.js). Lights default to the lights of the rooms on the Rooms page.
-const lvCfg = () => { const a = CONFIG.leaving; return a === false ? null : Object.assign({ lights: true, garage: true, doors: true, alarm: true, lightEntities: [], ignore: [] }, a || {}); };
+// Config: leaving: false | { lights: true, garage: true, doors: true, windows: true, curtains: true, alarm: true, lightEntities: ["light.all_lights"], windowEntities: ["group.all_windows"], curtainEntities: ["group.curtains_mbr"], ignore: ["light.hall_lamp"] } (see config.example.js). Lights default to the lights of the rooms on the Rooms page.
+const lvCfg = () => { const a = CONFIG.leaving; return a === false ? null : Object.assign({ lights: true, garage: true, doors: true, windows: true, curtains: true, alarm: true, lightEntities: [], windowEntities: [], curtainEntities: [], ignore: [] }, a || {}); };
 const LV = { t: null, q: 0, open: false };
 const lvRx = c => [].concat(c.ignore || []).map(x => { try { return new RegExp(x); } catch (e) { return null; } }).filter(Boolean);
+const lvLightDef = () => HOUSE().reduce((a, r) => a.concat(r.lights || [], r.lightSwitches || []), []).concat(states["light.all_lights"] ? ["light.all_lights"] : []);
 function lvLights() {
   const c = lvCfg(); if (!c) return [];
-  const src = c.lightEntities && c.lightEntities.length ? c.lightEntities : HOUSE().reduce((a, r) => a.concat(r.lights || [], r.lightSwitches || []), []), rx = lvRx(c);
+  const src = c.lightEntities && c.lightEntities.length ? c.lightEntities : lvLightDef(), rx = lvRx(c);
   return members(src).filter(id => /^(light|switch)\./.test(id) && states[id] && !entHidden(id) && !rx.some(r => r.test(id)));
 }
+// windows / curtains still open: the entities (or groups) in windowEntities / curtainEntities, else every room's windows (curtains: only when listed)
+function lvOpenList(ents, fallback) {
+  const src = ents && ents.length ? ents : fallback, rx = lvRx(lvCfg() || {});
+  return members(src).filter(id => states[id] && !/^group\./.test(id) && isOn(id) && !entHidden(id) && !rx.some(r => r.test(id)));
+}
+const lvWinDef = () => (CONFIG.house || []).reduce((a, r) => a.concat(r.windows || []), []).concat(states["group.all_windows"] ? ["group.all_windows"] : []);
+const lvCurtDef = () => ["group.all_curtains", "group.curtains_mbr"].filter(x => states[x]);
+const lvWins = () => { const c = lvCfg(); return c ? lvOpenList(c.windowEntities, lvWinDef()) : []; };
+const lvCurt = () => { const c = lvCfg(); return c ? lvOpenList(c.curtainEntities, lvCurtDef()) : []; };
 const lvGarage = () => Object.keys(galCfg()).map(k => (galCfg()[k] || {}).sensor).filter(Boolean);
-function lvSet() { const c = lvCfg(), s = new Set(); if (!c) return s; lvLights().forEach(x => s.add(x)); lvGarage().forEach(x => s.add(x)); const g = E("doorsGroup"); if (g) { s.add(g); members(g).forEach(x => s.add(x)); } if (CONFIG.alarm) s.add(CONFIG.alarm); return s; }
-const lvRel = id => (LV.t || (LV.t = lvSet())).has(id);   // a state change that can alter the card
+function lvSet() { const c = lvCfg(), s = new Set(); if (!c) return s; { const c3 = lvCfg(); members(c3.lightEntities && c3.lightEntities.length ? c3.lightEntities : lvLightDef()).forEach(x => { if (/^(light|switch)\./.test(x)) s.add(x); }); } lvGarage().forEach(x => s.add(x)); { const c2 = lvCfg(); const wl = [].concat(c2.windowEntities && c2.windowEntities.length ? c2.windowEntities : lvWinDef(), c2.curtainEntities && c2.curtainEntities.length ? c2.curtainEntities : lvCurtDef()); members(wl).concat(wl).forEach(x => s.add(x)); } const g = E("doorsGroup"); if (g) { s.add(g); members(g).forEach(x => s.add(x)); } if (CONFIG.alarm) s.add(CONFIG.alarm); return s; }
+const lvRel = id => { if (!LV.t || Date.now() - LV.tt > 5000) { LV.t = lvSet(); LV.tt = Date.now(); } return LV.t.has(id); };   // a state change that can alter the card
 const lvNames = ids => ids.slice(0, 2).map(fname).join(", ") + (ids.length > 2 ? " +" + (ids.length - 2) : "");
 function lvItems() {
   const c = lvCfg(), out = []; if (!c) return out;
   if (c.lights) { const on = lvLights().filter(isOn); if (on.length) out.push({ k: "lights", icon: "lightbulb-on", t: on.length + (on.length > 1 ? " lights on" : " light on"), sub: lvNames(on), s: on.length + (on.length > 1 ? " lights" : " light"), ids: on }); }
   if (c.garage) { const sn = lvGarage().filter(x => isOn(x))[0]; if (sn) { const ms = Date.now() - (Date.parse(states[sn].last_changed || "") || Date.now()); out.push({ k: "garage", icon: "garage-open-variant", t: "Garage door open", sub: ms > 6e4 ? "For " + attnAgo(ms) : "", s: "garage" }); } }
   if (c.doors) { const d = doorsOpen(); if (d) out.push({ k: "doors", icon: "door-open", t: d.length > 1 ? d.length + " doors open" : d.length ? fname(d[0]) + " open" : "A door is open", sub: d.length > 1 ? lvNames(d) : "", s: d.length > 1 ? d.length + " doors" : d.length ? fname(d[0]).toLowerCase() : "a door" }); }
+  if (c.windows) { const w = lvWins(); if (w.length) out.push({ k: "windows", icon: "m3-window-open", t: w.length > 1 ? w.length + " windows open" : fname(w[0]) + " open", sub: w.length > 1 ? lvNames(w) : "", s: w.length > 1 ? w.length + " windows" : fname(w[0]).toLowerCase() }); }
+  if (c.curtains) { const u = lvCurt(); if (u.length) out.push({ k: "curtains", icon: "m3-curtains", t: u.length > 1 ? u.length + " curtains open" : fname(u[0]) + " open", sub: u.length > 1 ? lvNames(u) : "", s: u.length > 1 ? u.length + " curtains" : fname(u[0]).toLowerCase() }); }
   const al = CONFIG.alarm && states[CONFIG.alarm];
   if (c.alarm && al && al.state === "disarmed") out.push({ k: "alarm", icon: "shield-off", t: "Alarm not armed", sub: "", s: "alarm off" });
   return out;
 }
 function lvCard() {
-  const el = $("#lvc"); if (!el) return; const it = lvItems(), on = it.length > 0;
+  const el = $("#lvc"); if (!el) { if (typeof hplDraw === "function") hplDraw(); if (LV.open) { const i2 = lvItems(); if (i2.length) lvDraw(i2); else lvClose(); } return; } const it = lvItems(), on = it.length > 0;
   const h = on ? '<span class="at-h" title="Before you leave">' + mdi("door-open") + '</span><span class="at-l"><span class="at-x">Leaving? <small>' + esc(it.map(x => x.s).join(", ")) + '</small></span></span><span class="at-c">' + mdi("chevron-right") + '</span>' : "";
   if (el._h !== h) { el._h = h; el.innerHTML = h; } el.hidden = !on; if (typeof hplDraw === "function") hplDraw(); hsFit();
   if (LV.open) { if (on) lvDraw(it); else lvClose(); }
@@ -12928,7 +13296,7 @@ function enCost(sp) {   // grid import split into the tariff periods + daily cha
   return { per: per, use: use, fixed: fixed, days: days, total: total, kwh: per.reduce((s, x) => s + x.kwh, 0), cols: cols, est: est, real: !!en.gridCost };
 }
 function wxTop(f) {   // a Weather card opened from a link: on phones each tab shows one card, so go to the top of the page (scrollIntoView left the top of the card under the pinned title bar and tabs)
-  if (!isMobile()) { f.scrollIntoView({ block: "start" }); return; }
+  if (!isMobile()) { const hs = $(".hs"), hb = hs ? hs.offsetHeight + 27 : 0; f.style.scrollMarginTop = hb + 14 + "px"; f.scrollIntoView({ block: "start" }); return; }   // big screen: the card's top sits just under the pinned greeting bar
   let e = f.parentElement; while (e && e !== document.body && !(e.scrollHeight > e.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(e).overflowY))) e = e.parentElement;
   if (e && e !== document.body) e.scrollTop = 0; else scrollTo(0, 0);
 }
@@ -13109,7 +13477,7 @@ function route() {
     drawWeather();
     if (wk) [0, 80, 400].forEach(ms => setTimeout(() => { const wc = $("#wx .wcols"); if (curPg() === "weather" && wc && wc.clientWidth) { wc.scrollLeft = wcI * (wc.clientWidth + 12); $$("#wx .wdots i").forEach((d, k) => d.classList.toggle("on", k === wcI)); } }, ms));
     if (h[1] === "radar" || h[1] === "map") [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wxmap"); if (f) wxTop(f); } }, ms));
-    if (h[1] === "forecast" && !isMobile()) [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wx .fcp"); if (f) f.scrollIntoView({ block: "start" }); } }, ms));
+    if (h[1] === "forecast" && !isMobile()) [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wx .fcp"); if (f) wxTop(f); } }, ms));
     if (h[1] === "pollen") [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wxpol"); if (f) wxTop(f); } }, ms));   // #weather/pollen scrolls to the Pollen card
     if (ti != null) [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { fcSync(); const f = $("#wx .fcp"); if (f) { wxTop(f); } } }, ms));
   }
