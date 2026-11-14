@@ -1685,8 +1685,8 @@ html[data-style] #npmini{background-color:var(--bg)}
 @media(prefers-reduced-motion:reduce){.cam.fs,.cam.fs>*,.cam.fclose,.cam.fclose>*,.cam.fopen{animation:none!important}}
 /* turning to landscape / back: like a native app, fade out over black, switch with no animation, fade in (only opacity moves, so nothing is re-laid-out every frame) */
 html.camsw::before{content:"";position:fixed;inset:0;background:#000;z-index:49}
-html.camsw .cam{transition:opacity .18s ease}
-html.camsw .cam.lf{opacity:0;transition:opacity .13s linear}
+html.camsw .cam,html.camsw .zc{transition:opacity .18s ease}
+html.camsw .cam.lf,html.camsw .zc.lf{opacity:0;transition:opacity .13s linear}
 @media(prefers-reduced-motion:reduce){html.camsw .cam{transition:none}}
 /* the #view page on a phone: edge to edge like a full-screen Security camera (the garage frame follows the square corners) */
 body.vwm #vw.one{padding:0;gap:0}
@@ -1907,6 +1907,7 @@ html:not(#x) .zc.zls:fullscreen,html:not(#x) .zc.zls.zfull{inset:auto;top:0;left
 .cam .cld{display:none}
 .cam:is(.fs,.vf):is(.cwait,:not(.live)):not(.pb) .cld{display:flex;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);flex-direction:column;align-items:center;gap:12px;z-index:3;pointer-events:none;color:rgba(255,255,255,.8);font:13px var(--mono);letter-spacing:.04em;text-shadow:0 1px 6px rgba(0,0,0,.6);white-space:nowrap}
 html.camsw .cam .cld .dtsp{animation:none}
+html:not(#x) .zup{transform:none!important;clip-path:none!important;filter:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;contain:none!important;perspective:none!important;will-change:auto!important;animation:none!important;overflow:visible!important}
 /* artist info: the Artist tab beside the lyrics (Media page, and the lyrics sheet on a phone) and the Artist page in the Now Playing sheet */
 .aitabs{display:inline-flex;gap:2px;padding:4px;border-radius:99px;background:rgba(var(--w),.1);text-transform:none}.aitabs .chip{border:0;background:transparent;box-shadow:none;padding:8px 18px;min-height:0;font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}.aitabs .chip.on{background:var(--mint);color:var(--bg)}
 .lyh .aitabs{margin:-6px 0}
@@ -5333,7 +5334,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "603d03";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "98c4e7";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -12498,23 +12499,38 @@ function czFadeIn(el) { clearTimeout(el._zfT); el._zfT = setTimeout(() => reques
 // a phone held upright: the player's full screen turns to landscape like a live camera does (the phone is asked to turn; when it will not, the player is turned with CSS).
 // The browser's own full screen of an element is fixed at the screen's size (its width / height cannot be turned), so on a phone the whole page goes full screen and the player fills it (class zfull), like the live card does.
 const czPhone = () => isMobile() && innerHeight > innerWidth && !document.querySelector(".cam.ls");   // a live card already turned to landscape: the player inside is landscape too
+// a full-screen player sits in a card or a pop-up that may be turned, clipped or filtered, which would make "fixed" mean "inside that box" (the clip then showed half the picture): while it is full screen those ancestors are set plain
+function czHost(el, on) { for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) n.classList.toggle("zup", on); }
 function czLandOff(el) { el.classList.remove("zls"); if (el._zlk) { el._zlk = 0; try { screen.orientation.unlock(); } catch (_) {} } }
-function czLand(el) {   // turns the full-screen player to landscape, then fades it in
-  const on = () => czFsNow() === el || el.classList.contains("zfull");
-  const css = () => { if (!on()) return; if (innerHeight > innerWidth && !el.classList.contains("zls")) { czReset(el); el.classList.add("zls"); czUi(el); } czFadeIn(el); };
+// landscape <-> portrait like the live camera (camSwap in 12-init.js): the page fades out over black, the switch happens unseen, then it fades back in
+function czSwap(el, fn) {
+  const card = el.closest(".cam") || el, h = document.documentElement;
+  if (czRm() || el._sw) { fn(() => {}); return; }
+  el._sw = 1; h.classList.add("camsw"); card.classList.add("lf");
+  setTimeout(() => fn(() => requestAnimationFrame(() => requestAnimationFrame(() => { card.classList.remove("lf"); setTimeout(() => { h.classList.remove("camsw"); el._sw = 0; }, 200); }))), 130);
+}
+function czLand(el, done) {   // turns the full-screen player to landscape (the phone is asked to turn; still upright after 350 ms means turn it with CSS), then calls done
+  const css = () => { if (el.classList.contains("zfull") && innerHeight > innerWidth && !el.classList.contains("zls")) { czReset(el); el.classList.add("zls"); czUi(el); } done(); };
   const o = screen.orientation;
-  if (o && o.lock && czFsNow()) { try { o.lock("landscape").then(() => { el._zlk = 1; }, () => {}); } catch (_) {} setTimeout(css, 350); } else css();   // a phone that never answers the lock: still upright after 350 ms means turn the player with CSS
+  if (o && o.lock && czFsNow()) { try { o.lock("landscape").then(() => { el._zlk = 1; }, () => {}); } catch (_) {} setTimeout(css, 350); } else css();
 }
 function czFull(el) {
   const rm = czRm(), root = document.documentElement;
   if (czFsNow() === el) { const go = () => { czLandOff(el); (document.exitFullscreen || document.webkitExitFullscreen).call(document); }; if (rm) return go(); clearTimeout(el._zfT); el.classList.add("zfade"); el._zfT = setTimeout(go, 150); return; }
-  if (el.classList.contains("zfull")) { const go = () => { czLandOff(el); el.classList.remove("zfull"); czReset(el); czUi(el); if (el._zroot) { el._zroot = 0; if (czFsNow() === root) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (_) {} } } if (!rm) czFadeIn(el); }; if (rm) return go(); clearTimeout(el._zfT); el.classList.add("zfade"); el._zfT = setTimeout(go, 150); return; }
+  if (el.classList.contains("zfull")) {
+    if (el._zroot || el.classList.contains("zls")) { czSwap(el, done => { czLandOff(el); el.classList.remove("zfull"); czHost(el, false); czReset(el); czUi(el); if (el._zroot) { el._zroot = 0; if (czFsNow() === root) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (_) {} } } done(); }); return; }
+    const go = () => { czLandOff(el); el.classList.remove("zfull"); czReset(el); czUi(el); if (!rm) czFadeIn(el); }; if (rm) return go(); clearTimeout(el._zfT); el.classList.add("zfade"); el._zfT = setTimeout(go, 150); return;
+  }
+  if (czPhone()) {   // a phone held upright: the whole page goes full screen (Chrome fixes an element's own full screen at the screen's size, so it could not be turned) and the player fills it, turned to landscape
+    const rf = root.requestFullscreen || root.webkitRequestFullscreen; let p;
+    if (rf && !czFsNow()) { try { p = rf.call(root, { navigationUI: "hide" }); } catch (x) { p = Promise.reject(x); } }
+    czSwap(el, done => { const fin = () => { czHost(el, true); el.classList.add("zfull"); czReset(el); czUi(el); czLand(el, done); }; if (!p) fin(); else Promise.resolve(p).then(() => { el._zroot = 1; fin(); }, fin); });
+    return;
+  }
   if (!rm) { clearTimeout(el._zfT); el.classList.add("zfade", "zfnow"); clearTimeout(el._zfS); el._zfS = setTimeout(() => { if (el.classList.contains("zfade")) czFadeIn(el); }, 1500); }   // hidden at once: the request has to happen inside the tap, so there is no time to fade out first
-  const phone = czPhone(), tg = phone ? root : el, rf = tg.requestFullscreen || tg.webkitRequestFullscreen;
-  const pseudo = () => { el.classList.add("zfull"); czReset(el); czUi(el); if (phone) czLand(el); else if (!rm) czFadeIn(el); };   // the page (phone) or no real full screen (an iPhone, an iframe that does not allow it): the player fills the page
-  if (phone && czFsNow()) return pseudo();   // the page is in full screen already (the camera view)
-  let p; if (rf) { try { p = rf.call(tg, phone ? { navigationUI: "hide" } : undefined); } catch (x) { p = Promise.reject(x); } }
-  if (!rf) pseudo(); else if (phone) Promise.resolve(p).then(() => { el._zroot = 1; pseudo(); }, pseudo); else Promise.resolve(p).catch(pseudo);
+  const rf = el.requestFullscreen || el.webkitRequestFullscreen; let p; if (rf) { try { p = rf.call(el); } catch (x) { p = Promise.reject(x); } }
+  const pseudo = () => { el.classList.add("zfull"); czReset(el); czUi(el); if (!rm) czFadeIn(el); };   // no real full screen here (an iPhone, an iframe that does not allow it): fill the page instead
+  if (!rf) pseudo(); else Promise.resolve(p).catch(pseudo);
 }
 function czEnhance(el) {
   if (el._zui || CONFIG.camZoom === false) return; const v = el.querySelector("video"); if (!v) return; el._zui = 1;
