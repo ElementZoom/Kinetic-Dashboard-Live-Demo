@@ -5,7 +5,7 @@ const S = process.env.SLOW ? +process.env.SLOW : 0.8; // pacing multiplier
 // The phone is the S26 Ultra: 412 CSS px wide (what the real phone reports), 19.5:9. Loops are still written in the old 540-wide coordinates (x, y, w, h and the +208 bottom anchor);
 // K converts them. PHONE_W=540 records the old, too-small layout. The mp4 is always 720x1558 and frames are captured at up to 2x.
 export const W = +process.env.PHONE_W || 412, K = W / 540, H = Math.round(1168 * K), DY = 208, DPR = Math.min(2, 1080 / W);
-export async function open(name, { zh = false, hash = '', dark = false, w = W, h = H, record = true } = {}) {
+export async function open(name, { zh = false, hash = '', dark = false, w = W, h = H, record = true, pre = null } = {}) {
   const dir = `/tmp/rl-${name}${zh ? '-zh' : ''}`; fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
   const b = await chromium.launch();
   const ctx = await b.newContext({ viewport: { width: w, height: h }, isMobile: true, hasTouch: true, deviceScaleFactor: DPR });
@@ -46,6 +46,7 @@ export async function open(name, { zh = false, hash = '', dark = false, w = W, h
     window.__ezOff = () => { if (S.a < .02) return; aT = { t0: performance.now(), from: S.a, to: 0, dur: 300 }; kick(); };
     window.__ezOn = () => S.a > .02;
   }, K);
+  if (pre) { await pre(p); await p.waitForTimeout(400); }   // a loop's own set-up before the first recorded frame (optional `pre` in the loop file)
   const frames = []; const cdp = await ctx.newCDPSession(p);
   cdp.on('Page.screencastFrame', async (ev) => { frames.push({ t: ev.metadata.timestamp, data: ev.data }); try { await cdp.send('Page.screencastFrameAck', { sessionId: ev.sessionId }); } catch (e) {} });
   await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 95, maxWidth: Math.round(w * DPR), maxHeight: Math.round(h * DPR), everyNthFrame: 1 });

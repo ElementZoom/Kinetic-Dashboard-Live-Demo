@@ -3,7 +3,7 @@ import fs from 'node:fs';
 const [,, name, lang] = process.argv; const zh = lang === 'zh';
 globalThis.__loop = name + (zh ? '_zh' : '');
 const L = (await import('./loops/' + name + '.mjs')).default;
-const h = await open(name, { zh, hash: L.hash || '' });
+const h = await open(name, { zh, hash: L.hash || '', pre: L.pre });
 await L.run(h.p, { wait: (ms) => wait(h.p, ms), spot: (...a) => spot(h.p, ...a), unspot: () => unspot(h.p), tap: (...a) => tap(h.p, ...a), zh, scroll: (...a) => scrollSheet(h.p, ...a) });
 const OD = process.env.OUT || 'out60'; fs.mkdirSync(OD, { recursive: true });
 const base = `${OD}/${L.file}${zh ? '_zh' : ''}`;
