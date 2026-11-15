@@ -1907,12 +1907,18 @@ html:not(#x):not(#y) .zc.zls:fullscreen,html:not(#x):not(#y) .zc.zls.zfull{flex:
 .cam .cld{display:none}
 .cam:is(.fs,.vf):is(.cwait,:not(.live)):not(.pb) .cld{display:flex;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);flex-direction:column;align-items:center;gap:12px;z-index:3;pointer-events:none;color:rgba(255,255,255,.8);font:13px var(--mono);letter-spacing:.04em;text-shadow:0 1px 6px rgba(0,0,0,.6);white-space:nowrap}
 html.camsw .cam .cld .dtsp{animation:none}
+.cam .cld .cre{display:none;pointer-events:auto;margin-top:2px;padding:10px 22px;border-radius:99px;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.12);color:#fff;font:600 12px var(--mono);letter-spacing:.12em;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cam .cld .cre:active{background:rgba(255,255,255,.28)}
+.cam.cfail .cld .dtsp{display:none}.cam.cfail .cld .cre{display:inline-block}
 html:not(#x) .zup{transform:none!important;clip-path:none!important;filter:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;contain:none!important;perspective:none!important;will-change:auto!important;animation:none!important;overflow:visible!important}
 html:not(#x):not(#y) .zc.zfull{flex:none;min-height:0;aspect-ratio:auto;height:100vh;height:100dvh}
 html:not(#x):not(#y) .zc.zls.zfull{height:100vw;height:100dvw}
 html.zsw,html.zsw body{background:#000!important}
 .zcv{position:fixed;inset:0;background:#000;opacity:0;z-index:2147483600;pointer-events:none;transition:opacity .2s linear}
 .zcv.on{opacity:1}
+/* the whole page is full screen while a player is (czFull): nothing else may show through on top of it (the pop-up's or the camera page's own close button next to the player's X, arrows, thumbnails). Only the player, its controls and the fade cover stay visible. */
+html:not(#x):has(.zc.zfull) body *{visibility:hidden!important}
+html:not(#x):not(#y):has(.zc.zfull) :is(.zc.zfull,.zc.zfull *,.zcv){visibility:visible!important}
 /* artist info: the Artist tab beside the lyrics (Media page, and the lyrics sheet on a phone) and the Artist page in the Now Playing sheet */
 .aitabs{display:inline-flex;gap:2px;padding:4px;border-radius:99px;background:rgba(var(--w),.1);text-transform:none}.aitabs .chip{border:0;background:transparent;box-shadow:none;padding:8px 18px;min-height:0;font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}.aitabs .chip.on{background:var(--mint);color:var(--bg)}
 .lyh .aitabs{margin:-6px 0}
@@ -5075,6 +5081,8 @@ html[data-style=glass]:not(#x):not(#y):not(#z) .pn:is(.pg,.sectg,#alp,#dtp){marg
 /* Liquid Glass: panels that keep their card (only where asked) */
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(#alp,#mini,#fcp,#energy .pn,#weather .pn,#hazards .pn,.pn.wrs,.pn.rn12,.pn.imc,#vehicle .pn.csv-card,#vehicle .pn:has(.veco),#vehicle .pn:has(.vhr)):not(#npw):not(#npmini){background:var(--gg)!important;padding:18px!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(#lvc,#insc,#updc):not(#npw){background:var(--gg)!important;padding:10px 16px!important}
+/* Liquid Glass: the Today strip under the cameras keeps its card too (same grey as Leaving; the event chips sit on it) */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #sch:not(#npw){background:var(--gg)!important;border:0!important;padding:0 40px 0 16px!important}
 /* Liquid Glass: Climate cards use the same grey surface as the other pages */
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #climate .card{background:var(--gg)!important;border:0!important;box-shadow:none!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #climate .card::before,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #climate .card::after{display:none!important}
@@ -5167,9 +5175,9 @@ html:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr.on .tn svg{fill
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr{display:grid!important;padding:12px 14px!important;white-space:normal;border-radius:22px}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl:not(.sir){border-radius:22px}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr .tn svg{position:static!important;transform:none!important;left:auto;width:38px;height:38px}
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl:not(.dr) .tn svg{background:rgba(255,255,255,.16)!important}
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.on:not(.dr) .tn svg{background:color-mix(in srgb,rgb(var(--tcx,224,150,40)) 62%,#d98400)!important;fill:#fff!important}
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr:not(.on) .tn svg{background:rgba(255,255,255,.16)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl:not(.dr) .tn svg{background:none!important}   /* Liquid Glass: no disc behind the glyph (it showed as a grey square) */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.on:not(.dr) .tn svg{background:none!important;fill:color-mix(in srgb,rgb(var(--tcx,224,150,40)) 70%,#000)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr:not(.on) .tn svg{background:none!important}
 @media(max-width:760px),(max-height:520px){
   html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam.hasc .cpanel .tg3{grid-auto-columns:minmax(196px,230px)}
   html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl .tn svg,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr .tn svg{width:34px;height:34px;padding:8px}
@@ -5337,7 +5345,7 @@ html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) 
 html:not(#x) :is(#admin,#theme) > .hsw:has(> .setchips){z-index:22}
 html:not(#x) :is(#admin .admtop,#admin .adlog>.adlh){z-index:23}
 /* Settings > Status: Restart button on a Zigbee2MQTT tile. First tap arms it (amber), second restarts. */
-.sys-st .syrs{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--w),.08);color:var(--ink);font:600 12px var(--sans,inherit);letter-spacing:.02em;text-transform:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sys-st .syra{display:flex;flex-wrap:wrap;gap:8px}.sys-st .syrs{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--w),.08);color:var(--ink);font:600 12px var(--sans,inherit);letter-spacing:.02em;text-transform:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .sys-st .syrs svg{width:16px;height:16px;fill:currentColor}
 .sys-st .syrs.arm{border-color:rgba(242,163,58,.6);background:rgba(242,163,58,.16);color:#f2a33a}
 .sys-st .syrs.busy{opacity:.7;cursor:default}.sys-st .syrs.busy svg{animation:syspin 1s linear infinite}
@@ -5666,7 +5674,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "4cb790";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "964e5c";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
@@ -5918,6 +5926,7 @@ window.__ZHD={"D": {"0.0 mm": "0.0 毫米", "1 hr": "1 小时", "2 hr": "2 小�
 (function () {
   const Z = window.__ZHD = window.__ZHD || { D: {}, P: [] };
   Object.assign(Z.D, {
+    "connecting to camera…": "正在连接摄像头…", "couldn't connect to the camera": "无法连接摄像头", "retry": "重试",
     // insights: chips, sections, kickers
     "rain due": "预计降雨", "next watering": "下次浇水", "dry below": "低于此值为干", "4+ days": "4 天以上",
     "all": "全部", "needs you": "需要处理", "today": "今天", "tomorrow": "明天", "yesterday": "昨天", "stats": "统计", "climate": "气候", "security": "安防", "energy": "能源", "garden": "花园", "weather": "天气", "vehicle": "车辆", "system": "系统", "home": "家居",
@@ -6386,18 +6395,23 @@ function mbSet(tv) {
   { const g = bar.querySelector(".g"), tt = parseFloat(tv), ok = !isNaN(mbIn) && !isNaN(tt) && Math.abs(tt - mbIn) >= .3; if (g) { g.style.display = ok ? "" : "none"; if (ok) { const a = Math.max(0, Math.min(100, (mbIn - 10) / 20 * 100)), b = Math.max(0, Math.min(100, (tt - 10) / 20 * 100)); g.style.left = Math.min(a, b) + "%"; g.style.width = Math.abs(a - b) + "%"; } } }   // a thin line from the room to its target
   $("#mtg").textContent = tv != null && !isNaN(parseFloat(tv)) ? f1(parseFloat(tv)) + "°" : "--";
 }
+// the weather entity's condition for NOW. With entities.rainNow set, a dry rain plate overrides a rainy forecast condition (the model says rain, the roof says dry): Home, the weather page and its scene then show cloud instead of rain
+const WXN_FIX = { rainy: "cloudy", pouring: "cloudy", "lightning-rainy": "lightning", "snowy-rainy": "snowy" };
+function wxNowState() { const w = states[W]; if (!w) return ""; const rn = states[E("rainNow")]; return rn && rn.state === "off" && WXN_FIX[w.state] ? WXN_FIX[w.state] : w.state; }
 function home() {
   const w = states[W], a = w ? w.attributes : {}, hp = states[MAIN], ha = hp ? hp.attributes : {};
-  const cd = w ? (COND[w.state] || ["", title(w.state)]) : ["", ""], ot = sv(E("outdoorTemp")), rd = states[E("rainDetected")], raining = !!rd && rd.state === "on", dry = !!rd && rd.state === "off";
+  const wst = wxNowState(), cd = w ? (COND[wst] || ["", title(wst)]) : ["", ""], ot = sv(E("outdoorTemp")), rd = states[E("rainDetected")], rn = states[E("rainNow")];
+  // the rain sensor says the plate is wet, which stays true for a while after the rain stops. With entities.rainNow (wet AND the weather says rain) the greeting shows three states: Raining, Wet (plate still wet, no rain) and Dry; without it, the sensor alone decides as before
+  const raining = rn ? rn.state === "on" : !!rd && rd.state === "on", wet = !!rn && !!rd && rd.state === "on" && !raining, dry = !!rd && rd.state === "off" && !raining;
   const ic = "", unit = a.temperature_unit || "°C", wsp = null;   // icon and wind come straight from the weather entity
   // 2.5.0: when rain is coming in the alert window (the same forecast and limits as the rain alert, 31-weather-alerts.js) and today's high and low sit after the weather
   // as two small pills, "Rain at 6 PM" and "↑23° ↓16°"; each opens its chart (they had a "HIGH 23° / LOW 16°" item of their own)
   const wr = !raining && typeof wxaNow === "function" ? (wxaNow() || {}).rain : null;
-  $("#wchip").innerHTML = w ? (raining ? mdi("weather-pouring") : MDI[ic] ? mdi(ic) : wic(w.state)) + " " + f1(ot != null ? ot : a.temperature) + " " + unit + ", " + (dry ? "Dry" : cd[1]) : "--";
+  $("#wchip").innerHTML = w ? (raining ? mdi("weather-pouring") : MDI[ic] ? mdi(ic) : wic(wst)) + " " + f1(ot != null ? ot : a.temperature) + " " + unit + ", " + (dry ? "Dry" : wet ? "Wet" : cd[1]) : "--";
   { const p = (wr && !wr.now ? '<span class="wpl r" data-go="#weather/rain">' + mdi("weather-rainy") + 'Rain ' + esc(wxaRainWhen(wr)) + '</span>' : "") + (fc[0] ? '<span class="wpl t" data-go="#weather/temp"><b>↑' + Math.round(fc[0].temperature) + '°</b><i>↓' + Math.round(fc[0].templow != null ? fc[0].templow : fc[0].temperature) + '°</i></span>' : ""), el = $("#wpls"); if (el._h !== p) { el._h = p; el.innerHTML = p; } }
   $("#wwind").innerHTML = w ? mdi("weather-windy") + " " + (wsp != null ? wsp : a.wind_speed != null ? Math.round(a.wind_speed) : "--") + " " + (a.wind_speed_unit || "km/h") : "";
   { const wt = typeof wxaLive === "function" ? wxaLive() : 0, el = $("#wwind"); el.className = "wch" + (wt ? " wnd wt" + wt : ""); el.title = wt ? WXA_W[wt] + " wind" : ""; }   // Moderate / Strong / Severe wind: coloured like the Alerts card
-  wfxSet(w ? w.state : "", raining, parseFloat(wsp != null ? wsp : a.wind_speed) || 0);
+  wfxSet(w ? wst : "", raining, parseFloat(wsp != null ? wsp : a.wind_speed) || 0);
   if (!CONFIG.outside && w) $("#outs").textContent = f1(a.temperature) + "°C";
   $("#mi").textContent = f1(sv(CONFIG.indoor) != null ? sv(CONFIG.indoor) : ha.current_temperature) + "°";
   $("#mbg").textContent = f1(sv(CONFIG.indoor) != null ? sv(CONFIG.indoor) : ha.current_temperature);
@@ -6496,12 +6510,15 @@ const calName = c => (CONFIG.calNames || {})[c] || (states[c] && states[c].attri
 const mrows = () => Math.ceil(((new Date(cy, cm, 1).getDay() + 6) % 7 + new Date(cy, cm + 1, 0).getDate()) / 7);
 const EVV = { t: ["month", "week", "list"], p: ["agenda", "week", "month"] };   // the views each device offers (phone: agenda | week | month, tablet: month | week | list)
 let evw = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - (new Date().getDay() + 6) % 7), evSel = null, evVs = {};   // week shown (its Monday), day picked on the phone, view chosen this session
+const evMonKey = () => evView() === "week" ? "w" + dk(evw) : cy + "-" + cm;   // what evLast.k holds for the month / week on screen
+// opening Events with nothing drawn for this month yet: the page waits (hold) for the calendars, then rises once with its events in it, instead of rising empty and the events popping in afterwards
+function evPgGo() { const pg = $("#events"); if (pg && pg.classList.contains("hold")) pgEnter(pg); }
 let EVS = [], evLast = {}, evSq = { on: false, all: null, busy: false, q: "" };
 function loadEvents() {
   EVS = []; evColSync(); const evErr = [];
   const wk = evView() === "week", gs = wk ? new Date(evw.getFullYear(), evw.getMonth(), evw.getDate()) : new Date(cy, cm, 1 - (new Date(cy, cm, 1).getDay() + 6) % 7), ge = new Date(gs.getFullYear(), gs.getMonth(), gs.getDate() + (wk ? 7 : mrows() * 7)), map = {}, tok = ++evTok;
   const q = "?start=" + encodeURIComponent(gs.toISOString()) + "&end=" + encodeURIComponent(ge.toISOString());
-  const mk = (wk ? "w" + dk(evw) : cy + "-" + cm); if (evLast.k === mk) drawEvents(evLast.gs, evLast.map); else drawEvents(gs, map);   // same month: keep what is on screen until the new answer is in (no blink)
+  const mk = evMonKey(); if (evLast.k === mk) drawEvents(evLast.gs, evLast.map); else drawEvents(gs, map);   // same month: keep what is on screen until the new answer is in (no blink)
   Promise.all(CONFIG.calendars.map((c, i) => getToken().then(tk => fetch(CONFIG.url + "/api/calendars/" + c + q, { headers: { Authorization: "Bearer " + tk } }))
     .then(r => r.text().then(t => { let j = null; try { j = JSON.parse(t); } catch (x) {} if (!Array.isArray(j)) { const st = states[c]; throw new Error(r.status === 404 || !t ? (st ? "HTTP " + r.status + " (HA sent no events: the calendar may be unavailable or still loading)" : "no calendar with this id exists in Home Assistant") : (j && (j.message || j.error)) || ("HTTP " + r.status)); } return j; })).then(l => l.forEach(v => { try {
       evPend(c, v); const s = pd(v.start), e = pd(v.end), ad = !v.start.dateTime;
@@ -6509,7 +6526,7 @@ function loadEvents() {
       let d = new Date(s.getFullYear(), s.getMonth(), s.getDate());
       for (let n = 0; n < 42 && d <= last; n++, d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1))
         (map[dk(d)] = map[dk(d)] || []).push({ t: s, e: e, n: calName(c), ad: ad, s: v.summary, c: evColOf(c, v) || shiftCol(c, v) || CALCOL[i % CALCOL.length], i: EVS.push({ v: v, cal: c, ci: i }) - 1 });
-    } catch (x) { evErr.push(calName(c) + ": skipped \"" + (v && v.summary || "?") + "\" (" + x.message + ")"); } })).catch(x => { evErr.push(calName(c) + ": " + x.message); }))).then(() => { if (tok === evTok) { evLast = { k: mk, gs: gs, map: map }; drawEvents(gs, map, true); evReveal(); const el = $("#eerr"); if (el) el.textContent = evErr.length ? evErr.join(" · ") + "  |  Calendars HA has: " + Object.keys(states).filter(k => k.indexOf("calendar.") === 0).join(", ") : ""; } });
+    } catch (x) { evErr.push(calName(c) + ": skipped \"" + (v && v.summary || "?") + "\" (" + x.message + ")"); } })).catch(x => { evErr.push(calName(c) + ": " + x.message); }))).then(() => { if (tok === evTok) { evLast = { k: mk, gs: gs, map: map }; drawEvents(gs, map, true); evPgGo(); evReveal(); const el = $("#eerr"); if (el) el.textContent = evErr.length ? evErr.join(" · ") + "  |  Calendars HA has: " + Object.keys(states).filter(k => k.indexOf("calendar.") === 0).join(", ") : ""; } });
 }
 let evTy = null;
 function evTitle(y, m) {   // the month name, or its short form when the long one does not fit between the arrows (September on a narrow phone)
@@ -6838,32 +6855,42 @@ function camEnt(c) {
 }
 function camLiveSync() { document.documentElement.classList.toggle("camlive", location.hash === "#security/detections" || CONFIG.cameras.concat(CONFIG.security, VWC, NPC, RVC).some(c => c.live)); }   // the Detections tab counts as live too: clips play there
 addEventListener("hashchange", () => camLiveSync());   // lets CSS pause decorative effects while video is playing
-function dropOld(c) { clearTimeout(c.swapT); if (c.old) { try { c.old.pc.close(); } catch (x) {} delete subs[c.old.sub]; c.old = null; } }   // the stream that was playing until the new one had its first picture
+const CAM_POSTER = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";   // phones draw a grey box with a big black play button for a video that has no picture yet; a clear poster keeps that from ever showing
+function rmXf(c) { clearTimeout(c.xft); if (c.xf) { try { c.xf.srcObject = null; c.xf.remove(); } catch (x) {} c.xf = null; } }   // the sharp picture that is fading in over the soft one
+function dropOld(c) { clearTimeout(c.swapT); rmXf(c); if (c.old) { try { c.old.pc.close(); } catch (x) {} delete subs[c.old.sub]; c.old = null; } }   // the stream that was playing until the new one had its first picture
 function stopCam(c) {
-  dropOld(c);
+  dropOld(c); rmXf(c);
   if (c.pc) { try { c.pc.close(); } catch (x) {} c.pc = null; }
   if (c.sub) { delete subs[c.sub]; c.sub = 0; }
   // the last live frame becomes the tile's picture (and the kept still), so the next visit opens on it instead of an older one
   if (c.live && c.o && c.o.vid.videoWidth) { const u = camMem.put(c.id, c.o.vid, true); if (u) c.o.img.src = u; }
-  const o = c.o; c.live = false; o.el.classList.remove("live", "cwait"); o.vid.classList.remove("on"); o.vid.srcObject = null; camLiveSync();
+  const o = c.o; c.live = false; clearTimeout(c.ft); o.el.classList.remove("live", "cwait", "cfail"); o.vid.classList.remove("on"); o.vid.srcObject = null; camLiveSync();
 }
 function stopCams() { CONFIG.cameras.concat(CONFIG.security, VWC, NPC, RVC, INSC).forEach(c => { clearTimeout(c.rt); c._on = c.rv || c.ins ? 0 : c._on; stopCam(c); micOff(c); }); }
 function startCams() { if (onView()) { VW.mode = ""; applyView(); return; } if (onHome() && !camsOn()) return; cams(); camList().forEach((c, i) => { if (!isMobile() || (CONFIG.mobileLive !== false && c.o.el._vis !== false)) { clearTimeout(c.rt); c.rt = setTimeout(() => { if (camPage()) liveCam(c); }, i * 160); } }); }   // staggered so several streams do not negotiate and decode at once   // phones: live too, but only for tiles on screen (CONFIG.mobileLive:false = snapshots, live on tap)
-function retryCam(c, ms) { stopCam(c); c.o.el.classList.add("cwait"); clearTimeout(c.rt); c.rt = setTimeout(() => { if ((c.np && document.body.classList.contains("np-open")) || (c.rv && c._on && curRoom && onRooms) || (c.ins && c._on && INS.det) || camPage() && (onSec() || camsOn() || onView()) && (!isMobile() || c.o.el.classList.contains("fs") || (CONFIG.mobileLive !== false && c.o.el._vis !== false))) liveCam(c); }, ms); }
-function liveCam(c, up) {   // HA built-in WebRTC (go2rtc); falls back to snapshots if it fails. up = a switch between the light and the clear stream: the picture that is playing keeps playing until the new one has its first picture
-  const o = c.o, sid = { v: null }, q = [], eid = camEnt(c);
-  dropOld(c); if (up && c.live && c.pc && o.vid.srcObject && c.eid && c.eid !== eid) { c.old = { pc: c.pc, sub: c.sub }; c.pc = null; c.sub = 0; clearTimeout(c.rt); } else stopCam(c);
+const camMsg = (c, fail) => { const m = c.o.el.querySelector(".clm"); if (m) m.textContent = fail ? "Couldn't connect to the camera" : "Connecting to camera…"; };
+function camFail(c) { if (c.live && !c.old) return; c.o.el.classList.add("cfail"); camMsg(c, true); }   // the "Connecting to camera" screen offers RETRY (the camera retries by itself too)
+function retryCam(c, ms) { stopCam(c); c.o.el.classList.add("cwait", "cfail"); camMsg(c, true); clearTimeout(c.rt); c.rt = setTimeout(() => { if ((c.np && document.body.classList.contains("np-open")) || (c.rv && c._on && curRoom && onRooms) || (c.ins && c._on && INS.det) || camPage() && (onSec() || camsOn() || onView()) && (!isMobile() || c.o.el.classList.contains("fs") || (CONFIG.mobileLive !== false && c.o.el._vis !== false))) liveCam(c); }, ms); }
+function liveCam(c, up, big) {   // HA built-in WebRTC (go2rtc); falls back to snapshots if it fails. up = a switch between the light and the clear stream: the picture that is playing keeps playing until the new one has its first picture
+  const o = c.o, sid = { v: null }, q = [], eid = big ? c.id : camEnt(c);
+  dropOld(c); rmXf(c); if (up && c.live && c.pc && o.vid.srcObject && c.eid && c.eid !== eid) { c.old = { pc: c.pc, sub: c.sub }; c.pc = null; c.sub = 0; clearTimeout(c.rt); } else stopCam(c);
   clearTimeout(c.rt); c.eid = eid;
-  if (!(up && c.old)) o.el.classList.add("cwait");   // the spinner and message show until the first picture (12-init.js onplaying)
+  o.el.classList.remove("cfail"); camMsg(c, false); if (!(up && c.old)) o.el.classList.add("cwait");   // the spinner and message show until the first picture (12-init.js onplaying); a camera that is already playing keeps its picture, nothing is put over it while the clear stream connects
+  clearTimeout(c.ft); c.ft = setTimeout(() => { if (!c.live || c.old) camFail(c); }, 12000);   // nothing after 12 s: the message turns into "Couldn't connect" with a RETRY button
   o.vid.muted = !(c.snd && (o.el.classList.contains("fs") || o.el.classList.contains("vf")));
   send({ type: "camera/webrtc/get_client_config", entity_id: eid }, cfg => {
     try {
       const pc = new RTCPeerConnection(cfg.configuration); c.pc = pc;
-      if (c.old) c.swapT = setTimeout(() => { if (c.pc !== pc || !c.old) return; try { pc.close(); } catch (x) {} delete subs[c.sub]; c.pc = c.old.pc; c.sub = c.old.sub; c.old = null; c.eid = ""; }, 8000);   // the new picture never came: the one that was playing stays
+      if (c.old) c.swapT = setTimeout(() => { if (c.pc !== pc || !c.old) return; try { pc.close(); } catch (x) {} delete subs[c.sub]; c.pc = c.old.pc; c.sub = c.old.sub; c.old = null; c.eid = ""; rmXf(c); }, 8000);   // the new picture never came: the one that was playing stays
       pc.ontrack = e => { if (e.track.kind !== "video") return; const ms = e.streams[0] || new MediaStream([e.track]);
         if (!c.old) { o.vid.srcObject = ms; o.vid.play().catch(() => {}); return; }
-        const tv = document.createElement("video"); tv.muted = true; tv.playsInline = true; tv.srcObject = ms;   // the new picture is waited for off screen
-        tv.addEventListener("playing", () => { tv.srcObject = null; if (c.pc !== pc) return; o.vid.srcObject = ms; o.vid.play().catch(() => {}); dropOld(c); }, { once: true }); tv.play().catch(() => {});
+        const tv = document.createElement("video"); tv.muted = true; tv.playsInline = true; tv.poster = CAM_POSTER; tv.className = "xf"; tv.style.cssText = "pointer-events:none;opacity:0;transition:opacity .3s ease"; tv.srcObject = ms;   // the new picture is waited for in place, invisible (a video that is moved in after it started shows the phone's grey play box for a moment)
+        rmXf(c); c.xf = tv; o.vid.after(tv);
+        tv.addEventListener("playing", () => {   // the clear picture has its first frame: it fades in over the light one (the light one keeps playing underneath), then takes over
+          if (c.pc !== pc || c.xf !== tv) return;
+          void tv.offsetWidth; tv.style.opacity = "1";
+          c.xft = setTimeout(() => { if (c.pc !== pc) return; const done = () => { if (c.xf === tv) rmXf(c); dropOld(c); }; o.vid.addEventListener("playing", done, { once: true }); setTimeout(done, 700); o.vid.srcObject = ms; o.vid.play().catch(() => {}); }, 330);
+        }, { once: true }); tv.play().catch(() => {});
         };
       pc.addTransceiver("video", { direction: "recvonly" });
       const mt = c.mic && c.mic.getAudioTracks()[0];
@@ -7109,7 +7136,8 @@ CONFIG.tiles.forEach(t => {
   el.innerHTML = cardHtml(t.name, t.icon);
   $("#rooms").className = "rooms s-" + CONFIG.tileStyle; $("#rooms").appendChild(el); tileEls.push({ el: el, t: t });
 });
-const camIO = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { e.target._vis = e.isIntersecting; if (isMobile() && camPage()) { const c = camList().filter(x => x.o && x.o.el === e.target)[0]; if (c) { if (e.isIntersecting) { if (!c.live) { if (CONFIG.mobileLive !== false) liveCam(c); else camSnap(c); } } else if (CONFIG.mobileLive !== false && !e.target.classList.contains("fs")) { clearTimeout(c.rt); stopCam(c); } } } }), { rootMargin: "150px" }) : null;
+// a tile stops only after 2 s off screen: closing full screen re-lays the page out and a tile can look off screen for a moment
+const camIO = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { e.target._vis = e.isIntersecting; if (isMobile() && camPage()) { const c = camList().filter(x => x.o && x.o.el === e.target)[0]; if (c) { if (e.isIntersecting) { clearTimeout(c.vt); if (!c.live) { if (CONFIG.mobileLive !== false) liveCam(c); else camSnap(c); } } else if (CONFIG.mobileLive !== false && !e.target.classList.contains("fs")) { clearTimeout(c.vt); c.vt = setTimeout(() => { if (c.o.el._vis === false && !c.o.el.classList.contains("fs")) { clearTimeout(c.rt); stopCam(c); } }, 2000); } } } }), { rootMargin: "150px" }) : null;
 const CAMREG = [], DETHOLD = {};
 function detOf(id) { const b = id.replace(/^camera\./, "binary_sensor.").replace(/_(clear|fluent|sub|main)$/, ""); return { person: b + "_person", vehicle: b + "_vehicle" }; }
 function detApply(el, id) {
@@ -7205,7 +7233,7 @@ const AUD = {
 function micOff(c) { if (c.mic) { c.mic.getTracks().forEach(t => t.stop()); c.mic = null; } c.talk = false; const b = c.o && $(".mic", c.o.el); if (b) b.classList.remove("on"); }
 function mkCam(c, host) {
   const el = document.createElement("div"); el.className = "cam";
-  el.innerHTML = '<div class="lbl">' + esc(c.name) + '</div><span class="lv">' + mdi("circle") + ' LIVE</span><img alt=""><video muted autoplay playsinline></video><button class="fsb" aria-label="Landscape"><svg viewBox="0 0 24 24"><path d="M5 5h5v2H7v3H5V5m9 0h5v5h-2V7h-3V5M5 14h2v3h3v2H5v-5m12 0h2v5h-5v-2h3v-3"/></svg></button><button class="cx" aria-label="Close">' + mdi("close") + '</button><button class="px">' + mdi("play") + ' PLAYBACK</button><span class="dl"></span><div class="aud"><button class="snd" aria-label="Sound">' + AUD.off + '</button><button class="mic" aria-label="Talk">' + AUD.mic + '</button>' + (CONFIG.detectLive && CONFIG.detectAI && CONFIG.detectMark !== false ? '<button class="det' + (mkPref("live") ? " on" : "") + '" data-mkt="live" aria-label="Detection boxes">' + AUD.det + '</button>' : '') + '</div><div class="cpanel"></div><div class="pbk"></div><div class="gal" role="status" aria-live="polite"></div>';
+  el.innerHTML = '<div class="lbl">' + esc(c.name) + '</div><span class="lv">' + mdi("circle") + ' LIVE</span><img alt=""><video muted autoplay playsinline poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></video><button class="fsb" aria-label="Landscape"><svg viewBox="0 0 24 24"><path d="M5 5h5v2H7v3H5V5m9 0h5v5h-2V7h-3V5M5 14h2v3h3v2H5v-5m12 0h2v5h-5v-2h3v-3"/></svg></button><button class="cx" aria-label="Close">' + mdi("close") + '</button><button class="px">' + mdi("play") + ' PLAYBACK</button><span class="dl"></span><div class="aud"><button class="snd" aria-label="Sound">' + AUD.off + '</button><button class="mic" aria-label="Talk">' + AUD.mic + '</button>' + (CONFIG.detectLive && CONFIG.detectAI && CONFIG.detectMark !== false ? '<button class="det' + (mkPref("live") ? " on" : "") + '" data-mkt="live" aria-label="Detection boxes">' + AUD.det + '</button>' : '') + '</div><div class="cpanel"></div><div class="pbk"></div><div class="gal" role="status" aria-live="polite"></div>';
   CAMREG.push({ el: el, id: c.id });
   const px = $(".px", el); if (CONFIG.playback[c.id]) px.onclick = e => { e.stopPropagation(); openPb(c); }; else px.remove();
   const o = c.o = { el: el, img: $("img", el), vid: $("video", el) }; if (camIO) camIO.observe(el);
@@ -7223,18 +7251,23 @@ function mkCam(c, host) {
       if (fresh) { c.snd = true; o.vid.muted = false; snd.classList.add("on"); snd.innerHTML = AUD.on; liveCam(c); }   // reconnect once with a send channel
     } catch (x) { mic.dataset.e = "Mic blocked: " + (x && x.name || "error"); mic.classList.add("err"); setTimeout(() => mic.classList.remove("err"), 4500); }
   };
-  o.vid.onplaying = () => { c.live = true; el.classList.add("live"); el.classList.remove("cwait"); o.vid.classList.add("on"); camLiveSync(); setTimeout(() => { if (c.live) camMem.put(c.id, o.vid); }, 1500); };
+  o.vid.onplaying = () => { c.live = true; clearTimeout(c.ft); el.classList.add("live"); el.classList.remove("cwait", "cfail"); o.vid.classList.add("on"); camLiveSync(); setTimeout(() => { if (c.live) camMem.put(c.id, o.vid); }, 1500); };
   { const ar = m => { const w = m.videoWidth || m.naturalWidth, h = m.videoHeight || m.naturalHeight; if (w > 0 && h > 0) el.style.setProperty("--ar", w + " / " + h); };   // the two-feed landscape view sizes each picture from this
     o.img.addEventListener("load", () => { if (!c.live) ar(o.img); }); o.vid.addEventListener("loadedmetadata", () => ar(o.vid)); o.vid.addEventListener("resize", () => ar(o.vid)); }
   const cp = $(".cpanel", el); cp.onclick = tapH; cp.onchange = chgH;
   // phones: the garage door / light tiles under a full-screen camera stay folded away (they covered the bottom of the picture); this pill brings them up and puts them away
-  const ctb = document.createElement("button"); ctb.className = "ctb"; ctb.setAttribute("aria-expanded", "false"); ctb.innerHTML = mdi("chevron-up") + "<span>CONTROLS</span>"; el.appendChild(ctb); el.insertAdjacentHTML("beforeend", '<div class="cld"><i class="dtsp"></i>Connecting to camera…</div>');   // full screen / camera view: a spinner and a message until the first picture
+  const ctb = document.createElement("button"); ctb.className = "ctb"; ctb.setAttribute("aria-expanded", "false"); ctb.innerHTML = mdi("chevron-up") + "<span>CONTROLS</span>"; el.appendChild(ctb); el.insertAdjacentHTML("beforeend", '<div class="cld"><i class="dtsp"></i><span class="clm">Connecting to camera…</span><button type="button" class="cre">RETRY</button></div>');   // full screen / camera view: a spinner and a message until the first picture
+  { const re = $(".cre", el); re.onclick = e => { e.stopPropagation(); clearTimeout(c.rt); liveCam(c); }; }   // the connection failed or took too long: try again now
 
   el._ctb = () => { const o = !el.classList.contains("cpo"); el.classList.toggle("cpo", o); ctb.setAttribute("aria-expanded", o); ctb.innerHTML = mdi(o ? "chevron-down" : "chevron-up") + "<span>" + (o ? "HIDE" : "CONTROLS") + "</span>"; };
   if (host.id === "vw") {   // the camera view's top controls share one wrapper, so the layout can put them in one row (tablets) or two (phones)
     const vh = document.createElement("div"); vh.className = "vh"; ["lbl", "dl", "lv", "aud", "px", "cx", "fsb"].forEach(k => { const n = el.querySelector("." + k); if (n) vh.appendChild(n); }); el.appendChild(vh); el.dataset.k = c.k;
   }
   if (host.id === "vw") { el.classList.add("vf"); setTimeout(() => pbPre(c), 600); const ctl = camCtl(c.id); if (ctl) { cp.innerHTML = '<div class="tg3">' + ctl.map(tileHtml).join("") + '</div>'; cp.dataset.b = 1; } if (ctl) el.classList.add("hasc"); el.onclick = e => { if (e.target.closest(".ctb")) el._ctb(); else if (e.target.closest(".fsb")) camLand(el); else if (e.target.closest(".cx")) vwClose(); }; host.appendChild(el); return el; }   // phones: the card has the same X as a Security camera (the tablet keeps the round X above the pictures)
+  el.addEventListener("pointerdown", e => {   // the clear stream starts connecting on touch-down, so it is usually ready by the time the card has grown
+    if (e.button || el.classList.contains("fs") || el.classList.contains("vf") || !c.live || c.old || c.eid === c.id || e.target.closest(".cpanel, .pbk, .px, .ctb, .fsb, .cx")) return;
+    const t = c.pre = Date.now(); liveCam(c, true, true); setTimeout(() => { if (c.pre === t && !el.classList.contains("fs")) { c.pre = 0; liveCam(c, true); } }, 3000); });
+  el.addEventListener("pointercancel", () => { if (c.pre && !el.classList.contains("fs")) { c.pre = 0; liveCam(c, true); } });   // it was a scroll, not a tap: back to the light stream
   el.onclick = e => {
     if (e.target.closest(".cpanel, .pbk, .px")) return;
     if (e.target.closest(".ctb")) { el._ctb(); return; }
@@ -7251,7 +7284,7 @@ function mkCam(c, host) {
     const ctl = camCtl(c.id);
     if (ctl && !cp.dataset.b) { cp.innerHTML = '<div class="tg3">' + ctl.map(tileHtml).join("") + '</div>'; cp.dataset.b = 1; }
     el.classList.toggle("hasc", !!ctl);
-    updTiles(); liveCam(c, true); mkLiveOn(el); };
+    updTiles(); if (!(c.pre && Date.now() - c.pre < 2500 && c.eid === c.id)) liveCam(c, true); c.pre = 0; mkLiveOn(el); };
   host.appendChild(el);
 }
 CONFIG.cameras.forEach(c => mkCam(c, $("#cams")));
@@ -8294,7 +8327,7 @@ let wcI = 0, alI = 0, wnMore = false;   // wnMore: the Now card shows its extra 
 function drawWeather() {
   if (WXS.drag) { WXS.pend = 1; return; }   // a scene slider is being dragged: redraw when the finger lifts
   wxsPrep();
-  const w = states[W], a = w ? w.attributes : {}, cd = w ? (COND[w.state] || ["☁️", w.state]) : ["", ""], ot = sv(E("outdoorTemp"));
+  const w = states[W], a = w ? w.attributes : {}, cd = w ? (COND[wxNowState()] || ["☁️", wxNowState()]) : ["", ""], ot = sv(E("outdoorTemp"));
   const st = (l, v) => '<div class="ws"><span class="lbl">' + l + '</span><b>' + v + '</b></div>', n = (v, u) => v != null ? Math.round(v) + (u ? " " + u : "") : "--", wu = a.wind_speed_unit || "km/h";
   wxPresLoad(); const fd = wxFeels(a, ot != null ? ot : a.temperature, wu), wxl = typeof wxaLive === "function" ? wxaLive() : 0, d0 = fc[0];
   const pill = (l, v, c) => '<span class="wnp' + (c || "") + '"><small>' + l + '</small>' + v + '</span>', lo0 = d0 ? (d0.templow != null ? d0.templow : d0.temperature) : null;
@@ -8474,7 +8507,7 @@ function wxsRec(x) {
 }
 function wxsLive() {
   const w = states[W], a = w ? w.attributes : {}, ot = parseFloat(sv(E("outdoorTemp"))), h0 = WXS.H[0];
-  return { t: Date.now(), temp: !isNaN(ot) ? ot : +a.temperature, cond: w ? w.state : "", rain: h0 ? h0.rain : 0, pp: h0 ? h0.pp : 0, wind: +a.wind_speed || 0, gust: a.wind_gust_speed != null ? +a.wind_gust_speed : null, uv: a.uv_index != null ? +a.uv_index : null, cloud: a.cloud_coverage != null ? +a.cloud_coverage : null, hum: a.humidity != null ? +a.humidity : null, live: 1 };
+  return { t: Date.now(), temp: !isNaN(ot) ? ot : +a.temperature, cond: w ? wxNowState() : "", rain: h0 ? h0.rain : 0, pp: h0 ? h0.pp : 0, wind: +a.wind_speed || 0, gust: a.wind_gust_speed != null ? +a.wind_gust_speed : null, uv: a.uv_index != null ? +a.uv_index : null, cloud: a.cloud_coverage != null ? +a.cloud_coverage : null, hum: a.humidity != null ? +a.humidity : null, live: 1 };
 }
 function wxsPrep() {
   const n = Date.now(); WXS.H = (fcH || []).filter(x => Date.parse(x.datetime) > n - 3600000).slice(0, 168).map(wxsRec).filter(r => !isNaN(r.t) && !isNaN(r.temp));
@@ -10545,20 +10578,39 @@ const SYSW = { on: ["ok", "Connected"], online: ["ok", "Online"], connected: ["o
 // A Zigbee2MQTT bridge tile gets a Restart button. It presses that bridge's own "Restart" button entity (button.zigbee2mqtt_bridge_restart, _2 ... found from the tile's
 // bridge_connection_state sensor), or restarts the Home Assistant app: systemStatus tile { id, name, restart: { addon: "45df7312_zigbee2mqtt" } } (needs an admin; slug is in the app's address),
 // or { restart: { button: "button.my_restart" } }; restart: false hides it.
+// With nothing set, a Zigbee2MQTT tile offers BOTH: Restart add-on (the Zigbee2MQTT add-on found through the Supervisor, needs an admin: usually the part that is stuck) and Restart Zigbee (the bridge's own button: the Zigbee adapter / network).
+const SYAO = { list: null, busy: false };   // the Home Assistant add-ons (Supervisor), read once for an admin
+function sysAddons() {
+  if (SYAO.list || SYAO.busy || !ws || ws.readyState !== 1) return; SYAO.busy = true;
+  send({ type: "supervisor/api", endpoint: "/addons", method: "get" }, r => { const l = r && (Array.isArray(r) ? r : r.addons); SYAO.list = Array.isArray(l) ? l : []; SYAO.busy = false; sysUpd(); });
+  setTimeout(() => { if (SYAO.busy) { SYAO.busy = false; SYAO.list = SYAO.list || []; } }, 8000);
+}
+// what a tile can restart: [{ k: "addon", addon, name }, { k: "button", button }] (empty: no Restart button)
+// A Zigbee2MQTT tile (its id or its name says so) gets its add-on found through the Supervisor: the 1st network (no number) is the first Zigbee2MQTT add-on by slug,
+// "Zigbee2MQTT 2" the second (the number in the name, else the id's _2), and so on. A button named in config is kept next to it.
 function sysRestart(x) {
-  if (x.restart === false) return null; const r = x.restart && typeof x.restart === "object" ? x.restart : typeof x.restart === "string" ? { button: x.restart } : {};
-  if (r.addon) return { addon: r.addon }; if (r.button) return states[r.button] ? { button: r.button } : null;
-  const m = /^binary_sensor\.(.*)bridge_connection_state(_\d+)?$/.exec(x.id || ""); if (!m) return null;
-  const b = "button." + m[1] + "bridge_restart" + (m[2] || ""); if (states[b]) return { button: b };
-  const f = Object.keys(states).find(k => /^button\./.test(k) && k.indexOf(m[1]) > 0 && new RegExp("restart" + (m[2] || "") + "$").test(k)); return f ? { button: f } : null;
+  if (x.restart === false) return []; const r = x.restart && typeof x.restart === "object" ? x.restart : typeof x.restart === "string" ? { button: x.restart } : {};
+  if (r.addon) return [{ k: "addon", addon: r.addon }];
+  const m = /^binary_sensor\.(.*)bridge_connection_state(_\d+)?$/.exec(x.id || ""), out = [];
+  if (m || /zigbee2?mqtt|z2m/i.test((x.id || "") + " " + (x.name || ""))) {
+    if (!SYAO.list) sysAddons();
+    const zs = (SYAO.list || []).filter(a => /zigbee2?mqtt|z2m/i.test((a.slug || "") + " " + (a.name || "")) && a.installed !== false).sort((a, b) => (a.slug || "") < (b.slug || "") ? -1 : 1);
+    const nm = /\s(\d+)$/.exec(x.name || "") || /_(\d+)$/.exec(x.id || ""), z = zs[(nm ? +nm[1] : 1) - 1];   // the number in the name first ("Zigbee2MQTT 2"): the entity id suffix can skip numbers (..._3)
+    if (z) out.push({ k: "addon", addon: z.slug, name: zs.length > 1 ? z.name : "" });
+  }
+  if (r.button) { if (states[r.button]) out.push({ k: "button", button: r.button }); return out; }
+  if (!m) return out;
+  const b = "button." + m[1] + "bridge_restart" + (m[2] || "");
+  if (states[b]) out.push({ k: "button", button: b }); else { const f = Object.keys(states).find(k => /^button\./.test(k) && k.indexOf(m[1]) > 0 && new RegExp("restart" + (m[2] || "") + "$").test(k)); if (f) out.push({ k: "button", button: f }); }
+  return out;
 }
 Object.assign(MDI, { restart: "M12,4C14.1,4 16.1,4.8 17.6,6.3C20.7,9.4 20.7,14.5 17.6,17.6C15.8,19.4 13.2,20.2 10.7,19.8L11.2,17.8C13,18.1 14.9,17.6 16.2,16.2C18.3,14.1 18.3,10.8 16.2,8.7C15.2,7.7 13.6,7.1 12,7.1V11L7,6L12,1V4M6.3,17.6C3.7,15 3.3,11 5.1,7.9L6.6,9.4C5.5,11.6 5.9,14.4 7.8,16.2C8.3,16.7 8.9,17.1 9.5,17.4L9,19.4C8,19 7.1,18.4 6.3,17.6Z" });
-const SYRS = {};   // tile id -> "arm" (first tap done) | "busy"
+const SYRS = {};   // "tile id|addon" or "tile id|button" -> "arm" (first tap done) | "busy"
 function sysTiles(tl) {
   return tl.map(x => {
     const s = states[x.id], st = s ? String(s.state) : "", w = s ? SYSW[st] : null, k = w ? w[0] : "syw", t = !s ? "Not found" : w ? w[1] : st ? st.charAt(0).toUpperCase() + st.slice(1) : "Unknown";
     const ms = s ? Date.now() - Date.parse(s.last_changed || "") : NaN, nm = x.name || (s && s.attributes && s.attributes.friendly_name) || x.id;
-    return '<div class="' + k + '"><small>' + esc(nm) + '</small><b>' + esc(t) + '</b>' + (isNaN(ms) ? "" : '<small class="sy">changed ' + attnAgo(ms) + ' ago</small>') + (rs => rs ? '<button class="syrs' + (SYRS[x.id] ? " " + SYRS[x.id] : "") + '" data-syrs="' + esc(x.id) + '">' + mdi("restart") + (SYRS[x.id] === "busy" ? "Restarting…" : SYRS[x.id] === "arm" ? "Tap to confirm" : "Restart") + '</button>' : "")(sysRestart(x)) + '</div>';
+    return '<div class="' + k + '"><small>' + esc(nm) + '</small><b>' + esc(t) + '</b>' + (isNaN(ms) ? "" : '<small class="sy">changed ' + attnAgo(ms) + ' ago</small>') + (rs => rs.length ? '<div class="syra">' + rs.map(a => { const q = x.id + "|" + a.k; return '<button class="syrs' + (SYRS[q] ? " " + SYRS[q] : "") + '" data-syrs="' + esc(q) + '">' + mdi("restart") + (SYRS[q] === "busy" ? "Restarting…" : SYRS[q] === "arm" ? "Tap to confirm" : rs.length > 1 ? (a.k === "addon" ? (a.name ? "Restart " + esc(a.name) : "Restart add-on") : "Restart Zigbee") : "Restart") + '</button>'; }).join("") + '</div>' : "")(sysRestart(x)) + '</div>';
   }).join("");
 }
 const sysOk = e => { const s = states[e]; return !!s && !/^(unavailable|unknown)$/.test(s.state); };
@@ -10611,11 +10663,11 @@ $("#admin").addEventListener("click", e => { const ac = e.target.closest("[data-
 
 // Restart button on a system status tile: the first tap arms it (3 s), the second restarts; it shows "Restarting…" for 30 s
 document.addEventListener("click", e => {
-  const b = e.target.closest && e.target.closest("[data-syrs]"); if (!b) return; e.stopPropagation(); const id = b.dataset.syrs;
-  if (SYRS[id] === "busy") return;
-  if (SYRS[id] !== "arm") { SYRS[id] = "arm"; sysUpd(); setTimeout(() => { if (SYRS[id] === "arm") { delete SYRS[id]; sysUpd(); } }, 3000); return; }
-  const t = (CONFIG.systemStatus ? [].concat(Array.isArray(CONFIG.systemStatus) ? CONFIG.systemStatus : [].concat(CONFIG.systemStatus.network || [], CONFIG.systemStatus.hardware || [])) : []).map(sysTile).find(x => x && x.id === id), r = t && sysRestart(t); if (!r) { delete SYRS[id]; sysUpd(); return; }
-  SYRS[id] = "busy"; sysUpd(); setTimeout(() => { delete SYRS[id]; sysUpd(); }, 30000);
+  const b = e.target.closest && e.target.closest("[data-syrs]"); if (!b) return; e.stopPropagation(); const q = b.dataset.syrs, id = q.split("|")[0], kd = q.split("|")[1];
+  if (SYRS[q] === "busy") return;
+  if (SYRS[q] !== "arm") { SYRS[q] = "arm"; sysUpd(); setTimeout(() => { if (SYRS[q] === "arm") { delete SYRS[q]; sysUpd(); } }, 3000); return; }
+  const t = (CONFIG.systemStatus ? [].concat(Array.isArray(CONFIG.systemStatus) ? CONFIG.systemStatus : [].concat(CONFIG.systemStatus.network || [], CONFIG.systemStatus.hardware || [])) : []).map(sysTile).find(x => x && x.id === id), r = t && sysRestart(t).find(a => a.k === kd); if (!r) { delete SYRS[q]; sysUpd(); return; }
+  SYRS[q] = "busy"; sysUpd(); setTimeout(() => { delete SYRS[q]; sysUpd(); }, 30000);
   if (r.addon) send({ type: "supervisor/api", endpoint: "/addons/" + r.addon + "/restart", method: "post", timeout: null }); else call("button", "press", r.button);
 }, true);
 // ---------- Settings: one page with tabs ----------
@@ -12752,7 +12804,7 @@ function wfxFrame(ts) {
   g.setTransform(d, 0, 0, d, 0, 0); g.clearRect(0, 0, W, H);
   let ax = W - 90; const hd = c.closest("header"), hr = hd && hd.querySelector(".hr");   // in the header the sun / moon sits in the free space left of the music note and the chips, not under them
   if (hr) { const hl = hr.getBoundingClientRect().left - c.getBoundingClientRect().left; ax = Math.max(W * 0.4, Math.min(W - 90, hl - 56)); const wm = Math.round(Math.max(40, Math.min(100, (hl - 16) / W * 100))); if (c._wm !== wm) { c._wm = wm; c.style.setProperty("--wm", wm + "%"); } }
-  const light = document.documentElement.getAttribute("data-mode") === "light", k = WFX.k, wd = WFX.wind, t = (WFX.t += dt * 0.016);
+  const light = STYLE !== "glass" && document.documentElement.getAttribute("data-mode") === "light", k = WFX.k, wd = WFX.wind, t = (WFX.t += dt * 0.016);
   const ink = light ? "40,70,110" : "230,240,255", rain = light ? "50,110,200" : "150,200,255", cl = light ? "90,110,140" : "255,255,255";
   const clouds = () => WFX.parts.forEach(p => {
     if (!p.cloud) return; p.x += (p.v + wd * 0.8) * dt; if (p.x > W + 80) p.x = -100;
@@ -12885,10 +12937,10 @@ const czPhone = () => isMobile() && innerHeight > innerWidth && !document.queryS
 function czHost(el, on) { for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) n.classList.toggle("zup", on); }
 function czLandOff(el) { el.classList.remove("zls"); if (el._zlk) { el._zlk = 0; try { screen.orientation.unlock(); } catch (_) {} } }
 // landscape <-> portrait like the live camera (camSwap in 12-init.js): the page fades out over black, the switch happens unseen, then it fades back in
-function czSwap(el, fn) {   // a black cover over everything fades in, fn switches unseen (the browser's own full-screen change flashes white / jumps, so it only starts once the cover is solid), the cover fades out
+function czSwap(el, fn, fast) {   // fast (nothing turns: tablet, desktop): a shorter cover and settle. A black cover over everything fades in, fn switches unseen (the browser's own full-screen change flashes white / jumps, so it only starts once the cover is solid), the cover fades out
   if (czRm() || el._sw) { fn(() => {}); return; }
-  const h = document.documentElement; el._sw = 1; h.classList.add("zsw"); const cv = document.createElement("div"); cv.className = "zcv"; document.body.appendChild(cv); requestAnimationFrame(() => requestAnimationFrame(() => cv.classList.add("on")));
-  setTimeout(() => fn(() => setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(() => { cv.classList.remove("on"); setTimeout(() => { cv.remove(); h.classList.remove("zsw"); el._sw = 0; }, 300); })), 140)), 230);   // 140 ms after the switch the page has settled
+  const h = document.documentElement; el._sw = 1; h.classList.add("zsw"); const cv = document.createElement("div"); cv.className = "zcv"; if (fast) cv.style.transitionDuration = ".1s"; document.body.appendChild(cv); requestAnimationFrame(() => requestAnimationFrame(() => cv.classList.add("on")));
+  setTimeout(() => fn(() => setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(() => { cv.classList.remove("on"); setTimeout(() => { cv.remove(); h.classList.remove("zsw"); el._sw = 0; }, fast ? 140 : 300); })), fast ? 40 : 140)), fast ? 150 : 230);   // 140 ms after the switch the page has settled (40 when fast)
 }
 const czFsDone = want => new Promise(r => { const ok = () => !!czFsNow() === want; if (ok()) return r(); const f = () => { if (ok()) { document.removeEventListener("fullscreenchange", f); document.removeEventListener("webkitfullscreenchange", f); r(); } }; document.addEventListener("fullscreenchange", f); document.addEventListener("webkitfullscreenchange", f); setTimeout(r, 700); });
 function czLand(el, done) {   // turns the full-screen player to landscape (the phone is asked to turn; still upright after 350 ms means turn it with CSS), then calls done
@@ -12900,22 +12952,18 @@ function czFull(el) {
   const rm = czRm(), root = document.documentElement;
   if (czFsNow() === el) { const go = () => { czLandOff(el); (document.exitFullscreen || document.webkitExitFullscreen).call(document); }; if (rm) return go(); clearTimeout(el._zfT); el.classList.add("zfade"); el._zfT = setTimeout(go, 150); return; }
   if (el.classList.contains("zfull")) {
-    if (el._zroot || el.classList.contains("zls")) { czSwap(el, done => { czLandOff(el); el.classList.remove("zfull"); czHost(el, false); czReset(el); czUi(el); let lv = Promise.resolve(); if (el._zroot) { el._zroot = 0; if (czFsNow() === root) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (_) {} lv = czFsDone(false); } } lv.then(done); }); return; }
+    if (el._zroot || el.classList.contains("zls")) { czSwap(el, done => { czLandOff(el); el.classList.remove("zfull"); czHost(el, false); czReset(el); czUi(el); let lv = Promise.resolve(); if (el._zroot) { el._zroot = 0; if (czFsNow() === root) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (_) {} lv = czFsDone(false); } } lv.then(done); }, !el.classList.contains("zls")); return; }
     const go = () => { czLandOff(el); el.classList.remove("zfull"); czReset(el); czUi(el); if (!rm) czFadeIn(el); }; if (rm) return go(); clearTimeout(el._zfT); el.classList.add("zfade"); el._zfT = setTimeout(go, 150); return;
   }
-  if (czPhone()) {   // a phone held upright: the whole page goes full screen (Chrome fixes an element's own full screen at the screen's size, so it could not be turned) and the player fills it, turned to landscape
-    czSwap(el, done => {
-      const rf = root.requestFullscreen || root.webkitRequestFullscreen; let p;
-      if (rf && !czFsNow()) { try { p = rf.call(root, { navigationUI: "hide" }); } catch (x) { p = Promise.reject(x); } }
-      const fin = () => { czHost(el, true); el.classList.add("zfull"); czReset(el); czUi(el); czLand(el, done); };
-      if (!p) fin(); else Promise.resolve(p).then(() => { el._zroot = 1; czFsDone(true).then(fin); }, fin);
-    });
-    return;
-  }
-  if (!rm) { clearTimeout(el._zfT); el.classList.add("zfade", "zfnow"); clearTimeout(el._zfS); el._zfS = setTimeout(() => { if (el.classList.contains("zfade")) czFadeIn(el); }, 1500); }   // hidden at once: the request has to happen inside the tap, so there is no time to fade out first
-  const rf = el.requestFullscreen || el.webkitRequestFullscreen; let p; if (rf) { try { p = rf.call(el); } catch (x) { p = Promise.reject(x); } }
-  const pseudo = () => { el.classList.add("zfull"); czReset(el); czUi(el); if (!rm) czFadeIn(el); };   // no real full screen here (an iPhone, an iframe that does not allow it): fill the page instead
-  if (!rf) pseudo(); else Promise.resolve(p).catch(pseudo);
+  // every device: the whole page goes full screen (the browser's own change of the player alone cannot be covered by a fade: it sits above everything) and the player fills it (zfull), entered and left behind the black cover.
+  // Only a phone held upright also turns the player to landscape; tablets and desktops keep their own shape.
+  const rot = czPhone();
+  czSwap(el, done => {
+    const rf = root.requestFullscreen || root.webkitRequestFullscreen; let p;
+    if (rf && !czFsNow()) { try { p = rf.call(root, { navigationUI: "hide" }); } catch (x) { p = Promise.reject(x); } }
+    const fin = () => { czHost(el, true); el.classList.add("zfull"); czReset(el); czUi(el); if (rot) czLand(el, done); else done(); };
+    if (!p) fin(); else Promise.resolve(p).then(() => { el._zroot = 1; czFsDone(true).then(fin); }, fin);
+  }, !rot);
 }
 function czEnhance(el) {
   if (el._zui || CONFIG.camZoom === false) return; const v = el.querySelector("video"); if (!v) return; el._zui = 1;
@@ -13449,7 +13497,7 @@ function route() {
     let dir = 0; if (tabGo) { const o = setTabs().map(x => x[0]); dir = o.indexOf(tk) >= o.indexOf(SETTAB) ? 1 : -1; }
     SETTAB = tk;
     if (el && el !== lastPg) el.scrollTop = 0;   // arriving on a page always starts at its top (each page is its own scroller and kept the old position)
-    if (el && bootDone && (el !== lastPg || tabGo)) { if (pg === "energy" && !enReady()) pgHold(el, 1500); else { pgEnter(el); if (tabGo) { el.style.setProperty("--pgdx", dir * 36 + "px"); el.style.setProperty("--pgdr", dir * 16 + "deg"); } } } lastPg = el; if (el) lazyIn(el); }
+    if (el && bootDone && (el !== lastPg || tabGo)) { if ((pg === "energy" && !enReady()) || (pg === "events" && evLast.k !== evMonKey() && !evSq.on)) pgHold(el, 1500); else { pgEnter(el); if (tabGo) { el.style.setProperty("--pgdx", dir * 36 + "px"); el.style.setProperty("--pgdr", dir * 16 + "deg"); } } } lastPg = el; if (el) lazyIn(el); }
   const setP = p === "theme" || p === "admin", onA = a => a.getAttribute("href") === "#" + p || (setP && a.getAttribute("href") === "#settings");
   $$("nav a").forEach(a => a.classList.toggle("on", onA(a)));
   document.body.classList.remove("more-open");
@@ -15483,7 +15531,7 @@ function insxDaylight() {
 }
 // --- 38b. How long it has rained today: the rain sensor (entities.rainDetected) on-time since midnight, its spells, and the last week for comparison
 function insxRain() {
-  const id = E("rainDetected"); if (!id || !states[id]) return [];
+  const id = states[E("rainNow")] ? E("rainNow") : E("rainDetected"); if (!id || !states[id]) return [];
   const H = insxGet("rainh", 10, done => insxHist([id], 24 * 8, false, done)); if (!H) return [];
   const a = (H[id] || []).slice(), cur = states[id].state; if (!a.length || a[a.length - 1][1] !== cur) a.push([Date.now(), cur]);
   const runs = []; let st = null; a.forEach(x => { const on = x[1] === "on"; if (on && st == null) st = x[0]; if (!on && st != null) { runs.push([st, x[0]]); st = null; } }); if (st != null) runs.push([st, Date.now(), 1]);
