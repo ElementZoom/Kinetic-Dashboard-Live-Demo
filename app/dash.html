@@ -49,6 +49,7 @@ html.boot #bootld{display:grid;animation:bldIn .3s ease .45s backwards}
 @keyframes bldIn{from{opacity:0}}
 /* brand (config.js -> brand): logo in the first-load screen instead of the spinner; a short intro on a cold start; logo on the sign-in screen and Theme page */
 #bootld .bl{display:none}
+html.resume #bootld{animation:none}   /* a page that has just replaced an older one: the logo is there at once instead of fading in again */
 .bl .bv{font-size:13px;color:var(--mut,#8b93a5);margin-top:-4px}
 html.brand #bootld i{display:none}
 html.brand #bootld .bl{display:flex;flex-direction:column;align-items:center;gap:18px;animation:blPulse 2.4s ease-in-out infinite}
@@ -1662,6 +1663,9 @@ html[data-style] #npmini{background-color:var(--bg)}
 /* a room page's live camera (13-rooms.js rvCamMount): no taller than about half the screen, centred */
 #rv .rvcam{width:min(100%,calc(46vh * 16 / 9));margin:0 auto}
 #rv .rvcam+.tg3{margin-top:14px}
+/* the room page's camera is the camera tile itself and opens full screen in place (a plain box, not .snap/.npcam: those clip and hide the full-screen controls) */
+#rv .rvcam{aspect-ratio:16/9;position:relative;margin-bottom:10px}
+#rv .rvcam>.cam:not(.fs){height:100%}
 /* camera full screen on phones: real full screen is full-bleed (no floating card), and closing fades + shrinks out */
 .cam.fs.nfs{border:0;border-radius:0}
 .cam.fs.nfs:not(.ls){inset:0}
@@ -1919,6 +1923,8 @@ html.zsw,html.zsw body{background:#000!important}
 /* the whole page is full screen while a player is (czFull): nothing else may show through on top of it (the pop-up's or the camera page's own close button next to the player's X, arrows, thumbnails). Only the player, its controls and the fade cover stay visible. */
 html:not(#x):has(.zc.zfull) body *{visibility:hidden!important}
 html:not(#x):not(#y):has(.zc.zfull) :is(.zc.zfull,.zc.zfull *,.zcv){visibility:visible!important}
+/* the full-screen camera opened from a room tile starts on that tile's last picture: no spinner over it while the live picture connects (a failure still says so) */
+.cam.vf.still:not(.cfail) .cld{display:none!important}
 /* artist info: the Artist tab beside the lyrics (Media page, and the lyrics sheet on a phone) and the Artist page in the Now Playing sheet */
 .aitabs{display:inline-flex;gap:2px;padding:4px;border-radius:99px;background:rgba(var(--w),.1);text-transform:none}.aitabs .chip{border:0;background:transparent;box-shadow:none;padding:8px 18px;min-height:0;font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}.aitabs .chip.on{background:var(--mint);color:var(--bg)}
 .lyh .aitabs{margin:-6px 0}
@@ -4534,6 +4540,9 @@ html:not(#x) :is(#security > #stabs,#insights > .inschips).stk{box-shadow:0 8px 
 html:not(#x) :is(#admin,#theme):has(> .secw,.admtop,.adlog>.adlh) > .hsw:has(> .setchips).stk::before{box-shadow:none!important}
 /* Settings tabs with a second pinned row (search card): the top row's backdrop stops at its own edge, so it never paints over the card's top */
 html:not(#x) #admin:has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips)::before{bottom:0!important}
+
+/* a pinned row that has just been drawn shows its wallpaper layer at once (31-section-pills.js): no fade from nothing */
+.wpnew::before,.wpnew::after{transition:none!important}
 /* Search (2.6.0): the header button, the search screen, and the flash on the card or tile a result opens */
 #hsrch{position:relative;display:inline-flex;flex:none;width:30px;height:32px;padding:0;border:0;background:none;color:var(--mint);align-items:center;justify-content:center;cursor:pointer}
 #hsrch svg{width:20px;height:20px;fill:currentColor}
@@ -5248,7 +5257,7 @@ html[data-style=glass][data-mode=dark]:not(#x) .tk-wc.on{background:#636366;colo
 html[data-style=glass]:not(#x) .tk-facts{display:block;background:var(--tkw);border-radius:14px;margin:12px 0}
 html[data-style=glass]:not(#x) .tk-facts>div{display:flex;justify-content:space-between;align-items:center;border:0;border-radius:0;background:none;padding:12px 14px}html[data-style=glass]:not(#x) .tk-facts>div+div{border-top:.5px solid var(--line)}
 html[data-style=glass]:not(#x) .tk-facts small{font:400 15px var(--sans);letter-spacing:0;color:var(--mut)}html[data-style=glass]:not(#x) .tk-facts b{margin:0;font:500 15px var(--sans)}
-html[data-style=glass]:not(#x) .tk-tip{background:color-mix(in srgb,#ff453a 12%,transparent);border-radius:14px}
+html[data-style=glass]:not(#x) .tk-tip{background:color-mix(in srgb,var(--tkc,#ff453a) 14%,transparent);border-radius:14px}
 html[data-style=glass]:not(#x) :is(.tk-ev,.tk-door,.tk-wwr,.tk-wwc,.tk-tl,.tk-wr,.tk-tlc){border:0;background:var(--tkw);border-radius:14px}
 html[data-style=glass]:not(#x) .tk-wr.sel{outline:2px solid var(--tkc);outline-offset:-2px}
 html[data-style=glass]:not(#x) .tk-f{flex-direction:column;gap:8px;padding:6px 18px 22px}
@@ -5586,6 +5595,29 @@ html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x)
 
 /* the curtain group header keeps OPEN ALL + CLOSE ALL inside the card while a curtain moves (they used to run off the edge) */
 #rv .pg .lbl.hd [data-rcv]{flex:0 1 auto;min-width:0;padding-left:12px;padding-right:12px;font-size:11px;white-space:nowrap}
+/* Weather alert colours by KIND, so the three read apart at a glance (2026-11): UV is yellow, rain is blue, wind is teal. The tier (1 to 3) only deepens the colour:
+   UV follows the UV scale (yellow, orange, red), rain goes from light to deep blue, wind turns from teal to amber to red when it gets strong. They set --wc (cards, rows, chips,
+   edge bars, bars, icon discs) and, on the pop-up sheet, --tkc. Every look reads those two, so this one file recolours Kinetic, Liquid Glass and Material, dark and light. */
+:root{--wu1:#e9c53a;--wu2:#f2a33a;--wu3:#ff6b5e;--wr1:#7cc4ff;--wr2:#55a8f6;--wr3:#4a86f2;--ww1:#5fc4ad;--ww2:#f2a33a;--ww3:#ff6b5e}
+html[data-mode=light]{--wu1:#c29600;--wu2:#c9720a;--wu3:#c42a1f;--wr1:#2f86d0;--wr2:#2468b8;--wr3:#1f4fb0;--ww1:#3f8a78;--ww2:#b86a00;--ww3:#c42a1f}
+html .wxl-uv.wt1,html .wxa-s[data-wxa=uv].wt1,html .tk-wr[data-tkwx=uv].wt1,html .tk-wx[data-wk=uv][data-wt="1"]{--wc:var(--wu1);--tkc:var(--wu1)}
+html .wxl-uv.wt2,html .wxa-s[data-wxa=uv].wt2,html .tk-wr[data-tkwx=uv].wt2,html .tk-wx[data-wk=uv][data-wt="2"]{--wc:var(--wu2);--tkc:var(--wu2)}
+html .wxl-uv.wt3,html .wxa-s[data-wxa=uv].wt3,html .tk-wr[data-tkwx=uv].wt3,html .tk-wx[data-wk=uv][data-wt="3"]{--wc:var(--wu3);--tkc:var(--wu3)}
+html .wxl-rain.wt1,html .wxa-s[data-wxa=rain].wt1,html .tk-wr[data-tkwx=rain].wt1,html .tk-wx[data-wk=rain][data-wt="1"]{--wc:var(--wr1);--tkc:var(--wr1)}
+html .wxl-rain.wt2,html .wxa-s[data-wxa=rain].wt2,html .tk-wr[data-tkwx=rain].wt2,html .tk-wx[data-wk=rain][data-wt="2"]{--wc:var(--wr2);--tkc:var(--wr2)}
+html .wxl-rain.wt3,html .wxa-s[data-wxa=rain].wt3,html .tk-wr[data-tkwx=rain].wt3,html .tk-wx[data-wk=rain][data-wt="3"]{--wc:var(--wr3);--tkc:var(--wr3)}
+html .wxl-wind.wt1,html .wxa-s[data-wxa=wind].wt1,html .tk-wr[data-tkwx=wind].wt1,html .tk-wx[data-wk=wind][data-wt="1"]{--wc:var(--ww1);--tkc:var(--ww1)}
+html .wxl-wind.wt2,html .wxa-s[data-wxa=wind].wt2,html .tk-wr[data-tkwx=wind].wt2,html .tk-wx[data-wk=wind][data-wt="2"]{--wc:var(--ww2);--tkc:var(--ww2)}
+html .wxl-wind.wt3,html .wxa-s[data-wxa=wind].wt3,html .tk-wr[data-tkwx=wind].wt3,html .tk-wx[data-wk=wind][data-wt="3"]{--wc:var(--ww3);--tkc:var(--ww3)}
+html .wnd.wt1{--wc:var(--ww1)}html .wnd.wt2{--wc:var(--ww2)}html .wnd.wt3{--wc:var(--ww3)}
+/* the sheet's round icon (Kinetic) and its tab */
+html:not([data-style=glass]) .tk-wx[data-wk] .tk-ic{color:var(--tkc);background:color-mix(in srgb,var(--tkc) 16%,transparent)}
+/* header chip for UV: it only shows from Very high UV (tier 3), so it has the tier 3 colour (rain is already blue, wind amber from its urgent tier 2) */
+#nacc[data-k=uv],#nacc .nai[data-k=uv]{--nk:#ff6b5e}
+/* light mode: a bar in the forecast strip that is over the alert level takes the alert colour (the grey light-mode bar rule was stronger than .on) */
+html[data-mode=light] .wxb span.on{background:var(--k)}
+/* the crossfade when the look or the font is changed (themeDip in 29-palette-page.js) */
+html.vts::view-transition-old(root),html.vts::view-transition-new(root){animation-duration:.45s;animation-timing-function:cubic-bezier(.4,0,.2,1)}
 </style>
 <style>
 /* HA diagnostics stay compact until requested. */
@@ -5674,9 +5706,11 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "2.8.1";   // the one place to change the version
 window.DASH_NEW = {"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "964e5c";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "a994d5";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
+  var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
+  if (res) { r.classList.add("resume"); window.__noHold = true; }   // this page replaced an older one a moment ago (58-auto-update.js): the logo is there at once, no fade-in, no intro, no minimum time
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
   var G = window.brandLogo(); if (!B || !G || !el || lp === "off") return;
   var d = document.createElement("div"); d.className = "bl"; d.innerHTML = window.brandMark("s");
@@ -5687,7 +5721,7 @@ window.DASH_BUILD = "964e5c";   // filled in by build.mjs: tells two copies of t
   try { seen = +localStorage.getItem("dashSeen") || 0; localStorage.setItem("dashSeen", now); } catch (e) {}
   try { if (window.parent !== window) { var P = window.parent.location, g = new URLSearchParams(P.search).get("go"); h = g ? "#" + g : (P.hash || h); } } catch (e) {}
   var deep = h && !/^#(home)?$/.test(h), back = /[?&]code=/.test(location.search), still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (B.intro !== false && lp !== "load" && !deep && !back && !still && now - seen > (B.introAfter != null ? B.introAfter : 30) * 60000) { r.classList.add("intro"); window.__introEnd = performance.now() + (B.introMs || 3000); }
+  if (!res && B.intro !== false && lp !== "load" && !deep && !back && !still && now - seen > (B.introAfter != null ? B.introAfter : 30) * 60000) { r.classList.add("intro"); window.__introEnd = performance.now() + (B.introMs || 3000); }
 } catch (e) {} })();
 </script>
 <script>
@@ -6066,7 +6100,11 @@ function bootMark(k) { delete bootNeed[k]; if (!Object.keys(bootNeed).length) bo
 function bootGo() {
   if (bootDone) return; bootDone = true;
   const fin = () => requestAnimationFrame(() => requestAnimationFrame(bootShow));   // two frames: the queued home()/render() redraws have run
-  const hold = () => {   // brand: the intro, or a logo that has already started to show, stays up for a minimum time so it never just blinks
+  const hold = () => {   // the first look at the server's page (58-auto-update.js) gets up to 1.5 s: a newer build replaces this page while the logo is still up
+    const g = window.__auGate; if (!g) return hold2();
+    Promise.race([g, new Promise(r => setTimeout(r, 1500))]).then(() => { if (window.__auGoing) setTimeout(hold2, 4000); else hold2(); }, hold2);
+  };
+  const hold2 = () => {   // brand: the intro, or a logo that has already started to show, stays up for a minimum time so it never just blinks
     const t0 = window.__brandT0, now = performance.now(), B = CONFIG.brand || {};
     let end = window.__introEnd || 0;
     if (!end && t0 && !window.__noHold && now > t0 + 450) end = t0 + 450 + (B.minShow != null ? B.minShow : 1000);
@@ -6866,14 +6904,22 @@ function stopCam(c) {
   if (c.live && c.o && c.o.vid.videoWidth) { const u = camMem.put(c.id, c.o.vid, true); if (u) c.o.img.src = u; }
   const o = c.o; c.live = false; clearTimeout(c.ft); o.el.classList.remove("live", "cwait", "cfail"); o.vid.classList.remove("on"); o.vid.srcObject = null; camLiveSync();
 }
-function stopCams() { CONFIG.cameras.concat(CONFIG.security, VWC, NPC, RVC, INSC).forEach(c => { clearTimeout(c.rt); c._on = c.rv || c.ins ? 0 : c._on; stopCam(c); micOff(c); }); }
+function stopCams() { CONFIG.cameras.concat(CONFIG.security, VWC, NPC, RVC, INSC).forEach(c => { if (c._warm && Date.now() - c._warm < 5000 && /^#view/.test(location.hash)) return; clearTimeout(c.rt); c._on = c.rv || c.ins ? 0 : c._on; stopCam(c); micOff(c); }); }
 function startCams() { if (onView()) { VW.mode = ""; applyView(); return; } if (onHome() && !camsOn()) return; cams(); camList().forEach((c, i) => { if (!isMobile() || (CONFIG.mobileLive !== false && c.o.el._vis !== false)) { clearTimeout(c.rt); c.rt = setTimeout(() => { if (camPage()) liveCam(c); }, i * 160); } }); }   // staggered so several streams do not negotiate and decode at once   // phones: live too, but only for tiles on screen (CONFIG.mobileLive:false = snapshots, live on tap)
 const camMsg = (c, fail) => { const m = c.o.el.querySelector(".clm"); if (m) m.textContent = fail ? "Couldn't connect to the camera" : "Connecting to camera…"; };
 function camFail(c) { if (c.live && !c.old) return; c.o.el.classList.add("cfail"); camMsg(c, true); }   // the "Connecting to camera" screen offers RETRY (the camera retries by itself too)
 function retryCam(c, ms) { stopCam(c); c.o.el.classList.add("cwait", "cfail"); camMsg(c, true); clearTimeout(c.rt); c.rt = setTimeout(() => { if ((c.np && document.body.classList.contains("np-open")) || (c.rv && c._on && curRoom && onRooms) || (c.ins && c._on && INS.det) || camPage() && (onSec() || camsOn() || onView()) && (!isMobile() || c.o.el.classList.contains("fs") || (CONFIG.mobileLive !== false && c.o.el._vis !== false))) liveCam(c); }, ms); }
 function liveCam(c, up, big) {   // HA built-in WebRTC (go2rtc); falls back to snapshots if it fails. up = a switch between the light and the clear stream: the picture that is playing keeps playing until the new one has its first picture
   const o = c.o, sid = { v: null }, q = [], eid = big ? c.id : camEnt(c);
-  dropOld(c); rmXf(c); if (up && c.live && c.pc && o.vid.srcObject && c.eid && c.eid !== eid) { c.old = { pc: c.pc, sub: c.sub }; c.pc = null; c.sub = 0; clearTimeout(c.rt); } else stopCam(c);
+  // a stream whose connection was closed leaves a dead picture behind: that is not "playing"
+  const alive = !!(o.vid.srcObject && o.vid.srcObject.getTracks().some(t => t.readyState === "live"));
+  // a switch is already under way (closed and opened again within a second or two): the picture that is playing keeps playing, only the half-connected new stream is replaced
+  // a camera with ONE stream (no light / clear pair) is already showing what the big view needs: opening or closing full screen leaves it playing, nothing reconnects
+  if (up && !c.old && c.live && c.pc && alive && c.eid === eid) return;
+  if (up && c.old && c.live && alive) {
+    if (c.eid === eid && c.pc) return;
+    clearTimeout(c.swapT); rmXf(c); if (c.pc) { try { c.pc.close(); } catch (x) {} c.pc = null; } if (c.sub) { delete subs[c.sub]; c.sub = 0; } clearTimeout(c.rt);
+  } else { dropOld(c); rmXf(c); if (up && c.live && c.pc && alive && c.eid && c.eid !== eid) { c.old = { pc: c.pc, sub: c.sub }; c.pc = null; c.sub = 0; clearTimeout(c.rt); } else stopCam(c); }
   clearTimeout(c.rt); c.eid = eid;
   o.el.classList.remove("cfail"); camMsg(c, false); if (!(up && c.old)) o.el.classList.add("cwait");   // the spinner and message show until the first picture (12-init.js onplaying); a camera that is already playing keeps its picture, nothing is put over it while the clear stream connects
   clearTimeout(c.ft); c.ft = setTimeout(() => { if (!c.live || c.old) camFail(c); }, 12000);   // nothing after 12 s: the message turns into "Couldn't connect" with a RETRY button
@@ -7137,7 +7183,7 @@ CONFIG.tiles.forEach(t => {
   $("#rooms").className = "rooms s-" + CONFIG.tileStyle; $("#rooms").appendChild(el); tileEls.push({ el: el, t: t });
 });
 // a tile stops only after 2 s off screen: closing full screen re-lays the page out and a tile can look off screen for a moment
-const camIO = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { e.target._vis = e.isIntersecting; if (isMobile() && camPage()) { const c = camList().filter(x => x.o && x.o.el === e.target)[0]; if (c) { if (e.isIntersecting) { clearTimeout(c.vt); if (!c.live) { if (CONFIG.mobileLive !== false) liveCam(c); else camSnap(c); } } else if (CONFIG.mobileLive !== false && !e.target.classList.contains("fs")) { clearTimeout(c.vt); c.vt = setTimeout(() => { if (c.o.el._vis === false && !c.o.el.classList.contains("fs")) { clearTimeout(c.rt); stopCam(c); } }, 2000); } } } }), { rootMargin: "150px" }) : null;
+const camIO = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { e.target._vis = e.isIntersecting; if (isMobile() && camPage()) { const c = camList().filter(x => x.o && x.o.el === e.target)[0]; if (c) { if (e.isIntersecting) { clearTimeout(c.vt); if (!c.live && !(c.pc && c._warm && Date.now() - c._warm < 5000)) { if (CONFIG.mobileLive !== false) liveCam(c); else camSnap(c); } } else if (CONFIG.mobileLive !== false && !e.target.classList.contains("fs")) { clearTimeout(c.vt); c.vt = setTimeout(() => { if (c.o.el._vis === false && !c.o.el.classList.contains("fs")) { clearTimeout(c.rt); stopCam(c); } }, 2000); } } } }), { rootMargin: "150px" }) : null;
 const CAMREG = [], DETHOLD = {};
 function detOf(id) { const b = id.replace(/^camera\./, "binary_sensor.").replace(/_(clear|fluent|sub|main)$/, ""); return { person: b + "_person", vehicle: b + "_vehicle" }; }
 function detApply(el, id) {
@@ -7251,7 +7297,7 @@ function mkCam(c, host) {
       if (fresh) { c.snd = true; o.vid.muted = false; snd.classList.add("on"); snd.innerHTML = AUD.on; liveCam(c); }   // reconnect once with a send channel
     } catch (x) { mic.dataset.e = "Mic blocked: " + (x && x.name || "error"); mic.classList.add("err"); setTimeout(() => mic.classList.remove("err"), 4500); }
   };
-  o.vid.onplaying = () => { c.live = true; clearTimeout(c.ft); el.classList.add("live"); el.classList.remove("cwait", "cfail"); o.vid.classList.add("on"); camLiveSync(); setTimeout(() => { if (c.live) camMem.put(c.id, o.vid); }, 1500); };
+  o.vid.onplaying = () => { c.live = true; el.classList.remove("still"); clearTimeout(c.ft); el.classList.add("live"); el.classList.remove("cwait", "cfail"); o.vid.classList.add("on"); camLiveSync(); setTimeout(() => { if (c.live) camMem.put(c.id, o.vid); }, 1500); };
   { const ar = m => { const w = m.videoWidth || m.naturalWidth, h = m.videoHeight || m.naturalHeight; if (w > 0 && h > 0) el.style.setProperty("--ar", w + " / " + h); };   // the two-feed landscape view sizes each picture from this
     o.img.addEventListener("load", () => { if (!c.live) ar(o.img); }); o.vid.addEventListener("loadedmetadata", () => ar(o.vid)); o.vid.addEventListener("resize", () => ar(o.vid)); }
   const cp = $(".cpanel", el); cp.onclick = tapH; cp.onchange = chgH;
@@ -7312,7 +7358,7 @@ function viewMode() {
 function applyView() {
   if (!onView()) return; const m = viewMode(); if (m === VW.mode) return; VW.mode = m;
   const vw = $("#vw"); vw.className = "on " + (m === "both" ? "two" : "one");
-  VWC.forEach(c => { const vis = m === "both" ? (c.k === "driveway" || c.k === "garage") : m === c.k; c.o.el.style.display = vis ? "" : "none"; if (vis) { liveCam(c); if (m === "both") mkLiveOff(c.o.el); else mkLiveOn(c.o.el);   /* two cameras side by side: no recogniser (heavy, and the picture is laid out differently) */ const s = states[c.id], pc = s && s.attributes.entity_picture; if (pc) c.o.img.src = CONFIG.url + pc + (pc.indexOf("?") > -1 ? "&" : "?") + "t=" + Date.now(); } else { clearTimeout(c.rt); stopCam(c); mkLiveOff(c.o.el); } });
+  VWC.forEach(c => { const vis = m === "both" ? (c.k === "driveway" || c.k === "garage") : m === c.k; c.o.el.style.display = vis ? "" : "none"; if (vis) { const warm = !!c.pc && c.eid === c.id && (c.live || (c._warm && Date.now() - c._warm < 5000)); const mem = camMem.get(c.id); if (mem && !c.live) { c.o.img.src = mem; c.o.el.classList.add("still"); } if (!warm) liveCam(c); if (m === "both") mkLiveOff(c.o.el); else mkLiveOn(c.o.el);   /* two cameras side by side: no recogniser (heavy, and the picture is laid out differently) */ const s = states[c.id], pc = s && s.attributes.entity_picture; if (pc && !mem) c.o.img.src = CONFIG.url + pc + (pc.indexOf("?") > -1 ? "&" : "?") + "t=" + Date.now(); } else { clearTimeout(c.rt); stopCam(c); mkLiveOff(c.o.el); } });
   // both feeds on screen: a control the garage card already has (the garage door) only shows there, not under the driveway too
   { const dv = VWC.filter(c => c.k === "driveway")[0], gv = VWC.filter(c => c.k === "garage")[0];
     if (dv && gv) { const ge = new Set($$(".cpanel .tg3>[data-e]", gv.o.el).map(x => x.dataset.e)); $$(".cpanel .tg3>[data-e]", dv.o.el).forEach(t => t.classList.toggle("vdup", m === "both" && ge.has(t.dataset.e))); } }
@@ -7543,7 +7589,7 @@ function drawRoom(id) {
   if (dw.length) P.push(["Doors & windows", '<div class="bl">' + dw.map(tileHtml).join("") + '</div>', { k: "open", ids: dwl, off: [] }]);
   if (cl.length) P.push(["Climate", '<div class="tg3">' + cl.map(climHtml).join("") + '</div>', { k: "on", ids: cl, off: [] }]);
   // a live camera: the garage's (its garage alert) goes inside the card with the garage door button, above it; a room's own camera (config camera) gets the first card
-  { const rc = roomCam(r); if (rc) { const cv = '<div class="snap npcam rvcam" data-rvc="' + esc(rc.id) + '" data-name="' + esc(rc.name) + '"></div>', gs = ((typeof galCfg === "function" && galCfg()[rc.id]) || {}).sensor, gi = gs ? P.findIndex(p => p[2].ids.indexOf(gs) > -1) : -1;
+  { const rc = roomCam(r); if (rc) { const cv = '<div class="rvcam" data-rvc="' + esc(rc.id) + '" data-name="' + esc(rc.name) + '"></div>', gs = ((typeof galCfg === "function" && galCfg()[rc.id]) || {}).sensor, gi = gs ? P.findIndex(p => p[2].ids.indexOf(gs) > -1) : -1;
     if (gi > -1) P[gi][1] = cv + P[gi][1]; else P.unshift(["Camera", cv, { k: "cam", ids: [], off: [] }]); } }
   curPanels = P.map(p => p[2]);
   v.innerHTML = '<div class="rh"><a class="eb" href="#rooms">' + mdi("chevron-left") + ' ROOMS</a><h2><span class="rnm">' + esc(r.name) + '</span><span class="lbl" id="rvt">--</span></h2>' +
@@ -7561,8 +7607,7 @@ function roomCam(r) {
 function rvCamMount() {
   const sl = $("#rv [data-rvc]"); if (!sl || !curRoom || !onRooms) { rvCamStop(); return; }
   const id = sl.dataset.rvc; let c = RVC.find(x => x.id === id);
-  if (!c) { c = { id: id, name: sl.dataset.name, rv: true }; RVC.push(c); mkCam(c, document.createElement("div"));
-    c.o.el.onclick = e => { if (e.target.closest("button")) return; const v = VWC.find(x => x.id === c.id); if (!v) return; VW.back = location.hash || "#rooms"; location.hash = "#view/" + String(v.k).replace(/^cam:/, ""); }; }   // one tap opens it full screen, like any other camera
+  if (!c) { c = { id: id, name: sl.dataset.name, rv: true }; RVC.push(c); mkCam(c, document.createElement("div")); }   // one tap opens it full screen in place, like any other camera: the same live picture keeps playing
   RVC.forEach(x => { if (x !== c && x._on) { clearTimeout(x.rt); x._on = 0; stopCam(x); } });
   if (c.o.el.parentNode !== sl) sl.appendChild(c.o.el); c.o.el.querySelector(".lbl").textContent = sl.dataset.name;
   if (!c._on) { c._on = 1; camSnap(c); clearTimeout(c.rt); c.rt = setTimeout(() => { if (c._on && curRoom && onRooms) { if (isMobile() && CONFIG.mobileLive === false) camSnap(c); else liveCam(c); } }, 200); }
@@ -9905,6 +9950,7 @@ function dtDrawLater() {   // while loading: one redraw per ~1.2s instead of one
   if (DT.lt) return; DT.lt = setTimeout(() => { DT.lt = 0; dtDraw(true); }, 1200);
 }
 function dtDraw(soft) {
+  if (DT.warm && !dtWanted()) return;   // being got ready in the background: nothing is on screen to draw
   const P = $("#dtp"); if (!P) return; if (!dtCams().length || CONFIG.detections === false) { P.style.display = "none"; return; } P.style.display = "";
   const all = dtItems(), tyOn = k => DT.types[k], vis = all.filter(x => (DT.cam === "all" || x.cam === DT.cam) && x.p.tags.some(t => tyOn(t)));
   DT.vis = vis; DT.mom = dtMoments(vis);
@@ -9934,17 +9980,18 @@ function dtNext() {
   if (!dtWanted()) return;
   while (DT.run < thPar() && DT.q.length) dtOne(DT.q.shift());
 }
-function dtOne(mc) {
+function dtOne(mc, cb) {   // cb: the background preload waits for each picture; for a snapshot it also pulls the file into the browser's cache
+  let cbd = 0; const ready = () => { if (cb && !cbd) { cbd = 1; cb(); } };
   const put = u => { [].concat.apply([], dtRoots().map(P => $$("[data-dth]", P))).filter(x => x.dataset.dth === mc).forEach(n => { if (!n.querySelector("img")) { const im = document.createElement("img"); im.alt = ""; im.src = u; n.insertBefore(im, n.firstChild); } }); };
   const sid = DT.snapOf[mc];
   if (sid) {   // a picture HA saved at the time: just fetch it, nothing to decode
-    const su = DT.snapUrl[mc]; if (su && Date.now() - su.t < 3000000) { put(su.u); return; }
-    DT.run++; send({ type: "media_source/resolve_media", media_content_id: sid, expires: 3600 }, r => { DT.run--; if (r && r.url) { const u = (r.url.indexOf("http") === 0 ? "" : CONFIG.url) + r.url; DT.snapUrl[mc] = { u: u, t: Date.now() }; put(u); } else { delete DT.snapOf[mc]; DT.q.push(mc); } dtNext(); });
+    const su = DT.snapUrl[mc]; if (su && Date.now() - su.t < 3000000) { put(su.u); ready(); return; }
+    DT.run++; send({ type: "media_source/resolve_media", media_content_id: sid, expires: 3600 }, r => { DT.run--; if (r && r.url) { const u = (r.url.indexOf("http") === 0 ? "" : CONFIG.url) + r.url; DT.snapUrl[mc] = { u: u, t: Date.now() }; put(u); if (cb) { const im = new Image(); im.onload = im.onerror = ready; setTimeout(ready, 8000); im.src = u; } } else { delete DT.snapOf[mc]; if (!cb) DT.q.push(mc); ready(); } dtNext(); });
     return;
   }
-  if (DT.th[mc] != null) { if (DT.th[mc]) put(DT.th[mc]); return; }
+  if (DT.th[mc] != null) { if (DT.th[mc]) put(DT.th[mc]); ready(); return; }
   DT.run++; let done = false, tries = 0; const v = document.createElement("video"); v.muted = true; v.playsInline = true; v.preload = "metadata"; v.crossOrigin = "anonymous";
-  const fin = ok => { if (done) return; done = true; clearTimeout(tm); v.removeAttribute("src"); try { v.load(); } catch (e) {} DT.run--; if (!ok) DT.th[mc] = ""; dtNext(); };
+  const fin = ok => { if (done) return; done = true; clearTimeout(tm); v.removeAttribute("src"); try { v.load(); } catch (e) {} DT.run--; if (!ok) DT.th[mc] = ""; dtNext(); ready(); };
   const tm = setTimeout(() => fin(false), 12000);
   send({ type: "media_source/resolve_media", media_content_id: mc, expires: 3600 }, r => {
     if (!r || !r.url) return fin(false);
@@ -9957,6 +10004,29 @@ function dtOne(mc) {
     v.onerror = () => fin(false); v.src = (r.url.indexOf("http") === 0 ? "" : CONFIG.url) + r.url;
   });
 }
+// ---------- getting Detections ready in the background ----------
+// While the dashboard sits open (not on Detections, nothing full screen, the page on screen) the clip list is read every 10 minutes and the newest
+// previews are fetched one at a time, so the tab opens with its pictures. config.js: detections: { preload: false } turns it off.
+const dtPre = () => { const d = CONFIG.detections; return !(d && typeof d === "object" && d.preload === false); };
+const dtWarmOk = () => !document.hidden && wsAuthed && ws && ws.readyState === 1 && !dtWanted() && !document.querySelector(".cam.fs, .cam.zm");
+async function dtWarm() {
+  if (DT.warming || DT.busy || !dtPre() || !dtCams().length || CONFIG.detections === false || !ruSec("detections") || !dtWarmOk()) return;
+  DT.warming = true;
+  try {
+    if (!DT.stored) { DT.stored = 1; await THDB.load(); }
+    if (!DT.t0 || Date.now() - DT.t0 > 600000) { DT.warm = true; try { await dtLoad(); } finally { DT.warm = false; } }
+    const list = dtItems().filter(x => x.p.tags.some(t => DT.types[t])).slice(0, 24); let slow = 0;
+    for (const x of list) {
+      if (!dtWarmOk()) break;
+      const mc = x.mc, snap = DT.snapOf[mc], su = DT.snapUrl[mc];
+      if (snap ? su && Date.now() - su.t < 3000000 : DT.th[mc] != null) continue;
+      if (!snap && slow++ >= 6) continue;   // a clip with no saved snapshot is cut from the video: only the newest few
+      await new Promise(r => dtOne(mc, r));
+    }
+  } catch (e) {} finally { DT.warming = false; DT.warm = false; }
+}
+setTimeout(dtWarm, 12000);
+setInterval(() => { if (typeof AU === "undefined" || Date.now() - AU.touch > 8000) dtWarm(); }, 90000);
 function secTab(t) {   // Security page: LIVE (alarm + cameras) or DETECTIONS (loaded only when opened)
   const pg = $("#security"), tb = $("#stabs"), has = dtCams().length && CONFIG.detections !== false && ruSec("detections"); pg.dataset.tab = has ? t : "live";
   tb.style.display = has ? "" : "none"; tb.innerHTML = has ? [["live", "LIVE", "#security"], ["det", "DETECTIONS", "#security/detections"]].map(x => '<button class="chip' + (pg.dataset.tab === x[0] ? " on" : "") + '" data-st="' + x[2] + '">' + x[1] + '</button>').join("") : "";
@@ -9967,7 +10037,7 @@ function secTab(t) {   // Security page: LIVE (alarm + cameras) or DETECTIONS (l
 }
 let secPrev = "";
 $("#stabs").onclick = e => { const b = e.target.closest("[data-st]"); if (b && location.hash !== b.dataset.st) location.hash = b.dataset.st; };
-function dtInit() { if (mkAiOn()) mkAiLoad(); if (!dtCams().length || CONFIG.detections === false || !ruSec("detections")) return; if (!DT.stored) { DT.stored = 1; THDB.load().then(n => { if (n && location.hash === "#security/detections") dtDraw(true); }); } dtDraw(); if (!DT.t0 || Date.now() - DT.t0 > 5 * 60000) dtLoad(); }
+function dtInit() { DT.warm = false; if (mkAiOn()) mkAiLoad(); if (!dtCams().length || CONFIG.detections === false || !ruSec("detections")) return; if (!DT.stored) { DT.stored = 1; THDB.load().then(n => { if (n && location.hash === "#security/detections") dtDraw(true); }); } dtDraw(); if (!DT.t0 || Date.now() - DT.t0 > 5 * 60000) dtLoad(); }
 $("#dtp").addEventListener("click", e => {
   const b = e.target.closest("[data-dt]"); if (!b) return; const k = b.dataset.dt;
   if (k === "type") { DT.types[b.dataset.v] = !DT.types[b.dataset.v]; DT.show = 24; dtDraw(); txGo($("#dtp .dtg"), 0, true); }
@@ -10320,7 +10390,15 @@ $("#theme").oninput = e => {
   applyPal(); savePal();
 };
 // smooth colour fade when the palette changes (a short-lived class lets colours transition; no page snapshots, so no blink)
-const themeFx = fn => fn(), themeDip = fn => fn();
+const themeFx = fn => fn();
+// a change of look (Kinetic, Liquid Glass, Material) or font crossfades the whole screen instead of cutting: the browser keeps a picture of the old look and fades it into the new one.
+// Where that is not available (older browsers, reduced motion) the change is instant, as before.
+const themeDip = fn => {
+  if (!document.startViewTransition || matchMedia("(prefers-reduced-motion: reduce)").matches) { fn(); return; }
+  const h = document.documentElement; h.classList.add("vts");
+  let t; try { t = document.startViewTransition(() => { fn(); }); } catch (e) { h.classList.remove("vts"); fn(); return; }
+  const done = () => h.classList.remove("vts"); t.finished.then(done, done);
+};
 $("#theme").onclick = e => {
   const p = e.target.closest("[data-p]"), r = e.target.closest("[data-reset]"), md = e.target.closest("button[data-mode]"), sy = e.target.closest("button[data-style]"), fn = e.target.closest("button[data-font]");
   const ac = e.target.closest("[data-acc]"); if (ac) { accClick(ac); return; }
@@ -10524,6 +10602,13 @@ document.addEventListener("scroll", wpGo, { capture: true, passive: true });
 addEventListener("resize", wpBurst); addEventListener("hashchange", wpBurst);
 document.addEventListener("click", wpBurst, true); document.addEventListener("animationend", wpGo, true); document.addEventListener("transitionend", wpGo, true);
 setInterval(wpSync, 1000); setTimeout(wpBurst, 300);
+// a page that is drawn again (a colour preset, a style, a language) puts NEW pinned rows in place. Their wallpaper layer must be there from the very first frame: set up in the same
+// moment they appear (before anything is painted) and without the fade that is meant for scrolling, or the list shows through the row for a moment
+if ("MutationObserver" in window) {
+  const wpNew = ns => { let any = false; ns.forEach(n => { if (n.nodeType !== 1) return; (n.matches(WP_ROWS) ? [n] : n.firstElementChild ? [].slice.call(n.querySelectorAll(WP_ROWS)) : []).forEach(e => { any = true; e.classList.add("wpnew"); setTimeout(() => e.classList.remove("wpnew"), 500); }); }); if (any) wpSync(); };
+  const wpWatch = () => document.querySelectorAll(".page, #theme, #admin").forEach(pg => { if (pg._wpo) return; pg._wpo = 1; new MutationObserver(ms => ms.forEach(m => wpNew(m.addedNodes))).observe(pg, { childList: true, subtree: pg.id === "theme" || pg.id === "admin" }); });
+  wpWatch(); setTimeout(wpWatch, 1500);
+}
 // ---------- Admin page: for Home Assistant admins only (nav link hidden for everyone else, and #admin sends other people home) ----------
 // Holds what used to sit at the bottom of the Theme page: who can see which pages (Access), plus the setup check, and a few facts about this dashboard.
 // config.js systemStatus adds a "System status" block at the top of this page. Two forms:
@@ -16456,8 +16541,8 @@ function tkRoadPane(sel, whole) {
 const tkBad = T => (T || []).reduce((a, t) => a + t.bad.length, 0);
 const tkSubRoad = T => !T ? "No data from NZTA" : tkBad(T) ? tkBad(T) + " problem" + (tkBad(T) > 1 ? "s" : "") + " on your routes · NZTA" : "No problems on your routes · NZTA";
 const TK_CH = { wx: "CH 03 · WEATHER ALERT", ww: "CH 06 · WEATHER WARNING", cam: "CH 01 · CAMERA", road: "CH 07 · ROADS", sea: "CH 08 · SEA" };   // the channel line Kinetic shows above the title (hidden in the other looks)
-function tkShell(kind, icon, tone, ttl, sub, body, foot, wide) {
-  return '<div class="cmb tk tk-' + kind + " tn-" + tone + (wide ? " tkw" : "") + '" role="dialog" aria-label="' + esc(ttl) + '" data-tk="' + kind + '"><div class="tk-gr"></div><div class="tk-h"><span class="tk-ic ' + tone + '">' + mdi(icon) + '</span><div class="tk-ht"><span class="tk-tg">' + (TK_CH[kind] || "") + '</span><b>' + esc(ttl) + '</b><small class="tk-sub">' + esc(sub) + '</small></div><button class="rnd" data-cmx aria-label="Close">' + mdi("close") + '</button><button class="tk-dn" data-cmx>Done</button></div>' +
+function tkShell(kind, icon, tone, ttl, sub, body, foot, wide, attrs) {
+  return '<div class="cmb tk tk-' + kind + " tn-" + tone + (wide ? " tkw" : "") + '" role="dialog" aria-label="' + esc(ttl) + '" data-tk="' + kind + '"' + (attrs || "") + '><div class="tk-gr"></div><div class="tk-h"><span class="tk-ic ' + tone + '">' + mdi(icon) + '</span><div class="tk-ht"><span class="tk-tg">' + (TK_CH[kind] || "") + '</span><b>' + esc(ttl) + '</b><small class="tk-sub">' + esc(sub) + '</small></div><button class="rnd" data-cmx aria-label="Close">' + mdi("close") + '</button><button class="tk-dn" data-cmx>Done</button></div>' +
     body + '<div class="tk-f">' + foot.replace(/(<button[^>]*>)([^<]+)(<\/button>)/g, (m, a, t, c) => a + "<span>" + t.replace("GOOGLE MAPS", "<i>GOOGLE MAPS</i>") + "</span>" + c) + '</div></div>';
 }
 function tkOpen(kind, key) {
@@ -16503,8 +16588,8 @@ function tkWxOpen(key) {
   const ks = tkwKeys(w), k = ks.indexOf(key) >= 0 ? key : ks[0], x = w[k], P = wxaParts(k, x); TK.sel = k;
   const foot = '<button class="eb tk-b" data-tka="wx">OPEN WEATHER PAGE</button><button class="eb tk-b pri" data-cmx>DONE</button>';
   const head = [k, x.tier === 3 ? "bad" : "warn", P[1], P[2] || ""];
-  if (TK.wide) cmtShow(tkShell("wx", wxaIc[k](x), head[1], head[2], head[3], '<div class="tk-cols"><div class="tk-rail tk-wxl">' + tkwRail(ks, w, k, true) + '</div><div class="tk-pane">' + tkwPane(k, w) + '</div></div>', foot, true));
-  else cmtShow(tkShell("wx", wxaIc[k](x), head[1], head[2], head[3], '<div class="tk-body">' + (ks.length > 1 ? '<div class="tk-wsw">' + tkwRail(ks, w, k, false) + '</div>' : "") + '<div class="tk-wxp">' + tkwPane(k, w) + '</div></div>', foot, false));
+  if (TK.wide) cmtShow(tkShell("wx", wxaIc[k](x), head[1], head[2], head[3], '<div class="tk-cols"><div class="tk-rail tk-wxl">' + tkwRail(ks, w, k, true) + '</div><div class="tk-pane">' + tkwPane(k, w) + '</div></div>', foot, true, ' data-wk="' + k + '" data-wt="' + x.tier + '"'));
+  else cmtShow(tkShell("wx", wxaIc[k](x), head[1], head[2], head[3], '<div class="tk-body">' + (ks.length > 1 ? '<div class="tk-wsw">' + tkwRail(ks, w, k, false) + '</div>' : "") + '<div class="tk-wxp">' + tkwPane(k, w) + '</div></div>', foot, false, ' data-wk="' + k + '" data-wt="' + x.tier + '"'));
 }
 function tkWxSel(k) {
   const w = wxaNow(), el = $("#cmtsh .tk-wx"); if (!w || !el || !w[k]) return; TK.sel = k;
@@ -16515,6 +16600,7 @@ function tkWxSel(k) {
   if (t) t.textContent = P[1]; if (sb) sb.textContent = P[2] || "";
   if (ic) { ic.className = "tk-ic " + (x.tier === 3 ? "bad" : "warn"); ic.innerHTML = mdi(wxaIc[k](x)); }
   el.classList.remove("tn-warn", "tn-bad", "tn-ok"); el.classList.add(x.tier === 3 ? "tn-bad" : "tn-warn");
+  el.dataset.wk = k; el.dataset.wt = x.tier;
 }
 // ---------- cameras: a tap on a camera in Notifications opens it here, live, with the garage door control under it ----------
 function tkCamList() { return typeof npCams === "function" ? npCams() : []; }
@@ -16786,7 +16872,7 @@ function tkLink(kind, key, n) {
 // with ?v=<build> in the address so no cache can hand back the old page. It waits while something is open or in use (a pop-up, a card, a camera
 // in full screen, typing, Settings, a touch in the last minute). A file that can't be fetched or looks cut off changes nothing.
 // config.js: autoUpdate: false turns it off; autoUpdateMinutes: how often it looks.
-const AU = { cfg: null, last: 0, busyT: 0, touch: Date.now() };
+const AU = { cfg: null, last: 0, busyT: 0, touch: 0 };
 const auOn = () => CONFIG.autoUpdate !== false && /^https?:$/.test(location.protocol);
 const auHash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
 // the config.js this page loaded, as written in its script tag (config.js?v=1, or ?v=2.5.6 on the demo)
@@ -16827,14 +16913,22 @@ async function auCheck(force) {
 }
 function auGo(why, build) {
   const busy = auBusy(); if (busy) { clearTimeout(AU.busyT); AU.busyT = setTimeout(() => auGo(why, build), 15000); return; }
+  window.__auGoing = true;   // the first reveal (05-first-load-gate.js) waits: the page is about to be replaced
   // no loop: the same target twice in a row in this tab (a cache that won't let go) and it stops trying until the next new build
   const key = why + ":" + (build || AU.cfgNew || "cfg"); let tried = {}; try { tried = JSON.parse(sessionStorage.getItem("kinetic-au") || "{}"); } catch (e) {}
-  if ((tried[key] || 0) >= 2) return;
+  if ((tried[key] || 0) >= 2) { window.__auGoing = false; return; }
   tried[key] = (tried[key] || 0) + 1; try { sessionStorage.setItem("kinetic-au", JSON.stringify(tried)); sessionStorage.setItem("kinetic-au-done", why === "page" ? (AU.ver || "") + " · " + build : "cfg"); } catch (e) {}
-  const u = new URL(location.href); if (build) u.searchParams.set("v", build);
+  // the address the dashboard is normally opened from (HA, a bookmark): without the ?v= this script adds itself. THAT saved copy is the one that must be refreshed,
+  // or every later open starts on the old page, updates again and shows the note again
+  const base = new URL(location.href); if (base.searchParams.get("v") === window.DASH_BUILD) base.searchParams.delete("v");
+  const u = (tried[key] || 0) > 1 && build ? new URL(base.href) : base;
+  if (u !== base) u.searchParams.set("v", build);
   const cs = auCfgSrc();
-  // refresh the saved copies the reload will use, then go
-  Promise.all([cs ? fetch(cs, { cache: "reload", credentials: "same-origin" }).catch(() => {}) : null, fetch(u.pathname + u.search, { cache: "reload", credentials: "same-origin" }).catch(() => {})])
+  // the logo says so, and the next page picks up where this one is (no second fade-in): see brand-splash.js
+  try { sessionStorage.setItem("kinetic-au-resume", String(Date.now())); } catch (e) {}
+  const bv = document.querySelector("#bootld .bv"); if (bv) bv.textContent = "Updating…";
+  // refresh the saved copies the reload will use, then go. The second try for the same build (a cache that won't let go) goes to its own ?v=<build> address
+  Promise.all([cs ? fetch(cs, { cache: "reload", credentials: "same-origin" }).catch(() => {}) : null, fetch(base.pathname + base.search, { cache: "reload", credentials: "same-origin" }).catch(() => {})])
     .then(() => { if (u.href === location.href) location.reload(); else location.replace(u.href); });
 }
 // after an update: a short note at the bottom
@@ -16845,12 +16939,19 @@ function auNote() {
   setTimeout(() => { void tt.offsetWidth; tt.classList.add("on"); setTimeout(() => tt.classList.remove("on"), 4000); }, 1500);
 }
 if (auOn()) {
+  // the first look happens at once, while the logo is still up: a newer page replaces this one before anything has been shown or touched
+  window.__auGate = auCheck(true);
   setTimeout(() => auCheck(true), 20000);
   setInterval(() => auCheck(false), Math.max(1, +(CONFIG.autoUpdateMinutes || 5)) * 60000);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) auCheck(false); });
   addEventListener("online", () => auCheck(false));
 }
 auNote();
+// arrived by an update on a ?v=<build> address: quietly refresh the saved copy of the normal address too (it may still hold an older page that would update again on every open)
+if (auOn()) try {
+  const b = new URL(location.href);
+  if (b.searchParams.get("v") === window.DASH_BUILD) { b.searchParams.delete("v"); setTimeout(() => fetch(b.pathname + b.search, { cache: "reload", credentials: "same-origin" }).catch(() => {}), 6000); }
+} catch (e) {}
 // ---------- Search (2.6.0) ----------
 // A magnifier in the header opens a search over the whole dashboard: a full screen on a phone, a centred panel on a tablet or computer
 // (Ctrl/Cmd+K opens it too, and so does "/" when you are not typing in a box). It finds
