@@ -5907,6 +5907,8 @@ html[data-style=glass]:not(#x):not(#y) .tl:not(.wt):not(.sir):not(.cl):not(.cam 
 /* the small badges and buttons on the camera tiles (not on a full-screen picture): one flat darker chip instead of a blur of live video, one per button per camera */
 html:not(#x):not(#y) .cam:not(.fs):not(.vf) :is(.lv,.px,.cx,.fsb){-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(18,18,24,.72)}
 html[data-style=glass]:not(#x):not(#y) .cam:not(.fs):not(.vf)>.lbl{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,255,255,.36)}
+/* Scenes: the picture library can hold well over a hundred tiles; the ones off screen are not drawn until they scroll near (the tile keeps its size, so the scrollbar does not jump) */
+html:not(#x) #scenes .gal>.sc{content-visibility:auto;contain-intrinsic-size:auto 170px}
 /* Now Playing pop-up on tablets (the Spotify bar opens it): the player on the left, the artist or the lyrics on the right.
    The title row keeps the label on the left and the lyrics and close buttons at the top right, all on one centre line. Phones keep the swipe pages (93-now-playing-sheet.css). */
 @media(min-width:761px){
@@ -6207,6 +6209,13 @@ html[data-style=glass] #bband i:is(:nth-child(1),:nth-child(3),:nth-child(5)){di
 #tlscrim:not(.on){visibility:hidden;transition:opacity .2s,visibility 0s .2s}
 /* half sheets float inset from the screen edge with rounded corners all round (Apple's sheet), instead of sitting flush on the bottom */
 @media(max-width:760px){html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) :is(#scenes .sct:not(.col),#irrigation .zsx:not(.col)){left:8px!important;right:8px!important;bottom:8px!important;border-radius:34px!important;max-height:calc(88dvh - 8px)!important}}
+/* tile names may wrap to two lines instead of being cut off ("Master Bath…"); a little less padding gives the text more width */
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl:not(.wt):not(.sir):not(.cl){column-gap:10px;padding:12px 12px}
+html[data-style=glass]:not(#x):not(#y):not(#z) .tl:not(.wt):not(.sir):not(.cl)>.tn .nm{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-height:1.2;overflow:hidden;text-overflow:ellipsis;overflow-wrap:anywhere}
+/* Scenes and Irrigation selectors sit over pictures and cards: nearly solid glass, so the labels stay sharp */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(#scenes,#irrigation) .chips.tabs[data-gth]{background:rgba(30,28,44,.9)!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) :is(#scenes,#irrigation) .chips.tabs[data-gth]{background:rgba(248,247,253,.92)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(#scenes,#irrigation) .chips.tabs[data-gth]>.chip:not(.on){color:var(--ink)!important;opacity:.85}
 /* ---------- Kinetic polish (remove this file's include in index.html to revert it) ----------
    Lessons from iOS and Material, kept in Kinetic's own character:
    1. sentence case on tabs, chips and buttons (headings and badges stay in capitals)
@@ -6245,6 +6254,9 @@ html:not(#x):not(#y) *{-webkit-backdrop-filter:none!important;backdrop-filter:no
 html:not(#x):not(#y) :is(#fband,#bband){display:none!important}
 html:not(#x):not(#y) :is(header,#mshe,#btab,nav,#np){background:var(--bg2)!important}
 }
+/* lit tiles in light mode: the state line and the icon take a darkened tile colour, so "100%" is readable on the pale glow */
+html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.on:not(.wt):not(.sir) .ts2{color:color-mix(in srgb,rgb(var(--tcx)) 42%,#1a1a1a)!important}
+html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.on:not(.wt):not(.sir) .tn svg{fill:color-mix(in srgb,rgb(var(--tcx)) 55%,#1a1a1a)!important;filter:none}
 </style>
 <style>
 /* HA diagnostics stay compact until requested. */
@@ -6331,9 +6343,9 @@ html:not(#x):not(#y) :is(header,#mshe,#btab,nav,#np){background:var(--bg2)!impor
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "3.2.1";   // the one place to change the version
+window.DASH_VER = "3.2.2";   // the one place to change the version
 window.DASH_NEW = {"3.2.0":{"n":["**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass."],"f":0},"3.1.2":{"n":["**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page."],"f":0},"3.1.1":{"n":["**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer."],"f":0},"3.1.0":{"n":["**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass."],"f":0},"3.0.0":{"n":["**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "2f5d4b";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "c9c836";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
@@ -10035,6 +10047,9 @@ function scGroups() {
   });
   return G;
 }
+// the picture strip in the phone's Scene sheet is the same library again: it is only built when the sheet opens (the page itself holds the pictures once, so it opens faster)
+const scStripHtml = () => scGroupLib(scFilter).map(c => c[1].map(scTile).join("")).join("");
+function scStripFill() { const t = $("#scenes .scstp"); if (!t || t.firstElementChild) return; scEager = 0; t.innerHTML = scStripHtml(); updScenes(); }
 function scPanel() {   // the room tabs, each with its zones and its LED lights in one list
   const S = CONFIG.scenes, G = scGroups().filter(x => x[2].length || x[3].length); if (scTab >= G.length) scTab = 0; const T = G[scTab] || ["", "", [], []];
   const led = '<em class="sclt">LED</em>';
@@ -10045,7 +10060,7 @@ function scPanel() {   // the room tabs, each with its zones and its LED lights 
   const ctl = '<div class="lbl np2">Scenes control</div>' + [[E("dynBrightness"), "Brightness", "brightness-6", ""]].concat(T[2].length ? [[E("dynInterval"), "Interval", "timer", ""]] : []).concat(T[3].map(i => [S.lights[i].v, S.lights[i].n + " speed", "speedometer", i])).filter(x => x[0]).map(x => '<div class="mv"' + (x[3] !== "" ? ' data-spd="' + x[3] + '" hidden' : "") + '><span>' + mdi(x[2]) + ' ' + esc(x[1]) + '</span><input type="range" data-nb="' + x[0] + '"><b class="nbv"></b></div>').join("") +
     '<div class="sr stp" data-stop="1"><i class="sbd">' + mdi("stop-circle") + '</i><b>Stop scenes</b></div>';
   const col = isMobile() ? !scSheet : scCol;
-  body = '<div class="lbl scpk">Scene</div>' + hsw('<div class="scstp">' + scGroupLib(scFilter).map(c => c[1].map(scTile).join("")).join("") + '</div>') + '<div class="lbl scpk">Apply to</div>' + body;
+  body = '<div class="lbl scpk">Scene</div>' + hsw('<div class="scstp">' + (isMobile() && scSheet ? scStripHtml() : "") + '</div>') + '<div class="lbl scpk">Apply to</div>' + body;
   return '<div class="scbk" data-sch="1"></div><div class="pn sct' + (col ? " col" : "") + '"><div class="sch" data-sch="1"><i class="schi" id="scth">' + mdi("palette") + '</i><div class="sck"><span class="lbl">Scene</span><b class="h3" id="scn">--</b><div class="sctags" id="sctags"></div><div class="sm">Tap a light to play this scene</div><div class="sm scsm" id="scsum"></div></div><span class="schc">' + mdi("chevron-down") + '<i class="schx">' + mdi("close") + '</i></span></div><div class="scb">' + body + ctl + '</div></div>';
 }
 let scBarWas, scBarH = 44;   // whether the filter chips were showing at the last draw, and their height
@@ -10089,7 +10104,7 @@ $("#scenes").onclick = e => {
   else if (stb) { const old = scTab; scTab = +stb.dataset.st; if (!scGroupHasLed()) scFilter = "room"; else if (scFilter === "room") scFilter = "all"; drawScenes(); scStripGo(); if (scTab !== old) txGo($("#scenes .srl"), scTab > old ? 1 : -1, true); }
   else if (sch) { const p0 = $("#scenes .sct"), c = !p0.classList.contains("col"); if (sch.classList.contains("scbk") && !c) return;
     const ap = () => { const p = $("#scenes .sct"); if (!p) return; p.classList.toggle("col", c); $("#scenes").classList.toggle("scop", !c); document.body.classList.toggle("pill-open", !c && isMobile());
-      if (isMobile()) { scSheet = !c; if (c) pillIn(p); else { shIn(p, $("#scenes .scbk")); scStripGo(); } } else { scCol = c; try { localStorage.setItem("dashScCol", scCol ? "1" : "0"); } catch (_) {} } };
+      if (isMobile()) { scSheet = !c; if (c) pillIn(p); else { scStripFill(); shIn(p, $("#scenes .scbk")); scStripGo(); } } else { scCol = c; try { localStorage.setItem("dashScCol", scCol ? "1" : "0"); } catch (_) {} } };
     if (c && isMobile()) shShut(p0, $("#scenes .scbk"), ap); else ap(); }
   else if (stp) { if (scDirect()) scdStopAll(); else call("input_boolean", "toggle", E("dynStop")); }
   else if (sc) { const match = scGroupLib("all").some(c => c[1].some(x => x.v === sc.dataset.v)); if (match) call("input_text", "set_value", E("dynSelected"), { value: sc.dataset.v }); }
