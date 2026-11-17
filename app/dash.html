@@ -2322,7 +2322,7 @@ header.hmerge #wpls .wpl{line-height:1.2}
 .wxl .wxopen::after{content:"OPEN FULL SCREEN"}
 /* page transition: one motion per look. Kinetic rises (the original); Liquid Glass fades up softly and quickly; Material slides a short way in the direction you moved (an Android shared axis) and fades.
    The same motion drives tab switches inside a page and the Energy range switch. --pgs is the speed (it scales every duration and delay), --cd-t / --tx-t the starting position, --ez the easing. */
-html{--pgs:2}
+html{--pgs:1.2}
 html[data-style=glass]{--pgs:.8;--cd-t:translateY(10px) scale(.985);--tx-t:translateY(8px) scale(.99);--ez:cubic-bezier(.2,.8,.2,1)}
 html[data-style=material]{--pgs:.6;--tx-t:translateY(10px);--ez:cubic-bezier(.2,0,0,1)}
 html[data-style=material] .page{--cd-t:translateX(calc(var(--pgdx,0px)*.7))}   /* resolved on the page, where pgEnter sets --pgdx (+36px or -36px: the direction you moved) */
@@ -6207,6 +6207,44 @@ html[data-style=glass] #bband i:is(:nth-child(1),:nth-child(3),:nth-child(5)){di
 #tlscrim:not(.on){visibility:hidden;transition:opacity .2s,visibility 0s .2s}
 /* half sheets float inset from the screen edge with rounded corners all round (Apple's sheet), instead of sitting flush on the bottom */
 @media(max-width:760px){html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) :is(#scenes .sct:not(.col),#irrigation .zsx:not(.col)){left:8px!important;right:8px!important;bottom:8px!important;border-radius:34px!important;max-height:calc(88dvh - 8px)!important}}
+/* ---------- Kinetic polish (remove this file's include in index.html to revert it) ----------
+   Lessons from iOS and Material, kept in Kinetic's own character:
+   1. sentence case on tabs, chips and buttons (headings and badges stay in capitals)
+   2. 44px touch targets and clearer outlines on a phone
+   3. press feedback on tiles and controls
+   4. reduce motion and reduce transparency are honoured in every look
+   Motion speed itself is --pgs in 34-page-transition.css. */
+/* 1. sentence case: lower-case, then the first letter up (the same method as Material) */
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.chips .chip,.seg .eb,.cpft .eb,.sectc .chip,.chip.ag,.ce-sv .eb,.ce-a .eb,.adm-f small,.ce-f>small,.lsf>small,.rzc small,.tpl,.polsrc){text-transform:lowercase;letter-spacing:.03em}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.chips .chip,.seg .eb,.cpft .eb,.sectc .chip,.chip.ag,.ce-sv .eb,.ce-a .eb,.adm-f small,.ce-f>small,.lsf>small,.rzc small,.tpl,.polsrc)::first-letter{text-transform:uppercase}
+/* tile names are written in sentence case already and sit in a flex row with their icon: just stop the capitals */
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.tl .tn,#cpp .cpl .tl .tn,.cps .tl .tn){text-transform:none;letter-spacing:.03em}
+/* flex boxes cannot take a first-letter capital: text-only chips and segment buttons are plain blocks */
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.chips .chip,.chip.ag,.sectc .chip):not(:has(svg)){display:block}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.seg,.ce-sv,.ce-a) .eb:not(:has(svg)){display:block}
+/* 2. touch targets and outlines (phone) */
+@media(max-width:760px){
+html:not(#x):not(#y) :is(.chips .chip,.seg .eb,.cpft .eb,.ce-sv .eb,.ce-a .eb){min-height:44px}
+}
+html:not([data-style=glass]):not([data-style=material]){--line:rgba(var(--w),.16)}   /* fine outlines a little stronger */
+/* the 01 02 03 numbers on Kinetic tabs sit out of the flow, so the label itself is the first line and can take its capital */
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip{position:relative;padding-top:26px}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip::before{position:absolute;top:10px;left:2px;margin:0;letter-spacing:.12em}
+/* 3. press feedback */
+html:not(#x):not(#y) :is(.tl,a.rc,.chip,.eb,.seg button,nav a,#btab a,#mshe a){transition:transform .12s ease-out,background-color .28s,color .28s,border-color .28s,box-shadow .28s}
+html:not(#x):not(#y) :is(.tl,a.rc):active{transform:scale(.975)}
+html:not(#x):not(#y) :is(.chip,.eb,.seg button,#btab a,#mshe a):active{transform:scale(.95)}
+/* 4. reduce motion: pages and tabs appear at once, presses do not move */
+@media(prefers-reduced-motion:reduce){
+html:not(#x):not(#y) :is(.page.enter,.tx,.txc,.enin) , html:not(#x):not(#y) :is(.page.enter,.tx,.txc) *{animation:none!important}
+html:not(#x):not(#y) :is(.tl,a.rc,.chip,.eb,.seg button,#btab a,#mshe a):active{transform:none}
+}
+/* reduce transparency: blurred bars and bands become solid in every look */
+@media(prefers-reduced-transparency:reduce){
+html:not(#x):not(#y) *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+html:not(#x):not(#y) :is(#fband,#bband){display:none!important}
+html:not(#x):not(#y) :is(header,#mshe,#btab,nav,#np){background:var(--bg2)!important}
+}
 </style>
 <style>
 /* HA diagnostics stay compact until requested. */
@@ -6293,9 +6331,9 @@ html[data-style=glass] #bband i:is(:nth-child(1),:nth-child(3),:nth-child(5)){di
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
 window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONFIG || {}).brand; return L && L.svg ? { svg: L.svg, lockup: !!L.lockup } : B && B.mark ? { svg: B.mark, lockup: false } : null; };   // brand-logo.js wins over brand.mark in config.js
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
-window.DASH_VER = "3.2.0";   // the one place to change the version
+window.DASH_VER = "3.2.1";   // the one place to change the version
 window.DASH_NEW = {"3.2.0":{"n":["**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass."],"f":0},"3.1.2":{"n":["**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page."],"f":0},"3.1.1":{"n":["**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer."],"f":0},"3.1.0":{"n":["**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass."],"f":0},"3.0.0":{"n":["**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "0bc610";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "2f5d4b";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
