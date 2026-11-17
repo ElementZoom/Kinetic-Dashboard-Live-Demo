@@ -6,6 +6,7 @@
 //  the <script src="config.js?v=..."> line, or hard-refresh. NOTES.md explains every option.
 // =====================================================================================
 window.DASH_CONFIG = {
+  whatsNew: false,                   // demo: visitors do not need the "What's new" sheet after an update
   url: location.origin,
   token: "",                         // leave blank when the dashboard runs inside Home Assistant (it uses the signed-in user)
   brand: {
