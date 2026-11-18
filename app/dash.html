@@ -14,7 +14,7 @@ if(m==="time"){var q=new Date(),n=q.getHours()*60+q.getMinutes(),t=function(x,d)
 if(m==="sun"){m=localStorage.getItem("dashSunDark")==="0"?"light":"dark"}
 var p=o[m]||(o.bg&&m==="dark"?o:{}),d=D[m]||D.dark,g=function(k){return p[k]||d[k]};
 r.setAttribute("data-mode",m);s.colorScheme=m;s.setProperty("--w",m==="light"?"0,0,0":"255,255,255");
-s.setProperty("--bg",g("bg"));s.setProperty("--bg2",g("glow"));s.setProperty("--ink",g("ink"));s.setProperty("--ink-rgb",h(g("ink")));s.setProperty("--mint",g("accent"));
+s.setProperty("--bg",g("bg"));s.backgroundColor=g("bg");s.setProperty("--bg2",g("glow"));s.setProperty("--ink",g("ink"));s.setProperty("--ink-rgb",h(g("ink")));s.setProperty("--mint",g("accent"));
 if(st&&st!=="metro")r.setAttribute("data-style",st)}catch(e){}})();
 </script>
 <style>
@@ -49,7 +49,7 @@ html.boot #bootld{display:grid;animation:bldIn .3s ease .45s backwards}
 @keyframes bldIn{from{opacity:0}}
 /* brand (config.js -> brand): logo in the first-load screen instead of the spinner; a short intro on a cold start; logo on the sign-in screen and Theme page */
 #bootld .bl{display:none}
-html.resume #bootld{animation:none}   /* a page that has just replaced an older one: the logo is there at once instead of fading in again */
+html.resume #bootld,html.resume #bootld .bl,html.au-go #bootld .bl{animation:none}   /* a page that has just replaced an older one: the logo is there at once instead of fading in again */
 .bl .bv{font-size:13px;color:var(--mut,#8b93a5);margin-top:-4px}
 html.brand #bootld i{display:none}
 html.brand #bootld .bl{display:flex;flex-direction:column;align-items:center;gap:18px;animation:blPulse 2.4s ease-in-out infinite}
@@ -4842,7 +4842,17 @@ html:not(#x) :is(#kp,#sp,#bd,#grp,#grpw,#cmtsh,#rsp,#insq,#evq,#dtm,#tlsh,#tlscr
 .hm #fcp .fcs{height:68px!important}
 .hm #fcp .fcc{margin-top:4px!important}
 }
-@media(max-width:760px){.hm #fcp .fcc>div.fcs{min-height:100px!important;height:100px!important}.hm #fcp #fc,.hm #fcp .fcc{height:auto!important;min-height:0!important}}
+/* portrait phone: Home is one screen; the forecast card stretches from under the heat pump to just above the bottom bar */
+@media(max-width:760px) and (orientation:portrait){
+#home.on{display:flex!important;flex-direction:column}
+#home .hm{flex:1 1 auto;min-height:0;grid-template-rows:auto minmax(0,1fr)!important}
+.hm #fcp{grid-row:2!important;display:flex!important;flex-direction:column;min-height:0}
+.hm #fcp #fc{flex:1 1 0!important;display:flex!important;min-height:0!important}
+.hm #fcp .fcc{flex:1 1 auto;min-height:0!important;height:auto!important}
+}
+/* no room tiles on the phone Home (they live on Rooms): the forecast card takes that space instead, with taller day skies */
+@media(max-width:760px){.hm #hrooms.rooms{display:none!important}.hm #fcp .fcc>div.fcs{min-height:150px!important;height:auto!important}.hm #fcp .fcc>div.fcs small,.hm #fcp .fcc>div.fcs em{display:block!important}}
+@media(max-width:760px){.hm #fcp #fc,.hm #fcp .fcc{height:auto!important;min-height:0!important}}
 @media(max-width:760px) and (max-height:680px){.hm #fcp{display:none!important}}
 /* phone search launcher: sections use the full width, rooms are a 2-column grid (no sideways scroller) */
 @media(max-width:760px){
@@ -5776,7 +5786,9 @@ html[data-style=glass] #npsk .npskc{background:rgba(54,52,68,.97)}
 html[data-style=glass][data-mode=light] #npsk .npskc{background:#f2f2f6}
 @keyframes npskIn{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
 @media(prefers-reduced-motion:reduce){#npsk .npskc{animation:none}}
-@media(max-width:760px){#npbody.np2{height:calc(100dvh - 96px - env(safe-area-inset-bottom,0px))}}
+@media(max-width:760px){#npbody.np2{height:calc(100dvh - 96px - env(safe-area-inset-bottom,0px))}
+/* nothing under the player (a local file, white noise: no lyrics, no artist): the card is as tall as the player, not an empty full-height card */
+html:not(#x):not(#y):not(#z):not(#w) #npbody.np2:not(:has(.npl2>:nth-child(2))){height:auto}}
 @media(min-width:761px){
   #npbody.np2 .npt.two{height:clamp(480px,calc(100dvh - 150px),640px)}
   #npbody .npgr{padding:0;background:none}
@@ -5924,11 +5936,11 @@ html[data-style=material] #spdv .spds{background:var(--m1);border:0;box-shadow:n
   body.np-on.sp-on #npmini{display:block!important;position:fixed;bottom:16px;z-index:44;width:min(680px,calc(100vw - 236px));left:calc(200px + (100vw - 216px - min(680px,calc(100vw - 236px))) / 2);padding:10px 14px;border-radius:20px;background:rgba(var(--w),.08);background-color:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.08),0 10px 30px rgba(0,0,0,.28);border:1px solid var(--line)}
   body.np-on.sp-on #npmini .npr{margin:0}body.np-on.sp-on #npmini .npart{width:46px;height:46px}body.np-on.sp-on #npmini .mpb{height:3px;margin-top:8px}
   body.np-on.sp-on #spot{padding-bottom:110px}
-  body.np-on.sp-on #npsheet{display:block!important;position:fixed;inset:0;z-index:80;visibility:hidden;pointer-events:none;transition:visibility 0s .36s}   /* the Now Playing sheet the bar opens: the tablet normally uses the header player instead, so these are the phone's sheet styles */
-  body.np-on.sp-on.nps-open #npsheet{visibility:visible;pointer-events:auto;transition:none}
-  body.sp-on .npbk{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .3s ease}body.sp-on.nps-open .npbk{opacity:1}
-  body.sp-on .npb{position:absolute;left:max(16px,calc(50% - 290px));right:auto;width:min(580px,calc(100vw - 32px));bottom:16px;max-height:calc(100dvh - 32px);overflow-y:auto;border-radius:26px;background:linear-gradient(160deg,var(--bg2),var(--bg))!important;padding:16px 16px 26px;transform:translateY(110%);transition:transform .36s cubic-bezier(.2,.85,.3,1)}
-  body.sp-on.nps-open .npb{transform:none}
+  body.np-on.np-tab #npsheet{display:block!important;position:fixed;inset:0;z-index:80;visibility:hidden;pointer-events:none;transition:visibility 0s .36s}   /* the Now Playing sheet the bar opens: the tablet normally uses the header player instead, so these are the phone's sheet styles */
+  body.np-on.np-tab.nps-open #npsheet{visibility:visible;pointer-events:auto;transition:none}
+  body.np-tab .npbk{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .3s ease}body.np-tab.nps-open .npbk{opacity:1}
+  body.np-tab .npb{position:absolute;left:max(16px,calc(50% - 290px));right:auto;width:min(580px,calc(100vw - 32px));bottom:16px;max-height:calc(100dvh - 32px);overflow-y:auto;border-radius:26px;background:linear-gradient(160deg,var(--bg2),var(--bg))!important;padding:16px 16px 26px;transform:translateY(110%);transition:transform .36s cubic-bezier(.2,.85,.3,1)}
+  body.np-tab.nps-open .npb{transform:none}
 }
 /* entering the Media page: the chip, tabs, tiles and shelves rise one after another like every other page (the delays come from pgStagger) */
 html:not(#x) #media.enter>#spot{animation:none}
@@ -5993,12 +6005,12 @@ html:not(#x) #scenes .gal>.sc{content-visibility:auto;contain-intrinsic-size:aut
 /* Now Playing pop-up on tablets (the Spotify bar opens it): the player on the left, the artist or the lyrics on the right.
    The title row keeps the label on the left and the lyrics and close buttons at the top right, all on one centre line. Phones keep the swipe pages (93-now-playing-sheet.css). */
 @media(min-width:761px){
-  html:not(#x):not(#y):not(#z) body.sp-on #npsheet #npbody .lbl{display:flex;align-items:center;gap:10px;min-height:44px;margin-bottom:6px}
-  html:not(#x):not(#y):not(#z) body.sp-on #npsheet #npbody .lbl .nptx{margin:0 auto 0 0;line-height:44px}
-  html:not(#x):not(#y):not(#z) body.sp-on #npsheet #npbody .lbl .rnd.s{margin:0;align-self:center}
-  html:not(#x):not(#y):not(#z) body.sp-on #npsheet #npbody.npt2{width:min(980px,calc(100vw - 32px));left:max(16px,calc(50% - 490px));transition:width .28s ease,left .28s ease}
-  html:not(#x):not(#y):not(#z) body.sp-on #npsheet #npbody{transform:none;transition:none}   /* it grows out of the mini player bar now (npGrow in 35-now-playing.js), it no longer slides up */
-  html:not(#x):not(#y):not(#z) body.sp-on #npsheet #npbody.npt2{transition:width .28s ease,left .28s ease}
+  html:not(#x):not(#y):not(#z) body.np-tab #npsheet #npbody .lbl{display:flex;align-items:center;gap:10px;min-height:44px;margin-bottom:6px}
+  html:not(#x):not(#y):not(#z) body.np-tab #npsheet #npbody .lbl .nptx{margin:0 auto 0 0;line-height:44px}
+  html:not(#x):not(#y):not(#z) body.np-tab #npsheet #npbody .lbl .rnd.s{margin:0;align-self:center}
+  html:not(#x):not(#y):not(#z) body.np-tab #npsheet #npbody.npt2{width:min(980px,calc(100vw - 32px));left:max(16px,calc(50% - 490px));transition:width .28s ease,left .28s ease}
+  html:not(#x):not(#y):not(#z) body.np-tab #npsheet #npbody{transform:none;transition:none}   /* it grows out of the mini player bar now (npGrow in 35-now-playing.js), it no longer slides up */
+  html:not(#x):not(#y):not(#z) body.np-tab #npsheet #npbody.npt2{transition:width .28s ease,left .28s ease}
   #npbody .npt{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align-items:stretch}
   #npbody .npt.two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   #npbody .npt.two{height:clamp(480px,calc(100dvh - 150px),640px)}
@@ -6046,6 +6058,22 @@ html:not(#x):not(#y) #bat.open{width:auto;padding:0 2px;border-radius:99px}html:
   #hmp.hm2{padding:0;width:40px;border-color:transparent;background:none;gap:0;justify-content:center}
   #hmp.hm2 .hmx{display:none}#hmp.hm2 .hmw{margin:0;width:38px;height:38px}
   #hmp.hm2 .hmpp{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;background:rgba(0,0,0,.5);color:#fff}#hmp.hm2 .hmpp svg{width:12px;height:12px}
+}
+
+/* tablet Now Playing card: the speakers sit under the player (they used to open as a pop-up) */
+@media(min-width:761px){
+  #npbody .npsp{margin-top:16px;padding:12px 14px 10px;border-radius:20px;background:rgba(var(--ink-rgb),.06);text-align:left}
+  html:not(#x):not(#y):not(#z) #npbody .npsp>.lbl{display:flex;align-items:center;min-height:0;margin:0 0 4px}
+  #npbody .npsp>.lbl .nptx{margin:0;line-height:1.4}
+  #npbody .npsp .nsl{border-top:0;margin-top:0;padding-top:0}
+}
+/* full-screen lyrics: the close (chevron) button is always a clear light disc with a ring on the dark lyrics background, in every look (it was nearly invisible in Kinetic and Liquid Glass) */
+html:not(#x):not(#y):not(#z):not(#w) #npfs .nlfh .rnd.s{background:rgba(255,255,255,.2)!important;border:1.5px solid rgba(255,255,255,.55)!important;color:#fff!important;box-shadow:0 2px 10px rgba(0,0,0,.35)!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:1!important}
+html:not(#x):not(#y):not(#z):not(#w) #npfs .nlfh .rnd.s svg{width:26px;height:26px;fill:#fff!important;color:#fff!important}
+/* Liquid Glass tablet sheet: a solid-enough frosted card (the grey rule that clears every .pn left it fully see-through, so the page behind fought with the text) */
+@media(min-width:761px){
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) body.np-tab #npsheet #npbody{padding:20px 20px 22px!important;box-sizing:border-box;background:rgba(40,38,56,.94)!important;border:1px solid rgba(255,255,255,.2)!important;-webkit-backdrop-filter:blur(30px) saturate(170%)!important;backdrop-filter:blur(30px) saturate(170%)!important;box-shadow:0 18px 50px rgba(0,0,0,.45)!important}
+  html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v) body.np-tab #npsheet #npbody{background:rgba(250,250,253,.95)!important;border-color:rgba(255,255,255,.9)!important;box-shadow:0 18px 50px rgba(60,40,100,.22)!important}
 }
 /* ---------- Time picker (js/modules/63-time-picker.js): one structure, three looks ---------- */
 .tpk{position:fixed;inset:0;z-index:400;visibility:hidden;pointer-events:none;transition:visibility 0s .26s}
@@ -6534,6 +6562,157 @@ html[data-style=material]:not(#x):not(#y):not(#z):not(#w):not(#v) #cpp .lrt::bef
 html[data-style=material]:not(#x):not(#y):not(#z):not(#w):not(#v) #cpp .lrb{height:6px;margin-top:-3px;border-radius:0;background:var(--mint)}
 html[data-style=material]:not(#x):not(#y):not(#z):not(#w):not(#v) #cpp .lrt input[type=range]::-webkit-slider-thumb{width:6px;height:22px;margin-top:7px;border:0;border-radius:3px;background:var(--mint)}
 html[data-style=material]:not(#x):not(#y):not(#z):not(#w):not(#v) #cpp .lrt input[type=range]::-moz-range-thumb{width:6px;height:22px;border:0;border-radius:3px;background:var(--mint)}
+/* Climate sheet: Heat (below / until) and Cool (until / above) are range bars with two handles; the steppers stay under each bar. Built like the lights schedule's lux bar (107-lux-range.css). */
+.crg{display:none}
+#grid>.card.rm[data-open] .ct-threshold-inner .crg{display:block;grid-column:1/-1;--t:16px;--pa:.3;--pb:.6;--a:.3;--b:.6;--m:0;margin:4px 4px 0}
+#grid>.card.rm[data-open] .ct-threshold-inner .crg-heat{--bc:var(--heat,#ff7a6b);order:0}
+#grid>.card.rm[data-open] .ct-threshold-inner .crg-cool{--bc:var(--cool,#6bb8ff);order:3;margin-top:10px}
+#grid>.card.rm[data-open] .ct-threshold-inner.hasrg .ct-heatBelow{order:1}
+#grid>.card.rm[data-open] .ct-threshold-inner.hasrg .ct-heatUntil{order:2}
+#grid>.card.rm[data-open] .ct-threshold-inner.hasrg .ct-coolUntil{order:4}
+#grid>.card.rm[data-open] .ct-threshold-inner.hasrg .ct-coolAbove{order:5}
+#grid .crh{display:flex;justify-content:space-between;align-items:center;gap:10px;font:500 11px var(--mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+#grid .crh span{display:flex;align-items:center;gap:6px}
+#grid .crh svg{width:14px;height:14px}
+#grid>.card.rm[data-open] .ct-threshold-inner .crh .wm{color:var(--heat,#ff9a62)}#grid>.card.rm[data-open] .ct-threshold-inner .crh .cl2{color:var(--cool,#6bb8ff)}#grid>.card.rm[data-open] .ct-threshold-inner .crh svg{color:inherit;fill:currentColor}
+#grid .crh b{font-weight:600;letter-spacing:0;text-transform:none;font-size:12px;color:var(--ink)}
+#grid .crt{position:relative;height:36px;margin-top:2px;touch-action:pan-y;cursor:pointer;-webkit-user-select:none;user-select:none}
+#grid .crt::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:var(--line)}
+#grid .crb{position:absolute;top:50%;height:4px;margin-top:-2px;left:calc(var(--t) / 2 + (100% - var(--t)) * var(--a));right:calc(var(--t) / 2 + (100% - var(--t)) * (1 - var(--b)));background:var(--bc);border-radius:2px}
+#grid .crm{position:absolute;top:2px;bottom:2px;width:0;border-left:1px dashed var(--mut);left:calc(var(--t) / 2 + (100% - var(--t)) * var(--m));pointer-events:none}
+#grid .crm[hidden]{display:none}
+#grid .crk{position:absolute;top:50%;width:14px;height:18px;margin:-9px 0 0 -7px;box-sizing:border-box;border:2px solid var(--bc);background:var(--bg,#141218);border-radius:4px;cursor:grab;outline:0;touch-action:pan-y}
+#grid .crk[data-k=a]{left:calc(var(--t) / 2 + (100% - var(--t)) * var(--pa))}
+#grid .crk[data-k=b]{left:calc(var(--t) / 2 + (100% - var(--t)) * var(--pb))}
+#grid .crk:focus-visible{box-shadow:0 0 0 3px rgba(var(--w),.25)}
+/* Liquid Glass: a fat pill track and round white handles */
+html[data-style=glass] #grid>.card.rm[data-open] .ct-threshold-inner .crg{--t:28px}
+html[data-style=glass] #grid .crh{text-transform:none;letter-spacing:0;font:500 13px var(--sans,inherit)}
+html[data-style=glass] #grid .crt{height:40px}
+html[data-style=glass] #grid .crt::before{height:16px;margin-top:-8px;border-radius:99px;background:rgba(var(--w),.14)}
+html[data-style=glass] #grid .crb{height:16px;margin-top:-8px;border-radius:99px;background:var(--bc);opacity:.7}
+html[data-style=glass] #grid .crk{width:28px;height:28px;margin:-14px 0 0 -14px;border:0;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.35)}
+/* Material: a thicker track, bar handles, the values as small chips */
+html[data-style=material] #grid>.card.rm[data-open] .ct-threshold-inner .crg{--t:6px}
+html[data-style=material] #grid .crh{text-transform:none;letter-spacing:0;font:500 13px var(--sans,inherit)}
+html[data-style=material] #grid .crh b{background:rgba(var(--w),.1);border-radius:8px;padding:2px 8px}
+html[data-style=material] #grid .crt::before{height:6px;margin-top:-3px;border-radius:3px;background:rgba(var(--w),.16)}
+html[data-style=material] #grid .crb{height:6px;margin-top:-3px;border-radius:0;background:var(--bc)}
+html[data-style=material] #grid .crk{width:6px;height:22px;margin:-11px 0 0 -3px;border:0;border-radius:3px;background:var(--bc)}
+/* full screen for the Hazards map and the Windy weather map (37-map-full-screen.js) */
+.mpfb{display:flex;align-items:center;justify-content:center;padding:0;line-height:1;cursor:pointer;color:var(--ink)}.mpfb svg{width:20px;height:20px;fill:currentColor;display:block}
+.hzzb .mpfb{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--hzbg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.wxmm>.mpfb{position:absolute;top:10px;right:10px;z-index:3;width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+html.mpf:not(#x):not(#y){overflow:hidden}
+html.mpf:not(#x) body *{visibility:hidden!important}
+html.mpf:not(#x):not(#y) :is(.mfull,.mfull *,.zcv){visibility:visible!important}
+/* Hazards: the panel is the screen; the map fills it; the header and the legend are slim pills over it */
+html:not(#x) #hazards .hzm.mfull{height:100vh!important;height:100dvh!important;position:fixed!important}
+.hzm.mfull{position:fixed!important;inset:0;z-index:2147483000;margin:0!important;padding:0!important;width:auto!important;max-width:none!important;height:100vh;height:100dvh;border:0!important;border-radius:0!important;background:var(--bg)!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;display:block!important;overflow:hidden}
+.hzm.mfull>.hzmap{position:absolute;inset:0;height:auto;min-height:0;border:0;border-radius:0}
+.hzm.mfull>.hzh{position:absolute;z-index:3;left:calc(12px + env(safe-area-inset-left));right:calc(64px + env(safe-area-inset-right));top:calc(12px + env(safe-area-inset-top));padding:8px 12px;gap:6px 10px;align-items:center;border-radius:18px;border:1px solid var(--line);background:var(--hzbg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);pointer-events:none;width:fit-content;max-width:calc(100% - 76px - env(safe-area-inset-left) - env(safe-area-inset-right))}
+.hzm.mfull>.hzh>div:first-child{min-width:0;flex:1 1 180px}
+.hzm.mfull>.hzh .lbl{margin:0}
+.hzm.mfull>.hzh .hzs{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:12.5px;font-weight:500;line-height:1.3}
+.hzm.mfull>.hzh .hzseg{pointer-events:auto;margin:0;display:flex;flex-wrap:wrap;gap:6px;padding:0;border:0;flex:0 0 100%}
+.hzm.mfull>.hzh .hzseg .chip{display:inline-flex;flex-direction:row;align-items:center;width:auto;min-width:0;min-height:0;height:auto;padding:5px 11px;margin:0;font-size:11px;line-height:1.2;border:1px solid var(--line);border-radius:99px;background:transparent;box-shadow:none}
+.hzm.mfull>.hzh .hzseg .chip.on{background:rgba(var(--w),.14);border-color:var(--ink)}
+.hzm.mfull>.hzh .hzseg .chip::before,.hzm.mfull>.hzh .hzseg .chip::after{display:none!important;content:none!important}
+.hzm.mfull>.hzleg{position:absolute;z-index:3;left:calc(12px + env(safe-area-inset-left));right:calc(12px + env(safe-area-inset-right));bottom:calc(12px + env(safe-area-inset-bottom));width:fit-content;max-width:calc(100% - 24px);padding:8px 14px;gap:6px 16px;border-radius:18px;border:1px solid var(--line);background:var(--hzbg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);pointer-events:none}
+.hzm.mfull.dop>.hzleg{display:none}
+.hzm.mfull .hzzb{top:calc(12px + env(safe-area-inset-top));right:calc(12px + env(safe-area-inset-right))}
+.hzm.mfull .hzd{left:calc(12px + env(safe-area-inset-left));bottom:calc(12px + env(safe-area-inset-bottom));right:calc(12px + env(safe-area-inset-right))}
+.hzm.mfull .hzlb{display:none!important}
+/* Windy: the map fills the screen; the layer chips float over the top, the play bar stays at the bottom, no "tap to use" cover */
+.wxmap.mfull{position:fixed!important;inset:0;z-index:2147483000;margin:0!important;padding:0!important;width:auto!important;max-width:none!important;height:100vh;height:100dvh;border:0!important;border-radius:0!important;background:#000!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;overflow:hidden}
+.wxmap.mfull .wxmm{position:absolute;inset:0;margin:0;border:0;border-radius:0}
+.wxmap.mfull .wxmv{height:100%}
+.wxmap.mfull .wxmcv,.wxmap.mfull .wxmh,.wxmap.mfull .wxmn{display:none!important}
+.wxmap.mfull>.hsw{display:block;position:absolute;z-index:4;left:calc(64px + env(safe-area-inset-left));right:calc(64px + env(safe-area-inset-right));top:calc(12px + env(safe-area-inset-top));margin:0}
+.wxmap.mfull .wxml{margin:0}
+.wxmap.mfull>.hsw{padding:2px 8px;border-radius:18px;border:1px solid var(--line);background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.wxmap.mfull .wxmm>.mpfb{top:calc(12px + env(safe-area-inset-top));right:calc(12px + env(safe-area-inset-right));width:40px;height:40px}
+/* the three looks */
+html[data-style=glass]:not(#x) .hzzb .mpfb,html[data-style=glass]:not(#x) .wxmm>.mpfb{border-radius:14px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.18);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6)}
+html[data-style=glass]:not(#x) .hzm.mfull>.hzh,html[data-style=glass]:not(#x) .hzm.mfull>.hzleg,html[data-style=glass]:not(#x) .wxmap.mfull>.hsw{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6)}
+html[data-style=material]:not(#x) .hzzb .mpfb,html[data-style=material]:not(#x) .wxmm>.mpfb{border-radius:14px;border:0;background:color-mix(in srgb,var(--ink) 12%,var(--bg))}
+html[data-style=material]:not(#x) .hzm.mfull>.hzh,html[data-style=material]:not(#x) .hzm.mfull>.hzleg,html[data-style=material]:not(#x) .wxmap.mfull>.hsw{border:0;border-radius:16px;background:color-mix(in srgb,var(--ink) 10%,var(--bg))}
+html:not([data-style]):not(#x) .hzzb .mpfb,html[data-style=kinetic]:not(#x) .hzzb .mpfb{border-radius:50%}
+html:not([data-style]):not(#x) .wxmm>.mpfb,html[data-style=kinetic]:not(#x) .wxmm>.mpfb{border-radius:50%}
+@media(prefers-reduced-motion:reduce){.mpfb{transition:none}}
+
+/* opening and closing, the way the camera card does it (25-camera-full-screen.css): solid from the first frame, contents fade in; closing: contents out fast, the card dissolves into its empty spot in the page */
+html:not(#x) .mfull{animation:none!important}
+html:not(#x) .mfull.mfin{animation:mpBgIn .2s cubic-bezier(.2,.8,.2,1) both!important}
+.mfull.mfin>*{animation:mpKidsIn .22s ease-out both}
+@keyframes mpBgIn{from{transform:scale(.97)}}
+@keyframes mpKidsIn{from{opacity:0}}
+html:not(#x) .mfull.mclose{animation:mpOut .2s ease-out both!important}
+.mfull.mclose>*:not(.hzmap):not(.wxmm){animation:mpKidsOut .07s ease-out both}
+@keyframes mpOut{to{opacity:0}}
+@keyframes mpKidsOut{to{opacity:0}}
+html:not(#x) .mback{animation:mpBack .22s ease-out both}
+@keyframes mpBack{from{opacity:0}}
+.mph{display:block;box-sizing:border-box;visibility:hidden;border-radius:18px;border:1px solid var(--line);background:rgba(var(--w),.05)}
+.mph.on{visibility:visible}
+@media(prefers-reduced-motion:reduce){html:not(#x) .mfull.mfin,.mfull.mfin>*,html:not(#x) .mfull.mclose,.mfull.mclose>*,html:not(#x) .mback{animation:none!important}}
+/* Room climate sheet, calmer: the temperature and the target on top, then ONE automation area:
+   the auto-climate switch, one two-lane bar (heat lane, cool lane, same scale), four chips that name each threshold in words,
+   and a single stepper for whichever chip (or bar handle) is selected. It replaces the four steppers and the rainbow comfort bar. */
+#grid>.card.rm[data-open]:has(.ctr:not([hidden])) .cbar{display:none}
+#grid>.card.rm[data-open] .ct-threshold-inner{display:flex;flex-direction:column;gap:12px;padding-top:2px}
+#grid>.card.rm[data-open] .ct-threshold-inner .crg-heat{order:0;margin:6px 4px 0}
+#grid>.card.rm[data-open] .ct-threshold-inner .crg-cool{order:1;margin:-6px 4px 0}
+#grid>.card.rm[data-open] .ct-threshold-inner .ctchs{order:2}
+#grid>.card.rm[data-open] .ct-threshold-inner .ctst{order:3}
+#grid .crh{display:none}
+#grid .crt{height:32px;margin-top:0}
+html[data-style=glass] #grid .crt{height:36px}
+.crk.sel{box-shadow:0 0 0 3px rgba(var(--w),.3)}
+html[data-style=glass] #grid .crk.sel{box-shadow:0 0 0 3px rgba(var(--w),.3),0 1px 4px rgba(0,0,0,.35)}
+/* the auto-climate row */
+.ctr .ct-auto span{flex:1;min-width:0;font:inherit;letter-spacing:0;text-transform:none;color:var(--ink)}
+.ctr .ct-auto b{display:block;min-width:0;text-align:left;font-weight:600;font-size:15px}
+.ctr .ct-auto small{display:block;margin-top:2px;font-size:12px;color:var(--mut)}
+/* the four chips */
+.ctchs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ctch{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:3px;padding:10px 12px;border-radius:14px;background:rgba(var(--w),.06);border:1px solid transparent;min-width:0;-webkit-tap-highlight-color:transparent}
+.ctch span{display:flex;align-items:center;gap:6px;font:600 12px var(--sans,inherit);letter-spacing:.02em}
+.ctch .wm{color:var(--heat,#ff9a62)}.ctch .cl2{color:var(--cool,#6bb8ff)}
+.ctch b{font-weight:600;font-size:15px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctch.on{background:rgba(var(--w),.12);border-color:rgba(var(--w),.3)}
+.ctch:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+html[data-style=glass] .ctch{border-radius:16px}
+html[data-style=material] .ctch{border-radius:12px}
+/* the one stepper */
+.ctst{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 14px;border-radius:16px;background:rgba(var(--w),.06)}
+.ctst .cl{flex:1;min-width:0}
+.ctst .cl .sl{display:block;font:600 12px var(--mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.ctst .cl .sd{display:block;margin-top:2px;font-size:12px;line-height:1.35;color:var(--mut)}
+.ctst .rnd{width:40px;height:40px;border-radius:50%;font-size:18px;flex:none}
+.ctst .sv{min-width:56px;text-align:center;font-weight:600;font-size:18px}
+html[data-style=glass] .ctst .cl .sl,html[data-style=material] .ctst .cl .sl{font:600 13px var(--sans,inherit);letter-spacing:0;text-transform:none}
+#grid>.card.rm[data-open] .ct-threshold-inner .ctst .cl{grid-column:auto;padding-left:0}
+#grid>.card.rm[data-open] .ct-threshold-inner .ctst .cl small{display:block}
+#grid>.card.rm[data-open] .ct-threshold-inner .ctst .cl .sl{font-size:12px;white-space:normal}
+html[data-style=glass] #grid>.card.rm[data-open] .ct-threshold-inner .ctst .cl .sl,html[data-style=material] #grid>.card.rm[data-open] .ct-threshold-inner .ctst .cl .sl{font-size:13px}
+#grid>.card.rm[data-open] .ct-threshold-inner .ctst .sv{font-size:18px}
+#grid>.card.rm[data-open] .ct-threshold-inner .ctst .rnd{width:40px;height:40px}
+.ctchs:has(.ctch:only-child){display:none}
+/* a fixed-size stepper: the label and hint stay on one line each and the value has a fixed width, so picking another chip or stepping a number never changes the sheet's height (it is anchored to the bottom, so a taller stepper pushed everything up) */
+#grid>.card.rm[data-open] .ct-threshold-inner .ctst{height:72px;min-height:72px;box-sizing:border-box;flex:none}
+#grid>.card.rm[data-open] .ct-threshold-inner .ctst .cl .sl,.ctst .cl .sd{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctst .sv{width:64px;min-width:64px;flex:none;font-variant-numeric:tabular-nums}
+.ctch{min-height:62px;box-sizing:border-box}
+.ctch b{font-variant-numeric:tabular-nums}
+/* "Before you leave" and the warning takeover's "At your place" use the room-page chip colours: doors and the open garage red, windows amber, curtains purple, lights yellow */
+.at-r.kc-lights,.tk-wwr.kc-lights{--k:#c9a227}.at-r.kc-doors,.tk-wwr.kc-doors,.at-r.kc-gopen,.tk-wwr.kc-gopen{--k:#bc000a}.at-r.kc-windows,.tk-wwr.kc-windows{--k:#e69500}.at-r.kc-covers,.tk-wwr.kc-covers{--k:#702963}
+html[data-mode=dark] :is(.at-r,.tk-wwr).kc-lights{--k:#fcf2d4}html[data-mode=dark] :is(.at-r,.tk-wwr):is(.kc-doors,.kc-gopen){--k:#ff5a5f}html[data-mode=dark] :is(.at-r,.tk-wwr).kc-windows{--k:#ffaa00}html[data-mode=dark] :is(.at-r,.tk-wwr).kc-covers{--k:#c46bb5}
+.nrow.at-r[class*=" kc-"]{--bc:var(--k);border-color:color-mix(in srgb,var(--k) 34%,transparent);background:color-mix(in srgb,var(--k) 9%,transparent)}
+.at-r[class*=" kc-"] .at-i{background:color-mix(in srgb,var(--k) 20%,transparent)}.at-r[class*=" kc-"] .at-i svg{fill:var(--k)}
+.tk-wwr[class*=" kc-"]{border-color:color-mix(in srgb,var(--k) 34%,transparent);background:color-mix(in srgb,var(--k) 9%,transparent)}
+.tk-wwr[class*=" kc-"]>i{background:color-mix(in srgb,var(--k) 20%,transparent);color:var(--k)}
+html[data-style=glass] .tk-wwr[class*=" kc-"],html[data-style=material] .tk-wwr[class*=" kc-"]{border:1px solid color-mix(in srgb,var(--k) 34%,transparent)}
 </style>
 <style>
 /* HA diagnostics stay compact until requested. */
@@ -6543,6 +6722,10 @@ html[data-style=material]:not(#x):not(#y):not(#z):not(#w):not(#v) #cpp .lrt inpu
 <body>
 
 <div id="bootld" aria-hidden="true"><i></i></div>
+<script>
+// an update just replaced the older page (58-auto-update.js saved its loader): paint the same logo at once, before any big file loads, so only the text under it changes
+(function(){try{var rs=+sessionStorage.getItem("kinetic-au-resume")||0,j=sessionStorage.getItem("kinetic-au-splash");if(!rs||Date.now()-rs>3e4||!j)return;j=JSON.parse(j);var el=document.getElementById("bootld"),r=document.documentElement;el.insertAdjacentHTML("beforeend",j.h);j.c.forEach(function(c){r.classList.add(c)});r.classList.add("resume");window.__splashKept=1}catch(e){}})();
+</script>
 <div id="bd"></div>
 <nav>
   <div class="t" id="outs">--°C</div><div class="t" id="nclk" role="button" aria-label="Notifications">--:--</div>
@@ -6555,7 +6738,7 @@ html[data-style=material]:not(#x):not(#y):not(#z):not(#w):not(#v) #cpp .lrt inpu
 <div id="npsheet"><div class="npbk" data-np="close"></div><div class="pn npb" id="npbody"></div><div id="npfs" hidden></div><div id="npsk" hidden></div></div>
 <div id="mshe"><div class="mgh" data-g="home">HOME</div><a href="#energy" data-g="home" data-i2="n-energy"><span>Energy</span></a><a href="#scenes" data-g="home" data-i2="n-scenes"><span>Scenes</span></a><div class="mgh" data-g="outside">OUTSIDE</div><a href="#weather" data-g="outside" data-i2="n-weather"><span>Weather</span></a><a href="#irrigation" data-g="outside" data-i2="n-irr"><span>Irrigation</span></a><a href="#vehicle" data-g="outside" data-i2="v-car"><span>Vehicle</span></a><a href="#hazards" data-g="outside" data-i2="volcano"><span>Hazards</span></a><div class="mgh" data-g="info">INFO</div><a href="#insights" data-g="info" data-i2="lightbulb-on"><span>Insights</span></a><a href="#media" data-g="info" data-i2="music-note"><span>Media</span></a><a href="#events" data-g="info" data-i2="n-events"><span>Events</span></a><a href="#settings" id="navset2" class="mset" data-i2="n-set"><span>Settings</span></a></div>
 <div class="main">
-  <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><div id="hnp" class="npoff"></div><div class="hr"><div id="hmp" data-np="media" title="Open Media" hidden></div><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header>
+  <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><div id="hnp" class="npoff"></div><div class="hr"><div id="hmp" data-np="sheet" title="Now playing" hidden></div><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header>
   <div id="alb" hidden></div>
   <div id="cdb" hidden></div>
 
@@ -6622,17 +6805,18 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.2.4";   // the one place to change the version
 window.DASH_NEW = {"3.2.0":{"n":["**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass."],"f":0},"3.1.2":{"n":["**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page."],"f":0},"3.1.1":{"n":["**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer."],"f":0},"3.1.0":{"n":["**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass."],"f":0},"3.0.0":{"n":["**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "532a97";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "0ee898";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
   if (res) { r.classList.add("resume"); window.__noHold = true; }   // this page replaced an older one a moment ago (58-auto-update.js): the logo is there at once, no fade-in, no intro, no minimum time
   try { lp = localStorage.getItem("dashLogo") || "on"; } catch (e) {}   // Theme page -> "Start-up logo": on | load (no intro) | off (plain spinner, as before)
   var G = window.brandLogo(); if (!B || !G || !el || lp === "off") return;
-  var d = document.createElement("div"); d.className = "bl"; d.innerHTML = window.brandMark("s");
-  if (!G.lockup) { var n = document.createElement("b"); n.textContent = B.name || ""; var t = document.createElement("small"); t.textContent = B.tag || ""; d.appendChild(n); d.appendChild(t); }
-  var vv = document.createElement("span"); vv.className = "bv"; vv.textContent = "Kinetic " + window.DASH_VER + " · " + window.DASH_BUILD; d.appendChild(vv);
-  el.appendChild(d); r.classList.add("brand"); if (G.lockup) r.classList.add("lockup"); window.__brandT0 = performance.now();
+  var kept = window.__splashKept && el.querySelector(".bl"); try { sessionStorage.removeItem("kinetic-au-splash"); } catch (e) {}
+  var d = kept || document.createElement("div"); if (!kept) { d.className = "bl"; d.innerHTML = window.brandMark("s"); }
+  if (!kept && !G.lockup) { var n = document.createElement("b"); n.textContent = B.name || ""; var t = document.createElement("small"); t.textContent = B.tag || ""; d.appendChild(n); d.appendChild(t); }
+  var vv = kept && d.querySelector(".bv") || document.createElement("span"); vv.className = "bv"; vv.textContent = "Kinetic " + window.DASH_VER + " · " + window.DASH_BUILD; if (!vv.parentNode) d.appendChild(vv);   // a kept logo only gets the new version number
+  if (!kept) el.appendChild(d); r.classList.add("brand"); if (G.lockup) r.classList.add("lockup"); window.__brandT0 = performance.now();
   var seen = 0, now = Date.now(), h = location.hash;
   try { seen = +localStorage.getItem("dashSeen") || 0; localStorage.setItem("dashSeen", now); } catch (e) {}
   try { if (window.parent !== window) { var P = window.parent.location, g = new URLSearchParams(P.search).get("go"); h = g ? "#" + g : (P.hash || h); } } catch (e) {}
@@ -9441,7 +9625,7 @@ function wxMapCard() {
   c.innerHTML = '<div class="lbl wxmh">' + mdi("weather-rainy") + ' Weather map</div>' +
     hsw('<div class="chips tabs wxml">' + WXL.map(l => '<button class="chip" data-wxl="' + l[0] + '">' + l[1] + '</button>').join("") + '</div>') +
     '<div class="wxmm"><iframe class="wxmv" title="Weather map" loading="lazy" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>' +
-    '<button class="wxmcv" data-wxm="use" hidden>' + mdi("gesture-tap") + '<span>TAP TO USE THE MAP</span></button></div>' +
+    '<button class="mpfb" data-mpf="wx" aria-label="Full screen">' + mdi("fullscreen") + '</button><button class="wxmcv" data-wxm="use" hidden>' + mdi("gesture-tap") + '<span>TAP TO USE THE MAP</span></button></div>' +
     '<div class="sm wxmn">Live from Windy · play bar for the hours ahead</div>';
   c.addEventListener("click", e => {
     const l = e.target.closest("[data-wxl]");
@@ -11244,9 +11428,9 @@ function drawHaz() {
   const qrow = q => { const M = hzMag(q.m); return '<button class="hzrow' + (HZ.sel === q.id ? " on" : "") + (q.del ? " del" : "") + (q.far ? " far" : "") + '" data-hz="s" data-v="' + q.id + '"><i class="hzb" style="--c:' + M[1] + '">' + q.m.toFixed(1) + '</i><span><b>' + esc(q.name) + '</b><small>' + hzAgo(q.t) + ' · ' + (q.depth != null ? Math.round(q.depth) + " km deep · " : "") + (isNaN(q.dist) ? "" : Math.round(q.dist) + " km away") + (q.del ? " · withdrawn" : "") + '</small></span><em style="--c:' + M[1] + '">' + M[2] + '</em></button>'; };
   const qN = d.q.filter(q => !q.far), qF = d.q.filter(q => q.far);
   const ql = (qN.length ? qN.map(qrow).join("") : '<p class="hzempty">' + mdi("check-circle-outline") + ' Nothing within ' + fk + ' km' + (hzMin() ? ' (M' + hzMin() + '+)' : '') + '.</p>') + (qF.length ? '<div class="hzsub">' + fk + '-' + hzRad() + ' km</div>' + qF.map(qrow).join("") : "");
-  const vl = d.v.length ? d.v.map(v => { const L = HZ_VAL[v.lvl || 0]; const th = v.lvl > 0 && typeof vcamThumbs === "function" ? vcamThumbs(v) : ""; return '<button class="hzrow' + (HZ.sel === v.id ? " on" : "") + (v.lvl > 0 ? "" : " q") + (th ? " vcam-row" : "") + '" data-hz="s" data-v="' + v.id + '"><i class="hzb hztri">' + hzTri(L[1], v.lvl == null ? "?" : v.lvl) + '</i><span><b>' + esc(v.name) + '</b><small>' + esc(v.lvl > 0 ? (v.act || L[0]) : L[0]) + (hzOn(v) ? "" : " · off the map") + '</small></span>' + (v.lvl > 0 ? '<em style="--c:' + L[1] + '">Level ' + v.lvl + '</em>' : typeof vcamMark === "function" ? vcamMark(v) : "") + th + '</button>'; }).join("") : '<p class="hzempty">No GeoNet volcano sensors found.</p>';
+  const vl = act.length ? act.map(v => { const L = HZ_VAL[v.lvl || 0]; const th = v.lvl > 0 && typeof vcamThumbs === "function" ? vcamThumbs(v) : ""; return '<button class="hzrow' + (HZ.sel === v.id ? " on" : "") + (v.lvl > 0 ? "" : " q") + (th ? " vcam-row" : "") + '" data-hz="s" data-v="' + v.id + '"><i class="hzb hztri">' + hzTri(L[1], v.lvl == null ? "?" : v.lvl) + '</i><span><b>' + esc(v.name) + '</b><small>' + esc(v.lvl > 0 ? (v.act || L[0]) : L[0]) + (hzOn(v) ? "" : " · off the map") + '</small></span>' + (v.lvl > 0 ? '<em style="--c:' + L[1] + '">Level ' + v.lvl + '</em>' : typeof vcamMark === "function" ? vcamMark(v) : "") + th + '</button>'; }).join("") : '<p class="hzempty">' + (d.v.length ? mdi("check-circle-outline") + " All " + d.v.length + " volcanoes are quiet (level 0)." : "No GeoNet volcano sensors found.") + '</p>';
   pg.innerHTML = '<div class="hsw hztw"><div class="chips tabs hztabs">' + [["map", "MAP"], ["quake", "EARTHQUAKES"], ["volc", "VOLCANOES"]].concat(typeof RDC === "function" && RDC() ? [["roads", "ROADS"]] : []).map(t => '<button class="chip' + (HZ.tab === t[0] ? " on" : "") + '" data-hz="tab" data-v="' + t[0] + '">' + t[1] + '</button>').join("") + '</div><span class="hsm l" aria-hidden="true">' + mdi("chevron-left") + '</span><span class="hsm r" aria-hidden="true">' + mdi("chevron-right") + '</span></div><div class="hzg" data-tab="' + HZ.tab + '"><div class="pn hzm' + (HZ.sel ? " dop" : "") + '"><div class="hzh"><div><span class="lbl">' + mdi("pulse") + ' GeoNet · live</span><b class="hzs">' + esc(sum) + '</b></div><div class="chips tabs hzseg">' + chip("nz", "NZ") + chip("ni", "NORTH ISLAND") + (d.home ? chip("home", fk + " KM") : "") + '</div></div>' +
-    '<div class="hzmap"><i id="hzslot"></i><div class="hzzb"><button data-hz="in" aria-label="Zoom in">' + mdi("plus") + '</button><button data-hz="out" aria-label="Zoom out">' + mdi("minus") + '</button><button class="hzlb" data-hz="pg" data-v="1" aria-label="Lists">' + mdi("format-list-bulleted") + '</button></div><div class="hzd' + (HZ.sel ? " on" : "") + '" id="hzd">' + hzDetail(d) + '</div></div>' + leg + '</div>' +
+    '<div class="hzmap"><i id="hzslot"></i><div class="hzzb"><button class="mpfb" data-mpf="hz" aria-label="Full screen">' + mdi(MPF.key === "hz" ? "close" : "fullscreen") + '</button><button data-hz="in" aria-label="Zoom in">' + mdi("plus") + '</button><button data-hz="out" aria-label="Zoom out">' + mdi("minus") + '</button><button class="hzlb" data-hz="pg" data-v="1" aria-label="Lists">' + mdi("format-list-bulleted") + '</button></div><div class="hzd' + (HZ.sel ? " on" : "") + '" id="hzd">' + hzDetail(d) + '</div></div>' + leg + '</div>' +
     '<div class="hzside"><div class="pn hzpq"><div class="hzlh"><span class="lbl">' + mdi("pulse") + ' Earthquakes</span><small>' + (hzMin() ? "M" + hzMin() + "+ · " : "") + 'within ' + hzRad() + ' km</small></div>' + ql + '</div>' + (typeof slvHtml === "function" ? slvHtml() + rdHtml() : "") + '<div class="pn hzpv"><div class="hzlh"><span class="lbl">' + mdi("volcano") + ' Volcanoes</span><small>' + (act.length ? act.length + " above level 0" : "all at level 0") + '</small></div>' + vl + '</div></div></div><div class="dots hzdots"><i data-hz="pg" data-v="0" class="on"></i><i data-hz="pg" data-v="1"></i></div>';
   hzFit(); setTimeout(hzFit, 500); 
   // one map element for the life of the page: it is made and bound once and put back in its place on every draw. Making a new one each time left every old copy (and its listeners) in memory
@@ -11256,6 +11440,7 @@ function drawHaz() {
   if (HZ.svg._in !== inner) { HZ.svg._in = inner; HZ.svg.innerHTML = inner; }
   const slot = $("#hzslot"); if (slot) slot.replaceWith(HZ.svg);
   hzApply();
+  if (MPF.key === "hz") mpOn("hz");
 }
 function hzFit() {   // phone: the map page and the lists page each fill the space between the header and the tab bar
   const g = $("#hazards .hzg"); if (!g) return;
@@ -12995,7 +13180,8 @@ function lvCard() {
 function lvQ() { if (!LV.q) LV.q = requestAnimationFrame(() => { LV.q = 0; lvCard(); }); }
 function lvDraw(it) {
   const b = $("#lvbody"); if (!b) return;
-  const row = x => '<div class="nrow warn at-r"><span class="at-i">' + mdi(x.icon) + '</span><span class="nbn"><b>' + esc(x.t) + '</b>' + (x.sub ? '<small>' + esc(x.sub) + '</small>' : "") + '</span></div>';
+  const KC = { lights: "lights", garage: "gopen", doors: "doors", windows: "windows", curtains: "covers" };   // the same colours as the room-page chips
+  const row = x => '<div class="nrow warn at-r' + (KC[x.k] ? " kc-" + KC[x.k] : "") + '"><span class="at-i">' + mdi(x.icon) + '</span><span class="nbn"><b>' + esc(x.t) + '</b>' + (x.sub ? '<small>' + esc(x.sub) + '</small>' : "") + '</span></div>';
   const lt = it.filter(x => x.k === "lights")[0], al = it.filter(x => x.k === "alarm")[0];
   const h = '<div class="lbl lvh"><span>' + mdi("door-open") + 'Before you leave</span><button class="rnd lvx" data-lv="close" aria-label="Close">' + mdi("close") + '</button></div>' + it.map(row).join("") +
     '<div class="lvb2">' + (lt ? '<button class="eb" data-lv="off">LIGHTS OFF</button>' : "") + (al ? '<button class="eb" data-lv="arm">ARM AWAY</button>' : "") + '</div>';
@@ -13056,7 +13242,15 @@ const CTROWS = [
   ["coolUntil", "Cool until", "snowflake", "cl2", "Cooling stops below this"],
   ["coolAbove", "Cool above", "snowflake", "cl2", "Cooling starts over this"]
 ];
-const CTV = {}, CTH = {};   // value waiting to be sent, and the send timers, by helper
+const CTV = {}, CTH = {}, CTS = {}, CTC = {};   // by helper: the value shown (a tap or a drag not yet confirmed by Home Assistant), the send timer, the value last sent, the timer that gives up waiting for the confirmation
+// A tapped value stays on screen until Home Assistant reports that same value (or 8 s after the last send), and every new tap or drag cancels the wait, so quick taps and late or older states never bring an old number back.
+function ctSend(e) {
+  delete CTH[e]; if (CTV[e] == null) return; CTS[e] = CTV[e]; call("input_number", "set_value", e, { value: CTV[e] });
+  clearTimeout(CTC[e]); CTC[e] = setTimeout(() => { delete CTV[e]; delete CTS[e]; delete CTC[e]; ctDraw(); }, 8000);
+}
+function ctSettle() {
+  Object.keys(CTV).forEach(e => { const st = states[e]; if (CTH[e] || CTS[e] == null || CTV[e] !== CTS[e] || !st || parseFloat(st.state) !== CTS[e]) return; clearTimeout(CTC[e]); delete CTV[e]; delete CTS[e]; delete CTC[e]; });
+}
 const ctOwner = r => r.main ? (CONFIG.climateTriggers || {}) : r;
 const ctIds = () => { const o = {}; CONFIG.rooms.forEach(r => { CTROWS.forEach(x => { const e = ctOwner(r)[x[0]]; if (e) o[e] = 1; }); if (!r.main && r.autoClimate) o[r.autoClimate] = 1; }); return o; };
 const CTSET = ctIds();
@@ -13067,10 +13261,42 @@ function ctMarks(el, o) {   // the two trigger points as little arrows under the
   });
   el.classList.toggle("hasmk", !document.body.classList.contains("ca-off") && !!$(".mk:not([hidden])", el));
 }
-function ctThresholdMarkup(rows, o) {
-  return rows.map(x => { const e = o[x[0]], v = CTV[e] != null ? CTV[e] : parseFloat(states[e].state);
-    return '<div class="ct ct-' + x[0] + '" title="' + x[4] + '"><div class="cl"><span class="' + x[3] + '">' + mdi(x[2]) + x[1] + '</span><small>' + x[4] + '</small></div><button class="rnd" data-ct="' + esc(e) + '" data-d="-1" aria-label="Lower ' + x[1] + '">' + mdi("minus") + '</button><b>' + (isNaN(v) ? "--" : f1(v) + "°") + '</b><button class="rnd" data-ct="' + esc(e) + '" data-d="1" aria-label="Raise ' + x[1] + '">' + mdi("plus") + '</button></div>';
-  }).join("");
+const CTCH = { heatBelow: ["Heat on", "below", "wm"], heatUntil: ["Heat off", "above", "wm"], coolUntil: ["Cool off", "below", "cl2"], coolAbove: ["Cool on", "above", "cl2"] };   // chip wording: what happens, and on which side of the number
+function ctThresholdMarkup(rows, o) {   // four chips (one per helper) and ONE stepper that edits the chip picked (or the handle last touched on a bar)
+  return '<div class="ctchs">' + rows.map(x => '<button type="button" class="ctch ct-' + x[0] + '" data-sel="' + x[0] + '" title="' + x[4] + '"><span class="' + CTCH[x[0]][2] + '">' + CTCH[x[0]][0] + '</span><b>--</b></button>').join("") + '</div>' +
+    '<div class="ctst"><div class="cl"><span class="sl"></span><small class="sd"></small></div><button class="rnd" data-ct="" data-d="-1" aria-label="Lower">' + mdi("minus") + '</button><b class="sv">--</b><button class="rnd" data-ct="" data-d="1" aria-label="Raise">' + mdi("plus") + '</button></div>';
+}
+// Range bars: "Heat below" + "Heat until" are one bar with two handles (the band where heating runs), "Cool until" + "Cool above" another. The steppers stay under each bar for fine steps.
+// The bar elements are built once per set of helpers and only updated afterwards, so a drag is never rebuilt under the finger. Both bars share one scale that fits the values and the room's reading.
+const CTRG = [["heat", "Heat", "fire", "wm", "heatBelow", "heatUntil"], ["cool", "Cool", "snowflake", "cl2", "coolUntil", "coolAbove"]];
+const ctGet = e => { const s = states[e], v = CTV[e] != null ? CTV[e] : s ? parseFloat(s.state) : NaN; return v; };
+const ctAt = e => { const a = (states[e] || {}).attributes || {}; return { step: parseFloat(a.step) || 0.5, mn: a.min != null ? +a.min : 10, mx: a.max != null ? +a.max : 35 }; };
+function ctRangeMarkup(rows, o) {
+  const has = k => rows.some(x => x[0] === k);
+  return CTRG.filter(g => has(g[4]) && has(g[5])).map(g => '<div class="crg crg-' + g[0] + '" data-rg="' + g[0] + '" data-ea="' + esc(o[g[4]]) + '" data-eb="' + esc(o[g[5]]) + '"><div class="crh"><span class="' + g[3] + '">' + mdi(g[2]) + g[1] + '</span><b data-rv>-</b></div><div class="crt"><i class="crb"></i><u class="crm" hidden></u>' +
+    '<span class="crk" role="slider" tabindex="0" data-k="a" data-e="' + esc(o[g[4]]) + '" aria-label="' + esc(CTROWS.filter(x => x[0] === g[4])[0][1]) + '"></span><span class="crk" role="slider" tabindex="0" data-k="b" data-e="' + esc(o[g[5]]) + '" aria-label="' + esc(CTROWS.filter(x => x[0] === g[5])[0][1]) + '"></span></div></div>').join("");
+}
+function ctVals(inner, rows, o, r) {
+  const keys = {}; rows.forEach(x => { keys[o[x[0]]] = x[0]; }); inner._keys = keys;
+  if (!inner._sel || !rows.some(x => x[0] === inner._sel)) inner._sel = rows.length ? rows[0][0] : "";
+  rows.forEach(x => { const b = $(".ct-" + x[0] + " b", inner), v = ctGet(o[x[0]]), on = x[0] === inner._sel; if (b) b.textContent = isNaN(v) ? "--" : CTCH[x[0]][1] + " " + f1(v) + "°"; const ch = $(".ct-" + x[0], inner); if (ch) { ch.classList.toggle("on", on); ch.setAttribute("aria-pressed", on); }
+    if (on) { const sv = $(".ctst .sv", inner), sl = $(".ctst .sl", inner), sd = $(".ctst .sd", inner); if (sv) sv.textContent = isNaN(v) ? "--" : f1(v) + "°"; if (sl) sl.textContent = CTCH[x[0]][0] + " " + CTCH[x[0]][1]; if (sd) sd.textContent = x[4]; $$(".ctst .rnd", inner).forEach(bt => { bt.dataset.ct = o[x[0]]; }); } });
+  $$(".crk", inner).forEach(k => k.classList.toggle("sel", !!inner._sel && o[inner._sel] === k.dataset.e));
+  const boxes = $$(".crg", inner); if (!boxes.length) return;
+  const rs = states[r.id], cur = rs && rs.attributes ? parseFloat(rs.attributes.current_temperature) : NaN;
+  const vals = rows.map(x => ctGet(o[x[0]])).concat(isNaN(cur) ? [] : [cur]).filter(v => !isNaN(v));
+  let lo, hi;
+  if (inner._fz) { lo = inner._fz[0]; hi = inner._fz[1]; }
+  else { const mn = Math.min.apply(null, vals), mx = Math.max.apply(null, vals); lo = Math.floor(mn - 2); hi = Math.ceil(mx + 2); if (hi - lo < 8) { lo = Math.floor((mn + mx) / 2 - 4); hi = lo + 8; } }
+  inner._sc = [lo, hi];
+  const pc = v => Math.max(0, Math.min(1, (v - lo) / (hi - lo)));
+  boxes.forEach(bx => {
+    const ea = bx.dataset.ea, eb = bx.dataset.eb, a = ctGet(ea), b = ctGet(eb); if (isNaN(a) || isNaN(b)) return;
+    bx.style.setProperty("--pa", pc(a)); bx.style.setProperty("--pb", pc(b)); bx.style.setProperty("--a", pc(Math.min(a, b))); bx.style.setProperty("--b", pc(Math.max(a, b)));
+    const m = $(".crm", bx); m.hidden = isNaN(cur); if (!isNaN(cur)) { bx.style.setProperty("--m", pc(cur)); m.title = f1(cur) + "° now"; }
+    $("[data-rv]", bx).textContent = f1(Math.min(a, b)) + "° - " + f1(Math.max(a, b)) + "°";
+    [[ea, a], [eb, b]].forEach((p, i) => { const k = $('.crk[data-k="' + "ab"[i] + '"]', bx), t = ctAt(p[0]); k.setAttribute("aria-valuemin", t.mn); k.setAttribute("aria-valuemax", t.mx); k.setAttribute("aria-valuenow", p[1]); k.setAttribute("aria-valuetext", f1(p[1]) + "°"); });
+  });
 }
 // The phone sheet is fixed to the bottom of the screen, so animating its height re-lays out and repaints the whole sheet every frame (laggy).
 // Instead the new layout is applied at once and the sheet slides with a transform (compositor only); the rows fade. Tablets keep the grid animation.
@@ -13099,6 +13325,7 @@ function ctSetExpanded(box, visible) {
   }
 }
 function ctDraw() {
+  ctSettle();
   CONFIG.rooms.forEach(r => {
     const c = cards[r.id], box = c && $(".ctr", c.el); if (!box) return; const o = ctOwner(r);
     const rows = CTROWS.filter(x => o[x[0]] && states[o[x[0]]] && states[o[x[0]]].state !== "unavailable");
@@ -13110,13 +13337,14 @@ function ctDraw() {
     // When the room's auto-climate switch is off, the four thresholds are hidden.
     const hasToggle = !!ac;
     if (!box.querySelector('.ct-threshold-outer') || hasToggle !== !!box.querySelector('.ct-auto')) {
-      box.innerHTML = (hasToggle ? '<div class="ct ct-auto"><span>' + esc(r.autoLabel || "Sleeping here tonight") + '</span><button class="csw" role="switch" aria-checked="false" data-cb="' + esc(ac) + '" aria-label="' + esc(r.autoLabel || "Sleeping here tonight") + '"><i></i></button></div>' : '') + '<div class="ct-threshold-outer"><div class="ct-threshold-inner"></div></div>';
+      box.innerHTML = (hasToggle ? '<div class="ct ct-auto"><span><b>' + esc(r.autoLabel || "Auto climate") + '</b>' + (r.autoLabel ? "" : "<small>Sleeping here tonight</small>") + '</span><button class="csw" role="switch" aria-checked="false" data-cb="' + esc(ac) + '" aria-label="' + esc(r.autoLabel || "Auto climate, sleeping here tonight") + '"><i></i></button></div>' : '') + '<div class="ct-threshold-outer"><div class="ct-threshold-inner"></div></div>';
     }
     const toggle = box.querySelector('.ct-auto .csw');
     if (toggle) toggle.setAttribute('aria-checked', acOn ? 'true' : 'false');
     const inner = box.querySelector('.ct-threshold-inner');
-    const markup = ctThresholdMarkup(rows, o);
-    if (inner.innerHTML !== markup) inner.innerHTML = markup;
+    const sig = rows.map(x => x[0] + "=" + o[x[0]]).join("|");
+    if (inner._sig !== sig) { inner.innerHTML = ctThresholdMarkup(rows, o) + ctRangeMarkup(rows, o); inner._sig = sig; inner.classList.toggle("hasrg", !!inner.querySelector(".crg")); }
+    ctVals(inner, rows, o, r);
     const visible = !hasToggle || !!acOn;
     ctSetExpanded(box, visible);
     box.querySelector('.ct-threshold-outer').setAttribute('aria-hidden', visible ? 'false' : 'true');
@@ -13127,11 +13355,23 @@ function ctBump(e, d) {
   const s = states[e]; if (!s) return; const a = s.attributes || {}, step = parseFloat(a.step) || 0.5, mn = a.min != null ? +a.min : 10, mx = a.max != null ? +a.max : 35;
   const base = CTV[e] != null ? CTV[e] : parseFloat(s.state); if (isNaN(base)) return;
   CTV[e] = Math.min(mx, Math.max(mn, Math.round((base + step * d) / step) * step)); ctDraw();
-  clearTimeout(CTH[e]); CTH[e] = setTimeout(() => { call("input_number", "set_value", e, { value: CTV[e] }); setTimeout(() => { delete CTV[e]; ctDraw(); }, 4000); }, 700);
+  clearTimeout(CTH[e]); clearTimeout(CTC[e]); CTH[e] = setTimeout(() => ctSend(e), 700);
 }
 CONFIG.rooms.forEach(r => { const c = cards[r.id]; if (!c || !Object.keys(CTSET).length) return; const o = ctOwner(r); if (!CTROWS.some(x => o[x[0]]) && !(!r.main && r.autoClimate)) return; const box = document.createElement("div"); box.className = "ctr"; box.hidden = true; c.el.appendChild(box); });
-$("#grid").addEventListener("click", e => { const b = e.target.closest("[data-ct]"); if (b) ctBump(b.dataset.ct, +b.dataset.d);
+$("#grid").addEventListener("click", e => { const b = e.target.closest("[data-ct]"); if (b && b.dataset.ct) ctBump(b.dataset.ct, +b.dataset.d);
+  const sc = e.target.closest("[data-sel]"); if (sc) { const inn = sc.closest(".ct-threshold-inner"); if (inn) { inn._sel = sc.dataset.sel; ctDraw(); } }
   const t = e.target.closest("[data-cb]"); if (t) { const id = t.dataset.cb; call("input_boolean", states[id] && states[id].state === "on" ? "turn_off" : "turn_on", id); } });
+{ let LR = null;
+  const ctPos = (e, t, inner) => { const r = t.getBoundingClientRect(), th = parseFloat(getComputedStyle(t.parentNode).getPropertyValue("--t")) || 14, sc = inner._fz || inner._sc || [16, 26]; return sc[0] + Math.max(0, Math.min(1, (e.clientX - r.left - th / 2) / Math.max(1, r.width - th))) * (sc[1] - sc[0]); };
+  const ctPut = (en, v, k, bx) => { const t = ctAt(en), other = ctGet(k === "a" ? bx.dataset.eb : bx.dataset.ea); v = Math.round(v / t.step) * t.step; if (!isNaN(other)) v = k === "a" ? Math.min(v, other - t.step) : Math.max(v, other + t.step); v = Math.min(t.mx, Math.max(t.mn, v)); CTV[en] = Math.round(v * 100) / 100; clearTimeout(CTH[en]); clearTimeout(CTC[en]); delete CTH[en]; CTH[en] = 0; ctDraw(); };
+  $("#grid").addEventListener("pointerdown", e => { const t = e.target.closest(".crt"); if (!t || (e.pointerType === "mouse" && e.button !== 0)) return;
+    const bx = t.parentNode, inner = bx.closest(".ct-threshold-inner"), ea = bx.dataset.ea, eb = bx.dataset.eb; if (!inner || isNaN(ctGet(ea)) || isNaN(ctGet(eb))) return;
+    inner._fz = inner._sc; const v = ctPos(e, t, inner), a = ctGet(ea), b = ctGet(eb), k = Math.abs(v - a) < Math.abs(v - b) ? "a" : Math.abs(v - a) > Math.abs(v - b) ? "b" : (v < a ? "a" : "b");
+    LR = { t: t, bx: bx, inner: inner, k: k, en: k === "a" ? ea : eb }; if (inner._keys && inner._keys[LR.en]) inner._sel = inner._keys[LR.en]; try { t.setPointerCapture(e.pointerId); } catch (_) {} ctPut(LR.en, v, k, bx); e.preventDefault(); });
+  $("#grid").addEventListener("pointermove", e => { if (LR) ctPut(LR.en, ctPos(e, LR.t, LR.inner), LR.k, LR.bx); });
+  const ctEnd = () => { if (!LR) return; const en = LR.en, inner = LR.inner; LR = null; inner._fz = null; ctSend(en); ctDraw(); };
+  $("#grid").addEventListener("pointerup", ctEnd); $("#grid").addEventListener("pointercancel", ctEnd);
+  $("#grid").addEventListener("keydown", e => { const k = e.target.closest && e.target.closest(".crk"); if (!k) return; const d = e.key === "ArrowLeft" || e.key === "ArrowDown" ? -1 : e.key === "ArrowRight" || e.key === "ArrowUp" ? 1 : 0; if (!d) return; e.preventDefault(); ctBump(k.dataset.e, d); }); }
 ctDraw();
 // ---------- Events: more ways to look at the calendar ----------
 // tablet: MONTH | WEEK | LIST      phone: AGENDA | WEEK | MONTH
@@ -13445,6 +13685,7 @@ function npFsDraw(g, sh, ga) {
 }
 // the speakers pop-up lives outside the card, so joining or taking out a speaker only redraws the pop-up
 function npSkDraw(g) {
+  if (matchMedia("(min-width:761px)").matches) npSpk = false;   // tablets show the speakers under the player
   const el = $("#npsk"), b = $("#npbody .npq"); if (b) { b.classList.toggle("on", npSpk); b.setAttribute("aria-expanded", npSpk); } if (!el) return;
   if (!npSpk) { if (!el.hidden) { el.hidden = true; el.innerHTML = ""; el._h = ""; } return; }
   const h = '<div class="npskb" data-np="spkx"></div><div class="npskc" role="dialog" aria-label="Speakers"><div class="lbl"><span class="nptx">Speakers</span><button class="rnd s" data-np="spkx" aria-label="Close speakers">' + mdi("close") + '</button></div><div class="nsl">' + grpRows(g.ctl) + '</div></div>';
@@ -13453,7 +13694,7 @@ function npSkDraw(g) {
 function npRender() {
   if (!CONFIG.media || !CONFIG.media.length) return;
   const act = npActive(), w = $("#npw"), mi = $("#npmini"), sh = $("#npsheet"), hn0 = $("#hnp"), dragging = document.activeElement && document.activeElement.type === "range" && (w.contains(document.activeElement) || sh.contains(document.activeElement) || hn0.contains(document.activeElement));
-  document.body.classList.toggle("np-on", !!act.length);
+  document.body.classList.toggle("np-on", !!act.length); document.body.classList.add("np-tab");
   const onMed = curPg() === "media" && !(typeof spHere === "function" && spHere());   // the Spotify page keeps the floating player bar; the old speaker page does not need it
   { const nt = $("#hnote"), pl = act.some(x => (states[x.ctl] || {}).state === "playing"); nt.classList.toggle("on", false);   /* the header music note is retired: the mini player bar at the bottom does its job */ nt.classList.toggle("pl", pl); if (act.length) nt.title = "Open Media"; }   // tablet: the music note in the header on every page, Media included (the player bar is gone)
   document.body.classList.toggle("np-fab", !!act.length && isMobile() && ["scenes", "irrigation"].indexOf(curPg()) > -1);   // pages with a floating pill: the music bar becomes a round button beside it
@@ -13502,7 +13743,7 @@ function npRender() {
     SL.lines = sh ? ss.lines : null; SL.ctl = g.ctl; SL.cur = -2;
     const key = (ga.media_title || "") + "|" + (ga.media_artist || ""), nb = $("#npbody"), oldSc = $(".npl2", nb); let top0 = oldSc ? oldSc.scrollTop : 0; if (key !== npsKey) { npsKey = key; top0 = 0; }
     const nlc = sh ? '<div class="npcd nlc"><div class="lbl"><span>Lyrics</span><button class="rnd s" data-np="lyf" aria-label="Lyrics full screen">' + mdi("fullscreen") + '</button></div><div class="nlx" data-np="lyf">' + nlxHtml(SL.lines, hlIdx(SL.lines, SL.ctl)) + '</div></div>' : "", arc = aiOn() && ga.media_artist ? '<div class="npcd arc2">' + aiHtml(g.ctl) + '</div>' : "";
-    const head = '<div class="lbl"><span class="nptx">Now playing</span><button class="rnd s npq" data-np="spk" aria-label="Speakers">' + mdi("speaker-multiple") + '</button><button class="rnd s" data-np="close">' + mdi("close") + '</button></div>';
+    const head = '<div class="lbl"><span class="nptx">Now playing</span>' + (tb ? "" : '<button class="rnd s npq" data-np="spk" aria-label="Speakers">' + mdi("speaker-multiple") + '</button>') + '<button class="rnd s" data-np="close">' + mdi("close") + '</button></div>';   // tablets: the speakers sit under the player, so no pop-up button
     if (GRP.busy && npWas && nb.firstChild) return;   // speakers are being joined or taken out: leave the card exactly as it is (it is drawn once more when Sonos has settled)
     npFsDraw(g, sh, ga);
     nb.classList.add("np2");
@@ -13510,7 +13751,7 @@ function npRender() {
     if (tb) {   // tablet: the player on the left, the long card (lyrics, then the artist) on the right
       const side = nlc + arc; npsName = side ? "two" : "";
       nb.classList.toggle("npt2", !!side);
-      html = head + '<div class="npt' + (side ? " two" : "") + '"><div class="npg">' + npPlay(g, true) + '</div>' + (side ? '<div class="npg npgr"><div class="npl2">' + side + '</div></div>' : "") + '</div>';
+      html = head + '<div class="npt' + (side ? " two" : "") + '"><div class="npg">' + npPlay(g, true) + '<div class="npsp"><div class="lbl"><span class="nptx">Speakers</span></div><div class="nsl">' + grpRows(g.ctl) + '</div></div></div>' + (side ? '<div class="npg npgr"><div class="npl2">' + side + '</div></div>' : "") + '</div>';
     } else {
       nb.classList.remove("npt2");
       html = head + '<div class="npl2"><div class="npg">' + npPlay(g, true) + '</div>' + nlc + arc + '</div>';
@@ -13545,7 +13786,7 @@ addEventListener("resize", hmFitSoon);
 function npGrow(nb, closing) {   // tablets: the card grows out of the mini player bar and shrinks back into it (a clip, so nothing is stretched)
   try {
     if (npAnimH) { npAnimH.cancel(); npAnimH = null; }
-    const mi = $("#npmini"); if (!mi || !nb.animate || matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    const hp = $("#hmp"), mi = hp && !hp.hidden && hp.getBoundingClientRect().width ? hp : $("#npmini"); if (!mi || !nb.animate || matchMedia("(prefers-reduced-motion:reduce)").matches) return;
     const m = mi.getBoundingClientRect(), b = nb.getBoundingClientRect(); if (!m.width || !b.width) return;
     const cp = "inset(" + [m.top - b.top, b.right - m.right, b.bottom - m.bottom, m.left - b.left].map(v => Math.round(Math.max(0, v)) + "px").join(" ") + " round 20px)", full = "inset(0px 0px 0px 0px round 26px)";
     npAnimH = nb.animate(closing ? [{ clipPath: full }, { clipPath: cp }] : [{ clipPath: cp }, { clipPath: full }], { duration: closing ? 300 : 440, easing: "cubic-bezier(.2,.85,.3,1)", fill: closing ? "forwards" : "none" });
@@ -14156,6 +14397,55 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") document.que
 document.addEventListener("dragstart", e => { if (CZ.pts.size && czTarget(e)) e.preventDefault(); });   // a mouse drag moves the picture, it does not pick the image up
 
 addEventListener("resize", () => { if (innerWidth > innerHeight) document.querySelectorAll(".zc.zls").forEach(e => { e.classList.remove("zls"); czReset(e); }); });
+// ----- Full screen for the Hazards map and the Windy weather map -----
+// Same way as the camera card (12-init.js camNative / camClose): no cover over the page. The panel itself becomes a solid full-screen card from the first frame (class mfull), its contents fade in, and the browser's real full screen is asked for without waiting.
+// Closing: the contents fade out fast, the card dissolves into the empty spot that was kept for it in the page (class mph), then the real full screen is left after the fade.
+// The map stays the way the phone is held (portrait or landscape). Header and legend become slim pills over the map; the button turns into a close X.
+const MPF = { key: "", root: 0, closing: 0, opening: 0, h: 0, gc: "", m: "" };
+const mpEl = k => k === "hz" ? $("#hazards .hzm") : k === "wx" ? $("#wxmap") : null;
+const mpFsOff = () => { if (czFsNow()) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (_) {} } };
+function mpSync() { document.querySelectorAll("[data-mpf]").forEach(b => { const on = b.dataset.mpf === MPF.key && !MPF.closing; b.innerHTML = mdi(on ? "close" : "fullscreen"); b.setAttribute("aria-label", on ? "Close full screen" : "Full screen"); }); }
+function mpAfter(k) { if (k === "hz" && typeof hzFit === "function") { hzFit(); if (typeof hzApply === "function") hzApply(); } window.dispatchEvent(new Event("resize")); }
+function mpPh(el) {   // the card leaves the page layout while it is full screen: this holds its place, so the page behind does not jump
+  const p = el.previousElementSibling; if (p && p.classList.contains("mph")) return p;
+  const ph = document.createElement("div"); ph.className = "mph"; ph.style.height = (MPF.h || el.offsetHeight) + "px"; if (MPF.gc) ph.style.gridColumn = MPF.gc; if (MPF.m) ph.style.margin = MPF.m;
+  if (el.parentNode) el.parentNode.insertBefore(ph, el); return ph;
+}
+function mpOn(k, fresh) {   // also called after every Hazards redraw, which makes a new panel
+  const el = mpEl(k); if (!el) return; MPF.key = k;
+  mpPh(el); czHost(el, true); el.classList.add("mfull");
+  if (MPF.closing) el.classList.add("mclose");
+  else document.documentElement.classList.add("mpf");
+  if (fresh) { el.classList.add("mfin"); setTimeout(() => el.classList.remove("mfin"), 320); }
+  mpSync(); mpAfter(k);
+}
+function mpOff() {
+  const k = MPF.key; if (!k) return; const el = mpEl(k); MPF.key = ""; MPF.root = 0; MPF.closing = 0; MPF.opening = 0;
+  document.documentElement.classList.remove("mpf");
+  document.querySelectorAll(".mph").forEach(p => p.remove());
+  if (el) { czHost(el, false); el.classList.remove("mfull", "mclose", "mfin"); if (!czRm()) { el.classList.add("mback"); setTimeout(() => el.classList.remove("mback"), 260); } }
+  mpSync(); mpAfter(k);
+}
+function mpOpen(k) {
+  const el = mpEl(k); if (!el || MPF.key || MPF.opening) return;
+  const cs = getComputedStyle(el); MPF.h = el.offsetHeight; MPF.gc = cs.gridColumnStart + " / " + cs.gridColumnEnd; MPF.m = cs.margin; MPF.opening = 1; setTimeout(() => { MPF.opening = 0; }, 320);
+  mpOn(k, !czRm());
+  const root = document.documentElement, rf = root.requestFullscreen || root.webkitRequestFullscreen;   // asked for straight away, not waited for: the card already fills the screen (config camFullscreen: false keeps it inside the page)
+  if (rf && !czFsNow() && CONFIG.camFullscreen !== false) { let p; try { p = rf.call(root, { navigationUI: "hide" }); } catch (x) { p = Promise.reject(x); } Promise.resolve(p).then(() => { MPF.root = 1; }, () => {}); }
+}
+function mpClose(left) {   // left: the browser already left full screen (system gesture)
+  const k = MPF.key; if (!k || MPF.closing) return; const el = mpEl(k);
+  if (!el || czRm()) { if (!left) mpFsOff(); mpOff(); return; }
+  MPF.closing = 1; document.documentElement.classList.remove("mpf"); el.classList.add("mclose"); const ph = el.previousElementSibling; if (ph && ph.classList.contains("mph")) ph.classList.add("on"); mpSync();
+  setTimeout(() => { if (!MPF.key) return; mpOff(); if (!left) mpFsOff(); }, 240);   // the real full screen is left after the fade: leaving first blanked the whole screen for a moment
+}
+function mpFull(k) { if (MPF.key === k) mpClose(); else mpOpen(k); }
+document.addEventListener("click", e => { const b = e.target.closest("[data-mpf]"); if (b) { e.preventDefault(); e.stopPropagation(); mpFull(b.dataset.mpf); } }, true);
+// the browser's own exit (Escape, swipe) leaves full screen: close the card the same way
+["fullscreenchange", "webkitfullscreenchange"].forEach(n => document.addEventListener(n, () => { if (MPF.key && MPF.root && !czFsNow()) { MPF.root = 0; mpClose(true); } }));
+// leaving the page, or Escape when the browser did not take the key
+addEventListener("hashchange", () => { if (MPF.key && curPg() !== (MPF.key === "hz" ? "hazards" : "weather")) { mpFsOff(); mpOff(); } });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && MPF.key && !e.defaultPrevented) { e.preventDefault(); mpClose(); } }, true);
 // ---------- Playback / Detections: mark the person or car that moves ----------
 // Needs no extra software: the picture is compared with the one a moment ago, and a box follows whatever changed. It only runs for clips the camera tagged Person / Vehicle / Animal, so wind and shadows in plain "Motion" clips are left alone.
 // config.js: detectMark: "brackets" (default) | "box" | "glow" | false
@@ -14698,6 +14988,7 @@ function route() {
   document.body.classList.remove("pill-open");
   if (p === "irrigation") { drawIrr(); loadIrrH(); }
   if (p === "scenes") { scSheet = false; $("#scenes").classList.remove("scop"); drawScenes(); }
+  if (p !== "media") document.body.classList.remove("sp-on");   // the Spotify page and its floating player bar belong to the Media page only
   if (p === "media") { drawMedia(); if (typeof spRoute === "function") spRoute(); }
   if (p === "theme") drawPalette();
   if (p === "admin") drawAdmin();
@@ -17810,16 +18101,16 @@ function wwTl(it) {
   return '<div class="tk-wwt"><div class="tk-wwtb"><i class="w" style="left:' + p(it.start).toFixed(1) + '%;width:' + (p(it.end) - p(it.start)).toFixed(1) + '%"></i><i class="n" style="left:' + p(now).toFixed(1) + '%"></i></div>' +
     '<div class="tk-wwtr"><b>' + l + '</b><span>' + esc(wxaTime(it.start) + " to " + wxaTime(it.end)) + '</span><span>' + r + '</span></div></div>';
 }
-const wwRow = (ic, t, sub, btn, go) => '<div class="tk-wwr' + (go ? " go" : "") + '"' + (go ? ' data-wwgo="' + go + '"' : "") + '><i>' + mdi(ic) + '</i><span><b>' + esc(t) + '</b>' + (sub ? '<small>' + esc(sub) + '</small>' : "") + '</span>' + (btn || "") + '</div>';
+const wwRow = (ic, t, sub, btn, go, kc) => '<div class="tk-wwr' + (go ? " go" : "") + (kc ? " kc-" + kc : "") + '"' + (go ? ' data-wwgo="' + go + '"' : "") + '><i>' + mdi(ic) + '</i><span><b>' + esc(t) + '</b>' + (sub ? '<small>' + esc(sub) + '</small>' : "") + '</span>' + (btn || "") + '</div>';
 // what at home matters while the warning is on (each row only when it applies)
 function wwPlace(it) {
   const R = [], now = Date.now(), wins = [];
   HOUSE().forEach(r => members(r.windows).forEach(x => { if (isOn(x) && wins.indexOf(x) < 0) wins.push(x); }));
-  if (wins.length) R.push(wwRow("window-open", wins.length > 1 ? wins.length + " windows open" : fname(wins[0]) + " open", wins.length > 1 ? lvNames(wins) : (it.start > now ? "Close before " + wxaTime(it.start) : "")));
+  if (wins.length) R.push(wwRow("window-open", wins.length > 1 ? wins.length + " windows open" : fname(wins[0]) + " open", wins.length > 1 ? lvNames(wins) : (it.start > now ? "Close before " + wxaTime(it.start) : ""), "", "", "windows"));
   const lv = typeof lvItems === "function" ? lvItems() : [], dr = lv.find(x => x.k === "doors"), gr = lv.find(x => x.k === "garage");
-  if (dr) R.push(wwRow("door-open", dr.t, dr.sub));
+  if (dr) R.push(wwRow("door-open", dr.t, dr.sub, "", "", "doors"));
   if (gr) { const gc = typeof galCfg === "function" ? galCfg() : {}, id = Object.keys(gc).find(i => gc[i].opener && galOpen(gc[i]));
-    R.push(wwRow("garage-open-variant", gr.t, gr.sub, id ? '<button class="eb npgc" data-gclose="' + esc(id) + '">CLOSE</button>' : "")); }
+    R.push(wwRow("garage-open-variant", gr.t, gr.sub, id ? '<button class="eb npgc" data-gclose="' + esc(id) + '">CLOSE</button>' : "", "", "gopen")); }
   const zr = (CONFIG.irrigation || []).filter(z => z.switch && isOn(z.switch));
   if (zr.length) R.push(wwRow("sprinkler-variant", "Irrigation running", zr.map(z => z.name).join(", ") + (it.kind === "rain" ? " · rain is on the way" : ""), '<button class="eb" data-wwirr>STOP</button>'));
   if (typeof laundryOn === "function" && laundryOn()) { const rem = (parseInt(sv(E("laundryRemaining"))) || 0) * 1000; R.push(wwRow("washing-machine", "Washing machine running", rem ? "Done in " + wwDur(rem) : "")); }
@@ -17986,7 +18277,9 @@ function auGo(why, build) {
   const cs = auCfgSrc();
   // the logo says so, and the next page picks up where this one is (no second fade-in): see brand-splash.js
   try { sessionStorage.setItem("kinetic-au-resume", String(Date.now())); } catch (e) {}
-  const bv = document.querySelector("#bootld .bv"); if (bv) bv.textContent = "Updating…";
+  const bv = document.querySelector("#bootld .bv"), bl = document.querySelector("#bootld .bl");
+  if (bv) bv.textContent = "Updating…";
+  if (bl) { document.documentElement.classList.add("au-go"); try { sessionStorage.setItem("kinetic-au-splash", JSON.stringify({ h: bl.outerHTML, c: ["brand", "lockup"].filter(c => document.documentElement.classList.contains(c)) })); } catch (e) {} }   // the next page paints this same logo at once (see the script after #bootld in index.html)
   // refresh the saved copies the reload will use, then go. The second try for the same build (a cache that won't let go) goes to its own ?v=<build> address
   Promise.all([cs ? fetch(cs, { cache: "reload", credentials: "same-origin" }).catch(() => {}) : null, fetch(base.pathname + base.search, { cache: "reload", credentials: "same-origin" }).catch(() => {})])
     .then(() => { if (u.href === location.href) location.reload(); else location.replace(u.href); });
