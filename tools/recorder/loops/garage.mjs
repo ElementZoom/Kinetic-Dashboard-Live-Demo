@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Garage_Light_v10', hash: '#home',
+export default { file: 'EZ_Loop_Garage_Light_v11', hash: '#home',
   // before the first frame: the header chip shows only the garage-open indicator in this loop (no weather warning / "+N" next to it, no "3 new" pill before the door opens)
   async pre(p) { await p.evaluate(() => { const g = NSK.find(k => k[0] === 'garage'); NSK.length = 0; NSK.push(g); drawNotif(); const st = document.createElement('style'); st.textContent = '#nacc:not([data-k]){display:none!important}'; document.head.append(st); }); },
   async run(p, c) {

@@ -1,5 +1,5 @@
 const tag = (p, sel, i, n) => p.evaluate(([sel, i, n]) => { const e = [...document.querySelectorAll(sel)].filter(x => x.getBoundingClientRect().width > 0)[i]; if (e) e.dataset.rec = n; return !!e; }, [sel, i, n]);
-export default { file: 'EZ_Loop_Warning_Light_v10', hash: '#home', async run(p, c) {
+export default { file: 'EZ_Loop_Warning_Light_v11', hash: '#home', async run(p, c) {
   await p.evaluate(() => { const D = window.DEMO; D.alerts(true); ["binary_sensor.demo_front_door_contact","binary_sensor.demo_patio_door_contact","switch.demo_backyard_tap","input_boolean.demo_rubbish_day","binary_sensor.demo_washing_machine_leak"].forEach(i => D.push(i, "off")); D.push("binary_sensor.demo_master_window", "on"); });
   await c.wait(1500);
   await c.spot('#hc', 6, 24); await c.wait(1800);
