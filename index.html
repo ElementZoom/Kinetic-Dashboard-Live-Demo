@@ -490,11 +490,13 @@ body.free .stage{grid-row:3}body.free .foot{grid-row:4}
   function size() {
     var phone = mode === "phone"; device.className = "device " + mode; place();
     if (narrow.matches) {   // real phone: the dashboard gets the real width, no scaling
-      var w = Math.min(stage.clientWidth || 360, 560) - 18, h = Math.max(460, Math.min(viewH() - (parentFull ? 100 : embedded ? 140 : 60), 860));   // on the website the sticky header takes ~115px, so the phone is sized to fit under it
+      var w = Math.min(stage.clientWidth || 360, parentFull ? 560 : embedded ? 270 : 560) - 18 + (embedded && !parentFull ? 18 : 0), h = Math.max(460, Math.min(viewH() - (parentFull ? 100 : embedded ? 200 : 60), parentFull ? 860 : embedded ? 560 : 860));   // embedded on the website: a smaller, centred phone (not full width) so it fits short screens; website full screen keeps the big one
+      device.style.width = (embedded && !parentFull) ? (w + 18) + "px" : ""; device.style.margin = (embedded && !parentFull) ? "0 auto" : "";   // on the website the sticky header takes ~115px, so the phone is sized to fit under it
       var d = Math.min(DENS, w / 400);   // denser: the dashboard lays out as on a wider phone, then is scaled down to fit (more cards, smaller type)
       screen.style.width = w + "px"; screen.style.height = h + "px"; screen.style.setProperty("--sb", "34px"); screen.style.setProperty("--hb", "20px");
       frame.style.width = Math.round(w / d) + "px"; frame.style.height = Math.round((h - 54) / d) + "px"; frame.style.transform = "scale(" + d + ")"; curScale = d; return;
     }
+    device.style.width = ""; device.style.margin = "";
     var VW = phone ? 440 : 1180, VH = phone ? 950 : 820, avail = device.parentElement.clientWidth - (phone ? 22 : 32);
     var maxH = Math.max(560, viewH() - (free ? 250 : 90)) - (phone ? 22 : 32), s = Math.min(avail / VW, maxH / VH, phone ? 1 : free ? 1 : 0.9);
     screen.style.width = Math.round(VW * s) + "px"; screen.style.height = Math.round(VH * s) + "px";
