@@ -50,8 +50,9 @@ window.DASH_CONFIG = {
     "switch.demo_table_light": "countertop"
   },
   vehicle: {   // sample car; prefix = the part after "sensor." in the integration's entity ids
-    prefix: "demo_car", name: "Sample Estate 200", plate: "ABC123", tank: 0, lowFuelPct: 15,
-    photo: "",   // blank = a simple drawing is shown
+    prefix: "demo_car", name: "Mercedes-Benz GLC", plate: "ABC123", tank: 0, lowFuelPct: 15,
+    fuelSensor: "sensor.demo_nz_fuel_95", fuelTrend: "sensor.demo_nz_fuel_95_28d", fuelSource: "Pretend pump price (demo)",
+    photo: "car.webp",
     color: "#16161a",
     lockText: { 0: "Unlocked", 1: "Locked", 2: "Locked", 3: "Partly unlocked" },
     ignitionText: { 0: "Off", 1: "Off", 2: "Accessory", 4: "Running" },
@@ -60,7 +61,7 @@ window.DASH_CONFIG = {
     batteryText: { 0: "Good", 1: "Fair", 2: "Low", 3: "Unavailable", 4: "Unavailable" }
   },
   // Vehicle > Service: next service km and dates are filled in on the dashboard and kept in this Text helper
-  carCare: [{ name: "Sample Estate 200", lastService: "2026-03-23", everyKm: 10000, everyMonths: 12, wof: "2027-09-08", rego: "2027-05-01", firstRegistered: "2020", serviceHelper: "input_text.car_service" }],
+  carCare: [{ name: "Mercedes-Benz GLC", lastService: "2026-03-23", everyKm: 10000, everyMonths: 12, wof: "2027-09-08", rego: "2027-05-01", firstRegistered: "2020", serviceHelper: "input_text.car_service" }],
   settingsPath: "/config/dashboard",
   weatherFx: { speed: 0.5 },
   mobileNav: "drawer",               // phones: "drawer" | "tabs"

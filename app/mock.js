@@ -116,6 +116,27 @@ function demoWarn() { var clk = function (h) { var d = new Date(Date.now() + h *
       if (m.period === "month") { var d = new Date(s); while (+d < e) { var n = new Date(d); n.setMonth(n.getMonth() + 1); var sum = 0; for (var t = +d; t < Math.min(+n, e); t += 3600e3) sum += hourUse(id, t); L.push({ start: +d, end: +n, change: sum }); d.setMonth(d.getMonth() + 1); } }
       else for (var t2 = s; t2 < e; t2 += step) { var sm = 0; for (var u = t2; u < t2 + step && u < e; u += 3600e3) sm += hourUse(id, u); L.push({ start: t2, end: t2 + step, change: Math.round(sm * 1000) / 1000 }); }
       out[id] = L; }); return out; }
+  // ---------- the sample car's history: trips on a weekly pattern, fuel that drains with the distance and is topped up now and then, a steady price that moves a few cents ----------
+  var VT = (function () { var out = [], d0 = new Date(); d0.setHours(0, 0, 0, 0);
+    var plan = function (dow) { return dow === 0 ? [[11, 0, 24.3, 38]] : dow === 6 ? [[10, 15, 17.8, 31], [14, 5, 6.2, 14]] : dow === 3 ? [[7, 45, 9.8, 22], [12, 30, 4.1, 11], [17, 20, 10.6, 27]] : [[7, 45, 9.8, 22], [17, 20, 10.6, 27]]; };
+    for (var k = 60; k >= 0; k--) { var dd = new Date(+d0 - k * 864e5); plan(dd.getDay()).forEach(function (q, i) { var a = +dd + (q[0] * 60 + q[1] + ((k * 7 + i * 3) % 9)) * 6e4, km = q[2] + ((k * 13 + i) % 5) / 10; if (a + q[3] * 6e4 < Date.now() - 6e4) out.push({ a: a, b: a + q[3] * 6e4, d: km }); }); }
+    return out; })();
+  var VODO = 48230, VTANK = 55, VL100 = 7.2;
+  (function () { var after = VODO; for (var i = VT.length - 1; i >= 0; i--) { VT[i].o1 = after; VT[i].o0 = after - VT[i].d; after = VT[i].o0; } })();
+  (function () { var cur = 62; for (var i = VT.length - 1; i >= 0; i--) { var t = VT[i], pc = t.d * VL100 / VTANK; t.f1 = cur; t.f0 = cur + pc; if (t.f0 > 94) { t.low = 12 + (i % 5) * 1.6; cur = t.low; } else cur = t.f0; } })();
+  function vehHist(id, s, e) { var o = id.replace("sensor.demo_car_", ""), L = [], push = function (ms, v) { if (ms >= s && ms <= e) L.push({ s: String(v), lu: ms / 1000 }); }, first = true;
+    var seed = { odometer: VODO - VT.reduce(function (a, t) { return a + (t.b < s ? 0 : t.d); }, 0), lock: 2, fuel_level: 62 };
+    if (/^window_status_/.test(o) || o === "sunroof_status" || o === "starter_battery_state" || o === "ignition_state") { var v0 = /^window/.test(o) ? 2 : 0; L.push({ s: String(v0), lu: s / 1000 });
+      if (o === "window_status_rear_left") { var y = new Date(); y.setDate(y.getDate() - 1); y.setHours(13, 10, 0, 0); push(+y, 3); push(+y + 30 * 6e4, 2); } return L; }
+    if (o === "odometer") { L.push({ s: String(Math.round(VT.filter(function (t) { return t.a <= s; }).length ? VT.filter(function (t) { return t.a <= s; }).pop().o1 : VT.length ? VT[0].o0 : VODO)), lu: s / 1000 });
+      VT.forEach(function (t) { for (var q = 0; q <= 4; q++) push(t.a + (t.b - t.a) * q / 4, Math.round(t.o0 + t.d * q / 4)); }); return L; }
+    if (o === "fuel_level") { var pf = VT.filter(function (t) { return t.a <= s; }); L.push({ s: String(Math.round((pf.length ? pf[pf.length - 1].f1 : (VT[0] ? VT[0].f0 : 62)) * 10) / 10), lu: s / 1000 });
+      VT.forEach(function (t) { if (t.low != null) { push(t.a - 80 * 6e4, Math.round(t.low * 10) / 10); push(t.a - 30 * 6e4, Math.round(t.f0 * 10) / 10); }
+        for (var q = 0; q <= 3; q++) push(t.a + (t.b - t.a) * q / 3, Math.round((t.f0 + (t.f1 - t.f0) * q / 3) * 10) / 10); }); return L; }
+    if (o === "lock") { L.push({ s: "2", lu: s / 1000 }); VT.forEach(function (t) { push(t.a - 2 * 6e4, 0); push(t.a + 2 * 6e4, 2); push(t.b + 1 * 6e4, 0); push(t.b + 3 * 6e4, 2); }); return L; }
+    var v = S[id] && !isNaN(parseFloat(S[id].state)) ? S[id].state : "0"; L.push({ s: v, lu: s / 1000 }); return L; }
+  function fuelPriceHist(id, s, e) { var L = [], steps = [[-60, 2.79], [-44, 2.82], [-31, 2.84], [-19, 2.86], [-9, 2.89]], d0 = new Date(); d0.setHours(5, 0, 0, 0);
+    steps.forEach(function (q, i) { var ms = +d0 + q[0] * 864e5; if (ms <= s) L = [{ s: String(q[1]), lu: s / 1000 }]; else if (ms < e) L.push({ s: String(q[1]), lu: ms / 1000 }); }); if (!L.length) L.push({ s: "2.89", lu: s / 1000 }); return L; }
   function history(m) { var s = Date.parse(m.start_time), e = Date.parse(m.end_time || now()), out = {};
     (m.entity_ids || []).forEach(function (id) { var base = parseFloat((S[id] || {}).state) || 30, L = [];
       // irrigation: the backyard waters 6:00-6:15 each morning; the taps and their flow sensors are quiet the rest of the time (no stray flow, so no leak card)
@@ -123,6 +144,8 @@ function demoWarn() { var clk = function (h) { var d = new Date(Date.now() + h *
       if (tz) { var zn = tz[2] || tz[3], fl = !!tz[3], d0 = new Date(s); d0.setHours(0, 0, 0, 0); L.push({ s: fl ? "0" : "off", lu: s / 1000 });
         if (zn === "backyard") for (var d = +d0; d < e; d += 864e5) { var a1 = d + 6 * 3600e3, a2 = a1 + 15 * 6e4; if (a1 > s && a1 < e) L.push({ s: fl ? "12" : "on", lu: a1 / 1000 }); if (a2 > s && a2 < e) L.push({ s: fl ? "0" : "off", lu: a2 / 1000 }); }
         out[id] = L; return; }
+      if (/^sensor\.demo_car_/.test(id)) { out[id] = vehHist(id, s, e); return; }
+      if (id === "sensor.demo_nz_fuel_95") { out[id] = fuelPriceHist(id, s, e); return; }
       // on / off and other words: keep the current state (a sine wave of numbers only suits sensors)
       if (S[id] && isNaN(parseFloat(S[id].state)) && !/^climate\./.test(id)) { out[id] = [{ s: S[id].state, lu: s / 1000 }]; return; }
       for (var t = s; t < e; t += 1800e3) { var v = Math.round((base + 6 * Math.sin((t - s) / 864e5 * Math.PI * 2) - 3 * (t - s) / (e - s)) * 10) / 10, pt = { s: String(v), lu: t / 1000 }; if (/^climate\./.test(id)) { pt.s = "heat"; pt.a = { current_temperature: Math.round((19 + 2 * Math.sin((t - s) / 864e5 * Math.PI * 2 + (id.length % 5))) * 10) / 10 }; } L.push(pt); }
@@ -365,6 +388,7 @@ window.__REC = (function () {
     set("sensor.volcano_" + v[0], v[4], { latitude: v[2], longitude: v[3], activity: v[5], hazards: v[6], distance: km(v[2], v[3]), feed_last_update: t(3), external_id: "volcano_" + v[0], friendly_name: "Volcano " + v[1] }); });
   var car = { fuel_level: 62, range_liquid: 548, odometer: 48230, lock: 2, ignition_state: 0, window_status_front_left: 2, window_status_front_right: 2, window_status_rear_left: 2, window_status_rear_right: 2, sunroof_status: 0, starter_battery_state: 0,
     distance_start: 12.4, average_speed_start: 34, liquid_consumption_start: 7.8, distance_reset: 1840, average_speed_reset: 46, liquid_consumption_reset: 7.2, eco_score_acceleration: 72, eco_score_constant: 64, eco_score_free_wheel: 81, eco_score_bonus_range: 3.4 };
+  set("sensor.demo_nz_fuel_95", 2.89, { friendly_name: "Pretend 95 price", unit_of_measurement: "$/L" }); set("sensor.demo_nz_fuel_95_28d", 7, { friendly_name: "Pretend 95 price, 28 days", unit_of_measurement: "c" });
   Object.keys(car).forEach(function (k) { set("sensor.demo_car_" + k, car[k], { friendly_name: "Sample Estate " + k.replace(/_/g, " ") }); });
   /* 2.5.15 roads: pretend NZTA events on the demo trip over the Kaimai Range (a crash ahead, planned work on the way, one far away) */
   var ev = [{ id: 9001, status: "Active", planned: false, eventType: "Road Hazard", eventDescription: "Crash", impact: "Delays", locationArea: "SH 29 Kaimai Range, near the summit", eventComments: "Crash blocking one lane. Expect delays of about 20 minutes.", journey: { name: "SH29" }, geometry: "POINT (175.86 -37.874)", startDate: t(0.5) },
