@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Module_Shading_Light_v9', hash: '#rooms/master', async run(p, c) {
+export default { file: 'EZ_Loop_Module_Shading_Light_v10', hash: '#rooms/master', async run(p, c) {
   await c.wait(1500);
   const L = '.tl[data-e="cover.demo_master_curtain_left"]', R = '.tl[data-e="cover.demo_master_curtain_right"]';
   await c.tap('#roomspg .chips button:nth-of-type(2), #rv .chips button:nth-of-type(2)'); await c.wait(1600);
