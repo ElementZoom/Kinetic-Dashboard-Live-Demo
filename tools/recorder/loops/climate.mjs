@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Climate_Light_v11', hash: '#climate', async run(p, c) {
+export default { file: 'EZ_Loop_Climate_Light_v12', hash: '#climate', async run(p, c) {
   await c.wait(1500);
   await c.spot('#climate .card.main2', 4, 22); await c.wait(2400);
   await c.spot('#climate .card.main2 .chips', 4, 20); await c.wait(1400);
