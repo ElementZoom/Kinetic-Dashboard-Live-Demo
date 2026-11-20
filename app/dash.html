@@ -4543,7 +4543,7 @@ html{--snc:var(--bg2)}html[data-style=material]{--snc:var(--m1)}
 /* wide screens, final: no card behind the tabs. The tabs are loose pills on the wallpaper (like the Rooms page), and the row stays pinned on scroll with a wallpaper layer so nothing shows around them */
 @media(min-width:0px){
   :is(#admin,#theme) > .hsw:has(> .setchips)::after,.page > .secw::after,#scenes .scfh::after,#energy > .ehc::after,#admin .admtop::after,#admin .adlog>.adlh::after{content:none!important;display:none!important}
-  #security > #stabs,#insights > .insnav,#energy > .ehc{background:var(--wbg)!important;background-repeat:no-repeat!important;background-size:var(--ww,100vw) var(--wh,100vh)!important;background-position:var(--wx,0) var(--wy,0)!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+  #security > #stabs,#insights > .insnav,#energy > .ehc,#vehicle.page:not(#x):not(#y) > .secw{background:var(--wbg)!important;background-repeat:no-repeat!important;background-size:var(--ww,100vw) var(--wh,100vh)!important;background-position:var(--wx,0) var(--wy,0)!important;border:0!important;border-radius:0!important;box-shadow:none!important}
 }
 @media(max-width:760px){
   :is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#energy > .ehc::before,#admin .admtop::before,#admin .adlog>.adlh::before{left:-10px;right:-10px}
@@ -4702,6 +4702,16 @@ mark.srk{background:rgba(var(--mint-rgb),.3);color:inherit;border-radius:4px}
 .srfl{animation:srfl 1.8s ease-out}
 @keyframes srfl{0%,40%{box-shadow:0 0 0 2px var(--mint),0 0 28px color-mix(in srgb,var(--mint) 45%,transparent)}100%{box-shadow:0 0 0 0 transparent}}
 @media(prefers-reduced-motion:reduce){.srfl{animation:none;outline:2px solid var(--mint);outline-offset:2px}}
+/* Controls: a switch (or a Press pill) at the end of the row; it works without leaving the search */
+.srsw{flex:none;position:relative;width:44px;height:26px;border-radius:13px;background:rgba(var(--w),.2);transition:background .2s;cursor:pointer}
+.srsw::before,.srpb::before{content:"";position:absolute;inset:-9px -6px}
+.srsw i{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.35);transition:transform .2s}
+.srsw[aria-checked=true]{background:var(--mint)}.srsw[aria-checked=true] i{transform:translateX(18px)}
+.srsw[aria-disabled=true]{opacity:.4;cursor:default}
+.srpb{flex:none;position:relative;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:999px;border:1px solid rgba(var(--w),.22);color:var(--ink);cursor:pointer;transition:background .2s,color .2s}
+.srpb.did{background:var(--mint);border-color:var(--mint);color:#fff}
+.srr[data-k=Control] .srg{display:none}
+@media(prefers-reduced-motion:reduce){.srsw,.srsw i,.srpb{transition:none}}
 /* What's new sheet (60-whats-new.js): over everything, a centred card (full width on a phone) */
 #wtnew{position:fixed;inset:0;z-index:99995;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .25s}
 #wtnew.on{opacity:1}
@@ -4993,17 +5003,13 @@ html[data-style=glass][data-mode=light]:not(#x):not(#y) :is(#rl.rooms2,.hm #hroo
 html[data-style=glass]:not(#x):not(#y) :is(#rl.rooms2,.hm #hrooms.rooms) a.rc .temp{color:var(--tcs)}
 html[data-style=glass][data-mode=light]:not(#x):not(#y) :is(#rl.rooms2,.hm #hrooms.rooms) a.rc .temp{color:color-mix(in srgb,var(--tcs) 60%,#14161c)}
 
-/* Kinetic: the temperature cue follows the tab accent. A thin bar on the card's edge with a soft glow bleeding inward (like the glowing bar over the active tab), a quiet neutral outline, and the index numeral in the room's colour. */
+/* Kinetic: the temperature colour runs round the whole card as a 2px line (70%), with a faint wash of the same colour inside, and the index numeral in the room's colour. (The old thin left bar was cut by the rounded corner.) */
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#rl.rooms2,.hm #hrooms.rooms) a.rc{
-  background:rgba(var(--w),.05);border-color:rgba(var(--ink-rgb),.16);
-  box-shadow:inset 22px 0 22px -20px color-mix(in srgb,var(--tcs) 38%,transparent)
+  background:color-mix(in srgb,var(--tcs) 9%,rgba(var(--w),.05));border:2px solid color-mix(in srgb,var(--tcs) 70%,transparent);box-shadow:none
 }
-html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#rl.rooms2,.hm #hrooms.rooms) a.rc::before{
-  display:block;position:absolute;top:0;bottom:0;left:0;width:3px;height:auto;margin:0;border-radius:0;background:var(--tcs);
-  box-shadow:8px 0 14px -8px var(--tcs)
-}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#rl.rooms2,.hm #hrooms.rooms) a.rc::before{display:none}
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#rl.rooms2,.hm #hrooms.rooms) a.rc .rcn::before{color:var(--tcs)}
-html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#rl.rooms2,.hm #hrooms.rooms) a.rc{background:rgba(255,255,255,.72);border-color:rgba(var(--ink-rgb),.14)}
+html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#rl.rooms2,.hm #hrooms.rooms) a.rc{background:color-mix(in srgb,var(--tcs) 9%,rgba(255,255,255,.72));border-color:color-mix(in srgb,var(--tcs) 70%,transparent)}
 html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#rl.rooms2,.hm #hrooms.rooms) a.rc .rcn::before{color:color-mix(in srgb,var(--tcs) 55%,var(--ink))}
 /* Card design per style: iOS = calm surface, Material = neutral tonal, Kinetic = fine outline + glow. Additive: shape, outline and tint only, no layout. */
 /* Kinetic */
@@ -7080,7 +7086,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "77e408";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "8f4c68";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
@@ -19453,7 +19459,8 @@ if (auOn()) try {
 //   - the card titles of pages already opened on this device (kept per page, so a card is found without opening its page first).
 // Matching ignores case and accents, takes the start of any word, forgives one typo, and in Chinese also matches the Chinese label.
 // Picking a result goes there, opens the phone tab that holds the card, scrolls to the card or tile and flashes it.
-// Search only moves around: it never arms the alarm or switches a device. config.js: search: false switches it off.
+// Controls (lights, switches, helpers, buttons and the Auto climate switches) show a switch on their row: it works without leaving search. Anything that opens a lock, a cover or the alarm only goes there.
+// config.js: search: false switches it off.
 (function () {
   if (CONFIG.search === false || !$("header .hr") || !$("#hc")) return;
   const LSK = "dashSrch", LSR = "dashSrchRecent";
@@ -19476,7 +19483,8 @@ if (auOn()) try {
     energy: "power electricity solar usage cost bill", irrigation: "garden watering sprinkler soil lawn", scenes: "scene mood", media: "music tv speakers playing", events: "calendar schedule diary", vehicle: "car ev charging",
     hazards: "earthquake volcano tsunami", insights: "tips stats alerts" };
   const DOM = { light: "light lamp", switch: "switch", cover: "curtain blind cover", climate: "climate heat cool ac", fan: "fan", lock: "lock", media_player: "music tv speaker", script: "script", scene: "scene", input_boolean: "toggle", binary_sensor: "sensor door window", sensor: "sensor", automation: "automation", select: "select" };
-  const WT = { Page: 60, Room: 50, View: 34, Camera: 30, Card: 14, Device: 6 };   // a tie goes to the bigger thing
+  const WT = { Page: 60, Room: 50, View: 34, Camera: 30, Control: 20, Card: 14, Device: 6 };
+  const TOG = { light: 1, switch: 1, input_boolean: 1, fan: 1, automation: 1 }, PRS = { button: 1, input_button: 1 };   // what a row can switch from the search, and what it can press   // a tie goes to the bigger thing
   const pgName = p => { const a = $('nav a[href="#' + p + '"]'), t = p === "theme" || p === "admin" ? "settings" : a ? [...a.childNodes].filter(n => n.nodeType === 3 || !(n.classList && n.classList.contains("nbg"))).map(n => n.textContent).join("").trim() : p; return t.charAt(0).toUpperCase() + t.slice(1).toLowerCase(); };
   const pgEl = () => { const p = curPg(); return $("#" + (p === "rooms" ? "roomspg" : p)) || document.body; };
 
@@ -19514,10 +19522,15 @@ if (auOn()) try {
       items.forEach(x => {
         const it = x[0], id = typeof it === "string" ? it : it && it.entity; if (typeof id !== "string") return; const e0 = id.split("#")[0]; if (e0.indexOf(".") < 1 || got.has(e0)) return; got.add(e0);
         const st = states[e0], nm = (it && it.name) || (st && st.attributes && st.attributes.friendly_name) || fname(e0);
-        add(mk("Device", nm, x[1] && norm(x[1]) !== norm(rn) ? rn + " · " + x[1] : rn, h, { e: e0, kw: DOM[e0.split(".")[0]] || e0.split(".")[0], pg: "rooms" }));
+        const dm = e0.split(".")[0], ct = TOG[dm] || PRS[dm];
+        add(mk(ct ? "Control" : "Device", nm, x[1] && norm(x[1]) !== norm(rn) ? rn + " · " + x[1] : rn, h, { e: e0, kw: (DOM[dm] || dm) + (ct ? " toggle switch on off button control" : ""), pg: "rooms" }));
       });
     });
-    if (on("climate")) (CONFIG.rooms || []).forEach(r => { if (r && r.name) add(mk("Card", r.name, "Climate", "#climate", { card: r.name, kw: "climate heat cool ac", pg: "climate" })); });
+    if (on("climate")) (CONFIG.rooms || []).forEach(r => {
+      if (r && r.name) add(mk("Card", r.name, "Climate", "#climate", { card: r.name, kw: "climate heat cool ac", pg: "climate" }));
+      if (r && r.name && !r.main && typeof r.autoClimate === "string" && states[r.autoClimate]) add(mk("Control", r.autoLabel || "Auto climate", "Climate · " + r.name, "#climate", { e: r.autoClimate, card: r.name, kw: "auto automatic sleeping here tonight toggle switch on off heat cool", pg: "climate" }));
+    });
+    if (on("climate") && typeof CAUTO !== "undefined" && CAUTO && caIds().length) add(mk("Control", CAUTO.name, "Climate", "#climate", { e: caIds()[0], ids: CAUTO.ids.slice(), kw: "auto automatic automations climate toggle switch on off heat cool", pg: "climate", done: 1 }));
     if (on("security")) (CONFIG.security || []).forEach(c => { if (c && c.name) add(mk("Camera", c.name, "Security", "#camera/" + slug(c.name), { kw: "camera cctv", pg: "security", done: 1, cid: c.id })); });
     // card titles of pages opened before on this device
     const L = rd(LSK) || {};
@@ -19593,24 +19606,29 @@ if (auOn()) try {
 
   // ----- the overlay -----
   let box, inp, lst, fl, idx = [], res = [], sel = 0, flt = "all", T = [];
-  const TN = t => LANG === "zh" ? { Page: "页面", View: "视图", Room: "房间", Card: "卡片", Device: "设备", Camera: "摄像头" }[t] || t : t;   // the kind, translated here so plain words like "Room" are not added to the dictionary for the whole dashboard
-  const LZ = { "All": "全部", "Pages": "页面", "Rooms": "房间", "Devices": "设备", "Cameras": "摄像头", "Cards": "卡片", "Recent": "最近", "Jump to": "前往", "Needs attention": "需要关注", "Search": "搜索",
+  const TN = t => LANG === "zh" ? { Page: "页面", View: "视图", Room: "房间", Card: "卡片", Device: "设备", Control: "控制", Camera: "摄像头" }[t] || t : t;   // the kind, translated here so plain words like "Room" are not added to the dictionary for the whole dashboard
+  const LZ = { "All": "全部", "Pages": "页面", "Rooms": "房间", "Devices": "设备", "Controls": "控制", "Press": "按下", "Cameras": "摄像头", "Cards": "卡片", "Recent": "最近", "Jump to": "前往", "Needs attention": "需要关注", "Search": "搜索",
     "Go to page": "前往页面", "Open": "打开", "Go to room": "前往房间", "Open camera": "打开摄像头", "Notifications": "通知", "on": "已开", "off": "关闭", "No results": "没有结果" };
   const L = s => LANG === "zh" && LZ[s] ? LZ[s] : s;
   const hintOf = e => e.t === "Page" ? L("Go to page") : e.t === "View" ? L("Open") : e.t === "Room" ? L("Go to room") : e.t === "Camera" ? L("Open camera") : (LANG === "zh" ? "在 " : "Show in ") + (e.t === "Device" ? String(e.s || "").split(" · ")[0] || "" : e.s || "") + (LANG === "zh" ? " 中显示" : "");
   const PGI = { home: "n-home", rooms: "n-rooms", climate: "n-climate", security: "n-cam", energy: "n-energy", scenes: "n-scenes", weather: "n-weather", irrigation: "n-irr", events: "n-events", vehicle: "car", hazards: "alert-octagon", insights: "lightbulb-on", media: "video", theme: "n-set", admin: "n-set" };
   const DI = { light: "lightbulb", switch: "lightning-bolt", climate: "thermometer", fan: "fan", binary_sensor: "door-open", cover: "garage-open-variant" };
-  const iconOf = e => { const n = e.t === "Room" ? "sofa" : e.t === "Camera" ? "video" : e.t === "Device" ? DI[String(e.e || "").split(".")[0]] || "lightning-bolt" : e.t === "Card" ? "n-rooms" : PGI[e.pg] || "magnify"; return MDI[n] ? mdi(n) : ""; };
+  const iconOf = e => { const n = e.t === "Room" ? "sofa" : e.t === "Camera" ? "video" : (e.t === "Device" || e.t === "Control") ? DI[String(e.e || "").split(".")[0]] || (e.ids || /^automation\./.test(e.e || "") ? "thermometer" : "lightning-bolt") : e.t === "Card" ? "n-rooms" : PGI[e.pg] || "magnify"; return MDI[n] ? mdi(n) : ""; };
   if (!MDI["chevron-right"]) MDI["chevron-right"] = "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z";
   // the chips: what each one holds
-  const GR = [["all", "All", null], ["page", "Pages", { Page: 1, View: 1 }], ["room", "Rooms", { Room: 1 }], ["dev", "Devices", { Device: 1 }], ["cam", "Cameras", { Camera: 1 }], ["card", "Cards", { Card: 1 }]];
+  const GR = [["all", "All", null], ["page", "Pages", { Page: 1, View: 1 }], ["room", "Rooms", { Room: 1 }], ["ctl", "Controls", { Control: 1 }], ["dev", "Devices", { Device: 1 }], ["cam", "Cameras", { Camera: 1 }], ["card", "Cards", { Card: 1 }]];
   const inGr = (e, g) => !g[2] || !!g[2][e.t];
   const hl = (s, ts) => {   // the typed letters in bold (a typo or a hidden keyword has nothing to mark)
     const lo = s.toLowerCase(), rg = []; ts.forEach(x => { const i = x ? lo.indexOf(x) : -1; if (i > -1) rg.push([i, i + x.length]); });
     if (!rg.length) return esc(s); rg.sort((p, q) => p[0] - q[0]); const m = []; rg.forEach(r => { const l = m[m.length - 1]; if (l && r[0] <= l[1]) l[1] = Math.max(l[1], r[1]); else m.push(r.slice()); });
     let o = "", p = 0; m.forEach(r => { o += esc(s.slice(p, r[0])) + '<mark class="srk">' + esc(s.slice(r[0], r[1])) + "</mark>"; p = r[1]; }); return o + esc(s.slice(p));
   };
-  const row = (e, i) => '<button type="button" class="srr' + (i === sel ? " on" : "") + '" role="option" aria-selected="' + (i === sel) + '" data-n="' + i + '" data-k="' + e.t + '"><span class="sric">' + iconOf(e) + '</span><span class="srm"><b>' + hl(e.l, T) + '</b>' + (e.s ? "<small>" + esc(e.s) + "</small>" : "") + '</span><span class="srg">' + esc(hintOf(e)) + '</span><span class="srcv">' + mdi("chevron-right") + "</span></button>";
+  const ids = e => e.ids || [e.e];
+  const ctOn = e => ids(e).some(id => isOn(id)), ctAv = e => ids(e).some(id => states[id] && states[id].state !== "unavailable");
+  const pend = {};   // a switch just flipped: it shows the new position until Home Assistant reports it (or 3 s have passed)
+  const ctVal = e => { const k = key(e), p = pend[k], v = ctOn(e); if (p && (p.v === v || Date.now() - p.t > 3000)) delete pend[k]; return pend[k] ? pend[k].v : v; };
+  const ctEnd = (e, i) => PRS[String(e.e).split(".")[0]] ? '<span class="srpb" role="button" data-sw="' + i + '">' + esc(L("Press")) + "</span>" : '<span class="srsw" role="switch" tabindex="-1" data-sw="' + i + '" aria-label="' + esc(e.l) + '" aria-checked="' + ctVal(e) + '"' + (ctAv(e) ? "" : ' aria-disabled="true"') + "><i></i></span>";
+  const row = (e, i) => '<button type="button" class="srr' + (i === sel ? " on" : "") + '" role="option" aria-selected="' + (i === sel) + '" data-n="' + i + '" data-k="' + e.t + '"><span class="sric">' + iconOf(e) + '</span><span class="srm"><b>' + hl(e.l, T) + '</b>' + (e.s ? "<small>" + esc(e.s) + "</small>" : "") + '</span><span class="srg">' + esc(hintOf(e)) + "</span>" + (e.t === "Control" ? ctEnd(e, i) : '<span class="srcv">' + mdi("chevron-right") + "</span>") + "</button>";
   const houseOf = e => (CONFIG.house || []).filter(r => r && "#rooms/" + r.id === e.h)[0];
   const roomLine = e => {   // the temperature and the lights that are on, for a room's launcher tile
     const r = houseOf(e); let tp = "", n = 0; if (!r) return ["", ""];
@@ -19640,7 +19658,7 @@ if (auOn()) try {
       if (!all.length) { res = []; html = '<div class="sre"><b>' + esc(L("No results")) + '</b><small>Try a page, a room, a device or a camera</small></div>'; }
       else if (flt !== "all") { res = all.filter(e => inGr(e, g)); html = res.length ? res.map(row).join("") : '<div class="sre"><b>' + esc(L("No results")) + "</b><small>" + esc(L(g[1])) + "</small></div>"; }
       else {   // grouped, the best matches of each kind first
-        res = []; [2, 4, 3, 5, 1].map(i => GR[i]).forEach(x => { const m = all.filter(e => inGr(e, x)).slice(0, 6); if (!m.length) return; html += '<div class="srh">' + esc(L(x[1])) + "</div>"; m.forEach(e => { html += row(e, res.length); res.push(e); }); });
+        res = []; ["room", "ctl", "cam", "dev", "card", "page"].map(k => GR.filter(x => x[0] === k)[0]).forEach(x => { const m = all.filter(e => inGr(e, x)).slice(0, 6); if (!m.length) return; html += '<div class="srh">' + esc(L(x[1])) + "</div>"; m.forEach(e => { html += row(e, res.length); res.push(e); }); });
       }
     } else if (flt !== "all") {   // a kind chosen with nothing typed: all of it, A to Z
       res = idx.filter(e => inGr(e, g)).sort((p, q2) => p.l.localeCompare(q2.l)).slice(0, 80); html = res.map(row).join("");
@@ -19651,6 +19669,15 @@ if (auOn()) try {
     const nt = cnt && flt === "all" ? cnt.all + (LANG === "zh" ? " 个结果" : cnt.all === 1 ? " result" : " results") : ""; $$(".srn", box).forEach(x => { x.textContent = nt; });
     mark();
   }
+  function flip(n) {   // the switch on a row: change the device here, stay in the search
+    const e = res[n]; if (!e || e.t !== "Control") return; const b = $('[data-sw="' + n + '"]', lst);
+    if (PRS[String(e.e).split(".")[0]]) { call(String(e.e).split(".")[0], "press", e.e); if (b) { b.classList.add("did"); setTimeout(() => b.classList.remove("did"), 900); } return; }
+    if (!ctAv(e)) return; const v = !ctVal(e); pend[key(e)] = { v: v, t: Date.now() };
+    if (e.ids) call("automation", v ? "turn_on" : "turn_off", ids(e).filter(id => states[id] && states[id].state !== "unavailable")); else call(e.e.split(".")[0], v ? "turn_on" : "turn_off", e.e);
+    if (b) b.setAttribute("aria-checked", v);
+  }
+  function syncSw() { if (!lst) return; $$(".srsw", lst).forEach(b => { const e = res[+b.dataset.sw]; if (!e) return; const v = String(ctVal(e)); if (b.getAttribute("aria-checked") !== v) b.setAttribute("aria-checked", v); }); }
+  setInterval(() => { if (isOpen()) syncSw(); }, 400);
   function mark(scroll) { $$("[data-n]", lst).forEach(b => { const on = +b.dataset.n === sel; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); if (on && scroll) b.scrollIntoView({ block: "nearest" }); }); }
   function fit() {   // a phone's keyboard: the screen is the part that is still visible (the search box sits at the bottom of it)
     const v = window.visualViewport; if (!box || box.hidden || !v || !matchMedia("(max-width:760px)").matches) { if (box) { box.style.top = box.style.height = ""; } return; }
@@ -19660,7 +19687,7 @@ if (auOn()) try {
     if (box) return;
     box = document.createElement("div"); box.id = "srch"; box.hidden = true; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("aria-label", "Search");
     const cl = '<button type="button" class="src" aria-label="' + (LANG === "zh" ? "关闭" : "Close") + '">' + mdi("close") + "</button>";
-    box.innerHTML = '<div class="srp"><div class="srhd"><b>' + esc(L("Search")) + '</b><span class="srn"></span>' + cl + '</div><div class="srb"><span class="sri">' + mdi("magnify") + '</span><input id="srq" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go"><span class="srn"></span>' + cl + '</div><div class="srfs" id="srfs"></div><div id="srl" role="listbox"></div><div class="srft"><span>↵ go</span><span>↑↓ move</span><span>Esc close</span><em>Search only moves around. It never switches anything.</em></div></div>';
+    box.innerHTML = '<div class="srp"><div class="srhd"><b>' + esc(L("Search")) + '</b><span class="srn"></span>' + cl + '</div><div class="srb"><span class="sri">' + mdi("magnify") + '</span><input id="srq" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go"><span class="srn"></span>' + cl + '</div><div class="srfs" id="srfs"></div><div id="srl" role="listbox"></div><div class="srft"><span>↵ go</span><span>↑↓ move</span><span>Esc close</span><em>Switches work here. Shift+Enter flips the selected one.</em></div></div>';
     document.body.appendChild(box); inp = $("#srq", box); lst = $("#srl", box); fl = $("#srfs", box);
     inp.placeholder = zh("Search pages, rooms, devices…"); inp.setAttribute("aria-label", zh("Search"));   // the Chinese layer leaves inputs alone, so these two are translated here
     inp.addEventListener("input", () => { sel = 0; draw(); });
@@ -19668,9 +19695,10 @@ if (auOn()) try {
       const go = d => { if (res.length) { sel = (sel + d + res.length) % res.length; mark(true); } };
       if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); go(e.key === "ArrowDown" ? 1 : -1); }
       else if ((e.key === "ArrowRight" || e.key === "ArrowLeft") && !inp.value) { e.preventDefault(); go(e.key === "ArrowRight" ? 1 : -1); }   // on the launcher the arrows walk through the tiles
+      else if (e.key === "Enter" && e.shiftKey && res[sel] && res[sel].t === "Control") { e.preventDefault(); flip(sel); }   // Shift+Enter switches it, Enter goes to it
       else if (e.key === "Enter") { e.preventDefault(); if (res[sel]) pick(res[sel]); }
     });
-    lst.addEventListener("click", e => { const b = e.target.closest("[data-n]"); if (b && res[+b.dataset.n]) pick(res[+b.dataset.n]); });
+    lst.addEventListener("click", e => { const w = e.target.closest("[data-sw]"); if (w) { e.preventDefault(); e.stopPropagation(); flip(+w.dataset.sw); return; } const b = e.target.closest("[data-n]"); if (b && res[+b.dataset.n]) pick(res[+b.dataset.n]); });
     lst.addEventListener("pointermove", e => { const b = e.target.closest("[data-n]"); if (b && +b.dataset.n !== sel) { sel = +b.dataset.n; mark(); } });
     fl.addEventListener("click", e => { const b = e.target.closest("[data-f]"); if (!b) return; flt = b.dataset.f; sel = 0; draw(); if (matchMedia("(pointer:fine)").matches) inp.focus({ preventScroll: true }); });
     box.addEventListener("click", e => { if (e.target === box || e.target.closest(".src")) shut(); });
@@ -20353,8 +20381,12 @@ let TP = null;
 const tpP2 = n => ("0" + n).slice(-2);
 const tpShow = (h, m) => CLK12() ? (h % 12 || 12) + ":" + tpP2(m) + " " + (h >= 12 ? "pm" : "am") : tpP2(h) + ":" + tpP2(m);
 function tpParse(v) { const m = /^(\d{1,2}):(\d{2})/.exec(v || ""); if (m) return [+m[1] % 24, +m[2] % 60]; const n = new Date(); return [n.getHours(), Math.round(n.getMinutes() / 5) * 5 % 60]; }
+// The page behind the picker may redraw its fields while it is open (the New event form rebuilds itself when the start time changes, Climate rebuilds on every sensor update),
+// which leaves TP.input detached: later taps would then write to a field nobody can see. So the field is found again, by its id or its data attribute, before each write.
+function tpKey(i) { if (i.id) return "#" + CSS.escape(i.id); const a = [].find.call(i.attributes, x => /^data-/.test(x.name)); return a ? "input[type=time][" + a.name + '="' + CSS.escape(a.value) + '"]' : ""; }
+function tpField() { const t = TP; if (!t.input.isConnected && t.key) { const n = document.querySelector(t.key); if (n) t.input = n; } return t.input; }
 function tpSet() {
-  const t = TP, v = tpP2(t.h) + ":" + tpP2(t.m) + (t.sec ? ":00" : "");
+  tpField(); const t = TP, v = tpP2(t.h) + ":" + tpP2(t.m) + (t.sec ? ":00" : "");
   if (t.input.value === v) return; t.input.value = v;
   t.input.dispatchEvent(new Event("input", { bubbles: true })); t.input.dispatchEvent(new Event("change", { bubbles: true }));
 }
@@ -20381,14 +20413,14 @@ function tpOpen(input) {
   const [h, m] = tpParse(input.value), sheet = matchMedia("(pointer:coarse)").matches || innerWidth <= 760;
   const el = document.createElement("div"); el.id = "tpk"; el.className = "tpk" + (sheet ? " tps" : ""); el.setAttribute("role", "dialog"); el.setAttribute("aria-label", "Pick a time");
   el.innerHTML = '<div class="tpbk" data-tpd="1"></div><div class="tpc2"></div>'; document.body.appendChild(el);
-  TP = { input, el, h, m, sheet, sec: /^\d{1,2}:\d{2}:\d{2}/.test(input.value) };
+  TP = { input, key: tpKey(input), el, h, m, sheet, sec: /^\d{1,2}:\d{2}:\d{2}/.test(input.value) };
   tpDraw(); void el.offsetWidth; el.classList.add("on");
   const f = el.querySelector(".tpc.on, .tpd"); if (f && !sheet) f.focus({ preventScroll: true });
 }
 function tpClose(quick) {
   if (!TP) return; const t = TP; TP = null; t.el.classList.remove("on");
   if (quick) t.el.remove(); else setTimeout(() => t.el.remove(), 260);
-  if (!t.sheet) try { t.input.focus({ preventScroll: true }); } catch (_) {}   // a PC keeps the field selected; a touch screen does not (a selected hour would show behind the sheet)
+  if (!t.sheet) try { (t.input.isConnected ? t.input : (t.key && document.querySelector(t.key)) || t.input).focus({ preventScroll: true }); } catch (_) {}   // a PC keeps the field selected; a touch screen does not (a selected hour would show behind the sheet)
 }
 document.addEventListener("click", e => {
   const tg = e.target;
