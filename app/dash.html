@@ -6815,6 +6815,7 @@ html[data-style=material] #spdv .sped .spsi:focus{border-color:var(--mint);box-s
 #spot .spr.spw{background:color-mix(in srgb,var(--mint) 10%,transparent)}
 #spot .spr.spw em{font-size:0;display:flex;align-items:center;justify-content:center}
 #spot .spr.spw em::before{content:"";display:block;width:14px;height:14px;box-sizing:border-box;border:2px solid var(--mint);border-top-color:transparent;border-radius:50%;animation:spspin .7s linear infinite}
+#evtoast .spsp{flex:none;width:14px;height:14px;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;animation:spspin .8s linear infinite}
 /* Climate sheet: summary + Edit toggle (35-climate-triggers.js); the chart and pickers are in 114-climate-chart.css */
 /* collapsed (default): only the summary rows and the Edit button; editing: everything, with "Done" at the bottom */
 .ct-sum,.ct-edit{display:none}
@@ -7162,7 +7163,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "2beb47";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "96fa3e";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
@@ -19868,11 +19869,10 @@ if (auOn()) try {
   function pick(e) {
     if (e.mus) {   // a song plays, an artist opens, both in Media
       const m = e.mus; shut(); if (location.hash !== "#media") location.hash = "#media";
-      setTimeout(() => {
-        if (m.k === "artist") { spOpen("artist", m.u, m.n, m.i, m.s); if (typeof spDraw === "function") spDraw(); return; }
-        const mp = typeof spMain === "function" ? spMain() : ""; if (mp) { SP.want = { main: mp, title: m.n, artist: m.s, img: m.i, t: Date.now() }; if (typeof queueNp === "function") queueNp(); }
-        spPlay("track", m.u);
-      }, location.hash === "#media" ? 60 : 450); return;
+      if (m.k === "artist") { setTimeout(() => { spOpen("artist", m.u, m.n, m.i, m.s); if (typeof spDraw === "function") spDraw(); }, location.hash === "#media" ? 60 : 450); return; }
+      const mp = typeof spMain === "function" ? spMain() : ""; if (mp) { SP.want = { main: mp, title: m.n, artist: m.s, img: m.i, t: Date.now() }; if (typeof queueNp === "function") queueNp(); }
+      spStarting(m.n); spPlay("track", m.u); return;   // it starts at once (no waiting for the page), and a spinner shows until the speaker has it
+
     }
     const o = { t: e.t, l: e.l, s: e.s, h: e.h }; ["e", "card", "kw", "pg", "done"].forEach(k => { if (e[k]) o[k] = e[k]; });
     wr(LSR, [o].concat((rd(LSR) || []).filter(x => key(x) !== key(e))).slice(0, 8));
@@ -20099,11 +20099,21 @@ function spToast(t) {
   let tt = $("#evtoast"); if (!tt) { tt = document.createElement("div"); tt.id = "evtoast"; document.body.appendChild(tt); }
   tt.innerHTML = mdi("spotify") + "<span>" + esc(t) + "</span>"; void tt.offsetWidth; tt.classList.add("on"); clearTimeout(SP.tt); SP.tt = setTimeout(() => tt.classList.remove("on"), 4200);
 }
+// "Starting <song>…" with a spinner: stays until the speaker reports the song (or 20 s), for a song picked where no row can show it (the header search)
+function spStarting(title) {
+  let tt = $("#evtoast"); if (!tt) { tt = document.createElement("div"); tt.id = "evtoast"; document.body.appendChild(tt); }
+  tt.innerHTML = '<i class="spsp"></i><span>Starting ' + esc(title) + "…</span>"; void tt.offsetWidth; tt.classList.add("on"); clearTimeout(SP.tt); SP.st = { title: title, t: Date.now() };
+  SP.tt = setTimeout(() => { SP.st = null; tt.classList.remove("on"); }, 20000);
+}
+function spStartDone() {
+  if (!SP.st) return; const m = spMain(), at = ((m && states[m]) || {}).attributes || {}, tt = $("#evtoast");
+  if (at.media_title && at.media_title === SP.st.title) { SP.st = null; clearTimeout(SP.tt); if (tt) tt.classList.remove("on"); }
+}
 const SP_ERR = [[/Desktop Player authorization token|Cast Application could not be activated/i, "This Chromecast needs SpotifyPlus's one-time Desktop Player token setup first.", 0],
   [/discoverable via Zeroconf/i, "That speaker can't be reached. Check it is on and on the same network as Home Assistant.", 0],
   [/no active Spotify player/i, "Pick a speaker to play on.", 1]];   // third value: 1 = open the speaker sheet, because only picking a speaker fixes it
 function spFail(msg) {
-  SP.want = null; if (typeof queueNp === "function") queueNp(); const e = SP_ERR.filter(x => x[0].test(msg))[0]; spToast(e ? e[1] : "Couldn't play that: " + String(msg || "").replace(/\s+/g, " ").slice(0, 110)); if (e && e[2]) spDev(true); }   // an error the speaker sheet cannot fix only shows the reason; it never pops the sheet over the page
+  SP.want = null; SP.st = null; if (typeof queueNp === "function") queueNp(); const e = SP_ERR.filter(x => x[0].test(msg))[0]; spToast(e ? e[1] : "Couldn't play that: " + String(msg || "").replace(/\s+/g, " ").slice(0, 110)); if (e && e[2]) spDev(true); }   // an error the speaker sheet cannot fix only shows the reason; it never pops the sheet over the page
 // ---- loading: each list is fetched once, then kept (pull again by leaving and coming back after 5 minutes) ----
 const SP_LOAD = {
   recent: ["get_player_recent_tracks", { limit: 20 }, r => { const seen = {}, out = []; ((r && r.items) || []).forEach(i => { const a = i.track && i.track.album; if (a && a.id && !seen[a.id]) { seen[a.id] = 1; out.push(a); } }); return out; }],
@@ -20408,7 +20418,7 @@ function spStatus() {
 const SP_ROWS = "#spot .spr[data-sp=at], #spot .spr[data-sp=play][data-k=track]";
 function spPend(b) { $$(SP_ROWS).forEach(r => { r.classList.remove("spw"); delete r.dataset.spwt; }); b.classList.add("spw"); b.dataset.spwt = Date.now(); }
 function spMark() {
-  const R = $$(SP_ROWS); if (!R.length) return;
+  spStartDone(); const R = $$(SP_ROWS); if (!R.length) return;
   const m = spMain(), st = (m && states[m]) || {}, at = st.attributes || {}, live = st.state === "playing" || st.state === "paused" || st.state === "buffering";
   R.forEach(r => {
     const t = ($(".spx b", r) || {}).textContent || "", now = live && !!at.media_title && at.media_title === t;
