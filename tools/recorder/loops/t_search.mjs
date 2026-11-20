@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Tablet_Search_v1', hash: '#home', size: { w: 1280, h: 800, mobile: false, dsf: 1 }, async run(p, c) {
+export default { file: 'EZ_Loop_Tablet_Search_v2', hash: '#home', size: { w: 1280, h: 800, mobile: false, dsf: 1 }, async run(p, c) {
   await c.wait(1500);
   await c.spot('#hsrch', 8, 20); await c.wait(1800);
   await c.tap('#hsrch'); await c.wait(1600);

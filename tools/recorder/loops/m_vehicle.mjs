@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Module_Vehicle_Light_v3', hash: '#vehicle', async run(p, c) {
+export default { file: 'EZ_Loop_Module_Vehicle_Light_v4', hash: '#vehicle', async run(p, c) {
   await c.wait(1500);
   await c.spot('#vehicle .vgrid > .pn:nth-child(1)', 4, 22); await c.wait(2600);
   await c.unspot(); await c.wait(300);
