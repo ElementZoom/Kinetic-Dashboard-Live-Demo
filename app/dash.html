@@ -6817,6 +6817,13 @@ html[data-style=material] #spdv .sped .spsi:focus{border-color:var(--mint);box-s
 #spot .spr.spw em{font-size:0;display:flex;align-items:center;justify-content:center}
 #spot .spr.spw em::before{content:"";display:block;width:14px;height:14px;box-sizing:border-box;border:2px solid var(--mint);border-top-color:transparent;border-radius:50%;animation:spspin .7s linear infinite}
 #evtoast .spsp{flex:none;width:14px;height:14px;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;animation:spspin .8s linear infinite}
+/* music search (Media page): artists row and the playing song */
+#srch .srsa{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 10px;scrollbar-width:none}#srch .srsa::-webkit-scrollbar{display:none}
+#srch .srart{flex:none;width:72px;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;padding:0;text-align:center;color:inherit;cursor:pointer}
+#srch .srart .srim{width:64px;height:64px;border-radius:50%;background:rgba(var(--w),.1) center/cover no-repeat;display:flex;align-items:center;justify-content:center}
+#srch .srart .srim svg{width:26px;height:26px;fill:currentColor;opacity:.6}
+#srch .srart b{font-size:12px;font-weight:500;max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#srch .srr.np{box-shadow:inset 3px 0 0 var(--mint)}#srch .srr.np .srm b{color:var(--mint)}
 /* Climate sheet: summary + Edit toggle (35-climate-triggers.js); the chart and pickers are in 114-climate-chart.css */
 /* collapsed (default): only the summary rows and the Edit button; editing: everything, with "Done" at the bottom */
 .ct-sum,.ct-edit{display:none}
@@ -7164,7 +7171,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "3b94de";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "0ec484";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
@@ -19868,12 +19875,14 @@ if (auOn()) try {
     setTimeout(tick, wait || 0);
   }
   function pick(e) {
-    if (e.mus) {   // a song plays, an artist opens, both in Media
-      const m = e.mus; shut(); if (location.hash !== "#media") location.hash = "#media";
-      if (m.k === "artist") { setTimeout(() => { spOpen("artist", m.u, m.n, m.i, m.s); if (typeof spDraw === "function") spDraw(); }, location.hash === "#media" ? 60 : 450); return; }
+    if (e.mus) {   // a song plays, anything else opens, both in Media
+      const m = e.mus, tq = inp ? inp.value.trim() : "";
+      if (musMode && tq) wr("dashSpRecentQ", [tq].concat((rd("dashSpRecentQ") || []).filter(x => x !== tq)).slice(0, 6));
+      shut(); const same = location.hash === "#media"; if (!same) location.hash = "#media";
+      if (m.k !== "track") { setTimeout(() => { spOpen(m.k, m.u, m.n, m.i, m.s); if (typeof spDraw === "function") spDraw(); }, same ? 60 : 450); return; }
       const mp = typeof spMain === "function" ? spMain() : ""; if (mp) { SP.want = { main: mp, title: m.n, artist: m.s, img: m.i, t: Date.now() }; if (typeof queueNp === "function") queueNp(); }
+      SP.hint = { uri: m.u, artist: m.s };
       spStarting(m.n); spPlay("track", m.u); return;   // it starts at once (no waiting for the page), and a spinner shows until the speaker has it
-
     }
     const o = { t: e.t, l: e.l, s: e.s, h: e.h }; ["e", "card", "kw", "pg", "done"].forEach(k => { if (e[k]) o[k] = e[k]; });
     wr(LSR, [o].concat((rd(LSR) || []).filter(x => key(x) !== key(e))).slice(0, 8));
@@ -19882,12 +19891,12 @@ if (auOn()) try {
   }
 
   // ----- the overlay -----
-  let box, inp, lst, fl, idx = [], res = [], sel = 0, flt = "all", T = [];
+  let box, inp, lst, fl, idx = [], res = [], sel = 0, flt = "all", T = [], musMode = false;
   const TN = t => LANG === "zh" ? { Page: "页面", View: "视图", Room: "房间", Card: "卡片", Device: "设备", Control: "控制", Camera: "摄像头" }[t] || t : t;   // the kind, translated here so plain words like "Room" are not added to the dictionary for the whole dashboard
   const LZ = { "All": "全部", "Pages": "页面", "Rooms": "房间", "Devices": "设备", "Controls": "控制", "Press": "按下", "Cameras": "摄像头", "Cards": "卡片", "Recent": "最近", "Jump to": "前往", "Needs attention": "需要关注", "Search": "搜索",
     "Go to page": "前往页面", "Open": "打开", "Go to room": "前往房间", "Open camera": "打开摄像头", "Notifications": "通知", "on": "已开", "off": "关闭", "No results": "没有结果" };
   const L = s => LANG === "zh" && LZ[s] ? LZ[s] : s;
-  const hintOf = e => e.t === "Music" ? (e.mus.k === "artist" ? "Open artist" : "Play") : e.t === "Page" ? L("Go to page") : e.t === "View" ? L("Open") : e.t === "Room" ? L("Go to room") : e.t === "Camera" ? L("Open camera") : (LANG === "zh" ? "在 " : "Show in ") + (e.t === "Device" ? String(e.s || "").split(" · ")[0] || "" : e.s || "") + (LANG === "zh" ? " 中显示" : "");
+  const hintOf = e => e.t === "Music" ? (e.mus.k === "track" ? "Play" : "Open") : e.t === "Page" ? L("Go to page") : e.t === "View" ? L("Open") : e.t === "Room" ? L("Go to room") : e.t === "Camera" ? L("Open camera") : (LANG === "zh" ? "在 " : "Show in ") + (e.t === "Device" ? String(e.s || "").split(" · ")[0] || "" : e.s || "") + (LANG === "zh" ? " 中显示" : "");
   const PGI = { home: "n-home", rooms: "n-rooms", climate: "n-climate", security: "n-cam", energy: "n-energy", scenes: "n-scenes", weather: "n-weather", irrigation: "n-irr", events: "n-events", vehicle: "car", hazards: "alert-octagon", insights: "lightbulb-on", media: "video", theme: "n-set", admin: "n-set" };
   const DI = { light: "lightbulb", switch: "lightning-bolt", climate: "thermometer", fan: "fan", binary_sensor: "door-open", cover: "garage-open-variant" };
   const iconOf = e => { if (e.t === "Music") return e.mus && e.mus.i ? '<span class="srim' + (e.mus.k === "artist" ? " rd" : "") + '" style="background-image:url(' + esc(e.mus.i) + ')"></span>' : mdi(e.mus && e.mus.k === "artist" ? "account-music" : "music-note"); const n = e.t === "Room" ? "sofa" : e.t === "Camera" ? "video" : (e.t === "Device" || e.t === "Control") ? DI[String(e.e || "").split(".")[0]] || (e.ids || /^automation\./.test(e.e || "") ? "thermometer" : "lightning-bolt") : e.t === "Card" ? "n-rooms" : PGI[e.pg] || "magnify"; return MDI[n] ? mdi(n) : ""; };
@@ -19907,7 +19916,8 @@ if (auOn()) try {
   const pend = {};   // a switch just flipped: it shows the new position until Home Assistant reports it (or 3 s have passed)
   const ctVal = e => { const k = key(e), p = pend[k], v = ctOn(e); if (p && (p.v === v || Date.now() - p.t > 3000)) delete pend[k]; return pend[k] ? pend[k].v : v; };
   const ctEnd = (e, i) => PRS[String(e.e).split(".")[0]] ? '<span class="srpb" role="button" data-sw="' + i + '">' + esc(L("Press")) + "</span>" : '<span class="srsw" role="switch" tabindex="-1" data-sw="' + i + '" aria-label="' + esc(e.l) + '" aria-checked="' + ctVal(e) + '"' + (ctAv(e) ? "" : ' aria-disabled="true"') + "><i></i></span>";
-  const row = (e, i) => '<button type="button" class="srr' + (i === sel ? " on" : "") + '" role="option" aria-selected="' + (i === sel) + '" data-n="' + i + '" data-k="' + e.t + '"><span class="sric">' + iconOf(e) + '</span><span class="srm"><b>' + hl(e.l, T) + '</b>' + (e.s ? "<small>" + esc(e.s) + "</small>" : "") + '</span><span class="srg">' + esc(hintOf(e)) + "</span>" + (e.t === "Control" ? ctEnd(e, i) : '<span class="srcv">' + mdi("chevron-right") + "</span>") + "</button>";
+  const npOf = e => { try { const m = typeof spMain === "function" ? spMain() : ""; const st = (m && states[m]) || {}; return !!(e.mus && e.mus.k === "track" && st.attributes && st.attributes.media_title === e.l && /^(playing|paused|buffering)$/.test(st.state)); } catch (x) { return false; } };
+  const row = (e, i) => '<button type="button" class="srr' + (i === sel ? " on" : "") + (npOf(e) ? " np" : "") + '" role="option" aria-selected="' + (i === sel) + '" data-n="' + i + '" data-k="' + e.t + '"><span class="sric">' + iconOf(e) + '</span><span class="srm"><b>' + hl(e.l, T) + '</b>' + (e.s ? "<small>" + esc(e.s) + "</small>" : "") + '</span><span class="srg">' + esc(hintOf(e)) + "</span>" + (e.t === "Control" ? ctEnd(e, i) : '<span class="srcv">' + mdi("chevron-right") + "</span>") + "</button>";
   const houseOf = e => (CONFIG.house || []).filter(r => r && "#rooms/" + r.id === e.h)[0];
   const roomLine = e => {   // the temperature and the lights that are on, for a room's launcher tile
     const r = houseOf(e); let tp = "", n = 0; if (!r) return ["", ""];
@@ -19931,16 +19941,44 @@ if (auOn()) try {
   }
   // songs and artists from Spotify: asked after a short pause in typing, shown as a Music group (a tap plays the song, or opens the artist in Media)
   const MUS = { q: "", n: 0, busy: false, items: [], t: 0 };
+  const MK = [["track", "tracks", "Songs"], ["artist", "artists", "Artists"], ["album", "albums", "Albums"], ["playlist", "playlists", "Playlists"]];
+  const musItem = (k, o) => mk("Music", o.name || "", k === "artist" ? "Artist" : spSub(o), "#media", { pg: "media", mus: { k: k, u: o.uri, n: o.name || "", i: spImg(o, 64) || spImg(o.album, 64), s: k === "artist" ? "Artist" : spSub(o) } });
   function musAsk(q) {
     if (!musOn() || q.length < 2 || MUS.q === q) return; MUS.q = q; MUS.busy = true; MUS.items = []; const n = ++MUS.n; clearTimeout(MUS.t);
-    MUS.t = setTimeout(() => spCall("search_all", { criteria: q, criteria_type: "artist,track", limit_total: 10 }, r => {
-      if (n !== MUS.n) return; MUS.busy = false; const it = k => ((r && r[k] && r[k].items) || []).filter(Boolean);
-      MUS.items = it("artists").slice(0, 3).map(a => mk("Music", a.name || "", "Artist", "#media", { pg: "media", mus: { k: "artist", u: a.uri, n: a.name || "", i: spImg(a, 64), s: "Artist" } }))
-        .concat(it("tracks").slice(0, 6).map(t => mk("Music", t.name || "", (t.artists || []).map(x => x.name).join(", "), "#media", { pg: "media", mus: { k: "track", u: t.uri, n: t.name || "", i: spImg(t, 64) || spImg(t.album, 64), s: (t.artists || []).map(x => x.name).join(", ") } })));
+    MUS.t = setTimeout(() => spCall("search_all", { criteria: q, criteria_type: musMode ? "album,artist,playlist,track" : "artist,track", limit_total: musMode ? 20 : 10 }, r => {
+      if (n !== MUS.n) return; MUS.busy = false; const it = k => ((r && r[k] && r[k].items) || []).filter(o => o && o.uri);
+      MUS.items = musMode ? [].concat.apply([], MK.map(m => it(m[1]).map(o => musItem(m[0], o))))
+        : it("artists").slice(0, 3).map(a => musItem("artist", a)).concat(it("tracks").slice(0, 6).map(t => musItem("track", t)));
       if (isOpen() && norm(inp.value) === norm(q)) draw();
     }, () => { if (n === MUS.n) { MUS.busy = false; if (isOpen()) draw(); } }), 450);
   }
+  // On the Media page the search is for music only: before anything is typed, what you played lately and artists you may like; typing finds songs, artists, albums and playlists
+  function drawMus() {
+    const q = inp.value.trim(); let html = ""; T = norm(q).split(" ").filter(Boolean); box.classList.remove("srlau"); res = [];
+    const wait = '<div class="sre"><i class="spsp"></i><b>Looking for songs…</b></div>';
+    if (!q) {
+      flt = "all"; fl.innerHTML = "";
+      const rt = (SP.rt || []).slice(0, 5), ar = ((SP.disc && !SP.disc.bad && SP.disc.v) || []).filter(o => o && o.uri).slice(0, 8), rq = rd("dashSpRecentQ") || [];
+      if (rt.length) { html += '<p class="srh">Recently played</p>'; rt.forEach(t => { const e = musItem("track", t); html += row(e, res.length); res.push(e); }); }
+      if (ar.length) { html += '<p class="srh">Artists you may like</p><div class="srsa">' + ar.map(o => { const e = musItem("artist", o), im = e.mus.i; res.push(e);
+        return '<button type="button" class="srx srart" data-n="' + (res.length - 1) + '"><span class="srim rd"' + (im ? ' style="background-image:url(' + esc(im) + ')"' : "") + ">" + (im ? "" : mdi("music-note")) + "</span><b>" + esc(e.l) + "</b></button>"; }).join("") + "</div>"; }
+      if (rq.length) html += '<p class="srh">Recent searches</p><div class="srcp">' + rq.map(x => '<button type="button" class="srx srcc" data-rq="' + esc(x) + '">' + esc(x) + "</button>").join("") + "</div>";
+      if (!html) html = '<div class="sre"><b>Search your music</b><small>Songs, artists, albums and playlists</small></div>';
+      $$(".srn", box).forEach(x => { x.textContent = ""; });
+    } else {
+      musAsk(q); const all = MUS.q === q ? MUS.items : [], srching = MUS.busy && MUS.q === q, cnt = { all: all.length };
+      MK.forEach(m => { cnt[m[0]] = all.filter(e => e.mus.k === m[0]).length; });
+      if (!all.length) html = srching ? wait : '<div class="sre"><b>' + esc(L("No results")) + "</b><small>Try a song, an artist, an album or a playlist</small></div>";
+      else if (flt !== "all") { const L2 = all.filter(e => e.mus.k === flt); html = L2.length ? L2.map(e => { res.push(e); return row(e, res.length - 1); }).join("") : '<div class="sre"><b>' + esc(L("No results")) + "</b></div>"; }
+      else MK.forEach(m => { const L2 = all.filter(e => e.mus.k === m[0]).slice(0, m[0] === "track" ? 5 : 3); if (!L2.length) return; html += '<p class="srh">' + m[2] + "</p>"; L2.forEach(e => { html += row(e, res.length); res.push(e); }); });
+      fl.innerHTML = [["all", "All"]].concat(MK.map(m => [m[0], m[2]])).map(x => '<button type="button" class="chip srf' + (x[0] === flt ? " on" : "") + '" data-f="' + x[0] + '">' + x[1] + '<span class="cn">' + cnt[x[0]] + "</span></button>").join("");
+      $$(".srn", box).forEach(x => { x.textContent = all.length ? all.length + (all.length === 1 ? " result" : " results") : ""; });
+    }
+    if (sel >= res.length) sel = Math.max(0, res.length - 1);
+    lst.innerHTML = html; lst.scrollTop = 0; mark();
+  }
   function draw() {
+    if (musMode) { drawMus(); return; }
     const q = inp.value.trim(), g = GR.filter(x => x[0] === flt)[0] || GR[0]; let html = "", cnt = null; T = norm(q).split(" ").filter(Boolean);
     box.classList.toggle("srlau", !q && flt === "all");
     if (q) {
@@ -19991,14 +20029,17 @@ if (auOn()) try {
       else if (e.key === "Enter" && e.shiftKey && res[sel] && res[sel].t === "Control") { e.preventDefault(); flip(sel); }   // Shift+Enter switches it, Enter goes to it
       else if (e.key === "Enter") { e.preventDefault(); if (res[sel]) pick(res[sel]); }
     });
-    lst.addEventListener("click", e => { const w = e.target.closest("[data-sw]"); if (w) { e.preventDefault(); e.stopPropagation(); flip(+w.dataset.sw); return; } const b = e.target.closest("[data-n]"); if (b && res[+b.dataset.n]) pick(res[+b.dataset.n]); });
+    lst.addEventListener("click", e => { const rq = e.target.closest("[data-rq]"); if (rq) { inp.value = rq.dataset.rq; sel = 0; draw(); inp.focus({ preventScroll: true }); return; } const w = e.target.closest("[data-sw]"); if (w) { e.preventDefault(); e.stopPropagation(); flip(+w.dataset.sw); return; } const b = e.target.closest("[data-n]"); if (b && res[+b.dataset.n]) pick(res[+b.dataset.n]); });
     lst.addEventListener("pointermove", e => { const b = e.target.closest("[data-n]"); if (b && +b.dataset.n !== sel) { sel = +b.dataset.n; mark(); } });
     fl.addEventListener("click", e => { const b = e.target.closest("[data-f]"); if (!b) return; flt = b.dataset.f; sel = 0; draw(); if (matchMedia("(pointer:fine)").matches) inp.focus({ preventScroll: true }); });
     box.addEventListener("click", e => { if (e.target === box || e.target.closest(".src")) shut(); });
     if (window.visualViewport) { visualViewport.addEventListener("resize", fit); visualViewport.addEventListener("scroll", fit); }
   }
   function show() {
-    make(); idx = build(); inp.value = ""; sel = 0; flt = "all"; draw(); clearTimeout(box._t); box.classList.remove("out"); box.hidden = false; btn.classList.add("on"); fit();   // (a search being closed comes straight back)
+    make(); musMode = !!(typeof spHere === "function" && spHere() && musOn()); idx = musMode ? [] : build(); MUS.q = ""; MUS.n++; inp.value = ""; sel = 0; flt = "all";
+    $(".srhd b", box).textContent = musMode ? "Search music" : L("Search"); inp.placeholder = musMode ? "Songs, artists, albums, playlists" : zh("Search pages, rooms, controls…");
+    if (musMode) { if (typeof spLoad === "function") { spLoad("recent", !SP.rt); } if (typeof spDiscLoad === "function") spDiscLoad(); [900, 2200].forEach(ms => setTimeout(() => { if (isOpen() && musMode && !inp.value.trim()) drawMus(); }, ms)); }
+    draw(); clearTimeout(box._t); box.classList.remove("out"); box.hidden = false; btn.classList.add("on"); fit();   // (a search being closed comes straight back)
     // a screen you tap through is the first thing to see: only a device with a keyboard (a mouse pointer) starts in the box; on a phone or tablet the keyboard would cover it until you tap the box
     if (matchMedia("(pointer:fine)").matches) { inp.focus({ preventScroll: true }); setTimeout(() => { if (!box.hidden) inp.focus({ preventScroll: true }); }, 60); }
   }
@@ -20120,7 +20161,7 @@ function spFail(msg) {
   SP.want = null; SP.st = null; if (typeof queueNp === "function") queueNp(); const e = SP_ERR.filter(x => x[0].test(msg))[0]; spToast(e ? e[1] : "Couldn't play that: " + String(msg || "").replace(/\s+/g, " ").slice(0, 110)); if (e && e[2]) spDev(true); }   // an error the speaker sheet cannot fix only shows the reason; it never pops the sheet over the page
 // ---- loading: each list is fetched once, then kept (pull again by leaving and coming back after 5 minutes) ----
 const SP_LOAD = {
-  recent: ["get_player_recent_tracks", { limit: 20 }, r => { const seen = {}, out = []; ((r && r.items) || []).forEach(i => { const a = i.track && i.track.album; if (a && a.id && !seen[a.id]) { seen[a.id] = 1; out.push(a); } }); return out; }],
+  recent: ["get_player_recent_tracks", { limit: 20 }, r => { const seen = {}, out = []; SP.rt = ((r && r.items) || []).map(i => i.track).filter(t => t && t.uri).filter((t, k, A) => A.findIndex(x => x.uri === t.uri) === k);   /* the songs themselves, for the search page's Recently played */ ((r && r.items) || []).forEach(i => { const a = i.track && i.track.album; if (a && a.id && !seen[a.id]) { seen[a.id] = 1; out.push(a); } }); return out; }],
   playlists: ["get_playlist_favorites", { limit: 50 }, r => (r && r.items || []).filter(Boolean)],
   albums: ["get_album_favorites", { limit: 50 }, r => (r && r.items || []).map(i => i.album || i).filter(Boolean)],
   artists: ["get_artists_followed", { limit: 50 }, r => { const x = r && (r.artists || r); return (x && x.items || []).filter(Boolean); }]
@@ -20242,6 +20283,23 @@ function spPlayNow(kind, uri, extra) {
   if (kind === "context" && main && SPC().sonos !== false && /^spotify:(playlist|album):/.test(uri)) { spSonosPlay(main, uri, (extra && extra.offset_position) || 0, () => spPlayCloud(kind, uri, extra, shuf), shuf); return; }
   spPlayCloud(kind, uri, extra, shuf);
 }
+// A song picked on its own would stop when it ends. Spotify's own app carries on with similar songs: so does this. The list is the song, then Spotify's recommendations for it; where Spotify no longer gives
+// those (new apps lose that call), the artist's other songs mixed with songs played lately. Never holds the song back for more than ~1.8 s. spotify: { autoplay: false } in config.js plays just the song.
+function spMore(uri, cb) {
+  if (SPC().autoplay === false || String(uri).indexOf(",") > -1) { cb([uri]); return; }   // (a list of songs is already a queue)
+  const id = String(uri).split(":").pop(), h = SP.hint && SP.hint.uri === uri ? SP.hint : null, art = h ? String(h.artist || "").split(",")[0].trim() : "";
+  let done = false, tm;
+  const fin = L => { if (done) return; done = true; clearTimeout(tm); const seen = { [uri]: 1 }, out = [uri]; L.forEach(u => { if (u && !seen[u] && out.length < 16) { seen[u] = 1; out.push(u); } }); cb(out); };
+  tm = setTimeout(() => fin([]), 1800);
+  const uris = a => (a || []).filter(t => t && t.uri && t.type !== "episode").map(t => t.uri);
+  const mix = (A, B) => { const o = []; for (let i = 0; i < Math.max(A.length, B.length); i++) { if (A[i]) o.push(A[i]); if (B[i]) o.push(B[i]); } return o; };
+  const fallback = () => {
+    const hist = uris(SP.rt).slice(0, 10);
+    if (!art) { fin(hist); return; }
+    spCall("search_all", { criteria: 'artist:"' + art + '"', criteria_type: "track", limit_total: 20 }, r => fin(mix(uris(r && r.tracks && r.tracks.items).slice(0, 10), hist)));
+  };
+  spCall("get_track_recommendations", { seed_tracks: id, limit: 20 }, r => { const L = uris(r && (r.tracks || r.items)); if (L.length >= 5) fin(L); else fallback(); }, () => fallback());
+}
 function spPlayCloud(kind, uri, extra, shuf) {
   if (shuf) { if (((states[SPE()] || {}).attributes || {}).shuffle !== true) call("media_player", "shuffle_set", SPE(), { shuffle: true }); }
   else if (extra && extra.offset_position != null && ((states[SPE()] || {}).attributes || {}).shuffle === true) call("media_player", "shuffle_set", SPE(), { shuffle: false });   // same reason: a chosen song must not be shuffled away
@@ -20249,7 +20307,7 @@ function spPlayCloud(kind, uri, extra, shuf) {
   if (!tg && !spLive()) { SP.pend = { kind: kind, uri: uri, extra: extra }; spDev(true); return; }
   const dv = tg ? { device_id: tg } : {};
   if (kind === "liked") spCall("player_media_play_track_favorites", Object.assign({ shuffle: true }, dv), null, spFail);
-  else if (kind === "track") spCall("player_media_play_tracks", Object.assign({ uris: uri }, dv), null, spFail);
+  else if (kind === "track") spMore(uri, L => spCall("player_media_play_tracks", Object.assign({ uris: L.join(",") }, dv), null, spFail));   // a single song carries on with similar ones, like the Spotify app
   else spCall("player_media_play_context", Object.assign({ context_uri: uri }, extra || {}, dv), null, spFail);
   spCall("trigger_scan_interval", {});
 }
@@ -20278,7 +20336,7 @@ function spHome() {
     return '<div class="spq">' + spLikedTile() + '<div class="spt spk"><span class="spa"></span><b>&nbsp;</b></div>'.repeat(5) + '</div>' + spSk(4) + spSk(4);
   }
   const pl = g("playlists"), pins = spPins().slice(0, 5), quick = [spLikedTile()].concat(pins.map(spPinTile), pl.filter(o => !spIsPin(o.uri)).slice(0, Math.max(0, 5 - pins.length)).map(o => spTile(o)));
-  let h = '<div class="spq">' + quick.join("") + '</div>' + spDiscover() + spShelf("Recently played", g("recent")) + spShelf("Your playlists", pl) + spShelf("Your albums", g("albums")) + spShelf("Artists you follow", g("artists"));
+  let h = '<div class="spq">' + quick.join("") + '</div>' + spDiscover() + spShelf("Recently played", g("recent")) + (SPC().tabs ? spShelf("Your playlists", pl) : '<div class="sps"><h3>Your playlists</h3><div class="spsh">' + spNewTile() + pl.map(o => spTile(o)).join("") + "</div></div>") + spShelf("Your albums", g("albums")) + spShelf("Artists you follow", g("artists"));
   if (SP.d.playlists && SP.d.playlists.bad && SP.d.recent && SP.d.recent.bad) h += spNote("Couldn't load your Spotify library. Check that the SpotifyPlus integration is signed in.");
   return h;
 }
@@ -20340,7 +20398,7 @@ function spDevDraw() {
   if (e._k !== h) { e._k = h; e.innerHTML = h; }
 }
 function spDraw() {
-  const el = $("#spot"); if (!el) return;
+  const el = $("#spot"); if (!el) return; if (!SPC().tabs) SP.tab = "home";   // no tabs: Home is the page, and search is the header magnifier (spotify: { tabs: true } brings Home / Search / Library back)
   if (!spHere()) { document.body.classList.remove("sp-on"); return; }
   document.body.classList.add("sp-on");
   if (!el._init) {
@@ -20354,7 +20412,7 @@ function spDraw() {
     el.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.id === "spq") { clearTimeout(SP.qT); spSearch(); e.target.blur(); } });
   }
   $(".spchip", el).innerHTML = mdi("speaker") + '<span>' + esc(spDevName()) + '</span>';
-  $(".spmt", el).style.display = SP.view ? "none" : "";
+  $(".spmt", el).style.display = SPC().tabs && !SP.view ? "" : "none";
   $(".spmt", el).innerHTML = [["home", "HOME"], ["search", "SEARCH"], ["lib", "LIBRARY"]].map(t => '<button class="chip' + (SP.tab === t[0] ? " on" : "") + '" data-sp="tab" data-k="' + t[0] + '">' + t[1] + '</button>').join("");
   const b = $(".spbody", el);
   if (SP.view) { const h = spDetail(); if (b._k !== "d" + h) { b._k = "d" + h; b.innerHTML = h; } }
@@ -20375,6 +20433,7 @@ function spClick(e) {
   else if (a === "play" && k === "track") {   // a song from Search: the row spins and the player shows it at once, like a song in a list
     const m = spMain(), im = ((b.querySelector(".spa") || {}).style || {}).backgroundImage || "", mt = /url\(["']?([^"')]+)/.exec(im);
     if (m) { SP.want = { main: m, title: ($(".spx b", b) || {}).textContent || "", artist: ($(".spx small", b) || {}).textContent || "", img: mt ? mt[1] : "", t: Date.now() }; if (typeof queueNp === "function") queueNp(); }
+    SP.hint = { uri: u, artist: ($(".spx small", b) || {}).textContent || "" };
     spPend(b); spPlay(k, u);
   }
   else if (a === "play") { if (k === "playlist" || k === "album" || k === "artist") spOpen(k, u, b.dataset.n, b.dataset.i, b.dataset.s); else spPlay(k, u); }
