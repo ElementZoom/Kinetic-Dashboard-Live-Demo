@@ -6237,6 +6237,23 @@ html[data-style=material]:not(#x):not(#y) .dpa{border:0;background:transparent}
 html[data-style=material]:not(#x):not(#y) :is(.dpt,.dpw i){font-family:inherit}
 html[data-style=material]:not(#x):not(#y) .dpt{font-weight:500;font-size:16px}
 html[data-style=material]:not(#x):not(#y) .tpk.tps .dpd{height:auto}
+/* ---------- Select picker (js/modules/65-select-picker.js): the same card / sheet, with a list of choices ---------- */
+.sxl{width:auto;padding:6px;max-height:min(340px,50vh);overflow-y:auto;overscroll-behavior:contain}
+.sxi{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left;padding:11px 13px;border:0;border-radius:12px;background:transparent;color:var(--ink);font:500 15px var(--sans,inherit);cursor:pointer}
+.sxi svg{width:20px;height:20px;fill:currentColor;flex:none;color:var(--mint)}
+.sxi{outline:none}html:not(#x):not(#y) .sxi:focus-visible{outline:none}.sxi:hover,.sxk .sxi:focus{background:rgba(var(--w),.08)}
+.sxk .sxi:focus{box-shadow:inset 0 0 0 2px var(--mint)}   /* the ring is for the keyboard only */
+.sxi.on{background:color-mix(in srgb,var(--mint) 16%,transparent)}
+.tpk.tps .sxl{padding:12px 10px calc(12px + env(safe-area-inset-bottom,0px));max-height:70vh}
+.tpk.tps .sxl .tpl{margin:2px 10px 8px}
+.tpk.tps .sxi{padding:15px 14px;font-size:16px}
+html[data-style=glass]:not(#x):not(#y) .sxi{border-radius:14px}
+html[data-style=glass]:not(#x):not(#y) .sxi.on{background:rgba(var(--w),.16)}
+html[data-style=glass][data-mode=light]:not(#x):not(#y) .sxi.on{background:rgba(40,30,80,.09)}
+html[data-style=glass]:not(#x):not(#y) .sxi svg{color:var(--ink)}
+html[data-style=material]:not(#x):not(#y) .sxi{border-radius:28px;font-family:inherit;font-weight:500;padding:13px 18px}
+html[data-style=material]:not(#x):not(#y) .sxi.on{background:color-mix(in srgb,var(--mint) 34%,var(--bg2))}
+html[data-style=material]:not(#x):not(#y) .sxi svg{color:var(--ink)}
 /* ---------- Material look, aligned with Google's Material 3 values (checked against @material/web tokens v0.192) ----------
    Labels and chips in sentence case at 14px / medium (label-large), switch 52x32 with the small off handle and 2px outline, outlined text fields (4px corners, 1px outline, 2px on focus), chips with 8px corners. */
 html[data-style=material]:not(#x):not(#y) :is(.chip,.eb,.evc button:not(.csw):not(.wd)){text-transform:none;font-family:inherit;font-weight:500;letter-spacing:.1px;font-size:14px}
@@ -7086,7 +7103,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "b0448f";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "391616";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
@@ -19896,7 +19913,24 @@ function spWant(ctl) {
   if (Date.now() - w.t > 20000 || (st.media_title && st.media_title === w.title)) { SP.want = null; return null; }
   return ctl === w.main || (typeof grpMem === "function" && grpMem(w.main).indexOf(ctl) > -1) ? w : null;
 }
-function spPlay(kind, uri, extra) {
+// Asking where to play: only when it could disturb someone. If any speaker (or group) is playing and there is more than one to choose from, a "Play on" sheet comes first;
+// when every speaker is idle nothing is in use, so the song just plays. Choosing a speaker only makes it Main for this song: it never groups or ungroups anything.
+function spAskList() {
+  const L = typeof mpGroups === "function" ? mpGroups() : [];
+  if (L.length < 2 || !L.some(g => (states[g.ctl] || {}).state === "playing")) return null;
+  return L;
+}
+function spPlay(kind, uri, extra, chosen) {
+  if (!chosen && spAskList()) { SP.ask = { kind: kind, uri: uri, extra: extra }; spDevDraw(); return; }
+  spPlayNow(kind, uri, extra);
+}
+function spAskHtml() {
+  const L = spAskList() || (typeof mpGroups === "function" ? mpGroups() : []), cur = spMain(), last = (() => { try { return localStorage.getItem("dashSpAsk") || ""; } catch (_) { return ""; } })();
+  const rows = L.map(g => { const a = (states[g.ctl] || {}).attributes || {}, pl = (states[g.ctl] || {}).state === "playing", song = pl && typeof mpTitle === "function" ? mpTitle(a, "playing") : "", nm = g.mem.map(x => fname(x)).join(" + "), on = g.ctl === (last && L.some(x => x.ctl === last) ? last : cur);
+    return '<button class="spd' + (on ? " on" : "") + '" data-sp="askgo" data-u="' + esc(g.ctl) + '"><span>' + mdi("speaker") + '</span><b>' + esc(nm) + '</b><small>' + esc(pl ? "Playing" + (song ? " · " + song : "") : "Not playing") + '</small>' + (on ? mdi("check") : "") + '</button>'; }).join("");
+  return '<div class="spdb" data-sp="askx"></div><div class="spds"><div class="spdh"><b>Play on</b><button class="eb" data-sp="askx" aria-label="Cancel">' + mdi("close") + '</button></div>' + rows + '<div class="spcap">Only this song moves. Other speakers keep what they are playing.</div></div>';
+}
+function spPlayNow(kind, uri, extra) {
   const shuf = !!(extra && extra.shuffle); if (shuf) { extra = Object.assign({}, extra); delete extra.shuffle; }   // extra.shuffle = the shuffle button on a playlist or album
   spCount(kind, uri);
   const main = spMain();
@@ -19986,6 +20020,7 @@ function spList() {
 function spDrawRes() { const e = $("#spr"); if (e) e.innerHTML = spResHtml(); }
 function spDevDraw() {
   const e = $("#spdv"); if (!e) return;
+  if (SP.ask) { e.classList.add("on"); const h = spAskHtml(); if (e._k !== h) { e._k = h; e.innerHTML = h; } return; }
   if (SP.ed) { spEdDraw(); return; }
   e.classList.toggle("on", SP.devOpen);
   if (!SP.devOpen) { e.innerHTML = ""; e._k = ""; return; }
@@ -20050,6 +20085,8 @@ function spClick(e) {
   else if (a === "devs") spDev(true);
   else if (a === "dev") spPickDev(u);
   else if (a === "refresh") spDevLoad();
+  else if (a === "askgo") { const q = SP.ask; SP.ask = null; try { localStorage.setItem("dashSpAsk", u); } catch (_) {} GRP.main = u; GRP.hand = null; spDevDraw(); if (q) spPlay(q.kind, q.uri, q.extra, true); }
+  else if (a === "askx") { SP.ask = null; spDevDraw(); }
   else if (a === "close" || a === "x") { SP.devOpen = false; SP.pend = null; spDevDraw(); }
 }
 // the Speakers page button: in the dashboard when SpotifyPlus is set up, otherwise it still opens the Spotify app
@@ -20493,6 +20530,58 @@ document.addEventListener("keydown", e => {
   const i = e.target; if (!DP && i && i.matches && i.matches('input[type="date"]') && !i.disabled && ((e.altKey && e.key === "ArrowDown") || e.key === "F4")) { e.preventDefault(); dpOpen(i); }
 }, true);
 addEventListener("resize", () => { if (DP) dpPlace(); });
+// ---------- Select picker: the dashboard's own list, in place of the browser's drop-down ----------
+// The <select> stays where it is (it holds the value and fires input / change); only the list that opens from it is ours. Used by the New / Edit event form (#evp).
+// PC: a card under the field. Touch screens and phones: a bottom sheet with bigger rows. It shares the time picker's card and sheet, so it follows the Kinetic / Liquid Glass / Material look (css/100-time-picker.css).
+// Tap or click the field, Enter, Space, Alt+Down or F4 opens it; Up / Down / Home / End move, Enter picks, Escape or a tap outside closes.
+let SXP = null;
+const SXQ = "#evp select", SXL = { evrp: "Repeat", evun2: "Every" };
+const sxKey = s => s.id ? "#" + CSS.escape(s.id) : "";
+const sxField = () => { const t = SXP; if (!t.sel.isConnected && t.key) { const n = document.querySelector(t.key); if (n) t.sel = n; } return t.sel; };
+function sxPlace() {
+  const t = SXP, c = t.el.querySelector(".tpc2"); if (!c || t.sheet) return;
+  const r = t.sel.getBoundingClientRect(), vw = innerWidth, vh = innerHeight; c.style.width = Math.round(Math.max(r.width, 200)) + "px";
+  const h = c.offsetHeight, w = c.offsetWidth; let x = Math.min(Math.max(8, r.left), vw - w - 8), y = r.bottom + 6;
+  if (y + h > vh - 8) y = Math.max(8, r.top - h - 6);   // under the field, or above it when there is no room below
+  c.style.left = Math.round(x) + "px"; c.style.top = Math.round(y) + "px";
+}
+function sxClose(quick) {
+  if (!SXP) return; const t = SXP; SXP = null; t.el.classList.remove("on");
+  if (quick) t.el.remove(); else setTimeout(() => t.el.remove(), 260);
+  if (!t.sheet) try { (t.sel.isConnected ? t.sel : (t.key && document.querySelector(t.key)) || t.sel).focus({ preventScroll: true }); } catch (_) {}
+}
+function sxOpen(sel, kb) {
+  if (SXP) sxClose(true);
+  const sheet = matchMedia("(pointer:coarse)").matches || innerWidth <= 760, title = SXL[sel.id] || "Choose", cur = sel.value;
+  const el = document.createElement("div"); el.id = "sxpk"; el.className = "tpk" + (sheet ? " tps" : "") + (kb ? " sxk" : ""); el.setAttribute("role", "dialog"); el.setAttribute("aria-label", title);
+  el.innerHTML = '<div class="tpbk" data-sxx="1"></div><div class="tpc2 sxl" role="listbox" aria-label="' + esc(title) + '">' + (sheet ? '<div class="tpl">' + esc(title) + "</div>" : "") +
+    [].map.call(sel.options, o => '<button type="button" class="sxi' + (o.value === cur ? " on" : "") + '" role="option" aria-selected="' + (o.value === cur) + '" data-sxv="' + esc(o.value) + '"><span>' + esc(o.textContent) + "</span>" + (o.value === cur ? mdi("check") : "") + "</button>").join("") + "</div>";
+  document.body.appendChild(el); SXP = { sel, key: sxKey(sel), el, sheet };
+  sxPlace(); void el.offsetWidth; el.classList.add("on");
+  const f = el.querySelector(".sxi.on") || el.querySelector(".sxi"); if (f) { f.focus({ preventScroll: true }); try { f.scrollIntoView({ block: "nearest" }); } catch (_) {} }
+}
+document.addEventListener("click", e => {
+  const tg = e.target;
+  if (SXP && tg.closest && tg.closest("#sxpk")) {
+    e.preventDefault(); e.stopPropagation(); const b = tg.closest(".sxi"); if (!b) { if (tg.closest("[data-sxx]")) sxClose(); return; }
+    const s = sxField(), v = b.dataset.sxv, changed = s.value !== v; if (changed) { s.value = v; s.dispatchEvent(new Event("input", { bubbles: true })); s.dispatchEvent(new Event("change", { bubbles: true })); }
+    sxClose(); return;
+  }
+  const s = tg.closest && tg.closest(SXQ); if (!s || s.disabled) return; e.preventDefault(); e.stopPropagation(); sxOpen(s);
+}, true);
+document.addEventListener("mousedown", e => { const s = e.target.closest && e.target.closest(SXQ); if (s && !s.disabled) { e.preventDefault(); s.focus({ preventScroll: true }); } }, true);   // the browser's own list never opens
+document.addEventListener("keydown", e => {
+  if (SXP) {
+    if (e.key === "Escape") { e.preventDefault(); e.stopImmediatePropagation(); sxClose(); return; }
+    const L = [].slice.call(SXP.el.querySelectorAll(".sxi")), i = L.indexOf(document.activeElement), mv = n => { e.preventDefault(); e.stopPropagation(); if (L.length) L[(n + L.length) % L.length].focus({ preventScroll: true }); };
+    if (/^(ArrowDown|ArrowUp|Home|End)$/.test(e.key)) SXP.el.classList.add("sxk");
+    if (e.key === "ArrowDown") mv(i + 1); else if (e.key === "ArrowUp") mv(i < 0 ? L.length - 1 : i - 1); else if (e.key === "Home") mv(0); else if (e.key === "End") mv(L.length - 1);
+    else if (e.key === "Tab") sxClose(true);
+    return;
+  }
+  const s = e.target; if (s && s.matches && s.matches(SXQ) && !s.disabled && (e.key === "Enter" || e.key === " " || e.key === "F4" || (e.altKey && e.key === "ArrowDown"))) { e.preventDefault(); sxOpen(s, true); }
+}, true);
+addEventListener("resize", () => { if (SXP) sxPlace(); });
 // ---------- Liquid Glass controls (only done while the Liquid Glass look is on) ----------
 // A slider's filled part needs its value as a percentage: --v is kept on every tile slider.
 let gcQ = 0;
