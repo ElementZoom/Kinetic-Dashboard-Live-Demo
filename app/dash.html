@@ -6680,6 +6680,8 @@ html:not([data-style=glass]):not([data-style=material]):not(#x) .sc.scp .scpc{bo
 html:not(#x):not(#y):not(#z) #scenes .scf .chip svg{display:none!important}
 html:not(#x):not(#y):not(#z) #scenes .scf .chip span{text-transform:lowercase!important;display:inline-block}
 html:not(#x):not(#y):not(#z) #scenes .scf .chip span::first-letter{text-transform:uppercase!important}
+/* search: a song or artist result shows its picture */
+#srch .sric .srim{display:block;width:100%;height:100%;border-radius:6px;background:center/cover no-repeat}#srch .sric .srim.rd{border-radius:50%}
 /* full screen for the Hazards map and the Windy weather map (37-map-full-screen.js) */
 .mpfb{display:flex;align-items:center;justify-content:center;padding:0;line-height:1;cursor:pointer;color:var(--ink)}.mpfb svg{width:20px;height:20px;fill:currentColor;display:block}
 .hzzb .mpfb{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--hzbg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
@@ -7160,7 +7162,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "fcf6d5";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "2beb47";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
@@ -14840,7 +14842,7 @@ function cmCount(n) {   // (an automated browser such as the test runner reads t
 }
 // Every big number on the pages that have them climbs up when the page opens: found by what it is (the first text of an element at 22px or more that starts with a number),
 // so a new page or card needs no code. Checked only when something on the page changed.
-const CMB = "#weather, #irrigation, #energy, #vehicle, #climate, #hazards, #insights, #npop", CMPX = { weather: 15 };   // the smallest text size that counts, 22px unless the page says otherwise (the Weather forecast temperatures are 15px)
+const CMB = "#weather, #irrigation, #energy, #vehicle, #climate, #hazards, #insights, #npop, #insd", CMPX = { weather: 15, insd: 15 };   // the smallest text size that counts, 22px unless the page says otherwise (the Weather forecast temperatures are 15px)
 const CM_NUM = /^\s*[^\d\s]{0,3}-?\d[\d,.:]*\s*[a-zA-Z%°]{0,3}\s*$/;
 let CMD = 1; try { new MutationObserver(() => { CMD = 1; }).observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["class"] }); } catch (_) {}
 let CMT = [];   // the big numbers that are on screen now, by place: a redraw of the same place does not climb again, leaving the page and coming back does
@@ -14848,11 +14850,13 @@ function cmNums() {
   const now = Date.now(); CMT = CMT.filter(o => { if (!o.el.isConnected || !o.el.getClientRects().length) { delete o.el._cm; return false; } CMV[o.key] = now; return true; });
   if (!CMD) return; CMD = 0; if (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) return;
   document.querySelectorAll(CMB).forEach(root => {
-    if (!root.getClientRects().length) return; const rid = root.id; let k = 0;
+    if (!root.getClientRects().length) return; const rid = root.id, occ = {};
     root.querySelectorAll("*").forEach(el => {
       const t = el.firstChild; if (!t || t.nodeType !== 3 || !CM_NUM.test(t.textContent) || el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.tagName === "SCRIPT" || el.tagName === "STYLE") return;
       if (!el._cm && (el.closest(".enold") || !cmOn(el) || parseFloat(getComputedStyle(el).fontSize) < (CMPX[rid] || 22))) return;
-      const key = "num|" + rid + "|" + (k++); if (el._cm) return;
+      if (el._cm) return;
+      // the place is the card it sits in (its label, digits left out), not its position in the page: opening a group above or below must not make it climb again
+      const cd = el.closest("button, .ids > div, aside, article, li, .pn") || el.parentElement, cx = ((cd && cd.textContent) || "").replace(/[\d.,:]+/g, "#").replace(/\s+/g, " ").trim().slice(0, 28), kk = rid + "|" + cx, key = "num|" + kk + "|" + (occ[kk] = (occ[kk] || 0) + 1);
       el._cm = 1; const was = CMV[key] || 0; CMV[key] = now; CMT.push({ el: el, key: key });
       if (now - was > 900 || now < CMF) cmCount(t);
     });
@@ -19765,7 +19769,7 @@ if (auOn()) try {
     energy: "power electricity solar usage cost bill", irrigation: "garden watering sprinkler soil lawn", scenes: "scene mood", media: "music tv speakers playing", events: "calendar schedule diary", vehicle: "car ev charging",
     hazards: "earthquake volcano tsunami", insights: "tips stats alerts" };
   const DOM = { light: "light lamp", switch: "switch", cover: "curtain blind cover", climate: "climate heat cool ac", fan: "fan", lock: "lock", media_player: "music tv speaker", script: "script", scene: "scene", input_boolean: "toggle", binary_sensor: "sensor door window", sensor: "sensor", automation: "automation", select: "select" };
-  const WT = { Page: 60, Room: 50, View: 34, Camera: 30, Control: 20, Card: 14, Device: 6 };
+  const WT = { Page: 60, Room: 50, View: 34, Camera: 30, Control: 20, Card: 14, Device: 6, Music: 10 };
   const TOG = { light: 1, switch: 1, input_boolean: 1, fan: 1, automation: 1 }, PRS = { button: 1, input_button: 1 };   // what a row can switch from the search, and what it can press   // a tie goes to the bigger thing
   const pgName = p => { const a = $('nav a[href="#' + p + '"]'), t = p === "theme" || p === "admin" ? "settings" : a ? [...a.childNodes].filter(n => n.nodeType === 3 || !(n.classList && n.classList.contains("nbg"))).map(n => n.textContent).join("").trim() : p; return t.charAt(0).toUpperCase() + t.slice(1).toLowerCase(); };
   const pgEl = () => { const p = curPg(); return $("#" + (p === "rooms" ? "roomspg" : p)) || document.body; };
@@ -19862,6 +19866,14 @@ if (auOn()) try {
     setTimeout(tick, wait || 0);
   }
   function pick(e) {
+    if (e.mus) {   // a song plays, an artist opens, both in Media
+      const m = e.mus; shut(); if (location.hash !== "#media") location.hash = "#media";
+      setTimeout(() => {
+        if (m.k === "artist") { spOpen("artist", m.u, m.n, m.i, m.s); if (typeof spDraw === "function") spDraw(); return; }
+        const mp = typeof spMain === "function" ? spMain() : ""; if (mp) { SP.want = { main: mp, title: m.n, artist: m.s, img: m.i, t: Date.now() }; if (typeof queueNp === "function") queueNp(); }
+        spPlay("track", m.u);
+      }, location.hash === "#media" ? 60 : 450); return;
+    }
     const o = { t: e.t, l: e.l, s: e.s, h: e.h }; ["e", "card", "kw", "pg", "done"].forEach(k => { if (e[k]) o[k] = e[k]; });
     wr(LSR, [o].concat((rd(LSR) || []).filter(x => key(x) !== key(e))).slice(0, 8));
     shut(); const same = location.hash === e.h; if (!same) location.hash = e.h;
@@ -19874,13 +19886,15 @@ if (auOn()) try {
   const LZ = { "All": "全部", "Pages": "页面", "Rooms": "房间", "Devices": "设备", "Controls": "控制", "Press": "按下", "Cameras": "摄像头", "Cards": "卡片", "Recent": "最近", "Jump to": "前往", "Needs attention": "需要关注", "Search": "搜索",
     "Go to page": "前往页面", "Open": "打开", "Go to room": "前往房间", "Open camera": "打开摄像头", "Notifications": "通知", "on": "已开", "off": "关闭", "No results": "没有结果" };
   const L = s => LANG === "zh" && LZ[s] ? LZ[s] : s;
-  const hintOf = e => e.t === "Page" ? L("Go to page") : e.t === "View" ? L("Open") : e.t === "Room" ? L("Go to room") : e.t === "Camera" ? L("Open camera") : (LANG === "zh" ? "在 " : "Show in ") + (e.t === "Device" ? String(e.s || "").split(" · ")[0] || "" : e.s || "") + (LANG === "zh" ? " 中显示" : "");
+  const hintOf = e => e.t === "Music" ? (e.mus.k === "artist" ? "Open artist" : "Play") : e.t === "Page" ? L("Go to page") : e.t === "View" ? L("Open") : e.t === "Room" ? L("Go to room") : e.t === "Camera" ? L("Open camera") : (LANG === "zh" ? "在 " : "Show in ") + (e.t === "Device" ? String(e.s || "").split(" · ")[0] || "" : e.s || "") + (LANG === "zh" ? " 中显示" : "");
   const PGI = { home: "n-home", rooms: "n-rooms", climate: "n-climate", security: "n-cam", energy: "n-energy", scenes: "n-scenes", weather: "n-weather", irrigation: "n-irr", events: "n-events", vehicle: "car", hazards: "alert-octagon", insights: "lightbulb-on", media: "video", theme: "n-set", admin: "n-set" };
   const DI = { light: "lightbulb", switch: "lightning-bolt", climate: "thermometer", fan: "fan", binary_sensor: "door-open", cover: "garage-open-variant" };
-  const iconOf = e => { const n = e.t === "Room" ? "sofa" : e.t === "Camera" ? "video" : (e.t === "Device" || e.t === "Control") ? DI[String(e.e || "").split(".")[0]] || (e.ids || /^automation\./.test(e.e || "") ? "thermometer" : "lightning-bolt") : e.t === "Card" ? "n-rooms" : PGI[e.pg] || "magnify"; return MDI[n] ? mdi(n) : ""; };
+  const iconOf = e => { if (e.t === "Music") return e.mus && e.mus.i ? '<span class="srim' + (e.mus.k === "artist" ? " rd" : "") + '" style="background-image:url(' + esc(e.mus.i) + ')"></span>' : mdi(e.mus && e.mus.k === "artist" ? "account-music" : "music-note"); const n = e.t === "Room" ? "sofa" : e.t === "Camera" ? "video" : (e.t === "Device" || e.t === "Control") ? DI[String(e.e || "").split(".")[0]] || (e.ids || /^automation\./.test(e.e || "") ? "thermometer" : "lightning-bolt") : e.t === "Card" ? "n-rooms" : PGI[e.pg] || "magnify"; return MDI[n] ? mdi(n) : ""; };
   if (!MDI["chevron-right"]) MDI["chevron-right"] = "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z";
   // the chips: what each one holds
-  const GR = [["all", "All", null], ["page", "Pages", { Page: 1, View: 1 }], ["room", "Rooms", { Room: 1 }], ["ctl", "Controls", { Control: 1 }], ["cam", "Cameras", { Camera: 1 }]];
+  const GR = [["all", "All", null], ["page", "Pages", { Page: 1, View: 1 }], ["room", "Rooms", { Room: 1 }], ["ctl", "Controls", { Control: 1 }], ["cam", "Cameras", { Camera: 1 }], ["mus", "Music", { Music: 1 }]];
+  const musOn = () => CONFIG.search !== false && (CONFIG.search || {}).music !== false && typeof spOn === "function" && spOn();   // Spotify is set up and reachable: songs and artists are searched too
+  const GRV = () => GR.filter(x => x[0] !== "mus" || musOn());
   const inGr = (e, g) => !g[2] || !!g[2][e.t];
   const hl = (s, ts) => {   // the typed letters in bold (a typo or a hidden keyword has nothing to mark)
     const lo = s.toLowerCase(), rg = []; ts.forEach(x => { const i = x ? lo.indexOf(x) : -1; if (i > -1) rg.push([i, i + x.length]); });
@@ -19914,22 +19928,33 @@ if (auOn()) try {
     const cms = cm.length ? '<div class="srcm"><p class="srh">' + esc(L("Cameras")) + '</p><div class="srcl">' + cm.map(e => { const st = camMem.get(e.cid || ""); return '<button type="button" class="srx srca" data-n="' + n() + '"' + (st ? ' style="background-image:url(' + st + ')"' : "") + "><b>" + esc(e.l) + "</b></button>"; }).join("") + "</div></div>" : "";
     return '<div class="srlh"><div class="srl1">' + rec + pgs + '</div><div class="srl2">' + att + rms + cms + "</div></div>";
   }
+  // songs and artists from Spotify: asked after a short pause in typing, shown as a Music group (a tap plays the song, or opens the artist in Media)
+  const MUS = { q: "", n: 0, busy: false, items: [], t: 0 };
+  function musAsk(q) {
+    if (!musOn() || q.length < 2 || MUS.q === q) return; MUS.q = q; MUS.busy = true; MUS.items = []; const n = ++MUS.n; clearTimeout(MUS.t);
+    MUS.t = setTimeout(() => spCall("search_all", { criteria: q, criteria_type: "artist,track", limit_total: 10 }, r => {
+      if (n !== MUS.n) return; MUS.busy = false; const it = k => ((r && r[k] && r[k].items) || []).filter(Boolean);
+      MUS.items = it("artists").slice(0, 3).map(a => mk("Music", a.name || "", "Artist", "#media", { pg: "media", mus: { k: "artist", u: a.uri, n: a.name || "", i: spImg(a, 64), s: "Artist" } }))
+        .concat(it("tracks").slice(0, 6).map(t => mk("Music", t.name || "", (t.artists || []).map(x => x.name).join(", "), "#media", { pg: "media", mus: { k: "track", u: t.uri, n: t.name || "", i: spImg(t, 64) || spImg(t.album, 64), s: (t.artists || []).map(x => x.name).join(", ") } })));
+      if (isOpen() && norm(inp.value) === norm(q)) draw();
+    }, () => { if (n === MUS.n) { MUS.busy = false; if (isOpen()) draw(); } }), 450);
+  }
   function draw() {
     const q = inp.value.trim(), g = GR.filter(x => x[0] === flt)[0] || GR[0]; let html = "", cnt = null; T = norm(q).split(" ").filter(Boolean);
     box.classList.toggle("srlau", !q && flt === "all");
     if (q) {
-      const all = find(q); cnt = {}; GR.forEach(x => { cnt[x[0]] = all.filter(e => inGr(e, x)).length; });
+      musAsk(q); const all = find(q).concat(musOn() && MUS.q === q ? MUS.items : []); cnt = {}; GRV().forEach(x => { cnt[x[0]] = all.filter(e => inGr(e, x)).length; });
       if (!all.length) { res = []; html = '<div class="sre"><b>' + esc(L("No results")) + '</b><small>Try a page, a room, a control or a camera</small></div>'; }
       else if (flt !== "all") { res = all.filter(e => inGr(e, g)); html = res.length ? res.map(row).join("") : '<div class="sre"><b>' + esc(L("No results")) + "</b><small>" + esc(L(g[1])) + "</small></div>"; }
       else {   // grouped, the best matches of each kind first
-        res = []; ["room", "ctl", "cam", "page"].map(k => GR.filter(x => x[0] === k)[0]).forEach(x => { const m = all.filter(e => inGr(e, x)).slice(0, 6); if (!m.length) return; html += '<div class="srh">' + esc(L(x[1])) + "</div>"; m.forEach(e => { html += row(e, res.length); res.push(e); }); });
+        res = []; ["room", "mus", "ctl", "cam", "page"].map(k => GR.filter(x => x[0] === k)[0]).filter(x => x[0] !== "mus" || musOn()).forEach(x => { const m = all.filter(e => inGr(e, x)).slice(0, x[0] === "mus" ? 8 : 6); if (!m.length) { if (x[0] === "mus" && MUS.busy && MUS.q === q) html += '<div class="srh">' + esc(L(x[1])) + '</div><div class="sre"><small>Searching music…</small></div>'; return; } html += '<div class="srh">' + esc(L(x[1])) + "</div>"; m.forEach(e => { html += row(e, res.length); res.push(e); }); });
       }
     } else if (flt !== "all") {   // a kind chosen with nothing typed: all of it, A to Z
       res = idx.filter(e => inGr(e, g)).sort((p, q2) => p.l.localeCompare(q2.l)).slice(0, 80); html = res.map(row).join("");
     } else html = launcher();
     if (sel >= res.length) sel = Math.max(0, res.length - 1);
     lst.innerHTML = html; lst.scrollTop = 0;
-    fl.innerHTML = GR.map(x => '<button type="button" class="chip srf' + (x[0] === flt ? " on" : "") + '" data-f="' + x[0] + '">' + esc(L(x[1])) + (cnt ? '<span class="cn">' + cnt[x[0]] + "</span>" : "") + "</button>").join("");
+    fl.innerHTML = GRV().map(x => '<button type="button" class="chip srf' + (x[0] === flt ? " on" : "") + '" data-f="' + x[0] + '">' + esc(L(x[1])) + (cnt ? '<span class="cn">' + cnt[x[0]] + "</span>" : "") + "</button>").join("");
     const nt = cnt && flt === "all" ? cnt.all + (LANG === "zh" ? " 个结果" : cnt.all === 1 ? " result" : " results") : ""; $$(".srn", box).forEach(x => { x.textContent = nt; });
     mark();
   }
@@ -20333,13 +20358,18 @@ function spClick(e) {
   const b = e.target.closest("[data-sp]"); if (!b) return; const a = b.dataset.sp, k = b.dataset.k, u = b.dataset.u;
   if (a === "tab") { SP.tab = k; spDraw(); spRise(); if (k === "search") setTimeout(() => { const q = $("#spq"); if (q && !isMobile()) q.focus(); }, 30); }
   else if (a === "lib") { SP.lib = k; spDraw(); spRise(); }
+  else if (a === "play" && k === "track") {   // a song from Search: the row spins and the player shows it at once, like a song in a list
+    const m = spMain(), im = ((b.querySelector(".spa") || {}).style || {}).backgroundImage || "", mt = /url\(["']?([^"')]+)/.exec(im);
+    if (m) { SP.want = { main: m, title: ($(".spx b", b) || {}).textContent || "", artist: ($(".spx small", b) || {}).textContent || "", img: mt ? mt[1] : "", t: Date.now() }; if (typeof queueNp === "function") queueNp(); }
+    spPend(b); spPlay(k, u);
+  }
   else if (a === "play") { if (k === "playlist" || k === "album" || k === "artist") spOpen(k, u, b.dataset.n, b.dataset.i, b.dataset.s); else spPlay(k, u); }
   else if (a === "back") { SP.view = null; spDraw(); spRise(); }
   else if (a === "all") { if (SP.view.kind === "artist") spPlayList(0); else spPlay("context", SP.view.uri); }
   else if (a === "shuf") spPlay("context", SP.view.uri, { shuffle: true });
   else if (a === "at") {
     const t = (SP.view.items || []).filter(x => x._p === +k)[0], m = spMain();
-    $$("#spot .spr[data-sp=at]").forEach(r => r.classList.remove("spw")); b.classList.add("spw");   // the row answers at once: a spinner until the speaker reports the song
+    spPend(b);   // the row answers at once: a spinner until the speaker reports the song
     if (t && m) { SP.want = { main: m, title: t.name || "", artist: (t.artists || []).map(x => x.name).join(", "), img: spImg(t, 200) || spImg(t.album, 200) || SP.view.img || "", t: Date.now() }; if (typeof queueNp === "function") queueNp(); }
     if (SP.view.kind === "artist") spPlayList(+k); else spPlay("context", SP.view.uri, { offset_position: +k });
   }
@@ -20375,12 +20405,14 @@ function spStatus() {
 }
 
 // The song rows show what the speaker is doing: the song playing now is highlighted, the one just tapped shows a spinner until the speaker reports it.
+const SP_ROWS = "#spot .spr[data-sp=at], #spot .spr[data-sp=play][data-k=track]";
+function spPend(b) { $$(SP_ROWS).forEach(r => { r.classList.remove("spw"); delete r.dataset.spwt; }); b.classList.add("spw"); b.dataset.spwt = Date.now(); }
 function spMark() {
-  const R = $$("#spot .spr[data-sp=at]"); if (!R.length) return;
-  const m = spMain(), st = (m && states[m]) || {}, at = st.attributes || {}, w = spWant(m), live = st.state === "playing" || st.state === "paused" || st.state === "buffering";
+  const R = $$(SP_ROWS); if (!R.length) return;
+  const m = spMain(), st = (m && states[m]) || {}, at = st.attributes || {}, live = st.state === "playing" || st.state === "paused" || st.state === "buffering";
   R.forEach(r => {
     const t = ($(".spx b", r) || {}).textContent || "", now = live && !!at.media_title && at.media_title === t;
-    r.classList.toggle("spon", now); r.classList.toggle("spw", !now && !!w && w.title === t && r.classList.contains("spw"));
+    r.classList.toggle("spon", now); r.classList.toggle("spw", !now && Date.now() - (+r.dataset.spwt || 0) < 20000 && r.classList.contains("spw"));
   });
 }
 setInterval(spMark, 600);
