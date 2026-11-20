@@ -6828,6 +6828,7 @@ html[data-style=material] #spdv .sped .spsi:focus{border-color:var(--mint);box-s
 #evtoast.spst{z-index:9990;bottom:calc(112px + env(safe-area-inset-bottom,0px))}
 body.np-on #evtoast.spst{bottom:calc(214px + env(safe-area-inset-bottom,0px))}
 @media(min-width:761px){#evtoast.spst,body.np-on #evtoast.spst{bottom:calc(96px + env(safe-area-inset-bottom,0px))}}
+#srl.srbusy{opacity:.55;transition:opacity .15s}
 /* Climate sheet: summary + Edit toggle (35-climate-triggers.js); the chart and pickers are in 114-climate-chart.css */
 /* collapsed (default): only the summary rows and the Edit button; editing: everything, with "Done" at the bottom */
 .ct-sum,.ct-edit{display:none}
@@ -7175,7 +7176,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "6fefb8";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "607ea7";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
@@ -19957,7 +19958,7 @@ if (auOn()) try {
   const MK = [["track", "tracks", "Songs"], ["artist", "artists", "Artists"], ["album", "albums", "Albums"], ["playlist", "playlists", "Playlists"]];
   const musItem = (k, o) => mk("Music", o.name || "", k === "artist" ? "Artist" : spSub(o), "#media", { pg: "media", mus: { k: k, u: o.uri, n: o.name || "", i: spImg(o, 64) || spImg(o.album, 64), s: k === "artist" ? "Artist" : spSub(o) } });
   function musAsk(q) {
-    if (!musOn() || q.length < 2 || MUS.q === q) return; MUS.q = q; MUS.busy = true; MUS.items = []; const n = ++MUS.n; clearTimeout(MUS.t);
+    if (!musOn() || q.length < 2 || MUS.q === q) return; MUS.q = q; MUS.busy = true; const n = ++MUS.n;   /* the last answer stays on screen (dimmed) until the new one arrives, so typing does not blink */ clearTimeout(MUS.t);
     MUS.t = setTimeout(() => spCall("search_all", { criteria: q, criteria_type: musMode ? "album,artist,playlist,track" : "artist,track", limit_total: musMode ? 20 : 10 }, r => {
       if (n !== MUS.n) return; MUS.busy = false; const it = k => ((r && r[k] && r[k].items) || []).filter(o => o && o.uri);
       MUS.items = musMode ? [].concat.apply([], MK.map(m => it(m[1]).map(o => musItem(m[0], o))))
@@ -19979,7 +19980,7 @@ if (auOn()) try {
       if (!html) html = '<div class="sre"><b>Search your music</b><small>Songs, artists, albums and playlists</small></div>';
       $$(".srn", box).forEach(x => { x.textContent = ""; });
     } else {
-      musAsk(q); const all = MUS.q === q ? MUS.items : [], srching = MUS.busy && MUS.q === q, cnt = { all: all.length };
+      musAsk(q); const all = MUS.items, srching = MUS.busy && MUS.q === q, cnt = { all: all.length }; lst.classList.toggle("srbusy", srching && all.length > 0);
       MK.forEach(m => { cnt[m[0]] = all.filter(e => e.mus.k === m[0]).length; });
       if (!all.length) html = srching ? wait : '<div class="sre"><b>' + esc(L("No results")) + "</b><small>Try a song, an artist, an album or a playlist</small></div>";
       else if (flt !== "all") { const L2 = all.filter(e => e.mus.k === flt); html = L2.length ? L2.map(e => { res.push(e); return row(e, res.length - 1); }).join("") : '<div class="sre"><b>' + esc(L("No results")) + "</b></div>"; }
@@ -19988,14 +19989,15 @@ if (auOn()) try {
       $$(".srn", box).forEach(x => { x.textContent = all.length ? all.length + (all.length === 1 ? " result" : " results") : ""; });
     }
     if (sel >= res.length) sel = Math.max(0, res.length - 1);
-    lst.innerHTML = html; lst.scrollTop = 0; mark();
+    if (lst._k !== html) { lst._k = html; lst.innerHTML = html; lst.scrollTop = 0; }   // the same screen is left alone: a spinner keeps turning instead of restarting
+    mark();
   }
   function draw() {
     if (musMode) { drawMus(); return; }
     const q = inp.value.trim(), g = GR.filter(x => x[0] === flt)[0] || GR[0]; let html = "", cnt = null; T = norm(q).split(" ").filter(Boolean);
     box.classList.toggle("srlau", !q && flt === "all");
     if (q) {
-      musAsk(q); const all = find(q).concat(musOn() && MUS.q === q ? MUS.items : []); cnt = {}; GRV().forEach(x => { cnt[x[0]] = all.filter(e => inGr(e, x)).length; });
+      musAsk(q); const all = find(q).concat(musOn() ? MUS.items : []); lst.classList.toggle("srbusy", musOn() && MUS.busy && MUS.items.length > 0); cnt = {}; GRV().forEach(x => { cnt[x[0]] = all.filter(e => inGr(e, x)).length; });
       const srching = musOn() && MUS.busy && MUS.q === q;   // Spotify has not answered yet: say so instead of "No results"
       const wait = '<div class="sre"><i class="spsp"></i><b>' + esc(LANG === "zh" ? "正在搜索歌曲…" : "Looking for songs…") + "</b></div>";
       if (!all.length && srching) { res = []; html = wait; }
@@ -20008,7 +20010,7 @@ if (auOn()) try {
       res = idx.filter(e => inGr(e, g)).sort((p, q2) => p.l.localeCompare(q2.l)).slice(0, 80); html = res.map(row).join("");
     } else html = launcher();
     if (sel >= res.length) sel = Math.max(0, res.length - 1);
-    lst.innerHTML = html; lst.scrollTop = 0;
+    if (lst._k !== html) { lst._k = html; lst.innerHTML = html; lst.scrollTop = 0; }
     fl.innerHTML = GRV().map(x => '<button type="button" class="chip srf' + (x[0] === flt ? " on" : "") + '" data-f="' + x[0] + '">' + esc(L(x[1])) + (cnt ? '<span class="cn">' + cnt[x[0]] + "</span>" : "") + "</button>").join("");
     const nt = cnt && flt === "all" && !(musOn() && MUS.busy && MUS.q === q && !cnt.all) ? cnt.all + (LANG === "zh" ? " 个结果" : cnt.all === 1 ? " result" : " results") : ""; $$(".srn", box).forEach(x => { x.textContent = nt; });
     mark();
@@ -20049,7 +20051,7 @@ if (auOn()) try {
     if (window.visualViewport) { visualViewport.addEventListener("resize", fit); visualViewport.addEventListener("scroll", fit); }
   }
   function show() {
-    make(); musMode = !!(typeof spHere === "function" && spHere() && musOn()); idx = musMode ? [] : build(); MUS.q = ""; MUS.n++; inp.value = ""; sel = 0; flt = "all";
+    make(); musMode = !!(typeof spHere === "function" && spHere() && musOn()); idx = musMode ? [] : build(); MUS.q = ""; MUS.items = []; MUS.n++; inp.value = ""; sel = 0; flt = "all";
     $(".srhd b", box).textContent = musMode ? "Search music" : L("Search"); inp.placeholder = musMode ? "Songs, artists, albums, playlists" : zh("Search pages, rooms, controls…");
     if (musMode) { if (typeof spLoad === "function") { spLoad("recent", !SP.rt); } if (typeof spDiscLoad === "function") spDiscLoad(); [900, 2200].forEach(ms => setTimeout(() => { if (isOpen() && musMode && !inp.value.trim()) drawMus(); }, ms)); }
     draw(); clearTimeout(box._t); box.classList.remove("out"); box.hidden = false; btn.classList.add("on"); fit();   // (a search being closed comes straight back)
