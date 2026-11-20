@@ -8,7 +8,7 @@ export async function open(name, { zh = false, hash = '', dark = false, w = W, h
   DYT = Math.max(w, h) > 1000 ? 0 : H - 960;
   const b = await chromium.launch();
   const ctx = await b.newContext({ viewport: { width: w, height: h }, isMobile: mobile, hasTouch: true, deviceScaleFactor: dsf });
-  await ctx.addInitScript(() => { try { localStorage.dashPal = JSON.stringify({ mode: 'light' }); } catch (e) {} });
+  await ctx.addInitScript(() => { try { localStorage.dashPal = JSON.stringify({ mode: 'light' }); } catch (e) {} window.__cmForce = true; });
   const p = await ctx.newPage();
   const t0 = Date.now();
   await p.goto(`http://localhost:8765/app/dash.html${zh ? '?lang=zh' : ''}${hash}`);
