@@ -7102,6 +7102,31 @@ html[data-style=material] .clft{border-radius:12px}
 html[data-style=glass] .clft{border-radius:14px;backdrop-filter:blur(6px)}
 @media (prefers-reduced-motion:no-preference){.clft.clfn{animation:clftin .3s ease-out both}}
 @keyframes clftin{from{opacity:0;transform:translateY(-4px)}}
+/* armed lockdown (19-lockdown.js): the Security page only, and a Disarm button bottom-right */
+body.lk :is(nav,#btab,#mshe,#bmore,#hb,#outs,#hnp,#hnote,#hmp,#hc,#npmini,#npfab,#npsheet,#tlfab,#tldial,#tlsh,#tlscrim){display:none!important}
+body.lk #ttl .tbc{display:none}
+body.lk .main{padding-bottom:104px}
+/* locked: Security reads alarm, what is open, cameras, quick actions, events */
+body.lk #security.on{display:flex;flex-direction:column}body.lk #security.on>*{flex:none}
+body.lk #alp{order:1}body.lk #lkz{order:2}body.lk #sectog,body.lk #scams{order:3}body.lk #lkx{order:4}
+#lkx{display:flex;flex-direction:column;gap:10px;margin:12px 0}#lkz{margin:10px 0 0}#lkx:empty,#lkz:empty,#security[data-tab=det] :is(#lkx,#lkz){display:none}
+/* what is open: green while everything is shut, amber when something is open. A solid base, so no look lets the camera feed show through it */
+.lkz{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:22px;font-size:14px;font-weight:600;line-height:1.35;color:var(--ink);background:color-mix(in srgb,var(--mint) 16%,var(--bg));border:1px solid color-mix(in srgb,var(--mint) 35%,transparent)}
+.lkz svg{width:24px;height:24px;fill:currentColor;flex:none;color:var(--mint)}
+.lkz.w{background:color-mix(in srgb,#e8973a 20%,var(--bg));border-color:color-mix(in srgb,#e8973a 45%,transparent)}.lkz.w svg{color:#e8973a}
+.lka{display:flex;flex-wrap:wrap;gap:10px}
+.lka .chip{display:inline-flex;align-items:center;gap:8px;min-height:44px}.lka .chip svg{width:20px;height:20px;fill:currentColor}
+.lkev .lbl{margin-bottom:4px}
+.lkev>div:not(.lbl){display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:13px;font-weight:600}
+.lkev>div:not(.lbl) svg{width:20px;height:20px;fill:currentColor;flex:none;color:var(--mint)}
+.lkev small{margin-left:auto;color:var(--mut);font-size:12px;font-weight:500}
+/* the Disarm button: solid in every look (Glass included), above the camera feeds */
+#lkfab{display:none}
+body.lk #lkfab{display:flex;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:44;align-items:center;gap:10px;height:60px;padding:0 22px 0 18px;border-radius:20px;border:0;background:var(--mint);color:var(--onmint,var(--bg));font:700 14px var(--sans,system-ui);letter-spacing:.06em;box-shadow:0 10px 28px rgba(0,0,0,.35);cursor:pointer;-webkit-backdrop-filter:none;backdrop-filter:none}
+#lkfab svg{width:24px;height:24px;fill:currentColor}
+@media(min-width:761px){body.lk #lkfab{right:32px;bottom:32px}}
+/* the Disarm button replaces the card's own Disarm chip while locked (the siren hold button stays) */
+body.lk #alp .alsa .ag{display:none}
 /* Value picker sheet (37-value-picker.js): common values as chips, - and + to fine tune, Done */
 .ctf.sel{cursor:pointer}.ctf.sel select{pointer-events:none}
 #vpk{position:fixed;inset:0;z-index:97;display:flex;align-items:flex-end;justify-content:center}
@@ -7174,7 +7199,7 @@ html[data-style=material] #vpk .vpg button.on{background:var(--mint);border-colo
 
   <div id="roomspg" class="page"><div class="chips tabs" id="rtabs"></div><div id="rl"></div><div id="rv" style="display:none"></div></div>
 
-  <div id="security" class="page" data-tab="live"><div class="chips tabs" id="stabs" style="display:none"></div><div class="pn pg" id="alp"></div><div id="sectog"></div><div class="cams cams3" id="scams"></div><div class="pn pg" id="dtp" style="display:none"></div></div>
+  <div id="security" class="page" data-tab="live"><div class="chips tabs" id="stabs" style="display:none"></div><div class="pn pg" id="alp"></div><div id="sectog"></div><div class="cams cams3" id="scams"></div><div id="lkz"></div><div id="lkx"></div><div class="pn pg" id="dtp" style="display:none"></div></div>
 <div id="dtm" role="dialog" aria-label="Detection"><div class="dtc"><div class="dth"><b class="dtt"></b><button class="evx" data-dt="close" aria-label="Close"></button></div><div class="dtvw"><div class="dtv"><video controls playsinline poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></video><div class="dte"></div></div><div class="dtsx"></div><button class="dtnv pv" aria-label="Previous moment" hidden></button><button class="dtnv nx" aria-label="Next moment" hidden></button></div><div class="dtal2"></div></div></div>
 
   <div id="weather" class="page"><div id="wx"></div></div>
@@ -7218,7 +7243,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "7f9d54";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "eea24a";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
@@ -9576,6 +9601,7 @@ function drawAlarm() {
   [$("#al")].forEach(el => { if (!el) return; el.innerHTML = mdi(h[1]) + '<span class="at">' + h[0] + '</span>'; el.className = "al " + c; el.title = cap(m[0]); el.setAttribute("aria-label", "Alarm: " + cap(m[0])); });
   document.querySelector("header").dataset.al = m[1] || "x";   // the lock button takes the state colour from this (41-alarm-header.css)
   drawAlb();
+  lkSync();   // armed lockdown (19-lockdown.js)
   const p = $("#alp"); if (!p || !onSec()) return;
   const arm = [[1, "arm_home", "HOME"], [2, "arm_away", "AWAY"], [4, "arm_night", "NIGHT"]].filter(x => (f & x[0]) || (!f && x[1] === "arm_away"));
   if (alSlim()) {
@@ -9755,6 +9781,67 @@ function alSirGo() { const t = alSirTiles(), k = t.some(x => x.siren === "timed"
   // the siren and the open doors / windows change without the alarm itself changing: keep the bar current
   setInterval(() => { if (document.hidden || !alSlim() || !onSec()) return; const s = states[CONFIG.alarm]; if (!s) return; const sir = alSirTiles().length && sirenSt();
     if ((sir && (sir.any !== ALB.sir || sir.timed)) || (s.state === "disarmed" && $(".alst small", p) && $(".alst small", p).textContent !== alSub(s)) || (ALB.list && Math.floor(Date.now() / 60000) !== ALB.min)) { ALB.min = Math.floor(Date.now() / 60000); drawAlarm(); } }, 1000);
+})();
+// ---------- armed lockdown: while the alarm is armed, every account sees the Security page only, with a Disarm button ----------
+// config.js -> lockdown: false (off) | { modes: ["armed_away", "armed_home", "armed_night", "pending", "triggered"], lights: ["light.front_yard", ...] }
+// Default: armed away, pending and triggered. Someone who may not use the alarm (Access: Alarm off) keeps their own pages, as they could not disarm.
+// lights = the outside lights the LIGHTS button switches; a garage door that is open gets a CLOSE GARAGE button (garageAlert in config.js).
+const LKD = ["armed_away", "pending", "triggered"];
+const lkCfg = () => CONFIG.lockdown && typeof CONFIG.lockdown === "object" ? CONFIG.lockdown : {};
+const lkModes = () => Array.isArray(lkCfg().modes) ? lkCfg().modes : LKD;
+const lkBody = () => document.body.classList.contains("lk");
+function lkWant() {   // true = lock, false = open, null = the alarm's state is not in yet (leave things as they are)
+  if (CONFIG.lockdown === false || !CONFIG.alarm) return false;
+  const s = states[CONFIG.alarm]; if (!s) return null;
+  if (!PAGE_ON("security") || (typeof ruSec === "function" && !ruSec("alarm"))) return false;
+  return lkModes().indexOf(s.state) > -1;
+}
+function lkSync() {
+  const w = lkWant(); if (w === null) return;
+  if (w !== lkBody()) {
+    document.body.classList.toggle("lk", w);
+    try { localStorage.setItem("dashLk", w ? "1" : "0"); } catch (_) {}
+    const h0 = curPg();
+    if (w) { if (h0 !== "security" && h0 !== "view" && h0 !== "camera") location.replace("#security"); else route(); }
+    else { const lp = RU && RU.custom && PAGE_ON(RU.landing || "") ? RU.landing : "home"; if (h0 === "security" || h0 === "view" || h0 === "camera") location.hash = "#" + lp; else route(); }   // disarmed: back to the normal dashboard, on their own first page
+  }
+  lkDraw();
+}
+// the last known state keeps the normal pages from flashing up on a reload while the alarm is still armed
+try { if (CONFIG.alarm && CONFIG.lockdown !== false && localStorage.getItem("dashLk") === "1") document.body.classList.add("lk"); } catch (_) {}
+// what the Security page adds while locked: what is open, a few quick actions, and the latest door and window events
+function lkOpenNames() { let o = []; try { o = alOpen(); } catch (_) {} return o.map(x => fname(x[0])); }
+function lkEvents() {
+  const ids = new Set(); try { members(E("doorsGroup")).forEach(x => { if (!/^group\./.test(x)) ids.add(x); }); (CONFIG.house || []).forEach(r => members(r.windows).forEach(x => { if (!/^group\./.test(x)) ids.add(x); })); } catch (_) {}
+  const L = [...ids].filter(x => states[x] && !entHidden(x)).map(x => [x, Date.parse(states[x].last_changed || "")]).filter(x => x[1]);
+  const a = states[CONFIG.alarm], at = a && Date.parse(a.last_changed || "");
+  const rows = L.map(x => ({ t: x[1], ic: isOn(x[0]) ? "door-open" : "lock", tx: fname(x[0]) + (isOn(x[0]) ? " opened" : " closed") }));
+  if (at && /^armed/.test(a.state)) { const by = a.attributes.changed_by; rows.push({ t: at, ic: "shield-lock", tx: "Armed " + a.state.replace("armed_", "") + (by && typeof by === "string" ? " by " + by : "") }); }
+  return rows.sort((p, q) => q.t - p.t).slice(0, 5);
+}
+function lkGarage() { const m = galCfg(); return Object.keys(m).filter(k => m[k] && m[k].sensor && m[k].opener && galOpen(m[k])); }
+function lkDraw() {
+  const el = $("#lkx"), ez = $("#lkz"); if (!el || !ez) return;
+  if (!lkBody() || !(onSec() || /^#security\//.test(location.hash))) { if (el.innerHTML || ez.innerHTML) { el.innerHTML = ez.innerHTML = ""; el._h = ez._h = ""; } return; }
+  const n = lkOpenNames(), lights = [].concat(lkCfg().lights || []).filter(x => states[x]), gar = lkGarage();
+  const zone = '<div class="lkz ' + (n.length ? "w" : "ok") + '">' + mdi(n.length ? "alert-circle" : "check-circle") + "<span>" + (n.length ? esc(n.slice(0, 3).join(", ") + (n.length > 3 ? " +" + (n.length - 3) : "") + " open") : "All doors and windows shut") + "</span></div>";
+  const acts = (lights.length ? '<button class="chip' + (lights.some(isOn) ? " on" : "") + '" data-lk="lights">' + mdi("lightbulb") + "OUTSIDE LIGHTS</button>" : "") + gar.map(k => '<button class="chip on" data-lk="garage" data-cam="' + esc(k) + '">' + mdi("garage-variant") + "CLOSE GARAGE</button>").join("");
+  const ev = lkEvents();
+  const evs = ev.length ? '<div class="pn pg lkev"><div class="lbl">Recent events</div>' + ev.map(r => "<div>" + mdi(r.ic) + "<span>" + esc(r.tx) + "</span><small>" + schTm(new Date(r.t)) + "</small></div>").join("") + "</div>" : "";
+  const h = (acts ? '<div class="lka">' + acts + "</div>" : "") + evs;
+  if (ez._h !== zone) { ez._h = zone; ez.innerHTML = zone; }
+  if (el._h !== h) { el._h = h; el.innerHTML = h; }
+}
+(function () {
+  const f = document.createElement("button"); f.id = "lkfab"; f.type = "button"; f.setAttribute("aria-label", "Disarm the alarm"); f.innerHTML = mdi("lock-open-variant") + "<span>DISARM</span>";
+  f.onclick = () => alarmDo("disarm"); document.body.appendChild(f);
+  const x = $("#lkx"); if (x) x.addEventListener("click", e => {
+    const b = e.target.closest("[data-lk]"); if (!b) return;
+    if (b.dataset.lk === "lights") { const L = [].concat(lkCfg().lights || []).filter(q => states[q]); if (L.length) call("homeassistant", L.some(isOn) ? "turn_off" : "turn_on", L); }
+    else if (b.dataset.lk === "garage") galPress(b.dataset.cam, false);
+    setTimeout(lkDraw, 400);
+  });
+  setInterval(() => { if (!document.hidden && lkBody()) lkDraw(); }, 5000);
 })();
 // ---------- pollen: Google Pollen data, read from the sensors of Home Assistant's "pollenlevels" integration ----------
 // config: pollen: { risk: "sensor.…_overall_pollen_risk_today", top: "sensor.…_top_pollen_types_today", plants: "sensor.…_plants_in_season_today", grass: "sensor.…_grass", alertFrom: "moderate" }
@@ -16437,6 +16524,8 @@ function route() {
   if (/^#palette/.test(location.hash)) { try { history.replaceState(null, "", location.hash.replace("#palette", "#theme")); } catch (_) {} }
   document.body.classList.remove("nav-open", "np-open");
   { const h0 = location.hash.slice(1).split("/")[0], lp = RU && PAGE_ON(RU.landing || "") ? RU.landing : (RU_ALL.filter(PAGE_ON)[0] || "home");
+    // armed lockdown: the Security page (and a camera in full screen) only, whichever address was opened (19-lockdown.js)
+    if (lkBody() && h0 !== "security" && h0 !== "view" && h0 !== "camera") { location.replace("#security"); return; }
     if (h0 === "settings") { location.replace(setHome()); return; }
     // #popup/warning | alert | road | sea | camera/<name>: the Home page with that centred pop-up open over it (50-takeover-warning.js)
     if (h0 === "popup") { const q = location.hash.slice(1).split("/"); location.replace("#" + (PAGE_ON("home") ? "home" : lp)); setTimeout(() => { if (typeof tkLink === "function") tkLink(q[1], q[2]); }, 350); return; }
