@@ -6237,6 +6237,9 @@ html:not(#x):not(#y):not(#z):not(#w) #npfs .nlfh .rnd.s svg{width:26px;height:26
 /* touch screens and phones: a bottom sheet, bigger buttons */
 .tpk.tps .tpc2{left:50%;top:auto;bottom:16px;width:min(440px,calc(100vw - 20px));transform:translate(-50%,24px);padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));border-radius:26px}
 .tpk.tps.on .tpc2{transform:translate(-50%,0)}
+/* the sheet slides in and out fully opaque, no opacity fade: a see-through panel showed the screen behind it through the picker, which looked like a flicker (the dim behind it still fades) */
+.tpk.tps .tpc2{opacity:1;transform:translate(-50%,calc(100% + 32px));transition:transform .26s cubic-bezier(.22,1,.36,1)}
+.tpk.tps.on .tpc2{transform:translate(-50%,0)}
 .tpk.tps .tpc{height:46px;font-size:15px}.tpk.tps .tpa button{height:46px}.tpk.tps .tpd{padding:13px 26px}.tpk.tps .tpn{padding:11px 16px}
 .tpg.h24{grid-template-columns:repeat(6,1fr)}
 @media(max-width:380px){.tpk.tps .tpc2{padding-left:12px;padding-right:12px}.tpk.tps .tpg{gap:5px}.tpk.tps .tpc{font-size:14px}}
@@ -7152,7 +7155,7 @@ html[data-mode=light] .vwr.on[data-k=door]>i svg{fill:#bc000a}html[data-mode=lig
 .vhfuel{display:flex;flex-direction:column;gap:6px;cursor:pointer}.vhfuel:focus-visible{outline:2px solid var(--accent,#c4b0f5);outline-offset:2px}
 .vfh{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2px 10px}.vhfuel,.vhdist,.vhcost{min-width:0}
 .vfm{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
-.vfp{flex:none}.vfp b{font-size:34px;font-weight:400;letter-spacing:-.01em}.vfp span{font-size:14px;color:var(--mut);margin-left:3px}
+.vfp{flex:none}.vfp b{font-size:34px;font-weight:400;letter-spacing:-.01em;font-variant-numeric:tabular-nums}.vfp span{font-size:14px;color:var(--mut);margin-left:3px}
 .vhsp{flex:1 1 0;min-width:0;max-width:200px;height:40px;color:var(--accent,#c4b0f5)}.vhsp.dn{color:#4fbf8a}.vhsp.up{color:#e8973a}
 html[data-mode=light] .vhsp.dn{color:#1a7f4f}html[data-mode=light] .vhsp.up{color:#a65f00}
 .vfr{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:6px;padding-top:10px;border-top:1px solid var(--line)}.vfr span{font-size:13px;color:var(--mut)}.vfr b{font-size:22px;font-weight:400}
@@ -7248,24 +7251,104 @@ html:not(#x):not(#y) :is(.chip,.chmt button,.seg>.eb).glh{background:transparent
 html:not(#x):not(#y):not(#z) .chip.glu::after{opacity:0!important;transition:none!important}
 /* Every slider (scene Brightness / Interval / speed, irrigation, weather scenes ...) looks and moves like the Media speaker volume: the filled part follows the thumb, in each look. Copied from the media rules, wherever the slider lives. */
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:24px;--sf:var(--mgc,rgb(var(--mint-rgb)));--st:rgba(var(--w),.14)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .snr.snr input[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:24px;--sf:var(--mgc,rgb(var(--mint-rgb)));--st:rgba(var(--w),.14)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:24px;--sf:var(--mgc,rgb(var(--mint-rgb)));--st:rgba(var(--w),.14)}
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .snr.snr input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-moz-range-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .snr.snr input[type=range]::-moz-range-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-moz-range-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;margin-top:-5px;border-radius:50%;background:var(--sf);border:2px solid var(--bg);box-shadow:0 0 8px var(--sf)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .snr.snr input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;margin-top:-5px;border-radius:50%;background:var(--sf);border:2px solid var(--bg);box-shadow:0 0 8px var(--sf)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;margin-top:-5px;border-radius:50%;background:var(--sf);border:2px solid var(--bg);box-shadow:0 0 8px var(--sf)}
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--sf);border:2px solid var(--bg)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .snr.snr input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--sf);border:2px solid var(--bg)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--sf);border:2px solid var(--bg)}
 html[data-style=glass]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:30px;--sf:rgba(var(--w),.85);--st:rgba(var(--w),.16)}
+html[data-style=glass]:not(#x):not(#y):not(#z) .snr.snr input[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:30px;--sf:rgba(var(--w),.85);--st:rgba(var(--w),.16)}
+html[data-style=glass]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:30px;--sf:rgba(var(--w),.85);--st:rgba(var(--w),.16)}
 html[data-style=glass]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-runnable-track{height:30px;border-radius:999px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
+html[data-style=glass]:not(#x):not(#y):not(#z) .snr.snr input[type=range]::-webkit-slider-runnable-track{height:30px;border-radius:999px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
+html[data-style=glass]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-webkit-slider-runnable-track{height:30px;border-radius:999px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
 html[data-style=glass]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-moz-range-track{height:30px;border-radius:999px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
+html[data-style=glass]:not(#x):not(#y):not(#z) .snr.snr input[type=range]::-moz-range-track{height:30px;border-radius:999px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
+html[data-style=glass]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-moz-range-track{height:30px;border-radius:999px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
 html[data-style=glass]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:3px;height:30px;margin-top:0;border:0;border-radius:2px;background:transparent;box-shadow:none}
+html[data-style=glass]:not(#x):not(#y):not(#z) .snr.snr input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:3px;height:30px;margin-top:0;border:0;border-radius:2px;background:transparent;box-shadow:none}
+html[data-style=glass]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:3px;height:30px;margin-top:0;border:0;border-radius:2px;background:transparent;box-shadow:none}
 html[data-style=glass]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-moz-range-thumb{width:3px;height:30px;border:0;border-radius:2px;background:transparent}
+html[data-style=glass]:not(#x):not(#y):not(#z) .snr.snr input[type=range]::-moz-range-thumb{width:3px;height:30px;border:0;border-radius:2px;background:transparent}
+html[data-style=glass]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-moz-range-thumb{width:3px;height:30px;border:0;border-radius:2px;background:transparent}
 html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]{--sf:var(--mgc,rgb(var(--mint-rgb)))}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z) .snr.snr input[type=range]{--sf:var(--mgc,rgb(var(--mint-rgb)))}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]{--sf:var(--mgc,rgb(var(--mint-rgb)))}
 html[data-style=material]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:32px;--sf:var(--mint);--st:rgba(var(--w),.2)}
+html[data-style=material]:not(#x):not(#y):not(#z) .snr.snr input[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:32px;--sf:var(--mint);--st:rgba(var(--w),.2)}
+html[data-style=material]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:32px;--sf:var(--mint);--st:rgba(var(--w),.2)}
 html[data-style=material]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
+html[data-style=material]:not(#x):not(#y):not(#z) .snr.snr input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
+html[data-style=material]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
 html[data-style=material]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
+html[data-style=material]:not(#x):not(#y):not(#z) .snr.snr input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
+html[data-style=material]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-moz-range-track{height:4px;border-radius:2px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
 html[data-style=material]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:4px;height:24px;margin-top:-10px;border-radius:2px;background:var(--sf);border:0}
+html[data-style=material]:not(#x):not(#y):not(#z) .snr.snr input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:4px;height:24px;margin-top:-10px;border-radius:2px;background:var(--sf);border:0}
+html[data-style=material]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:4px;height:24px;margin-top:-10px;border-radius:2px;background:var(--sf);border:0}
 html[data-style=material]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-moz-range-thumb{width:4px;height:24px;border-radius:2px;background:var(--sf);border:0}
+html[data-style=material]:not(#x):not(#y):not(#z) .snr.snr input[type=range]::-moz-range-thumb{width:4px;height:24px;border-radius:2px;background:var(--sf);border:0}
+html[data-style=material]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-moz-range-thumb{width:4px;height:24px;border-radius:2px;background:var(--sf);border:0}
 @media(max-width:760px){html[data-style=glass]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]{height:26px}html[data-style=glass]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-runnable-track{height:26px}html[data-style=glass]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-moz-range-track{height:26px}html[data-style=glass]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-thumb{height:26px}html[data-style=glass]:not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-moz-range-thumb{height:26px}}
+@media(max-width:760px){html[data-style=glass]:not(#x):not(#y):not(#z) .snr.snr input[type=range]{height:26px}html[data-style=glass]:not(#x):not(#y):not(#z) .snr.snr input[type=range]::-webkit-slider-runnable-track{height:26px}html[data-style=glass]:not(#x):not(#y):not(#z) .snr.snr input[type=range]::-moz-range-track{height:26px}html[data-style=glass]:not(#x):not(#y):not(#z) .snr.snr input[type=range]::-webkit-slider-thumb{height:26px}html[data-style=glass]:not(#x):not(#y):not(#z) .snr.snr input[type=range]::-moz-range-thumb{height:26px}}
+@media(max-width:760px){html[data-style=glass]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]{height:26px}html[data-style=glass]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-webkit-slider-runnable-track{height:26px}html[data-style=glass]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-moz-range-track{height:26px}html[data-style=glass]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-webkit-slider-thumb{height:26px}html[data-style=glass]:not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-moz-range-thumb{height:26px}}
 /* Glass, light mode: every tab track (Security Live/Detections, Rooms, Insights, the Scenes / Irrigation sheets) is the same see-through grey capsule as Climate and Settings, not a whiter one */
 html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) :is(.chips.tabs,#stabs.chips.tabs,#rtabs.chips.tabs,#insights>.insnav){background:rgba(120,120,128,.14)!important;border-color:rgba(255,255,255,.55)!important}
+/* Smooth slider (125-slider-smooth.css): the fill (and the knob, in Kinetic and Material) glides instead of stepping.
+   --v is a real percentage so it can be transitioned; while a finger is down (.sdrag) 66-slider-fill.js sets it from the pointer, so it follows continuously, and on release it eases to the snapped value. */
+@property --v{syntax:'<percentage>';inherits:true;initial-value:0%}
+html:not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]{transition:--v .24s cubic-bezier(.2,.8,.2,1)}
+html:not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range]{transition:--v .24s cubic-bezier(.2,.8,.2,1)}
+html:not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range]{transition:--v .24s cubic-bezier(.2,.8,.2,1)}
+html:not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range].sdrag,html:not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range].snt{transition:none}
+html:not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range].sdrag,html:not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range].snt{transition:none}
+html:not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range].sdrag,html:not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range].snt{transition:none}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]{height:24px;--tw:16px}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range]{height:24px;--tw:16px}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range]{height:24px;--tw:16px}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-runnable-track{height:24px;border-radius:0;background:radial-gradient(circle,var(--sf) 0 6px,var(--bg) 6.5px 8px,transparent 8.5px) var(--v) 50%/16px 16px no-repeat,linear-gradient(var(--sf),var(--sf)) 0 50%/var(--v) 6px no-repeat,linear-gradient(var(--st),var(--st)) 0 50%/100% 6px no-repeat}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range]::-webkit-slider-runnable-track{height:24px;border-radius:0;background:radial-gradient(circle,var(--sf) 0 6px,var(--bg) 6.5px 8px,transparent 8.5px) var(--v) 50%/16px 16px no-repeat,linear-gradient(var(--sf),var(--sf)) 0 50%/var(--v) 6px no-repeat,linear-gradient(var(--st),var(--st)) 0 50%/100% 6px no-repeat}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range]::-webkit-slider-runnable-track{height:24px;border-radius:0;background:radial-gradient(circle,var(--sf) 0 6px,var(--bg) 6.5px 8px,transparent 8.5px) var(--v) 50%/16px 16px no-repeat,linear-gradient(var(--sf),var(--sf)) 0 50%/var(--v) 6px no-repeat,linear-gradient(var(--st),var(--st)) 0 50%/100% 6px no-repeat}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-moz-range-track{height:24px;border-radius:0;background:radial-gradient(circle,var(--sf) 0 6px,var(--bg) 6.5px 8px,transparent 8.5px) var(--v) 50%/16px 16px no-repeat,linear-gradient(var(--sf),var(--sf)) 0 50%/var(--v) 6px no-repeat,linear-gradient(var(--st),var(--st)) 0 50%/100% 6px no-repeat}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range]::-moz-range-track{height:24px;border-radius:0;background:radial-gradient(circle,var(--sf) 0 6px,var(--bg) 6.5px 8px,transparent 8.5px) var(--v) 50%/16px 16px no-repeat,linear-gradient(var(--sf),var(--sf)) 0 50%/var(--v) 6px no-repeat,linear-gradient(var(--st),var(--st)) 0 50%/100% 6px no-repeat}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range]::-moz-range-track{height:24px;border-radius:0;background:radial-gradient(circle,var(--sf) 0 6px,var(--bg) 6.5px 8px,transparent 8.5px) var(--v) 50%/16px 16px no-repeat,linear-gradient(var(--sf),var(--sf)) 0 50%/var(--v) 6px no-repeat,linear-gradient(var(--st),var(--st)) 0 50%/100% 6px no-repeat}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-thumb{width:16px;height:24px;margin-top:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range]::-webkit-slider-thumb{width:16px;height:24px;margin-top:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range]::-webkit-slider-thumb{width:16px;height:24px;margin-top:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-moz-range-thumb{width:16px;height:24px;border:0;border-radius:0;background:transparent}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range]::-moz-range-thumb{width:16px;height:24px;border:0;border-radius:0;background:transparent}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range]::-moz-range-thumb{width:16px;height:24px;border:0;border-radius:0;background:transparent}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]{--tw:4px}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range]{--tw:4px}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range]{--tw:4px}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-runnable-track{height:32px;border-radius:0;background:linear-gradient(var(--sf),var(--sf)) var(--v) 50%/4px 24px no-repeat,linear-gradient(var(--sf),var(--sf)) 0 50%/var(--v) 4px no-repeat,linear-gradient(var(--st),var(--st)) 0 50%/100% 4px no-repeat}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range]::-webkit-slider-runnable-track{height:32px;border-radius:0;background:linear-gradient(var(--sf),var(--sf)) var(--v) 50%/4px 24px no-repeat,linear-gradient(var(--sf),var(--sf)) 0 50%/var(--v) 4px no-repeat,linear-gradient(var(--st),var(--st)) 0 50%/100% 4px no-repeat}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range]::-webkit-slider-runnable-track{height:32px;border-radius:0;background:linear-gradient(var(--sf),var(--sf)) var(--v) 50%/4px 24px no-repeat,linear-gradient(var(--sf),var(--sf)) 0 50%/var(--v) 4px no-repeat,linear-gradient(var(--st),var(--st)) 0 50%/100% 4px no-repeat}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-moz-range-track{height:32px;border-radius:0;background:linear-gradient(var(--sf),var(--sf)) var(--v) 50%/4px 24px no-repeat,linear-gradient(var(--sf),var(--sf)) 0 50%/var(--v) 4px no-repeat,linear-gradient(var(--st),var(--st)) 0 50%/100% 4px no-repeat}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range]::-moz-range-track{height:32px;border-radius:0;background:linear-gradient(var(--sf),var(--sf)) var(--v) 50%/4px 24px no-repeat,linear-gradient(var(--sf),var(--sf)) 0 50%/var(--v) 4px no-repeat,linear-gradient(var(--st),var(--st)) 0 50%/100% 4px no-repeat}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range]::-moz-range-track{height:32px;border-radius:0;background:linear-gradient(var(--sf),var(--sf)) var(--v) 50%/4px 24px no-repeat,linear-gradient(var(--sf),var(--sf)) 0 50%/var(--v) 4px no-repeat,linear-gradient(var(--st),var(--st)) 0 50%/100% 4px no-repeat}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-thumb{width:4px;height:32px;margin-top:0;border:0;border-radius:0;background:transparent}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range]::-webkit-slider-thumb{width:4px;height:32px;margin-top:0;border:0;border-radius:0;background:transparent}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range]::-webkit-slider-thumb{width:4px;height:32px;margin-top:0;border:0;border-radius:0;background:transparent}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-moz-range-thumb{width:4px;height:32px;border:0;border-radius:0;background:transparent}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range]::-moz-range-thumb{width:4px;height:32px;border:0;border-radius:0;background:transparent}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range]::-moz-range-thumb{width:4px;height:32px;border:0;border-radius:0;background:transparent}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]{--tw:3px}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .snr.snr input[type=range]{--tw:3px}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) input.dtmr.dtmr[type=range]{--tw:3px}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .tl input[type=range]::-webkit-slider-thumb,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .tl input[type=range]::-moz-range-thumb{transition:none}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .tl input[type=range]:active::-webkit-slider-thumb{transform:none;background:rgba(255,255,255,.95);box-shadow:0 2px 8px rgba(0,0,0,.28)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .tl input[type=range]:active::-moz-range-thumb{transform:none;background:rgba(255,255,255,.95)}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) .tl input[type=range]:active::-webkit-slider-thumb{box-shadow:0 2px 8px rgba(40,40,70,.3)}
 /* Value picker sheet (37-value-picker.js): common values as chips, - and + to fine tune, Done */
 .ctf.sel{cursor:pointer}.ctf.sel select{pointer-events:none}
 #vpk{position:fixed;inset:0;z-index:97;display:flex;align-items:flex-end;justify-content:center}
@@ -7382,7 +7465,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["Each speaker now has a Sound button under its volume: tap it to change Bass and Treble.","**Add songs to your playlists.** Tap the + on any song, or the Add to playlist button on Now Playing, then pick a playlist or start a new one with that song in it.","**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "bddf3f";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "de95b3";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
@@ -9547,7 +9630,7 @@ function tapH(e) {
   else if (t.dataset.a) { call("cover", t.dataset.a, id); if (t.dataset.a !== "stop_cover") covMark(id, t.dataset.a === "open_cover" ? "opening" : "closing"); else { delete COVMV[id]; updTiles(); } }
   else if (el.dataset.sc) send({ type: "call_service", domain: "script", service: el.dataset.sc });
   else if (d === "select") selOpen(id);
-  else if (d === "light" || d === "switch" || d === "input_boolean" || d === "fan" || d === "automation") { if (npTab === "active" && el.closest("#np") && isOn(id)) npDismiss(id); if (!el.closest("#np") && npGone(id)) { delete NPOFF[id]; call(d, "turn_on", id); } else call(d, "toggle", id); }
+  else if (d === "light" || d === "switch" || d === "input_boolean" || d === "fan" || d === "automation") { if (npTab === "active" && el.closest("#np") && isOn(id)) npDismiss(id); lgGuard(id, () => { if (!el.closest("#np") && npGone(id)) { delete NPOFF[id]; call(d, "turn_on", id); } else call(d, "toggle", id); }); }
 };
 function selOpen(id) {
   const s = states[id]; if (!s) return; const o = s.attributes.options || [];
@@ -9638,8 +9721,8 @@ document.addEventListener("pointermove", e => {
 }, true);
 const lpEnd = e => {
   const dl = $("#lsdl"), ct = $("#lsct");
-  if (dl && dl._d === Infinity) { dl._d = Date.now() + 1500; call("light", "turn_on", LS.id, { brightness_pct: dl._v }); }
-  if (ct && ct._d === Infinity) { ct._d = Date.now() + 1500; call("light", "turn_on", LS.id, { color_temp_kelvin: ct._k }); }
+  if (dl && dl._d === Infinity) { dl._d = Date.now() + 1500; const bv = dl._v; lgGuard(LS.id, () => call("light", "turn_on", LS.id, { brightness_pct: bv })); }
+  if (ct && ct._d === Infinity) { ct._d = Date.now() + 1500; const kv = ct._k; lgGuard(LS.id, () => call("light", "turn_on", LS.id, { color_temp_kelvin: kv })); }
   if (!LP) return; clearTimeout(LP.t); const el = LP.el;
   if (LP.drag) { el.classList.remove("drag"); el._d = Date.now() + 1500; el._nc = 1; call("light", "turn_on", LP.id, { brightness_pct: LP.v }); }
   if (el._nc) setTimeout(() => { el._nc = 0; }, 450);
@@ -9650,8 +9733,8 @@ document.addEventListener("click", e => { const t = e.target.closest && e.target
 document.addEventListener("contextmenu", e => { if (e.target.closest && e.target.closest('.tl[data-e], .bd[data-e]')) e.preventDefault(); });
 $("#lsh").addEventListener("click", e => {
   if (e.target.closest('[data-ls="x"]')) { lsClose(); return; }
-  if (e.target.closest("#lsw")) { call("light", "toggle", LS.id); return; }
-  const c = e.target.closest("[data-rgb]"); if (c) { call("light", "turn_on", LS.id, { rgb_color: c.dataset.rgb.split(",").map(Number) }); return; }
+  if (e.target.closest("#lsw")) { lgGuard(LS.id, () => call("light", "toggle", LS.id)); return; }
+  const c = e.target.closest("[data-rgb]"); if (c) { const rgb = c.dataset.rgb.split(",").map(Number); lgGuard(LS.id, () => call("light", "turn_on", LS.id, { rgb_color: rgb })); return; }
   const S = CONFIG.scenes, sr = e.target.closest("[data-lsr]"), sg = e.target.closest("[data-lsg]");   // same scripts the Scenes page uses
   if (sr) { const x = S.rooms[sr.dataset.lsr]; send({ type: "call_service", domain: "script", service: "toggle_or_apply_dynamic_scene", service_data: { room_lights: x.l, presence_automation: x.p, room_boolean: x.b, room_scene_tracker: x.t } }); }
   else if (sg) { const x = S.lights[sg.dataset.lsg]; send({ type: "call_service", domain: "script", service: "toggle_or_apply_gradient_scene", service_data: { select_entity: x.s, light_entity: x.l, speed_entity: x.v } }); }
@@ -12988,7 +13071,7 @@ document.addEventListener("click", e => {
   if (r.addon) send({ type: "supervisor/api", endpoint: "/addons/" + r.addon + "/restart", method: "post", timeout: null }); else call("button", "press", r.button);
 }, true);
 // ---------- Settings: one page with tabs ----------
-// DISPLAY (the old Theme page) and ACCOUNT live on #theme; an admin also gets STATUS, ENTITIES, AUTOMATIONS, LOGS, ACCESS and SETUP on #admin.
+// DISPLAY (the old Theme page) and ACCOUNT live on #theme; an admin also gets STATUS, AUTOMATIONS, LOGS, ACCESS and SETUP on #admin.
 // The same tab row sits on top of both, so it reads as one page. Links: #settings, #theme, #theme/account, #admin, #admin/<tab>.
 // Nobody is sent into Home Assistant from here except an admin who taps OPEN HA SETTINGS on the Status tab.
 Object.assign(MDI, { "content-copy": "M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z",
@@ -12996,7 +13079,7 @@ Object.assign(MDI, { "content-copy": "M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 
   "open-in-new": "M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z",
   "check-circle": "M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z",
   "lock": "M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" });
-const ADM_TABS = [["status", "STATUS"], ["entities", "ENTITIES"], ["automations", "AUTOMATIONS"], ["logs", "LOGS"], ["access", "ACCESS"], ["setup", "SETUP"]];
+const ADM_TABS = [["status", "STATUS"], ["automations", "AUTOMATIONS"], ["logs", "LOGS"], ["access", "ACCESS"], ["setup", "SETUP"]];
 // a person signed in with their own Home Assistant account (not a dashboard running on a long-lived token) has an Account tab
 const setAcct = () => !!(ME && ME.id && !CONFIG.token);
 const setOn = () => PAGE_ON("theme") || setAcct() || ADMIN_ON();
@@ -13117,11 +13200,11 @@ function navSync() {
   const so = setOn(); [$("#navset"), $("#navset2")].forEach(a => { if (a) { a.hidden = !so; a.setAttribute("href", "#settings"); } });
 }
 try { navGroups(); } catch (_) {}
-// ---------- Settings, admin tabs: STATUS (+ quick actions) · ENTITIES · AUTOMATIONS · LOGS · ACCESS · SETUP ----------
+// ---------- Settings, admin tabs: STATUS (+ quick actions) · AUTOMATIONS · LOGS · ACCESS · SETUP ----------
 // For a quick look and a quick fix on the go; editing stays in Home Assistant (OPEN IN HA). Admins only (ADMIN_ON).
 // Home Assistant calls used: history/history_during_period, trace/list, trace/get, system_log/list, the REST check_config,
 // and the services automation.* / script.reload / scene.reload / template.reload / homeassistant.restart.
-const ADM = { tab: "", eq: "", ef: "all", esel: "", aq: "", af: "all", asel: "", arun: "", tl: null, tlT: 0, tlBusy: 0, tg: {}, logs: null, logT: 0, lf: "all", lq: "", li: "", lopen: -1, hist: {}, qa: "", qaT: 0, qaBad: null, liveT: 0 };
+const ADM = { tab: "", aq: "", af: "all", asel: "", arun: "", tl: null, tlT: 0, tlBusy: 0, tg: {}, logs: null, logT: 0, lf: "all", lq: "", li: "", lopen: -1, qa: "", qaT: 0, qaBad: null, liveT: 0 };
 const admT = ms => { if (!ms) return "-"; const d = new Date(ms), now = new Date(), t = d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" }));
   if (d.toDateString() === now.toDateString()) return t; const y = new Date(now); y.setDate(now.getDate() - 1); if (d.toDateString() === y.toDateString()) return "Yesterday " + t;
   return d.toLocaleDateString([], { day: "numeric", month: "short" }) + " " + t; };
@@ -13140,9 +13223,9 @@ function drawAdmin() {
   if (!el.querySelector(":scope > #admb")) { el.innerHTML = th + '<div id="admb"></div>'; el._tabs = th; }
   else if (el._tabs !== th) { const o = el.querySelector(":scope > .hsw"), sl = o && o.firstElementChild ? o.firstElementChild.scrollLeft : 0; if (o) o.remove(); el.insertAdjacentHTML("afterbegin", th); el._tabs = th; const n = el.querySelector(":scope > .hsw > .chips"); if (n) n.scrollLeft = sl; }
   const b = $("#admb");
-  if (tab === "entities" || tab === "automations" || tab === "logs") {
-    if (b.dataset.t !== tab) { b.dataset.t = tab; b.innerHTML = tab === "entities" ? admEntShell() : tab === "automations" ? admAutShell() : admLogShell(); }
-    if (tab === "entities") admEntDraw(); else if (tab === "automations") { admAutDraw(); admTlLoad(); } else { admLogDraw(); admLogLoad(); }
+  if (tab === "automations" || tab === "logs") {
+    if (b.dataset.t !== tab) { b.dataset.t = tab; b.innerHTML = tab === "automations" ? admAutShell() : admLogShell(); }
+    if (tab === "automations") { admAutDraw(); admTlLoad(); } else { admLogDraw(); admLogLoad(); }
   } else {
     b.dataset.t = tab;
     const n = Object.keys(states).length, who = ME.name ? esc(ME.name) : (CONFIG.token ? "long-lived token" : "-");
@@ -13157,7 +13240,7 @@ function drawAdmin() {
 function admLive() {
   if (curPg() !== "admin" || !ADMIN_ON()) return; const now = Date.now();
   if (now - ADM.liveT < 1000) { clearTimeout(ADM.liveTm); ADM.liveTm = setTimeout(admLive, 1000 - (now - ADM.liveT)); return; }
-  ADM.liveT = now; const t = setTab(); if (t === "entities") admEntDraw(true); else if (t === "automations") admAutDraw(true);
+  ADM.liveT = now; const t = setTab(); if (t === "automations") admAutDraw(true);
 }
 
 // ----- STATUS: quick actions -----
@@ -13185,77 +13268,6 @@ function admQa(k) {
   if (k === "restart") admCheck(() => insAsk("Restart Home Assistant?", "", "The config check passed. Every screen goes offline for about a minute and reconnects by itself.", "Restart", () => { call("homeassistant", "restart"); admQaSet("Restarting Home Assistant…"); }));
 }
 
-// ----- ENTITIES -----
-function admEntShell() {
-  return '<div class="adw' + (ADM.esel ? " det" : "") + '" data-w="ent"><div class="pn pg adl"><div class="admtop"><label class="admsrch">' + mdi("magnify") + '<input type="search" data-adq-ent placeholder="Search entities" value="' + esc(ADM.eq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div></div><div class="adrs"></div></div>' +
-    '<div class="admbk" data-adx="ent"></div><div class="pn pg add"></div></div>';
-}
-function admEntMatch() {
-  const w = ADM.eq.toLowerCase().split(/\s+/).filter(Boolean);
-  return Object.keys(states).filter(id => { if (!w.length) return true; const h = (id + " " + admNm(id)).toLowerCase(); return w.every(x => h.indexOf(x) > -1); });
-}
-function admEntDraw(live) {
-  const w = $('#admb .adw[data-w="ent"]'); if (!w) return;
-  const all = admEntMatch(), bad = all.filter(id => admBadSt(states[id].state)), dc = {};
-  all.forEach(id => { const d = id.split(".")[0]; dc[d] = (dc[d] || 0) + 1; });
-  const doms = Object.keys(dc).sort((a, b) => dc[b] - dc[a]).slice(0, 8);
-  if (ADM.ef !== "all" && ADM.ef !== "bad" && !dc[ADM.ef]) ADM.ef = "all";
-  const chip = (k, t) => '<button class="chip' + (ADM.ef === k ? " on" : "") + (k === "bad" ? " adbad" : "") + '" data-adf="' + k + '">' + t + '</button>';
-  const ch = chip("all", "ALL " + all.length) + (bad.length ? chip("bad", "UNAVAILABLE " + bad.length) : "") + doms.map(d => chip(d, d.toUpperCase().replace(/_/g, " ") + " " + dc[d])).join("");
-  const c = $(".adch", w); if (c._h !== ch) { c._h = ch; c.innerHTML = hsw('<div class="chips tabs">' + ch + '</div>'); }
-  const list = (ADM.ef === "all" ? all : ADM.ef === "bad" ? bad : all.filter(id => id.split(".")[0] === ADM.ef)).sort((a, b) => admNm(a).localeCompare(admNm(b)));
-  const max = 150, rows = list.slice(0, max).map(id => { const s = states[id], v = s.state;
-    return '<button class="adr' + (id === ADM.esel ? " sel" : "") + '" data-ae="' + esc(id) + '"><span class="adn"><b>' + esc(admNm(id)) + '</b><small>' + esc(id) + '</small></span><em class="' + (admBadSt(v) ? "bad" : admOnSt(v) ? "on" : "") + '">' + esc(admSt(s).toUpperCase()) + '</em></button>'; }).join("");
-  const h = (rows || admEmpty(ADM.eq ? "Nothing matches “" + ADM.eq + "”." : "No entities loaded yet.")) + (list.length > max ? '<div class="admore">Showing ' + max + ' of ' + list.length + '. Search to narrow it down.</div>' : "");
-  const r = $(".adrs", w); if (r._h !== h) { r._h = h; r.innerHTML = h; }
-  admEntDet(live);
-}
-function admEntDet(live) {
-  const w = $('#admb .adw[data-w="ent"]'), d = w && $(".add", w); if (!d) return; const id = ADM.esel, s = states[id];
-  w.classList.toggle("det", !!id);
-  if (!id || !s) { d.innerHTML = '<div class="adhint">' + mdi("magnify") + '<span>Pick an entity to see its state, attributes and the last 24 hours.</span></div>'; d._id = ""; return; }
-  const dom = id.split(".")[0], v = s.state, lc = admMs(s.last_changed), since = lc ? "for " + agoTxt(Date.now() - lc) + " · since " + admT(lc) : "";
-  const tog = ["switch", "light", "fan", "input_boolean", "automation", "siren", "humidifier"].indexOf(dom) > -1 && !admBadSt(v);
-  const ctl = tog ? '<button class="adsw' + (v === "on" ? " on" : "") + '" data-aet="' + esc(id) + '" aria-label="Turn ' + (v === "on" ? "off" : "on") + '"><i></i></button>'
-    : dom === "script" ? '<button class="eb" data-aerun="' + esc(id) + '">' + mdi("play") + ' RUN</button>'
-    : dom === "button" || dom === "input_button" ? '<button class="eb" data-aerun="' + esc(id) + '">PRESS</button>'
-    : dom === "scene" ? '<button class="eb" data-aerun="' + esc(id) + '">ACTIVATE</button>'
-    : (dom === "input_select" || dom === "select") && Array.isArray(s.attributes.options) ? '<select class="adsel" data-aesel="' + esc(id) + '">' + s.attributes.options.map(o => '<option' + (o === v ? " selected" : "") + '>' + esc(o) + '</option>').join("") + '</select>'
-    : (dom === "input_number" || dom === "number") && s.attributes.min != null ? '<input class="adnum" type="number" data-aenum="' + esc(id) + '" value="' + esc(v) + '" min="' + s.attributes.min + '" max="' + s.attributes.max + '" step="' + (s.attributes.step || 1) + '">' : "";
-  const at = Object.keys(s.attributes || {}).sort().map(k => { let x = s.attributes[k]; x = typeof x === "object" ? JSON.stringify(x) : String(x); if (x.length > 160) x = x.slice(0, 157) + "…"; return '<div class="adat"><b>' + esc(k) + '</b><span>' + esc(x) + '</span></div>'; }).join("");
-  const key = id + "|" + v + "|" + lc + "|" + JSON.stringify(s.attributes).length;
-  if (live && d._key === key) return; d._key = key;
-  const keepH = d._id === id ? ($(".adh", d) || {}).innerHTML : "";
-  d.innerHTML = '<div class="addh"><div><b>' + esc(admNm(id)) + '</b><small>' + esc(id) + '</small></div><button class="adic" data-aecopy="' + esc(id) + '" aria-label="Copy the entity id">' + mdi("content-copy") + '</button><button class="adic adx" data-adx="ent" aria-label="Close">' + mdi("close") + '</button></div>' +
-    '<div class="adv"><span class="' + (admBadSt(v) ? "bad" : admOnSt(v) ? "on" : "") + '">' + esc(admSt(s)) + '</span>' + ctl + '</div><div class="adsince">' + esc(since) + '</div>' +
-    '<div class="adh">' + (keepH || '<div class="adhl">Loading the last 24 hours…</div>') + '</div><div class="adhx"><span>24 H AGO</span><span>NOW</span></div>' +
-    '<div class="lbl adal">Attributes</div>' + (at || admEmpty("No attributes.")) +
-    '<div class="adbt"><button class="eb" data-aeha="' + esc(id) + '">OPEN IN HA ' + mdi("open-in-new") + '</button></div>';
-  d._id = id; if (!keepH || !live) admHist(id);
-}
-function admHist(id) {
-  const c = ADM.hist[id]; if (c && Date.now() - c.t < 60000) { admHistDraw(id, c.a); return; }
-  const end = new Date(), st = new Date(end.getTime() - 864e5);
-  send({ type: "history/history_during_period", start_time: st.toISOString(), end_time: end.toISOString(), entity_ids: [id], minimal_response: true, no_attributes: true, significant_changes_only: false }, r => {
-    const a = ((r && r[id]) || []).map(x => [x.lu != null ? x.lu * 1000 : admMs(x.last_updated || x.last_changed), x.s != null ? x.s : x.state]).filter(x => x[0]);
-    ADM.hist[id] = { t: Date.now(), a: a }; admHistDraw(id, a);
-  });
-}
-function admHistDraw(id, a) {
-  const h = $("#admb .add .adh"); if (!h || ADM.esel !== id) return;
-  const t1 = Date.now(), t0 = t1 - 864e5, W = 300, X = t => Math.max(0, Math.min(W, (t - t0) / 864e5 * W));
-  if (!a.length) { h.innerHTML = '<div class="adhl">No history in the last 24 hours.</div>'; return; }
-  const nums = a.map(x => parseFloat(x[1])), numeric = a.every((x, i) => !isNaN(nums[i]) || admBadSt(x[1]));
-  if (numeric && nums.some(n => !isNaN(n))) {
-    const ok = a.map((x, i) => [x[0], nums[i]]).filter(x => !isNaN(x[1])), lo = Math.min.apply(null, ok.map(x => x[1])), hi = Math.max.apply(null, ok.map(x => x[1])), sp = hi - lo || 1;
-    let pts = ""; ok.forEach((x, i) => { const y = 30 - (x[1] - lo) / sp * 26; pts += (i ? " " : "") + X(Math.max(x[0], t0)).toFixed(1) + "," + y.toFixed(1); }); pts += " " + W + "," + (30 - (ok[ok.length - 1][1] - lo) / sp * 26).toFixed(1);
-    h.innerHTML = '<svg viewBox="0 0 300 34" preserveAspectRatio="none"><polyline points="' + pts + '" fill="none" stroke="var(--mint)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg><div class="adhr"><span>' + esc(String(+lo.toFixed(2))) + '</span><span>' + esc(String(+hi.toFixed(2))) + '</span></div>';
-    return;
-  }
-  const col = v => admBadSt(v) ? "var(--heat)" : admOnSt(v) ? "var(--mint)" : v === "off" || v === "closed" || v === "idle" || v === "not_home" || v === "disarmed" || v === "locked" ? "rgba(var(--w),.12)" : "hsl(" + ([...String(v)].reduce((p, c) => p * 31 + c.charCodeAt(0) & 1023, 7) % 360) + " 55% 60% / .7)";
-  let seg = ""; a.forEach((x, i) => { const s0 = X(Math.max(x[0], t0)), s1 = i + 1 < a.length ? X(a[i + 1][0]) : W; if (s1 - s0 > 0) seg += '<rect x="' + s0.toFixed(2) + '" y="8" width="' + (s1 - s0).toFixed(2) + '" height="18" fill="' + col(x[1]) + '"><title>' + esc(String(x[1])) + ' · ' + esc(admT(x[0])) + '</title></rect>'; });
-  h.innerHTML = '<svg viewBox="0 0 300 34" preserveAspectRatio="none"><rect x="0" y="8" width="300" height="18" rx="4" fill="rgba(var(--w),.06)"/>' + seg + '</svg>';
-}
 
 // ----- AUTOMATIONS -----
 const AUT_WHY = { finished: "", failed_conditions: "stopped at a condition", failed_single: "skipped, already running", failed_max_runs: "skipped, too many runs", error: "error", aborted: "stopped", cancelled: "cancelled", running: "running now" };
@@ -13406,13 +13418,8 @@ $("#admin").addEventListener("click", e => {
   const t = e.target, tab = setTab(), g = s => t.closest(s);
   let b;
   if ((b = g("[data-adq]"))) { admQa(b.dataset.adq); return; }
-  if ((b = g("[data-adf]"))) { const k = b.dataset.adf; if (tab === "entities") { ADM.ef = k; admEntDraw(); } else if (tab === "automations") { ADM.af = k; admAutDraw(); } else { ADM.lf = k; ADM.lopen = -1; admLogDraw(); } return; }
-  if ((b = g("[data-adx]"))) { if (b.dataset.adx === "ent") { ADM.esel = ""; admEntDraw(); } else { ADM.asel = ""; admAutDraw(); } return; }
-  if ((b = g("[data-aet]"))) { const id = b.dataset.aet, on = states[id] && states[id].state === "on"; call(id.split(".")[0] === "automation" ? "automation" : "homeassistant", on ? "turn_off" : "turn_on", id); b.classList.toggle("on", !on); return; }
-  if ((b = g("[data-aerun]"))) { const id = b.dataset.aerun, d = id.split(".")[0]; if (d === "script") call("script", "turn_on", id); else if (d === "scene") call("scene", "turn_on", id); else call(d, "press", id); b.classList.add("ok"); setTimeout(() => b.classList.remove("ok"), 1200); return; }
-  if ((b = g("[data-aecopy]"))) { admCopy(b.dataset.aecopy, b); return; }
-  if ((b = g("[data-aeha]"))) { haGo("/history?entity_id=" + encodeURIComponent(b.dataset.aeha)); return; }
-  if ((b = g("[data-ae]"))) { ADM.esel = b.dataset.ae; admEntDraw(); return; }
+  if ((b = g("[data-adf]"))) { const k = b.dataset.adf; if (tab === "automations") { ADM.af = k; admAutDraw(); } else { ADM.lf = k; ADM.lopen = -1; admLogDraw(); } return; }
+  if ((b = g("[data-adx]"))) { ADM.asel = ""; admAutDraw(); return; }
   if ((b = g("[data-aat]"))) { e.stopPropagation(); const id = b.dataset.aat, on = states[id] && states[id].state !== "off"; call("automation", on ? "turn_off" : "turn_on", id); b.classList.toggle("on", !on); return; }
   if ((b = g("[data-aarun]"))) { call("automation", "trigger", b.dataset.aarun, { skip_condition: true }); b.classList.add("ok"); setTimeout(() => { b.classList.remove("ok"); admTlLoad(true); }, 2500); return; }
   if ((b = g("[data-aaha]"))) { haGo(b.dataset.aaha ? "/config/automation/edit/" + encodeURIComponent(b.dataset.aaha) : "/config/automation/dashboard"); return; }
@@ -13428,15 +13435,10 @@ $("#admin").addEventListener("click", e => {
 $("#admin").addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.dataset && e.target.dataset.aa) { e.preventDefault(); e.target.click(); } });
 $("#admin").addEventListener("input", e => {
   const t = e.target;
-  if (t.hasAttribute("data-adq-ent")) { ADM.eq = t.value; admEntDraw(); }
-  else if (t.hasAttribute("data-adq-aut")) { ADM.aq = t.value; admAutDraw(); }
+  if (t.hasAttribute("data-adq-aut")) { ADM.aq = t.value; admAutDraw(); }
   else if (t.hasAttribute("data-adq-log")) { ADM.lq = t.value; ADM.lopen = -1; admLogDraw(); }
 });
-$("#admin").addEventListener("change", e => {
-  const t = e.target;
-  if (t.dataset.aesel) call(t.dataset.aesel.split(".")[0], "select_option", t.dataset.aesel, { option: t.value });
-  else if (t.dataset.aenum) { const v = parseFloat(t.value); if (!isNaN(v)) call(t.dataset.aenum.split(".")[0], "set_value", t.dataset.aenum, { value: v }); }
-});
+
 // ---------- Config editor (Admin page): edit rooms, tiles, climate rooms, cameras, media and alarm tiles; kept on the Home Assistant host by the kinetic_config component ----------
 // config.js stays the base. What is saved here only replaces the listed parts of it (CFG_OV_KEYS); "Reset" puts a part back to what config.js says. Saving never switches a device.
 const CE = { draft: null, avail: null, busy: false, msg: "", open: {}, fresh: "" };
@@ -14652,6 +14654,7 @@ function hzDraw() {
   const col = t => { if (t <= cs[0]) return pc[0]; if (t >= cs[6]) return pc[6]; let k = 0; while (t > cs[k + 1]) k++; const f = (t - cs[k]) / (cs[k + 1] - cs[k]); return pc[k].map((v, n) => Math.round(v + (pc[k + 1][n] - v) * f)); };
   const stops = p.map((v, i) => '<stop offset="' + (i / (p.length - 1)).toFixed(3) + '" stop-color="rgb(' + col(v).join(",") + ')"/>').join("");
   $("svg", g).setAttribute("data-cr", "clz-house"); $("svg", g).setAttribute("data-crs", "1"); chartReadout("clz-house", p.map((v, i) => ({ x: X(i), t: crWhen((CHZ.t0 || Date.now() - 24 * 3600000) + i * 1800000), r: [["House average", f1(v) + "°", "rgb(" + col(v).join(",") + ")"]] })), { scrub: true });
+  { const sv0 = $("svg", g), sig = p.map(v => v.toFixed(2)).join(",") + "|" + pc.join(";"); if (sv0._sig === sig && sv0.firstChild) { g.hidden = false; return; } sv0._sig = sig; }   // same data and colours: leave the drawn chart (and its entrance) alone
   $("svg", g).innerHTML = '<defs><linearGradient id="hzh" x1="0" y1="0" x2="1" y2="0">' + stops + '</linearGradient><linearGradient id="hzv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="hzk" maskUnits="userSpaceOnUse" x="0" y="0" width="' + W + '" height="' + H + '"><rect width="' + W + '" height="' + H + '" fill="url(#hzv)"/></mask></defs><path d="' + d + ' L' + W + " " + H + " L0 " + H + ' Z" fill="url(#hzh)" mask="url(#hzk)"/><path d="' + d + '" fill="none" stroke="url(#hzh)" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round"/>';
   $("small", g).textContent = "LAST 24 HOURS · " + f1(mn) + "-" + f1(mx) + "°"; g.hidden = false;
 }
@@ -15104,7 +15107,8 @@ const CMO = [
   { root: ".czg svg, .ctgsvg, svg.slv-sp, #insd svg.itsp, .iwc svg, .vhfuel .vhsp", kind: "ln" }, { root: ".ims svg, svg.lsbs", kind: "wipe" },
   { root: ".hzpq", kids: ".hzrow", kind: "rows" }, { root: ".chb .chbar", kids: "i", kind: "gx" }, { root: "#admin .add", kids: ".adint i", kind: "gx" }, { root: ".sct .scb", kids: ".mv:not([hidden]), .stp", kind: "mvs" }, { root: "svg.br", kind: "ring" }
 ];
-let CMF = 0, CMS = "";   // a tab / card was just opened: charts that appear in the next few seconds play, even though that place was on screen a moment ago
+let CMF = 0, CMS = "";
+const CMS0 = {};   // when each chart (by place) started its entrance, and during which tab / card opening (CMF)   // a tab / card was just opened: charts that appear in the next few seconds play, even though that place was on screen a moment ago
 const CMV = {};   // when each chart (by place, not by element: a redraw makes a new element) was last seen on screen
 const cmKey = (el, sel) => { const a = el.closest("[id]"), sib = a ? [...a.querySelectorAll(sel)].indexOf(el) : 0; return sel + "|" + (a ? a.id : "") + "|" + sib; };
 const cmOn = el => { if (!el.isConnected || !el.getClientRects().length) return false; const r = el.getBoundingClientRect(); return r.width > 4 && r.height > 2 && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth; };
@@ -15126,7 +15130,7 @@ function cmPrep(el, c) {
     const sv = el, vb = sv.viewBox && sv.viewBox.baseVal, r = sv.getBoundingClientRect(), s = vb && vb.width ? Math.max(1, r.width / vb.width, r.height / (vb.height || 1)) : 1; let n = 0;
     sv.querySelectorAll("polyline, path").forEach(p => { if (p.closest("defs, mask, clipPath")) return; const cs = getComputedStyle(p), f = cs.fill, st = cs.stroke;   // what is drawn, whether it was set by an attribute or by the style sheet
       if (f === "none" && st && st !== "none" && getComputedStyle(p).strokeDasharray !== "none") { p.setAttribute("data-cma", ""); n++; }   // an already dashed line (a forecast) fades in instead
-      else if (f === "none" && st && st !== "none" && p.getTotalLength) { let L = 0; try { L = p.getTotalLength(); } catch (_) {} if (L > 4) { p.setAttribute("data-cml", ""); p.style.setProperty("--len", Math.ceil(L * s + 6)); n++; } }
+      else if (f === "none" && st && st !== "none" && p.getTotalLength) { let L = 0; try { L = p.getTotalLength(); } catch (_) {} if (L > 4) { if (sv.closest(".czg")) p.setAttribute("data-cmw", ""); else { p.setAttribute("data-cml", ""); p.style.setProperty("--len", Math.ceil(L * s + 6)); } n++; } }   // the Climate house line is revealed left to right together with its area (the same wipe), not drawn with a stroke dash: on the phone the dash animation was not painted until the page was scrolled
       else if (p.tagName === "path" && f && f !== "none") p.setAttribute(sv.closest(".czg") ? "data-cmw" : "data-cma", ""); });   // the area under the Climate house line is wiped in from the left along with the pen (data-cmw); the other areas fade in
     const vh = vb && vb.height ? vb.height : 0, bars = vh ? sv.querySelectorAll("rect.rn") : []; bars.forEach((b, i) => { b.setAttribute("data-cmb", ""); b.style.setProperty("--k", i); n++; }); if (vh) sv.style.setProperty("--ob", vh + "px");
     sv.querySelectorAll("rect.fz").forEach(x => x.setAttribute("data-cma", ""));
@@ -15146,9 +15150,9 @@ function cmCount(n) {   // (an automated browser such as the test runner reads t
   const out = k => { const q = P.slice(); N.forEach(x => { q[x.i] = f(x, k >= 1 ? x.to : x.to * (1 - Math.pow(1 - k, 3))); }); return q.join(""); }, t0 = performance.now(), T = 1100;
   let last = raw;
   // the digits are not all the same width ("1" is narrower), so a number that is a flex / grid item would change width with every step and push what sits beside it (the degree sign, the mode switch) back and forth: it keeps the width of its widest possible value while it climbs
-  const box = n.nodeType === 3 ? n.parentElement : n; let pin = false;
-  try { const pd = box && box.parentElement ? getComputedStyle(box.parentElement).display : ""; if (/flex|grid/.test(pd)) { let w = box.getBoundingClientRect().width; if (w > 0) { for (let d = 0; d < 10; d++) { n.textContent = raw.replace(/\d/g, d); w = Math.max(w, box.getBoundingClientRect().width); } n.textContent = raw; box.style.minWidth = w + "px"; pin = true; } } } catch (_) {}
-  const unpin = () => { if (pin) { box.style.minWidth = ""; pin = false; } };
+  const box = n.nodeType === 3 ? n.parentElement : n; let pin = false, od = "", inl = false;
+  try { const par = box && box.parentElement, pd = par ? getComputedStyle(par).display : "", gd = par && par.parentElement ? getComputedStyle(par.parentElement).display : ""; if (/flex|grid/.test(pd) || /flex|grid/.test(gd)) { let w = box.getBoundingClientRect().width; if (w > 0) { for (let d = 0; d < 10; d++) { n.textContent = raw.replace(/\d/g, d); w = Math.max(w, box.getBoundingClientRect().width); } n.textContent = raw; if (!/flex|grid/.test(pd) && getComputedStyle(box).display === "inline") { od = box.style.display; box.style.display = "inline-block"; inl = true; } box.style.minWidth = w + "px"; pin = true; } } } catch (_) {}   // (the price on the Vehicle fuel card is a flex item's child: its width changing pushed the graph beside it)
+  const unpin = () => { if (pin) { box.style.minWidth = ""; if (inl) box.style.display = od; pin = false; } };
   const step = t => { const k = Math.min(1, (t - t0) / T);
     if (n.textContent !== last) { unpin(); return; }   // something else wrote a new value while it climbed: let that stand
     last = out(k); n.textContent = last; if (k < 1) requestAnimationFrame(step); else unpin(); };
@@ -15178,6 +15182,18 @@ function cmNums() {
     });
   });
 }
+// a chart whose contents were replaced while its entrance plays gets its new lines / bars marked again and set to the same moment of the animation, so it carries on instead of jumping to the end or starting over
+function cmShift(el, ms) {
+  el.querySelectorAll("[data-cmk],[data-cml],[data-cmw],[data-cma],[data-cmb]").forEach(n => { const d = parseFloat(getComputedStyle(n).animationDelay); if (!isNaN(d)) n.style.animationDelay = (d * 1000 - ms) + "ms"; });
+}
+try { new MutationObserver(() => {
+  if (!document.querySelector(".cin[data-cm]")) return;
+  document.querySelectorAll(".cin[data-cm=ln], .cin[data-cm=gy], .cin[data-cm=gx], .cin[data-cm=sb]").forEach(el => {
+    if (!el._cm || !el._cmT || el.querySelector("[data-cmk],[data-cml],[data-cmw],[data-cma],[data-cmb]")) return;   // still has its marks: nothing was replaced
+    const k = el.getAttribute("data-cm"), c = CMO.find(o => o.kind === k && o.root.split(",").some(s => el.matches(s.trim()))); if (!c) return;
+    if (cmPrep(el, c)) cmShift(el, Date.now() - el._cmT);
+  });
+}).observe(document.body, { childList: true, subtree: true }); } catch (_) {}
 function cmScan() {
   if (document.hidden || (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches)) return;
   const now = Date.now();
@@ -15189,7 +15205,9 @@ function cmScan() {
     if (!el._cm) {   // lazy: only a chart that is on screen AND already holds its data is marked, so one that is still loading (or below the fold) waits and plays the moment it is really there
       if (el.closest(".enold")) return;   // the dimmed old page while a new one loads
       if (!cmPrep(el, c)) return;
-      el._cm = 1; const was = CMV[key] || 0; if (now - was > 900 || now < CMF) { el.setAttribute("data-cm", c.kind); el.classList.add("cin"); setTimeout(() => el.classList.remove("cin"), 3200); if (c.kind === "hp") cmCount(el.querySelector("#mbg")); else if (c.kind === "vr") cmCount(el.firstChild); }
+      el._cm = 1; const was = CMV[key] || 0, st0 = CMS0[key], cont = !!(st0 && CMF && st0.ev === CMF && now - st0.t < 2600 && /^(ln|gy|gx|sb)$/.test(c.kind));   // the same chart rebuilt while its entrance is playing (the page redrew it): carry on, do not start over
+      if (cont) { el.setAttribute("data-cm", c.kind); el.classList.add("cin"); el._cmT = st0.t; setTimeout(() => el.classList.remove("cin"), 3200 - (now - st0.t)); cmShift(el, now - st0.t); }
+      else if (now - was > 900 || now < CMF) { el.setAttribute("data-cm", c.kind); el.classList.add("cin"); el._cmT = now; CMS0[key] = { t: now, ev: CMF }; setTimeout(() => el.classList.remove("cin"), 3200); if (c.kind === "hp") cmCount(el.querySelector("#mbg")); else if (c.kind === "vr") cmCount(el.firstChild); }
     }
     CMV[key] = now;
   })));
@@ -15897,7 +15915,7 @@ function mpDo(m, id) {
   return true;
 }
 $("#media").onclick = e => { const ck = e.target.closest("[data-grp]"); if (ck) { grpToggle(ck.dataset.grp, ck.dataset.m, ck.dataset.x === "1"); return; } const lo = e.target.closest('[data-ly="open"]'); if (lo) { lyOpen(lo.dataset.e); return; } const b = e.target.closest("[data-mp]"); if (b) mpDo(b.dataset.mp, b.dataset.e, b.dataset.c); };
-$("#media").oninput = e => { const t = e.target; if (t.dataset.vol) t.style.setProperty("--v", t.value + "%"); if (t.dataset.vol && t.nextElementSibling && t.nextElementSibling.tagName === "EM") t.nextElementSibling.textContent = t.value; };
+$("#media").oninput = e => { const t = e.target; if (t.dataset.vol && !t.classList.contains("sdrag")) t.style.setProperty("--v", t.value + "%"); if (t.dataset.vol && t.nextElementSibling && t.nextElementSibling.tagName === "EM") t.nextElementSibling.textContent = t.value; };
 $("#media").onchange = e => { const t = e.target; if (t.dataset.vol) call("media_player", "volume_set", t.dataset.vol, { volume_level: +t.value / 100 }); };
 
 /* Value picker: the lux lists (lights card) and the temperature lists (climate sheet) open a small sheet of common values with - and + instead of the phone's plain list.
@@ -15908,7 +15926,7 @@ function vpClose(apply) {
   if (!VP) return; const v = VP; VP = null;
   if (apply && String(v.sel.value) !== String(v.cur)) { v.sel.value = v.cur; v.sel.dispatchEvent(new Event("change", { bubbles: true })); }
   const gone = () => v.el.remove();
-  if (v.el.animate && !matchMedia("(prefers-reduced-motion:reduce)").matches) { const a = v.el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: "ease-out" }); a.onfinish = a.oncancel = gone; v.el.style.pointerEvents = "none"; } else gone();
+  if (v.el.animate && !matchMedia("(prefers-reduced-motion:reduce)").matches) { v.el.animate([{ backgroundColor: "rgba(0,0,0,.55)" }, { backgroundColor: "rgba(0,0,0,0)" }], { duration: 200, easing: "ease-out", fill: "forwards" }); const a = $(".vps", v.el).animate([{ transform: "none" }, { transform: "translateY(110%)" }], { duration: 220, easing: "ease-in", fill: "forwards" }); a.onfinish = a.oncancel = gone; v.el.style.pointerEvents = "none"; } else gone();
   if (v.back && v.back.isConnected) try { v.back.focus({ preventScroll: true }); } catch (_) {}
 }
 function vpOpen(lab) {
@@ -15931,7 +15949,7 @@ function vpOpen(lab) {
     const c = t.closest("[data-vv]"); if (c && !c.disabled) { cur = c.dataset.vv; paint(); return; }
     const s = t.closest("[data-vs]"); if (s && !s.disabled) { const i = en.findIndex(o => +o.v === +cur), j = Math.max(0, Math.min(en.length - 1, i + +s.dataset.vs)); cur = en[j].v; paint(); } });
   VP = { el: el, sel: sel, get cur() { return cur; }, back: sel }; document.body.appendChild(el); paint();
-  if (el.animate && !matchMedia("(prefers-reduced-motion:reduce)").matches) { el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160, easing: "ease-out" }); $(".vps", el).animate([{ transform: "translateY(36px)", opacity: .6 }, { transform: "none", opacity: 1 }], { duration: 260, easing: "cubic-bezier(.22,1,.36,1)" }); }
+  if (el.animate && !matchMedia("(prefers-reduced-motion:reduce)").matches) { el.animate([{ backgroundColor: "rgba(0,0,0,0)" }, { backgroundColor: "rgba(0,0,0,.55)" }], { duration: 200, easing: "ease-out" }); $(".vps", el).animate([{ transform: "translateY(110%)" }, { transform: "none" }], { duration: 260, easing: "cubic-bezier(.22,1,.36,1)" }); }
   const f = $("[data-vv].on", el) || $("[data-vd]", el); try { f.focus({ preventScroll: true }); } catch (_) {}
 }
 document.addEventListener("click", e => { if (e.target.closest("#vpk")) return; const lab = e.target.closest(".ctf.sel"); if (!lab) return; e.preventDefault(); e.stopPropagation(); vpOpen(lab); }, true);
@@ -19363,7 +19381,7 @@ function insxStale() {
 }
 document.addEventListener("click", e => {
   const m = e.target.closest("[data-stmute]"); if (m) { e.stopPropagation(); stlMute(m.dataset.stmute); if (typeof insTick === "function") insTick(); setTimeout(() => { if (typeof drawInsights === "function" && curPg() === "insights") drawInsights(); if (typeof insDetDraw === "function") insDetDraw(); }, 60); return; }
-  const g = e.target.closest("[data-stgo]"); if (g) { e.stopPropagation(); const id = g.dataset.stgo; if (typeof INS !== "undefined") INS.det = ""; location.hash = "#admin/entities"; setTimeout(() => { if (typeof ADM !== "undefined" && typeof admEntDraw === "function") { ADM.esel = id; admEntDraw(); } }, 400); }
+  const g = e.target.closest("[data-stgo]"); if (g) { e.stopPropagation(); const id = g.dataset.stgo; if (typeof INS !== "undefined") INS.det = ""; haGo("/history?entity_id=" + encodeURIComponent(id)); }
 }, true);
 // ---------- Vehicle > Service: the next service by km or date, filled in on the dashboard (2.5.17) ----------
 // The values live in one Home Assistant Text helper (max length 255) so every device sees the same: carCare[0].serviceHelper, default input_text.car_service,
@@ -21460,12 +21478,12 @@ document.addEventListener("change", e => { const t = e.target; if (t.dataset && 
 // values in place (a slider being dragged is left alone); a real change of the list (a speaker joins, a song changes) still redraws it.
 const spkKey = h => String(h).replace(/(<input[^>]*type="range"[^>]*?) value="[^"]*"/g, "$1").replace(/(<input[^>]*type="range"[^>]*>)<em>[^<]*<\/em>/g, "$1<em></em>");
 function spkGlide(inp, to, done) {
-  const from = parseFloat(inp.value), snd = inp.dataset.sndn !== undefined, em = inp.nextElementSibling && inp.nextElementSibling.tagName === "EM" ? inp.nextElementSibling : null, fmt = v => snd ? sndFmt(v) : String(v);
-  cancelAnimationFrame(inp._ga);
-  if (isNaN(from) || from === to || matchMedia("(prefers-reduced-motion:reduce)").matches) { inp.value = to; if (em) em.textContent = fmt(to); inp.style.setProperty("--v", to + "%"); if (done) done(); return; }
+  const from = parseFloat(inp.value), mn0 = parseFloat(inp.min || 0), mx0 = parseFloat(inp.max || 100), pc = v => mx0 > mn0 ? Math.max(0, Math.min(100, (v - mn0) / (mx0 - mn0) * 100)) + "%" : "0%", snd = inp.dataset.sndn !== undefined, em = inp.nextElementSibling && inp.nextElementSibling.tagName === "EM" ? inp.nextElementSibling : null, fmt = v => snd ? sndFmt(v) : String(v);
+  cancelAnimationFrame(inp._ga); inp.classList.add("snt"); clearTimeout(inp._gs); inp._gs = setTimeout(() => inp.classList.remove("snt"), 560);   // its own glide writes --v every frame: no second transition on top
+  if (isNaN(from) || from === to || matchMedia("(prefers-reduced-motion:reduce)").matches) { inp.value = to; if (em) em.textContent = fmt(to); inp.style.setProperty("--v", pc(to)); if (done) done(); return; }
   const t0 = performance.now(), dur = 480, step = t => {
     const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3), v = from + (to - from) * e;
-    inp.value = v; if (em) em.textContent = fmt(Math.round(v)); inp.style.setProperty("--v", v + "%");
+    inp.value = v; if (em) em.textContent = fmt(Math.round(v)); inp.style.setProperty("--v", pc(v));
     if (k < 1) inp._ga = requestAnimationFrame(step); else { inp.value = to; if (em) em.textContent = fmt(to); if (done) done(); }
   };
   inp._ga = requestAnimationFrame(step);
@@ -21475,7 +21493,7 @@ function spkSet(el, h) {
   if (el._sk === key && el.firstChild && el.firstChild === el._sn) {
     const t = document.createElement("div"); t.innerHTML = h;
     const nw = t.querySelectorAll("input[type=range]"), old = el.querySelectorAll("input[type=range]");
-    if (nw.length === old.length) { nw.forEach((n, i) => { if (old[i] !== document.activeElement && !old[i]._tap) spkGlide(old[i], parseFloat(n.getAttribute("value"))); }); return; }
+    if (nw.length === old.length) { nw.forEach((n, i) => { if (old[i] !== document.activeElement && !old[i]._tap && !old[i].classList.contains("sdrag")) spkGlide(old[i], parseFloat(n.getAttribute("value"))); }); return; }
   }
   el._sk = key; el.innerHTML = h; el._sn = el.firstChild;
 }
@@ -21484,7 +21502,7 @@ function spkSet(el, h) {
 function spkTap(e) {
   const t = e.target; if (!t || t.type !== "range" || !(t.dataset && (t.dataset.vol !== undefined || t.dataset.sndn !== undefined))) return;
   if (matchMedia("(prefers-reduced-motion:reduce)").matches || t.disabled) return;
-  const pt = e.touches ? e.touches[0] : e, r = t.getBoundingClientRect(), tw = 24, mn = parseFloat(t.min || 0), mx = parseFloat(t.max || 100), st = parseFloat(t.step) || 1;
+  const pt = e.touches ? e.touches[0] : e, r = t.getBoundingClientRect(), tw = parseFloat(getComputedStyle(t).getPropertyValue("--tw")) || 24, mn = parseFloat(t.min || 0), mx = parseFloat(t.max || 100), st = parseFloat(t.step) || 1;
   if (!r.width || mx <= mn) return;
   const span = Math.max(1, r.width - tw), cur = (parseFloat(t.value) - mn) / (mx - mn), thumbX = r.left + tw / 2 + cur * span;
   if (Math.abs(pt.clientX - thumbX) <= 22) return;   // on the thumb: a normal drag
@@ -21704,6 +21722,34 @@ document.addEventListener("click", e => {
   b.classList.remove("tapfx"); void b.offsetWidth; b.classList.add("tapfx");
   clearTimeout(b._tf); b._tf = setTimeout(() => b.classList.remove("tapfx"), 600);
 }, true);
+// Night light guard: after 11 pm a tap that would turn a light (or a light switch) ON asks first, in the same card as OPEN GARAGE DOOR on Insights.
+// Saying yes lets that room be used normally for the rest of the night (one prompt per room); another room asks again. Turning off never asks.
+// Settings: CONFIG.lightGuard = false switches it off; { from: "23:00", to: "05:00" } changes the hours.
+function lgMin(s) { const m = String(s).split(":"); return (+m[0] || 0) * 60 + (+m[1] || 0); }
+function lgNight() {   // "" in the daytime, otherwise a label for tonight (the date the night began)
+  const c = CONFIG.lightGuard; if (c === false) return "";
+  const f = lgMin(c && c.from || "23:00"), t = lgMin(c && c.to || "05:00"), d = new Date(), n = d.getHours() * 60 + d.getMinutes();
+  if (!(f <= t ? n >= f && n < t : n >= f || n < t)) return "";
+  const s = new Date(d); if (f > t && n < t) s.setDate(s.getDate() - 1); return s.toDateString();
+}
+function lgRoom(id) {   // the house room the light belongs to; a light in no room counts as one room of its own
+  const d = id.split(".")[0];
+  for (const r of HOUSE()) { const L = [].concat(r.lights || [], r.lightSwitches || []); if (L.indexOf(id) > -1 || members(L).indexOf(id) > -1) return r.id; }
+  return d === "light" ? "(other lights)" : "";
+}
+const lgKey = () => "kinetic-lgpass:" + ((typeof ME !== "undefined" && ME && ME.id) || "local");
+let LGP = null;
+function lgGet(n) { if (!LGP) { try { LGP = JSON.parse(localStorage.getItem(lgKey()) || "{}"); } catch (e) { LGP = {}; } } if (LGP.n !== n || !Array.isArray(LGP.r)) LGP = { n: n, r: [] }; return LGP; }
+function lgPass(n, rm) { const p = lgGet(n); if (p.r.indexOf(rm) < 0) p.r.push(rm); try { localStorage.setItem(lgKey(), JSON.stringify(p)); } catch (e) {} }
+function lgGuard(id, go) {   // go() runs now, or after the person says yes
+  const d = id.split(".")[0];
+  if ((d !== "light" && d !== "switch") || isOn(id)) { go(); return; }
+  const n = lgNight(); if (!n) { go(); return; }
+  const rm = lgRoom(id); if (!rm) { go(); return; }
+  if (lgGet(n).r.indexOf(rm) > -1) { go(); return; }
+  const r = HOUSE().find(x => x.id === rm), where = r ? r.name : "the house";
+  insAsk("Turn on the light?", fname(id), "It is late. Please make sure this was on purpose. Once you say yes, the lights in " + where + " work as normal for the rest of the night.", "Turn on", () => { lgPass(n, rm); go(); });
+}
 (() => {
   const SEL = ".chip, .chmt button, .seg > .eb";
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -21754,20 +21800,33 @@ document.addEventListener("click", e => {
     requestAnimationFrame(go);
   }, true);
 })();
-const SLS = ".mv input[type=range], .wsl input[type=range]";
-function slFill(r) { const mn = +r.min || 0, mx = r.max !== "" && !isNaN(+r.max) ? +r.max : 100, p = mx > mn ? Math.max(0, Math.min(100, Math.round((r.value - mn) / (mx - mn) * 1000) / 10)) : 0; if (r.style.getPropertyValue("--v") !== p + "%") r.style.setProperty("--v", p + "%"); }
+const SLS = ".mv input[type=range], .wsl input[type=range], .nsv input[type=range], .snr input[type=range], input.dtmr[type=range]";
+function slFill(r) { const mn = +r.min || 0, mx = r.max !== "" && !isNaN(+r.max) ? +r.max : 100, p = mx > mn ? Math.max(0, Math.min(100, Math.round((r.value - mn) / (mx - mn) * 1000) / 10)) : 0; if (r.classList.contains("sdrag")) return;   // a finger is down: the pointer sets --v (smooth), not the stepped value
+  if (r.style.getPropertyValue("--v") !== p + "%") {
+    if (!r.style.getPropertyValue("--v")) { r.classList.add("snt"); requestAnimationFrame(() => requestAnimationFrame(() => r.classList.remove("snt"))); }   // first value: set it, do not animate in from 0
+    r.style.setProperty("--v", p + "%"); } }
 function slAll(root) { (root || document).querySelectorAll(SLS).forEach(slFill); }
 document.addEventListener("input", e => { const t = e.target; if (t && t.matches && t.matches(SLS)) slFill(t); }, true);
 new MutationObserver(ms => { for (const m of ms) { if (m.type === "attributes") { if (m.target.matches && m.target.matches(SLS)) slFill(m.target); continue; } for (const n of m.addedNodes) if (n.nodeType === 1) { if (n.matches(SLS)) slFill(n); else if (n.querySelector) slAll(n); } } }).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["value", "min", "max"] });
 setInterval(() => { if (!document.hidden) slAll(); }, 1000);
 slAll();
+// Smooth knob: while a finger or mouse is down, --v follows the pointer exactly (the native value still snaps to its step); on release it eases to the snapped value (transition on --v in 125-slider-smooth.css).
+(function () {
+  let cur = null, rc = null, tw = 0;
+  const fr = x => rc && rc.width > tw ? Math.max(0, Math.min(1, (x - rc.left - tw / 2) / (rc.width - tw))) : null;
+  const meas = () => { if (!cur) return; rc = cur.getBoundingClientRect(); tw = parseFloat(getComputedStyle(cur).getPropertyValue("--tw")) || 0; };
+  document.addEventListener("pointerdown", e => { const t = e.target; if (!t || !t.matches || !t.matches(SLS) || t.disabled) return; cur = t; rc = null; t.classList.add("sdrag"); requestAnimationFrame(meas); }, true);
+  document.addEventListener("pointermove", e => { if (!cur || cur._tap) return; if (!rc) meas(); const f = fr(e.clientX); if (f !== null) cur.style.setProperty("--v", Math.round(f * 1000) / 10 + "%"); }, true);
+  const end = () => { if (!cur) return; const t = cur; cur = null; rc = null; t.classList.remove("sdrag"); slFill(t); };
+  ["pointerup", "pointercancel"].forEach(ev => document.addEventListener(ev, end, true));
+})();
 // ---------- Liquid Glass controls (only done while the Liquid Glass look is on) ----------
 // A slider's filled part needs its value as a percentage: --v is kept on every tile slider.
 let gcQ = 0;
 function gcPlace() {
   gcQ = 0;
   if (document.documentElement.dataset.style !== "glass") return;   // only Liquid Glass draws these
-  document.querySelectorAll(".tl input[type=range], .wsl input[type=range]").forEach(r => { const mn = +r.min || 0, mx = +r.max || 100, p = mx > mn ? Math.round((r.value - mn) / (mx - mn) * 1000) / 10 : 0; if (r.style.getPropertyValue("--v") !== p + "%") r.style.setProperty("--v", p + "%"); });
+  document.querySelectorAll(".tl input[type=range], .wsl input[type=range]").forEach(r => { if (r.classList.contains("sdrag")) return; const mn = +r.min || 0, mx = +r.max || 100, p = mx > mn ? Math.round((r.value - mn) / (mx - mn) * 1000) / 10 : 0; if (r.style.getPropertyValue("--v") !== p + "%") r.style.setProperty("--v", p + "%"); });
 }
 function gcSoon() { if (!gcQ) gcQ = requestAnimationFrame(gcPlace); }
 // only changes that touch a control matter (a class on a segment, a control or slider arriving). A page drawing hundreds of cards changes thousands of classes: those must not trigger a measuring pass each frame.
