@@ -1819,6 +1819,8 @@ html:not(#x) #vw.two .cam.vf:not(.ls) .vh::before{content:"";position:absolute;l
 .ldt{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:20px;border:1px solid var(--line);background:rgba(var(--w),.04);min-height:68px}
 .ldt b{display:block;font-size:17px;font-weight:500}.ldt span{opacity:.8;font-size:13px;letter-spacing:.04em}.ldt em{font-style:normal}
 .ldi{width:40px;height:40px;display:flex;color:var(--mut)}.ldi svg,.drum{width:40px;height:40px;fill:none}
+.scnt{cursor:pointer}.scnt.on{border-color:rgba(var(--mint-rgb),.5);background:rgba(var(--mint-rgb),.1)}.scnt .ldi{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;color:var(--mint)}.scnt .ldi svg{width:26px;height:26px;fill:currentColor}
+.npscs{display:flex;margin:10px 0 4px}.npscs .eb{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px}
 .ldt.run{border-color:rgba(80,170,255,.7);background:linear-gradient(160deg,rgba(40,140,255,.30),rgba(10,50,110,.28));color:#e8f4ff;animation:ldglow 3s ease-in-out infinite}
 .ldt.run .ldi{color:#8fd0ff;filter:drop-shadow(0 0 5px rgba(80,170,255,.8));animation:ldshake 2.4s ease-in-out infinite}
 .ldt.run .wv,#nacc .nai[data-k=laundry] .wv{animation:ldwave 1.6s linear infinite}
@@ -2365,7 +2367,7 @@ html #energy .enin{animation-duration:calc(.5s*var(--pgs,1))}
 /* Settings pages: the first tab row stays put while the page enters; everything else rises like on the other pages */
 html:not(#x) .page.enter>.hsw:has(>.setchips){animation:none!important;opacity:1!important;transform:none!important;filter:none!important}
 /* the second sticky row (Settings sub-tabs, Security / Insights rows) leads the rise: no delay, like the first row of the other pages */
-html:not(#x) .page.enter :is(.secw,.scfh,.admtop,.adlh){animation-delay:0s!important}
+html:not(#x) .page.enter :is(.secw,.scfh,.adlh){animation-delay:0s!important}
 /* Home on a phone: the wrappers around the Today card are display:contents (no box to animate), so the cards rise themselves, top to bottom */
 @media(max-width:760px){
 html:not(#x) .page.enter .camcol>.sch{animation:cdIn calc(.5s*var(--pgs,1)) var(--ez,cubic-bezier(.2,.7,.2,1)) calc(.05s*var(--pgs,1)) both}
@@ -4167,46 +4169,15 @@ html[data-mode=light] .adpre{background:rgba(0,0,0,.04)}
 .admsrch:focus-within{border-color:var(--mint)}.admsrch svg{width:18px;height:18px;fill:currentColor;flex:none}
 .admsrch input{flex:1;min-width:0;height:100%;border:0;background:none;outline:none;color:var(--ink);font:inherit;font-size:15px;-webkit-appearance:none;appearance:none}
 .adch{margin:12px 0 4px}.adch .chips.tabs{--tb:10px}
-.chip.adbad{color:#ff8a80;border-color:color-mix(in srgb,#ff6b5e 40%,transparent)}.chip.adbad.on{background:#ff6b5e;border-color:#ff6b5e;color:#2a0d0b}
-html[data-mode=light] .chip.adbad:not(.on){color:#c62828}
 .adrs{display:flex;flex-direction:column}
-.adr{display:flex;align-items:center;gap:12px;width:100%;padding:10px 8px;margin:0;border:0;border-top:1px solid var(--line);background:none;color:var(--ink);font:inherit;text-align:left;cursor:pointer;border-radius:0;box-sizing:border-box}
-.adr:first-child{border-top:0}
-.adr.sel{background:rgba(var(--w),.08);border-radius:12px;border-top-color:transparent}.adr.sel+.adr{border-top-color:transparent}
-.adn{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.adn b{font-weight:500;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.adn small{font:11px var(--mono);color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.adr em{font:600 11px var(--mono);font-style:normal;letter-spacing:.06em;color:var(--mut);flex:none;max-width:42%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.adr em.on,.adv .on{color:var(--mint)}.adr em.bad,.adv .bad{color:#ff8a80}
-html[data-mode=light] .adr em.bad,html[data-mode=light] .adv .bad{color:#c62828}
-.adra.err .adn b,.adra.err .adn small{color:#ff8a80}.adra.off .adn b{color:var(--mut)}
-html[data-mode=light] .adra.err .adn b,html[data-mode=light] .adra.err .adn small{color:#c62828}
-.admore,.ademp,.adhl{font-size:13px;color:var(--mut);padding:12px 4px;line-height:1.5}
-.adsw{position:relative;flex:none;width:46px;height:26px;border-radius:13px;border:0;padding:0;background:rgba(var(--w),.18);cursor:pointer;transition:background .2s}
-.adsw i{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35);transition:transform .2s}
-.adsw.on{background:var(--mint)}.adsw.on i{transform:translateX(20px)}
-.add{position:sticky;top:12px}
-.adhint{display:flex;flex-direction:column;align-items:center;gap:10px;padding:40px 16px;text-align:center;color:var(--mut);font-size:14px;line-height:1.5}.adhint svg{width:30px;height:30px;fill:currentColor;opacity:.6}
-.addh{display:flex;align-items:center;gap:10px}.addh>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}.addh b{font-weight:500;font-size:18px}.addh small{font:11.5px var(--mono);color:var(--mut);word-break:break-all}
-.adic{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(var(--w),.06);color:var(--ink);display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer}
-.adic svg{width:18px;height:18px;fill:currentColor}.adic.ok,.eb.ok{color:var(--mint);border-color:var(--mint)}
-.adx{display:none}
+.adv .on{color:var(--mint)}.adv .bad{color:#ff8a80}
+html[data-mode=light] .adv .bad{color:#c62828}
+.ademp,.adhl{font-size:13px;color:var(--mut);padding:12px 4px;line-height:1.5}
+.add{position:sticky;top:12px}.eb.ok{color:var(--mint);border-color:var(--mint)}
 .adv{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:16px}.adv>span{font-size:30px;font-weight:300;line-height:1.1;word-break:break-word}
-.adsel,.adnum{height:38px;border-radius:12px;border:1px solid var(--line);background:rgba(var(--w),.06);color:var(--ink);font:inherit;padding:0 10px}.adnum{width:110px}
 .adsince{font-size:12.5px;color:var(--mut);margin-top:4px}
-.adh{margin-top:14px;min-height:34px}.adh svg{display:block;width:100%;height:34px}
-.adhr{display:flex;justify-content:space-between;font:10.5px var(--mono);color:var(--mut);margin-top:2px}
-.adhx{display:flex;justify-content:space-between;font:600 10px var(--mono);letter-spacing:.12em;color:var(--mut);margin-top:4px}
 .adal{margin:18px 0 6px}
-.adat{display:flex;gap:12px;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line);font:12px var(--mono)}.adat:first-of-type{border-top:0}
-.adat b{font-weight:400;color:var(--mut);flex:none;max-width:45%;overflow:hidden;text-overflow:ellipsis}.adat span{text-align:right;word-break:break-word;min-width:0}
 .adbt{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
-.adruns{margin-top:4px}
-.adsteps{margin-top:8px}
-.adst{display:flex;gap:12px;padding:8px 0}.adst>i{width:12px;height:12px;border-radius:50%;flex:none;margin-top:4px;background:var(--mint)}
-.adst>div{display:flex;flex-direction:column;gap:2px;min-width:0}.adst b{font-weight:500;font-size:14px}.adst small{font-size:12.5px;color:var(--mut);word-break:break-word}
-.adst.bad>i{background:#ff6b5e}.adst.bad small{color:#ff8a80}.adst.no{opacity:.45}.adst.no>i{background:rgba(var(--w),.35)}
-html[data-mode=light] .adst.bad small{color:#c62828}
-.admbk{display:none}
 /* admin: logs */
 .adlh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.adlh .adch{flex:1;min-width:0;margin:0}.adlh .eb svg{width:16px;height:16px;fill:currentColor;vertical-align:-3px}
 .adlog .adrs{margin-top:8px}
@@ -4222,25 +4193,19 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
   .adw{grid-template-columns:minmax(0,1fr)}
   .adqg{grid-template-columns:minmax(0,1fr)}
   .add{display:none;position:fixed;left:0;right:0;bottom:0;top:auto;z-index:82;max-height:86dvh;overflow-y:auto;overscroll-behavior:contain;margin:0!important;border-radius:26px 26px 0 0;padding:20px 18px calc(26px + env(safe-area-inset-bottom,0px));background:var(--bg);box-shadow:0 -10px 40px rgba(0,0,0,.35);animation:shUp .32s cubic-bezier(.2,.85,.3,1) both}
-  .adw.det .add{display:block}html .adw .add.pn{background:var(--bg)!important;backdrop-filter:none;-webkit-backdrop-filter:none}.adw.det .admbk{display:block;position:fixed;inset:0;z-index:81;background:rgba(0,0,0,.5);animation:thIn .2s ease}
-  .adx{display:flex}
-  .adhint{display:none}
+  .adw.det .add{display:block}html .adw .add.pn{background:var(--bg)!important;backdrop-filter:none;-webkit-backdrop-filter:none}
 }
 /* 2.5.10: Entities use the full width until one is picked (two columns of rows); Automations and Logs show an overview beside the list */
 @media(min-width:761px){
   .adw[data-w=ent]:not(.det){grid-template-columns:minmax(0,1fr)}
   .adw[data-w=ent]:not(.det)>.add{display:none}
   .adw[data-w=ent]:not(.det) .adrs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:28px}
-  .adw[data-w=ent]:not(.det) .adrs>.adr:nth-child(2){border-top:0}
-  .adw[data-w=ent]:not(.det) .adrs>.admore,.adw[data-w=ent]:not(.det) .adrs>.ademp{grid-column:1/-1}
+  .adw[data-w=ent]:not(.det) .adrs>.ademp{grid-column:1/-1}
   .adw.det>.add{animation:adIn .25s ease both}
 }
 @keyframes adIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.adw.det>.add{animation:none}}
 .adbig{font-size:26px;line-height:1.2;margin-top:4px}
-.adov{padding:9px 6px}.adov>svg{width:18px;height:18px;fill:currentColor;opacity:.45;flex:none;margin-left:auto}
-.adov.err b,.adov.err small{color:#ff8a80}html[data-mode=light] .adov.err b,html[data-mode=light] .adov.err small{color:#c62828}
-.adov.off b{opacity:.6}
 .adint{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;padding:8px 6px;border-top:1px solid var(--line);position:relative}
 .adint span{display:flex;justify-content:space-between;gap:10px;font-size:14px}.adint b{font-weight:400;text-transform:capitalize}.adint small{color:var(--mut);font:11px var(--mono);white-space:nowrap}
 .adint i{display:block;height:5px;border-radius:3px;margin-top:6px;background:var(--mint);opacity:.8}.adint i.err{background:#ff8a80}
@@ -4258,10 +4223,7 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
   .adlw{grid-template-columns:minmax(0,1fr)}
 }
 /* 2.5.17 Entities, Automations, Logs: the search box and filter chips (Logs: chips, COPY ALL, REFRESH) stay at the top while the list scrolls */
-.admtop,.adlog>.adlh{position:sticky;top:var(--admtop,0px);z-index:5;margin:-18px -18px 0;padding:18px 18px 12px;border-radius:22px 22px 0 0;background:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.04)}
-.admtop .adch{margin-bottom:0}
-/* phones: the detail sheet's title row and close stay at the top while the sheet scrolls */
-@media(max-width:760px){.adw .add .addh{position:sticky;top:-20px;z-index:3;margin:-20px -18px 0;padding:20px 18px 12px;background:var(--bg);border-radius:26px 26px 0 0}}
+.adlog>.adlh{position:sticky;top:var(--admtop,0px);z-index:5;margin:-18px -18px 0;padding:18px 18px 12px;border-radius:22px 22px 0 0;background:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.04)}
 
 /* Kinetic 2.5.19: consolidated navigation and theme surfaces.
    One sticky layer per navigation row. No masked pseudo-elements or full-width blur plates. */
@@ -4271,7 +4233,7 @@ html[data-mode=light] .adlv.err{color:#b3261e}html[data-mode=light] .adlv.warn{c
  background:transparent;box-shadow:none;isolation:isolate;
 }
 #theme > .secw{top:62px;z-index:23}
-#admin .admtop,#admin .adlog>.adlh{--admtop:62px;z-index:12}
+#admin .adlog>.adlh{--admtop:62px;z-index:12}
 /* The nav surface is bounded by the tabs. The fade is contained within the
    navigation row, never below it or on the first card. */
 #theme > .hsw:has(> .setchips)::before,#admin > .hsw:has(> .setchips)::before,
@@ -4362,7 +4324,7 @@ html[data-style=material] :is(#insights > .insnav,#scenes .scfh,#energy > .ehc){
 }
 :is(#theme,#admin) > .hsw:has(> .setchips){z-index:26}
 #theme > .secw{top:62px;z-index:25}
-#admin .admtop,#admin .adlog>.adlh{--admtop:62px}
+#admin .adlog>.adlh{--admtop:62px}
 /* No overlays: artwork disappears behind the opaque row. */
 :is(#theme,#admin) > .hsw:has(> .setchips)::before,
 #theme > .secw::before,.page > .secw::before,
@@ -4507,7 +4469,7 @@ html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(.chi
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs,#srfs)>.chip.on::before{color:var(--mint)}
 /* Settings: the search block pins exactly where it sits at rest (just under the tab row), so nothing shifts when scrolling starts;
    on wide screens the overview / detail card pins in place beside the list */
-#admin .admtop,#admin .adlog>.adlh{--admtop:68px}
+#admin .adlog>.adlh{--admtop:68px}
 @media(min-width:761px){
   #admin .adw>.add{position:sticky;top:68px;align-self:start;max-height:calc(100dvh - 190px);overflow-y:auto;overscroll-behavior:contain}
   /* the side card (Automations Today, Logs In the log) scrolls inside when it is taller than the screen; a classic scrollbar there covered the card's right edge and border, so it scrolls without one */
@@ -4519,15 +4481,13 @@ html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(.chi
   html[data-style=glass]{--snc:var(--bg2)}
   html[data-style=material]{--snc:var(--m1);--snb:transparent}
   :is(#admin,#theme) > .hsw:has(> .setchips){background:var(--snc)!important;border:1px solid var(--snb);border-bottom:0;border-radius:18px 18px 0 0!important;padding:9px 0 1px}
-  :is(#admin,#theme):not(:has(.admtop,.adlog>.adlh)) > .hsw:has(> .setchips){border-bottom:1px solid var(--snb);border-radius:18px!important}
-  #admin .admtop,#admin .adlog>.adlh{background:var(--snc)!important;box-shadow:none!important;border:1px solid var(--snb);border-top:0;border-radius:0 0 18px 18px!important}
+  #admin .adlog>.adlh{background:var(--snc)!important;box-shadow:none!important;border:1px solid var(--snb);border-top:0;border-radius:0 0 18px 18px!important}
 }
-@media(min-width:761px){:is(#admin,#theme) > .hsw:has(> .setchips){margin-bottom:0!important}#admin .admtop,#admin .adlog>.adlh{--admtop:67px}#admin .adw>.add{top:67px}}
-@media(min-width:761px){html[data-style=glass] #admin .admtop,html[data-style=glass] #admin .adlog>.adlh{--admtop:68px}html:not([data-style=glass]):not([data-style=material]) #admin .admtop,html:not([data-style=glass]):not([data-style=material]) #admin .adlog>.adlh{--admtop:68px}}
+@media(min-width:761px){:is(#admin,#theme) > .hsw:has(> .setchips){margin-bottom:0!important}#admin .adlog>.adlh{--admtop:67px}#admin .adw>.add{top:67px}}
+@media(min-width:761px){html[data-style=glass] #admin .adlog>.adlh{--admtop:68px}html:not([data-style=glass]):not([data-style=material]) #admin .adlog>.adlh{--admtop:68px}}
 @media(min-width:761px){
-  :is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips){margin-bottom:-1px!important}
-  #admin .admtop,#admin .adlog>.adlh{--admtop:67px!important}
-  html[data-style=material] #admin .admtop,html[data-style=material] #admin .adlog>.adlh{--admtop:66px!important}
+  #admin .adlog>.adlh{--admtop:67px!important}
+  html[data-style=material] #admin .adlog>.adlh{--admtop:66px!important}
   #admin .adw>.add{top:66px}
 }
 
@@ -4538,7 +4498,7 @@ html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) :is(.chi
 
 /* no outlines on the joined card: the title bar, tab row and search block are one surface with no seams; the card's lower edge is a soft shadow */
 html{--snb:transparent}
-:is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#security > #stabs,#insights > .insnav,#scenes .scfh,#energy > .ehc,#admin .admtop,#admin .adlog>.adlh{border-color:transparent!important}
+:is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#security > #stabs,#insights > .insnav,#scenes .scfh,#energy > .ehc,#admin .adlog>.adlh{border-color:transparent!important}
 /* one flat colour, so the title bar and the rows below it can never show a seam where two gradients meet */
 html{--snc:var(--bg2)}html[data-style=material]{--snc:var(--m1)}
 /* wide screens: the tab rows look like the title bar above them (same radius, outline and shadow per style); opaque, so the list can't show through */
@@ -4547,23 +4507,19 @@ html{--snc:var(--bg2)}html[data-style=material]{--snc:var(--m1)}
   html[data-mode=dark]{--wnb:color-mix(in srgb,#fff 3%,var(--bg));--wnbd:1px solid rgba(255,255,255,.1);--wnsh:none}
   html[data-style=glass]{--wnr:30px;--wnb:linear-gradient(150deg,rgba(255,255,255,.22),rgba(255,255,255,.03) 42%,rgba(255,255,255,.1)),var(--g1);--wnbd:1px solid var(--gline);--wnsh:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(255,255,255,.08),var(--gsh)}
   html[data-style=material]{--wnr:30px;--wnb:var(--m1);--wnbd:0 none transparent;--wnsh:none}
-  .page > .secw,#security > #stabs,#insights > .insnav,#scenes .scfh,#energy > .ehc,
-  :is(#admin,#theme):not(:has(.admtop,.adlog>.adlh)) > .hsw:has(> .setchips){background:var(--wnb)!important;border:var(--wnbd)!important;border-radius:var(--wnr)!important;box-shadow:var(--wnsh)!important}
-  :is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips){background:var(--wnb)!important;border:var(--wnbd)!important;border-bottom:0!important;border-radius:var(--wnr) var(--wnr) 0 0!important;box-shadow:none!important}
-  #admin .admtop,#admin .adlog>.adlh{background:var(--wnb)!important;border:var(--wnbd)!important;border-top:0!important;border-radius:0 0 var(--wnr) var(--wnr)!important;box-shadow:var(--wnsh)!important}
+  .page > .secw,#security > #stabs,#insights > .insnav,#scenes .scfh,#energy > .ehc{background:var(--wnb)!important;border:var(--wnbd)!important;border-radius:var(--wnr)!important;box-shadow:var(--wnsh)!important}
+  #admin .adlog>.adlh{background:var(--wnb)!important;border:var(--wnbd)!important;border-top:0!important;border-radius:0 0 var(--wnr) var(--wnr)!important;box-shadow:var(--wnsh)!important}
 }
 /* wide screens: the wallpaper behind the tab rows. Like the greeting card, the tab row sits on the page's own background, so the list scrolling underneath never shows
    around it: a layer with the same gradient as the page extends past the row's edges, and the row's own surface sits on top of it */
 @media(min-width:0px){
-  :is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#energy > .ehc,#admin .admtop,#admin .adlog>.adlh{position:relative;isolation:isolate}
-  :is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#energy > .ehc,#admin .admtop,#admin .adlog>.adlh{position:sticky;background:transparent!important;border-color:transparent!important;box-shadow:none!important}
-  :is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#energy > .ehc::before,#admin .admtop::before,#admin .adlog>.adlh::before{content:""!important;display:block!important;position:absolute;z-index:-2;left:-14px;right:-14px;top:-14px;bottom:-12px;background:var(--wbg);background-repeat:no-repeat;background-size:var(--ww,100vw) var(--wh,100vh);background-position:var(--wx,0) var(--wy,0);pointer-events:none}
-  :is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips)::before{bottom:-3px}
-  #admin .admtop::before,#admin .adlog>.adlh::before{bottom:0}
-  #admin .admtop::before,#admin .adlog>.adlh::before{top:0}
-  :is(#admin,#theme) > .hsw:has(> .setchips)::after,.page > .secw::after,#scenes .scfh::after,#energy > .ehc::after,#admin .admtop::after,#admin .adlog>.adlh::after{content:""!important;display:block!important;position:absolute;inset:0;z-index:-1;background:var(--wnb);border:var(--wnbd);border-radius:var(--wnr);box-shadow:var(--wnsh);pointer-events:none}
-  :is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips)::after{border-bottom:0;border-radius:var(--wnr) var(--wnr) 0 0;box-shadow:none}
-  #admin .admtop::after,#admin .adlog>.adlh::after{border-top:0;border-radius:0 0 var(--wnr) var(--wnr)}
+  :is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#energy > .ehc,#admin .adlog>.adlh{position:relative;isolation:isolate}
+  :is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#energy > .ehc,#admin .adlog>.adlh{position:sticky;background:transparent!important;border-color:transparent!important;box-shadow:none!important}
+  :is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#energy > .ehc::before,#admin .adlog>.adlh::before{content:""!important;display:block!important;position:absolute;z-index:-2;left:-14px;right:-14px;top:-14px;bottom:-12px;background:var(--wbg);background-repeat:no-repeat;background-size:var(--ww,100vw) var(--wh,100vh);background-position:var(--wx,0) var(--wy,0);pointer-events:none}
+  #admin .adlog>.adlh::before{bottom:0}
+  #admin .adlog>.adlh::before{top:0}
+  :is(#admin,#theme) > .hsw:has(> .setchips)::after,.page > .secw::after,#scenes .scfh::after,#energy > .ehc::after,#admin .adlog>.adlh::after{content:""!important;display:block!important;position:absolute;inset:0;z-index:-1;background:var(--wnb);border:var(--wnbd);border-radius:var(--wnr);box-shadow:var(--wnsh);pointer-events:none}
+  #admin .adlog>.adlh::after{border-top:0;border-radius:0 0 var(--wnr) var(--wnr)}
 }
 /* the wallpaper layer must be a copy of whatever the page itself uses: Kinetic and Material are plain, Glass has its own colour washes (dark and light differ) */
 @media(min-width:0px){
@@ -4572,24 +4528,24 @@ html{--snc:var(--bg2)}html[data-style=material]{--snc:var(--m1)}
   html[data-style=glass]{--wbg:radial-gradient(55% 45% at 12% 8%,rgba(var(--mint-rgb),.5),transparent 62%),radial-gradient(50% 45% at 92% 18%,rgba(var(--cool-rgb),.5),transparent 62%),radial-gradient(55% 50% at 72% 100%,rgba(var(--heat-rgb),.38),transparent 62%),linear-gradient(160deg,var(--bg2),var(--bg))}
   html[data-style=glass][data-mode=dark]{--wbg:radial-gradient(55% 45% at 12% 8%,rgba(var(--mint-rgb),.3),transparent 62%),radial-gradient(50% 45% at 92% 18%,rgba(var(--cool-rgb),.3),transparent 62%),radial-gradient(55% 50% at 72% 100%,rgba(var(--heat-rgb),.24),transparent 62%),linear-gradient(160deg,var(--bg2),var(--bg))}
   html[data-style=glass][data-mode=light]{--wbg:radial-gradient(55% 45% at 12% 8%,rgba(var(--mint-rgb),.4),transparent 62%),radial-gradient(50% 45% at 92% 18%,rgba(var(--cool-rgb),.4),transparent 62%),radial-gradient(55% 50% at 72% 100%,rgba(var(--heat-rgb),.3),transparent 62%),linear-gradient(160deg,var(--bg2),var(--bg))}
-  html[data-style=glass] :is(#admin,#theme) > .hsw:has(> .setchips)::after,html[data-style=glass] .page > .secw::after,html[data-style=glass] #scenes .scfh::after,html[data-style=glass] #energy > .ehc::after,html[data-style=glass] #admin .admtop::after,html[data-style=glass] #admin .adlog>.adlh::after{-webkit-backdrop-filter:var(--gb);backdrop-filter:var(--gb)}
-  html[data-style=glass] #admin .admtop::after,html[data-style=glass] #admin .adlog>.adlh::after{box-shadow:inset 0 -1px 0 rgba(255,255,255,.08),var(--gsh)}
+  html[data-style=glass] :is(#admin,#theme) > .hsw:has(> .setchips)::after,html[data-style=glass] .page > .secw::after,html[data-style=glass] #scenes .scfh::after,html[data-style=glass] #energy > .ehc::after,html[data-style=glass] #admin .adlog>.adlh::after{-webkit-backdrop-filter:var(--gb);backdrop-filter:var(--gb)}
+  html[data-style=glass] #admin .adlog>.adlh::after{box-shadow:inset 0 -1px 0 rgba(255,255,255,.08),var(--gsh)}
 }
 /* wide screens, final: no card behind the tabs. The tabs are loose pills on the wallpaper (like the Rooms page), and the row stays pinned on scroll with a wallpaper layer so nothing shows around them */
 @media(min-width:0px){
-  :is(#admin,#theme) > .hsw:has(> .setchips)::after,.page > .secw::after,#scenes .scfh::after,#energy > .ehc::after,#admin .admtop::after,#admin .adlog>.adlh::after{content:none!important;display:none!important}
+  :is(#admin,#theme) > .hsw:has(> .setchips)::after,.page > .secw::after,#scenes .scfh::after,#energy > .ehc::after,#admin .adlog>.adlh::after{content:none!important;display:none!important}
   #security > #stabs,#insights > .insnav,#energy > .ehc,#vehicle.page:not(#x):not(#y) > .secw{background:var(--wbg)!important;background-repeat:no-repeat!important;background-size:var(--ww,100vw) var(--wh,100vh)!important;background-position:var(--wx,0) var(--wy,0)!important;border:0!important;border-radius:0!important;box-shadow:none!important}
 }
 @media(max-width:760px){
-  :is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#energy > .ehc::before,#admin .admtop::before,#admin .adlog>.adlh::before{left:-10px;right:-10px}
+  :is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#energy > .ehc::before,#admin .adlog>.adlh::before{left:-10px;right:-10px}
 }
 /* the wallpaper layer shows only while the page is scrolled (class set in 31-section-pills.js); at rest there is nothing under the row, so nothing can show a seam */
-:is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#energy > .ehc::before,#admin .admtop::before,#admin .adlog>.adlh::before{opacity:0}
-html:not(#x) .stk:is(.hsw,.secw,.scfh,.admtop,.adlh)::before{opacity:1}
+:is(#admin,#theme) > .hsw:has(> .setchips)::before,.page > .secw::before,#scenes .scfh::before,#energy > .ehc::before,#admin .adlog>.adlh::before{opacity:0}
+html:not(#x) .stk:is(.hsw,.secw,.scfh,.adlh)::before{opacity:1}
 /* the rows' own surfaces are off in every state (the earlier card rules have higher specificity, so they are repeated here at that strength) */
-:is(#admin,#theme):not(:has(.admtop,.adlog>.adlh)) > .hsw:has(> .setchips),:is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips),#admin .admtop,#admin .adlog>.adlh,.page > .secw,#scenes .scfh,#energy > .ehc{background:transparent!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+#admin .adlog>.adlh,.page > .secw,#scenes .scfh,#energy > .ehc{background:transparent!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 /* the search block sits on top of the list's own card at rest, so its layer is always on */
-#admin .admtop::before,#admin .adlog>.adlh::before,:is(#admin,#theme):has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips)::before{opacity:1}
+#admin .adlog>.adlh::before{opacity:1}
 
 /* the second tab row (Display: STYLE, PRESETS, FONT, DISPLAY): an older rule at id strength switched its layer off, so it gets the layer back at that strength;
    and the first row's layer stops at its own bottom edge so it never covers the top of the second row */
@@ -4597,12 +4553,11 @@ html:not(#x) .stk:is(.hsw,.secw,.scfh,.admtop,.adlh)::before{opacity:1}
 #theme > .hsw:not(.secw):has(~ .secw)::before{bottom:0}
 /* 2.5.28: the search box and filter chips (Entities, Automations, Logs) are a card of their own, with the list in a second card below; the wallpaper layer behind the pinned strip also covers the gap between the two */
 @media(min-width:0px){
-  #admin .pn.adl:has(> .admtop),#admin .pn.adlog:has(> .adlh){background:none!important;border:0!important;box-shadow:none!important;padding:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-  #admin .admtop,#admin .adlog > .adlh{margin:0 0 12px!important;padding:14px 16px!important}
-  #admin .admtop::before,#admin .adlog > .adlh::before{top:-14px;bottom:-12px;left:-14px;right:-14px}
-  #admin .admtop::after,#admin .adlog > .adlh::after{content:""!important;display:block!important;position:absolute;inset:0;z-index:-1;background:var(--wnb)!important;border:var(--wnbd)!important;border-radius:var(--wnr)!important;box-shadow:var(--wnsh)!important;pointer-events:none}
-  #admin .admtop ~ .adrs,#admin .adlog > .adlh ~ .adrs{background:var(--wnb);border:var(--wnbd);border-radius:var(--wnr);box-shadow:var(--wnsh);padding:6px 18px;margin-top:0}
-  #admin .admtop .admsrch{background:rgba(var(--w),.06)}
+  #admin .pn.adlog:has(> .adlh){background:none!important;border:0!important;box-shadow:none!important;padding:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  #admin .adlog > .adlh{margin:0 0 12px!important;padding:14px 16px!important}
+  #admin .adlog > .adlh::before{top:-14px;bottom:-12px;left:-14px;right:-14px}
+  #admin .adlog > .adlh::after{content:""!important;display:block!important;position:absolute;inset:0;z-index:-1;background:var(--wnb)!important;border:var(--wnbd)!important;border-radius:var(--wnr)!important;box-shadow:var(--wnsh)!important;pointer-events:none}
+  #admin .adlog > .adlh ~ .adrs{background:var(--wnb);border:var(--wnbd);border-radius:var(--wnr);box-shadow:var(--wnsh);padding:6px 18px;margin-top:0}
 }
 /* phones: the same card surface colours (the wide block above only defines them from 761px) */
 @media(max-width:760px){
@@ -4615,23 +4570,23 @@ html:not(#x) .stk:is(.hsw,.secw,.scfh,.admtop,.adlh)::before{opacity:1}
 html:not(#x) #energy > .ehc::after{content:none!important;display:none!important}
 html:not(#x) #energy > .ehc{background:transparent!important;border-radius:0!important;box-shadow:none!important}
 /* every pinned row: a soft shadow under it once the page has scrolled, faded in with the backdrop */
-html:not(#x) :is(#admin,#theme) > .hsw:has(> .setchips)::before,html:not(#x) .page > .secw::before,html:not(#x) #scenes .scfh::before,html:not(#x) #energy > .ehc::before,html:not(#x) #admin .admtop::before,html:not(#x) #admin .adlog>.adlh::before{transition:opacity .28s ease,box-shadow .28s ease}
-html:not(#x) :is(.hsw,.secw,.scfh,.admtop,.adlh,.ehc).stk::before{box-shadow:0 8px 14px -10px rgba(0,0,0,.45)!important}
+html:not(#x) :is(#admin,#theme) > .hsw:has(> .setchips)::before,html:not(#x) .page > .secw::before,html:not(#x) #scenes .scfh::before,html:not(#x) #energy > .ehc::before,html:not(#x) #admin .adlog>.adlh::before{transition:opacity .28s ease,box-shadow .28s ease}
+html:not(#x) :is(.hsw,.secw,.scfh,.adlh,.ehc).stk::before{box-shadow:0 8px 14px -10px rgba(0,0,0,.45)!important}
 html:not(#x) #energy > .ehc.stk::before{opacity:1;background-color:var(--bg)}
 html:not(#x) :is(#security > #stabs,#insights > .insnav){transition:box-shadow .28s ease}
 html:not(#x) :is(#security > #stabs,#insights > .insnav).stk{box-shadow:0 8px 14px -10px rgba(0,0,0,.45)!important}
 
 /* two-tier headers (tab row + a second row): only the lower row carries the shadow */
-html:not(#x) :is(#admin,#theme):has(> .secw,.admtop,.adlog>.adlh) > .hsw:has(> .setchips).stk::before{box-shadow:none!important}
+
 /* Settings tabs with a second pinned row (search card): the top row's backdrop stops at its own edge, so it never paints over the card's top */
-html:not(#x) #admin:has(.admtop,.adlog>.adlh) > .hsw:has(> .setchips)::before{bottom:0!important}
+
 
 /* a pinned row that has just been drawn shows its wallpaper layer at once (31-section-pills.js): no fade from nothing */
 .wpnew::before,.wpnew::after{transition:none!important}
 /* the side card (Automations Today, Logs In the log) starts a little below the tab row: it used to sit right under it, so the row covered the card's top border and rounded corners */
 @media(min-width:761px){#admin .adw>.add{margin-top:10px;top:76px}}
 /* the search block (Entities, Automations, Logs) is a card of its own with a full outline: it had no top border and square top corners where it met the tab row */
-@media(min-width:761px){#admin .admtop,#admin .adlog>.adlh{border:1px solid var(--line)!important;border-radius:18px!important;margin-top:-8px}}
+@media(min-width:761px){#admin .adlog>.adlh{border:1px solid var(--line)!important;border-radius:18px!important;margin-top:-8px}}
 /* Search (2.6.0): the header button, the search screen, and the flash on the card or tile a result opens */
 #hsrch{position:relative;display:inline-flex;flex:none;width:30px;height:32px;padding:0;border:0;background:none;color:var(--mint);align-items:center;justify-content:center;cursor:pointer}
 #hsrch svg{width:20px;height:20px;fill:currentColor}
@@ -4899,11 +4854,11 @@ html:not(#x) .main > header{position:relative;z-index:30}
   /* no tint: the blur alone separates the rows from the content, so the wallpaper never darkens */
   #fband::after{content:none}
   /* the pinned rows stop painting the wallpaper over what scrolls under them; the band does that now, and carries the shadow */
-  html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.admtop,.adlh,.ehc,#stabs,.insnav).stk{background:transparent!important;box-shadow:none!important}
-  html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.admtop,.adlh,.ehc,#stabs,.insnav).stk::before{opacity:0!important;box-shadow:none!important}
-  html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.admtop,.adlh,.ehc,#stabs,.insnav),html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.admtop,.adlh,.ehc,#stabs,.insnav)::before{transition:none!important}
+  html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.adlh,.ehc,#stabs,.insnav).stk{background:transparent!important;box-shadow:none!important}
+  html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.adlh,.ehc,#stabs,.insnav).stk::before{opacity:0!important;box-shadow:none!important}
+  html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.adlh,.ehc,#stabs,.insnav),html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.adlh,.ehc,#stabs,.insnav)::before{transition:none!important}
   /* the pinned rows sit above the band, so the band never blurs them (the Settings search card was z-index 12, under the band's 20) */
-  html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.admtop,.adlh,.ehc,#stabs,.insnav).stk{z-index:24!important}
+  html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.adlh,.ehc,#stabs,.insnav).stk{z-index:24!important}
   /* Security's and Insights' tab rows have their own, more specific shadow rule (67-settings-nav-card.css): it drew the hard line under the tabs */
   html[data-style=glass]:not(#x) :is(#security > #stabs,#insights > .insnav).stk{box-shadow:none!important}
   /* the title bar never has its own card on phones: title and chips sit straight on the page, and on the blur once it scrolls */
@@ -4917,7 +4872,7 @@ html[data-style=glass]:not(#x) .cd.t:not(.heat):not(.cool){border-color:var(--mi
 html[data-style=material]:not(#x) .cd.t{box-shadow:inset 0 0 0 2px var(--mint)}
 /* ONE darkness behind every pop-up, sheet, keypad and viewer: any new backdrop goes in this list so it cannot drift darker or lighter than the rest.
    One look behind every pop-up, sheet and keypad: the same flat dim as the Notifications pop-up (no blur: a full-screen backdrop blur is heavy and dropped frames on the phone) */
-html:not(#x) :is(#vpk,#nbd,#evb,#vcamv,#kp,#sp,#bd,#grp,#grpw,#cmtsh,#rsp,#insq,#evq,#dtm,#tlsh,#tlscrim,#srch,#wtnew,#upc,#lsh .lbk,#scenes.scop .scbk,#irrigation.zop .zbk,.npbk,.lvbk,#clbk,#insd .idbk,.adw.det .admbk,body.ly-open::after){background:rgba(0,0,0,.55);-webkit-backdrop-filter:none;backdrop-filter:none}
+html:not(#x) :is(#vpk,#nbd,#evb,#vcamv,#kp,#sp,#bd,#grp,#grpw,#cmtsh,#rsp,#insq,#evq,#dtm,#tlsh,#tlscrim,#srch,#wtnew,#upc,#lsh .lbk,#scenes.scop .scbk,#irrigation.zop .zbk,.npbk,.lvbk,#clbk,#insd .idbk,body.ly-open::after){background:rgba(0,0,0,.55);-webkit-backdrop-filter:none;backdrop-filter:none}
 @media(max-width:760px){html:not(#x) #srch{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}}   /* the phone search is a full screen of its own */
 /* PHONE "GLANCE" HOME: one screen, no scroll. Greeting + status, heat pump, four room tiles, compact forecast strip.
    Today/schedule lives on the Events page; the full room list on Rooms. Phone only (<=760px). */
@@ -5119,7 +5074,7 @@ html[data-style=material]:not(#x) :is(#np,#cpp .cpsh,#lsh .lb,#lvsheet #lvbody,#
 html:not([data-style=glass]):not([data-style=material]):not(#x) :is(#np,#cpp .cpsh,#lsh .lb,#lvsheet #lvbody,#evm #evp,#npsheet #npbody){background-image:none!important;background-color:var(--bg2)!important;border:1px solid color-mix(in srgb,var(--mint) 32%,transparent);box-shadow:0 -1px 24px -10px var(--mint);-webkit-backdrop-filter:none;backdrop-filter:none}
 
 /* Kinetic + Material: thinner pinned-row plate, same height in both looks */
-html:not([data-style=glass]):not(#x):not(#y) :is(#admin,#theme) > .hsw:has(> .setchips)::before,html:not([data-style=glass]):not(#x):not(#y) .page > .secw::before,html:not([data-style=glass]):not(#x):not(#y) #scenes .scfh::before,html:not([data-style=glass]):not(#x):not(#y) #energy > .ehc::before,html:not([data-style=glass]):not(#x):not(#y) #admin .admtop::before,html:not([data-style=glass]):not(#x):not(#y) #admin .adlog>.adlh::before{top:-8px!important;bottom:-4px!important}
+html:not([data-style=glass]):not(#x):not(#y) :is(#admin,#theme) > .hsw:has(> .setchips)::before,html:not([data-style=glass]):not(#x):not(#y) .page > .secw::before,html:not([data-style=glass]):not(#x):not(#y) #scenes .scfh::before,html:not([data-style=glass]):not(#x):not(#y) #energy > .ehc::before,html:not([data-style=glass]):not(#x):not(#y) #admin .adlog>.adlh::before{top:-8px!important;bottom:-4px!important}
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y) .setchips .chip{padding-top:6px;padding-bottom:3px}
 
 /* sidebar link icons are only shown by Liquid Glass on tablet (81-tablet-frosted.css) */
@@ -5252,8 +5207,7 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .insm>.in
   html[data-style=glass][data-mode=dark]:not(#x) :is(.chips.tabs,.setchips,.secnav,#rtabs,#stabs) > .chip.on{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.35)}
   html[data-style=glass]:not(#x) :is(#admin,#theme) > .hsw:has(> .setchips)::after,html[data-style=glass]:not(#x) :is(.page > .secw,#scenes .scfh,#energy > .ehc,#security > #stabs,#insights > .insnav,#roomspg > #rtabs)::after{display:none!important}
   /* the wallpaper-matching plate behind pinned rows is retired in this look: the blur band does that job, and the plate showed as a rectangle */
-  html[data-style=glass]:not(#x):not(#y) :is(:is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#energy > .ehc,#admin .admtop,#admin .adlog>.adlh,#security > #stabs,#insights > .insnav,#roomspg > #rtabs)::before{display:none!important;content:none!important}
-  html[data-style=glass]:not(#x):not(#y) :is(:is(#admin,#theme) > .hsw:has(> .setchips),.page > .secw,#scenes .scfh,#energy > .ehc,#admin .admtop,#admin .adlog>.adlh,#security > #stabs,#insights > .insnav,#roomspg > #rtabs){background:transparent!important;box-shadow:none!important}
+
   /* title bar and sidebar: no card, like Apple Home on iPad. The sidebar is just rows on the wallpaper; the selected row is the one bright capsule. */
   html[data-style=glass]:not(#x):not(#y) .main > header{background:transparent!important;background-image:none!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
   html[data-style=glass]:not(#x):not(#y) nav{background:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
@@ -5475,7 +5429,7 @@ html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) 
 :is(#admin,#theme) > .hsw:has(> .setchips){display:block}
 /* the first row is a box now, and it is a few px taller than the 62px the second row pins at: keep the second row above it, so it covers the overlap instead of its accent bars being hidden */
 html:not(#x) :is(#admin,#theme) > .hsw:has(> .setchips){z-index:22}
-html:not(#x) :is(#admin .admtop,#admin .adlog>.adlh){z-index:23}
+html:not(#x) :is(#admin .adlog>.adlh){z-index:23}
 /* the names in the pop-up are the same size and style as the names on the room page's tiles (Kinetic 12px caps with spacing, Liquid Glass and Material 15px) */
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) #cpp .cpl .tl .tn{font:500 12px/1.3 var(--sans,inherit);letter-spacing:1.2px;text-transform:uppercase}
 html[data-style=glass]:not(#x):not(#y):not(#z) #cpp .cpl .tl .tn{font-size:15px;font-weight:400}
@@ -6394,7 +6348,7 @@ html[data-style=material]:not(#x):not(#y):not(#z) .admsrch:focus-within{box-shad
 /* Settings and admin: the second sticky row sits directly under the 49px tab row (it was 62px for the old tabs, which left a gap where the list showed through) */
 html[data-style=material]:not(#x):not(#y):not(#z) :is(#theme,#admin)>.hsw:has(>.setchips){background:var(--bg)}
 html[data-style=material]:not(#x):not(#y):not(#z) #theme>.secw{top:49px}
-html[data-style=material]:not(#x):not(#y):not(#z) #admin :is(.admtop,.adlog>.adlh){--admtop:49px}
+html[data-style=material]:not(#x):not(#y):not(#z) #admin :is(.adlog>.adlh){--admtop:49px}
 /* segmented buttons are flex containers, where the first-letter capital cannot apply: lay them out as blocks */
 html[data-style=material]:not(#x):not(#y):not(#z) :is(.seg,.evvw) .eb{display:block;height:46px;line-height:44px;padding-top:0;padding-bottom:0;text-align:center}
 /* ---------- Liquid Glass look, aligned with Apple's guidance (remove this file's include in index.html to revert it) ----------
@@ -6463,7 +6417,6 @@ html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z) :is(#stabs,#rtab
 .eb.fnb.sel,.eb.sty.sel{outline-offset:-2px!important}
 /* fewer blur layers (Apple: glass belongs to the navigation layer only). The dock, the header band once a page scrolls, and pop-ups keep their blur; tiles, chips and the pinned rows' own layers are plain translucent fills, which is what made the Scenes page slow */
 html[data-style=glass]:not(#x):not(#y):not(#z) :is(.tl,.chip,.eb,.bd,.rnd,.pk,.vch,.sty,.fcc>div,.vtv>div){-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(:is(#admin,#theme)>.hsw:has(>.setchips),.page>.secw,#scenes .scfh,#energy>.ehc,#admin .admtop,#admin .adlog>.adlh,#security>#stabs,#insights>.insnav,#roomspg>#rtabs)::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 /* the bottom band keeps three of its six blur layers, and the closed tool scrim is not drawn at all */
 html[data-style=glass] #bband i:is(:nth-child(1),:nth-child(3),:nth-child(5)){display:none}
 #tlscrim:not(.on){visibility:hidden;transition:opacity .2s,visibility 0s .2s}
@@ -6528,8 +6481,8 @@ html:not(#x):not(#y) :is(header,#mshe,#btab,nav,#np){background:var(--bg2)!impor
 html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.on:not(.wt):not(.sir) .ts2{color:color-mix(in srgb,rgb(var(--tcx)) 42%,#1a1a1a)!important}
 html[data-mode=light]:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .tl.on:not(.wt):not(.sir) .tn svg{fill:color-mix(in srgb,rgb(var(--tcx)) 55%,#1a1a1a)!important;filter:none}
 /* 5. the Settings Entities / Automations / Logs cards (search block and the list under it) had no outline rule of their own and sat in a neutral grey; they take the same soft accent line as the standard card. Cards with their own outline rule (rooms, lights, ...) are left alone. */
-html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#admin .admtop::after,#admin .adlog>.adlh::after){border-color:color-mix(in srgb,var(--mint) 32%,transparent)!important}
-html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#admin .admtop ~ .adrs,#admin .adlog>.adlh ~ .adrs){border-color:color-mix(in srgb,var(--mint) 32%,transparent)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#admin .adlog>.adlh::after){border-color:color-mix(in srgb,var(--mint) 32%,transparent)!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(#admin .adlog>.adlh ~ .adrs){border-color:color-mix(in srgb,var(--mint) 32%,transparent)}
 
 /* Kinetic and Material: the same band height as Liquid Glass. Under the title bar and the pinned tab rows a solid strip (down to the bottom of the last pinned row, then the same 44px fade as Glass; it paints the page's own wallpaper, copied by wpSync, so it never shows as a rectangle) hides what scrolls through the gap, so the cut-off sits at the same place in all three looks. wpSync sets --fh, --fbo and fb0 */
 html:not([data-style=glass]):not(#x):not(#y) #fband{display:block;position:fixed;left:var(--fbl,0px);right:var(--fbr,0px);top:0;height:var(--fh,0px)!important;z-index:20;pointer-events:none;background-color:var(--bg);background-attachment:fixed;background-size:100vw 100vh;background-position:0 0;-webkit-mask-image:linear-gradient(to bottom,#000 calc(var(--fh,0px) - 44px),transparent);mask-image:linear-gradient(to bottom,#000 calc(var(--fh,0px) - 44px),transparent);opacity:var(--fbo,0)}
@@ -7465,7 +7418,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["Each speaker now has a Sound button under its volume: tap it to change Bass and Treble.","**Add songs to your playlists.** Tap the + on any song, or the Add to playlist button on Now Playing, then pick a playlist or start a new one with that song in it.","**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "a91737";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "e25bc8";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
@@ -11729,9 +11682,9 @@ function scdLoad(soon) {   // what scene_presets is running now
   send({ type: "call_service", domain: "scene_presets", service: "get_dynamic_scenes", service_data: {}, return_response: true }, (r, m) => {
     SCD.busy = false; if (m && m.success === false) return; const L = (((r || {}).response || {}).dynamic_scenes) || [];
     const k = JSON.stringify(L.map(x => [x.id, (x.parameters || {}).preset_id, (x.parameters || {}).light_entity_ids])); SCD.t = Date.now(); if (k === SCD.k) return; SCD.k = k; SCD.list = L;
-    if (curPg() === "scenes") updScenes(); if (curRoom) rsUpd(); });
+    if (curPg() === "scenes") updScenes(); if (curRoom) rsUpd(); if (document.body.classList.contains("np-open") && typeof drawNotif === "function") drawNotif(); });
 }
-setInterval(() => { if (scDirect() && !document.hidden && (curPg() === "scenes" || (curRoom && $("#rv .rsc")))) scdLoad(); }, 5000);
+setInterval(() => { if (scDirect() && !document.hidden && (curPg() === "scenes" || (curRoom && $("#rv .rsc")) || document.body.classList.contains("np-open"))) scdLoad(); }, 5000);
 function scdZone(i) {   // { on, scene } for a zone, from what is running
   const z = CONFIG.scenes.rooms[i], ls = members([].concat(z.l || [])), d = SCD.list.find(x => ((x.parameters || {}).light_entity_ids || []).some(e => ls.indexOf(e) > -1));
   return d ? { on: true, scene: scPresetName((d.parameters || {}).preset_id) } : { on: false, scene: "" };
@@ -11930,7 +11883,7 @@ const REL = {
   admin: { test: id => sysIds().has(id) }   // the System status tiles on the Admin page
 };
 let pq = 0;
-function queuePg() { if (!pq) pq = requestAnimationFrame(() => { pq = 0; const p = curPg(); if (p === "weather") drawWeather(); else if (p === "irrigation") drawIrr(); else if (p === "scenes") updScenes(); else if (p === "media") drawMedia(); else if (p === "vehicle") drawVehicle(); else if (p === "hazards") drawHaz(); else if (p === "admin") { sysUpd(); admLive(); } }); }
+function queuePg() { if (!pq) pq = requestAnimationFrame(() => { pq = 0; const p = curPg(); if (p === "weather") drawWeather(); else if (p === "irrigation") drawIrr(); else if (p === "scenes") updScenes(); else if (p === "media") drawMedia(); else if (p === "vehicle") drawVehicle(); else if (p === "hazards") drawHaz(); else if (p === "admin") sysUpd(); }); }
 
 
 // Skip re-writing a container when its markup has not changed. The pages below are redrawn on every related sensor update; rebuilding them
@@ -12784,7 +12737,7 @@ function accClick(b) {
 
 // ---------- setup check (Admin page) ----------
 // Walks config.js for anything that looks like a Home Assistant entity id and lists the ones Home Assistant does not have, with where they sit in config.js,
-// so a typo, a renamed device or a removed helper is found in one look instead of a tile that quietly never works. Ids the engine computes itself (VIRT) are skipped.
+// so a typo, a renamed device or a removed helper is found in one look instead of a tile that quietly never works. Ids the engine computes itself (VIRT) are skipped, and so are optional helper names the engine guessed for a room (a room's heat / cool until and schedule helpers).
 const SCK_DOM = new Set("light switch sensor binary_sensor input_boolean input_text input_select input_number input_datetime input_button timer counter group automation script scene cover fan climate camera media_player lock alarm_control_panel weather person device_tracker vacuum humidifier water_heater number select button siren update event todo calendar sun zone remote valve lawn_mower image text datetime schedule".split(" "));
 const SCK_SKIP = new Set(["token", "url", "relevance", "scenesRegex"]);
 function sckScan() {
@@ -12799,7 +12752,7 @@ function sckScan() {
   };
   walk(CONFIG, "", 0);
   const ids = Object.keys(found), out = { total: ids.length, missing: [], unavailable: [], ids: ids };
-  ids.forEach(id => { const s = states[id]; if (!s) out.missing.push([id, found[id]]); else if (s.state === "unavailable") out.unavailable.push([id, found[id]]); });
+  ids.forEach(id => { const s = states[id]; if (!s) { if (!HELPER_GUESS[id]) out.missing.push([id, found[id]]); } else if (s.state === "unavailable") out.unavailable.push([id, found[id]]); });
   const by = (a, b) => a[0] < b[0] ? -1 : 1; out.missing.sort(by); out.unavailable.sort(by);
   return out;
 }
@@ -13079,7 +13032,7 @@ Object.assign(MDI, { "content-copy": "M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 
   "open-in-new": "M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z",
   "check-circle": "M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z",
   "lock": "M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" });
-const ADM_TABS = [["status", "STATUS"], ["automations", "AUTOMATIONS"], ["logs", "LOGS"], ["access", "ACCESS"], ["setup", "SETUP"]];
+const ADM_TABS = [["status", "STATUS"], ["logs", "LOGS"], ["access", "ACCESS"], ["setup", "SETUP"]];
 // a person signed in with their own Home Assistant account (not a dashboard running on a long-lived token) has an Account tab
 const setAcct = () => !!(ME && ME.id && !CONFIG.token);
 const setOn = () => PAGE_ON("theme") || setAcct() || ADMIN_ON();
@@ -13200,11 +13153,11 @@ function navSync() {
   const so = setOn(); [$("#navset"), $("#navset2")].forEach(a => { if (a) { a.hidden = !so; a.setAttribute("href", "#settings"); } });
 }
 try { navGroups(); } catch (_) {}
-// ---------- Settings, admin tabs: STATUS (+ quick actions) · AUTOMATIONS · LOGS · ACCESS · SETUP ----------
+// ---------- Settings, admin tabs: STATUS (+ quick actions) · LOGS · ACCESS · SETUP ----------
 // For a quick look and a quick fix on the go; editing stays in Home Assistant (OPEN IN HA). Admins only (ADMIN_ON).
-// Home Assistant calls used: history/history_during_period, trace/list, trace/get, system_log/list, the REST check_config,
+// Home Assistant calls used: history/history_during_period, system_log/list, the REST check_config,
 // and the services automation.* / script.reload / scene.reload / template.reload / homeassistant.restart.
-const ADM = { tab: "", aq: "", af: "all", asel: "", arun: "", tl: null, tlT: 0, tlBusy: 0, tg: {}, logs: null, logT: 0, lf: "all", lq: "", li: "", lopen: -1, qa: "", qaT: 0, qaBad: null, liveT: 0 };
+const ADM = { tab: "", logs: null, logT: 0, lf: "all", lq: "", li: "", lopen: -1, qa: "", qaT: 0, qaBad: null };
 const admT = ms => { if (!ms) return "-"; const d = new Date(ms), now = new Date(), t = d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" }));
   if (d.toDateString() === now.toDateString()) return t; const y = new Date(now); y.setDate(now.getDate() - 1); if (d.toDateString() === y.toDateString()) return "Yesterday " + t;
   return d.toLocaleDateString([], { day: "numeric", month: "short" }) + " " + t; };
@@ -13223,9 +13176,9 @@ function drawAdmin() {
   if (!el.querySelector(":scope > #admb")) { el.innerHTML = th + '<div id="admb"></div>'; el._tabs = th; }
   else if (el._tabs !== th) { const o = el.querySelector(":scope > .hsw"), sl = o && o.firstElementChild ? o.firstElementChild.scrollLeft : 0; if (o) o.remove(); el.insertAdjacentHTML("afterbegin", th); el._tabs = th; const n = el.querySelector(":scope > .hsw > .chips"); if (n) n.scrollLeft = sl; }
   const b = $("#admb");
-  if (tab === "automations" || tab === "logs") {
-    if (b.dataset.t !== tab) { b.dataset.t = tab; b.innerHTML = tab === "automations" ? admAutShell() : admLogShell(); }
-    if (tab === "automations") { admAutDraw(); admTlLoad(); } else { admLogDraw(); admLogLoad(); }
+  if (tab === "logs") {
+    if (b.dataset.t !== tab) { b.dataset.t = tab; b.innerHTML = admLogShell(); }
+    admLogDraw(); admLogLoad();
   } else {
     b.dataset.t = tab;
     const n = Object.keys(states).length, who = ME.name ? esc(ME.name) : (CONFIG.token ? "long-lived token" : "-");
@@ -13236,13 +13189,6 @@ function drawAdmin() {
   ADM.tab = tab;
   setSlide(b.querySelector(":scope > .thg > .thl") || b);
 }
-// live updates (queuePg): the lists follow state changes, at most once a second
-function admLive() {
-  if (curPg() !== "admin" || !ADMIN_ON()) return; const now = Date.now();
-  if (now - ADM.liveT < 1000) { clearTimeout(ADM.liveTm); ADM.liveTm = setTimeout(admLive, 1000 - (now - ADM.liveT)); return; }
-  ADM.liveT = now; const t = setTab(); if (t === "automations") admAutDraw(true);
-}
-
 // ----- STATUS: quick actions -----
 function admQaHtml() {
   const q = (k, ic, t, s, cls) => '<button class="adq' + (cls ? " " + cls : "") + '" data-adq="' + k + '"' + (ADM.qa === k + "…" ? " disabled" : "") + '>' + mdi(ic) + '<span><b>' + t + '</b><small>' + s + '</small></span></button>';
@@ -13269,95 +13215,6 @@ function admQa(k) {
 }
 
 
-// ----- AUTOMATIONS -----
-const AUT_WHY = { finished: "", failed_conditions: "stopped at a condition", failed_single: "skipped, already running", failed_max_runs: "skipped, too many runs", error: "error", aborted: "stopped", cancelled: "cancelled", running: "running now" };
-function admAutShell() {
-  return '<div class="adw' + (ADM.asel ? " det" : "") + '" data-w="aut"><div class="pn pg adl"><div class="admtop"><label class="admsrch">' + mdi("magnify") + '<input type="search" data-adq-aut placeholder="Search automations" value="' + esc(ADM.aq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div></div><div class="adrs"></div></div>' +
-    '<div class="admbk" data-adx="aut"></div><div class="pn pg add"></div></div>';
-}
-// the newest run of each automation, from trace/list (all of them at once); refreshed when the tab opens and every minute while it is open
-function admTlLoad(force) {
-  if (ADM.tlBusy && Date.now() - ADM.tlBusy < 15000) return; if (!force && ADM.tl && Date.now() - ADM.tlT < 60000) return;
-  ADM.tlBusy = Date.now();
-  send({ type: "trace/list", domain: "automation" }, (r, m) => { ADM.tlBusy = 0; ADM.tlT = Date.now(); ADM.tl = m && m.success && Array.isArray(r) ? r : []; if (curPg() === "admin" && setTab() === "automations") admAutDraw(); });
-  clearTimeout(ADM.tlTm); ADM.tlTm = setTimeout(() => { if (curPg() === "admin" && setTab() === "automations") admTlLoad(true); }, 60000);
-}
-const admRuns = cid => (ADM.tl || []).filter(x => x.item_id === cid).sort((a, b) => admMs(b.timestamp && b.timestamp.start) - admMs(a.timestamp && a.timestamp.start));
-const admRunBad = x => !!x && (x.script_execution === "error" || !!x.error);
-function admAutDraw(live) {
-  const w = $('#admb .adw[data-w="aut"]'); if (!w) return;
-  const q = ADM.aq.toLowerCase().split(/\s+/).filter(Boolean), all = Object.keys(states).filter(id => id.indexOf("automation.") === 0 && (!q.length || q.every(x => (id + " " + admNm(id)).toLowerCase().indexOf(x) > -1)));
-  const off = all.filter(id => states[id].state === "off"), err = all.filter(id => admRunBad(admRuns(states[id].attributes.id)[0]));
-  const chip = (k, t) => '<button class="chip' + (ADM.af === k ? " on" : "") + (k === "err" ? " adbad" : "") + '" data-adf="' + k + '">' + t + '</button>';
-  const ch = chip("all", "ALL " + all.length) + (off.length ? chip("off", "OFF " + off.length) : "") + (err.length ? chip("err", "ERRORS " + err.length) : "");
-  if ((ADM.af === "off" && !off.length) || (ADM.af === "err" && !err.length)) ADM.af = "all";
-  const c = $(".adch", w); if (c._h !== ch) { c._h = ch; c.innerHTML = hsw('<div class="chips tabs">' + ch + '</div>'); }
-  const list = (ADM.af === "off" ? off : ADM.af === "err" ? err : all).sort((a, b) => admNm(a).localeCompare(admNm(b)));
-  const rows = list.map(id => { const s = states[id], lt = admMs(s.attributes.last_triggered), r = admRuns(s.attributes.id)[0], why = r ? AUT_WHY[r.script_execution] : "", bad = admRunBad(r), isOff = s.state === "off";
-    const sub = isOff && !lt ? "Off · never ran" : (lt ? "Last ran " + admT(lt) : "Never ran") + (bad ? " · error" : why ? " · " + why : "") + (isOff ? " · off" : "");
-    return '<div class="adr adra' + (id === ADM.asel ? " sel" : "") + (bad ? " err" : "") + (isOff ? " off" : "") + '" data-aa="' + esc(id) + '" role="button" tabindex="0"><span class="adn"><b>' + esc(admNm(id)) + '</b><small>' + esc(sub) + '</small></span><button class="adsw' + (isOff ? "" : " on") + '" data-aat="' + esc(id) + '" aria-label="Turn ' + (isOff ? "on" : "off") + '"><i></i></button></div>'; }).join("");
-  const h = rows || admEmpty(ADM.aq ? "Nothing matches “" + ADM.aq + "”." : "No automations.");
-  const r = $(".adrs", w); if (r._h !== h) { r._h = h; r.innerHTML = h; }
-  admAutDet(live);
-}
-function admAutDet(live) {
-  const w = $('#admb .adw[data-w="aut"]'), d = w && $(".add", w); if (!d) return; const id = ADM.asel, s = states[id];
-  w.classList.toggle("det", !!id);
-  if (!id || !s) { const ov = admAutOv(); if (d._ov !== ov) { d._ov = ov; d.innerHTML = ov; } d._key = ""; return; }
-  d._ov = "";
-  const cid = s.attributes.id, runs = admRuns(cid).slice(0, 6); if (!ADM.arun || !runs.some(x => x.run_id === ADM.arun)) ADM.arun = runs[0] ? runs[0].run_id : "";
-  const key = id + "|" + s.state + "|" + runs.map(x => x.run_id + x.script_execution).join(",") + "|" + ADM.arun + "|" + (ADM.tg[ADM.arun] ? 1 : 0);
-  if (live && d._key === key) return; d._key = key;
-  const run = runs.filter(x => x.run_id === ADM.arun)[0];
-  d.innerHTML = '<div class="addh"><div><b>' + esc(admNm(id)) + '</b><small>' + esc(id) + '</small></div><button class="adsw' + (s.state === "off" ? "" : " on") + '" data-aat="' + esc(id) + '" aria-label="Turn on or off"><i></i></button><button class="adic adx" data-adx="aut" aria-label="Close">' + mdi("close") + '</button></div>' +
-    '<div class="adbt"><button class="eb" data-aarun="' + esc(id) + '">' + mdi("play") + ' RUN NOW</button><button class="eb" data-aaha="' + esc(cid || "") + '">OPEN IN HA ' + mdi("open-in-new") + '</button></div>' +
-    '<div class="lbl adal">Recent runs</div>' +
-    (!cid ? admEmpty("This automation has no id (it isn't from the automation editor or automations.yaml), so Home Assistant keeps no runs for it.")
-      : !ADM.tl ? '<div class="adhl">Loading…</div>'
-      : !runs.length ? admEmpty("No runs kept yet. Home Assistant keeps the last few runs of each automation.")
-      : hsw('<div class="chips tabs adruns">' + runs.map(x => '<button class="chip' + (x.run_id === ADM.arun ? " on" : "") + (admRunBad(x) ? " adbad" : "") + '" data-aarid="' + esc(x.run_id) + '">' + esc(admT(admMs(x.timestamp && x.timestamp.start))) + '</button>').join("") + '</div>') +
-        '<div class="adsteps">' + (ADM.tg[ADM.arun] ? admSteps(ADM.tg[ADM.arun], run) : '<div class="adhl">Loading the run…</div>') + '</div>');
-  if (run && !ADM.tg[run.run_id]) send({ type: "trace/get", domain: "automation", item_id: cid, run_id: run.run_id }, (r, m) => { ADM.tg[run.run_id] = m && m.success && r ? r : { failed: true }; if (ADM.asel === id) admAutDet(); });
-}
-// nothing picked (wide screens): an overview instead of an empty panel. What ran today, what needs a look, the latest runs, what is off.
-function admAutOv() {
-  const all = Object.keys(states).filter(id => id.indexOf("automation.") === 0), d0 = new Date(); d0.setHours(0, 0, 0, 0);
-  const lt = id => admMs(states[id].attributes.last_triggered), last = id => admRuns(states[id].attributes.id)[0];
-  const today = all.filter(id => lt(id) >= +d0), bad = all.filter(id => admRunBad(last(id))), cond = all.filter(id => { const r = last(id); return r && r.script_execution === "failed_conditions"; }), off = all.filter(id => states[id].state === "off");
-  const row = (id, sub, cls) => '<button class="adr adov' + (cls ? " " + cls : "") + '" data-aa="' + esc(id) + '"><span class="adn"><b>' + esc(admNm(id)) + '</b><small>' + esc(sub) + '</small></span>' + mdi("chevron-right") + '</button>';
-  const rec = all.filter(id => lt(id)).sort((a, b) => lt(b) - lt(a)).slice(0, 5);
-  return '<div class="lbl">Today</div><div class="adbig">' + today.length + ' ran</div><div class="adsince">' + (bad.length ? bad.length + " with an error" : "No errors") + (cond.length ? " · " + cond.length + " stopped at a condition" : "") + ' · ' + all.length + ' automations</div>' +
-    '<div class="lbl adal">Needs a look</div>' + (bad.length ? bad.map(id => row(id, "Last run " + admT(lt(id)) + " · error", "err")).join("") : '<div class="adhl">Nothing failed in the runs Home Assistant keeps.</div>') +
-    (rec.length ? '<div class="lbl adal">Latest runs</div>' + rec.map(id => { const r = last(id), why = r ? AUT_WHY[r.script_execution] : ""; return row(id, admT(lt(id)) + (why ? " · " + why : ""), admRunBad(r) ? "err" : ""); }).join("") : "") +
-    (off.length ? '<div class="lbl adal">Off</div>' + off.map(id => row(id, lt(id) ? "Last ran " + admT(lt(id)) : "Never ran", "off")).join("") : "");
-}
-// one run, step by step: the trigger, each condition (passed / failed), each action (done / error / not reached)
-function admDesc(c, kind) {
-  if (!c || typeof c !== "object") return ""; if (c.alias) return c.alias;
-  const ent = [].concat(c.entity_id || (c.target && c.target.entity_id) || []).join(", ");
-  if (kind === "trigger") return [c.trigger || c.platform, ent, c.to != null ? "to " + c.to : "", c.at ? "at " + c.at : "", c.event ? c.event : ""].filter(Boolean).join(" · ");
-  if (kind === "condition") return [c.condition, ent, c.state != null ? "is " + [].concat(c.state).join(" or ") : "", c.above != null ? "above " + c.above : "", c.below != null ? "below " + c.below : "", c.after ? "after " + c.after : "", c.before ? "before " + c.before : "", c.value_template ? "template" : ""].filter(Boolean).join(" · ");
-  const sv = c.action || c.service; if (sv) return sv + (ent ? " · " + ent : "");
-  if (c.delay) return "wait " + (typeof c.delay === "object" ? JSON.stringify(c.delay) : c.delay);
-  return Object.keys(c).filter(k => k !== "enabled")[0] || "";
-}
-function admSteps(t, run) {
-  if (t.failed) return admEmpty("Couldn't load this run.");
-  const tr = t.trace || {}, cfg = t.config || {}, out = [], step = (k, title, sub, cls) => out.push('<div class="adst ' + cls + '"><i></i><div><b>' + esc(title) + '</b>' + (sub ? '<small>' + esc(sub) + '</small>' : "") + '</div></div>');
-  const L = (a, b) => [].concat(cfg[a] || cfg[b] || []);
-  const trig = L("triggers", "trigger"), cond = L("conditions", "condition"), act = L("actions", "action");
-  const top = Object.keys(tr).filter(k => k.split("/").length === 2);
-  let seenAct = -1, failed = false;
-  top.forEach(k => { const [kind, i] = k.split("/"), n = +i, e = (tr[k] || [])[0] || {}, res = e.result || {};
-    if (kind === "trigger") step(k, "Trigger", (t.trigger || run && run.trigger || admDesc(trig[n], "trigger") || "").toString(), "ok");
-    else if (kind === "condition") { const pass = res.result !== false && !e.error; if (!pass) failed = true; step(k, pass ? "Condition passed" : "Condition failed", admDesc(cond[n], "condition") || "Condition " + (n + 1), pass ? "ok" : "bad"); }
-    else if (kind === "action") { seenAct = Math.max(seenAct, n); const er = e.error || (res && res.error); if (er) failed = true; step(k, er ? "Action failed" : "Action", (admDesc(act[n], "action") || "Action " + (n + 1)) + (er ? " · " + er : ""), er ? "bad" : "ok"); }
-  });
-  if (!top.some(k => k.indexOf("action/") === 0) || failed || (run && run.script_execution !== "finished")) act.forEach((a, n) => { if (n > seenAct) step("", admDesc(a, "action") || "Action " + (n + 1), "Not reached", "no"); });
-  const err = t.error || (run && run.error); if (err) out.push('<pre class="adpre">' + esc(String(err)) + '</pre>');
-  return out.join("") || admEmpty("This run has no steps to show.");
-}
-
 // ----- LOGS -----
 function admLogShell() {
   return '<div class="adw adlw" data-w="log"><div class="pn pg adlog"><div class="adlh"><label class="admsrch">' + mdi("magnify") + '<input type="search" data-adq-log placeholder="Search the log" value="' + esc(ADM.lq) + '" autocomplete="off" spellcheck="false"></label><div class="adch"></div><button class="eb" data-adlca="1">' + mdi("content-copy") + ' COPY ALL</button><button class="eb" data-adlr="1">' + mdi("refresh") + ' REFRESH</button></div><div class="adrs"></div></div><div class="pn pg add adlov"></div></div>';
@@ -13376,10 +13233,10 @@ function admLogDraw() {
   if (ADM.li) $(".adch .chips", w).insertAdjacentHTML("beforeend", '<button class="chip on adli" data-adli="">' + esc(ADM.li.toUpperCase().replace(/_/g, " ")) + ' ' + mdi("close") + '</button>');
   admLogOv(L, E, Wn);
   $(".adrs", w).innerHTML = !ADM.logs ? '<div class="adhl">Loading the log…</div>' : ADM.logErr ? admEmpty("Couldn't read Home Assistant's log.") : !list.length ? admEmpty(ADM.lq ? "Nothing matches “" + ADM.lq + "”." : "Nothing logged. All quiet.") : list.slice(0, 100).map((x, i) => {
-    const msgs = [].concat(x.message || []), lv = admLvl(x.level), open = ADM.lopen === i, au = (msgs.join(" ") + " " + (x.exception || "")).match(/automation\.[a-z0-9_]+/);
+    const msgs = [].concat(x.message || []), lv = admLvl(x.level), open = ADM.lopen === i;
     return '<div class="adlg' + (open ? " open" : "") + '" data-adl="' + i + '"><span class="adlv ' + lv + '">' + (lv === "err" ? "ERROR" : lv === "warn" ? "WARN" : esc(String(x.level || "INFO").slice(0, 5))) + '</span><div class="adlb"><b>' + esc(String(msgs[0] || x.name || "")) + '</b><small>' + esc(String(x.name || "")) + ' · ' + esc(admT(admMs(x.timestamp))) + '</small>' +
       (open ? (msgs.length > 1 || x.exception ? '<pre class="adpre">' + esc(msgs.slice(1).concat(x.exception ? [x.exception] : []).join("\n\n")) + '</pre>' : "") + (x.source ? '<small>' + esc([].concat(x.source).join(":")) + (x.first_occurred ? " · first " + esc(admT(admMs(x.first_occurred))) : "") + '</small>' : "") +
-        '<div class="adbt">' + (au && states[au[0]] ? '<button class="eb" data-adlau="' + esc(au[0]) + '">OPEN AUTOMATION</button>' : "") + '<button class="eb" data-adlc="' + i + '">' + mdi("content-copy") + ' COPY</button></div>' : "") +
+        '<div class="adbt">' + '<button class="eb" data-adlc="' + i + '">' + mdi("content-copy") + ' COPY</button></div>' : "") +
       '</div>' + (x.count > 1 ? '<span class="adln">×' + x.count + '</span>' : "") + '</div>'; }).join("");
   w._list = list;
 }
@@ -13418,25 +13275,16 @@ $("#admin").addEventListener("click", e => {
   const t = e.target, tab = setTab(), g = s => t.closest(s);
   let b;
   if ((b = g("[data-adq]"))) { admQa(b.dataset.adq); return; }
-  if ((b = g("[data-adf]"))) { const k = b.dataset.adf; if (tab === "automations") { ADM.af = k; admAutDraw(); } else { ADM.lf = k; ADM.lopen = -1; admLogDraw(); } return; }
-  if ((b = g("[data-adx]"))) { ADM.asel = ""; admAutDraw(); return; }
-  if ((b = g("[data-aat]"))) { e.stopPropagation(); const id = b.dataset.aat, on = states[id] && states[id].state !== "off"; call("automation", on ? "turn_off" : "turn_on", id); b.classList.toggle("on", !on); return; }
-  if ((b = g("[data-aarun]"))) { call("automation", "trigger", b.dataset.aarun, { skip_condition: true }); b.classList.add("ok"); setTimeout(() => { b.classList.remove("ok"); admTlLoad(true); }, 2500); return; }
-  if ((b = g("[data-aaha]"))) { haGo(b.dataset.aaha ? "/config/automation/edit/" + encodeURIComponent(b.dataset.aaha) : "/config/automation/dashboard"); return; }
-  if ((b = g("[data-aarid]"))) { ADM.arun = b.dataset.aarid; admAutDet(); return; }
-  if ((b = g("[data-aa]"))) { if (ADM.asel !== b.dataset.aa) ADM.arun = ""; ADM.asel = b.dataset.aa; admAutDraw(); admTlLoad(); return; }
+  if ((b = g("[data-adf]"))) { const k = b.dataset.adf; ADM.lf = k; ADM.lopen = -1; admLogDraw(); return; }
   if ((b = g("[data-adlr]"))) { admLogLoad(true); return; }
   if ((b = g("[data-adlca]"))) { const L = ($("#admb .adlog") || {})._list || []; if (L.length) admCopy(admLogText(L), b); return; }
-  if ((b = g("[data-adlau]"))) { ADM.asel = b.dataset.adlau; ADM.arun = ""; location.replace("#admin/automations"); return; }
   if ((b = g("[data-adlc]"))) { const x = ($("#admb .adlog") || {})._list[+b.dataset.adlc]; if (x) admCopy([].concat(x.message || []).join("\n") + (x.exception ? "\n" + x.exception : "") + "\n(" + x.name + ")", b); return; }
   if ((b = g("[data-adli]"))) { const k = b.dataset.adli; ADM.li = ADM.li === k ? "" : k; ADM.lopen = -1; admLogDraw(); return; }
   if ((b = g("[data-adl]"))) { const i = +b.dataset.adl; ADM.lopen = ADM.lopen === i ? -1 : i; admLogDraw(); return; }
 });
-$("#admin").addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.dataset && e.target.dataset.aa) { e.preventDefault(); e.target.click(); } });
 $("#admin").addEventListener("input", e => {
   const t = e.target;
-  if (t.hasAttribute("data-adq-aut")) { ADM.aq = t.value; admAutDraw(); }
-  else if (t.hasAttribute("data-adq-log")) { ADM.lq = t.value; ADM.lopen = -1; admLogDraw(); }
+  if (t.hasAttribute("data-adq-log")) { ADM.lq = t.value; ADM.lopen = -1; admLogDraw(); }
 });
 
 // ---------- Config editor (Admin page): edit rooms, tiles, climate rooms, cameras, media and alarm tiles; kept on the Home Assistant host by the kinetic_config component ----------
@@ -13873,6 +13721,14 @@ const npChips = A => { const g = A.filter(x => x.ids.length); if (g.length < 2) 
 const npLoading = () => !Object.keys(states).length;   // nothing from Home Assistant yet: say so instead of "Nothing is on or open" / "All clear"
 const NPOFF = {}; let npHold = 0, npht = 0;   // tiles switched off from the Active list vanish at once (a slow light transition would keep them "on" for seconds)
 const npGone = x => { const t = NPOFF[x]; if (!t) return false; if (!isOn(x) || Date.now() - t > 12000) { delete NPOFF[x]; return false; } return true; };
+// running light scenes for Active: "z<i>" = a zone of config scenes.rooms that is playing a scene, "g<i>" = a gradient (LED) light of scenes.lights that is on
+const npScenes = () => { const S = CONFIG.scenes; if (!S || !Array.isArray(S.rooms)) return []; const o = [];
+  S.rooms.forEach((z, i) => { if (scZoneState(i).on) o.push("z" + i); }); (S.lights || []).forEach((l, i) => { if (isOn(l.l)) o.push("g" + i); }); return o; };
+const npScTile = k => { const S = CONFIG.scenes, i = +k.slice(1), g = k[0] === "g", z = g ? S.lights[i] : S.rooms[i], sc = g ? sv(z.s) : scZoneState(i).scene;
+  return '<div class="ldt scnt on" data-scn="' + k + '" role="button" tabindex="0" aria-label="Stop ' + esc(z.n) + '"><span class="ldi">' + mdi(g ? "led-strip" : (S.ri && S.ri[i]) || "palette") + '</span><div><b>' + esc(z.n) + '</b><span>' + esc(sc ? title(sc) : "RUNNING") + (g ? " · LED" : "") + '</span></div></div>'; };
+function npScStop(k) { const S = CONFIG.scenes, i = +k.slice(1); if (k[0] === "g") { const l = S.lights[i]; if (isOn(l.l)) call("light", "turn_off", l.l); return; }
+  if (scDirect()) { if (scdZone(i).on) scdStop(i); return; } const x = S.rooms[i]; if (x.b && isOn(x.b)) call("input_boolean", "turn_off", x.b); }
+function npScStopAll() { const S = CONFIG.scenes; if (scDirect()) scdStopAll(); else if (states[E("dynStop")]) call("input_boolean", "toggle", E("dynStop")); else npScenes().forEach(npScStop); (S.lights || []).forEach(l => { if (isOn(l.l)) call("light", "turn_off", l.l); }); }
 const actList = () => {
   const dg = E("doorsGroup"), A = ACTC.filter(c => !dg || c[1] !== dg).map(c => ({ c: c, ids: members(c[1]).filter(x => x !== c[1] && !/^group\./.test(x) && isOn(x) && !npGone(x) && !entHidden(x)) })), seen = {};
   A.forEach(x => x.ids.forEach(e => { seen[e] = 1; }));
@@ -13882,6 +13738,7 @@ const actList = () => {
   if (lm === "Run" || lm === "Delay Run") A.push({ c: ["Laundry", "", "washing-machine", "ld"], ids: ["laundry"] });   // one tile: the drum spins while it runs
   const twg = E("towelGroup"), tw = twg ? members(twg).filter(x => x !== twg && isOn(x) && !npGone(x) && !seen[x] && !entHidden(x)) : [];   // heated towel rails: listed under Active (they used to be in Alerts)
   if (tw.length) A.push({ c: ["Towel heating", "", "radiator", "tw"], ids: tw });
+  const sc = npScenes(); if (sc.length) A.push({ c: ["Scenes", "", "palette", "scn"], ids: sc });   // running light scenes (the Scenes page's zones and LED lights)
   return A;
 };
 const npDupIds = () => { const d = {}, add = e => { d[e] = 1; };   // what Active, the Doors card or the Bins card already lists
@@ -13913,14 +13770,15 @@ const npRoomMap = () => { const m = {}, order = []; HOUSE().forEach(r => { order
   ((CONFIG.roomControls || {})[r.id] || []).forEach(i => add(typeof i === "string" ? i : i.entity)); }); return { m: m, order: order }; };
 function actHtml(A) {
   const t = A.filter(x => x.ids.length); if (!t.length) return '<div class="lbl" style="margin:14px 0">Nothing is on or open</div>';
-  const RM = CONFIG.notifRoomHeadings === false ? null : npRoomMap(), tile = (x, e) => x.c[3] === "ld" ? ldTile() : tileHtml(x.c[0] === "Water taps" ? npItem(e, { icon: "m3-water-drop" }) : x.c[3] === 1 ? { entity: e, kind: x.c[0] === "Doors" ? "door" : "window" } : npItem(e, x.c[3] === "tw" ? { timer: states["timer.heated_towel_rails"] ? "timer.heated_towel_rails" : tileTimer(e) } : null));
+  const RM = CONFIG.notifRoomHeadings === false ? null : npRoomMap(), tile = (x, e) => x.c[3] === "scn" ? npScTile(e) : x.c[3] === "ld" ? ldTile() : tileHtml(x.c[0] === "Water taps" ? npItem(e, { icon: "m3-water-drop" }) : x.c[3] === 1 ? { entity: e, kind: x.c[0] === "Doors" ? "door" : "window" } : npItem(e, x.c[3] === "tw" ? { timer: states["timer.heated_towel_rails"] ? "timer.heated_towel_rails" : tileTimer(e) } : null));
   const slug = x => x.c[0].toLowerCase().replace(/\s+/g, "-");
   return t.map(x => {
     const sec = slug(x), slim = x.c[3] === 1, open = npOnly ? npOnly === sec : NPF[sec] != null ? NPF[sec] : !slim, cls = slim ? "bl" : "tg3 act-" + sec;
     const rooms = {}; x.ids.forEach(e => { const r = RM ? RM.m[e] || "Other" : ""; rooms[r] = (rooms[r] || 0) + 1; });
     const sum = open ? "" : '<div class="npsum">' + esc(Object.keys(rooms).filter(Boolean).sort((a, b) => RM.order.indexOf(a) - RM.order.indexOf(b)).map(r => r + " " + rooms[r]).join(" · ")) + '</div>';
-    const head = '<div class="lbl np2 il npf" data-sec="' + sec + '" data-npf="' + sec + '" role="button" tabindex="0" aria-expanded="' + open + '">' + mdi(x.c[2]) + x.c[0] + ' · ' + x.ids.length + '<span class="npfr">' + (slim || x.c[3] === "ld" ? "" : '<button class="eb" data-off="' + A.indexOf(x) + '">' + (x.c[3] === "close" ? "CLOSE ALL" : "ALL OFF") + '</button>') + '<span class="npch' + (open ? " open" : "") + '">' + mdi("chevron-down") + '</span></span></div>' + sum;
+    const head = '<div class="lbl np2 il npf" data-sec="' + sec + '" data-npf="' + sec + '" role="button" tabindex="0" aria-expanded="' + open + '">' + mdi(x.c[2]) + x.c[0] + ' · ' + x.ids.length + '<span class="npfr">' + (slim || x.c[3] === "ld" || x.c[3] === "scn" ? "" : '<button class="eb" data-off="' + A.indexOf(x) + '">' + (x.c[3] === "close" ? "CLOSE ALL" : "ALL OFF") + '</button>') + '<span class="npch' + (open ? " open" : "") + '">' + mdi("chevron-down") + '</span></span></div>' + sum;
     if (!open) return head;
+    if (x.c[3] === "scn") return head + '<div class="' + cls + '">' + x.ids.map(e => tile(x, e)).join("") + '</div><div class="npscs"><button class="eb" data-scsa="1">' + mdi("stop-circle") + 'STOP ALL</button></div>';
     if (slim && RM) {   // doors and windows: one list of slim rows, the room named on each row (open ones are all that is listed)
       const ord = x.ids.slice().sort((a, b) => { const ra = RM.m[a] || "Other", rb = RM.m[b] || "Other"; return (ra === "Other") - (rb === "Other") || RM.order.indexOf(ra) - RM.order.indexOf(rb); });
       return head + '<div class="bl">' + ord.map(e => tile(x, e).replace('<span class="st">', '<span class="rm">' + esc(RM.m[e] || "") + '</span><span class="st">')).join("") + '</div>'; }
@@ -13967,6 +13825,7 @@ function npKeep(nc, body) {
 function drawNotif() {
   if (typeof cdDraw === "function") cdDraw();
   const open = document.body.classList.contains("np-open");
+  if (open && npTab === "active" && scDirect() && Date.now() - SCD.t > 3000) scdLoad();   // running scenes are read from scene_presets
   if (open && Date.now() < npHold) { clearTimeout(npht); npht = setTimeout(drawNotif, npHold - Date.now() + 10); return; }
   if (open && $$("#np input[type=range], #np .tl").some(r => r._d && r._d > Date.now())) { clearTimeout(npht); npht = setTimeout(drawNotif, 400); return; }
   let r = notif(open, open && npTab !== "active" ? npOnly : "");
@@ -14037,6 +13896,8 @@ $("#np").onclick = e => {
   const ch = e.target.closest("[data-npchip]"); if (ch) { npSlide(ch.dataset.npchip); return; }
   const fo = e.target.closest("[data-npf]"); if (fo && !e.target.closest(".eb")) { const k = fo.dataset.npf, was = fo.getAttribute("aria-expanded") === "true"; if (!npOnly) { NPF[k] = !was; drawNotif(); } return; }   // while one group is picked with a chip it stays open
   const tb = e.target.closest("[data-npt]"); if (tb) { npOnly = ""; npFromAl = false; const ord = ["alerts", "attention", "active"], was = npTab; npTab = tb.dataset.npt; drawNotif(); if (was !== npTab) txGo($("#npc"), ord.indexOf(npTab) > ord.indexOf(was) ? 1 : -1, true); return; }
+  if (e.target.closest("[data-scsa]")) { npScStopAll(); if (scDirect()) scdLoad(600); return; }
+  const sn = e.target.closest("[data-scn]"); if (sn) { npScStop(sn.dataset.scn); if (scDirect()) scdLoad(600); return; }
   const of = e.target.closest("[data-off]"); if (of) { const ids = actList()[+of.dataset.off].ids; const cl = actList()[+of.dataset.off].c[3] === "close"; if (ids.length) { if (!cl) npDismiss(ids); call(cl ? "cover" : "homeassistant", cl ? "close_cover" : "turn_off", ids); } return; }
   if (e.target.closest("[data-wxatg]")) { WXA_FULL = !WXA_FULL; drawNotif(); return; }   // the combined weather card: one line each, or each as its full card
   // a shrunk weather card opens in place (MORE, or a tap anywhere on it); LESS shrinks it again
@@ -14318,16 +14179,17 @@ caInit();
 // Stop points: a room's "heat until" / "cool until" helpers. config.js can name them (rooms: [{ heatUntil, coolUntil }]); otherwise they are looked for under
 // the room's own name, input_number.<room>_heat_until and input_number.<room>_cool_until (<room> = the climate entity id without "climate.").
 // A helper that does not exist in Home Assistant simply shows no row.
+const HELPER_GUESS = {};   // names the dashboard made up for helpers config.js does not name; the setup check does not call them missing
 CONFIG.rooms.forEach(r => {
   const slug = String(r.id || "").replace(/^climate\./, ""); if (r.main || !slug) return;
-  if (!r.heatUntil) r.heatUntil = "input_number." + slug + "_heat_until";
-  if (!r.coolUntil) r.coolUntil = "input_number." + slug + "_cool_until";
+  if (!r.heatUntil) r.heatUntil = HELPER_GUESS["input_number." + slug + "_heat_until"] = "input_number." + slug + "_heat_until";
+  if (!r.coolUntil) r.coolUntil = HELPER_GUESS["input_number." + slug + "_cool_until"] = "input_number." + slug + "_cool_until";
 });
 // Schedule times: a room's heat / cool window (opens, closes) and the phone prompt time. input_datetime helpers (time only), found under the room's own name
 // (input_datetime.<room>_heat_start, _heat_end, _heat_prompt, _cool_start, _cool_end, _cool_prompt) or named in config.js (rooms: [{ heatStart, heatEnd, heatPrompt, coolStart, coolEnd, coolPrompt }]). A helper that does not exist shows nothing.
 CONFIG.rooms.forEach(r => {
   const slug = String(r.id || "").replace(/^climate\./, ""); if (r.main || !slug) return;
-  ["heat", "cool"].forEach(m => ["Start", "End", "Prompt"].forEach(q => { const k = m + q; if (!r[k]) r[k] = "input_datetime." + slug + "_" + m + "_" + q.toLowerCase(); }));
+  ["heat", "cool"].forEach(m => ["Start", "End", "Prompt"].forEach(q => { const k = m + q; if (!r[k]) r[k] = HELPER_GUESS["input_datetime." + slug + "_" + m + "_" + q.toLowerCase()] = "input_datetime." + slug + "_" + m + "_" + q.toLowerCase(); }));
 });
 const CTROWS = [
   ["heatBelow", "Heat below", "fire", "wm", "Heating starts under this"],
