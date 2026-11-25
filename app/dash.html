@@ -3120,7 +3120,7 @@ html:not(#x) #dtm .dtv{flex:1;aspect-ratio:auto;min-height:0;height:100%}
 /* the speed dial: two small labelled buttons above the tools button */
 #tldial{position:fixed;z-index:44;display:flex;flex-direction:column;align-items:flex-end;gap:12px;pointer-events:none}
 #tldial button{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(12px) scale(.9);transition:opacity .18s,transform .22s cubic-bezier(.2,.8,.2,1)}
-#tldial.on{pointer-events:auto}#tldial.on button{opacity:1;transform:none}#tldial.on button:nth-child(1){transition-delay:.08s}#tldial.on button:nth-child(2){transition-delay:.04s}
+#tldial.on{pointer-events:auto}#tldial.on button{opacity:1;transform:none}#tldial.on button:nth-child(1){transition-delay:.08s}#tldial.on button:nth-child(2){transition-delay:.04s}#tldial.on button:nth-child(3){transition-delay:.02s}
 #tldial button span{padding:6px 12px;border-radius:12px;background:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.08),0 4px 14px rgba(0,0,0,.25);color:var(--ink);font-size:14px;font-weight:600;white-space:nowrap}
 #tldial button i{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg);box-shadow:inset 0 0 0 999px rgba(var(--w),.12),0 4px 14px rgba(0,0,0,.25);color:var(--ink)}
 #tldial button i svg{width:22px;height:22px;fill:currentColor}
@@ -7441,7 +7441,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["Each speaker now has a Sound button under its volume: tap it to change Bass and Treble.","**Add songs to your playlists.** Tap the + on any song, or the Add to playlist button on Now Playing, then pick a playlist or start a new one with that song in it.","**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "8c8409";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "4c3193";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
@@ -7771,7 +7771,7 @@ window.__ZHD={"D": {"0.0 mm": "0.0 毫米", "1 hr": "1 小时", "2 hr": "2 小�
     // menu groups and the Settings page (2.5.7)
     "info": "信息", "outside": "室外", "account": "账户", "status": "状态", "entities": "实体", "logs": "日志", "change password": "修改密码", "quick actions": "快捷操作",
     "attributes": "属性", "recent runs": "最近运行", "reload automations": "重新加载自动化", "reload templates": "重新加载模板", "check config": "检查配置", "restart home assistant": "重启 Home Assistant",
-    "open ha settings": "打开 HA 设置", "open in ha": "在 HA 中打开", "run now": "立即运行", "refresh": "刷新", "copy": "复制", "copy all": "全部复制", "open automation": "打开自动化", "warnings": "警告", "errors": "错误",
+    "open ha settings": "打开 HA 设置", "home assistant settings": "Home Assistant 设置", "home assistant": "Home Assistant", "open in ha": "在 HA 中打开", "run now": "立即运行", "refresh": "刷新", "copy": "复制", "copy all": "全部复制", "open automation": "打开自动化", "warnings": "警告", "errors": "错误",
     "sign out of this device": "在此设备上退出登录", "signed in on this device": "已在此设备上登录", "at least 8 characters.": "至少 8 个字符。",
     "heating": "制热中", "cooling": "制冷中", "resting": "待机", "turn off": "关闭", "heat / cool": "制热 / 制冷",
     "hide this for today?": "今天隐藏此项？", "hide": "隐藏", "cancel": "取消", "show them": "显示", "hide for today": "今天隐藏",
@@ -8077,6 +8077,7 @@ function openWs(tk) {
     else if (m.type === "auth_invalid") authBad();
     else if (m.type === "auth_ok") {
       wsAuthed = true; setStatus(true); hideLogin();
+      if (camPage() && typeof startCams === "function" && !Object.keys(states).length) { try { startCams(); } catch (_) {} }   // the cameras on this page connect now, while the (large) list of states is still coming, not after it
       send({ type: "get_states" }, list => { list.forEach(setState); if (typeof LV !== "undefined") LV.t = null; loadFc(); loadFcH(); calFix(); palTick(); schLoad(); vGroups(); buildDep(); drawGsum(); if (cards[MAIN]) render(MAIN); if (!identDone) identify(); batTick(); tick(); bootMark("s"); setTimeout(() => { if (typeof lkReady === "function") lkReady(); }, 600); LV.t = null; lvQ(); queueNotif(); setTimeout(bootGo, 1400); if (camPage()) startCams(); if (onRooms) { if (curRoom) drawRoom(curRoom.id); else updRooms(); } });
       send({ type: "subscribe_events", event_type: "state_changed" }); cfgFetch();
       evBtn(); if (curPg() === "energy") { en.busy = false; loadEnergy(); }
@@ -8650,6 +8651,7 @@ function cams() {   // snapshot fallback for cameras that aren't live
 // one small still per camera kept on this device (localStorage): saved a moment after the stream starts (at most once a minute) and again whenever the stream stops,
 // so coming back to a page shows the last thing this device saw, not a picture from hours ago (night to morning)
 const camMem = {
+  fl: id => { try { return localStorage.getItem("dcamfl:" + id) === "1"; } catch (e) { return false; } },   // this light (_fluent) stream has been seen to exist
   get: id => { try { return localStorage.getItem("dcam:" + id) || ""; } catch (e) { return ""; } },
   age: id => { try { return Date.now() - (+localStorage.getItem("dcamt:" + id) || 0); } catch (e) { return 1e12; } },
   // returns the new still (a data: URL), or "" when nothing was saved
@@ -8698,9 +8700,10 @@ async function camPrefetch(force) {
 setInterval(() => camPrefetch(), 15000);
 document.addEventListener("visibilitychange", () => { if (!document.hidden) setTimeout(() => camPrefetch(), 1500); });
 // tiles use the light "_fluent" (sub) stream; full screen and the popup view switch to "_clear" (main)
+const camLt = c => { const f = c.id.replace(/_clear$/, "_fluent"); if (f === c.id) return ""; if (states[f]) { try { if (!camMem.fl(f)) localStorage.setItem("dcamfl:" + f, "1"); } catch (e) {} return f; } return !Object.keys(states).length && camMem.fl(f) ? f : ""; };   // "" = no light stream (or not known yet and never seen)
 function camEnt(c) {
   const cl = c.o.el.classList; if (cl.contains("fs") || cl.contains("vf")) return c.id;
-  const f = c.id.replace(/_clear$/, "_fluent"); return f !== c.id && states[f] ? f : c.id;
+  return camLt(c) || c.id;
 }
 function camLiveSync() { document.documentElement.classList.toggle("camlive", location.hash === "#security/detections" || CONFIG.cameras.concat(CONFIG.security, VWC, NPC, RVC).some(c => c.live)); }   // the Detections tab counts as live too: clips play there
 addEventListener("hashchange", () => camLiveSync());   // lets CSS pause decorative effects while video is playing
@@ -8708,7 +8711,7 @@ const CAM_POSTER = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALA
 function rmXf(c) { clearTimeout(c.xft); if (c.xf) { try { c.xf.srcObject = null; c.xf.remove(); } catch (x) {} c.xf = null; } }   // the sharp picture that is fading in over the soft one
 function dropOld(c) { clearTimeout(c.swapT); rmXf(c); if (c.old) { try { c.old.pc.close(); } catch (x) {} delete subs[c.old.sub]; c.old = null; } }   // the stream that was playing until the new one had its first picture
 function stopCam(c) {
-  dropOld(c); rmXf(c);
+  dropOld(c); rmXf(c); c._conn = 0;
   if (c.pc) { try { c.pc.close(); } catch (x) {} c.pc = null; }
   if (c.sub) { delete subs[c.sub]; c.sub = 0; }
   // the last live frame becomes the tile's picture (and the kept still), so the next visit opens on it instead of an older one
@@ -8727,8 +8730,10 @@ function liveCam(c, up, big) {   // HA built-in WebRTC (go2rtc); falls back to s
   // a stream whose connection was closed leaves a dead picture behind: that is not "playing"
   const alive = !!(o.vid.srcObject && o.vid.srcObject.getTracks().some(t => t.readyState === "live"));
   // nothing is playing yet and the big (clear) stream is wanted: the light stream connects first (a small picture arrives in about a second) and the clear one follows and fades in over it (12-init.js onplaying), like the Reolink app starting on its small stream. CONFIG.camLightFirst:false turns it off
-  { const lt = c.id.replace(/_clear$/, "_fluent"); c.upg = 0;
-    if (eid === c.id && lt !== c.id && states[lt] && CONFIG.camLightFirst !== false && !(c.live && alive) && !c.old) { eid = lt; c.upg = 1; } }
+  { const lt = camLt(c); c.upg = 0;
+    if (eid === c.id && lt && CONFIG.camLightFirst !== false && !(c.live && alive) && !c.old) { eid = lt; c.upg = 1; } }
+  // a start that is already under way (the early one at login, then the one after the states arrive): the second one must not tear the first down
+  if (!up && !c.live && c._conn && Date.now() - c._conn < 12000) return;
   // a switch is already under way (closed and opened again within a second or two): the picture that is playing keeps playing, only the half-connected new stream is replaced
   // a camera with ONE stream (no light / clear pair) is already showing what the big view needs: opening or closing full screen leaves it playing, nothing reconnects
   if (up && !c.old && c.live && c.pc && alive && c.eid === eid) return;
@@ -8740,6 +8745,7 @@ function liveCam(c, up, big) {   // HA built-in WebRTC (go2rtc); falls back to s
   o.el.classList.remove("cfail"); camMsg(c, false); if (!(up && c.old)) o.el.classList.add("cwait");   // the spinner and message show until the first picture (12-init.js onplaying); a camera that is already playing keeps its picture, nothing is put over it while the clear stream connects
   clearTimeout(c.ft); c.ft = setTimeout(() => { if (!c.live || c.old) camFail(c); }, 12000);   // nothing after 12 s: the message turns into "Couldn't connect" with a RETRY button
   o.vid.muted = !(c.snd && (o.el.classList.contains("fs") || o.el.classList.contains("vf")));
+  if (ws && ws.readyState === 1) c._conn = Date.now();   // (a start made before the socket is open sends nothing, so it does not count)
   send({ type: "camera/webrtc/get_client_config", entity_id: eid }, cfg => {
     try {
       const pc = new RTCPeerConnection(cfg.configuration); c.pc = pc;
@@ -9114,7 +9120,7 @@ function mkCam(c, host) {
     try {
       const fresh = !c.mic; if (fresh) c.mic = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
       c.mic.getAudioTracks().forEach(t => { t.enabled = true; }); c.talk = true; mic.classList.add("on");
-      if (fresh) { c.snd = true; o.vid.muted = false; snd.classList.add("on"); snd.innerHTML = AUD.on; liveCam(c); }   // reconnect once with a send channel
+      if (fresh) { c.snd = true; o.vid.muted = false; snd.classList.add("on"); snd.innerHTML = AUD.on; c._conn = 0; liveCam(c); }   // reconnect once with a send channel
     } catch (x) { mic.dataset.e = "Mic blocked: " + (x && x.name || "error"); mic.classList.add("err"); setTimeout(() => mic.classList.remove("err"), 4500); }
   };
   o.bind = v => { v.onplaying = () => { c.live = true; el.classList.remove("still"); clearTimeout(c.ft); el.classList.add("live"); el.classList.remove("cwait", "cfail"); o.vid.classList.add("on"); camLiveSync(); setTimeout(() => { if (c.live) camMem.put(c.id, o.vid); }, 1500); if (c.upg) { c.upg = 0; if (el.classList.contains("fs") || el.classList.contains("vf")) setTimeout(() => liveCam(c, true), 50); } }; };   // the light picture is up and the big view is open: now the clear stream connects and fades in over it
@@ -9124,7 +9130,7 @@ function mkCam(c, host) {
   const cp = $(".cpanel", el); cp.onclick = tapH; cp.onchange = chgH;
   // phones: the garage door / light tiles under a full-screen camera stay folded away (they covered the bottom of the picture); this pill brings them up and puts them away
   const ctb = document.createElement("button"); ctb.className = "ctb"; ctb.setAttribute("aria-expanded", "false"); ctb.innerHTML = mdi("chevron-up") + "<span>CONTROLS</span>"; el.appendChild(ctb); el.insertAdjacentHTML("beforeend", '<div class="cld"><i class="dtsp"></i><span class="clm">Connecting to camera…</span><button type="button" class="cre">RETRY</button></div>');   // full screen / camera view: a spinner and a message until the first picture
-  { const re = $(".cre", el); re.onclick = e => { e.stopPropagation(); clearTimeout(c.rt); liveCam(c); }; }   // the connection failed or took too long: try again now
+  { const re = $(".cre", el); re.onclick = e => { e.stopPropagation(); clearTimeout(c.rt); c._conn = 0; liveCam(c); }; }   // the connection failed or took too long: try again now
 
   el._ctb = () => { const o = !el.classList.contains("cpo"); el.classList.toggle("cpo", o); ctb.setAttribute("aria-expanded", o); ctb.innerHTML = mdi(o ? "chevron-down" : "chevron-up") + "<span>" + (o ? "HIDE" : "CONTROLS") + "</span>"; };
   if (host.id === "vw") {   // the camera view's top controls share one wrapper, so the layout can put them in one row (tablets) or two (phones)
@@ -16634,6 +16640,8 @@ function route() {
     // armed lockdown: the Security page (and a camera in full screen) only, whichever address was opened (19-lockdown.js)
     if (lkBody() && h0 !== "security" && h0 !== "view" && h0 !== "camera") { location.replace("#security"); return; }
     if (h0 === "settings") { location.replace(setHome()); return; }
+    // #ha: Home Assistant's own settings, for an admin (a bookmark, a Fully Kiosk shortcut, or Search); anyone else lands on their first page
+    if (h0 === "ha") { location.replace("#" + (PAGE_ON("home") ? "home" : lp)); if (ADMIN_ON()) setTimeout(haGo, 60); return; }
     // #popup/warning | alert | road | sea | camera/<name>: the Home page with that centred pop-up open over it (50-takeover-warning.js)
     if (h0 === "popup") { const q = location.hash.slice(1).split("/"); location.replace("#" + (PAGE_ON("home") ? "home" : lp)); setTimeout(() => { if (typeof tkLink === "function") tkLink(q[1], q[2]); }, 350); return; }
     if (h0 && !PAGE_ON(h0) && h0 !== "home" && !(h0 === "theme" && setOn())) { location.replace("#" + (PAGE_ON("home") ? "home" : lp)); return; }
@@ -19527,7 +19535,7 @@ function updFabMake() {
   // a blurred backdrop behind the two small buttons, so their labels read over any card
   const bk = document.createElement("div"); bk.id = "tlscrim"; document.body.appendChild(bk);
   b.addEventListener("click", () => { UPD.dial = !UPD.dial; updDraw(); });
-  d.addEventListener("click", e => { const t = e.target.closest("[data-tld]"); if (!t) return; UPD.open = t.dataset.tld; UPD.dial = false; updDraw(); });
+  d.addEventListener("click", e => { const t = e.target.closest("[data-tld]"); if (!t) return; if (t.dataset.tld === "ha") { UPD.dial = false; updDraw(); haGo(); return; } UPD.open = t.dataset.tld; UPD.dial = false; updDraw(); });
   document.addEventListener("pointerdown", e => { if (UPD.dial && !e.target.closest("#tlfab,#tldial")) { UPD.dial = false; updDraw(); } }, true);
   s.addEventListener("click", e => { if (e.target === s || e.target.closest("[data-tlx]")) { UPD.open = ""; updDraw(); return; } const q = e.target.closest("[data-adq]"); if (q && typeof admQa === "function") admQa(q.dataset.adq); });
 }
@@ -19542,7 +19550,7 @@ function updDraw() {
   fab.classList.toggle("dial", UPD.dial); const fh = mdi(UPD.dial ? "close" : "wrench") + '<span class="tlc"' + ((n + rn) && !UPD.dial ? "" : " hidden") + '>' + ((n + rn) || "") + '</span>'; if (fab._k !== fh) { fab._k = fh; fab.innerHTML = fh; }   // only when it changed (no needless rebuilds) fab.setAttribute("aria-expanded", UPD.dial ? "true" : "false");
   const dl = $("#tldial"); dl.classList.toggle("on", UPD.dial); $("#tlscrim").classList.toggle("on", UPD.dial);
   if (UPD.dial) { const r = fab.getBoundingClientRect(); dl.style.right = Math.round(innerWidth - r.right + (r.width - 44) / 2) + "px"; dl.style.bottom = Math.round(innerHeight - r.top + 10) + "px";
-    const h = '<button type="button" data-tld="upd"><span>Updates' + (n ? " · " + n : "") + '</span><i>' + mdi("download") + '</i></button><button type="button" data-tld="rpr"><span>Repairs' + (rn ? " · " + rn : "") + '</span><i>' + mdi("alert") + '</i></button><button type="button" data-tld="qa"><span>Quick actions</span><i>' + mdi("lightning-bolt") + '</i></button>';   // Updates on top, Quick actions below it (nearest the button)
+    const h = '<button type="button" data-tld="upd"><span>Updates' + (n ? " · " + n : "") + '</span><i>' + mdi("download") + '</i></button><button type="button" data-tld="rpr"><span>Repairs' + (rn ? " · " + rn : "") + '</span><i>' + mdi("alert") + '</i></button><button type="button" data-tld="qa"><span>Quick actions</span><i>' + mdi("lightning-bolt") + '</i></button><button type="button" data-tld="ha"><span>Home Assistant</span><i>' + mdi("open-in-new") + '</i></button>';   // Updates on top, then Repairs, Quick actions, and Home Assistant (opens HA's settings in one tap) nearest the button
     if (dl._k !== h) { dl._k = h; dl.innerHTML = h; } }
   const sh = $("#tlsh"), on = adm && !!UPD.open; if ((!on || UPD.open !== "rpr") && (RPR.fx || RPR.cur) && typeof rprCancel === "function") { rprCancel(); RPR.cur = null; } sh.classList.toggle("on", on); sh.setAttribute("aria-hidden", on ? "false" : "true"); document.body.classList.toggle("tl-open", on);
   if (on) { const qa = UPD.open === "qa", rp = UPD.open === "rpr", h = '<div class="tlx' + (qa ? " qa" : "") + '" role="dialog" aria-modal="true" aria-label="' + (qa ? "Quick actions" : rp ? "Repairs" : "Updates") + '"><div class="tlh"><span class="lbl">' + mdi(qa ? "lightning-bolt" : rp ? "alert" : "download") + (qa ? " Quick actions" : rp ? " Repairs" : " Updates") + '</span><button class="evx" data-tlx aria-label="Close">' + mdi("close") + '</button></div><div class="tlb">' + (qa ? (typeof admQaHtml === "function" ? admQaHtml() : "") : rp ? rprHtml() : updHtml()) + '</div>' + (qa || rp ? "" : updBar()) + '</div>';
@@ -20234,6 +20242,7 @@ if (auOn()) try {
       ["Earthquakes", "#hazards/earthquakes", "hazards", "quake seismic shake"], ["Volcanoes", "#hazards/volcanoes", "hazards", "volcano eruption ash"],
       ["Notifications", "#notifications", "*", "alerts bell"], ["Active devices", "#active", "*", "on now running left on"], ["Batteries", "#batteries", "*", "battery low flat"]
     ].forEach(v => { if (v[2] === "" || (v[2] !== "*" && !on(v[2]))) return; add(mk("View", v[0], v[2] === "*" ? "Pop-up" : pgName(v[2]), v[1], { kw: v[3], pg: v[2] === "*" ? "" : v[2], done: 1 })); });
+    if (typeof ADMIN_ON === "function" && ADMIN_ON()) add(mk("View", "Home Assistant settings", "Admin", "#ha", { kw: "ha open configuration config integrations devices helpers automations dashboards addons", done: 1 }));   // one tap from Search; same as the Home Assistant button on the Settings tools button
     if (setOn()) { add(mk("View", "Language", "Settings", setHome(), { kw: "english chinese 中文", card: "Language", pg: "theme" })); add(mk("View", "Theme & colours", "Settings", setHome(), { kw: "dark light mode palette style appearance", pg: "theme" })); }
     // rooms: the room, its doors and windows, its cards, and every device it lists
     if (on("rooms")) (CONFIG.house || []).forEach(r => {
