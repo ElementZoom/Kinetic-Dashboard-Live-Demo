@@ -3468,6 +3468,9 @@ html[data-mode=light] .rsc .rsst{color:#a3211a}
 #scenes .scfh.scoff{max-height:0;margin-bottom:0;padding-top:0;padding-bottom:0;border-width:0!important;opacity:0;overflow:hidden;pointer-events:none}
 /* the pop-up's tab row (and its header and footer) keep their height when the list is long: only the list scrolls / shrinks, the tabs are never squashed */
 #cpp .cpsh>:not(.cpl),#cpp .cpsh>.hsw>*{flex:none}   /* the tab row sits in a display:contents wrapper (.hsw), so it is a flex child of the card too */
+
+.rsc .rspv{margin:0 0 12px}.rsc .rspv[hidden]{display:none}#rsp .rspt{margin:2px 0 10px}#rsp .scpg{margin-bottom:16px}
+.rsc .rspv{flex-wrap:wrap}.rsc .rspv [data-pst]{flex:0 0 auto;min-width:0;padding-left:16px;padding-right:16px}
 /* Notifications > Active: groups fold, doors and windows are slim rows, and a chip row jumps to one group */
 #np .npf{cursor:pointer;-webkit-tap-highlight-color:transparent}
 #np .npfr{margin-left:auto;display:flex;align-items:center;gap:8px}
@@ -7418,7 +7421,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["Each speaker now has a Sound button under its volume: tap it to change Bass and Treble.","**Add songs to your playlists.** Tap the + on any song, or the Add to playlist button on Now Playing, then pick a playlist or start a new one with that song in it.","**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "e25bc8";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "b38dba";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
   var res = 0; try { var rs = +sessionStorage.getItem("kinetic-au-resume") || 0; sessionStorage.removeItem("kinetic-au-resume"); res = rs && Date.now() - rs < 30000; } catch (e) {}
@@ -11571,7 +11574,10 @@ setTimeout(() => { try { if (typeof PAGE_ON === "function" && !PAGE_ON("scenes")
 //   tap a zone   -> script.toggle_or_apply_dynamic_scene (same fields as the Scenes page)    tap a gradient light -> script.toggle_or_apply_gradient_scene
 //   CHANGE       -> a sheet with the scene pictures; picking one sets the house-wide pick (entities.dynSelected), then tap the zones to paint them
 //   STOP THIS ROOM -> turns off this room's zone switches (and its gradient lights); STOP ALL -> the Scenes page's Stop scenes (entities.dynStop)
-let RSP = { open: false, f: "all" };
+let RSP = { open: false, f: "all", m: "scene", v: "" };   // m: what the card plays (a single scene, or a preset that moves on by itself); v: the sheet's tab
+try { if (localStorage.getItem("dashRsMode") === "preset") RSP.m = "preset"; } catch (_) {}
+const rsSetMode = m => { RSP.m = m; try { localStorage.setItem("dashRsMode", m); } catch (_) {} };
+const rsMode = () => scpOn() && RSP.m === "preset" ? "preset" : "scene";   // presets only exist when the dashboard runs the scenes itself (scenes.mode: "direct")
 Object.assign(MDI, { "led-strip": "M2,15H22V19H2V15M4,9.5A2,2 0 1,0 8,9.5A2,2 0 1,0 4,9.5M10,9.5A2,2 0 1,0 14,9.5A2,2 0 1,0 10,9.5M16,9.5A2,2 0 1,0 20,9.5A2,2 0 1,0 16,9.5Z", speedometer: "M12,16A3,3 0 0,1 9,13C9,11.88 9.61,10.9 10.5,10.39L20.21,4.77L14.68,14.35C14.18,15.33 13.17,16 12,16M12,3C13.81,3 15.5,3.5 16.97,4.32L14.87,5.53C14,5.19 13,5 12,5A8,8 0 0,0 4,13C4,15.21 4.89,17.21 6.34,18.65H6.35C6.74,19.04 6.74,19.67 6.35,20.06C5.96,20.45 5.32,20.45 4.93,20.07V20.07C3.12,18.26 2,15.76 2,13A10,10 0 0,1 12,3M22,13C22,15.76 20.88,18.26 19.07,20.07V20.07C18.68,20.45 18.05,20.45 17.66,20.06C17.27,19.67 17.27,19.04 17.66,18.65V18.65C19.11,17.2 20,15.21 20,13C20,12 19.81,11 19.46,10.1L20.67,8C21.5,9.5 22,11.18 22,13Z" });
 const rsLights = r => members(roomLights(r));
 // Which room a zone goes to: its own room: "<id>" key; else the room that has the most of its lights (light groups expanded where Home Assistant lists
@@ -11606,18 +11612,25 @@ function rsHtml(r) {   // the card's body (drawRoom puts it in a panel called "S
   const m = rsFor(r); if (!m) return "";
   const S = CONFIG.scenes;
   return '<div class="rsc" data-rid="' + esc(r.id) + '"><div class="rsh"><i class="rsth">' + mdi("palette") + '</i><div class="rsn"><b>--</b><div class="sctags"></div><small>Pick a scene, then tap a light</small></div><button class="eb" data-rsp="1">CHANGE</button></div>' +
+    '<div class="chips rspv" hidden>' + SCP_EVERY.map(x => '<button class="chip" data-piv="' + x + '"><span>' + scpEvery(x).toUpperCase() + '</span></button>').join("") + '<button class="chip" data-pst="1">' + mdi("shuffle-variant") + '<span>STAGGER</span></button></div>' +
     '<div class="rsz">' + m.z.map(i => '<button class="rzc" data-rz="' + i + '"><span>' + esc(S.rooms[i].n) + '</span><small>--</small></button>').join("") + m.g.map(i => '<button class="rzc" data-rg="' + i + '"><span>' + esc(S.lights[i].n) + '</span><em class="sclt">LED</em><small>--</small></button>').join("") + '</div>' +
     [[E("dynBrightness"), "Brightness", "brightness-6"]].concat(m.z.length ? [[E("dynInterval"), "Interval", "timer"]] : []).concat(m.g.map(i => [S.lights[i].v, S.lights[i].n + " speed", "speedometer", i])).filter(x => x[0] && states[x[0]]).map(x => '<div class="mv rsv"' + (x[3] !== undefined ? ' data-spd="' + x[3] + '" hidden' : "") + '><span>' + mdi(x[2]) + ' ' + esc(x[1]) + '</span><input type="range" data-nb="' + x[0] + '"><b class="nbv">--</b></div>').join("") +   // Interval paces the zones; a gradient light has its own effect speed
     '<div class="rss"><button class="eb rsst" data-rss="1">' + mdi("stop-circle") + 'STOP THIS ROOM</button>' + (states[E("dynStop")] || scDirect() ? '<button class="eb" data-rsa="1">STOP ALL</button>' : "") + '</div></div>';
 }
 function rsUpd() {
   const c = $("#rv .rsc"); if (!c) return;
-  const S = CONFIG.scenes, picked = sv(E("dynSelected")) || "", v = rsCompatible(picked, curRoom) ? picked : "", fn = v ? rsPic(v) : "";
-  $(".rsn b", c).textContent = v ? title(v) : "No scene picked"; { const tg = $(".rsn .sctags", c); if (tg) tg.innerHTML = scTags(v, true); }
+  const S = CONFIG.scenes, picked = sv(E("dynSelected")) || "", pm = rsMode() === "preset", P = pm ? scpSel() : null, v = rsCompatible(picked, curRoom) ? picked : "", fn = pm ? (P && P.pics[0]) || "" : v ? rsPic(v) : "";
+  { const sm = $(".rsn small", c); if (sm) sm.textContent = pm ? "Tap a light to start this preset there" : "Pick a scene, then tap a light"; const pv = $(".rspv", c); if (pv) { pv.hidden = !pm; $$("[data-piv]", pv).forEach(b => b.classList.toggle("on", +b.dataset.piv === scpIv())); $$("[data-pst]", pv).forEach(b => b.classList.toggle("on", scpStag())); } }
+  $(".rsn b", c).textContent = pm ? (P ? P.n : "No preset picked") : v ? title(v) : "No scene picked"; { const tg = $(".rsn .sctags", c); if (tg) tg.innerHTML = pm ? "" : scTags(v, true); }
   { const th = $(".rsth", c), im = $("img", th); if (fn) { if (!im || im.getAttribute("src") !== fn) th.innerHTML = '<img alt="" src="' + fn + '">'; } else if (im || !$("svg", th)) th.innerHTML = mdi("palette"); }
   let on = 0, all = 0;
+  if (pm && P) {
+    $$("[data-rz]", c).forEach(el => { const i = +el.dataset.rz, z0 = scZoneState(i), r = SCP.run["r" + i], mine = !!r && r.p === P.id, na = !z0.on && !P.s.some(x => scpCan("r" + i, x)); all++; if (z0.on) on++; el.classList.toggle("scna", na); el.classList.toggle("on", z0.on); el.classList.toggle("scpr", mine); $("small", el).textContent = z0.on ? (mine ? "Preset · " : "") + (z0.scene ? title(z0.scene) : "ON") : na ? "No scenes here" : "OFF"; });
+    $$("[data-rg]", c).forEach(el => { const i = +el.dataset.rg, l = S.lights[i], o = isOn(l.l), r = SCP.run["g" + i], mine = !!r && r.p === P.id, na = !o && !P.s.some(x => scpCan("g" + i, x)); all++; if (o) on++; el.hidden = false; el.classList.toggle("scna", na); el.classList.toggle("on", o); el.classList.toggle("scpr", mine); $("small", el).textContent = o ? (mine ? "Preset · " : "") + title(sv(l.s) || "ON") : na ? "Not on this LED" : "OFF"; $$('[data-spd="' + i + '"]', c).forEach(x => { x.hidden = !o; }); });
+  } else {
   $$("[data-rz]", c).forEach(el => { const z0 = scZoneState(+el.dataset.rz), t = z0.scene, o = z0.on; all++; if (o) on++; const na = !o && !scZoneCan(v); el.classList.toggle("scna", na); el.classList.toggle("on", o); $("small", el).textContent = o ? (t ? title(t) : "ON") : na ? "LEDs only" : "OFF"; });   // a zone that cannot play the picked scene (an LED-only one) is greyed
   $$("[data-rg]", c).forEach(el => { all++; if (scGradState(el, +el.dataset.rg, "small")) on++; });
+  }
   const lb = c.closest(".pn") && c.closest(".pn").querySelector(".lbl.hd .rcnt"); if (lb) lb.textContent = "· " + (on ? on + " of " + all + " on" : "all off");
   $$("[data-nb]", c).forEach(r => { const s = states[r.dataset.nb]; if (!s) return; const a = s.attributes; r.min = a.min != null ? a.min : 0; r.max = a.max != null ? a.max : 100; r.step = a.step || 1; if (document.activeElement !== r) { r.value = s.state; slFill(r); $(".nbv", r.parentNode).textContent = Math.round(+s.state); } });
   const st = $("[data-rss]", c); if (st) st.disabled = !on;
@@ -11629,33 +11642,41 @@ function rsCompatibleLibrary(room) {
     (hasRooms && x.room) || (hasLeds && x.led && m.g.some(i => !!scOpt(i, x.v)))
   )]).filter(c => c[1].length);
 }
+function rsKeys(room) { const m = rsFor(room) || { z: [], g: [] }; return m.z.map(i => "r" + i).concat(m.g.map(i => "g" + i)); }
+const rsPresets = room => { const K = rsKeys(room); return scpList().filter(p => p.s.some(v => K.some(k => scpCan(k, v)))); };   // the presets at least one light of this room can play
 function rsCompatible(v, room) { return !v || rsCompatibleLibrary(room).some(c => c[1].some(x => scSame(x.v, v))); }
 function rsSheet() {   // the scene pictures as a sheet, opened by CHANGE: the same library and ALL / ROOMS / LEDS chips as the Scenes page
   let el = $("#rsp"); if (!el) { el = document.createElement("div"); el.id = "rsp"; document.body.appendChild(el); el.addEventListener("click", rsSheetClick); }
   if (!RSP.open) { el.classList.remove("on"); el.innerHTML = ""; return; }
-  const v = sv(E("dynSelected")) || "", L = rsCompatibleLibrary(curRoom);
-  el.innerHTML = '<div class="rspx" role="dialog" aria-modal="true" aria-label="Pick a scene"><div class="rsph"><div><span class="lbl">Pick a scene</span><h3>' + esc(curRoom ? curRoom.name : "") + '</h3></div><button class="evx" data-rspx="1" aria-label="Close">' + mdi("close") + '</button></div>' +
-    '<div class="rspl">' + L.map(c => '<div class="lbl" style="margin:10px 0 8px">' + esc(c[0]) + '</div><div class="gal">' + c[1].map(scTile).join("") + '</div>').join("") + '</div></div>';
-  $$("#rsp .sc").forEach(x => x.classList.toggle("on", x.dataset.v === v));
+  const v = sv(E("dynSelected")) || "", L = rsCompatibleLibrary(curRoom), PL = scpOn() ? rsPresets(curRoom) : [], tab = PL.length ? (RSP.v || rsMode()) : "scene";
+  const tabs = PL.length ? '<div class="chips tabs rspt"><button class="chip' + (tab === "preset" ? " on" : "") + '" data-rst="preset">' + mdi("shuffle-variant") + '<span>PRESETS</span></button><button class="chip' + (tab === "scene" ? " on" : "") + '" data-rst="scene"><span>SCENES</span></button></div>' : "";
+  el.innerHTML = '<div class="rspx" role="dialog" aria-modal="true" aria-label="Pick a scene"><div class="rsph"><div><span class="lbl">Pick a scene</span><h3>' + esc(curRoom ? curRoom.name : "") + '</h3></div><button class="evx" data-rspx="1" aria-label="Close">' + mdi("close") + '</button></div>' + tabs +
+    '<div class="rspl">' + (tab === "preset" ? '<div class="gal scpg">' + PL.map(scpTile).join("") + '</div>' : L.map(c => '<div class="lbl" style="margin:10px 0 8px">' + esc(c[0]) + '</div><div class="gal">' + c[1].map(scTile).join("") + '</div>').join("")) + '</div></div>';
+  $$("#rsp .sc").forEach(x => x.classList.toggle("on", tab === "preset" ? rsMode() === "preset" && x.dataset.pre === (scpSel() || {}).id : rsMode() === "scene" && x.dataset.v === v));
   el.classList.add("on");
 }
 function rsSheetClick(e) {
-  const t = e.target, m = t.closest("[data-rsm]"), sc = t.closest(".sc[data-v]");
+  const t = e.target, m = t.closest("[data-rsm]"), sc = t.closest(".sc[data-v]"), rt = t.closest("[data-rst]"), pr = t.closest(".sc[data-pre]");
+  if (rt) { RSP.v = rt.dataset.rst; rsSheet(); return; }
+  if (pr) { SCP.sel = pr.dataset.pre; scpSave(); rsSetMode("preset"); RSP.open = false; RSP.v = ""; rsSheet(); rsUpd(); return; }
   if (m) { RSP.f = m.dataset.rsm; rsSheet(); return; }
-  if (sc) { if (!rsCompatible(sc.dataset.v, curRoom)) return; call("input_text", "set_value", E("dynSelected"), { value: sc.dataset.v }); RSP.open = false; rsSheet(); return; }
+  if (sc) { if (!rsCompatible(sc.dataset.v, curRoom)) return; call("input_text", "set_value", E("dynSelected"), { value: sc.dataset.v }); rsSetMode("scene"); RSP.open = false; RSP.v = ""; rsSheet(); rsUpd(); return; }
   if (t.closest("[data-rspx]") || t.id === "rsp") { RSP.open = false; rsSheet(); }
 }
 document.addEventListener("keydown", e => { if (e.key === "Escape" && RSP.open) { RSP.open = false; rsSheet(); } });
 function rsClick(e) {   // clicks inside the room page's Scene card (13-rooms.js hands them over)
   const c = e.target.closest(".rsc"); if (!c) return false;
   const S = CONFIG.scenes, z = e.target.closest("[data-rz]"), g = e.target.closest("[data-rg]");
-  if (e.target.closest("[data-rsp]")) { const m = rsFor(curRoom) || { z: [], g: [] }; RSP.f = "all"; RSP.open = true; rsSheet(); }
-  else if ((z || g) && !rsCompatible(sv(E("dynSelected")), curRoom)) return true;
+  if (e.target.closest("[data-rsp]")) { const m = rsFor(curRoom) || { z: [], g: [] }; RSP.f = "all"; RSP.v = ""; RSP.open = true; rsSheet(); }
+  else if (e.target.closest("[data-piv]")) { SCP.iv = +e.target.closest("[data-piv]").dataset.piv; scpResched(); rsUpd(); }
+  else if (e.target.closest("[data-pst]")) { SCP.stag = !scpStag(); scpResched(); rsUpd(); }
+  else if ((z || g) && rsMode() === "scene" && !rsCompatible(sv(E("dynSelected")), curRoom)) return true;
   else if (e.target.closest(".scna")) return true;
+  else if ((z || g) && rsMode() === "preset") { if (z) scpTap(+z.dataset.rz); else scpLedTap(+g.dataset.rg); rsUpd(); }
   else if (z && scDirect()) scdTap(+z.dataset.rz);
   else if (z) { const x = S.rooms[z.dataset.rz]; send({ type: "call_service", domain: "script", service: "toggle_or_apply_dynamic_scene", service_data: { room_lights: x.l, presence_automation: x.p, room_boolean: x.b, room_scene_tracker: x.t } }); }
   else if (g) scGradTap(+g.dataset.rg);
-  else if (e.target.closest("[data-rss]")) { const m = rsFor(curRoom); if (m) { m.z.forEach(i => { const x = S.rooms[i]; if (scDirect()) { if (scdZone(i).on) scdStop(i); return; } if (x.b && isOn(x.b)) call("input_boolean", "turn_off", x.b); }); m.g.forEach(i => { const x = S.lights[i]; if (isOn(x.l)) call("light", "turn_off", x.l); }); } }
+  else if (e.target.closest("[data-rss]")) { const m = rsFor(curRoom); if (m) { m.z.forEach(i => { const x = S.rooms[i]; if (scDirect()) { if (scdZone(i).on) scdStop(i); return; } if (x.b && isOn(x.b)) call("input_boolean", "turn_off", x.b); }); m.g.forEach(i => { const x = S.lights[i]; scpDrop("g" + i); if (isOn(x.l)) call("light", "turn_off", x.l); }); } }
   else if (e.target.closest("[data-rsa]")) { if (scDirect()) scdStopAll(); else call("input_boolean", "toggle", E("dynStop")); }
   return true;
 }
@@ -11814,11 +11835,12 @@ function scpNext() {   // "Next change in 6 min" under the interval, while the P
   el.textContent = "Playing on " + n + (n > 1 ? " lights" : " light") + (scpStag() ? " · each moves on at its own moment" : "") + " · next change in " + (at - Date.now() < 60000 ? "under a minute" : m + " min");
 }
 // ----- the Presets tab: the gallery, the settings in the panel, the taps -----
+function scpTile(p, k) {   // one preset picture: a collage of its scenes and how many there are
+  const n = Math.min(p.pics.length, 4), pics = []; for (let j = 0; j < n; j++) pics.push(p.pics[Math.floor(j * p.pics.length / n)]);
+  return '<div class="sc scp' + (p.id === scpSel().id ? " on" : "") + '" data-pre="' + esc(p.id) + '"><div class="scpm n' + (n >= 4 ? 4 : n >= 2 ? 2 : 1) + '">' + pics.slice(0, n >= 4 ? 4 : n >= 2 ? 2 : 1).map(u => '<img class="scfi" loading="' + (k < 8 ? "eager" : "lazy") + '" decoding="async" alt="" src="' + u + '" onload="this.classList.add(\'ld\')" onerror="this.classList.add(\'ld\')">').join("") + '</div><em class="scpc">' + p.s.length + ' scenes</em><span>' + esc(p.n) + '</span></div>';
+}
 function scpGallery() {
-  return '<div class="lbl" style="margin:6px 0 10px">Presets</div><div class="gal scpg" style="margin-bottom:16px">' + scpList().map((p, k) => {
-    const n = Math.min(p.pics.length, 4), pics = []; for (let j = 0; j < n; j++) pics.push(p.pics[Math.floor(j * p.pics.length / n)]);
-    return '<div class="sc scp' + (p.id === scpSel().id ? " on" : "") + '" data-pre="' + esc(p.id) + '"><div class="scpm n' + (n >= 4 ? 4 : n >= 2 ? 2 : 1) + '">' + pics.slice(0, n >= 4 ? 4 : n >= 2 ? 2 : 1).map(u => '<img class="scfi" loading="' + (k < 8 ? "eager" : "lazy") + '" decoding="async" alt="" src="' + u + '" onload="this.classList.add(\'ld\')" onerror="this.classList.add(\'ld\')">').join("") + '</div><em class="scpc">' + p.s.length + ' scenes</em><span>' + esc(p.n) + '</span></div>';
-  }).join("") + '</div>';
+  return '<div class="lbl" style="margin:6px 0 10px">Presets</div><div class="gal scpg" style="margin-bottom:16px">' + scpList().map(scpTile).join("") + '</div>';
 }
 function scpSet() {   // the panel's settings block for the Presets tab
   return '<div class="lbl np2">Change scene every</div><div class="chips scpiv">' + SCP_EVERY.map(m => '<button class="chip" data-piv="' + m + '"><span>' + scpEvery(m).toUpperCase() + '</span></button>').join("") + '</div>' +
@@ -13726,7 +13748,7 @@ const npScenes = () => { const S = CONFIG.scenes; if (!S || !Array.isArray(S.roo
   S.rooms.forEach((z, i) => { if (scZoneState(i).on) o.push("z" + i); }); (S.lights || []).forEach((l, i) => { if (isOn(l.l)) o.push("g" + i); }); return o; };
 const npScTile = k => { const S = CONFIG.scenes, i = +k.slice(1), g = k[0] === "g", z = g ? S.lights[i] : S.rooms[i], sc = g ? sv(z.s) : scZoneState(i).scene;
   return '<div class="ldt scnt on" data-scn="' + k + '" role="button" tabindex="0" aria-label="Stop ' + esc(z.n) + '"><span class="ldi">' + mdi(g ? "led-strip" : (S.ri && S.ri[i]) || "palette") + '</span><div><b>' + esc(z.n) + '</b><span>' + esc(sc ? title(sc) : "RUNNING") + (g ? " · LED" : "") + '</span></div></div>'; };
-function npScStop(k) { const S = CONFIG.scenes, i = +k.slice(1); if (k[0] === "g") { const l = S.lights[i]; if (isOn(l.l)) call("light", "turn_off", l.l); return; }
+function npScStop(k) { const S = CONFIG.scenes, i = +k.slice(1); if (k[0] === "g") { const l = S.lights[i]; if (typeof scpDrop === "function") scpDrop(k); if (isOn(l.l)) call("light", "turn_off", l.l); return; }
   if (scDirect()) { if (scdZone(i).on) scdStop(i); return; } const x = S.rooms[i]; if (x.b && isOn(x.b)) call("input_boolean", "turn_off", x.b); }
 function npScStopAll() { const S = CONFIG.scenes; if (scDirect()) scdStopAll(); else if (states[E("dynStop")]) call("input_boolean", "toggle", E("dynStop")); else npScenes().forEach(npScStop); (S.lights || []).forEach(l => { if (isOn(l.l)) call("light", "turn_off", l.l); }); }
 const actList = () => {
