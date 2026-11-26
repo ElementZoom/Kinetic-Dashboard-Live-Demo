@@ -776,7 +776,8 @@ html[data-mode=light] .fcc b{color:color-mix(in srgb,var(--hc) 55%,#1d1d2b)}html
 .bq:nth-child(2n)::before{animation-delay:-2.3s}.bq:nth-child(3n)::before{animation-delay:-4.6s}
 @keyframes bqg{50%{opacity:.52}}
 @property --mgc{syntax:'<color>';inherits:true;initial-value:rgb(143,240,196)}
-.mpc{--mgc:rgb(var(--mint-rgb));transition:--mgc 1.2s ease}
+:root{--mgc:var(--mint)}   /* the media colour falls back to the chosen preset colour (the speakers pop-up sits outside the player card) */
+.mpc{--mgc:var(--mint);transition:--mgc 1.2s ease}
 .mpc.pl,.mpc.ac{position:relative;isolation:isolate}
 .mpc.pl::before,.mpc.ac::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;background:radial-gradient(110% 100% at 100% 0,var(--mgc),transparent 75%);opacity:.2;transition:opacity .6s}
 .mpc.pl::before{opacity:.38;animation:mpg 6s ease-in-out infinite}
@@ -1945,6 +1946,10 @@ html:not(#x):not(#y) .zc.zls:fullscreen,html:not(#x):not(#y) .zc.zls.zfull{flex:
 /* the live camera opening: a spinner and a message until the first picture (12-init.js .cld) */
 .cam .cld{display:none}
 .cam:is(.fs,.vf):is(.cwait,:not(.live)):not(.pb) .cld{display:flex;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);flex-direction:column;align-items:center;gap:12px;z-index:3;pointer-events:none;color:rgba(255,255,255,.8);font:13px var(--mono);letter-spacing:.04em;text-shadow:0 1px 6px rgba(0,0,0,.6);white-space:nowrap}
+/* a picture is already showing (the last frame this device saw, or a fresh snapshot): no message over it, only a small spinner in the corner until the live picture fades in */
+.cam:is(.fs,.vf).cpic:not(.cfail) .cld{left:auto;top:auto;right:16px;bottom:16px;transform:none;flex-direction:row;gap:0}
+.cam:is(.fs,.vf).cpic:not(.cfail) .cld>:not(.dtsp){display:none}
+.cam:is(.fs,.vf).cpic:not(.cfail) .cld .dtsp{width:18px;height:18px;opacity:.8}
 html.camsw .cam .cld .dtsp{animation:none}
 .cam .cld .cre{display:none;pointer-events:auto;margin-top:2px;padding:10px 22px;border-radius:99px;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.12);color:#fff;font:600 12px var(--mono);letter-spacing:.12em;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .cam .cld .cre:active{background:rgba(255,255,255,.28)}
@@ -3564,17 +3569,6 @@ html:not(#x) #vw .cam.vf.cpo .cpanel{padding-bottom:calc(66px + env(safe-area-in
   html:not(#x) .cam.fs.hasc[data-gal]:not(.pb) .ctb,html:not(#x) #vw .cam.vf.hasc[data-gal]:not(.pb) .ctb{bottom:calc(var(--galh,26px) + 10px + env(safe-area-inset-bottom,0px))}
   html:not(#x) .cam.fs.cpo[data-gal] .cpanel,html:not(#x) #vw .cam.vf.cpo[data-gal] .cpanel{padding-bottom:calc(var(--galh,26px) + 66px + env(safe-area-inset-bottom,0px))}
 }
-/* Weather page: live weather map (Windy embed) */
-.wxml{margin:10px 0 0}
-.wxmm{position:relative;margin:10px 0 10px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#1b1b22}
-.wxmv{display:block;width:100%;height:420px;border:0}
-.wxmcv{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:center;gap:8px;padding:0 0 18px;border:0;border-radius:0;background:transparent;color:#fff;font:600 11px var(--mono);letter-spacing:.1em}
-.wxmcv span{padding:8px 14px;border-radius:999px;background:rgba(10,10,16,.62)}
-.wxmcv svg{display:none}
-.wxmcv[hidden],.wxmap.live .wxmcv{display:none}
-.wxmn{margin-top:2px}
-.fch{margin-bottom:10px}
-@media(max-width:760px){.wxmv{height:360px}}
 /* Insights page, the insight cards on their own pages, and the Home teaser */
 #insights > .insnav{display:block;margin-bottom:12px}#insights .insnav{margin-bottom:12px}#insights .insnav>.inschips{margin:0}#insights > .insnav > .inschips{border:0!important;background:none!important;box-shadow:none!important}
 #insights .insl{margin:14px 4px 8px}
@@ -4769,6 +4763,9 @@ header.hmg{--alw:32px;--hrg:8px}
 html:not(#x) header.hmg #nacc[data-k]{padding-left:calc(var(--alw) + 12px)}
 }
 }
+
+/* the lock joining / leaving the pill: its colours change at once (no fade from the plain look to the pill look) */
+html:not(#x) header.hmgn #al,html:not(#x) header.hmgn #al *{transition:none!important}
 /* ---------- Rooms page (13-rooms.js): one list, every group under a header (the old tab name); each room is one slim row (1 column on phones, 2 on tablets, 3 on wide screens) ---------- */
 #rl .rgh{grid-column:1/-1;margin:12px 4px 0}
 #rl .rgh:first-child{margin-top:0}
@@ -4837,35 +4834,10 @@ html:not(#x) .main > header{position:relative;z-index:30}
 /* LIQUID GLASS STYLE ONLY (html[data-style=glass]); the other styles keep the original solid title bar and pinned rows.  phones: the title bar and a pinned tab row sit on one frosted band once a page has scrolled. The page scrolls from the top of the screen (the 66px is the title bar and its gap), so its content slides under the band and shows through it, blurred. #fband is placed and shown by wpSync (31-section-pills.js). */
 #fband{display:none}
 @media(max-width:760px){html[data-style=glass]:not(#x) .main > .page{margin-top:-66px;padding-top:66px}}
-  /* progressive blur like iOS 26's scroll edge effect: five stacked backdrop layers, blurrier toward the top, each masked so it fades out downwards. No edge, border, radius or shadow. Opacity follows the scroll distance (--fbo, set by wpSync); it sits on each layer, not on #fband, because a parent with opacity would stop the backdrop blur seeing the page. */
-  html[data-style=glass] #fband{display:block;position:fixed;left:0;right:0;top:0;height:100px;z-index:20;pointer-events:none;--fbo:0}
-  html[data-style=glass] #fband.fb0{display:none}
-  #fband i{position:absolute;inset:0;opacity:var(--fbo);-webkit-backdrop-filter:blur(calc(var(--b) * var(--fbo)));backdrop-filter:blur(calc(var(--b) * var(--fbo)));-webkit-mask-image:var(--mk);mask-image:var(--mk)}
-  #fband i:nth-child(1){--b:1.5px;--mk:linear-gradient(to bottom,#000 40%,rgba(0,0,0,.9) calc(40% + (100% - 40%) * .2),rgba(0,0,0,.65) calc(40% + (100% - 40%) * .4),rgba(0,0,0,.35) calc(40% + (100% - 40%) * .6),rgba(0,0,0,.1) calc(40% + (100% - 40%) * .8),transparent 100%)}
-  #fband i:nth-child(2){--b:3px;--mk:linear-gradient(to bottom,#000 32%,rgba(0,0,0,.9) calc(32% + (88% - 32%) * .2),rgba(0,0,0,.65) calc(32% + (88% - 32%) * .4),rgba(0,0,0,.35) calc(32% + (88% - 32%) * .6),rgba(0,0,0,.1) calc(32% + (88% - 32%) * .8),transparent 88%)}
-  #fband i:nth-child(3){--b:8px;--mk:linear-gradient(to bottom,#000 24%,rgba(0,0,0,.9) calc(24% + (76% - 24%) * .2),rgba(0,0,0,.65) calc(24% + (76% - 24%) * .4),rgba(0,0,0,.35) calc(24% + (76% - 24%) * .6),rgba(0,0,0,.1) calc(24% + (76% - 24%) * .8),transparent 76%)}
-  #fband i:nth-child(4){--b:15px;--mk:linear-gradient(to bottom,#000 16%,rgba(0,0,0,.9) calc(16% + (62% - 16%) * .2),rgba(0,0,0,.65) calc(16% + (62% - 16%) * .4),rgba(0,0,0,.35) calc(16% + (62% - 16%) * .6),rgba(0,0,0,.1) calc(16% + (62% - 16%) * .8),transparent 62%)}
-  #fband i:nth-child(5){--b:26px;--mk:linear-gradient(to bottom,#000 8%,rgba(0,0,0,.9) calc(8% + (50% - 8%) * .2),rgba(0,0,0,.65) calc(8% + (50% - 8%) * .4),rgba(0,0,0,.35) calc(8% + (50% - 8%) * .6),rgba(0,0,0,.1) calc(8% + (50% - 8%) * .8),transparent 50%)}
-  #fband i:nth-child(6){--b:40px;--mk:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.9) calc(0% + (38% - 0%) * .2),rgba(0,0,0,.65) calc(0% + (38% - 0%) * .4),rgba(0,0,0,.35) calc(0% + (38% - 0%) * .6),rgba(0,0,0,.1) calc(0% + (38% - 0%) * .8),transparent 38%)}
-  /* two or more pinned rows (tabs + a second row, e.g. Settings > Entities search card): text must be unreadable all the way down to the bottom of the last row, so the heavy layers stay solid down to there (--fh is the band height) and only the last 44px fade */
-  #fband.fb2 i:nth-child(1){--mk:linear-gradient(to bottom,#000 calc(var(--fh) - 44px + 8px),rgba(0,0,0,.9) calc(calc(var(--fh) - 44px + 8px) + (calc(var(--fh) - 44px + 44px) - calc(var(--fh) - 44px + 8px)) * .2),rgba(0,0,0,.65) calc(calc(var(--fh) - 44px + 8px) + (calc(var(--fh) - 44px + 44px) - calc(var(--fh) - 44px + 8px)) * .4),rgba(0,0,0,.35) calc(calc(var(--fh) - 44px + 8px) + (calc(var(--fh) - 44px + 44px) - calc(var(--fh) - 44px + 8px)) * .6),rgba(0,0,0,.1) calc(calc(var(--fh) - 44px + 8px) + (calc(var(--fh) - 44px + 44px) - calc(var(--fh) - 44px + 8px)) * .8),transparent calc(var(--fh) - 44px + 44px))}
-  #fband.fb2 i:nth-child(2){--mk:linear-gradient(to bottom,#000 calc(var(--fh) - 44px + 4px),rgba(0,0,0,.9) calc(calc(var(--fh) - 44px + 4px) + (calc(var(--fh) - 44px + 42px) - calc(var(--fh) - 44px + 4px)) * .2),rgba(0,0,0,.65) calc(calc(var(--fh) - 44px + 4px) + (calc(var(--fh) - 44px + 42px) - calc(var(--fh) - 44px + 4px)) * .4),rgba(0,0,0,.35) calc(calc(var(--fh) - 44px + 4px) + (calc(var(--fh) - 44px + 42px) - calc(var(--fh) - 44px + 4px)) * .6),rgba(0,0,0,.1) calc(calc(var(--fh) - 44px + 4px) + (calc(var(--fh) - 44px + 42px) - calc(var(--fh) - 44px + 4px)) * .8),transparent calc(var(--fh) - 44px + 42px))}
-  #fband.fb2 i:nth-child(3){--mk:linear-gradient(to bottom,#000 calc(var(--fh) - 44px + 0px),rgba(0,0,0,.9) calc(calc(var(--fh) - 44px + 0px) + (calc(var(--fh) - 44px + 38px) - calc(var(--fh) - 44px + 0px)) * .2),rgba(0,0,0,.65) calc(calc(var(--fh) - 44px + 0px) + (calc(var(--fh) - 44px + 38px) - calc(var(--fh) - 44px + 0px)) * .4),rgba(0,0,0,.35) calc(calc(var(--fh) - 44px + 0px) + (calc(var(--fh) - 44px + 38px) - calc(var(--fh) - 44px + 0px)) * .6),rgba(0,0,0,.1) calc(calc(var(--fh) - 44px + 0px) + (calc(var(--fh) - 44px + 38px) - calc(var(--fh) - 44px + 0px)) * .8),transparent calc(var(--fh) - 44px + 38px))}
-  #fband.fb2 i:nth-child(4){--mk:linear-gradient(to bottom,#000 calc(var(--fh) - 44px + -4px),rgba(0,0,0,.9) calc(calc(var(--fh) - 44px + -4px) + (calc(var(--fh) - 44px + 34px) - calc(var(--fh) - 44px + -4px)) * .2),rgba(0,0,0,.65) calc(calc(var(--fh) - 44px + -4px) + (calc(var(--fh) - 44px + 34px) - calc(var(--fh) - 44px + -4px)) * .4),rgba(0,0,0,.35) calc(calc(var(--fh) - 44px + -4px) + (calc(var(--fh) - 44px + 34px) - calc(var(--fh) - 44px + -4px)) * .6),rgba(0,0,0,.1) calc(calc(var(--fh) - 44px + -4px) + (calc(var(--fh) - 44px + 34px) - calc(var(--fh) - 44px + -4px)) * .8),transparent calc(var(--fh) - 44px + 34px))}
-  #fband.fb2 i:nth-child(5){--mk:linear-gradient(to bottom,#000 calc(var(--fh) - 44px + -8px),rgba(0,0,0,.9) calc(calc(var(--fh) - 44px + -8px) + (calc(var(--fh) - 44px + 30px) - calc(var(--fh) - 44px + -8px)) * .2),rgba(0,0,0,.65) calc(calc(var(--fh) - 44px + -8px) + (calc(var(--fh) - 44px + 30px) - calc(var(--fh) - 44px + -8px)) * .4),rgba(0,0,0,.35) calc(calc(var(--fh) - 44px + -8px) + (calc(var(--fh) - 44px + 30px) - calc(var(--fh) - 44px + -8px)) * .6),rgba(0,0,0,.1) calc(calc(var(--fh) - 44px + -8px) + (calc(var(--fh) - 44px + 30px) - calc(var(--fh) - 44px + -8px)) * .8),transparent calc(var(--fh) - 44px + 30px))}
-  #fband.fb2 i:nth-child(6){--mk:linear-gradient(to bottom,#000 calc(var(--fh) - 44px + -12px),rgba(0,0,0,.9) calc(calc(var(--fh) - 44px + -12px) + (calc(var(--fh) - 44px + 24px) - calc(var(--fh) - 44px + -12px)) * .2),rgba(0,0,0,.65) calc(calc(var(--fh) - 44px + -12px) + (calc(var(--fh) - 44px + 24px) - calc(var(--fh) - 44px + -12px)) * .4),rgba(0,0,0,.35) calc(calc(var(--fh) - 44px + -12px) + (calc(var(--fh) - 44px + 24px) - calc(var(--fh) - 44px + -12px)) * .6),rgba(0,0,0,.1) calc(calc(var(--fh) - 44px + -12px) + (calc(var(--fh) - 44px + 24px) - calc(var(--fh) - 44px + -12px)) * .8),transparent calc(var(--fh) - 44px + 24px))}
-  /* no tint: the blur alone separates the rows from the content, so the wallpaper never darkens */
-  #fband::after{content:none}
-  /* the pinned rows stop painting the wallpaper over what scrolls under them; the band does that now, and carries the shadow */
-  html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.adlh,.ehc,#stabs,.insnav).stk{background:transparent!important;box-shadow:none!important}
-  html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.adlh,.ehc,#stabs,.insnav).stk::before{opacity:0!important;box-shadow:none!important}
-  html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.adlh,.ehc,#stabs,.insnav),html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.adlh,.ehc,#stabs,.insnav)::before{transition:none!important}
-  /* the pinned rows sit above the band, so the band never blurs them (the Settings search card was z-index 12, under the band's 20) */
-  html[data-style=glass]:not(#x) .page.fbp :is(.hsw,.secw,.scfh,.adlh,.ehc,#stabs,.insnav).stk{z-index:24!important}
-  /* Security's and Insights' tab rows have their own, more specific shadow rule (67-settings-nav-card.css): it drew the hard line under the tabs */
-  html[data-style=glass]:not(#x) :is(#security > #stabs,#insights > .insnav).stk{box-shadow:none!important}
+  /* the progressive blur band is retired in Liquid Glass (127-glass-pill.css: one frosted card at the top instead); #fband stays for Kinetic and Material */
+  html[data-style=glass] #fband{display:none!important}
   /* the title bar never has its own card on phones: title and chips sit straight on the page, and on the blur once it scrolls */
-@media(max-width:760px){html[data-style=glass]:not(#x) .main > header,html[data-style=glass]:not(#x) .main > header.hstk{background:transparent!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}
+@media(max-width:760px){html[data-style=glass]:not(#x) .main > header{background:transparent!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}
 /* LIQUID GLASS STYLE ONLY: cards become see-through like the Today card (light mint tint + soft mint border, no shadow) so the wallpaper and the frosted header blur read through them. Heat / cool tinted cards keep their own gradient. Kinetic and Material are untouched. */
 html[data-style=glass]:not(#x) :where(.pn,.card,.rc,.cd,.ws,.zf,.tl,.bd,.kpb,.spb):not(.heat):not(.cool){background:rgba(var(--mint-rgb),.085);border:1px solid rgba(var(--mint-rgb),.4);box-shadow:none}
 html[data-style=glass][data-mode=light]:not(#x) :where(.pn,.card,.rc,.cd,.ws,.zf,.tl,.bd,.kpb,.spb):not(.heat):not(.cool){background:rgba(255,255,255,.4);border:1px solid rgba(var(--mint-rgb),.55);box-shadow:none}
@@ -6729,14 +6701,6 @@ html:not(#x) #hazards .hzm.mfull{height:100vh!important;height:100dvh!important;
 .hzm.mfull .hzd{left:calc(12px + env(safe-area-inset-left));bottom:calc(12px + env(safe-area-inset-bottom));right:calc(12px + env(safe-area-inset-right))}
 .hzm.mfull .hzlb{display:none!important}
 /* Windy: the map fills the screen; the layer chips float over the top, the play bar stays at the bottom, no "tap to use" cover */
-.wxmap.mfull{position:fixed!important;inset:0;z-index:2147483000;margin:0!important;padding:0!important;width:auto!important;max-width:none!important;height:100vh;height:100dvh;border:0!important;border-radius:0!important;background:#000!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;overflow:hidden}
-.wxmap.mfull .wxmm{position:absolute;inset:0;margin:0;border:0;border-radius:0}
-.wxmap.mfull .wxmv{height:100%}
-.wxmap.mfull .wxmcv,.wxmap.mfull .wxmh,.wxmap.mfull .wxmn{display:none!important}
-.wxmap.mfull>.hsw{display:block;position:absolute;z-index:4;left:calc(64px + env(safe-area-inset-left));right:calc(64px + env(safe-area-inset-right));top:calc(12px + env(safe-area-inset-top));margin:0}
-.wxmap.mfull .wxml{margin:0}
-.wxmap.mfull>.hsw{padding:2px 8px;border-radius:18px;border:1px solid var(--line);background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.wxmap.mfull .wxmm>.mpfb{top:calc(12px + env(safe-area-inset-top));right:calc(12px + env(safe-area-inset-right));width:40px;height:40px}
 /* the three looks */
 html[data-style=glass]:not(#x) .hzzb .mpfb,html[data-style=glass]:not(#x) .wxmm>.mpfb{border-radius:14px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.18);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6)}
 html[data-style=glass]:not(#x) .hzm.mfull>.hzh,html[data-style=glass]:not(#x) .hzm.mfull>.hzleg,html[data-style=glass]:not(#x) .wxmap.mfull>.hsw{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6)}
@@ -7208,9 +7172,9 @@ html:not(#x) .tapfx{animation:tapFlash .55s ease-out}
 html:not(#x):not(#y) :is(.chip,.chmt button,.seg>.eb).glh{background:transparent!important;background-image:none!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-color:transparent!important;transition:none!important}
 html:not(#x):not(#y):not(#z) .chip.glu::after{opacity:0!important;transition:none!important}
 /* Every slider (scene Brightness / Interval / speed, irrigation, weather scenes ...) looks and moves like the Media speaker volume: the filled part follows the thumb, in each look. Copied from the media rules, wherever the slider lives. */
-html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:24px;--sf:var(--mgc,rgb(var(--mint-rgb)));--st:rgba(var(--w),.14)}
-html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .snr.snr input[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:24px;--sf:var(--mgc,rgb(var(--mint-rgb)));--st:rgba(var(--w),.14)}
-html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:24px;--sf:var(--mgc,rgb(var(--mint-rgb)));--st:rgba(var(--w),.14)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:24px;--sf:var(--mgc,var(--mint));--st:rgba(var(--w),.14)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .snr.snr input[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:24px;--sf:var(--mgc,var(--mint));--st:rgba(var(--w),.14)}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]{-webkit-appearance:none;appearance:none;background:none;margin:0;padding:0;height:24px;--sf:var(--mgc,var(--mint));--st:rgba(var(--w),.14)}
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) :is(.nsv,.mv:not(.tl),.wsl) input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) .snr.snr input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
 html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z) input.dtmr.dtmr[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--sf) var(--v,0%),var(--st) var(--v,0%))}
@@ -7327,6 +7291,288 @@ html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) .tl inpu
 #ssv .ssp.bad{color:#ff7a70;border-color:rgba(255,122,112,.5)}
 @media (prefers-reduced-motion:reduce){#ssv,#ssv .ssb{transition:none}}
 html.ssv-on *,html.ssv-on *::before,html.ssv-on *::after{animation-play-state:paused!important}
+/* LIQUID GLASS ONLY: one frosted card at the top, never two.
+   - a page with a pinned tab row: while the row is stuck the title bar slides away (.hhid) and the row glides up to the top edge (--gpy, set by wpSync in 31-section-pills.js); the row itself is the frosted card.
+   - a page with no pinned row: the title bar is the frosted card (a floating pill) once the page has scrolled (.hstk), and sticks to the top on tablets and desktops too.
+   Frosted = a translucent surface plus a backdrop blur (nothing blurs the page behind it any more; the old progressive band is gone). */
+@media(prefers-reduced-motion:no-preference){
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header{transition:transform .32s cubic-bezier(.2,.85,.3,1),opacity .22s ease,background-color .25s,border-color .25s,box-shadow .25s!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(#stabs,#rtabs,#insights > .insnav,.secw,.hsw,.scfh,.ehc,.adlh).stk{transition:transform .32s cubic-bezier(.2,.85,.3,1)!important}
+}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hhid{transform:translateY(calc(-100% - 24px));opacity:0;pointer-events:none}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(#stabs,#rtabs,#insights > .insnav,.secw,.hsw,.scfh,.ehc,.adlh).stk{transform:translateY(var(--gpy,0px))}
+/* the title bar as a floating pill */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk{border-radius:28px!important;background:rgba(255,255,255,.14)!important;border:1px solid rgba(255,255,255,.18)!important;-webkit-backdrop-filter:blur(18px) saturate(1.5)!important;backdrop-filter:blur(18px) saturate(1.5)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk{background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
+/* a stuck tab row: the same frosted surface (the rows that are their own capsule, then the ones that draw it with ::after) */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(#stabs,#rtabs,#insights > .insnav).stk{background:rgba(40,38,58,.5)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) .page :is(#stabs,#rtabs,#insights > .insnav).stk{background:rgba(255,255,255,.5)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(:is(#admin,#theme) > .hsw:has(> .setchips),.secw,#scenes .scfh,#energy > .ehc,#admin .adlog>.adlh).stk::after{background:rgba(40,38,58,.5)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) .page :is(:is(#admin,#theme) > .hsw:has(> .setchips),.secw,#scenes .scfh,#energy > .ehc,#admin .adlog>.adlh).stk::after{background:rgba(255,255,255,.5)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
+@media(min-width:761px){
+  /* tablets and desktops: the title bar floats too (it used to scroll away with the page) */
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header{position:sticky!important;top:10px}
+}
+/* tablets and desktops: the greeting strip is its own coloured card inside the title bar; once the bar is the floating pill the strip drops its card, so there is one card, not two */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk > .hs{background:none!important;border-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;color:var(--ink)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk > .hs *{color:inherit}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk > .hs::before,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk > .hs::after{display:none!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk > .hs > .hsw{background:none!important;box-shadow:none!important;border-color:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk > .hs > .hsw canvas{display:none!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk > .hs > .hsw,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .main > header.hstk > .hs > .hsw *{color:var(--ink)!important;text-shadow:none!important;-webkit-text-fill-color:var(--ink)!important}
+/* no wallpaper layer or shadow behind a stuck row: the capsule is the only thing at the top, with no band of background around it */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(.hsw,.secw,.scfh,.ehc,.adlh).stk{background:transparent!important;box-shadow:none!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(.hsw,.secw,.scfh,.ehc,.adlh).stk::before{opacity:0!important;box-shadow:none!important;background:none!important}
+/* rows whose capsule is an inner tab track (Climate Control / History and the like, no ::after of their own): the track is the frosted card */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page :is(.hsw,.secw).stk > :is(.chips.tabs,.secnav,.setchips){background:rgba(40,38,58,.5)!important;border:1px solid rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page :is(.hsw,.secw).stk > :is(.chips.tabs,.secnav,.setchips){background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(.hsw,.secw).stk::after{display:none!important}   /* the inner track above is the card; a second one behind it would double the ring */
+
+/* B (phones): the tab capsule sits in the title row (placed by wpSync: --hx / --hy), the title text steps aside. The row is position:fixed, so it does not follow the scroll and leaves no gap in the page */
+@media(max-width:760px){
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hth #ttl > span{display:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr{position:fixed!important;left:var(--hx)!important;top:var(--hy)!important;right:auto!important;width:auto!important;max-width:none!important;margin:0!important;padding:0!important;transform:none!important;z-index:40!important;pointer-events:none;background:none!important;box-shadow:none!important;border:0!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr::before,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr::after{display:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr:is(.chips,.insnav),html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr > :is(.chips.tabs,.setchips,.inschips){pointer-events:auto;height:40px!important;min-height:0!important;margin:0!important;padding:2px!important;align-items:center;background:rgba(120,120,128,.18)!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr :is(.chip){height:34px!important;min-height:0!important;padding-top:0!important;padding-bottom:0!important;display:flex;align-items:center}
+}
+
+/* one header always: chips folded into a button + pop-up, and the tab capsule as a drop-down when it is still too wide */
+#hcb{display:none}
+@media(max-width:760px){
+  html[data-style=glass]:not(#x):not(#y):not(#z) .main > header.hcol .hr > :not(#hsrch):not(#hcb){display:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z) .main > header.hcol #hcb{display:inline-flex;order:10;position:relative;width:34px;height:34px;padding:0;border:0;border-radius:50%;background:rgba(120,120,128,.2);color:var(--ink);align-items:center;justify-content:center;cursor:pointer;margin:0}
+  #hcb svg{width:20px;height:20px;fill:currentColor}
+  #hcb i{position:absolute;top:2px;right:2px;width:9px;height:9px;border-radius:50%;background:#ff453a;box-shadow:0 0 0 2px rgba(30,30,40,.6)}
+  #hcb i[hidden]{display:none}
+  #hpan{position:fixed;top:72px;right:10px;z-index:60;display:none;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:10px;max-width:calc(100vw - 20px);padding:12px 14px;border-radius:24px;background:rgba(40,38,58,.62);-webkit-backdrop-filter:blur(28px) saturate(1.6);backdrop-filter:blur(28px) saturate(1.6);border:1px solid rgba(255,255,255,.18);box-shadow:0 10px 34px rgba(0,0,0,.35);color:var(--ink)}
+  html[data-mode=light] #hpan{background:rgba(255,255,255,.66);border-color:rgba(255,255,255,.7);box-shadow:0 10px 30px rgba(60,60,100,.2)}
+  #hpan.on{display:flex}
+  html[data-style=glass] #hpan > *{position:static!important;order:0!important;margin:0!important}
+  /* the capsule as a drop-down: only the current tab shows, a tap lists the rest */
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hdd:not(.hddo) .chip:not(.on){display:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hdd:not(.hddo) .chip.on::after{content:"";display:inline-block;width:6px;height:6px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);margin:-3px 0 0 9px}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr:has(.hddo),html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr.hddo{overflow:visible!important;height:auto!important;max-height:none!important;align-items:flex-start}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr .hdd.hddo,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr.hdd.hddo{position:static!important;overflow:visible!important;flex-direction:column;align-items:stretch;height:auto!important;min-height:0!important;width:max-content!important;max-width:none!important;padding:6px!important;gap:2px;border-radius:22px!important;background:rgba(40,38,58,.72)!important;-webkit-backdrop-filter:blur(28px) saturate(1.6)!important;backdrop-filter:blur(28px) saturate(1.6)!important;box-shadow:0 10px 30px rgba(0,0,0,.35)!important}
+  html[data-mode=light][data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr .hdd.hddo,html[data-mode=light][data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr.hdd.hddo{background:rgba(255,255,255,.8)!important}
+}
+
+@media(max-width:760px){
+  /* no scroll chevrons / fades / transitions on the tabs that live in the header: they flashed in and out after a tap */
+  html[data-style=glass]:not(#x):not(#y):not(#z) .page .hthr .hsm,html[data-style=glass]:not(#x):not(#y):not(#z) .page .hthr::before,html[data-style=glass]:not(#x):not(#y):not(#z) .page .hthr::after{display:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z) .page .hthr,html[data-style=glass]:not(#x):not(#y):not(#z) .page .hthr *{transition:none!important;animation:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z) .page .hthr .chip{-webkit-tap-highlight-color:transparent}
+}
+/* Insights wraps its tabs in two padded boxes; the other pages have none, so its tab sat 2px lower */
+@media(max-width:760px){html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s) #insights > .hthr.insnav{padding:0!important}}
+/* Scenes and Irrigation show big pictures: no blur band over them at the bottom (the nav bar and the player are frosted on their own) */
+@media(max-width:760px){html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):has(:is(#scenes,#irrigation).on) #bband{display:none!important}}
+/* phone: the tab capsule that sits in the title bar looks the same at the top of the page as it does once the page has scrolled (a thin bright ring), not a heavier grey ring that changes when you scroll */
+@media(max-width:760px){
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page .hthr > :is(.chips.tabs,.secnav,.setchips,.inschips){background:rgba(40,38,58,.5)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page .hthr > :is(.chips.tabs,.secnav,.setchips,.inschips){background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
+}
+/* phone: the second pinned row (Settings sub-tabs and the like) is the same frosted card from the first frame, not only once the page has scrolled */
+@media(max-width:760px){
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav) > :is(.chips.tabs,.secnav,.setchips,.inschips){background:rgba(40,38,58,.5)!important;border:1px solid rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav) > :is(.chips.tabs,.secnav,.setchips,.inschips){background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
+}
+
+/* the second row's capsule is frosted from its first frame (no fade from the plain look), and the tab you pick gets its ring and shadow at once instead of fading in (it read as a heavy outline for a moment); the glide itself is untouched */
+@media(max-width:760px){
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav) > :is(.chips.tabs,.secnav,.setchips,.inschips){transition-property:none!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav) .chip{transition-property:color,transform,opacity,filter!important}
+}
+/* One header row for Kinetic and Material too (phones): same structure as Liquid Glass, each style keeps its own capsule look */
+/* B (phones): the tab capsule sits in the title row (placed by wpSync: --hx / --hy), the title text steps aside. The row is position:fixed, so it does not follow the scroll and leaves no gap in the page */
+@media(max-width:760px){
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w) .main > header.hth #ttl > span{display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr{position:fixed!important;left:var(--hx)!important;top:var(--hy)!important;right:auto!important;width:auto!important;max-width:none!important;margin:0!important;padding:0!important;transform:none!important;z-index:40!important;pointer-events:none;background:none!important;box-shadow:none!important;border:0!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr::before,html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr::after{display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr:is(.chips,.insnav),html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr > :is(.chips.tabs,.setchips,.inschips){pointer-events:auto;width:max-content!important;height:40px!important;min-height:0!important;margin:0!important;align-items:center}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr :is(.chip){height:34px!important;min-height:0!important;padding-top:0!important;padding-bottom:0!important;display:flex;align-items:center}
+}
+
+/* one header always: chips folded into a button + pop-up, and the tab capsule as a drop-down when it is still too wide */
+@media(max-width:760px){
+  html:not([data-style=glass]):not(#x):not(#y):not(#z) .main > header.hcol .hr > :not(#hsrch):not(#hcb){display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z) .main > header.hcol #hcb{display:inline-flex;order:10;position:relative;width:34px;height:34px;padding:0;border:0;border-radius:50%;background:rgba(120,120,128,.2);color:var(--ink);align-items:center;justify-content:center;cursor:pointer;margin:0}
+  html:not([data-style=glass]) #hpan > *{position:static!important;order:0!important;margin:0!important}
+  /* the capsule as a drop-down: only the current tab shows, a tap lists the rest */
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hdd:not(.hddo) .chip:not(.on){display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hdd:not(.hddo) .chip.on::after{content:"";display:inline-block;width:6px;height:6px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);margin:-3px 0 0 9px}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr:has(.hddo),html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr.hddo{overflow:visible!important;height:auto!important;max-height:none!important;align-items:flex-start}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr .hdd.hddo,html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr.hdd.hddo{position:static!important;overflow:visible!important;flex-direction:column;align-items:stretch;height:auto!important;min-height:0!important;width:max-content!important;max-width:none!important;padding:6px!important;gap:2px;border-radius:22px!important;background:var(--bg2)!important;border:1px solid var(--line)!important;box-shadow:0 10px 30px rgba(0,0,0,.35)!important}
+}
+
+@media(max-width:760px){
+  /* no scroll chevrons / fades / transitions on the tabs that live in the header: they flashed in and out after a tap */
+  html:not([data-style=glass]):not(#x):not(#y):not(#z) .page .hthr .hsm,html:not([data-style=glass]):not(#x):not(#y):not(#z) .page .hthr::before,html:not([data-style=glass]):not(#x):not(#y):not(#z) .page .hthr::after{display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z) .page .hthr,html:not([data-style=glass]):not(#x):not(#y):not(#z) .page .hthr *{transition:none!important;animation:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z) .page .hthr .chip{-webkit-tap-highlight-color:transparent}
+}
+
+@media(max-width:760px){html:not([data-style=glass]) #hpan{background:var(--bg2);border:1px solid var(--line);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 10px 30px rgba(0,0,0,.35)}}
+@media(max-width:760px){
+  /* Kinetic numbers its tabs (01, 02) above the label: too tall for the title row, so the numerals are dropped there */
+  html[data-style=default]:not(#x):not(#y):not(#z) .page .hthr .chip::before{display:none!important}
+}
+
+/* Kinetic and Material share one tab look inside the header: no top bars or separators (Kinetic), the current tab has an accent underline (Material's own), the closed drop-down shows a caret, the open list marks the current tab in the accent colour */
+@media(max-width:760px){
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s) .page .hthr .chip{border:0!important;box-shadow:none!important;margin-top:0!important;padding-top:0!important;position:relative}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s) .page .hthr .chip.on{color:var(--ink)!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s) .page .hthr .chip.on::after{content:""!important;display:block!important;position:absolute!important;left:12px!important;right:12px!important;bottom:0!important;top:auto!important;width:auto!important;height:3px!important;border:0!important;border-radius:3px 3px 0 0!important;background:var(--mint)!important;transform:none!important;margin:0!important}
+  html[data-style=material][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr .chip.on::after{background:var(--ink)!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr .hdd:not(.hddo) .chip.on::after{position:static!important;display:inline-block!important;left:auto!important;right:auto!important;bottom:auto!important;width:6px!important;height:6px!important;border:solid currentColor!important;border-width:0 2px 2px 0!important;border-radius:0!important;background:none!important;transform:rotate(45deg)!important;margin:-3px 0 0 9px!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr .hddo .chip.on::after{display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr .hddo .chip.on{color:var(--mint)!important}
+  html[data-style=material][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page .hthr .hddo .chip.on{color:var(--ink)!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr:is(.chips,.insnav),html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr > :is(.chips,.setchips,.inschips){border-bottom:0!important}
+  html[data-style=default]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page .hthr .chip.on::after{left:12px!important;right:12px!important}
+  /* same height for every header and every tab capsule, and the tabs fill the capsule: the accent underline then sits at the same place on every page */
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .main > header.hth{min-height:52px!important;box-sizing:border-box}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr :is(.chips,.setchips,.inschips),html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr.chips{align-items:stretch!important;padding-top:0!important;padding-bottom:0!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr .chip{height:40px!important;line-height:1!important;padding-left:12px!important;padding-right:12px!important}
+  /* every header, every style, every page: the same 52px (a title bar with the status chips used to be taller than the one-row header) */
+  html:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .main > header{height:52px!important;min-height:52px!important;box-sizing:border-box!important}
+  html:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .main > header > .hr{height:40px!important;max-height:40px!important}
+  html:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .main > header > .hr > :is(#al,#hsrch,#hc){max-height:40px!important}
+}
+/* Scenes on a phone: the tab row is fixed into the title bar, and a transformed ancestor would make it sit relative to that ancestor until the page-enter animation ends (it then jumped up). The wrapper holds still; the picture list inside rises instead. */
+@media(max-width:760px){
+html:not(#x):not(#y):not(#z) #scenes.enter .scll{animation:none!important;transform:none!important;filter:none!important}
+html:not(#x):not(#y):not(#z) #scenes.enter .scll>.sclib{animation:cdIn calc(.5s*var(--pgs,1)) var(--ez,cubic-bezier(.2,.7,.2,1)) both}
+}
+/* LIQUID GLASS, tablets and desktops: the tab capsule of a page takes the greeting's place in the header strip (placed by wpSync: --hx / --hy), in front of the weather chips.
+   It is position:fixed like on the phone, so the page keeps no empty row below the header. The fold order (extra pills, wind, drop-down) is decided in wpSync (hnx, hnw, hdd). */
+@media(min-width:761px){
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hth.hmerge > .hs #gr,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hth.hmerge > .hs #dt{display:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hth.hmerge > .hs .hsw{padding-left:calc(5px + var(--hcw,0px) + 14px)!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hth.hnx > .hs :is(#wpls,#hpls){display:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hth.hnw > .hs #wwind{display:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr{position:fixed!important;left:var(--hx)!important;top:var(--hy)!important;right:auto!important;width:auto!important;max-width:none!important;margin:0!important;padding:0!important;transform:none!important;z-index:40!important;pointer-events:none;background:none!important;box-shadow:none!important;border:0!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr::before,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr::after{display:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr.chips,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr > :is(.chips.tabs,.setchips,.inschips,.secnav){pointer-events:auto;width:max-content!important;height:40px!important;min-height:0!important;margin:0!important;padding:2px!important;align-items:center;background:rgba(40,38,58,.5)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important}
+  html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr.chips,html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr > :is(.chips.tabs,.setchips,.inschips,.secnav){background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr .chip{height:34px!important;min-height:0!important;padding-top:0!important;padding-bottom:0!important;display:block!important;line-height:34px!important}
+  /* no scroll chevrons / transitions on the tabs that live in the header (same as the phone) */
+  html[data-style=glass]:not(#x):not(#y):not(#z) .page .hthr .hsm{display:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z) .page .hthr,html[data-style=glass]:not(#x):not(#y):not(#z) .page .hthr *{transition:none!important;animation:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr .chip{transition-property:color,transform,opacity,filter!important;transition-duration:.2s!important}
+  /* the capsule as a drop-down: only the current tab shows, a tap lists the rest */
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hdd:not(.hddo) .chip:not(.on){display:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hdd:not(.hddo) .chip.on::after{content:"";display:inline-block;width:6px;height:6px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);margin:-3px 0 0 9px}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr:has(.hddo),html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr.hddo{overflow:visible!important;height:auto!important;max-height:none!important;align-items:flex-start}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr .hdd.hddo,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr.hdd.hddo{position:static!important;overflow:visible!important;flex-direction:column;align-items:stretch;height:auto!important;min-height:0!important;width:max-content!important;max-width:none!important;padding:6px!important;gap:2px;border-radius:22px!important;background:rgba(40,38,58,.72)!important;box-shadow:0 10px 30px rgba(0,0,0,.35)!important}
+  html[data-mode=light][data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr .hdd.hddo,html[data-mode=light][data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr.hdd.hddo{background:rgba(255,255,255,.8)!important}
+  /* Scenes: a transformed ancestor would make the fixed row sit relative to it until the page-enter animation ends */
+  html[data-style=glass]:not(#x):not(#y):not(#z) #scenes.enter .scll{animation:none!important;transform:none!important;filter:none!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z) #scenes.enter .scll>.sclib{animation:cdIn calc(.5s*var(--pgs,1)) var(--ez,cubic-bezier(.2,.7,.2,1)) both}
+}
+
+/* Liquid Glass navigation tabs, every size: the picked tab shows its ring and shadow at once (no fade of border / shadow / fill), so the sliding pill can hand over to it without a doubled ring */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) :is(.setchips,.secnav,.inschips,.chips.tabs,.hdd,.hthr) .chip{transition-property:color,transform,opacity,filter!important}
+
+/* Navigation tabs (every style, every size) do not shrink / grow when pressed: that is for buttons, not for tabs */
+html:not(#x):not(#y):not(#z):not(#w) :is(.tabs,.secnav,.setchips,.inschips,.insnav,.secw,.hthr,.hmt,.hdd,.adlh,.scfh,.ehc,.hzseg,#rtabs,#stabs,#srfs,nav,#btab,#mshe) :is(.chip,.eb,button,a):active,html:not(#x):not(#y):not(#z):not(#w) :is(.chips.tabs,.hthr.chips,#stabs,#rtabs) .chip:active,html:not(#x):not(#y):not(#z):not(#w) :is(#btab,#mshe) a:active{transform:none!important}
+
+/* the frosted header keeps the weather pills in their own colours: high red, low blue, rain blue */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .main > header.hstk > .hs .wpl.t b{color:#ff8a5c!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .main > header.hstk > .hs :is(.wpl.t i,.wpl.r){color:#6bb8ff!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v) .main > header.hstk > .hs .wpl.t b{color:#c0582a!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v) .main > header.hstk > .hs :is(.wpl.t i,.wpl.r){color:#2f7fc0!important}
+
+/* Tablet: switching tabs keeps the scroll position, so the browser must not re-anchor it after the redraw */
+@media(min-width:761px){html[data-style=glass] .page{overflow-anchor:none}}
+/* KINETIC and MATERIAL, tablets and desktops: the same title-row header as their phone header (128): the tab capsule takes the title's place in the header card (placed by wpSync: --hx / --hy); the accent underline marks the current tab, also on the closed drop-down. */
+@media(min-width:761px){
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w) .main > header.hth #ttl > span{display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr{position:fixed!important;left:var(--hx)!important;top:var(--hy)!important;right:auto!important;width:auto!important;max-width:none!important;margin:0!important;padding:0!important;transform:none!important;z-index:40!important;pointer-events:none;background:none!important;box-shadow:none!important;border:0!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr::before,html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr::after{display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr:is(.chips,.insnav),html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr > :is(.chips.tabs,.setchips,.inschips){pointer-events:auto;width:max-content!important;height:40px!important;min-height:0!important;margin:0!important;align-items:center}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr :is(.chip){height:34px!important;min-height:0!important;padding-top:0!important;padding-bottom:0!important;display:flex;align-items:center}
+}
+@media(min-width:761px){
+  /* the capsule as a drop-down: only the current tab shows, a tap lists the rest */
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hdd:not(.hddo) .chip:not(.on){display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hdd:not(.hddo) .chip.on::after{content:"";display:inline-block;width:6px;height:6px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);margin:-3px 0 0 9px}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr:has(.hddo),html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr.hddo{overflow:visible!important;height:auto!important;max-height:none!important;align-items:flex-start}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr .hdd.hddo,html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) .page .hthr.hdd.hddo{position:static!important;overflow:visible!important;flex-direction:column;align-items:stretch;height:auto!important;min-height:0!important;width:max-content!important;max-width:none!important;padding:6px!important;gap:2px;border-radius:22px!important;background:var(--bg2)!important;border:1px solid var(--line)!important;box-shadow:0 10px 30px rgba(0,0,0,.35)!important}
+}
+@media(min-width:761px){
+  /* no scroll chevrons / fades / transitions on the tabs that live in the header: they flashed in and out after a tap */
+  html:not([data-style=glass]):not(#x):not(#y):not(#z) .page .hthr .hsm,html:not([data-style=glass]):not(#x):not(#y):not(#z) .page .hthr::before,html:not([data-style=glass]):not(#x):not(#y):not(#z) .page .hthr::after{display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z) .page .hthr,html:not([data-style=glass]):not(#x):not(#y):not(#z) .page .hthr *{transition:none!important;animation:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z) .page .hthr .chip{-webkit-tap-highlight-color:transparent}
+}
+@media(min-width:761px){
+  /* Kinetic numbers its tabs (01, 02) above the label: too tall for the title row, so the numerals are dropped there */
+  html[data-style=default]:not(#x):not(#y):not(#z) .page .hthr .chip::before{display:none!important}
+}
+@media(min-width:761px){
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s) .page .hthr .chip{border:0!important;box-shadow:none!important;margin-top:0!important;padding-top:0!important;position:relative}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s) .page .hthr .chip.on{color:var(--ink)!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s) .page .hthr .chip.on::after{content:""!important;display:block!important;position:absolute!important;left:12px!important;right:12px!important;bottom:0!important;top:auto!important;width:auto!important;height:3px!important;border:0!important;border-radius:3px 3px 0 0!important;background:var(--mint)!important;transform:none!important;margin:0!important}
+  html[data-style=material][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr .chip.on::after{background:var(--ink)!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr .hdd:not(.hddo) .chip.on::after{position:static!important;display:inline-block!important;left:auto!important;right:auto!important;bottom:auto!important;width:6px!important;height:6px!important;border:solid currentColor!important;border-width:0 2px 2px 0!important;border-radius:0!important;background:none!important;transform:rotate(45deg)!important;margin:-3px 0 0 9px!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr .hddo .chip.on::after{display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr .hddo .chip.on{color:var(--mint)!important}
+  html[data-style=material][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page .hthr .hddo .chip.on{color:var(--ink)!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr:is(.chips,.insnav),html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr > :is(.chips,.setchips,.inschips){border-bottom:0!important}
+  html[data-style=default]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page .hthr .chip.on::after{left:12px!important;right:12px!important}
+  /* same height for every header and every tab capsule, and the tabs fill the capsule: the accent underline then sits at the same place on every page */
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr :is(.chips,.setchips,.inschips),html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr.chips{align-items:stretch!important;padding-top:0!important;padding-bottom:0!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r) .page .hthr .chip{height:40px!important;line-height:1!important;padding-left:12px!important;padding-right:12px!important}
+  /* every header, every style, every page: the same 52px (a title bar with the status chips used to be taller than the one-row header) */
+}
+@media(min-width:761px){
+}
+/* the closed drop-down also carries the accent underline under its label (the caret stays beside the label) */
+@media(min-width:761px){
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q):not(#p) .page .hthr .hdd:not(.hddo) .chip.on::before{content:""!important;display:block!important;position:absolute!important;left:12px!important;right:12px!important;bottom:0!important;top:auto!important;width:auto!important;height:3px!important;border-radius:3px 3px 0 0!important;background:var(--mint)!important;margin:0!important;letter-spacing:0!important}
+  html[data-style=material][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q):not(#p) .page .hthr .hdd:not(.hddo) .chip.on::before{background:var(--ink)!important}
+}
+/* the greeting strip: the capsule takes the greeting's place, the weather chips stay (same fold order as Liquid Glass: extra pills, wind, drop-down) */
+@media(min-width:761px){
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w) .main > header.hth.hmerge > .hs #gr,html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w) .main > header.hth.hmerge > .hs #dt{display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w) .main > header.hth.hmerge > .hs{padding-left:calc(5px + var(--hcw,0px) + 14px)!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w) .main > header.hth.hnx > .hs :is(#wpls,#hpls){display:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w) .main > header.hth.hnw > .hs #wwind{display:none!important}
+}
+/* Scenes: a transformed ancestor would make the fixed tab row sit relative to it until the page-enter animation ends (on a heavy page that took long: the tabs sat over the pictures, then jumped up). The wrapper holds still; the picture list inside rises instead. */
+@media(min-width:761px){
+  html:not([data-style=glass]):not(#x):not(#y):not(#z) #scenes.enter .scll{animation:none!important;transform:none!important;filter:none!important}
+  html:not([data-style=glass]):not(#x):not(#y):not(#z) #scenes.enter .scll>.sclib{animation:cdIn calc(.5s*var(--pgs,1)) var(--ez,cubic-bezier(.2,.7,.2,1)) both}
+}
+/* View page: the doorbell card over the bottom edge (12-init.js, CONFIG.view.doorbell). The page keeps a band free under the picture(s) for it. */
+#vw .vwdb{display:none}
+#vw.db{padding-bottom:calc(14px + 96px)}
+#vw.db .vwdb{display:flex;align-items:center;gap:14px;position:absolute;left:14px;right:14px;bottom:14px;height:82px;box-sizing:border-box;padding:10px 14px 10px 10px;border-radius:22px;z-index:6;color:var(--ink);background:color-mix(in srgb,var(--bg2) 90%,transparent);border:1px solid var(--line);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);animation:pbgi .28s ease both}
+#vw .vwdb img{flex:none;width:112px;height:62px;object-fit:cover;border-radius:12px;background:rgba(var(--w),.08)}
+#vw .vwdb .vdt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+#vw .vwdb .vdt b{font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#vw .vwdb .vdt small{color:var(--mut);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#vw .vwdb button{flex:none;display:inline-flex;align-items:center;gap:8px;height:44px;border:0;border-radius:22px;cursor:pointer;font:inherit;font-weight:600}
+#vw .vwdb .vdl{padding:0 18px;background:var(--mint);color:var(--onmint,#000)}
+#vw .vwdb .vdl svg{width:20px;height:20px;fill:currentColor}
+#vw .vwdb .vdx{width:44px;justify-content:center;background:rgba(var(--w),.1);color:var(--ink)}
+#vw .vwdb .vdx svg{width:20px;height:20px;fill:currentColor}
+@media(max-width:760px){#vw .vwdb img{width:84px;height:48px}#vw .vwdb .vdl span{display:none}#vw .vwdb .vdl{padding:0;width:44px;justify-content:center}}
+@media(prefers-reduced-motion:reduce){#vw.db .vwdb{animation:none}}
+/* a snapshot-only camera (snap): never the connecting spinner; the corner shows its battery instead of LIVE */
+.cam.snpc .cld{display:none!important}
+html:not(#x):not(#y) .cam.snpc .lv{display:block;color:var(--ink2,#fff)!important;opacity:.85}
+html:not(#x):not(#y) .cam.snpc .lv svg{display:none}
+
+/* Spotify: songs rise in when they replace "Loading songs…"; new pictures fade in; PLAY spins until the speaker starts */
+@keyframes spRowIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#spot .spkl.spin .spr{animation:spRowIn .38s cubic-bezier(.2,.8,.2,1) both}
+#spot .spkl.spin .spr:nth-child(2){animation-delay:30ms}#spot .spkl.spin .spr:nth-child(3){animation-delay:60ms}#spot .spkl.spin .spr:nth-child(4){animation-delay:90ms}#spot .spkl.spin .spr:nth-child(5){animation-delay:120ms}#spot .spkl.spin .spr:nth-child(6){animation-delay:150ms}#spot .spkl.spin .spr:nth-child(7){animation-delay:180ms}#spot .spkl.spin .spr:nth-child(8){animation-delay:210ms}#spot .spkl.spin .spr:nth-child(n+9){animation-delay:240ms}
+#spot .spa.spim{opacity:0}#spot .spa.spim.spimo{opacity:1;transition:opacity .5s ease}
+#spot .spgo .spsp{display:block;flex:none;width:16px;height:16px;box-sizing:border-box;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;animation:spspin .7s linear infinite}
+@media(prefers-reduced-motion:reduce){#spot .spkl.spin .spr{animation:none}#spot .spa.spim.spimo{transition:none}}
+.cam .cdbg{position:absolute;left:8px;bottom:8px;z-index:9;max-width:calc(100% - 16px);font:10px/1.35 var(--mono,monospace);white-space:pre-wrap;color:#fff;background:rgba(0,0,0,.65);padding:4px 6px;border-radius:6px;pointer-events:none}
 /* Value picker sheet (37-value-picker.js): common values as chips, - and + to fine tune, Done */
 .ctf.sel{cursor:pointer}.ctf.sel select{pointer-events:none}
 #vpk{position:fixed;inset:0;z-index:97;display:flex;align-items:flex-end;justify-content:center}
@@ -7376,7 +7622,7 @@ html[data-style=material] #vpk .vpg button.on{background:var(--mint);border-colo
 <div id="npsheet"><div class="npbk" data-np="close"></div><div class="pn npb" id="npbody"></div><div id="npfs" hidden></div><div id="npsk" hidden></div></div>
 <div id="mshe"><div class="mgh" data-g="home">HOME</div><a href="#energy" data-g="home" data-i2="n-energy"><span>Energy</span></a><a href="#scenes" data-g="home" data-i2="n-scenes"><span>Scenes</span></a><div class="mgh" data-g="outside">OUTSIDE</div><a href="#weather" data-g="outside" data-i2="n-weather"><span>Weather</span></a><a href="#irrigation" data-g="outside" data-i2="n-irr"><span>Irrigation</span></a><a href="#vehicle" data-g="outside" data-i2="v-car"><span>Vehicle</span></a><a href="#hazards" data-g="outside" data-i2="volcano"><span>Hazards</span></a><div class="mgh" data-g="info">INFO</div><a href="#insights" data-g="info" data-i2="lightbulb-on"><span>Insights</span></a><a href="#media" data-g="info" data-i2="music-note"><span>Media</span></a><a href="#events" data-g="info" data-i2="n-events"><span>Events</span></a><a href="#settings" id="navset2" class="mset" data-i2="n-set"><span>Settings</span></a></div>
 <div class="main">
-  <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><div id="hnp" class="npoff"></div><div class="hr"><div id="hmp" data-np="sheet" title="Now playing" hidden></div><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header>
+  <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><div id="hnp" class="npoff"></div><div class="hr"><div id="hmp" data-np="sheet" title="Now playing" hidden></div><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><button id="hsrch" type="button" aria-label="Search"></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header><script>try{var h=document.querySelector(".main > header");if(h&&innerWidth<=760&&localStorage.getItem("dashStyle")==="glass")h.classList.add("hstk")}catch(e){}</script>
   <div id="alb" hidden></div>
   <div id="cdb" hidden></div>
 
@@ -7443,7 +7689,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["Each speaker now has a Sound button under its volume: tap it to change Bass and Treble.","**Add songs to your playlists.** Tap the + on any song, or the Add to playlist button on Now Playing, then pick a playlist or start a new one with that song in it.","**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "39da19";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "319f2a";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   window.__deep = !!location.hash && !/^#(home)?$/.test(location.hash) && !/[?&]code=/.test(location.search);   // opened on a page of its own (a notification tap such as #view/driveway): 05-first-load-gate.js does not hold the logo for a minimum time
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
@@ -8688,7 +8934,7 @@ async function camPrefetch(force) {
   const by = {}; CONFIG.cameras.concat(CONFIG.security, VWC).forEach(c => { if (c && c.id && c.o && !camHideNow(c)) (by[c.id] = by[c.id] || []).push(c); });
   try {
     for (const id of Object.keys(by)) {
-      const cs = by[id]; if (cs.some(c => c.live)) continue;   // a playing camera keeps its own last frame when it stops
+      const cs = by[id]; if (cs.some(c => c.live)) continue; if (cs.some(c => c.still) && camMem.age(id) < 600000) continue;   // a battery camera is not woken every minute for a picture   // a playing camera keeps its own last frame when it stops
       if (camMem.age(id) < sec * 1000 - 1000) continue;
       const f = id.replace(/_clear$/, "_fluent"), s = states[f !== id && states[f] ? f : id], p = s && s.attributes && s.attributes.entity_picture; if (!p) continue;
       const url = CONFIG.url + p + (p.indexOf("?") > -1 ? "&" : "?") + "t=" + Date.now();
@@ -8714,7 +8960,7 @@ const CAM_POSTER = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALA
 function rmXf(c) { clearTimeout(c.xft); if (c.xf) { try { c.xf.srcObject = null; c.xf.remove(); } catch (x) {} c.xf = null; } }   // the sharp picture that is fading in over the soft one
 function dropOld(c) { clearTimeout(c.swapT); rmXf(c); if (c.old) { try { c.old.pc.close(); } catch (x) {} delete subs[c.old.sub]; c.old = null; } }   // the stream that was playing until the new one had its first picture
 function stopCam(c) {
-  dropOld(c); rmXf(c); c._conn = 0;
+  dropOld(c); rmXf(c); c._conn = 0; clearTimeout(c._snL); c._snL = 0;
   if (c.pc) { try { c.pc.close(); } catch (x) {} c.pc = null; }
   if (c.sub) { delete subs[c.sub]; c.sub = 0; }
   // the last live frame becomes the tile's picture (and the kept still), so the next visit opens on it instead of an older one
@@ -8726,14 +8972,47 @@ function startCams() { if (onView()) { VW.mode = ""; applyView(); return; } if (
 const camMsg = (c, fail) => { const m = c.o.el.querySelector(".clm"); if (m) m.textContent = fail ? "Couldn't connect to the camera" : "Connecting to camera…"; };
 function camFail(c) { if (c.live && !c.old) return; c.o.el.classList.add("cfail"); camMsg(c, true); }   // the "Connecting to camera" screen offers RETRY (the camera retries by itself too)
 function retryCam(c, ms) { stopCam(c); c.o.el.classList.add("cwait", "cfail"); camMsg(c, true); clearTimeout(c.rt); c.rt = setTimeout(() => { if ((c.np && document.body.classList.contains("np-open")) || (c.rv && c._on && curRoom && onRooms) || (c.ins && c._on && INS.det) || camPage() && (onSec() || camsOn() || onView()) && (!isMobile() || c.o.el.classList.contains("fs") || (CONFIG.mobileLive !== false && c.o.el._vis !== false))) liveCam(c); }, ms); }
+function snBat(c) { const bt = c.battery && states[c.battery], v = bt && parseFloat(bt.state), lv = $(".lv", c.o.el); c.o.el.classList.add("snpc"); if (lv) lv.textContent = isFinite(v) ? "BATTERY " + Math.round(v) + "%" : ""; }
+function snapLoop(c) {
+  if (c._snL) return; const o = c.o, sec = Math.max(1, +c.snap || 3); stopCam(c);
+  o.el.classList.remove("cwait", "cfail", "live"); o.el.classList.add("still", "snpc"); camMsg(c, false);
+  const tick = () => {
+    if (!o.el.isConnected || o.el.style.display === "none" || SLP.on) { c._snL = 0; return; }
+    snBat(c);
+    if (!document.hidden) { const s = states[c.id], p = s && s.attributes && s.attributes.entity_picture; if (p) { const im = new Image(); im.onload = () => { o.img.src = im.src; }; im.src = CONFIG.url + p + (p.indexOf("?") > -1 ? "&" : "?") + "t=" + Date.now(); } }
+    c._snL = setTimeout(tick, sec * 1000);
+  };
+  tick();
+}
+// config.js camDebug: true writes the timing of every camera start on its tile (which stream, how long each step took, how many times it was started): start of the request, config answer, offer sent, answer, first track, first picture
+function camDbg(c, k, eid) {
+  if (!CONFIG.camDebug || !c.o) return; const n = performance.now();
+  if (k === "start") { c._dg = { t0: n, id: String(eid || "").replace(/^camera\./, "") + (c.upg ? " (light)" : ""), m: [] }; (c._dgs = c._dgs || []).push(c._dg); if (c._dgs.length > 4) c._dgs.shift(); } else if (c._dg) c._dg.m.push(k + " " + Math.round(n - c._dg.t0));
+  let e = c.o.el.querySelector(".cdbg"); if (!e) { e = document.createElement("div"); e.className = "cdbg"; c.o.el.appendChild(e); }
+  e.textContent = (c._dgs || []).map(d => d.id + ": " + d.m.join(" · ")).join("\n");
+}
+// Home Assistant / go2rtc answer the cameras' offers one after another: with a page of tiles still connecting, the camera that was just tapped waited behind them (4 s for its answer on a phone). While a camera is full screen the other tiles that have not got a picture yet stop asking (the page behind it is covered anyway) and start again, one after another, when it closes.
+const CAM_PAUSED = [];
+function camPauseOthers(c) {
+  CONFIG.cameras.concat(CONFIG.security).forEach(o => { if (o === c || !o.o || o.live || !o.pc || !o._conn || Date.now() - o._conn > 15000 || o.snap) return; clearTimeout(o.rt); stopCam(o); CAM_PAUSED.push(o); });
+}
+function camResume() { CAM_PAUSED.splice(0).forEach((o, i) => setTimeout(() => { if (camPage() && !o.live && !o.pc && !(o.o.el.classList.contains("fs"))) liveCam(o); }, 400 + i * 160)); }
 function liveCam(c, up, big) {   // HA built-in WebRTC (go2rtc); falls back to snapshots if it fails. up = a switch between the light and the clear stream: the picture that is playing keeps playing until the new one has its first picture
   if (SLP.on) return;   // idle sleep (68-idle-sleep.js): no stream starts until the screen is touched
+  if (c.snap) {   // a camera that only has snapshots (a battery doorbell: snap: true, or the seconds between pictures): no stream to connect, so no "Couldn't connect"; the picture is renewed every few seconds while it is on screen
+    if (c.still && !big && !(c.o && c.o.el.classList.contains("fs"))) { snBat(c); camSnap(c); return; }
+    snapLoop(c); return;
+  }
+  if (c.still && !big && !(c.o && c.o.el.classList.contains("fs"))) { camSnap(c); return; }   // a battery camera (still: true on its entry) shows its snapshot; the stream starts when the tile is tapped to full screen
   const o = c.o, sid = { v: null }, q = [];
   let eid = big ? c.id : camEnt(c);
   // a stream whose connection was closed leaves a dead picture behind: that is not "playing"
   const alive = !!(o.vid.srcObject && o.vid.srcObject.getTracks().some(t => t.readyState === "live"));
   // nothing is playing yet and the big (clear) stream is wanted: the light stream connects first (a small picture arrives in about a second) and the clear one follows and fades in over it (12-init.js onplaying), like the Reolink app starting on its small stream. CONFIG.camLightFirst:false turns it off
-  { const lt = camLt(c); c.upg = 0;
+  const lt0 = camLt(c);
+  // the tile's own light stream is still connecting when it is tapped to full screen: keep it (a new request would queue behind the others at the server); the clear stream follows once it plays
+  if (up && big !== true && !c.live && c.pc && c._conn && Date.now() - c._conn < 12000 && eid === c.id && lt0 && c.eid === lt0) { c.upg = 1; return; }
+  { const lt = lt0; c.upg = 0;
     if (eid === c.id && lt && CONFIG.camLightFirst !== false && !(c.live && alive) && !c.old) { eid = lt; c.upg = 1; } }
   // a start that is already under way (the early one at login, then the one after the states arrive): the second one must not tear the first down
   if (!up && !c.live && c._conn && Date.now() - c._conn < 12000) return;
@@ -8745,21 +9024,23 @@ function liveCam(c, up, big) {   // HA built-in WebRTC (go2rtc); falls back to s
     clearTimeout(c.swapT); rmXf(c); if (c.pc) { try { c.pc.close(); } catch (x) {} c.pc = null; } if (c.sub) { delete subs[c.sub]; c.sub = 0; } clearTimeout(c.rt);
   } else { dropOld(c); rmXf(c); if (up && c.live && c.pc && alive && c.eid && c.eid !== eid) { c.old = { pc: c.pc, sub: c.sub }; c.pc = null; c.sub = 0; clearTimeout(c.rt); } else stopCam(c); }
   clearTimeout(c.rt); c.eid = eid;
-  o.el.classList.remove("cfail"); camMsg(c, false); if (!(up && c.old)) o.el.classList.add("cwait");   // the spinner and message show until the first picture (12-init.js onplaying); a camera that is already playing keeps its picture, nothing is put over it while the clear stream connects
+  o.el.classList.remove("cfail"); camMsg(c, false); if (!(up && c.old)) o.el.classList.add("cwait"); o.el.classList.toggle("cpic", /^(data:image\/jpeg|https?:|\/)/.test(o.img.getAttribute("src") || ""));   // a picture is already on screen: the full screen shows it as it is with a small spinner, not a message over it;   // the spinner and message show until the first picture (12-init.js onplaying); a camera that is already playing keeps its picture, nothing is put over it while the clear stream connects
   clearTimeout(c.ft); c.ft = setTimeout(() => { if (!c.live || c.old) camFail(c); }, 12000);   // nothing after 12 s: the message turns into "Couldn't connect" with a RETRY button
   o.vid.muted = !(c.snd && (o.el.classList.contains("fs") || o.el.classList.contains("vf")));
   if (ws && ws.readyState === 1) c._conn = Date.now();   // (a start made before the socket is open sends nothing, so it does not count)
+  camDbg(c, "start", eid);
   send({ type: "camera/webrtc/get_client_config", entity_id: eid }, cfg => {
+    camDbg(c, "cfg");
     try {
       const pc = new RTCPeerConnection(cfg.configuration); c.pc = pc;
       if (c.old) c.swapT = setTimeout(() => { if (c.pc !== pc || !c.old) return; try { pc.close(); } catch (x) {} delete subs[c.sub]; c.pc = c.old.pc; c.sub = c.old.sub; c.old = null; c.eid = ""; rmXf(c); }, 8000);   // the new picture never came: the one that was playing stays
-      pc.ontrack = e => { if (e.track.kind !== "video") return; const ms = e.streams[0] || new MediaStream([e.track]);
+      pc.ontrack = e => { if (e.track.kind !== "video") return; camDbg(c, "track"); const ms = e.streams[0] || new MediaStream([e.track]);
         if (!c.old) { o.vid.srcObject = ms; o.vid.play().catch(() => {}); return; }
         const tv = document.createElement("video"); tv.muted = true; tv.playsInline = true; tv.poster = CAM_POSTER; tv.className = "xf"; tv.style.cssText = "pointer-events:none;opacity:0;transition:opacity .3s ease"; tv.srcObject = ms;   // the new picture is waited for in place, invisible (a video that is moved in after it started shows the phone's grey play box for a moment)
         rmXf(c); c.xf = tv; o.vid.after(tv);
         tv.addEventListener("playing", () => {   // the clear picture has its first frame: it fades in over the light one (the light one keeps playing underneath), then takes over
           if (c.pc !== pc || c.xf !== tv) return;
-          void tv.offsetWidth; tv.style.opacity = "1";
+          camDbg(c, "clear"); void tv.offsetWidth; tv.style.opacity = "1";
           // the sharp video now BECOMES the camera's video: no stream is moved from one video element to another (that moment made a tablet flash white). The soft one stays, covered, for a moment and is then taken away.
           c.xft = setTimeout(() => { if (c.pc !== pc || c.xf !== tv) return; const prev = o.vid; c.xf = null; prev.onplaying = null; o.bind(tv); o.bind2(tv); tv.className = prev.className; tv.style.cssText = ""; tv.classList.add("on"); tv.muted = prev.muted; o.vid = tv; dropOld(c); try { prev.srcObject = null; prev.remove(); } catch (x) {} }, 330);
         }, { once: true }); tv.play().catch(() => {});
@@ -8773,12 +9054,12 @@ function liveCam(c, up, big) {   // HA built-in WebRTC (go2rtc); falls back to s
       pc.createOffer().then(of => pc.setLocalDescription(of).then(() => {
         const id = msgId++; c.sub = id;
         subs[id] = ev => {
-          if (ev.type === "session") { sid.v = ev.session_id; q.splice(0).forEach(cand); }
-          else if (ev.type === "answer") pc.setRemoteDescription({ type: "answer", sdp: ev.answer });
+          if (ev.type === "session") { camDbg(c, "session"); sid.v = ev.session_id; q.splice(0).forEach(cand); }
+          else if (ev.type === "answer") { camDbg(c, "answer"); pc.setRemoteDescription({ type: "answer", sdp: ev.answer }); }
           else if (ev.type === "candidate") pc.addIceCandidate(ev.candidate).catch(() => {});
           else if (ev.type === "error") { retryCam(c, 30000); camSnap(c); }
         };
-        ws.send(JSON.stringify({ id: id, type: "camera/webrtc/offer", entity_id: eid, offer: of.sdp }));
+        camDbg(c, "offer"); ws.send(JSON.stringify({ id: id, type: "camera/webrtc/offer", entity_id: eid, offer: of.sdp }));
       })).catch(() => { retryCam(c, 30000); camSnap(c); });
     } catch (x) { retryCam(c, 30000); camSnap(c); }
   });
@@ -9126,7 +9407,7 @@ function mkCam(c, host) {
       if (fresh) { c.snd = true; o.vid.muted = false; snd.classList.add("on"); snd.innerHTML = AUD.on; c._conn = 0; liveCam(c); }   // reconnect once with a send channel
     } catch (x) { mic.dataset.e = "Mic blocked: " + (x && x.name || "error"); mic.classList.add("err"); setTimeout(() => mic.classList.remove("err"), 4500); }
   };
-  o.bind = v => { v.onplaying = () => { c.live = true; el.classList.remove("still"); clearTimeout(c.ft); el.classList.add("live"); el.classList.remove("cwait", "cfail"); o.vid.classList.add("on"); camLiveSync(); setTimeout(() => { if (c.live) camMem.put(c.id, o.vid); }, 1500); if (c.upg) { c.upg = 0; if (el.classList.contains("fs") || el.classList.contains("vf")) setTimeout(() => liveCam(c, true), 50); } }; };   // the light picture is up and the big view is open: now the clear stream connects and fades in over it
+  o.bind = v => { v.onplaying = () => { camDbg(c, "play"); c.live = true; el.classList.remove("still"); clearTimeout(c.ft); el.classList.add("live"); el.classList.remove("cwait", "cfail"); o.vid.classList.add("on"); camLiveSync(); setTimeout(() => { if (c.live) camMem.put(c.id, o.vid); }, 1500); if (c.upg) { c.upg = 0; if (el.classList.contains("fs") || el.classList.contains("vf")) setTimeout(() => liveCam(c, true), 50); } }; };   // the light picture is up and the big view is open: now the clear stream connects and fades in over it
   { const ar = m => { const w = m.videoWidth || m.naturalWidth, h = m.videoHeight || m.naturalHeight; if (w > 0 && h > 0) el.style.setProperty("--ar", w + " / " + h); };   // the two-feed landscape view sizes each picture from this
     o.img.addEventListener("load", () => { if (!c.live) ar(o.img); }); o.bind2 = v => { v.addEventListener("loadedmetadata", () => ar(v)); v.addEventListener("resize", () => ar(v)); }; o.bind2(o.vid); }
   o.bind(o.vid);
@@ -9151,7 +9432,7 @@ function mkCam(c, host) {
     if (el.classList.contains("fs")) {   // close: only with the X (a tap on the picture does nothing, so a stray touch never leaves the camera)
       if (!e.target.closest(".cx")) return;
       mkLiveOff(el); closePb(c, false); c.snd = false; micOff(c); snd.classList.remove("on"); snd.innerHTML = AUD.off; o.vid.muted = true;
-      camClose(el, () => { el.classList.remove("fs"); setTimeout(() => { if (el.dataset.det) dlPlace(el); }, 50); if (el.classList.contains("cpo")) el._ctb(); if (el._ph) { el._ph.remove(); el._ph = null; } if (isMobile() && CONFIG.mobileLive === false) { clearTimeout(c.rt); stopCam(c); } else liveCam(c, true); });
+      camClose(el, () => { el.classList.remove("fs"); setTimeout(() => { if (el.dataset.det) dlPlace(el); }, 50); if (el.classList.contains("cpo")) el._ctb(); if (el._ph) { el._ph.remove(); el._ph = null; } if (isMobile() && CONFIG.mobileLive === false) { clearTimeout(c.rt); stopCam(c); } else liveCam(c, true); camResume(); });
       return;
     }
     if (!el._ph && el.parentNode && el.parentNode.id !== "vw") { const cs = getComputedStyle(el), ph = document.createElement("div"); ph.className = "camph"; ph.style.height = el.offsetHeight + "px"; ph.style.gridColumn = cs.gridColumnStart + " / " + cs.gridColumnEnd; ph.style.margin = cs.margin; el.parentNode.insertBefore(ph, el); el._ph = ph; }   // the card leaves the page layout while full screen: this holds its place so the page behind does not jump during the fade
@@ -9160,14 +9441,22 @@ function mkCam(c, host) {
     const ctl = camCtl(c.id);
     if (ctl && !cp.dataset.b) { cp.innerHTML = '<div class="tg3">' + ctl.map(tileHtml).join("") + '</div>'; cp.dataset.b = 1; }
     el.classList.toggle("hasc", !!ctl);
-    updTiles(); if (!(c.pre && Date.now() - c.pre < 2500 && c.eid === c.id)) liveCam(c, true); c.pre = 0; mkLiveOn(el); };
+    updTiles(); camPauseOthers(c); if (!(c.pre && Date.now() - c.pre < 2500 && c.eid === c.id)) liveCam(c, true); c.pre = 0; mkLiveOn(el); };
   host.appendChild(el);
 }
 CONFIG.cameras.forEach(c => mkCam(c, $("#cams")));
 CONFIG.security.forEach(c => mkCam(c, $("#scams")));
 // full-screen view (driveway + garage)
-const VW = { mode: "", hold: { driveway: 0, garage: 0 }, seen: false, back: "#home" };
+const VW = { mode: "", hold: { driveway: 0, garage: 0, doorbell: 0 }, seen: false, back: "#home", dbX: false, db: false };
 ["driveway", "garage"].forEach(k => { const c = Object.assign({ k: k }, CONFIG.view[k]); VWC.push(c); mkCam(c, $("#vw")); });
+// doorbell (CONFIG.view.doorbell): a card over the bottom of the View while someone is at the door (or the driveway camera sees a person); with nothing else on, the doorbell itself is the picture (#view/doorbell). Snapshot first: Go live opens it
+const DBC = CONFIG.view.doorbell && CONFIG.view.doorbell.id ? CONFIG.view.doorbell : null;
+if (DBC) {
+  const c = Object.assign({ k: "doorbell", name: "Doorbell" }, DBC); VWC.push(c); mkCam(c, $("#vw"));
+  const d = document.createElement("div"); d.className = "vwdb"; d.innerHTML = '<img alt="" onerror="this.style.visibility=\'hidden\'" onload="this.style.visibility=\'\'"><div class="vdt"><b></b><small></small></div><button class="vdl">' + mdi("video") + '<span>Go live</span></button><button class="vdx" aria-label="Dismiss">' + mdi("close") + '</button>'; $("#vw").appendChild(d);
+  $(".vdl", d).onclick = e => { e.stopPropagation(); location.hash = "#view/doorbell"; };
+  $(".vdx", d).onclick = e => { e.stopPropagation(); VW.dbX = true; VW.hold.doorbell = 0; applyView(); };
+}
 const slug = n => n.toLowerCase().replace(/[^a-z0-9]+/g, "-");   // "Right walkway" -> right-walkway
 CONFIG.security.forEach(s => { const c = { k: "cam:" + slug(s.name), id: s.id, name: s.name, hideOn: s.hideOn }; VWC.push(c); mkCam(c, $("#vw")); });
 function vwClose() { location.hash = VW.back && VW.back.indexOf("#view") !== 0 ? VW.back : "#home"; }
@@ -9177,13 +9466,28 @@ const viewTrig = k => [].concat(CONFIG.view[k].trig || []).some(isOn);
 const holdOf = k => { const V = CONFIG.view, x = V[k] && V[k].hold != null ? V[k].hold : V.hold; return (x != null ? x : 20) * 1000; };
 function viewMode() {
   const m = location.hash.split("/")[1] || "auto"; if (m === "driveway" || m === "garage" || m === "both") return m;
+  if (m === "doorbell" && DBC) return "doorbell";
   if (/^#camera/.test(location.hash) || (/^#view/.test(location.hash) && m !== "auto")) { const k = "cam:" + slug(m), c = VWC.filter(x => x.k === k)[0] || VWC.filter(x => x.id.indexOf("camera." + m.replace(/-/g, "_")) === 0)[0]; return c ? c.k : "garage"; }
   const now = Date.now(); ["driveway", "garage"].forEach(k => { if (viewTrig(k)) { VW.hold[k] = now; VW.seen = true; } });
-  const d = now - VW.hold.driveway < holdOf("driveway"), g = now - VW.hold.garage < holdOf("garage");
+  const d = now - VW.hold.driveway < holdOf("driveway"), g = now - VW.hold.garage < holdOf("garage"), db = !!DBC && now - VW.hold.doorbell < holdOf("doorbell");
   // look again exactly when the next hold runs out (the 5 s interval below is only a backstop), so the switch happens right on time
-  clearTimeout(VW.tm); const left = ["driveway", "garage"].map(k => holdOf(k) - (now - VW.hold[k])).filter(x => x > 0);
+  clearTimeout(VW.tm); const left = ["driveway", "garage"].concat(DBC ? ["doorbell"] : []).map(k => holdOf(k) - (now - VW.hold[k])).filter(x => x > 0);
   if (left.length) VW.tm = setTimeout(applyView, Math.min.apply(null, left) + 40);
-  return d && g ? "both" : g ? "garage" : "driveway";
+  return d && g ? "both" : g ? "garage" : d ? "driveway" : db ? "doorbell" : "driveway";
+}
+function dbTick() { if (!DBC) return; const t = dbTrig(); if (!t) VW.dbX = false; else if (!VW.dbX) { VW.hold.doorbell = Date.now(); VW.seen = true; } }   // dismissed: it stays away until the door and the driveway person are quiet and something happens again
+// who is at the door: the doorbell's own sensors, or (default) the driveway camera's person sensor. Returns the text the card shows, "" when quiet
+function dbTrig() { const V = CONFIG.view, D = V.doorbell; if (!D) return ""; if ([].concat(D.trig || []).some(isOn)) return "Someone at the door"; if (D.withDriveway !== false && V.driveway && V.driveway.id && isOn(detOf(V.driveway.id).person)) return "Person on the driveway"; return ""; }
+// the card over the bottom of the View: shown while the doorbell is held and the doorbell is not the main picture
+function vwDb(m) {
+  if (!DBC) return; const el = $("#vw .vwdb"), show = Date.now() - VW.hold.doorbell < holdOf("doorbell") && m !== "doorbell" && !VW.dbX;
+  $("#vw").classList.toggle("db", show);
+  if (!show) { VW.db = false; return; }
+  const s = states[DBC.still || DBC.id], pc = s && s.attributes && s.attributes.entity_picture, im = $("img", el);
+  if (pc && (!VW.db || Date.now() - (el._t || 0) > 20000)) { el._t = Date.now(); im.src = CONFIG.url + pc + (pc.indexOf("?") > -1 ? "&" : "?") + "t=" + Date.now(); }
+  const bt = DBC.battery && states[DBC.battery], v = bt && parseFloat(bt.state), why = dbTrig() || "Doorbell";
+  $(".vdt b", el).textContent = why; $(".vdt small", el).textContent = [s && s.last_updated ? new Date(s.last_updated).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : "", isFinite(v) ? "battery " + Math.round(v) + "%" : "", "snapshot"].filter(Boolean).join(" · ");
+  VW.db = true;
 }
 // both feeds on screen: a control the garage card already has (the garage door) only shows there, not under the driveway too. Looked at on every pass, not only when the mode changes, because the control tiles are built a moment after the cards
 function vwDedupe() { const dv = VWC.filter(c => c.k === "driveway")[0], gv = VWC.filter(c => c.k === "garage")[0];
@@ -9191,8 +9495,8 @@ function vwDedupe() { const dv = VWC.filter(c => c.k === "driveway")[0], gv = VW
     const door = t => t.classList.contains("dr"), gd = T(gv).some(door);   // a door-with-a-sensor tile (the garage door) on the garage card also covers a door tile on the driveway card that names the door with other entities
     T(dv).forEach(t => t.classList.toggle("vdup", two && (keys(t).some(k => ge.has(k)) || (gd && door(t))))); } }
 function applyView() {
-  if (!onView()) return; const m = viewMode(); if (m === VW.mode) { vwDedupe(); return; } VW.mode = m;
-  const vw = $("#vw"); vw.className = "on " + (m === "both" ? "two" : "one");
+  if (!onView()) return; dbTick(); const m = viewMode(); vwDb(m); if (m === VW.mode) { vwDedupe(); return; } VW.mode = m;
+  const vw = $("#vw"); vw.className = "on " + (m === "both" ? "two" : "one"); vwDb(m);   // the class list was just reset: put the doorbell card back
   VWC.forEach(c => { const vis = m === "both" ? (c.k === "driveway" || c.k === "garage") : m === c.k; c.o.el.style.display = vis ? "" : "none"; if (vis) { const warm = !!c.pc && c.eid === c.id && (c.live || (c._warm && Date.now() - c._warm < 5000)); const mem = camMem.get(c.id); if (mem && !c.live) { c.o.img.src = mem; c.o.el.classList.add("still"); } if (!warm) liveCam(c); if (m === "both") mkLiveOff(c.o.el); else mkLiveOn(c.o.el);   /* two cameras side by side: no recogniser (heavy, and the picture is laid out differently) */ const s = states[c.id], pc = s && s.attributes.entity_picture; if (pc && !mem) c.o.img.src = CONFIG.url + pc + (pc.indexOf("?") > -1 ? "&" : "?") + "t=" + Date.now(); } else { clearTimeout(c.rt); stopCam(c); mkLiveOff(c.o.el); } });
   vwDedupe();
   updTiles();
@@ -10338,17 +10642,16 @@ function drawWeather() {
     '<div class="wnr">' + pill(mdi("weather-windy"), n(a.wind_speed, wu), wxl ? " wnd wt" + wxl : "") + pill("HUM", n(a.humidity, "%")) + pill("RAIN", fcH.length ? f1(+fcH[0].precipitation || 0) + " mm" : "--") + pill("UV", a.uv_index != null ? a.uv_index : "--") + '</div>' +
     '<button class="wnb" data-wnmore aria-label="More conditions">More ' + mdi("chevron-down") + '</button><div class="wnm wg">' + wnm + '</div>' +
     (wdy ? '<div class="wn7"><div class="lbl">Next 7 days</div>' + hsw('<div class="wn7s">' + wdy + '</div>') + '</div>' : "") + '</div>';
-  h += fcPanel(a, wu);   // order (and the phone tabs): Now, Forecast, Sun and moon, Pollen, Weather map
+  h += fcPanel(a, wu);   // order (and the phone tabs): Now, Forecast, Sun and moon, Pollen
   h += wxSunCard();
   h += polCard();   // Pollen (config.js pollen)
-  h += wxMapSlot();   // live rain radar, under the forecast (20-weather-map.js)
   const wr = states[E("weatherWarnings")];
   const AL = [], fr = wxFrost(a); if (fr) AL.push(fr);
   if (wr && sv(E("weatherWarnings")) && wr.attributes.warnings) AL.push(wwHtml(wr.attributes.warnings, "", true));
   AL.push.apply(AL, volcHtml()); AL.push.apply(AL, (quakeHtml() || "").split(/(?=<div class="alert q")/).filter(Boolean));
   if (alI >= AL.length) alI = 0;
   const al = AL.length > 1 ? '<div class="alc"><div class="alr">' + AL.join("") + '</div><div class="dots aldots">' + AL.map((x, i) => '<i data-ai="' + i + '"' + (i === alI ? ' class="on"' : "") + '></i>').join("") + '</div></div>' : AL.join("");   // several warnings: swipe left / right
-  $("#wx").innerHTML = al + h; wxMapMount(); fcSync(); wxsMount();
+  $("#wx").innerHTML = al + h; fcSync(); wxsMount();
   { const r = $("#wx .alr"); if (r) { if (alI && r.clientWidth) r.scrollLeft = alI * (r.clientWidth + 10); r.onscroll = () => { if (!r.clientWidth) return; alI = Math.round(r.scrollLeft / (r.clientWidth + 10)); $$("#wx .aldots i").forEach((d, i) => d.classList.toggle("on", i === alI)); }; } }
   const wc = $("#wx .wcols"); if (wc && wcI && wc.clientWidth) wc.scrollLeft = wcI * (wc.clientWidth + 12);
 }
@@ -10420,71 +10723,6 @@ document.addEventListener("click", e => {
     if (c.closest("#np")) { npHold = Date.now() + 390; clearTimeout(npht); npht = setTimeout(queueNotif, 410); }
   }
 }, true);
-// ----- Weather page: live weather map (Windy embed) -----
-// config.js: weatherMap: { zoom: 7, lat: -41.29, lon: 174.78, overlay: "radar" } changes the view (default: zone.home at zoom 7, radar first); weatherMap: false hides the card.
-// overlay: "radar" | "rain" | "wind" | "clouds" | "temp" (the chips on the card switch between them; the last one picked is kept per device).
-// The card is built once and moved back into #wx after each redraw, so the map is not reloaded on every state change.
-// The map is only loaded once the card is on screen. On touch screens a cover keeps one-finger scrolling for the page until the map is tapped.
-const WXL = [["radar", "Radar"], ["rain", "Rain"], ["wind", "Wind"], ["clouds", "Clouds"], ["temp", "Temp"]];
-const WXM = { el: null, ov: null, src: "", fb: false };
-function wxMapOn() { return CONFIG.weatherMap !== false; }
-function wxMapSlot() { return wxMapOn() ? '<div id="wxmapslot"></div>' : ""; }
-function wxMapCfg() { return typeof CONFIG.weatherMap === "object" && CONFIG.weatherMap ? CONFIG.weatherMap : {}; }
-function wxMapOv() {
-  if (WXM.ov) return WXM.ov;
-  let v = ""; try { v = localStorage.getItem("kin-wxmap") || ""; } catch (e) {}
-  const ok = x => WXL.some(l => l[0] === x);
-  WXM.ov = ok(v) ? v : ok(wxMapCfg().overlay) ? wxMapCfg().overlay : "radar";
-  return WXM.ov;
-}
-function wxMapHome() {
-  const c = wxMapCfg(), z = states["zone.home"];
-  WXM.fb = false;
-  if (c.lat != null && c.lon != null) return [+c.lat, +c.lon];
-  if (z && z.attributes.latitude != null) return [+z.attributes.latitude, +z.attributes.longitude];
-  WXM.fb = true;
-  return [-41.2, 174.8];
-}
-function wxMapUrl() {
-  const h = wxMapHome(), ov = wxMapOv(), u = (CONFIG.units || {}), wu = (states[W] && states[W].attributes.wind_speed_unit) || "km/h";
-  const q = { type: "map", location: "coordinates", lat: h[0].toFixed(3), lon: h[1].toFixed(3), detailLat: h[0].toFixed(3), detailLon: h[1].toFixed(3), zoom: wxMapCfg().zoom || 7, level: "surface",
-    overlay: ov, product: ov === "radar" ? "radar" : "ecmwf", menu: "", message: "true", marker: "true", calendar: "now", pressure: "", detail: "", radarRange: "-1",
-    metricWind: wu, metricTemp: "°C", metricRain: "mm" };
-  return "https://embed.windy.com/embed2.html?" + Object.keys(q).map(k => k + "=" + encodeURIComponent(q[k])).join("&");
-}
-function wxMapCard() {
-  if (WXM.el) return WXM.el;
-  const c = document.createElement("div"); c.className = "pn pg wxmap"; c.id = "wxmap";
-  c.innerHTML = '<div class="lbl wxmh">' + mdi("weather-rainy") + ' Weather map</div>' +
-    hsw('<div class="chips tabs wxml">' + WXL.map(l => '<button class="chip" data-wxl="' + l[0] + '">' + l[1] + '</button>').join("") + '</div>') +
-    '<div class="wxmm"><iframe class="wxmv" title="Weather map" loading="lazy" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>' +
-    '<button class="mpfb" data-mpf="wx" aria-label="Full screen">' + mdi("fullscreen") + '</button><button class="wxmcv" data-wxm="use" hidden>' + mdi("gesture-tap") + '<span>TAP TO USE THE MAP</span></button></div>' +
-    '<div class="sm wxmn">Live from Windy · play bar for the hours ahead</div>';
-  c.addEventListener("click", e => {
-    const l = e.target.closest("[data-wxl]");
-    if (l) { WXM.ov = l.dataset.wxl; try { localStorage.setItem("kin-wxmap", WXM.ov); } catch (x) {} wxMapLoad(true); return; }
-    if (e.target.closest("[data-wxm=use]")) c.classList.add("live");
-  });
-  WXM.el = c;
-  if (window.ResizeObserver) new ResizeObserver(() => { if (c.offsetWidth) wxMapLoad(); }).observe(c);
-  return c;
-}
-function wxMapLoad(force) {
-  const c = WXM.el; if (!c || !c.offsetWidth) return;
-  // the map opened before Home Assistant sent zone.home: reload at the house once it is known
-  const u = (!WXM.src || force || (WXM.fb && states["zone.home"])) ? wxMapUrl() : WXM.src;
-  if (u !== WXM.src) { WXM.src = u; c.querySelector(".wxmv").src = u; }
-  c.querySelectorAll("[data-wxl]").forEach(b => b.classList.toggle("on", b.dataset.wxl === wxMapOv()));
-  const cv = c.querySelector(".wxmcv"); cv.hidden = !(window.matchMedia && matchMedia("(pointer:coarse)").matches);
-}
-function wxMapMount() {
-  const s = $("#wxmapslot"); if (!s) return;
-  const c = wxMapCard(); s.replaceWith(c);
-  // leaving the page puts the cover back, so the next visit scrolls normally
-  if (curPg() !== "weather") c.classList.remove("live");
-  wxMapLoad();
-}
-addEventListener("hashchange", () => { if (WXM.el && curPg() !== "weather") WXM.el.classList.remove("live"); });
 // ---------- Weather page scenes: small flat 2D animated skies on the Now, Sun and moon, Pollen and Forecast cards ----------
 // Each card gets a <canvas data-sc="now|sun|pol|wk"> that paints the sky for one moment: the sun and the moon where they would be, stars at night,
 // clouds that drift at the wind speed, rain or snow, a tree that sways, and pollen in the air. A slider under each scene picks the moment.
@@ -12662,7 +12900,6 @@ function drawPalette() {
   const fnt = (FONTS.filter(x => x[0] === FONT)[0] || FONTS[0])[1].replace(/^Plus /, "").split(/[ (]/)[0] + (/mono/i.test(FONT) ? " mono" : ""), sum = [preAny || "Custom", fnt, { dark: "Dark", light: "Light", auto: "Auto", sun: "Sun", time: "Schedule" }[PAL.mode] || ""].join(" · ");
   const L = sec("Style", '<div class="stg">' + STYLES.map(x => '<button class="eb sty' + (STYLE === x[0] ? " sel" : "") + '" data-style="' + x[0] + '"><span class="spv" data-pv="' + x[0] + '"><b></b><i></i></span>' + '<span class="stt">' + x[1] + '</span><small>' + x[2] + '</small></button>').join("") + '</div>') +
     sec("Presets", '<div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">' + ({ glass: "Apple system colours, made for Liquid Glass.", material: "Google tonal palettes, made for Material." }[STYLE] || "Signal colours: bright and sharp, made for Kinetic.") + '</div><div class="pg4" style="margin-top:12px">'  + Object.keys(FAM).map(n => { const p = FAM[n][m]; return '<button class="pre2' + (n === preOn ? " on" : "") + '" data-p="' + n + '"><i style="background:' + p.accent + '"></i><b>' + n + '</b></button>'; }).join("") + '</div><div class="seg" style="margin-top:14px">' + [["off", "KEEP MY COLOUR"], ["on", "NEW COLOUR DAILY"]].map(x => '<button class="eb' + (palDailyOn() === (x[0] === "on") ? " on" : "") + '" data-daily="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">Daily picks a different colour from this list each morning, in random order: every colour comes up once before any repeats. Saved on this device only.</div>') +
-    sec("Font", '<div class="stg">' + FONTS.map(x => '<button class="eb fnb' + (FONT === x[0] ? " sel" : "") + '" data-font="' + x[0] + '" style="font-family:' + x[3] + '"><b>22.5°</b><span>' + x[1] + '</span><small>' + x[2] + '</small></button>').join("") + '</div>') +
     sec("Mode", '<div class="seg" style="margin-top:12px;flex-wrap:wrap">' + [["dark", "DARK"], ["light", "LIGHT"], ["auto", "FOLLOW DEVICE"], ["sun", "FOLLOW SUN"], ["time", "SCHEDULE"]].map(x => '<button class="eb' + (PAL.mode === x[0] ? " on" : "") + '" data-mode="' + x[0] + '">' + x[1] + '</button>').join("") + '</div>' +
       (PAL.mode === "time" ? '<div class="lbl" style="margin-top:12px;text-transform:none;letter-spacing:0;display:flex;gap:10px;align-items:center;flex-wrap:wrap">Dark from <input type="time" data-tm="from" value="' + esc(PAL.from || "18:00") + '"> until <input type="time" data-tm="to" value="' + esc(PAL.to || "06:00") + '"></div>' : "") + (PAL.mode === "sun" ? '<div class="lbl" style="margin-top:12px;text-transform:none;letter-spacing:0">Dark from sunset to sunrise, from <b>sun.sun</b> in Home Assistant' + (states["sun.sun"] ? "" : " (not found, using 6am-7pm)") + '. Saved on this device only.</div>' : "")) +
     sznSec(sec) +
@@ -12896,7 +13133,7 @@ function secPills(page, host, anchor, min, always) {
   wrap.innerHTML = hsw('<div class="chips tabs secnav">' + items.map((x, i) => '<button class="chip' + (i === k ? " on" : "") + '" data-i="' + i + '">' + esc(x.n).toUpperCase() + '</button>').join("") + '</div>').replace(/^<div class="hsw">|<\/div>$/g, "");
   const row = wrap.firstElementChild; row._items = items;
   (anchor || host).parentNode.insertBefore(wrap, anchor || host);
-  row.addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; const i = +b.dataset.i, it = row._items[i]; if (!it) return; const was = [...row.children].findIndex(c => c.classList.contains("on")); SECP.sel[key] = it.n; row._items.forEach((x, j) => x.els.forEach(el => { el.style.display = j === i ? "" : "none"; })); [...row.children].forEach((c, j) => c.classList.toggle("on", j === i)); page.scrollTop = 0; if (was !== i) txEls(it.els, i > was ? 1 : -1); });
+  row.addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; const i = +b.dataset.i, it = row._items[i]; if (!it) return; const was = [...row.children].findIndex(c => c.classList.contains("on")); SECP.sel[key] = it.n; row._items.forEach((x, j) => x.els.forEach(el => { el.style.display = j === i ? "" : "none"; })); [...row.children].forEach((c, j) => c.classList.toggle("on", j === i)); if (was !== i) txEls(it.els, i > was ? 1 : -1); });
 }
 (() => {
   const wrap = (name, fn) => { const f = window[name]; if (typeof f !== "function") return; window[name] = function () { const r = f.apply(this, arguments); try { fn(); } catch (e) {} return r; }; };
@@ -12914,7 +13151,31 @@ const WP_ROWS = ":is(#admin,#theme) > .hsw:has(> .setchips), .page > .secw, #sce
 const wpScroller = e => { for (let p = e.parentElement; p; p = p.parentElement) { const o = getComputedStyle(p).overflowY; if ((o === "auto" || o === "scroll") && p.scrollHeight > p.clientHeight) return p; } return null; };
 // the page's entrance moves every card up from 20px below (and holds it there until its turn, about a second): a row measured then is 20px low, which made the frosted band 20px too tall (and the pictures under the pinned chips blurred) until the entrance ended. wpTy: how far the element and its parents are shifted down by such a transform
 const wpTy = e => { let t = 0; for (let p = e; p && p !== document.body; p = p.parentElement) { const m = getComputedStyle(p).transform; if (m && m !== "none") { const v = /matrix\(([^)]+)\)/.exec(m); if (v) t += parseFloat(v[1].split(",")[5]) || 0; } } return t; };
-function wpSync() {
+// Liquid Glass phone, one header always: when the tab capsule does not fit beside the chips, the chips fold into one button (#hcb) whose pop-up (#hpan) holds them; when even that is too tight (Settings, six tabs) the capsule shows only the current tab and drops the rest down on a tap.
+function hpanSet(on) {
+  const hd = document.querySelector(".main > header"), hr = hd && hd.querySelector(".hr"); if (!hr) return;
+  let pan = document.getElementById("hpan");
+  if (on) { if (!pan) { pan = document.createElement("div"); pan.id = "hpan"; document.body.appendChild(pan); } [].slice.call(hr.children).forEach(c => { if (c.id !== "hsrch" && c.id !== "hcb") pan.appendChild(c); }); hd.classList.add("hpop"); pan.classList.add("on"); }
+  else { if (pan) [].slice.call(pan.children).forEach(c => hr.appendChild(c)); hd.classList.remove("hpop"); if (pan) pan.classList.remove("on"); }
+}
+function hcbEnsure() {
+  const hr = document.querySelector(".main > header .hr"); if (!hr || document.getElementById("hcb")) return;
+  const b = document.createElement("button"); b.id = "hcb"; b.setAttribute("aria-label", "More"); b.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg><i></i>'; hr.insertBefore(b, hr.firstChild);
+}
+// the drop-down's open state lives here, not on the row: some pages redraw their tab row (Settings > status, live data), which would otherwise close it mid-tap
+const HDD = { open: false, hm: null, hm0: null, row: null, sig: "" };
+let sig = "";
+const hddClose = () => { HDD.open = false; document.querySelectorAll(".hddo").forEach(e => e.classList.remove("hddo")); };
+document.addEventListener("click", e => {
+  if (!e.isTrusted) return;   // only a real tap opens the pop-ups; a script that clicks a tab just switches it
+  const hd = document.querySelector(".main > header"), t = e.target, cb = t.closest && t.closest("#hcb"), op = hd && hd.classList.contains("hpop");
+  if (cb) { hpanSet(!op); e.stopPropagation(); return; }
+  if (op) { if (t.closest && t.closest("#hpan")) setTimeout(() => hpanSet(false), 0); else hpanSet(false); }
+  const dd = document.querySelector(".hdd"), ch = t.closest && t.closest(".hdd .chip");
+  if (dd) { if (ch && !HDD.open) { e.stopPropagation(); e.preventDefault(); HDD.open = true; dd.classList.add("hddo"); } else if (HDD.open) { if (ch) setTimeout(hddClose, 0); else hddClose(); } }
+  if (ch || (t.closest && t.closest(".hthr .chip"))) [60, 250, 600].forEach(ms => setTimeout(wpSync, ms));   // the page redraws its tab row after a tap: settle the header straight away
+}, true);
+function wpSync() { if (typeof hmgSync === "function") hmgSync();
   const R = document.documentElement.getBoundingClientRect(), st = document.documentElement.style;
   st.setProperty("--ww", R.width + "px"); st.setProperty("--wh", R.height + "px");
   document.querySelectorAll(WP_ROWS).forEach(e => {
@@ -12927,7 +13188,43 @@ function wpSync() {
   // fb0: at the top of a page nothing slides under the band, so its blur layers are not drawn at all (they made every tab switch heavy).
   // a page scrolled under its title bar: one frosted band (#fband) sits behind the title bar and any pinned tab row (73-frosted-header.css); the page itself scrolls from the top of the screen on phones, so its content slides under the band
   { const pg = document.querySelector(".page.on"), hd = document.querySelector(".main > header"); if (pg && hd) { const po = getComputedStyle(pg).overflowY, sc = (po === "auto" || po === "scroll") && pg.scrollHeight > pg.clientHeight ? pg : wpScroller(pg), moved = !!sc && sc.scrollTop > 1;
-    hd.classList.toggle("hstk", moved && !pg.querySelector(".stk"));
+    // Liquid Glass phone, B: when the page's tab capsule fits beside the back arrow and the chips, it moves INTO the title row (position:fixed, so nothing follows the scroll) and the title text steps aside: one row, one header. The header is clear at the top and becomes the frosted pill once the page has scrolled.
+    let hm = null;
+    // Liquid Glass tablet / desktop (TB): the greeting strip sits in the header (41-start.js, hmerge); the capsule takes the greeting's place in it, in front of the weather chips. Fold order when it is too tight: the extra pills (rain, high/low), then the wind, then the capsule becomes the drop-down.
+    const TB = innerWidth > 760, TW = false;
+    if (innerWidth <= 760 || TB || TW) {   // every style on phones, Liquid Glass on tablets: the tab capsule joins the title row, the chips fold away when they do not fit
+      const row = pg.querySelector(":is(#admin,#theme) > .hsw:has(> .setchips), .page > .secw, #security > #stabs, #insights > .insnav, #scenes .scfh:not(.scoff)"), cap = row && (row.querySelector(":scope > .chips.tabs, :scope > .setchips, :scope > .inschips") || (row.matches(".chips.tabs") ? row : null)), hr = hd.querySelector(".hr"), hsE = TB ? hd.querySelector(":scope > .hs") : null;
+      if (row && cap && hr && (!TB || hsE)) {
+        if (!TB) hcbEnsure();
+        const sg = on => TB ? [innerWidth, cap.children.length, cap.textContent.length, hsE.clientWidth, Math.round(hd.getBoundingClientRect().top), ["wchip", "wwind", "wpls", "hpls"].map(i => (document.getElementById(i) || {}).textContent).join("~"), hd.classList.contains("hnx"), hd.classList.contains("hnw"), cap.classList.contains("hdd"), on].join("|") : [innerWidth, cap.children.length, cap.textContent.length, hr.children.length, (document.getElementById("hc") || {}).offsetWidth, (document.getElementById("st") || {}).textContent, hd.classList.contains("hcol"), cap.classList.contains("hdd"), on].join("|");
+        const measTb = () => { hd.classList.toggle("hth", true); row.classList.add("hthr");   /* measure the capsule as it will look in the header (Kinetic numbers its tabs and pads them differently outside it) */ hd.classList.remove("hs1", "hs2", "hs3"); const hw0 = hsE.querySelector(".hsw"), hsr = (hw0 && getComputedStyle(hw0).display !== "contents" ? hw0 : hsE).getBoundingClientRect(), w0 = cap.style.width; for (const t of [[0, 0, 0], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 1, 0], [1, 1, 1]]) { cap.classList.toggle("hdd", !!t[0]); hd.classList.toggle("hnx", !!t[1]); hd.classList.toggle("hnw", !!t[2]); cap.style.width = "max-content"; const cw = Math.max(cap.scrollWidth, Math.ceil(cap.getBoundingClientRect().width)); cap.style.width = w0; hd.style.setProperty("--hcw", cw + "px"); if (cw > 0 && (typeof hdFits === "function" ? hdFits() : hsE.scrollWidth <= hsE.clientWidth + 1)) return { row, left: Math.round(hsr.left + 5), top: Math.round(hsr.top + (hsr.height - 40) / 2) }; } return null; };
+        const meas = () => { const hb = hd.getBoundingClientRect(), h = hr.getBoundingClientRect(), left = Math.round(hb.left + 40), room = Math.round(h.left - 10 - left), w0 = cap.style.width; cap.style.width = "max-content"; const cw = cap.scrollWidth; cap.style.width = w0; /* fixed offset from the header edge: the back arrow has a nudge animation, so it is never measured */ return cw > 0 && cw <= room ? { row, left, top: Math.round(hb.top + (hb.height - 40) / 2) } : null; };
+        if ((hd.classList.contains("hpop") || HDD.open) && HDD.hm) { if (HDD.open) cap.classList.add("hdd", "hddo"); hm = { row, left: HDD.hm.left, top: HDD.hm.top }; }
+        else if ((sig = sg(row.classList.contains("hthr"))) === HDD.sig && (HDD.row === row || (HDD.row && !HDD.row.isConnected)) && HDD.hm0 && !(TB && row.classList.contains("hthr") && Math.abs(cap.offsetWidth - (parseFloat(hd.style.getPropertyValue("--hcw")) || 0)) > 2)) { HDD.row = row; hm = { row, left: HDD.hm0.left, top: HDD.hm0.top }; }   // a redraw of the page replaces the row element but not what decides the fit: no new measuring (it was the slow part on Scenes).  // nothing that decides the fit changed: skip the measuring (it forces layout, and this runs every frame for a while after any tap)
+        else {
+          const mk = TB ? [innerWidth, cap.children.length, cap.textContent.length, hsE.clientWidth, Math.round(hd.getBoundingClientRect().top), ["wchip", "wwind", "wpls", "hpls"].map(i => (document.getElementById(i) || {}).textContent).join("~"), row.id || row.className].join("|") : "", mm = TB && HDD.mem && HDD.mem[mk], stale = TB && row.classList.contains("hthr") && Math.abs(cap.offsetWidth - (parseFloat(hd.style.getPropertyValue("--hcw")) || 0)) > 2;
+          if (TB && mm && !stale) { hd.classList.add("hth"); row.classList.add("hthr"); cap.classList.toggle("hdd", mm.dd); hd.classList.toggle("hnx", mm.nx); hd.classList.toggle("hnw", mm.nw); hd.style.setProperty("--hcw", mm.cw); hm = mm.hm && { row, left: mm.hm.left, top: mm.hm.top }; }   // this page's tab row was fitted before at this width: reuse the answer instead of measuring again (measuring forces layout)
+          else if (TB) { hm = measTb(); (HDD.mem || (HDD.mem = {}))[mk] = { hm: hm && { left: hm.left, top: hm.top }, dd: cap.classList.contains("hdd"), nx: hd.classList.contains("hnx"), nw: hd.classList.contains("hnw"), cw: hd.style.getPropertyValue("--hcw") }; } else { hd.classList.remove("hcol"); cap.classList.remove("hdd"); hm = meas();
+          if (!hm) { hd.classList.add("hcol"); hm = meas(); }
+          if (!hm) { cap.classList.add("hdd"); hm = meas(); } }
+          HDD.hm = hm && { left: hm.left, top: hm.top }; HDD.hm0 = HDD.hm; HDD.row = row; HDD.sig = sg(true);
+        }
+        const st = document.getElementById("st"), bd = document.querySelector("#hcb i"); if (bd) bd.hidden = !(st && st.classList.contains("bad"));
+      }
+    }
+    if (!hm) { HDD.open = false; if (hd.classList.contains("hpop")) hpanSet(false); hd.classList.remove("hcol", "hnx", "hnw"); document.querySelectorAll(".hdd").forEach(e => e.classList.remove("hdd", "hddo")); }
+    document.querySelectorAll(".hthr").forEach(e => { if (!hm || e !== hm.row) e.classList.remove("hthr", "hthp"); });
+    hd.classList.toggle("hth", !!hm);
+    if (hm) { hm.row.classList.add("hthr"); hm.row.classList.toggle("hthp", moved); hm.row.style.setProperty("--hx", hm.left + "px"); hm.row.style.setProperty("--hy", hm.top + "px"); }
+    hd.classList.toggle("hstk", STYLE === "glass" ? true : moved && (hm || !pg.querySelector(".stk")));   // Liquid Glass (phone, tablet, desktop): the header is the frosted pill from the first pixel
+    // Liquid Glass: only ever one card at the top. A pinned tab row that has reached the top takes the title bar's place (the bar slides away, the row glides up to the top edge); a page with no pinned row keeps the title bar as a floating frosted pill (hstk)
+    { const rows = [].slice.call(pg.querySelectorAll(".stk")), r0 = rows[0]; let d = 0, hid = false;
+      if (r0 && STYLE === "glass" && !hm) { const base = r0.getBoundingClientRect().top - wpTy(r0); r0.style.position = "relative"; const nat = r0.getBoundingClientRect().top - wpTy(r0); r0.style.position = ""; if (base - nat > 0.5) { hid = true; d = Math.round(10 - base); } }   // stuck = the row sits lower than where the page would put it (measured with the sticky switched off for a moment)
+      hd.classList.toggle("hhid", hid); const hbb = hd.getBoundingClientRect().bottom;
+      pg.querySelectorAll(".hmt").forEach(e => { if (!hm || (e.parentNode !== pg && !e.matches(".adlog > .adlh"))) { e.style.removeProperty("top"); e.classList.remove("hmt"); } });
+      if (hm && pg === sc) { const r1 = [].slice.call(pg.querySelectorAll(WP_ROWS)).filter(e => e !== hm.row && e.offsetParent && (e.parentNode === pg || e.matches(".adlog > .adlh")))[0];   // a second row (Settings sub-tabs) pins right under the header: the sticky offset is measured from the scroller's padding edge, so it is the header's bottom minus that padding
+        if (r1) { r1.classList.add("hmt"); const pr = pg.getBoundingClientRect(); r1.style.setProperty("top", Math.round(hbb + 8 - pr.top - (parseFloat(getComputedStyle(pg).paddingTop) || 0)) + "px", "important"); } }
+      document.querySelectorAll(".stk").forEach(e => { let v = pg.contains(e) ? d : 0; if (false) { const base = e.getBoundingClientRect().top - wpTy(e); e.style.position = "relative"; const nat = e.getBoundingClientRect().top - wpTy(e); e.style.position = ""; v = base - nat > 0.5 ? Math.round(hbb + 8 - base) : 0; } e.style.setProperty("--gpy", v + "px"); }); }   // a second pinned row (Settings sub-tabs) sits under the header now that the first row lives in it
     const own = sc === pg, fb = document.getElementById("fband") || document.body.appendChild(Object.assign(document.createElement("div"), { id: "fband", innerHTML: "<i></i><i></i><i></i><i></i><i></i><i></i>" }));
     document.querySelectorAll(".page.fbp").forEach(x => { if (x !== pg) x.classList.remove("fbp"); }); pg.classList.toggle("fbp", own);
     const hb = hd.getBoundingClientRect().bottom; let bt = hb + 6, nr = 0; pg.querySelectorAll(".stk").forEach(e => { const r = e.getBoundingClientRect(), ty = wpTy(e); if (r.width && r.top - ty < bt + 100) { bt = Math.max(bt, r.bottom - ty + 2); nr += e.matches(".ehc") ? 2 : 1; } });   // nr: pinned rows in the stack (Energy's two-line header counts as two)
@@ -12936,10 +13233,18 @@ function wpSync() {
 }
 let wpQ = 0;
 const wpGo = () => { if (wpQ) return; wpQ = requestAnimationFrame(() => { wpQ = 0; wpSync(); }); };
-const wpBurst = () => { let n = 0; const f = () => { wpSync(); if (++n < 45) requestAnimationFrame(f); }; requestAnimationFrame(f); };
+let wpBn = 99;
+const wpBurst = () => { const run = wpBn < 45; wpBn = 0; if (run) return; const f = () => { wpBn++; if (wpBn <= 10 || wpBn % 3 === 0 || wpBn >= 45) wpSync(); if (wpBn < 45) requestAnimationFrame(f); }; requestAnimationFrame(f); };   // after a tap / page change the header is re-fitted every frame for the first moments, then every third frame (a tap and the hash change used to start two loops, each one a layout read per frame while the page was animating in)
+if (document.fonts) { const fr = () => { HDD.sig = null; HDD.mem = null; wpBurst(); }; document.fonts.addEventListener && document.fonts.addEventListener("loadingdone", fr); document.fonts.ready && document.fonts.ready.then(fr); }   // the capsule is measured again when the real font arrives (a fallback font is narrower, and the weather then ran over the last tab)
 document.addEventListener("scroll", wpGo, { capture: true, passive: true });
 addEventListener("resize", wpBurst); addEventListener("hashchange", wpBurst);
 document.addEventListener("click", wpBurst, true); document.addEventListener("animationend", wpGo, true); document.addEventListener("transitionend", wpGo, true);
+// a page that becomes the current one gets its header laid out in the same frame (before it is painted), not a frame or two later
+{ const was = new WeakMap(), mo = new MutationObserver(ms => { let ch = false; ms.forEach(m => { const on = m.target.classList.contains("on"); if (was.get(m.target) !== on) { was.set(m.target, on); ch = true; } }); if (ch) wpSync(); });
+  document.querySelectorAll(".page").forEach(pg => { was.set(pg, pg.classList.contains("on")); mo.observe(pg, { attributes: true, attributeFilter: ["class"] }); }); }
+// a tab row that appears (first draw, a redraw) or a header part that changes size (the connection chip) is fitted before it is painted, not on the next timer tick: no row below the title bar for a moment, no lock button out of the capsule until the fit settles
+{ let q = false; const run = () => { q = false; wpSync(); }, mo2 = new MutationObserver(ms => { if (q) return; if (ms.some(m => m.type !== "childList" || m.target.closest(".hr") || (STYLE === "glass" && innerWidth > 760 && m.target.closest("header")) || [].some.call(m.addedNodes, n => n.nodeType === 1 && (n.matches(WP_ROWS) || (n.firstElementChild && n.querySelector(WP_ROWS)))))) { q = true; queueMicrotask(run); } });
+  mo2.observe(document.querySelector(".main"), { childList: true, subtree: true }); const st0 = document.getElementById("st"); if (st0) mo2.observe(st0, { characterData: true, childList: true, subtree: true, attributes: true, attributeFilter: ["class"] }); wpSync(); }
 setInterval(wpSync, 1000); setTimeout(wpBurst, 300);
 // a page that is drawn again (a colour preset, a style, a language) puts NEW pinned rows in place. Their wallpaper layer must be there from the very first frame: set up in the same
 // moment they appear (before anything is painted) and without the fade that is meant for scrolling, or the list shows through the row for a moment
@@ -13893,6 +14198,12 @@ function npKeep(nc, body) {
   nc.innerHTML = body;
   if (a) { const b = nc.querySelector(k); if (b) { const d = b.getBoundingClientRect().top - at; if (Math.abs(d) > 1) np.scrollTop += d; } }
 }
+// the lock merges into the pill while a condition shows and the lock is on screen. Kept in step whenever either changes (not only when the list is redrawn), so the lock does not sit beside the pill for a moment and then slide into it
+let hmgT = 0;
+function hmgSync() { const hd = $("header"), lk = $("#al"), nc = $("#nacc"); if (!hd) return; const on = !!(nc && nc.dataset.k) && !!lk && lk.getClientRects().length > 0;
+  if (on !== hd.classList.contains("hmg")) { hd.classList.add("hmgn"); clearTimeout(hmgT); hmgT = setTimeout(() => hd.classList.remove("hmgn"), 500); }   // joining or leaving the pill is a cut, not a colour fade
+  hd.classList.toggle("hmg", on); }
+{ const lk = $("#al"), hc = $("#nacc"), mo = new MutationObserver(hmgSync); if (lk) mo.observe(lk, { attributes: true, attributeFilter: ["class", "hidden", "style"] }); if (hc) mo.observe(hc, { attributes: true, attributeFilter: ["data-k"] }); }
 function drawNotif() {
   if (typeof cdDraw === "function") cdDraw();
   const open = document.body.classList.contains("np-open");
@@ -13907,7 +14218,7 @@ function drawNotif() {
   const sig = ks.slice(0, 2).map((k, i) => nai(k, i ? " nai2" : "")).join("");
   if ((nacc.dataset.k || "") !== (top ? top[0] : "") || nacc._sig !== sig) { nacc._sig = sig; if (top) nacc.dataset.k = top[0]; else nacc.removeAttribute("data-k"); nacc.innerHTML = sig; if (top && nkc(top)) nacc.style.setProperty("--nk", nkc(top)); else nacc.style.removeProperty("--nk"); }
   // phones and tablets: the lock merges into the pill while a condition shows (70-header-status-pill.css); a person without the alarm has no lock to merge
-  { const hd = $("header"), lk = $("#al"); if (hd) hd.classList.toggle("hmg", !!top && !!lk && lk.getClientRects().length > 0); }
+  hmgSync();
   nacc.dataset.n = ks.length;   // 3+ conditions: one chip + "+N" (see 28-pollen.css)
   if (ks.length > 1) nacc.dataset.more = "+" + (ks.length - 1); else nacc.removeAttribute("data-more");
   if (ks.length > 2) nacc.dataset.more2 = "+" + (ks.length - 2); else if (ks.length > 1) nacc.dataset.more2 = ""; else nacc.removeAttribute("data-more2");
@@ -14810,7 +15121,7 @@ function chDraw() {
       w = document.createElement("div"); w.className = "hsw secw"; w.dataset.sig = "climate";
       w.innerHTML = hsw('<div class="chips tabs secnav">' + [["ctl", "Control"], ["hist", "History"]].map(x => '<button class="chip" data-t="' + x[0] + '">' + x[1].toUpperCase() + '</button>').join("") + '</div>').replace(/^<div class="hsw">|<\/div>$/g, "");
       pg.insertBefore(w, pg.firstChild);
-      w.addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b || b.dataset.t === CH.tab) return; const d = b.dataset.t === "hist" ? 1 : -1; CH.tab = b.dataset.t; tabs(); if (CH.tab === "hist") { CH.lastSig = ""; chDraw(); } try { txGo(CH.tab === "hist" ? el : $("#grid"), d, true); } catch (x) {} try { const ca = $("#cauto"); if (ca && !ca.hidden) txEls([ca], d); } catch (x) {} if (CH.tab === "hist") { CH.lastSig = ""; chDraw(); } pg.scrollTop = 0; });
+      w.addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b || b.dataset.t === CH.tab) return; const d = b.dataset.t === "hist" ? 1 : -1; CH.tab = b.dataset.t; tabs(); if (CH.tab === "hist") { CH.lastSig = ""; chDraw(); } try { txGo(CH.tab === "hist" ? el : $("#grid"), d, true); } catch (x) {} try { const ca = $("#cauto"); if (ca && !ca.hidden) txEls([ca], d); } catch (x) {} if (CH.tab === "hist") { CH.lastSig = ""; chDraw(); } });
     }
     pg.dataset.ctab = CH.tab; [...w.querySelectorAll(".chip")].forEach(c => c.classList.toggle("on", c.dataset.t === CH.tab));
   };
@@ -15239,7 +15550,13 @@ function drawMedia() {
   const cards = els;
   tickMedia(); lyrUpdate();
 }
+// a bar draws from the position it was built with; the true position can change without the bar being rebuilt (Spotify's own reading arrives later than the speaker's), so every tick refreshes it, except just after a seek made here
+function mpBarFresh(el) {
+  const id = el.dataset.ctl, k = id && MPK[id]; if (!id || !states[id] || (k && k.seek && srvNow() - k.seek < 6000)) return;
+  const q = mpPos(id); el.dataset.pos = q.pos.toFixed(2); el.dataset.upd = new Date(srvNow()).toISOString(); el.dataset.dur = q.dur; el.dataset.play = q.play ? "1" : "0";
+}
 function tickMedia() {
+  $$("#mp .mpb[data-ctl], #npw .mpb[data-ctl], #npsheet .mpb[data-ctl], #npfs .mpb[data-ctl], #npmini .mpb[data-ctl], #hnp .mpb[data-ctl], #npfab .mpr[data-ctl], #hmp .mpr[data-ctl]").forEach(mpBarFresh);
   $$("#npfab .mpr, #hmp .mpr").forEach(el => { const d = +el.dataset.dur; let p = +el.dataset.pos || 0; if (el.dataset.play === "1" && el.dataset.upd) p += (srvNow() - Date.parse(el.dataset.upd)) / 1000; const f = d ? Math.max(0, Math.min(1, p / d)) : 0, C = 2 * Math.PI * (+el.getAttribute("r") || 26.5); el.style.strokeDasharray = C; el.style.strokeDashoffset = C * (1 - f); });
   $$("#mp input[data-vol]").forEach(r => r.style.setProperty("--v", r.value + "%"));   // the filled part of each volume slider (used by the looks that draw their own slider)
   $$("#mp .mpb, #npw .mpb, #npsheet .mpb, #npfs .mpb, #npmini .mpb, #hnp .mpb").forEach(el => {
@@ -15714,6 +16031,17 @@ function mpPos(id) {
     const mine = m.base + (m.play ? (now - m.t) / 1000 : 0);
     if ((m.ov && m.ov === ru) || (!m.play && play && raw < mine - 3 && !(dur && mine >= dur - 2))) { use = mine; ov = ru; }   // stale report on resume: keep counting until HA sends a fresh position
   }
+  // Spotify knows where the song really is. Moving a song from the phone to a speaker can leave the speaker reporting a position that
+  // is off by a fixed amount for the rest of the song, so when Spotify's own player shows the same song in the same state with a fresh
+  // position, and it disagrees by more than 4 s, Spotify's position wins. Never within 20 s of a seek made here (Spotify polls later).
+  const se = typeof SPE === "function" ? SPE() : "", ss = se && se !== id ? states[se] : null;
+  if (ss && ss.state === s.state && /^(playing|paused)$/.test(ss.state) && !(m && m.seek && now - m.seek < 20000)) {
+    const b = ss.attributes, nm = x => String(x || "").trim().toLowerCase(), su = b.media_position_updated_at ? Date.parse(b.media_position_updated_at) : 0, age = su ? now - su : 1e9;
+    if (b.media_position != null && nm(b.media_title) && nm(b.media_title) === nm(a.media_title) && nm(b.media_artist) === nm(a.media_artist) && (!dur || !(+b.media_duration) || Math.abs(+b.media_duration - dur) <= 2) && (play ? age < 20000 : true)) {
+      const sp = Math.max(0, (+b.media_position || 0) + (play ? Math.max(0, now - su) / 1000 : 0));
+      if (Math.abs(sp - use) > 4) { use = sp; ov = 0; }
+    }
+  }
   if (dur) use = Math.min(use, dur);
   MPK[id] = { key: key, play: play, base: use, t: now, ov: ov, seek: m && m.key === key ? m.seek : 0 };
   return { pos: use, play: play, dur: dur };
@@ -15722,7 +16050,7 @@ const mpData = id => { const q = mpPos(id); return 'data-ctl="' + String(id).rep
 // Tap the song's progress bar to jump to that part (the now-playing card, the full-screen player and the mini player; the tap area is taller than the thin bar)
 document.addEventListener("click", e => {
   const bars = $$(".npp .mpb[data-ctl], #npfs .mpb[data-ctl], #npmini .mpb[data-ctl]"); if (!bars.length) return;
-  const b = bars.find(x => { if (!x.offsetParent) return false; const r = x.getBoundingClientRect(), pad = x.closest("#npmini") ? 7 : 16; return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top - pad && e.clientY <= r.bottom + pad; });
+  const b = bars.find(x => { if (!x.offsetParent) return false; const own = x.closest(".npp, #npfs, #npmini"); if (own && !own.contains(e.target)) return false; const r = x.getBoundingClientRect(), pad = x.closest("#npmini") ? 7 : 16; return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top - pad && e.clientY <= r.bottom + pad; });
   if (!b) return; const d = +b.dataset.dur, id = b.dataset.ctl; if (!(d > 0) || !id) return;
   const r = b.getBoundingClientRect(), pos = Math.max(0, Math.min(d - 1, (e.clientX - r.left) / r.width * d));
   e.stopPropagation(); e.preventDefault(); mpSeek(id); call("media_player", "media_seek", id, { seek_position: Math.round(pos) });
@@ -15915,14 +16243,15 @@ function wfxInit() {
 function wfxFrame(ts) {
   requestAnimationFrame(wfxFrame);
   const c = WFX.c; if (!c || document.hidden || (curPg() !== "home" && !c.closest("header"))) return;   // Home, or any page while the tablet strip sits in the header (hmerge)
-  if (ts - WFX.last < 14) return; const FXS = Math.max(0.05, +(CONFIG.weatherFx && CONFIG.weatherFx.speed) || 1), dt = Math.min(3, (ts - WFX.last) / 16.7) * FXS; WFX.last = ts;
+  const inHd = !!c.closest("header") && curPg() !== "home"; if (performance.now() - (WFX.nav || 0) < 500) { WFX.last = ts; return; }   // a page is opening: the sky waits until it has settled
+  if (ts - WFX.last < (inHd ? 32 : 14)) return; const FXS = Math.max(0.05, +(CONFIG.weatherFx && CONFIG.weatherFx.speed) || 1), dt = Math.min(3, (ts - WFX.last) / 16.7) * FXS; WFX.last = ts;
   const g = c.getContext("2d"); if (!g) return;
   const W = c.clientWidth, H = c.clientHeight, d = Math.min(window.devicePixelRatio || 1, 2);
   if (!W || !H) return;
   if (c.width !== Math.round(W * d) || c.height !== Math.round(H * d)) { c.width = Math.round(W * d); c.height = Math.round(H * d); WFX.w = W; WFX.h = H; WFX.parts = []; wfxInit(); }
   g.setTransform(d, 0, 0, d, 0, 0); g.clearRect(0, 0, W, H);
   let ax = W - 90; const hd = c.closest("header"), hr = hd && hd.querySelector(".hr");   // in the header the sun / moon sits in the free space left of the music note and the chips, not under them
-  if (hr) { const hl = hr.getBoundingClientRect().left - c.getBoundingClientRect().left; ax = Math.max(W * 0.4, Math.min(W - 90, hl - 56)); const wm = Math.round(Math.max(40, Math.min(100, (hl - 16) / W * 100))); if (c._wm !== wm) { c._wm = wm; c.style.setProperty("--wm", wm + "%"); } }
+  if (hr) { const hl = c._hl != null && ts - (c._hlt || 0) < 1000 && c._hlw === W ? c._hl : (c._hl = hr.getBoundingClientRect().left - c.getBoundingClientRect().left, c._hlt = ts, c._hlw = W, c._hl); ax = Math.max(W * 0.4, Math.min(W - 90, hl - 56)); const wm = Math.round(Math.max(40, Math.min(100, (hl - 16) / W * 100))); if (c._wm !== wm) { c._wm = wm; c.style.setProperty("--wm", wm + "%"); } }
   const light = STYLE !== "glass" && document.documentElement.getAttribute("data-mode") === "light", k = WFX.k, wd = WFX.wind, t = (WFX.t += dt * 0.016);
   const ink = light ? "40,70,110" : "230,240,255", rain = light ? "50,110,200" : "150,200,255", cl = light ? "90,110,140" : "255,255,255";
   const clouds = () => WFX.parts.forEach(p => {
@@ -16110,12 +16439,12 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") document.que
 document.addEventListener("dragstart", e => { if (CZ.pts.size && czTarget(e)) e.preventDefault(); });   // a mouse drag moves the picture, it does not pick the image up
 
 addEventListener("resize", () => { if (innerWidth > innerHeight) document.querySelectorAll(".zc.zls").forEach(e => { e.classList.remove("zls"); czReset(e); }); });
-// ----- Full screen for the Hazards map and the Windy weather map -----
+// ----- Full screen for the Hazards map -----
 // Same way as the camera card (12-init.js camNative / camClose): no cover over the page. The panel itself becomes a solid full-screen card from the first frame (class mfull), its contents fade in, and the browser's real full screen is asked for without waiting.
 // Closing: the contents fade out fast, the card dissolves into the empty spot that was kept for it in the page (class mph), then the real full screen is left after the fade.
 // The map stays the way the phone is held (portrait or landscape). Header and legend become slim pills over the map; the button turns into a close X.
 const MPF = { key: "", root: 0, closing: 0, opening: 0, h: 0, gc: "", m: "" };
-const mpEl = k => k === "hz" ? $("#hazards .hzm") : k === "wx" ? $("#wxmap") : null;
+const mpEl = k => k === "hz" ? $("#hazards .hzm") : null;
 const mpFsOff = () => { if (czFsNow()) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (_) {} } };
 function mpSync() { document.querySelectorAll("[data-mpf]").forEach(b => { const on = b.dataset.mpf === MPF.key && !MPF.closing; b.innerHTML = mdi(on ? "close" : "fullscreen"); b.setAttribute("aria-label", on ? "Close full screen" : "Full screen"); }); }
 function mpAfter(k) { if (k === "hz" && typeof hzFit === "function") { hzFit(); if (typeof hzApply === "function") hzApply(); } window.dispatchEvent(new Event("resize")); }
@@ -16646,6 +16975,7 @@ function lazyIn(pg) {
 }
 let lastPg = null;
 function route() {
+  if (typeof WFX !== "undefined") WFX.nav = performance.now();
   if (/^#palette/.test(location.hash)) { try { history.replaceState(null, "", location.hash.replace("#palette", "#theme")); } catch (_) {} }
   document.body.classList.remove("nav-open", "np-open");
   { const h0 = location.hash.slice(1).split("/")[0], lp = RU && PAGE_ON(RU.landing || "") ? RU.landing : (RU_ALL.filter(PAGE_ON)[0] || "home");
@@ -16664,6 +16994,7 @@ function route() {
     if (h0 === "security" && /^#security\/disarm\b/.test(location.hash)) { ALKP = Date.now(); location.replace("#security"); setTimeout(alarmKpTry, 80); return; } }
   const h = location.hash.slice(1).split("/"), k = h[0] === "camera" ? "view" : h[0], p = ["climate", "events", "rooms", "security", "weather", "energy", "irrigation", "scenes", "media", "theme", "vehicle", "hazards", "insights", "admin", "view"].indexOf(k) > -1 ? k : "home", pg = p === "rooms" ? "roomspg" : p;
   $("#vw").className = p === "view" ? $("#vw").className : ""; document.body.classList.toggle("vwb", p === "view"); if (p === "view") vwFull(); else vwFullOff(); if (p !== "view") document.querySelectorAll("#vw .cam.ls, #vw .cam.nfs").forEach(e => camLandOff(e, true));
+  const sy0 = lastPg ? lastPg.scrollTop : 0;   // the page being left, read before it is hidden (a hidden page reads 0)
   ["home", "climate", "events", "roomspg", "security", "weather", "energy", "irrigation", "scenes", "media", "theme", "vehicle", "hazards", "insights", "admin"].forEach(x => $("#" + x).classList.toggle("on", x === pg));
   { const t = $("#ttl"), hp = RU && RU.custom && PAGE_ON(RU.landing || "") ? RU.landing : "home", back = p === hp || !PAGE_ON(hp) ? "" : p === "rooms" && h[1] ? "#rooms" : p === "view" ? (VW.back && VW.back !== location.hash ? VW.back : "#" + hp) : "#" + hp;   // phone: the page title is the back button (room -> Rooms, any other page -> Home)
     t.innerHTML = (back ? '<svg class="tbc" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>' : "") + "<span>" + (p === "theme" || p === "admin" ? "Settings" : p === "media" && typeof spOn === "function" && spOn() ? "Spotify" : p.charAt(0).toUpperCase() + p.slice(1)) + "</span>"; t.dataset.back = back; t.classList.toggle("bk", !!back); }
@@ -16671,7 +17002,7 @@ function route() {
   { const el = $("#" + pg), stp = x => !!x && (x.id === "theme" || x.id === "admin"), tk = stp(el) ? setTab() : "", tabGo = !!tk && !!SETTAB && tk !== SETTAB && bootDone;
     let dir = 0; if (tabGo) { const o = setTabs().map(x => x[0]); dir = o.indexOf(tk) >= o.indexOf(SETTAB) ? 1 : -1; }
     SETTAB = tk;
-    if (el && el !== lastPg) el.scrollTop = 0;   // arriving on a page always starts at its top (each page is its own scroller and kept the old position)
+    if (el && el !== lastPg) el.scrollTop = stp(el) && stp(lastPg) ? sy0 : 0;   // Settings tabs (Display / Status / Logs ...) keep the scroll position, like on a phone;   // arriving on a page always starts at its top (each page is its own scroller and kept the old position)
     if (el && bootDone && (el !== lastPg || tabGo)) { if ((pg === "energy" && !enReady()) || (pg === "events" && evLast.k !== evMonKey() && !evSq.on)) pgHold(el, 1500); else { pgEnter(el); if (tabGo) { el.style.setProperty("--pgdx", dir * 36 + "px"); el.style.setProperty("--pgdr", dir * 16 + "deg"); } } } lastPg = el; if (el) lazyIn(el); }
   const setP = p === "theme" || p === "admin", onA = a => a.getAttribute("href") === "#" + p || (setP && a.getAttribute("href") === "#settings");
   $$("nav a").forEach(a => a.classList.toggle("on", onA(a)));
@@ -16694,12 +17025,10 @@ function route() {
   if (p === "weather") {   // #weather/wind | rain | uv opens that forecast tab and scrolls to it, #weather/pollen scrolls to the Pollen card
     const ti = { temp: 0, wind: 1, rain: 2, uv: 3, cloud: 3 }[h[1]];
     if (ti != null) fcTab = ti;
-    if (h[1] === "radar" || h[1] === "map") SECP.want = { page: "weather", q: "#wxmap" };
     if (h[1] === "pollen") SECP.want = { page: "weather", q: "#wxpol" }; else if (ti != null || h[1] === "forecast") SECP.want = { page: "weather", q: ".fcp" };   // #weather/forecast = the Forecast tab (the Home forecast card)
     const wk = h[1] === "now" || h[1] === "week"; if (wk) { wcI = h[1] === "week" ? 1 : 0; SECP.want = { page: "weather", q: ".wnow" }; }   // #weather/now = the Now card, #weather/week = the Next 7 days card (both on the Now tab)   // phones: open the tab that holds that card
     drawWeather();
     if (wk) [0, 80, 400].forEach(ms => setTimeout(() => { const wc = $("#wx .wcols"); if (curPg() === "weather" && wc && wc.clientWidth) { wc.scrollLeft = wcI * (wc.clientWidth + 12); $$("#wx .wdots i").forEach((d, k) => d.classList.toggle("on", k === wcI)); } }, ms));
-    if (h[1] === "radar" || h[1] === "map") [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wxmap"); if (f) wxTop(f); } }, ms));
     if (h[1] === "forecast" && !isMobile()) [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wx .fcp"); if (f) wxTop(f); } }, ms));
     if (h[1] === "pollen") [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { const f = $("#wxpol"); if (f) wxTop(f); } }, ms));   // #weather/pollen scrolls to the Pollen card
     if (ti != null) [60, 1500].forEach(ms => setTimeout(() => { if (curPg() === "weather") { fcSync(); const f = $("#wx .fcp"); if (f) { wxTop(f); } } }, ms));
@@ -17469,6 +17798,25 @@ document.addEventListener("click", e => {
   rows.forEach((r, i) => { if (h1 > h0 && r.animate) r.animate([{ opacity: 0, transform: "translateY(-6px)" }, { opacity: 1, transform: "none" }], { duration: 300, delay: 60 + i * 28, easing: "ease-out", fill: "backwards" }); });
   an.onfinish = an.oncancel = () => { box.style.overflow = ov; };
 });
+// the same tab redrawn (a time moved on, a sensor changed): only what differs is touched, so the cards do not all vanish and come back (and their entrance does not replay) every time something small changes
+function insMorph(el, html) {
+  const t = document.createElement("template"); t.innerHTML = html;
+  const sync = (a, b) => {
+    const ac = [].slice.call(a.childNodes), bc = [].slice.call(b.childNodes), n = Math.max(ac.length, bc.length);
+    for (let i = 0; i < n; i++) {
+      const x = ac[i], y = bc[i];
+      if (!y) { a.removeChild(x); continue; }
+      if (!x) { a.appendChild(y); continue; }
+      if (x.nodeType === 3 && y.nodeType === 3) { if (x.nodeValue !== y.nodeValue) x.nodeValue = y.nodeValue; continue; }
+      if (x.nodeType !== 1 || y.nodeType !== 1 || x.tagName !== y.tagName || x.tagName === "svg" || x.tagName === "INPUT") { a.replaceChild(y, x); continue; }
+      if (x.isEqualNode(y)) continue;
+      [].slice.call(x.attributes).forEach(at => { if (!y.hasAttribute(at.name)) x.removeAttribute(at.name); });
+      [].slice.call(y.attributes).forEach(at => { if (x.getAttribute(at.name) !== at.value) x.setAttribute(at.name, at.value); });
+      sync(x, y);
+    }
+  };
+  sync(el, t.content);
+}
 function drawInsights() {
   const pg = $("#insights"); if (!pg) return; const all = insAll(); INS.last = all;
   const need = all.filter(x => x.lvl === 2), cats = Object.keys(insCats).filter(c => all.some(x => x.cat === c));
@@ -17487,7 +17835,7 @@ function drawInsights() {
     (!ST && INS.hid ? '<div class="insdis">' + INS.hid + ' hidden for today · <button class="eb" data-insun>SHOW THEM</button></div>' : "");
   if (!pg.querySelector(":scope > #insbody")) { pg.innerHTML = hc + '<div id="insbody"></div>'; pg._hc = hc; }
   else if (pg._hc !== hc) { const c = pg.querySelector(":scope > .insnav > .inschips"); c.innerHTML = hci; pg._hc = hc; }
-  const b = pg.querySelector(":scope > #insbody"); if (pg._h !== h) { pg._h = h; b.innerHTML = h; }
+  const b = pg.querySelector(":scope > #insbody"); if (pg._h !== h) { const same = pg._tab === INS.tab && b.firstChild; pg._h = h; pg._tab = INS.tab; if (same) insMorph(b, h); else b.innerHTML = h; }
   insDetDraw();
 }
 function insTileHtml(x) {
@@ -20248,7 +20596,7 @@ if (auOn()) try {
     // views with a link of their own (the table in DEVELOPING.md); each needs its page to be on for this person
     const det = on("security") && CONFIG.detections !== false && (typeof ruSec !== "function" || ruSec("detections"));
     [["Temperature forecast", "#weather/temp", "weather", "temp hot cold degrees"], ["Wind forecast", "#weather/wind", "weather", "gust breeze windy"], ["Rain forecast", "#weather/rain", "weather", "precipitation shower umbrella"],
-      ["UV & cloud forecast", "#weather/uv", "weather", "sun sunburn cloudy"], ["Weather radar", "#weather/radar", "weather", "map rain clouds"], ["Weather now", "#weather/now", "weather", "current conditions today"],
+      ["UV & cloud forecast", "#weather/uv", "weather", "sun sunburn cloudy"], ["Weather now", "#weather/now", "weather", "current conditions today"],
       ["Next 7 days", "#weather/week", "weather", "week forecast seven days"], ["Pollen", "#weather/pollen", CONFIG.pollen ? "weather" : "", "hayfever allergy"],
       ["Detections", "#security/detections", det ? "security" : "", "person vehicle animal motion snapshots events"],
       ["Earthquakes", "#hazards/earthquakes", "hazards", "quake seismic shake"], ["Volcanoes", "#hazards/volcanoes", "hazards", "volcano eruption ash"],
@@ -20518,8 +20866,8 @@ if (auOn()) try {
   function shut() { if (!isOpen()) return; inp.blur(); btn.classList.remove("on"); box.classList.add("out"); clearTimeout(box._t); box._t = setTimeout(() => { box.hidden = true; box.classList.remove("out"); box.style.top = box.style.height = ""; }, 200); }
 
   // the header button sits right before the notification icon and the clock
-  const btn = document.createElement("button"); btn.id = "hsrch"; btn.type = "button"; btn.setAttribute("aria-label", "Search"); btn.innerHTML = mdi("magnify");
-  $("header .hr").insertBefore(btn, $("#hc")); btn.addEventListener("click", show);
+  const btn = document.getElementById("hsrch") || document.createElement("button"); btn.id = "hsrch"; btn.type = "button"; btn.setAttribute("aria-label", "Search"); btn.innerHTML = mdi("magnify");   // the empty button is in the page already, so the header does not shift when this script runs
+  if (!btn.parentNode) $("header .hr").insertBefore(btn, $("#hc")); btn.addEventListener("click", show);
   document.addEventListener("keydown", e => {
     const open = isOpen();
     if (e.key === "Escape" && open) { e.preventDefault(); shut(); return; }
@@ -20628,7 +20976,7 @@ const SP_ERR = [[/Desktop Player authorization token|Cast Application could not 
   [/discoverable via Zeroconf/i, "That speaker can't be reached. Check it is on and on the same network as Home Assistant.", 0],
   [/no active Spotify player/i, "Pick a speaker to play on.", 1]];   // third value: 1 = open the speaker sheet, because only picking a speaker fixes it
 function spFail(msg) {
-  SP.want = null; SP.st = null; if (typeof queueNp === "function") queueNp(); const e = SP_ERR.filter(x => x[0].test(msg))[0]; spToast(e ? e[1] : "Couldn't play that: " + String(msg || "").replace(/\s+/g, " ").slice(0, 110)); if (e && e[2]) spDev(true); }   // an error the speaker sheet cannot fix only shows the reason; it never pops the sheet over the page
+  SP.gw = 0; SP.want = null; SP.st = null; if (typeof queueNp === "function") queueNp(); const e = SP_ERR.filter(x => x[0].test(msg))[0]; spToast(e ? e[1] : "Couldn't play that: " + String(msg || "").replace(/\s+/g, " ").slice(0, 110)); if (e && e[2]) spDev(true); }   // an error the speaker sheet cannot fix only shows the reason; it never pops the sheet over the page
 // ---- loading: each list is fetched once, then kept (pull again by leaving and coming back after 5 minutes) ----
 const SP_LOAD = {
   recent: ["get_player_recent_tracks", { limit: 20 }, r => { const seen = {}, out = []; SP.rt = ((r && r.items) || []).map(i => i.track).filter(t => t && t.uri).filter((t, k, A) => A.findIndex(x => x.uri === t.uri) === k);   /* the songs themselves, for the search page's Recently played */ ((r && r.items) || []).forEach(i => { const a = i.track && i.track.album; if (a && a.id && !seen[a.id]) { seen[a.id] = 1; out.push(a); } }); return out; }],
@@ -20688,9 +21036,19 @@ function spDevLoad() {
 }
 function spPickDev(id, quiet) {
   SP.devId = id; try { localStorage.setItem("dashSpDev", id); } catch (_) {}
-  if (!quiet) { SP.devOpen = false; if (spLive()) spCall("player_transfer_playback", { device_id: id, play: (states[SPE()] || {}).state === "playing" }, null, spFail); }
+  if (!quiet) { SP.devOpen = false; if (spLive()) spCall("player_transfer_playback", { device_id: id, play: (states[SPE()] || {}).state === "playing" }, null, spFail); else spHandOff(id); }
   const p = SP.pend; if (p && !quiet) { SP.pend = null; spPlay(p.kind, p.uri, p.extra); }
   spDevDraw(); spDraw();
+}
+// The music is on the house speakers (played straight to them, so Spotify itself shows nothing playing): a tap on another device carries the song over, from where it is, and then quietens the speakers
+function spHandOff(id) {
+  const m = spMain(), S = (m && states[m]) || {}, a = S.attributes || {}; if (S.state !== "playing" && S.state !== "paused") return;
+  const tr = (String(a.media_content_id || "").replace(/%3a/gi, ":").match(/spotify:(?:track|episode):[A-Za-z0-9]+/) || [])[0]; if (!tr) { spToast("Start a song on the speaker first"); return; }
+  const pos = Math.max(0, Math.round((typeof mpPos === "function" ? +(mpPos(m) || {}).pos || 0 : 0) * 1000)), ctx = SP.ctx && /^spotify:(playlist|album):/.test(SP.ctx) ? SP.ctx : "", nm = ((SP.dev || []).filter(d => d.id === id)[0] || {}).name || "the device", play = S.state === "playing";
+  const go = ctx ? () => spCall("player_media_play_context", { context_uri: ctx, offset_uri: tr, position_ms: pos, device_id: id }, null, spFail) : () => spCall("player_media_play_tracks", { uris: tr, position_ms: pos, device_id: id }, null, spFail);
+  if (play) { go(); spToast("Playing on " + nm); setTimeout(() => call("media_player", "media_pause", m), 1500); }
+  else { SP.pend = null; go(); setTimeout(() => spCall("player_media_pause", { device_id: id }, null, null), 2500); spToast("Moved to " + nm); }
+  spCall("trigger_scan_interval", {});
 }
 const spMain = () => (CONFIG.media && CONFIG.media.length && typeof grpMainNow === "function") ? grpMainNow(GRP.main) : "";
 const spGroupName = () => { const m = spMain(); if (!m) return ""; const S = grpSel(m), n = (CONFIG.media || []).filter(x => S[x].on).length; return fname(m) + (n > 1 ? " + " + (n - 1) : ""); };
@@ -20752,6 +21110,7 @@ function spAskHtml() {
     '<div class="spaq">' + (what ? "Start <b>" + esc(what) + "</b> on…" : "Pick where to play it.") + '</div>' + rows + '<div class="spcap">Tap a speaker to start it there. Whatever that speaker is playing is replaced; the other speakers are left alone.</div></div>';
 }
 function spPlayNow(kind, uri, extra) {
+  { const m0 = spMain(); SP.ctx = kind === "context" ? uri : (extra && extra.art) || ""; SP.ctxT = Date.now(); SP.ctxTitle = ((((m0 && states[m0]) || {}).attributes) || {}).media_title || ""; }   // (PAUSE shows once the new song is on, not while the old one is still playing)
   const shuf = !!(extra && extra.shuffle); if (shuf) { extra = Object.assign({}, extra); delete extra.shuffle; }   // extra.shuffle = the shuffle button on a playlist or album
   spCount(kind, uri);
   const main = spMain();
@@ -20775,6 +21134,13 @@ function spMore(uri, cb) {
   };
   spCall("get_track_recommendations", { seed_tracks: id, limit: 20 }, r => { const L = uris(r && (r.tracks || r.items)); if (L.length >= 5) fin(L); else fallback(); }, () => fallback());
 }
+// one start command at a time: a second tap while the first is still being handled by the speaker used to overlap it (the speaker then ended up on the earlier song, or never answered); the last tap waits its turn and only that one is sent
+function spPlayQ(service, data) {
+  if (SP.pq && SP.pq.busy) { SP.pq.next = [service, data]; return; }
+  const q = SP.pq = { busy: true, next: null }, fin = () => { clearTimeout(q.t); if (!q.busy) return; q.busy = false; const n = q.next; q.next = null; if (n) setTimeout(() => spPlayQ(n[0], n[1]), 250); };
+  q.t = setTimeout(fin, 6000);
+  send({ type: "call_service", domain: "spotifyplus", service: service, service_data: Object.assign({ entity_id: SPE() }, data || {}), return_response: false }, (r, m) => { if (m && m.success === false) { spFail(m.error && m.error.message || "Failed"); } fin(); });
+}
 function spPlayCloud(kind, uri, extra, shuf) {
   if (shuf) { if (((states[SPE()] || {}).attributes || {}).shuffle !== true) call("media_player", "shuffle_set", SPE(), { shuffle: true }); }
   else if (extra && extra.offset_position != null && ((states[SPE()] || {}).attributes || {}).shuffle === true) call("media_player", "shuffle_set", SPE(), { shuffle: false });   // same reason: a chosen song must not be shuffled away
@@ -20782,7 +21148,7 @@ function spPlayCloud(kind, uri, extra, shuf) {
   if (!tg && !spLive()) { SP.pend = { kind: kind, uri: uri, extra: extra }; spDev(true); return; }
   const dv = tg ? { device_id: tg } : {};
   if (kind === "liked") spCall("player_media_play_track_favorites", Object.assign({ shuffle: true }, dv), null, spFail);
-  else if (kind === "track") spMore(uri, L => spCall("player_media_play_tracks", Object.assign({ uris: L.join(",") }, dv), null, spFail));   // a single song carries on with similar ones, like the Spotify app
+  else if (kind === "track") spMore(uri, L => spPlayQ("player_media_play_tracks", Object.assign({ uris: L.join(",") }, dv)));   // a single song carries on with similar ones, like the Spotify app
   else spCall("player_media_play_context", Object.assign({ context_uri: uri }, extra || {}, dv), null, spFail);
   spCall("trigger_scan_interval", {});
 }
@@ -20849,7 +21215,7 @@ function spDetail() {
     '<div class="sphd"><span class="spa lg"' + (v.img ? ' style="background-image:url(' + esc(v.img) + ')"' : "") + '>' + (v.img ? "" : mdi("music-note")) + '</span><div class="spht"><b>' + esc(v.name) + '</b><small class="spcnt">' + spCnt() + '</small></div></div>' + spActs() + '<div class="spdl">' + spList() + '</div></div>';
 }
 const spCnt = () => { const v = SP.view; return esc(v.sub || (v.kind === "album" ? "Album" : "Playlist")) + (v.items ? " · " + v.items.length + " songs" : ""); };
-function spListDraw() { const l = $("#spot .spdl"); if (!l || !SP.view) return; const h = spList(); if (l._k !== h) { l._k = h; l.innerHTML = h; } const c = $("#spot .spcnt"); if (c) c.innerHTML = spCnt(); const b = $("#spot .spbody"); if (b) b._k = "d" + spDetail(); }   // songs arriving: only the list changes, the header stays put
+function spListDraw() { const l = $("#spot .spdl"); if (!l || !SP.view) return; const h = spList(); if (l._k !== h) { const had = !!l.querySelector(".spkl"); l._k = h; l.innerHTML = h; const nl = l.querySelector(".spkl"); if (nl && !had) nl.classList.add("spin"); } const c = $("#spot .spcnt"); if (c) c.innerHTML = spCnt(); const b = $("#spot .spbody"); if (b) b._k = "d" + spDetail(); }   // songs arriving: only the list changes, the header stays put
 function spList() {
   const v = SP.view, L = v.items || [];
   const rows = L.map((t, i) => '<button class="spr spk" data-sp="at" data-k="' + (t._p != null ? t._p : i) + '"><em>' + (i + 1) + '</em><span class="spx"><b>' + esc(t.name || "") + '</b><small>' + esc((t.artists || []).map(a => a.name).join(", ")) + '</small></span><small class="spdu">' + (t.duration_ms ? spMs(t.duration_ms) : "") + '</small>' + spQBtn(t.uri) + '</button>').join("");
@@ -20912,8 +21278,13 @@ function spClick(e) {
   }
   else if (a === "play") { if (k === "playlist" || k === "album" || k === "artist") spOpen(k, u, b.dataset.n, b.dataset.i, b.dataset.s); else spPlay(k, u); }
   else if (a === "back") { SP.view = null; spDraw(); spRise(); }
-  else if (a === "all") { if (SP.view.kind === "artist") spPlayList(0); else spPlay("context", SP.view.uri); }
-  else if (a === "shuf") spPlay("context", SP.view.uri, { shuffle: true });
+  else if (a === "all") {
+    const cs = spCtxState(), m = spMain();
+    if (cs === "playing" && m) { call("media_player", "media_pause", m); b._pp = undefined; setTimeout(spGoSync, 120); }
+    else if (cs === "paused" && m) { call("media_player", "media_play", m); setTimeout(spGoSync, 400); }
+    else { SP.gw = Date.now(); b._pp = undefined; if (SP.view.kind === "artist") { spPlayList(0); if (!SP.ask && !SP.pend) SP.ctx = SP.view.uri; } else spPlay("context", SP.view.uri); spGoSync(); }
+  }
+  else if (a === "shuf") { SP.gw = Date.now(); spPlay("context", SP.view.uri, { shuffle: true }); spGoSync(); }
   else if (a === "at") {
     const t = (SP.view.items || []).filter(x => x._p === +k)[0], m = spMain();
     spPend(b);   // the row answers at once: a spinner until the speaker reports the song
@@ -20958,14 +21329,15 @@ function spPend(b) { $$(SP_ROWS).forEach(r => { r.classList.remove("spw"); delet
 // the speaker question was cancelled: nothing is starting, so no row or toast keeps spinning
 function spPendClear() {
   $$(SP_ROWS).forEach(r => { r.classList.remove("spw"); delete r.dataset.spwt; });
-  SP.want = null; if (SP.st) { SP.st = null; clearTimeout(SP.tt); const tt = $("#evtoast"); if (tt) tt.classList.remove("on"); }
+  SP.gw = 0; spGoSync(); SP.want = null; if (SP.st) { SP.st = null; clearTimeout(SP.tt); const tt = $("#evtoast"); if (tt) tt.classList.remove("on"); }
   if (typeof queueNp === "function") queueNp();
 }
 function spMark() {
   spStartDone(); const R = $$(SP_ROWS); if (!R.length) return;
   const m = spMain(), st = (m && states[m]) || {}, at = st.attributes || {}, live = st.state === "playing" || st.state === "paused" || st.state === "buffering";
   R.forEach(r => {
-    const t = ($(".spx b", r) || {}).textContent || "", now = live && !!at.media_title && at.media_title === t;
+    const t = ($(".spx b", r) || {}).textContent || "", it = r.dataset.sp === "at" ? ((SP.view && SP.view.items) || []).filter(x => x._p === +r.dataset.k)[0] : null, tid = String((it && it.uri) || r.dataset.u || "").split(":").pop(), cid = String(at.media_content_id || "").replace(/%3a/gi, ":"),
+      now = live && ((!!at.media_title && at.media_title === t) || (tid.length > 8 && cid.indexOf(tid) > -1));   // the song is also recognised by its Spotify id (the speaker may report another version's title)
     r.classList.toggle("spon", now); r.classList.toggle("spw", !now && Date.now() - (+r.dataset.spwt || 0) < 20000 && r.classList.contains("spw"));
   });
 }
@@ -21025,9 +21397,16 @@ function spCount(kind, uri) {
   spLsSet("dashSpHist", h);
 }
 // ---- the pin / edit buttons under a playlist or album header ----
+// PLAY turns into PAUSE once this playlist / album is the thing playing (started with PLAY, SHUFFLE or a song in its list): tapping it pauses, and tapping it again carries on instead of starting over
+function spCtxState() { const v = SP.view; if (!v || !SP.ctx || SP.ctx !== v.uri) return ""; const m = spMain(), S = (m && states[m]) || {}, st = S.state; if (st === "playing" && SP.ctxTitle !== undefined && Date.now() - (SP.ctxT || 0) < 8000 && ((S.attributes || {}).media_title || "") === SP.ctxTitle) return ""; return st === "playing" ? "playing" : st === "paused" ? "paused" : ""; }
+const spGw = () => !!SP.gw && !SP.ask && Date.now() - SP.gw < 20000 && spCtxState() !== "playing";   // PLAY was tapped and the speaker has not started yet: the button spins (like a song row) until it plays
+const spGoIn = on => spGw() ? '<i class="spsp"></i><span>PLAY</span>' : mdi(on ? "pause" : "play") + "<span>" + (on ? "PAUSE" : "PLAY") + "</span>";
+function spGoSync() { const b = $(".spgo"); if (!b) return; const on = spCtxState() === "playing", k = spGw() ? "w" : on; if (on) SP.gw = 0; if (b._pp === k) return; b._pp = k; b.classList.toggle("spgw", k === "w"); b.innerHTML = spGoIn(on); }
+setInterval(spGoSync, 300);
 function spActs() {
   const v = SP.view, pin = spIsPin(v.uri);
-  return '<div class="spacts"><button class="eb spgo" data-sp="all">' + mdi("play") + "<span>PLAY</span></button>" +
+  const on = spCtxState() === "playing";
+  return '<div class="spacts"><button class="eb spgo' + (spGw() ? " spgw" : "") + '" data-sp="all">' + spGoIn(on) + "</button>" +
     (v.kind !== "artist" ? '<button class="spib" data-sp="shuf" aria-label="Shuffle play">' + mdi("shuffle-variant") + "</button>" : "") +
     '<button class="spib' + (pin ? " on" : "") + '" data-sp="pin" aria-label="' + (pin ? "Unpin" : "Pin to Home") + '" aria-pressed="' + pin + '">' + mdi(pin ? "pin" : "pin-outline") + "</button>" +
     (v.kind === "playlist" ? '<button class="spib" data-sp="edadd0" aria-label="Add songs">' + mdi("plus") + '</button><button class="spib" data-sp="ededit" aria-label="Edit playlist">' + mdi("pencil") + "</button>" : "") + "</div>";
@@ -21264,7 +21643,7 @@ function spArtistSongs(v, done) {
 function spPlayList(from) {
   const v = SP.view, L = (v && v.items || []).filter(t => t._p >= from).map(t => t.uri); if (!L.length) return;
   if ((((states[SPE()] || {}).attributes) || {}).shuffle === true) call("media_player", "shuffle_set", SPE(), { shuffle: false });   /* the song picked must not be shuffled away */
-  spPlay("track", L.join(","));
+  spPlay("track", L.join(","), { art: v.uri });   // art: the artist page owns this queue, so PLAY / PAUSE and its spinner follow it like a playlist
 }
 
 // a press on a playlist / album / artist button flashes it (css/112-spotify-more.css): the finger hides the button and :active ends as the finger lifts, so without this nothing showed that the tap had landed
@@ -21273,6 +21652,10 @@ document.addEventListener("click", e => {
   b.classList.remove("flash"); void b.offsetWidth; b.classList.add("flash");
   clearTimeout(b._fl); b._fl = setTimeout(() => b.classList.remove("flash"), 650);
 }, true);
+// a picture that has not been shown before fades in when it arrives (the artist suggestions change from time to time), instead of appearing in one frame
+{ const seen = new Set(), fi = e => { const m = /url\(["']?([^"')]+)/.exec(e.style.backgroundImage || ""); if (!m || seen.has(m[1])) return; seen.add(m[1]); if (e.classList.contains("spim")) return; e.classList.add("spim"); const im = new Image(), go = () => requestAnimationFrame(() => requestAnimationFrame(() => e.classList.add("spimo"))); im.onload = im.onerror = go; im.src = m[1]; if (im.complete) go(); },
+    sp = document.getElementById("spot");
+  if (sp) new MutationObserver(ms => ms.forEach(m => { if (m.type === "attributes") { if (m.target.matches && m.target.matches(".spa")) fi(m.target); return; } m.addedNodes.forEach(n => { if (n.nodeType !== 1) return; if (n.matches(".spa")) fi(n); n.querySelectorAll(".spa").forEach(fi); }); })).observe(sp, { childList: true, subtree: true, attributes: true, attributeFilter: ["style"] }); }
 // ---------- Spotify: add a song to a playlist (a + button on every song row and on Now Playing) ----------
 // One sheet (it uses the speaker sheet's box, #spdv): New playlist, the playlist playing now, the playlist that is open, then your own playlists. Nothing talks to Spotify directly; it all goes through SpotifyPlus.
 // Spotify only lets you add to playlists you own or that are collaborative, so only those are listed.
@@ -21673,7 +22056,7 @@ addEventListener("resize", () => { if (SXP) sxPlace(); });
 document.addEventListener("click", e => {
   const t = e.target; if (!t || !t.closest) return;
   const b = t.closest("button, .chip, .eb, .btn, .tb, [role=button]");
-  if (!b || b.disabled || b.matches("#spot .spib, #spot .spgo, #spot .spq2") || b.closest("input, select, textarea, .tabs, .secnav, .setchips, #rtabs, #stabs, #srfs, nav, .cam, #vw")) return;
+  if (!b || b.disabled || b.matches("#spot .spib, #spot .spgo, #spot .spq2") || b.closest("input, select, textarea, .tabs, .secnav, .setchips, .inschips, .insnav, .secw, .hthr, .hmt, .hdd, .adlh, .scfh, .ehc, .hzseg, #rtabs, #stabs, #srfs, nav, .cam, #vw")) return;
   const r = b.getBoundingClientRect(); if (r.width > 320 || r.height > 90 || r.width < 8) return;
   b.classList.remove("tapfx"); void b.offsetWidth; b.classList.add("tapfx");
   clearTimeout(b._tf); b._tf = setTimeout(() => b.classList.remove("tapfx"), 600);
@@ -21739,9 +22122,12 @@ if (window.fully && typeof fully.bind === "function") {   // Fully Kiosk's own s
 //   idle   = seconds without a touch before it starts, with or without a sensor (default 600 with no entity). 0 = never from touches alone.
 //   dim    = how bright the clock is, 0.1 to 1 (default 1: the screen's own brightness, such as the tablet's automatic brightness, decides; a lower number dims the clock); nightDim = the same from 22:00 to 06:00 (default 1). chips: [["binary_sensor.freezer_door", "Freezer open", "door-open"]] adds a chip while that entity is on.
 //   hold   = seconds the screensaver stays away after the page is sent somewhere without a touch (Home Assistant's fully_kiosk.load_url, a notification link, a camera detection): default 300. The page that arrives is never covered at once, and a page change always ends the screensaver.
+//   where  = "kiosk" (default): only the Fully Kiosk tablet runs it, a phone or desktop browser never does; "always" lets any device run it.
 //   screensaver: false (or leaving it out) switches it off. An alarm that goes pending or triggered ends it and opens Security.
 var SSV = { on: false, shown: false, t: 0, seen: 0, last: Date.now(), cfg: null, hold: 0 };
-const ssvCfg = () => { const c = CONFIG.screensaver; if (!c) return null; return typeof c === "object" ? c : {}; };
+// Only the wall tablet runs it: a phone or browser that opens the same dashboard never shows it (it would cover the page after 2 quiet minutes there too). Same test as the tablet battery pill: the Fully Kiosk JS interface, a FullyKiosk user agent, or ?tablet=1 once (?tablet=0 forces it off). screensaver.where: "always" lets any device run it (default "kiosk").
+const ssvKiosk = () => { let ls = null; try { ls = localStorage.getItem("dashTablet"); } catch (_) {} if (ls === "0") return false; return ls === "1" || typeof window.fully !== "undefined" || /FullyKiosk|Fully Kiosk/i.test(navigator.userAgent); };
+const ssvCfg = () => { const c = CONFIG.screensaver; if (!c) return null; const o = typeof c === "object" ? c : {}; return o.where === "always" || ssvKiosk() ? o : null; };
 const ssvIcon = { sunny: "weather-sunny", "clear-night": "weather-night", cloudy: "weather-cloudy", partlycloudy: "weather-partly-cloudy", rainy: "weather-rainy", pouring: "weather-pouring", lightning: "weather-lightning", "lightning-rainy": "weather-lightning", snowy: "weather-snowy", fog: "weather-fog", windy: "weather-windy" };
 function ssvEl() {
   let el = $("#ssv"); if (el) return el;
@@ -21808,22 +22194,24 @@ if (window.fully && typeof fully.bind === "function") { window.ssvOff = ssvEnter
   const sameChip = (a, b) => a.textContent === b.textContent && JSON.stringify(a.dataset) === JSON.stringify(b.dataset);
   const prep = p => { if (getComputedStyle(p).position === "static") p.style.position = "relative"; p.style.isolation = "isolate"; };
   const geo = (el, p) => { const r = el.getBoundingClientRect(), pr = p.getBoundingClientRect(); return { l: r.left - pr.left + p.scrollLeft - p.clientLeft, t: r.top - pr.top + p.scrollTop - p.clientTop, w: r.width, h: r.height }; };
-  const twins = (b, old) => { for (const c of document.querySelectorAll(SEL)) { if (!c.classList.contains("on") || !sameChip(c, b) || !c.parentElement) continue; const o = [...c.parentElement.children].find(x => x !== c && sameChip(x, old)); if (o) return [c, o]; } return []; };
+  const twins = (b, old, vis) => { for (const c of document.querySelectorAll(SEL)) { if (!c.classList.contains("on") || !sameChip(c, b) || !c.parentElement || (vis && !c.getClientRects().length)) continue; const o = [...c.parentElement.children].find(x => x !== c && sameChip(x, old)); if (o) return [c, o]; } return []; };
   document.addEventListener("click", e => {
-    const b = e.target && e.target.closest ? e.target.closest(SEL) : null; if (!b || b.disabled || b.classList.contains("on")) return;
+    const b = e.target && e.target.closest ? e.target.closest(SEL) : null; if (!b || b.disabled || b.classList.contains("on") || b.closest(".hdd")) return;   // the tab drop-down (header) has no glide: the list closes and the new tab simply shows
     const par = b.parentElement; if (!par) return;
     const old = [...par.children].find(c => c !== b && c.matches(SEL) && c.classList.contains("on")); if (!old) return;
-    let tries = 0;
-    const go = () => {
+    let tries = 0, fired = false, mo = null;
+    const go = (sync) => {
+      if (fired) return;
       let n = b, o = old;
-      if (!n.isConnected || !o.isConnected || n.parentElement !== o.parentElement) [n, o] = twins(b, old);
-      if (!n || !o || !n.classList.contains("on")) { if (++tries < 40) requestAnimationFrame(go); return; }
+      if (!n.isConnected || !o.isConnected || n.parentElement !== o.parentElement || !n.classList.contains("on")) { if (n.isConnected && o.isConnected && n.parentElement === o.parentElement) { const t = twins(b, old, true); if (t[0]) [n, o] = t; } else [n, o] = twins(b, old); }   // the page changed under the tab (Display lives on another page than Status, Logs ...): the same tab of the new page, once it shows as picked, is the one to glide to
+      if (!n || !o || !n.classList.contains("on")) { if (sync !== true && ++tries < 40) requestAnimationFrame(go); return; }
       const p = n.parentElement; if (!p) return;
       n.style.setProperty("transition", "none", "important"); void n.offsetWidth;
       const cs = getComputedStyle(n), nG = geo(n, p), oldG = geo(o, p);
       const ps = getComputedStyle(n, "::after"), uh = parseFloat(ps.height), uw = parseFloat(ps.width), ul = parseFloat(ps.left), ub = parseFloat(ps.bottom);
       const under = ps.content !== "none" && ps.content !== "normal" && uh > 0 && uh <= 8 && uw > 0 && ps.position === "absolute";
       if (oldG.w < 8 || nG.w < 8) return;
+      fired = true; if (mo) mo.disconnect();
       [...p.querySelectorAll(":scope > .chipglide")].forEach(x => x.remove()); [...p.children].forEach(c => c.classList && c.classList.remove("glh", "glu")); prep(p);
       const g = document.createElement("i"); g.className = "chipglide"; g.setAttribute("aria-hidden", "true");
       const base = "position:absolute;z-index:-1;pointer-events:none;box-sizing:border-box;margin:0;will-change:transform;transform-origin:0 0;";
@@ -21843,11 +22231,13 @@ if (window.fully && typeof fully.bind === "function") { window.ssvOff = ssvEnter
       }
       Object.assign(g.style, px(to)); n.style.removeProperty("transition");
       p.appendChild(g); n.classList.add(cls);
-      const done = () => { n.classList.remove("glh", "glu"); setTimeout(() => g.remove(), 260); };
+      const done = () => { n.classList.remove("glh", "glu"); const tp = getComputedStyle(n).transitionProperty; if (/\ball\b|box-shadow|border/.test(tp)) setTimeout(() => g.remove(), 260); else g.remove(); };   // no ring fade: the chip shows its own fill and ring in this very frame as the copy goes (a frame with both painted a doubled, heavy ring)   // the chip's own ring fades in over the sliding pill (so that stays a moment); a chip with no ring fade (Glass header rows) shows its ring at once, and a second copy under it would double the shadow
       const tf = "translate(" + (from.l - to.l) + "px," + (from.t - to.t) + "px) scale(" + (from.w / to.w) + "," + (from.h / to.h) + ")";
       try { g.animate([{ transform: tf }, { transform: "none" }], { duration: 300, easing: "cubic-bezier(.3,.7,.2,1)" }).onfinish = done; } catch (_) { done(); }
       setTimeout(done, 700);
     };
+    // the moment the new tab turns "on" (a microtask, before anything is painted) the glide takes over: the chip never shows its own ring for a frame first
+    try { mo = new MutationObserver(() => go(true)); mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] }); setTimeout(() => { if (mo) mo.disconnect(); }, 800); } catch (_) {}
     requestAnimationFrame(go);
   }, true);
 })();
@@ -21915,10 +22305,11 @@ route(); drawGsum(); authReturn().then(r => { if (r !== "fail") connect(); });
   const fit = () => {
     mo.disconnect(); hd.classList.remove("hcmp", "hcmp2", "hs1", "hs2", "hs3");
     let ok = false;
-    if (can()) { put(true); for (let i = 0; i < 4 && !ok; i++) { hd.classList.remove("hs1", "hs2", "hs3"); if (i) hd.classList.add("hs" + i); ok = !bad() && !hsBad(); } }
+    if (can()) { put(true); for (let i = 0; i < (hd.classList.contains("hth") ? 1 : 4) && !ok; i++) { hd.classList.remove("hs1", "hs2", "hs3"); if (i) hd.classList.add("hs" + i); ok = !bad() && !hsBad(); } }
     if (!ok) { put(false); hd.classList.remove("hs1", "hs2", "hs3"); if (innerWidth > 760 && bad()) { hd.classList.add("hcmp"); if (bad()) hd.classList.add("hcmp2"); } }
     ob();
   };
+  window.hdFits = () => !bad() && !hsBad();   // 31-section-pills.js: does the header fit on one row right now?
   let tm = 0; const later = () => { clearTimeout(tm); tm = setTimeout(fit, 60); };
   addEventListener("resize", later); addEventListener("hashchange", later);
   fit();
