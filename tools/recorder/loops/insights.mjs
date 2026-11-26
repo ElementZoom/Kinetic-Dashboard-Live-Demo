@@ -1,5 +1,5 @@
 const tag = (p, sel, i, n) => p.evaluate(([sel, i, n]) => { const e = [...document.querySelectorAll(sel)].filter(x => x.getBoundingClientRect().width > 0)[i]; if (e) e.dataset.rec = n; return !!e; }, [sel, i, n]);
-export default { file: 'EZ_Loop_Insights_Light_v10', hash: '#insights', async run(p, c) {
+export default { file: 'EZ_Loop_Insights_Light_v11', hash: '#insights', async run(p, c) {
   await c.wait(1500);
   await c.spot('#insights .insnav', 4); await c.wait(2800);
   await p.waitForSelector('#insbody .itg', { timeout: 20000 }); await c.wait(1200);
