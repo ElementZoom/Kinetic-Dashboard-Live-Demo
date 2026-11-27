@@ -8,6 +8,8 @@
 - In loops, y coordinates ≥ 720 are bottom-anchored (nav bar, sheets, player) and are shifted by +208 automatically; content coordinates above that stay as written.
 - Run: `OUT=out node run.mjs <loop> <en|zh>` (phones), `node runt.mjs <loop> <en|zh>` (tablets and Detections). Serve the repo root on :8765 first.
 
+**Smooth recorder (use this one): `lib60v.mjs` / `run60v.mjs`.** Same loops, same command (`OUT=out node run60v.mjs <loop> <en|zh>`), but Chrome is driven frame by frame (begin-frame control + virtual time), so every frame is exactly 1/60 s and nothing is dropped; the screencast in `lib60.mjs` fell to about 27 fps on a 2-core machine and stuttered. It also adds a camera: each `spot()` eases the view in on the spot (about 1.2x, `ZOOM=` to change) and `unspot()` eases back out, applied afterwards as a crop. Loops need no changes; waits count frames of page time.
+
 ## Re-recording everything (60 fps, focus blur + border) – the full routine
 
 1. **Engine first.** Build `dash.html` in the Kinetic-Dashboard repo (`node build.mjs`), then make the demo copy: take that `dash.html` and replace the two lines `config.js?v=1` / `brand-logo.js?v=1` with the demo loader (`config.js?v=2.8.0`, `brand-logo.js?v=1`, `mock.js?v=2.8.1` and the `?lang=zh` dict/zh loader – copy them from the current `app/dash.html`). Save as `app/dash.html` here. Loops record whatever is in `app/`, so an old engine means old screens.
