@@ -1,4 +1,4 @@
-export default { file: 'EZ_Loop_Module_Energy_Light_v2', hash: '#energy', async run(p, c) {
+export default { file: 'EZ_Loop_Module_Energy_Light_v3', hash: '#energy', async run(p, c) {
   await c.wait(1500);
   await c.spot('#energy .ensl > .pn:nth-child(1)', 4, 22); await c.wait(3200);
   await c.unspot(); await c.wait(300);

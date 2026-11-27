@@ -1,5 +1,5 @@
 const tag = (p, sel, i, n) => p.evaluate(([sel, i, n]) => { const e = [...document.querySelectorAll(sel)].filter(x => x.getBoundingClientRect().width > 0)[i]; if (e) e.dataset.rec = n; return !!e; }, [sel, i, n]);
-export default { file: 'EZ_Loop_Module_Security_Light_v10', hash: '#security', async run(p, c) {
+export default { file: 'EZ_Loop_Module_Security_Light_v11', hash: '#security', async run(p, c) {
   await c.wait(1500);
   await c.spot('#alp', 4, 24); await c.wait(3200);
   await c.spot('#sectog', 4, 20); await c.wait(2600);
