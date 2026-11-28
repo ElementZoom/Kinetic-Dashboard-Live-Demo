@@ -50,6 +50,7 @@ html.boot #bootld{display:grid;animation:bldIn .3s ease .45s backwards}
 /* brand (config.js -> brand): logo in the first-load screen instead of the spinner; a short intro on a cold start; logo on the sign-in screen and Theme page */
 #bootld .bl{display:none}
 html.resume #bootld,html.resume #bootld .bl,html.au-go #bootld .bl{animation:none}   /* a page that has just replaced an older one: the logo is there at once instead of fading in again */
+.bl .bo{font-size:13px;color:var(--ink,#fff);opacity:.85;margin-top:-2px;font-weight:600}
 .bl .bv{font-size:13px;color:var(--mut,#8b93a5);margin-top:-4px}
 html.brand #bootld i{display:none}
 html.brand #bootld .bl{display:flex;flex-direction:column;align-items:center;gap:18px;animation:blPulse 2.4s ease-in-out infinite}
@@ -71,6 +72,7 @@ html.intro #bootld .bl .cw{animation:blWp 1.1s cubic-bezier(.3,.7,.2,1) backward
 html.intro #bootld .bl .nm{animation:blTs .6s ease .55s backwards}
 html.intro #bootld .bl .tg{animation:blTs .6s ease .75s backwards}
 html.intro #bootld .bl .bv{animation:blTs .6s ease .95s backwards}
+html.intro #bootld .bl .bo{animation:blTs .6s ease 1.05s backwards}
 @keyframes blPulse{50%{opacity:.8}}
 @keyframes blR{from{opacity:0;transform:translateY(16px)}}
 @keyframes blT{from{opacity:0;transform:translateY(8px)}}
@@ -5201,6 +5203,9 @@ html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w) :is(.card
 html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w) .alert{background:color-mix(in srgb,var(--al) 22%,var(--gt))!important;-webkit-backdrop-filter:blur(18px) saturate(150%)!important;backdrop-filter:blur(18px) saturate(150%)!important}
 html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w) .tl.cl.on{background:color-mix(in srgb,var(--mint) 26%,var(--gt))!important}
 @media(prefers-reduced-transparency:reduce){html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w){--gt:rgb(46,44,64)}}
+/* Settings > Logs: the list and the search/filter head were painted with the dense --g1 on top of the see-through card, so they read as a different, lighter card. The card (.adlog) already carries --gt; its parts add nothing (the head band keeps its frosted look once it is pinned, .stk) */
+html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z) #admin .adlog > .adrs{background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z) #admin .adlog > .adlh:not(.stk)::after{background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important}
 /* iOS look, tablet and desktop: the title pill floats and the page scrolls under it, with the same progressive blur band as the phone
    (73-frosted-header.css). The page runs up to the top of the main area; its own padding keeps the layout where it was. */
 @media(min-width:761px){
@@ -7466,8 +7471,8 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk > .hs
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(.hsw,.secw,.scfh,.ehc,.adlh).stk{background:transparent!important;box-shadow:none!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(.hsw,.secw,.scfh,.ehc,.adlh).stk::before{opacity:0!important;box-shadow:none!important;background:none!important}
 /* rows whose capsule is an inner tab track (Climate Control / History and the like, no ::after of their own): the track is the frosted card */
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page :is(.hsw,.secw).stk > :is(.chips.tabs,.secnav,.setchips){background:rgba(40,38,58,.5)!important;border:1px solid rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
-html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page :is(.hsw,.secw).stk > :is(.chips.tabs,.secnav,.setchips){background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page :is(.hsw,.secw):not(.hthr).stk > :is(.chips.tabs,.secnav,.setchips){background:rgba(40,38,58,.5)!important;border:1px solid rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page :is(.hsw,.secw):not(.hthr).stk > :is(.chips.tabs,.secnav,.setchips){background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(.hsw,.secw).stk::after{display:none!important}   /* the inner track above is the card; a second one behind it would double the ring */
 
 /* B (phones): the tab capsule sits in the title row (placed by wpSync: --hx / --hy), the title text steps aside. The row is position:fixed, so it does not follow the scroll and leaves no gap in the page */
@@ -7893,7 +7898,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["Each speaker now has a Sound button under its volume: tap it to change Bass and Treble.","**Add songs to your playlists.** Tap the + on any song, or the Add to playlist button on Now Playing, then pick a playlist or start a new one with that song in it.","**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "4e31a2";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "bc7d49";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   window.__deep = !!location.hash && !/^#(home)?$/.test(location.hash) && !/[?&]code=/.test(location.search);   // opened on a page of its own (a notification tap such as #view/driveway): 05-first-load-gate.js does not hold the logo for a minimum time
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
@@ -7904,7 +7909,11 @@ window.DASH_BUILD = "4e31a2";   // filled in by build.mjs: tells two copies of t
   var kept = window.__splashKept && el.querySelector(".bl"); try { sessionStorage.removeItem("kinetic-au-splash"); } catch (e) {}
   var d = kept || document.createElement("div"); if (!kept) { d.className = "bl"; d.innerHTML = window.brandMark("s"); }
   if (!kept && !G.lockup) { var n = document.createElement("b"); n.textContent = B.name || ""; var t = document.createElement("small"); t.textContent = B.tag || ""; d.appendChild(n); d.appendChild(t); }
-  var vv = kept && d.querySelector(".bv") || document.createElement("span"); vv.className = "bv"; vv.textContent = "Kinetic " + window.DASH_VER + " · " + window.DASH_BUILD; if (!vv.parentNode) d.appendChild(vv);   // a kept logo only gets the new version number
+  var vv = kept && d.querySelector(".bv") || document.createElement("span"); vv.className = "bv"; vv.textContent = "Kinetic " + window.DASH_VER + " · " + window.DASH_BUILD; if (!vv.parentNode) d.appendChild(vv);
+  // after a restored reload ("Opening Security") the note lives under the version line of the logo, not as a pill over the header
+  var ob = d.querySelector(".bo"); if (ob) ob.remove();
+  if (window.__restored && window.__last && window.__last.h) { var sg = String(window.__last.h).replace(/^#/, "").split("/")[0], NM = { events: "Notifications", admin: "Settings", view: "Cameras", camera: "Cameras", hazards: "Hazards map" };
+    var nm = NM[sg.toLowerCase()] || sg.charAt(0).toUpperCase() + sg.slice(1); ob = document.createElement("span"); ob.className = "bo"; ob.textContent = "Opening " + nm; d.appendChild(ob); window.__openNote = true; }   // a kept logo only gets the new version number
   if (!kept) el.appendChild(d); r.classList.add("brand"); if (G.lockup) r.classList.add("lockup"); window.__brandT0 = performance.now();
   var seen = 0, now = Date.now(), h = location.hash;
   try { seen = +localStorage.getItem("dashSeen") || 0; localStorage.setItem("dashSeen", now); } catch (e) {}
@@ -13479,6 +13488,13 @@ const HDD = { open: false, hm: null, hm0: null, row: null, sig: "" };
 let sig = "";
 // The tab drop-down is one overlay surface (#hddp), like Google's menu and iOS's pull-down: the selector in the header never changes layout, the list opens anchored under it
 // (a clip reveal on Kinetic / Material, a spring grow from the selector on Liquid Glass) and closes with a quick fade. Only opacity / clip / scale are animated, never the layout.
+// The tab row that is on screen: pages keep their own (hidden) copies of the selector, so never take the first .hdd in the document, take the one the person tapped or the visible one.
+const hddVis = from => { const f = from && from.closest && from.closest(".hdd"); if (f) return f; const all = [].slice.call(document.querySelectorAll(".hdd")); return all.filter(d => { const r = d.getBoundingClientRect(), pg = d.closest(".page"); return r.width > 0 && r.height > 0 && (!pg || pg.classList.contains("on")); })[0] || all[0] || null; };
+// Place the list under the selector as it is NOW (the header can still be settling: capsule morph, fold, scroll), so it is repeated for a moment after opening and on every header sync.
+function hddPlace() { const p = document.getElementById("hddp"), dd = HDD.dd; if (!p || !dd || !dd.isConnected) return;
+  const on = dd.querySelector(".chip.on") || dd.querySelector(".chip"); if (!on) return; const cr = dd.getBoundingClientRect(), or = on.getBoundingClientRect(); if (!cr.width || !cr.height) return;
+  const left = Math.max(8, Math.min(or.left - 18, innerWidth - p.offsetWidth - 8)), top = Math.round(cr.bottom + 6);
+  p.style.left = left + "px"; p.style.top = top + "px"; p.style.maxHeight = Math.max(120, innerHeight - top - 12) + "px"; p.style.transformOrigin = Math.max(20, or.left - left + or.width / 2) + "px 0"; }
 const hddRm = now => document.querySelectorAll("#hddp").forEach(p => { if (now) p.remove(); else if (!p.classList.contains("out")) { p.classList.remove("on"); p.classList.add("out"); setTimeout(() => p.remove(), 160); } });
 const hddClose = () => { const was = HDD.open; HDD.open = false; clearTimeout(HDD.tc); document.querySelectorAll(".hdd.hddv").forEach(x => x.classList.remove("hddv")); if (was || document.getElementById("hddp")) hddRm(matchMedia("(prefers-reduced-motion:reduce)").matches); };
 function hddOpen(dd) {
@@ -13486,23 +13502,22 @@ function hddOpen(dd) {
   hddRm(true); const cr = dd.getBoundingClientRect(), or = on.getBoundingClientRect(), cs = getComputedStyle(on), p = document.createElement("div");
   p.id = "hddp"; p.setAttribute("role", "menu"); p.style.textTransform = cs.textTransform; p.style.letterSpacing = cs.letterSpacing;
   p.innerHTML = chips.map((c, i) => '<button type="button" role="menuitem" data-i="' + i + '"' + (c === on ? ' class="on"' : "") + '>' + esc(c.textContent.replace(/\s+/g, " ").trim()) + '</button>').join("");
-  p.style.minWidth = Math.max(or.width + 44, 176) + "px"; document.body.appendChild(p);
-  const left = Math.max(8, Math.min(or.left - 18, innerWidth - p.offsetWidth - 8)), top = Math.round(cr.bottom + 6);
-  p.style.left = left + "px"; p.style.top = top + "px"; p.style.maxHeight = Math.max(120, innerHeight - top - 12) + "px"; p.style.transformOrigin = Math.max(20, or.left - left + or.width / 2) + "px 0";
+  p.style.minWidth = Math.max(or.width + 44, 176) + "px"; document.body.appendChild(p); HDD.dd = dd; hddPlace();
+  const t0 = performance.now(); (function tick() { if (!HDD.open || HDD.dd !== dd) return; hddPlace(); if (performance.now() - t0 < 900) requestAnimationFrame(tick); })();
   HDD.open = true; dd.classList.add("hddv"); void p.offsetWidth; p.classList.add("on");
   p.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; e.stopPropagation(); b.classList.add("pk"); const cur = document.querySelector(".page.on .hdd") || dd, c = cur.querySelectorAll(".chip")[+b.dataset.i]; if (c) c.click(); setTimeout(hddClose, 90); });
 }
-addEventListener("hashchange", hddClose); addEventListener("resize", hddClose); document.addEventListener("keydown", e => { if (e.key === "Escape") hddClose(); });
+addEventListener("scroll", () => { if (HDD.open) hddPlace(); }, { passive: true, capture: true }); addEventListener("hashchange", hddClose); addEventListener("resize", hddClose); document.addEventListener("keydown", e => { if (e.key === "Escape") hddClose(); });
 document.addEventListener("click", e => {
   if (!e.isTrusted) return;   // only a real tap opens the pop-ups; a script that clicks a tab just switches it
   const hd = document.querySelector(".main > header"), t = e.target, cb = t.closest && t.closest("#hcb"), op = hd && hd.classList.contains("hpop");
   if (cb) { hpanSet(!op); e.stopPropagation(); return; }
   if (op) { if (t.closest && t.closest("#hpan")) setTimeout(() => hpanSet(false), 0); else hpanSet(false); }
-  const dd = document.querySelector(".hdd"), ch = t.closest && t.closest(".hdd .chip");
+  const ch = t.closest && t.closest(".hdd .chip"), dd = hddVis(t);
   if (dd) { if (HDD.open) { if (t.closest && t.closest("#hddp")) return; if (ch) { e.stopPropagation(); e.preventDefault(); } hddClose(); } else if (ch) { e.stopPropagation(); e.preventDefault(); hddOpen(dd); } }
   if (ch || (t.closest && t.closest(".hthr .chip"))) [60, 250, 600].forEach(ms => setTimeout(wpSync, ms));   // the page redraws its tab row after a tap: settle the header straight away
 }, true);
-function wpSync() { if (typeof hmgSync === "function") hmgSync();
+function wpSync() { if (typeof hmgSync === "function") hmgSync(); if (HDD.open) hddPlace();
   const R = document.documentElement.getBoundingClientRect(), st = document.documentElement.style;
   st.setProperty("--ww", R.width + "px"); st.setProperty("--wh", R.height + "px");
   document.querySelectorAll(WP_ROWS).forEach(e => {
@@ -15098,7 +15113,7 @@ $("#grid").addEventListener("click", e => { const ed = e.target.closest("[data-c
   const mb = e.target.closest("[data-ctm]"); if (mb) { const inn = mb.closest(".ct-threshold-inner"); if (inn) { inn._mode = mb.dataset.ctm; ctDraw(); } return; }
   const t = e.target.closest("[data-cb]"); if (t) { const id = t.dataset.cb; call("input_boolean", states[id] && states[id].state === "on" ? "turn_off" : "turn_on", id); } });
 ctDraw();
-$("#grid").addEventListener("change", e => { const n = e.target.closest && e.target.closest("[data-ctn]"); if (n) { const en = n.dataset.ctn, v = parseFloat(n.value); if (!isNaN(v)) { CTV[en] = v; ctSend(en); ctDraw(); } return; } const i = e.target.closest && e.target.closest("[data-ctt]"); if (!i || !/^\d\d:\d\d$/.test(i.value)) return; const en = i.dataset.ctt, v = i.value; CTT[en] = v; call("input_datetime", "set_value", en, { time: v + ":00" }); setTimeout(() => { if (CTT[en] === v) { delete CTT[en]; ctDraw(); } }, 8000); ctDraw(); });
+$("#grid").addEventListener("change", e => { const n = e.target.closest && e.target.closest("[data-ctn]"); if (n) { const en = n.dataset.ctn, v = parseFloat(n.value); if (!isNaN(v)) { CTV[en] = v; ctSend(en); ctDraw(); } return; } const i = e.target.closest && e.target.closest("[data-ctt]"); if (!i || !/^\d\d:\d\d$/.test(i.value)) return; const en = i.dataset.ctt, v = i.value; CTT[en] = v; call("input_datetime", "set_datetime", en, { time: v + ":00" }); setTimeout(() => { if (CTT[en] === v) { delete CTT[en]; ctDraw(); } }, 8000); ctDraw(); });
 new MutationObserver(ms => ms.forEach(m => { const c = m.target; if (c.classList && c.classList.contains("rm") && c.hasAttribute("data-open") && c.querySelector(".ctr")) ctDraw(); if (c.classList && c.classList.contains("rm") && !c.hasAttribute("data-open")) { const bx = c.querySelector(".ctr"); if (bx && bx.classList.contains("ct-editing")) { bx.classList.remove("ct-editing", "ct-leaving"); const ii = bx.querySelector(".ct-threshold-inner"); if (ii) ii._mode = ""; const bt = bx.querySelector("[data-ctedit]"); if (bt) { bt.setAttribute("aria-expanded", "false"); bt.firstChild.textContent = "Edit triggers & schedule"; } } } })).observe($("#grid"), { attributes: true, attributeFilter: ["data-open"], subtree: true });
 setInterval(() => { if ($("#grid>.card.rm[data-open] .ctr")) ctDraw(); }, 30000);
 // ---------- Events: more ways to look at the calendar ----------
@@ -22791,7 +22806,7 @@ if (window.fully && typeof fully.bind === "function") { window.ssvOff = ssvEnter
   addEventListener("pagehide", save);
   save();
   // a short "Opening Climate" so the jump back to your last page does not look like a glitch
-  if (restored && L.h) setTimeout(() => { try { const t = ($("#ttl") || {}).textContent, n = String(t || "").trim(); if (!n || document.hidden) return; const d = document.createElement("div"); d.id = "rsnote"; d.textContent = "Opening " + n; document.body.appendChild(d); requestAnimationFrame(() => d.classList.add("on")); setTimeout(() => { d.classList.remove("on"); setTimeout(() => d.remove(), 400); }, 2200); } catch (_) {} }, 900);
+  if (restored && L.h && !window.__openNote) setTimeout(() => { try { const t = ($("#ttl") || {}).textContent, n = String(t || "").trim(); if (!n || document.hidden) return; const d = document.createElement("div"); d.id = "rsnote"; d.textContent = "Opening " + n; document.body.appendChild(d); requestAnimationFrame(() => d.classList.add("on")); setTimeout(() => { d.classList.remove("on"); setTimeout(() => d.remove(), 400); }, 2200); } catch (_) {} }, 900);
   // the scroll position: each page is its own scroller. The page fills in as its data arrives, so try a few times, and stop for good at the first touch or when the page changes
   if (restored && L.y > 24) {
     let off = false; const h0 = location.hash, stop = () => { off = true; ["pointerdown", "wheel", "touchstart", "keydown"].forEach(t => removeEventListener(t, stop, true)); };
