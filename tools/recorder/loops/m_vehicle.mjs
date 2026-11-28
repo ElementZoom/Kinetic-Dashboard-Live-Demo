@@ -1,5 +1,5 @@
-const tab = async (p, c, i) => { const t = '#vehicle .secnav .chip[data-i="' + i + '"]'; if (!(await p.locator(t).filter({ visible: true }).count())) { await c.tap('#vehicle .secnav .chip.on'); await c.wait(900); } await c.tap(t); await c.wait(1600); };
-export default { file: 'EZ_Loop_Module_Vehicle_Light_v6', hash: '#vehicle', async run(p, c) {
+const tab = async (p, c, i) => { const t = '#vehicle .secnav .chip[data-i="' + i + '"]'; if (!(await p.locator(t).filter({ visible: true }).count())) { await c.tap('#vehicle .secnav .chip.on'); await c.wait(900); await c.tap('#hddp [data-i="' + i + '"]'); await c.wait(1600); return; } await c.tap(t); await c.wait(1600); };
+export default { file: 'EZ_Loop_Module_Vehicle_Light_v7', hash: '#vehicle', async run(p, c) {
   await c.wait(1500);
   await c.spot('#vehicle .vgrid > .pn:nth-child(1)', 4, 22); await c.wait(2600);
   await c.unspot(); await c.wait(300);

@@ -2606,11 +2606,9 @@ html:not(#x):not(#y):not(#z):not(#w) #grid>.card.rm .chips.chips1 .chip{flex:1 1
 html:not(#x):not(#y):not(#z):not(#w) #grid>.card.rm .chips.chips1 .chip:not(.on){background:rgba(var(--w),.08);border:1px solid var(--line)}
 html:not(#x):not(#y):not(#z):not(#w) #grid>.card.rm .chips.chips1 .chip::before,html:not(#x):not(#y):not(#z):not(#w) #grid>.card.rm .chips.chips1 .chip::after{display:none}
 /* Events: view switch, tablet week + list, phone week + month */
-.evvw{gap:0;padding:4px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--w),.05)}
-.evvw .eb{padding:9px 16px;border:0;background:transparent;border-radius:999px;font-size:12px}
-.evvw .eb.on{background:var(--mint);color:var(--onmint,#07241a)}
+/* the Month / Week / List switch is a .chips.tabs row: each look's own tab style */
 #events.srch .evvw{display:none}
-@media(max-width:760px){.evvw{order:5;flex:1 1 100%;display:flex}.evvw .eb{flex:1;padding:9px 6px}}
+@media(max-width:760px){.evvw{order:5;flex:1 1 100%;display:flex}.evvw .chip{flex:1}}
 /* shared */
 .cg.ag .evnone{margin:12px 2px}
 .cg.ag .ah.t{color:var(--mint)}
@@ -2664,7 +2662,7 @@ html:not(#x):not(#y):not(#z):not(#w) #grid>.card.rm .chips.chips1 .chip::before,
 .evstrip button.on,.evmg button.on{background:var(--mint);border-color:var(--mint);color:var(--onmint,#07241a)}
 .evstrip button.on b,.evstrip button.on small,.evmg button.on b{color:inherit}
 .evstrip button.on i,.evmg button.on i{box-shadow:0 0 0 1px rgba(0,0,0,.35)}
-@media(min-width:761px){#events .eh{gap:10px}#events .eh .eb{padding:12px 18px}#events .eh .evvw .eb{padding:9px 14px}#events .eh h2{min-width:0;flex:0 1 auto}}
+@media(min-width:761px){#events .eh{gap:10px}#events .eh .eb{padding:12px 18px}#events .eh h2{min-width:0;flex:0 1 auto}}
 @media(max-width:760px){.evmg button{padding:4px 0 3px}.evmg b{font-size:15px}}
 /* Weather > Now (phone): as tall as the Sun and moon card, the 7-day strip sits at the bottom instead of leaving a gap under the card */
 @media(max-width:760px){#weather .wnow{min-height:430px;box-sizing:border-box;display:flex;flex-direction:column}#weather .wnow>.wn7{margin-top:auto}#weather .wnow>.wnm{margin-bottom:16px}#weather .wnow .wnh{margin:14px 0 14px}#weather .wnow .big2{font-size:92px}#weather .wscw .big2{font-size:72px}#weather .wnow .wns,#weather .wscw .wns{font-size:17px;margin-top:10px}#weather .wnow .wbig{font-size:84px}#weather .wnow .wnh~.wnb{margin-top:14px}}
@@ -5206,6 +5204,12 @@ html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w) .tl.cl.on
 /* Settings > Logs: the list and the search/filter head were painted with the dense --g1 on top of the see-through card, so they read as a different, lighter card. The card (.adlog) already carries --gt; its parts add nothing (the head band keeps its frosted look once it is pinned, .stk) */
 html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z) #admin .adlog > .adrs{background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z) #admin .adlog > .adlh:not(.stk)::after{background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important}
+/* Settings groups (Appearance: Presets, Mode ...) now carry the see-through card, but the Glass "no card" rule had taken their padding (0 at the sides, 6 px above and below), so the content touched the card's edge. Give them the same inner room as Kinetic's cards. */
+html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s) :is(#theme,#admin) .pn.pg{padding:16px 16px 14px!important}
+/* Climate > Auto climate bar: same cause, the toggle touched the card's right edge */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s) #cauto.pn{padding-left:18px!important;padding-right:18px!important}
+/* Security > Driveway alerts (and the other alert toggle rows): same cause again, the label and the tabs touched the card's edges */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s) #sectog .sectg.pn{padding:10px 12px 10px 18px!important}
 /* iOS look, tablet and desktop: the title pill floats and the page scrolls under it, with the same progressive blur band as the phone
    (73-frosted-header.css). The page runs up to the top of the main area; its own padding keeps the layout where it was. */
 @media(min-width:761px){
@@ -6321,13 +6325,13 @@ html[data-style=material]:not(#x):not(#y):not(#z) .ngh{text-transform:none;font-
 html[data-style=material]:not(#x):not(#y):not(#z) small.ncd{text-transform:none;font-size:12px;letter-spacing:.4px;font-weight:500}
 html[data-style=material]:not(#x):not(#y):not(#z) :is(#mbg,.mbg b){font-weight:300}
 /* outlined segmented buttons for the heat pump modes (phone Home card, tablet Climate card, zone cards) */
-html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card) .chips{gap:0;padding:0;background:none;border:0}
-html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card.main2) .chips{display:flex}
-html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card) .chips .chip{flex:1 1 0;font-size:12px;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:clip}
-html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card) .chips .chip{min-height:40px;height:40px;min-width:0;padding:0 4px;border-radius:0;background:transparent;border:1px solid var(--mo);margin-left:-1px;box-shadow:none}
-html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card) .chips .chip:first-child{border-radius:20px 0 0 20px;margin-left:0}
-html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card) .chips .chip:not(:has(~ .chip)){border-radius:0 20px 20px 0}
-html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card) .chips .chip.on{background:var(--mp);color:var(--ink);border-color:var(--mo)}
+html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card) .chips:not(.tabs){gap:0;padding:0;background:none;border:0}
+html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card.main2) .chips:not(.tabs){display:flex}
+html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card) .chips:not(.tabs) .chip{flex:1 1 0;font-size:12px;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:clip}
+html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card) .chips:not(.tabs) .chip{min-height:40px;height:40px;min-width:0;padding:0 4px;border-radius:0;background:transparent;border:1px solid var(--mo);margin-left:-1px;box-shadow:none}
+html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card) .chips:not(.tabs) .chip:first-child{border-radius:20px 0 0 20px;margin-left:0}
+html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card) .chips:not(.tabs) .chip:not(:has(~ .chip)){border-radius:0 20px 20px 0}
+html[data-style=material]:not(#x):not(#y):not(#z) :is(#mini,.card) .chips:not(.tabs) .chip.on{background:var(--mp);color:var(--ink);border-color:var(--mo)}
 html[data-style=material]:not(#x):not(#y):not(#z) .rnd{width:40px;height:40px;min-width:40px;border-radius:50%;background:var(--mp)}
 /* tablet and PC: the side nav as pills */
 html[data-style=material]:not(#x):not(#y):not(#z) nav a{border-radius:24px}
@@ -6419,14 +6423,14 @@ html[data-style=glass]:not(#x):not(#y):not(#z) :is(.pn,.card,section)>.lbl:first
 }
 
 /* the tab rows sit over scrolling content (scene pictures, cards): the capsule is a stronger frosted glass so its labels stay readable */
-html[data-style=glass]:not(#x):not(#y):not(#z) .chips.tabs{background:rgba(34,32,50,.5);-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-style=glass]:not(#x):not(#y):not(#z) .chips.tabs{background:var(--gtab);-webkit-backdrop-filter:none;backdrop-filter:none}
 html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z) .chips.tabs{background:rgba(246,245,252,.55)}
 html[data-style=glass]:not(#x):not(#y):not(#z) .chips.tabs>.chip:not(.on){opacity:1;color:rgba(var(--ink-rgb),.82)}
 /* option rows (.seg: Mode, Clock, Language ...) are a rounded track too, not a square block */
 html[data-style=glass]:not(#x):not(#y):not(#z) .seg{flex-wrap:wrap;gap:2px;padding:4px;border-radius:28px;background:rgba(var(--w),.08);border:1px solid rgba(var(--w),.16)}
 html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z) .seg{background:rgba(120,120,128,.14);border-color:rgba(255,255,255,.55)}
 /* tab rows that are themselves the pinned row (Security Live/Detections, Rooms tabs, Insights chips): other rules made them transparent and square; they are the same glass capsule as every other tab row */
-html[data-style=glass]:not(#x):not(#y):not(#z) :is(#stabs,#rtabs).chips.tabs,html[data-style=glass]:not(#x):not(#y):not(#z) #insights > .insnav{width:fit-content;max-width:100%;padding:4px!important;border-radius:999px!important;background:rgba(34,32,50,.5)!important;border:1px solid rgba(var(--w),.16)!important;box-shadow:inset 0 1px 0 rgba(var(--w),.14)!important;gap:2px}
+html[data-style=glass]:not(#x):not(#y):not(#z) :is(#stabs,#rtabs).chips.tabs,html[data-style=glass]:not(#x):not(#y):not(#z) #insights > .insnav{width:fit-content;max-width:100%;padding:4px!important;border-radius:999px!important;background:var(--gtab)!important;border:1px solid rgba(var(--w),.16)!important;box-shadow:inset 0 1px 0 rgba(var(--w),.14)!important;gap:2px}
 html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z) :is(#stabs,#rtabs).chips.tabs,html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z) #insights > .insnav{background:rgba(246,245,252,.55)!important;border-color:rgba(255,255,255,.55)!important}
 
 /* the selected font card draws its ring inside the card: the list around it clips anything that sticks out (the ring was cut off at the sides) */
@@ -6455,6 +6459,29 @@ html[data-style=glass]:not(#x):not(#y):not(#z) .scf .chip>span::first-letter{tex
 html[data-style=glass]:not(#x):not(#y):not(#z) :is(#cpp .cpl,.cps) .tl:not(.wt):not(.sir):not(.cl)>.tn .nm{grid-row:1/span 2;align-self:center}
 /* Insights: the capsule is the wrapper (so the sideways chevron can sit inside it); the scrolling row inside is plain */
 html[data-style=glass]:not(#x):not(#y):not(#z) #insights > .insnav > .inschips{padding:0!important;border:0!important;background:none!important;box-shadow:none!important;border-radius:999px;gap:2px;margin:0!important;width:100%}
+/* Recent detections and Playback filters (Person / Vehicle, camera, 24 hours ...) are the same glass capsule as every other tab row: sentence case, the picked one lit inside it (they were capital letters on loose bordered pills with a solid teal fill) */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(.pbc.dtf,.cam.pb .pbc){width:fit-content;max-width:100%;gap:2px;padding:4px!important;margin:0 0 12px!important;border-radius:999px;background:var(--gtab);border:1px solid rgba(var(--w),.16);box-shadow:inset 0 1px 0 rgba(var(--w),.14)}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) :is(.pbc.dtf,.cam.pb .pbc){background:rgba(246,245,252,.55);border-color:rgba(255,255,255,.55)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(.pbc.dtf,.cam.pb .pbc)>.chip{display:block;text-align:center;background:transparent!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none;backdrop-filter:none;color:var(--ink);opacity:.82;text-transform:lowercase;letter-spacing:0;font-weight:500;line-height:34px;padding:0 22px;border-radius:18px;white-space:nowrap;transition:background-color .22s ease,color .22s ease,opacity .22s ease}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(.pbc.dtf,.cam.pb .pbc)>.chip::first-letter{text-transform:uppercase}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(.pbc.dtf,.cam.pb .pbc)>.chip.on{background:rgba(var(--w),.24)!important;box-shadow:inset 0 1px 0 rgba(var(--w),.3),0 1px 6px rgba(0,0,0,.14)!important;opacity:1;color:var(--ink)}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) :is(.pbc.dtf,.cam.pb .pbc)>.chip.on{background:rgba(255,255,255,.9)!important;box-shadow:inset 0 1px 0 #fff,0 2px 10px rgba(40,40,70,.2)!important}
+/* Events: the Month / Week / List switch and Today are the same capsule and sentence case too. Energy: the date row (< date >) is the same capsule as Day / Week / Bill / Year above it, and its date is lit like a picked tab */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(#energy .ehc .seg,#evsw,.chn.seg){background:var(--gtab);gap:2px;flex-wrap:nowrap}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) :is(#energy .ehc .seg,#evsw,.chn.seg){background:rgba(246,245,252,.55);border-color:rgba(255,255,255,.55)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(#energy .ehc .seg>.eb,#evsw>.chip,.chn.seg>.eb){background:transparent!important;border:0!important;box-shadow:none!important;font-size:12px;font-weight:500;line-height:34px;padding:0 18px;border-radius:18px;color:rgba(var(--ink-rgb),.82)}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) :is(#energy .ehc .seg>.eb[data-eo="0"],#evsw>.chip.on,.chn.seg>b.eb){background:rgba(var(--w),.24)!important;box-shadow:inset 0 1px 0 rgba(var(--w),.3),0 1px 6px rgba(0,0,0,.14)!important;color:var(--ink)}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) :is(#energy .ehc .seg>.eb[data-eo="0"],#evsw>.chip.on,.chn.seg>b.eb){background:rgba(255,255,255,.9)!important;box-shadow:inset 0 1px 0 #fff,0 2px 10px rgba(40,40,70,.2)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) #etd{text-transform:capitalize;letter-spacing:0;font-weight:600}
+/* Every tab capsule is the one the Settings / Vehicle tab rows use (Car / Driving / Service / History): a dark frosted glass capsule with a fine light edge, the picked tab a lighter pill with a thin ring. */
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) :is(.chips.tabs,#energy .ehc .seg,.chn.seg):not(.hthr > *){background:var(--gtab)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;border:1px solid rgba(255,255,255,.16)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) :is(.chips.tabs,#energy .ehc .seg,.chn.seg):not(.hthr > *){background:rgba(255,255,255,.42)!important;border-color:rgba(255,255,255,.7)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 8px 22px -14px rgba(60,60,90,.35)!important}
+@media(prefers-reduced-transparency:reduce){html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) :is(.chips.tabs,#energy .ehc .seg,.chn.seg):not(.hthr > *){background:rgb(46,44,64)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) :is(.chips.tabs>.chip.on,#energy .ehc .seg>.eb[data-eo="0"],#evsw>.chip.on,.chn.seg>b.eb,:is(.pbc.dtf,.cam.pb .pbc)>.chip.on){background:rgba(var(--w),.32)!important;box-shadow:inset 0 0 0 1px rgba(var(--w),.4),inset 0 1px 0 rgba(var(--w),.32),0 1px 6px rgba(0,0,0,.16)!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t) :is(.chips.tabs>.chip.on,#energy .ehc .seg>.eb[data-eo="0"],#evsw>.chip.on,.chn.seg>b.eb,:is(.pbc.dtf,.cam.pb .pbc)>.chip.on){background:rgba(255,255,255,.9)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.95),0 2px 10px rgba(40,40,70,.2)!important}
+/* The tab capsule fill is a light see-through frost (white at 12 percent over a 24 px blur), like the Control / History capsule: the unpicked tabs sit on a light grey glass that takes the colour of whatever is behind it, never a dark or purple bar. */
+html[data-style=glass][data-mode=dark]{--gtab:rgba(255,255,255,.12)}
+html[data-style=glass][data-mode=light]{--gtab:rgba(255,255,255,.5)}
 /* ---------- Kinetic polish (remove this file's include in index.html to revert it) ----------
    Lessons from iOS and Material, kept in Kinetic's own character:
    1. sentence case on tabs, chips and buttons (headings and badges stay in capitals)
@@ -6695,16 +6722,12 @@ html:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam.ls.hasc .cpanel .tg3>.
 .sc.scp .scpm img{width:100%;height:100%;min-width:0;min-height:0;object-fit:cover;display:block}
 .sc.scp .scpc{position:absolute;right:8px;top:8px;z-index:2;font:600 10px var(--mono);font-style:normal;letter-spacing:.04em;color:#fff;background:rgba(0,0,0,.5);padding:3px 8px;border-radius:99px;pointer-events:none}
 html:not([data-style=glass]):not([data-style=material]):not(#x) .sc.scp .scpc{border-radius:0}
-#scenes .scpiv{gap:6px;margin:0 0 8px}
-#scenes .scpiv .chip{min-width:0;padding:10px 2px}
 #scenes .scpst{margin:0 0 6px}
 #scenes .scpst .chip{display:flex;align-items:center;justify-content:center;gap:8px}
 #scenes .scpst .chip svg{width:16px;height:16px;flex:none}
 #scenes .scpnx{margin:4px 0 12px;min-height:2.6em}
 #scenes .scpsr{margin:0 0 4px}
 #scenes .sr.scpall{cursor:pointer}
-#scenes .scpiv .chip{white-space:nowrap;letter-spacing:0;font-size:11px;padding:10px 0;text-align:center}
-#scenes .scpiv .chip span{white-space:nowrap}
 #scenes .srl.scpsr{display:block}
 #scenes .srl.scpsr>.sr{width:100%;box-sizing:border-box}
 #scenes .sr.scpall b{white-space:nowrap}
@@ -6715,6 +6738,10 @@ html:not(#x):not(#y):not(#z) #scenes .scf .chip span::first-letter{text-transfor
 /* search: a song or artist result shows its picture */
 #srch .sric .srim{display:block;width:100%;height:100%;border-radius:6px;background:center/cover no-repeat}#srch .sric .srim.rd{border-radius:50%}
 #srch .sre .spsp{display:block;margin:0 auto 12px;width:22px;height:22px;border-radius:50%;border:3px solid var(--mint,#7bd88f);border-top-color:transparent;animation:spspin .8s linear infinite}
+/* Change scene every: a tab row like the others (each look's own tab style), the six options sharing the card's width; a very narrow card scrolls it sideways */
+html:not(#x):not(#y):not(#z):not(#w) #scenes .scpiv.chips.tabs{width:100%;max-width:100%;box-sizing:border-box;margin:0 0 10px;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap}
+#scenes .scpiv::-webkit-scrollbar{display:none}
+html:not(#x):not(#y):not(#z):not(#w) #scenes .scpiv.chips.tabs>.chip{flex:1 0 auto;min-width:0;white-space:nowrap;padding-left:12px;padding-right:12px}
 /* full screen for the Hazards map and the Windy weather map (37-map-full-screen.js) */
 .mpfb{display:flex;align-items:center;justify-content:center;padding:0;line-height:1;cursor:pointer;color:var(--ink)}.mpfb svg{width:20px;height:20px;fill:currentColor;display:block}
 .hzzb .mpfb{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--hzbg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
@@ -7015,15 +7042,14 @@ html[data-style=material] .ctf input,html[data-style=material] .ctf select{borde
 .chh{display:flex;flex-direction:column;gap:10px;margin-top:14px;padding:14px;min-width:0;--bc:var(--ink)}
 .chh[hidden]{display:none}
 .chh .cteh>span{font:600 12px var(--mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
-.chn{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.chn b{font:600 15px var(--sans,inherit);color:var(--ink);text-align:center}
-.chn button{all:unset;box-sizing:border-box;width:44px;height:40px;display:grid;place-items:center;border-radius:99px;cursor:pointer;color:var(--ink);background:rgba(var(--w),.08);-webkit-tap-highlight-color:transparent}
+/* the period nav is the same row as the Energy page's date row (< date >): the .seg / .eb look of each style */
+.chn.seg{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;width:fit-content;max-width:100%;margin:0 auto}
+.chn .eb{flex:none}.chn b.eb{min-width:min(210px,50vw);text-align:center;cursor:default;font-weight:600}
 .chn button svg{width:20px;height:20px}
 .chn button:disabled{opacity:.3;cursor:default}
 .chn button:focus-visible,.chr button:focus-visible{outline:2px solid var(--mint);outline-offset:1px}
-.chr{display:flex;flex-wrap:wrap;gap:6px}
-.chr button{all:unset;box-sizing:border-box;cursor:pointer;min-height:36px;padding:7px 14px;border-radius:99px;font:600 13px var(--sans,inherit);color:var(--mut);background:rgba(var(--w),.08);-webkit-tap-highlight-color:transparent}
-.chr button.on{background:rgba(var(--w),.2);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+/* the room filter is a .chips.tabs row: it takes each look's own tab style; many rooms scroll sideways */
+.chr{max-width:100%;overflow-x:auto;scrollbar-width:none}.chr::-webkit-scrollbar{display:none}
 .chh .chw{display:flex;flex-direction:column;gap:10px}
 .chh .cht{font:500 12px var(--sans,inherit);color:var(--mut);margin-bottom:6px}
 .chh .ctgsvg{touch-action:pan-y}
@@ -7039,7 +7065,7 @@ html[data-style=material] .ctf input,html[data-style=material] .ctf select{borde
 .chbar i{display:block;border-radius:3px;background:var(--mut)}
 .chbar .m1{background:var(--cool,#2a6bd6)}.chbar .m2{background:var(--heat,#d6402e)}.chbar .m3{background:#1baf7a}.chbar .m4{background:#eda100}.chbar .m5{background:#8a6fd6}
 .chm{margin:2px 0;font:500 13px/1.4 var(--sans,inherit);color:var(--mut)}
-@media (prefers-reduced-motion:no-preference){.chh .chn b{transition:opacity .15s}}
+@media (prefers-reduced-motion:no-preference){.chh .chn b.eb{transition:opacity .15s}}
 .cht2{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;min-height:34px}
 .cht2 .cht{margin:0}
 .chmt button{min-width:0;padding:6px 12px;font-size:12px}
@@ -7452,9 +7478,9 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(#stabs,#rtabs,#
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk{border-radius:28px!important;background:rgba(255,255,255,.14)!important;border:1px solid rgba(255,255,255,.18)!important;-webkit-backdrop-filter:blur(18px) saturate(1.5)!important;backdrop-filter:blur(18px) saturate(1.5)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
 html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk{background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
 /* a stuck tab row: the same frosted surface (the rows that are their own capsule, then the ones that draw it with ::after) */
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(#stabs,#rtabs,#insights > .insnav).stk{background:rgba(40,38,58,.5)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(#stabs,#rtabs,#insights > .insnav).stk{background:var(--gtab)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
 html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) .page :is(#stabs,#rtabs,#insights > .insnav).stk{background:rgba(255,255,255,.5)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(:is(#admin,#theme) > .hsw:has(> .setchips),.secw,#scenes .scfh,#energy > .ehc,#admin .adlog>.adlh).stk::after{background:rgba(40,38,58,.5)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(:is(#admin,#theme) > .hsw:has(> .setchips),.secw,#scenes .scfh,#energy > .ehc,#admin .adlog>.adlh).stk::after{background:var(--gtab)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
 html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) .page :is(:is(#admin,#theme) > .hsw:has(> .setchips),.secw,#scenes .scfh,#energy > .ehc,#admin .adlog>.adlh).stk::after{background:rgba(255,255,255,.5)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
 @media(min-width:761px){
   /* tablets and desktops: the title bar floats too (it used to scroll away with the page) */
@@ -7471,7 +7497,7 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hstk > .hs
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(.hsw,.secw,.scfh,.ehc,.adlh).stk{background:transparent!important;box-shadow:none!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(.hsw,.secw,.scfh,.ehc,.adlh).stk::before{opacity:0!important;box-shadow:none!important;background:none!important}
 /* rows whose capsule is an inner tab track (Climate Control / History and the like, no ::after of their own): the track is the frosted card */
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page :is(.hsw,.secw):not(.hthr).stk > :is(.chips.tabs,.secnav,.setchips){background:rgba(40,38,58,.5)!important;border:1px solid rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page :is(.hsw,.secw):not(.hthr).stk > :is(.chips.tabs,.secnav,.setchips){background:var(--gtab)!important;border:1px solid rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
 html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page :is(.hsw,.secw):not(.hthr).stk > :is(.chips.tabs,.secnav,.setchips){background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(.hsw,.secw).stk::after{display:none!important}   /* the inner track above is the card; a second one behind it would double the ring */
 
@@ -7519,7 +7545,7 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(.hsw,.secw).stk
 }
 /* phone: the second pinned row (Settings sub-tabs and the like) is the same frosted card from the first frame, not only once the page has scrolled */
 @media(max-width:760px){
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav):not(.hthr) > :is(.chips.tabs,.secnav,.setchips,.inschips){background:rgba(40,38,58,.5)!important;border:1px solid rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav):not(.hthr) > :is(.chips.tabs,.secnav,.setchips,.inschips){background:var(--gtab)!important;border:1px solid rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
 html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav):not(.hthr) > :is(.chips.tabs,.secnav,.setchips,.inschips){background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
 }
 
@@ -7603,7 +7629,7 @@ html:not(#x):not(#y):not(#z) #scenes.enter .scll>.sclib{animation:cdIn calc(.5s*
   html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .main > header.hth.hnw > .hs #wwind{display:none!important}
   html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr{position:fixed!important;left:var(--hx)!important;top:var(--hy)!important;right:auto!important;width:auto!important;max-width:none!important;margin:0!important;padding:0!important;transform:none!important;z-index:40!important;pointer-events:none;background:none!important;box-shadow:none!important;border:0!important}
   html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr::before,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .page .hthr::after{display:none!important}
-  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr.chips,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr > :is(.chips.tabs,.setchips,.inschips,.secnav){pointer-events:auto;width:max-content!important;height:40px!important;min-height:0!important;margin:0!important;padding:2px!important;align-items:center;background:rgba(40,38,58,.5)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important}
+  html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr.chips,html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr > :is(.chips.tabs,.setchips,.inschips,.secnav){pointer-events:auto;width:max-content!important;height:40px!important;min-height:0!important;margin:0!important;padding:2px!important;align-items:center;background:var(--gtab)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important}
   html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr.chips,html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr > :is(.chips.tabs,.setchips,.inschips,.secnav){background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
   html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .page .hthr .chip{height:34px!important;min-height:0!important;padding-top:0!important;padding-bottom:0!important;display:block!important;line-height:34px!important}
   /* no scroll chevrons / transitions on the tabs that live in the header (same as the phone) */
@@ -7847,7 +7873,7 @@ html[data-style=material] #vpk .vpg button.on{background:var(--mint);border-colo
   <div id="climate" class="page"><div id="gsum" class="pn"></div><div id="grid"></div><div class="dots" id="gdots"></div></div>
 
   <div id="events" class="page">
-    <div class="eh"><button class="eb" id="ep" data-i="chevron-left"></button><h2 id="et"></h2><button class="eb" id="en" data-i="chevron-right"></button><div class="seg evvw" id="evsw" role="tablist" aria-label="Events view"></div><button class="eb" id="etd">TODAY</button><button class="eb" id="esrch" aria-label="Search events" data-i="magnify"></button><input type="search" id="esq" class="esq" placeholder="Search all events" autocomplete="off" aria-label="Search all events"><button class="eb" id="eadd" aria-label="Add event" style="display:none"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/></svg></button><div class="lg" id="elg"></div></div>
+    <div class="eh"><button class="eb" id="ep" data-i="chevron-left"></button><h2 id="et"></h2><button class="eb" id="en" data-i="chevron-right"></button><div class="chips tabs evvw" id="evsw" role="tablist" aria-label="Events view"></div><button class="eb" id="etd">TODAY</button><button class="eb" id="esrch" aria-label="Search events" data-i="magnify"></button><input type="search" id="esq" class="esq" placeholder="Search all events" autocomplete="off" aria-label="Search all events"><button class="eb" id="eadd" aria-label="Add event" style="display:none"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/></svg></button><div class="lg" id="elg"></div></div>
     <div class="cg" id="cg"></div>
   </div>
 </div>
@@ -7898,7 +7924,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["Each speaker now has a Sound button under its volume: tap it to change Bass and Treble.","**Add songs to your playlists.** Tap the + on any song, or the Add to playlist button on Now Playing, then pick a playlist or start a new one with that song in it.","**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "bc7d49";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "25ac48";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   window.__deep = !!location.hash && !/^#(home)?$/.test(location.hash) && !/[?&]code=/.test(location.search);   // opened on a page of its own (a notification tap such as #view/driveway): 05-first-load-gate.js does not hold the logo for a minimum time
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
@@ -8633,6 +8659,13 @@ function showT(id) {
 }
 
 // ---------- climate page ----------
+// The heat pump has no sensor of its own: the house average (config indoor / derived.houseTemps), else the average of the room climates. The Climate page, Home and the Always on display card all use this.
+function mainCurTemp() {
+  let ct = null; try { ct = sv(CONFIG.indoor); } catch (e) {}
+  if (ct == null || isNaN(parseFloat(ct))) { try { ct = avgOf(CONFIG.derived.houseTemps); } catch (e) {} }
+  if (ct == null || isNaN(parseFloat(ct))) { const z = CONFIG.rooms.filter(r => !r.main && !entHidden(r.id)).map(r => states[r.id] && parseFloat(states[r.id].attributes.current_temperature)).filter(x => x != null && !isNaN(x)); ct = z.length ? z.reduce((p, x) => p + x, 0) / z.length : null; }
+  return ct;
+}
 function label(r, m) {   // a room that is on shows what the heat pump is doing (HEAT, COOL, AUTO ...); off stays OFF
   if (!r.main && m === "heat_cool") { const h = states[MAIN], hs = h && h.state; return hs && hs !== "off" && hs !== "unavailable" && hs !== "unknown" ? (MODE[hs] || String(hs).toUpperCase()) : "ON"; }
   return MODE[m] || String(m).toUpperCase();
@@ -8680,11 +8713,7 @@ function render(id) {
   { const hm = c.r.main ? (s.state !== "off" ? cls[s.state] || "auto" : "") : (s.state !== "off" && hon ? cls[hs] || "auto" : ""); if ((el.dataset.hm || "") !== hm) { if (hm) el.dataset.hm = hm; else delete el.dataset.hm; } }   // the colour follows the heat pump; classes are only touched when something really changed (no redraw flicker)
   $(".md", el).textContent = c.r.main ? ({ heat: "Heating to", cool: "Cooling to", heat_cool: "Auto at", auto: "Auto at", fan_only: "Fan only", dry: "Drying to", off: "Off" }[s.state] || label(c.r, s.state)) : label(c.r, s.state);
   if (c.r.main) el.classList.toggle("hoff", s.state === "off");
-  { let ct = a.current_temperature; if ((ct == null || isNaN(parseFloat(ct))) && c.r.main) {   // heat pump has no sensor of its own: house average, else the average of the room climates
-      ct = null; try { ct = sv(CONFIG.indoor); } catch (e) {}
-      if (ct == null || isNaN(parseFloat(ct))) { try { ct = avgOf(CONFIG.derived.houseTemps); } catch (e) {} }
-      if (ct == null || isNaN(parseFloat(ct))) { const z = CONFIG.rooms.filter(r => !r.main && !entHidden(r.id)).map(r => states[r.id] && parseFloat(states[r.id].attributes.current_temperature)).filter(x => x != null && !isNaN(x)); ct = z.length ? z.reduce((p, x) => p + x, 0) / z.length : null; }
-    } $(".cur", el).textContent = f1(ct); }
+  { let ct = a.current_temperature; if ((ct == null || isNaN(parseFloat(ct))) && c.r.main) ct = mainCurTemp(); $(".cur", el).textContent = f1(ct); }
   showT(id);
   const modes = a.hvac_modes || [], one = !c.r.main && modes.length === 2 && modes.indexOf("off") > -1, isOff = s.state === "off", key = modes.join() + (c.r.main ? "" : "|" + ((states[MAIN] || {}).state || "")) + (one ? "|1" + isOff : ""), chips = $(".chips", el);
   // a room that only has Off and one running mode gets ONE button: "On" while it is off, "Off" while it is on (a pair of Off / On chips in a box was one too many)
@@ -12447,7 +12476,7 @@ function scpGallery() {
   return '<div class="lbl" style="margin:6px 0 10px">Presets</div><div class="gal scpg" style="margin-bottom:16px">' + scpList().map(scpTile).join("") + '</div>';
 }
 function scpSet() {   // the panel's settings block for the Presets tab
-  return '<div class="lbl np2">Change scene every</div><div class="chips scpiv">' + SCP_EVERY.map(m => '<button class="chip" data-piv="' + m + '"><span>' + scpEvery(m).toUpperCase() + '</span></button>').join("") + '</div>' +
+  return '<div class="lbl np2">Change scene every</div>' + hsw('<div class="chips tabs scpiv">' + SCP_EVERY.map(m => '<button class="chip" data-piv="' + m + '"><span>' + scpEvery(m).toUpperCase() + '</span></button>').join("") + '</div>') +
     '<div class="chips scpst"><button class="chip" data-pst="1">' + mdi("shuffle-variant") + '<span>STAGGER LIGHTS</span></button></div><div class="sm scpnx"></div>' +
     '<div class="srl scpsr"><div class="sr scpall" data-pall="1"><i class="sbd">' + mdi("shuffle-variant") + '</i><b>Apply to running lights</b></div></div><div class="lbl np2">Start it on</div>';
 }
@@ -12809,9 +12838,9 @@ function dtDraw(soft) {
   const keepX = [...P.querySelectorAll(".dtf")].map(r => r.scrollLeft), smo = dtSmBefore(P);
   DT.hasAnimal = cnt("Animal") > 0;
   P.innerHTML = '<div class="lbl dthd">Recent detections<button class="eb" data-dt="refresh" aria-label="Refresh">' + mdi("refresh") + '</button></div>' +
-    hsw('<div class="pbc dtf">' + [["Person", "PERSON"], ["Vehicle", "VEHICLE"], ["Animal", "ANIMAL"], ["Motion", "OTHER MOTION"]].filter(x => cnt(x[0]) > 0).map(x => '<button class="chip' + (DT.types[x[0]] ? " on" : "") + '" data-dt="type" data-v="' + x[0] + '">' + x[1] + (all.length ? chipN(cnt(x[0])) : "") + '</button>').join("") + '</div>') +
-    (camsHave.length < 2 && DT.cam === "all" ? "" : hsw('<div class="pbc dtf"><button class="chip' + (DT.cam === "all" ? " on" : "") + '" data-dt="cam" data-v="all">ALL CAMERAS</button>' + dtCams().filter(id => camsHave.indexOf(id) > -1 || DT.cam === id).map(id => '<button class="chip' + (DT.cam === id ? " on" : "") + '" data-dt="cam" data-v="' + esc(id) + '">' + esc(dtName(id)).toUpperCase() + '</button>').join("") + '</div>')) +
-    hsw('<div class="pbc dtf">' + DT_R.map((x, i) => '<button class="chip' + (DT.range === i + 1 ? " on" : "") + '" data-dt="range" data-v="' + (i + 1) + '">' + x[2] + '</button>').join("") + '</div>') +
+    hsw('<div class="pbc dtf chips tabs">' + [["Person", "PERSON"], ["Vehicle", "VEHICLE"], ["Animal", "ANIMAL"], ["Motion", "OTHER MOTION"]].filter(x => cnt(x[0]) > 0).map(x => '<button class="chip' + (DT.types[x[0]] ? " on" : "") + '" data-dt="type" data-v="' + x[0] + '">' + x[1] + (all.length ? chipN(cnt(x[0])) : "") + '</button>').join("") + '</div>') +
+    (camsHave.length < 2 && DT.cam === "all" ? "" : hsw('<div class="pbc dtf chips tabs"><button class="chip' + (DT.cam === "all" ? " on" : "") + '" data-dt="cam" data-v="all">ALL CAMERAS</button>' + dtCams().filter(id => camsHave.indexOf(id) > -1 || DT.cam === id).map(id => '<button class="chip' + (DT.cam === id ? " on" : "") + '" data-dt="cam" data-v="' + esc(id) + '">' + esc(dtName(id)).toUpperCase() + '</button>').join("") + '</div>')) +
+    hsw('<div class="pbc dtf chips tabs">' + DT_R.map((x, i) => '<button class="chip' + (DT.range === i + 1 ? " on" : "") + '" data-dt="range" data-v="' + (i + 1) + '">' + x[2] + '</button>').join("") + '</div>') +
     (vis.length ? (isMobile() ? '<div class="dtcv">' + dtMomHtml() + '</div>' : dtTlHtml()) : "") +
     '<div class="dtgw">' + dtGrid() + '</div>' + loading;
   P.querySelectorAll(".dtf").forEach((r, i) => { if (keepX[i]) r.scrollLeft = keepX[i]; });
@@ -14470,7 +14499,7 @@ Object.assign(MDI, { "bell-off": "M20,18.69L7.84,6.14L5.27,3.49L4,4.76L6.8,7.56V
 const togIds = () => TOG.reduce((a, g) => a.concat(g[3].map(x => x[0])), []);
 function secTogDraw() {
   const el = $("#sectog"); if (!el) return;
-  const h = TOG.length && ruSec("controls") ? TOG.map(g => '<div class="pn sectg"><span class="lbl">' + esc(g[0].replace(/\s*security$/i, "")) + ' alerts</span><div class="sectc">' + g[3].map(x => { const on = isOn(x[0]); return '<button class="chip' + (on ? " on" : " off") + '" data-nt="' + x[0] + '"' + (x[2] ? ' data-sc="' + x[2] + '"' : "") + ' aria-pressed="' + on + '">' + esc(x[1]) + (on ? "" : " off") + '</button>'; }).join("") + '</div></div>').join("") : "";
+  const h = TOG.length && ruSec("controls") ? TOG.map(g => '<div class="pn sectg"><span class="lbl">' + esc(g[0].replace(/\s*security$/i, "")) + ' alerts</span><div class="sectc chips tabs">' + g[3].map(x => { const on = isOn(x[0]); return '<button class="chip' + (on ? " on" : " off") + '" data-nt="' + x[0] + '"' + (x[2] ? ' data-sc="' + x[2] + '"' : "") + ' aria-pressed="' + on + '">' + esc(x[1]) + (on ? "" : " off") + '</button>'; }).join("") + '</div></div>').join("") : "";
   if (el._h !== h) { el._h = h; el.innerHTML = h; }
 }
 $("#sectog").addEventListener("click", e => { const c = e.target.closest("[data-nt]"); if (!c) return; if (c.dataset.sc) send({ type: "call_service", domain: "script", service: c.dataset.sc }); else call(c.dataset.nt.split(".")[0], "toggle", c.dataset.nt); });
@@ -15138,7 +15167,7 @@ function evSetView(v) {
 function evSwitch() {
   const b = $("#evsw"), v = evView(), k = isMobile() ? "p" : "t", nm = { month: "Month", week: "Week", list: "List", agenda: "Agenda" }, sig = k + v;
   if (b.dataset.s === sig) return; b.dataset.s = sig;
-  b.innerHTML = EVV[k].map(x => '<button data-v="' + x + '" role="tab" aria-selected="' + (x === v) + '" class="eb' + (x === v ? " on" : "") + '">' + nm[x].toUpperCase() + '</button>').join("");
+  b.innerHTML = EVV[k].map(x => '<button data-v="' + x + '" role="tab" aria-selected="' + (x === v) + '" class="chip' + (x === v ? " on" : "") + '">' + nm[x] + '</button>').join("");
 }
 $("#evsw").addEventListener("click", e => { const b = e.target.closest("[data-v]"); if (b && b.dataset.v !== evView()) evSetView(b.dataset.v); });
 function evRedraw() { if (evLast.gs) drawEvents(evLast.gs, evLast.map); }
@@ -15430,8 +15459,8 @@ function chDraw() {
   const s = chSel(H), st = chStats(H, s, CH.room), run = st.c.slice(1).reduce((a, b) => a + b, 0);
   const cs = getComputedStyle(el), W = Math.max(240, Math.floor(el.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0) - 20) || 320); CH.w = el.clientWidth;
   let top = 1; for (let k = 2; k < 6; k++) if (st.c[k] > st.c[top]) top = k;
-  const chips = '<div class="chr" role="group" aria-label="Room">' + list.map(r => '<button data-c="' + esc(r.id) + '"' + (CH.room === r.id ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"') + '>' + esc(chName(r)) + '</button>').join("") + '</div>';
-  const nav = '<div class="chn"><button data-n="-1" aria-label="Earlier"' + (chCan(H, s, -1) ? "" : " disabled") + '>' + mdi("chevron-left") + '</button><b>' + esc(chLabel(H, s)) + '</b><button data-n="1" aria-label="Later"' + (chCan(H, s, 1) ? "" : " disabled") + '>' + mdi("chevron-right") + '</button></div>';
+  const chips = '<div class="chr chips tabs" role="group" aria-label="Room">' + list.map(r => '<button data-c="' + esc(r.id) + '"' + (CH.room === r.id ? ' class="chip on" aria-pressed="true"' : ' class="chip" aria-pressed="false"') + '>' + esc(chName(r)) + '</button>').join("") + '</div>';
+  const nav = '<div class="chn seg"><button class="eb" data-n="-1" aria-label="Earlier"' + (chCan(H, s, -1) ? "" : " disabled") + '>' + mdi("chevron-left") + '</button><b class="eb">' + esc(chLabel(H, s)) + '</b><button class="eb" data-n="1" aria-label="Later"' + (chCan(H, s, 1) ? "" : " disabled") + '>' + mdi("chevron-right") + '</button></div>';
   const used = [1, 2, 3, 4, 5].filter(m => m < 5 || st.c[5]);
   let body;
   if (!st.known) body = '<p class="chm">No mode history for ' + esc(rooms.find(r => r.id === CH.room).name) + ' in this period.</p>';
@@ -19702,9 +19731,13 @@ function rdEvents() {
   return S.reduce((a, s) => a.concat(nzfList(s.attributes.roadevent)), []).filter(e => e && e.status !== "Resolved" && !seen[e.id] && (seen[e.id] = 1)).map(e => {
     const st = Date.parse(e.startDate) || 0, en = Date.parse(e.endDate) || 0, exp = rdExp(e.expectedResolution), grace = (RDC() && RDC().staleDays != null && !isNaN(+RDC().staleDays) ? Math.max(0, +RDC().staleDays) : 3) * 864e5;
     const stale = !e.planned && ((en > 0 && now - en > grace) || (!(en > now) && exp > 0 && now - exp > grace));
-    return { stale: stale, exp: exp, id: e.id, pts: rdWkt(e.geometry), plan: !!e.planned, on: (!st || st <= now) && (!en || en > now), soon: st > now && st - now < 864e5, st: st, en: en,
+    // Forgotten for good: past its own expected finish (or end) by roads.hideOldDays (default 14) AND not touched by NZTA for as long. NZTA's older feed keeps such records "Active" for months
+    // (an SH26 closure that was reopened in May still showed in November); they are dropped altogether. hideOldDays: 0 keeps them as "possibly out of date".
+    const mod = Date.parse(e.eventModified) || 0, hd = (RDC() && RDC().hideOldDays != null && !isNaN(+RDC().hideOldDays) ? Math.max(0, +RDC().hideOldDays) : 14) * 864e5, last = Math.max(en > 0 ? en : 0, en > 0 ? 0 : exp);
+    const dead = !!hd && stale && last > 0 && now - last > hd && mod > 0 && now - mod > hd;
+    return { dead: dead, mod: mod, stale: stale, exp: exp, id: e.id, pts: rdWkt(e.geometry), plan: !!e.planned, on: (!st || st <= now) && (!en || en > now), soon: st > now && st - now < 864e5, st: st, en: en,
       hw: (e.journey || {}).name || "", area: e.locationArea || "", type: e.eventDescription || e.eventType || "", imp: e.impact || "", txt: String(e.eventComments || "").trim(), alt: e.alternativeRoute && !/not applicable/i.test(e.alternativeRoute) ? e.alternativeRoute : "" };
-  }).filter(e => !e.plan || e.on || e.soon);
+  }).filter(e => !e.dead && (!e.plan || e.on || e.soon));
 }
 function rdTripList() {
   const c = RDC(); if ((c.trips || []).length) return c.trips.map(t => ({ name: t.name || "Trip", via: t.via || null, km: +c.km || 1, own: 1 }));
@@ -19809,7 +19842,7 @@ function rdPane(id, ti, whole) {
     : '<iframe class="cmf" title="Where it is" src="' + esc("https://www.google.com/maps/embed/v1/place?key=" + encodeURIComponent(key) + "&q=" + q + "&zoom=15") + '" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
   return { e: e, t: t, u: u, key: key, ttl: ttl, sub: e.area + (e.en ? " · until " + hzWhen(e.en) : ""), drawn: drawn, map: map,
     vd: vd ? '<div class="rds-vd' + (d != null && d <= .3 ? " on" : d != null ? " off" : "") + '">' + mdi(d != null && d <= .3 ? "alert" : d != null ? "check-circle-outline" : "help-circle-outline") + '<span>' + esc(vd) + '</span></div>' : "",
-    txt: e.txt || e.alt ? '<div class="sm rds-sh">' + esc(e.txt) + (e.alt ? (e.txt ? " " : "") + "Detour: " + esc(e.alt) : "") + '</div>' : "" };
+    txt: (e.stale ? '<div class="rds-vd off">' + mdi("help-circle-outline") + '<span>Possibly out of date: NZTA expected this to be over by ' + esc(new Date(e.en > 0 ? e.en : e.exp).toLocaleDateString()) + (e.mod ? ' and last updated it on ' + esc(new Date(e.mod).toLocaleDateString()) : '') + '.</span></div>' : "") + (e.txt || e.alt ? '<div class="sm rds-sh">' + esc(e.txt) + (e.alt ? (e.txt ? " " : "") + "Detour: " + esc(e.alt) : "") + '</div>' : "") };
 }
 function rdSheet(id, ti, whole) {
   const P = rdPane(id, ti, whole); if (!P) return;
@@ -22439,7 +22472,8 @@ document.addEventListener("click", e => {
 }, true);
 // Night light guard: after 11 pm a tap that would turn a light (or a light switch) ON asks first, in the same card as OPEN GARAGE DOOR on Insights.
 // Saying yes lets that room be used normally for the rest of the night (one prompt per room); another room asks again. Turning off never asks.
-// Settings: CONFIG.lightGuard = false switches it off; { from: "23:00", to: "05:00" } changes the hours.
+// Only rooms whose auto climate switch (the room's autoClimate helper, "sleeping here tonight") is ON ask; every other room, and lights in no room, turn on without a prompt.
+// Settings: CONFIG.lightGuard = false switches it off; { from: "23:00", to: "05:00" } changes the hours; { autoClimateOnly: false } makes every room ask again.
 function lgMin(s) { const m = String(s).split(":"); return (+m[0] || 0) * 60 + (+m[1] || 0); }
 function lgNight() {   // "" in the daytime, otherwise a label for tonight (the date the night began)
   const c = CONFIG.lightGuard; if (c === false) return "";
@@ -22452,6 +22486,11 @@ function lgRoom(id) {   // the house room the light belongs to; a light in no ro
   for (const r of HOUSE()) { const L = [].concat(r.lights || [], r.lightSwitches || []); if (L.indexOf(id) > -1 || members(L).indexOf(id) > -1) return r.id; }
   return d === "light" ? "(other lights)" : "";
 }
+function lgAuto(rm) {   // is this house room's auto climate switch on? (set on the house room, or on its climate room in CONFIG.rooms)
+  const h = HOUSE().find(x => x.id === rm); if (!h) return false;
+  const cr = (CONFIG.rooms || []).filter(q => q.id === h.climate || q.id === h.id);
+  return [].concat(h.autoClimate || [], ...cr.map(q => q.autoClimate || [])).some(e => states[e] && states[e].state === "on");
+}
 const lgKey = () => "kinetic-lgpass:" + ((typeof ME !== "undefined" && ME && ME.id) || "local");
 let LGP = null;
 function lgGet(n) { if (!LGP) { try { LGP = JSON.parse(localStorage.getItem(lgKey()) || "{}"); } catch (e) { LGP = {}; } } if (LGP.n !== n || !Array.isArray(LGP.r)) LGP = { n: n, r: [] }; return LGP; }
@@ -22461,6 +22500,7 @@ function lgGuard(id, go) {   // go() runs now, or after the person says yes
   if ((d !== "light" && d !== "switch") || isOn(id)) { go(); return; }
   const n = lgNight(); if (!n) { go(); return; }
   const rm = lgRoom(id); if (!rm) { go(); return; }
+  const c = CONFIG.lightGuard; if (!(c && c.autoClimateOnly === false) && !lgAuto(rm)) { go(); return; }   // not a room that is being slept in (auto climate off or none)
   if (lgGet(n).r.indexOf(rm) > -1) { go(); return; }
   const r = HOUSE().find(x => x.id === rm), where = r ? r.name : "the house";
   insAsk("Turn on the light?", fname(id), "It is late. Please make sure this was on purpose. Once you say yes, the lights in " + where + " work as normal for the rest of the night.", "Turn on", () => { lgPass(n, rm); go(); });
@@ -22535,9 +22575,20 @@ function ssvHp() {
   const W2 = { heat: "Heating to ", cool: "Cooling to ", dry: "Drying to ", auto: "Auto at ", fan: "Fan only" }[c] || "On", tgs = tg != null && !isNaN(+tg) ? f1(tg) + "°" : (a.target_temp_low != null ? f1(a.target_temp_low) + "-" + f1(a.target_temp_high) + "°" : "");
   return { chip: c === "fan" ? "Fan only" : W2 + tgs, ic: { heat: "fire", cool: "snowflake", dry: "water-percent", auto: "thermometer", fan: "fan" }[c] || "thermometer", col: c === "heat" ? "rgb(var(--heat-rgb))" : c === "cool" ? "rgb(var(--cool-rgb))" : "rgb(var(--mint-rgb))", c: c };
 }
+// A room with "auto climate" on aims for its own helper numbers (Heat until / Cool until on the Climate page: "stops above" / "stops below"), not for the unit's set point.
+// Auto climate off or unavailable, or no helper: the unit's target as before. Returns the helper entity or "".
+function ssvHpHelper(id, c, ct) {
+  const r = (CONFIG.rooms || []).find(q => q.id === id && !q.main); if (!r || !r.autoClimate) return ""; const ac = states[r.autoClimate]; if (!ac || ac.state !== "on") return "";
+  const ok = e => e && states[e] && states[e].state !== "unavailable" && states[e].state !== "unknown" && !isNaN(parseFloat(states[e].state)) ? e : "", hu = ok(r.heatUntil), cu = ok(r.coolUntil);
+  if (c === "heat") return hu; if (c === "cool") return cu;
+  if (c === "auto") { if (hu && cu) { const m = (parseFloat(states[hu].state) + parseFloat(states[cu].state)) / 2; return !isNaN(ct) && ct > m ? cu : hu; } return hu || cu; }
+  return "";
+}
 function ssvHpRows() {
   const rows = [{ id: MAIN, n: "House" }]; try { HOUSE().forEach(r => { const z = [].concat(r.climate || []).filter(x => x !== MAIN && states[x] && !isOff(states[x]))[0]; if (z && !rows.some(q => q.id === z)) rows.push({ id: z, n: r.name }); }); } catch (_) {}
-  return rows.filter(q => states[q.id]).slice(0, 5);
+  // The zone that has no auto climate of its own is the unit everything else runs through (it is on whenever another room heats or cools and cannot be switched off alone): it has no row. screensaver.hpHide: ["climate.x"] names the zones to leave out instead; hpHide: [] shows them all.
+  const H = (CONFIG.screensaver || {}).hpHide, rs = (CONFIG.rooms || []).filter(r => !r.main), hide = z => { if (z === MAIN) return false; if (Array.isArray(H)) return H.indexOf(z) > -1; if (!rs.some(r => r.autoClimate)) return false; const r = rs.find(q => q.id === z); return !!r && !r.autoClimate; };
+  return rows.filter(q => states[q.id] && !hide(q.id)).slice(0, 5);
 }
 // ---- next calendar event (the calendars of the Events page), the next 36 hours
 function ssvCalLoad() {
@@ -22688,9 +22739,9 @@ function ssvQBody(q) {
   }
   if (q.k === "hp") {
     const h = ssvHp(); if (!h) return null; const rows = ssvHpRows();
-    const row = x => { const a = (states[x.id] || {}).attributes || {}, ct = parseFloat(a.current_temperature), tg = ssvHpTg(x.id), st = states[x.id].state, c = cls[st] || "auto", nm = { heat: "Heating", cool: "Cooling", dry: "Drying", auto: "Auto", fan: "Fan" }[c] || "On";
+    const row = x => { const a = (states[x.id] || {}).attributes || {}, ct = x.id === MAIN && isNaN(parseFloat(a.current_temperature)) ? parseFloat(mainCurTemp()) : parseFloat(a.current_temperature), st = states[x.id].state, c = cls[st] || "auto", hh = ssvHpHelper(x.id, c, ct), tg = hh && typeof ctGet === "function" ? ctGet(hh) : ssvHpTg(x.id), nm = { heat: "Heating", cool: "Cooling", dry: "Drying", auto: "Auto", fan: "Fan" }[c] || "On";
       const gap = !isNaN(ct) && tg != null && !isNaN(+tg) ? +tg - ct : null, far = gap != null && Math.abs(gap) >= .3 && c !== "fan" ? (gap > 0 ? "warming up" : "cooling down") : "";
-      return '<div class="sshp" style="--k:' + (c === "heat" ? "rgb(var(--heat-rgb))" : c === "cool" ? "rgb(var(--cool-rgb))" : "rgb(var(--mint-rgb))") + '"><div class="sshn"><span>' + esc(x.n) + '</span><small>' + nm + (far ? " · " + far : "") + '</small></div><b>' + (isNaN(ct) ? "--" : f1(ct) + "°") + '<em> → ' + (tg != null && !isNaN(+tg) ? f1(tg) + "°" : "--") + '</em></b><button data-qa="hb:' + esc(x.id) + '|-1" aria-label="Lower">' + mdi("minus") + '</button><button data-qa="hb:' + esc(x.id) + '|1" aria-label="Raise">' + mdi("plus") + '</button></div>'; };
+      return '<div class="sshp" style="--k:' + (c === "heat" ? "rgb(var(--heat-rgb))" : c === "cool" ? "rgb(var(--cool-rgb))" : "rgb(var(--mint-rgb))") + '"><div class="sshn"><span>' + esc(x.n) + '</span><small>' + nm + (far ? " · " + far : "") + '</small></div><b>' + (isNaN(ct) ? "--" : f1(ct) + "°") + '<em> → ' + (tg != null && !isNaN(+tg) ? f1(tg) + "°" : "--") + '</em></b><button data-qa="' + (hh ? "hu:" + esc(hh) : "hb:" + esc(x.id)) + '|-1" aria-label="Lower">' + mdi("minus") + '</button><button data-qa="' + (hh ? "hu:" + esc(hh) : "hb:" + esc(x.id)) + '|1" aria-label="Raise">' + mdi("plus") + '</button></div>'; };
     return { h: "Heat pump", t: h.chip, b: '<div class="sshl">' + rows.map(row).join("") + '</div>', r: btn("close", "Close") + btn("open:#climate", "Climate", 1) };
   }
   if (q.k === "cal") {
@@ -22723,6 +22774,7 @@ function ssvQAct(a, q) {
     ssvWake("#security"); return; }   // a text code: the dashboard asks for it
   if (k === "key") { if (q.step !== "kp") return; if (v === "x") { q.step = ""; q.v = ""; } else if (v === "bk") q.v = q.v.slice(0, -1); else if (v === "ok") { if (q.v) { call("alarm_control_panel", "alarm_" + q.m, CONFIG.alarm, { code: q.v }); ssvQClose(q); return; } } else if (q.v.length < 12) q.v += v; ssvQDraw(q); ssvQTimer(q); return; }
   if (k === "rs") { if (typeof rosterSync === "function") rosterSync(); ssvQTimer(q); return; }
+  if (k === "hu") { const [e, d] = v.split("|"), at = ctAt(e), cur = ctGet(e); if (!isNaN(cur)) { CTV[e] = Math.min(at.mx, Math.max(at.mn, Math.round((cur + at.step * +d) * 100) / 100)); ctSend(e); } ssvQTimer(q); setTimeout(() => ssvQDraw(q), 60); return; }
   if (k === "hb") { const [id, d] = v.split("|"); bump(id, +d); ssvQTimer(q); setTimeout(() => ssvQDraw(q), 60); return; }
   if (k === "tp") { const t = states[v]; if (t) call("timer", t.state === "paused" ? "start" : "pause", v); ssvQTimer(q); return; }
   if (k === "tc") { call("timer", "cancel", v); ssvQTimer(q); return; }

@@ -9,7 +9,7 @@ export async function open(name, { zh = false, hash = '', dark = false, w = W, h
   const dir = `/tmp/rl-${name}${zh ? '-zh' : ''}`; fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
   const b = await chromium.launch({ args: ['--enable-begin-frame-control', '--run-all-compositor-stages-before-draw', '--disable-new-content-rendering-timeout', '--disable-threaded-animation', '--disable-threaded-scrolling', '--disable-checker-imaging', '--disable-gpu-vsync'] });
   const ctx = await b.newContext({ viewport: { width: w, height: h }, isMobile: true, hasTouch: true, deviceScaleFactor: DPR });
-  await ctx.addInitScript(() => { try { localStorage.dashPal = JSON.stringify({ mode: 'light' }); } catch (e) {} window.__cmForce = true; });
+  await ctx.addInitScript(() => { try { localStorage.dashPal = JSON.stringify({ mode: 'dark' }); } catch (e) {} window.__cmForce = true; });
   const p = await ctx.newPage();
   const t0 = Date.now();
   await p.goto(`http://localhost:8765/app/dash.html${zh ? '?lang=zh' : ''}${hash}`);

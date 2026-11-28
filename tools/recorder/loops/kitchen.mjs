@@ -1,5 +1,5 @@
 const tag = (p, sel, i, n) => p.evaluate(([sel, i, n]) => { const e = [...document.querySelectorAll(sel)].filter(x => x.getBoundingClientRect().width > 0)[i]; if (e) e.dataset.rec = n; return !!e; }, [sel, i, n]);
-export default { file: 'EZ_Loop_KitchenDisplay_Light_v9', hash: '#home', async run(p, c) {
+export default { file: 'EZ_Loop_KitchenDisplay_Light_v10', hash: '#home', async run(p, c) {
   await c.wait(1500);
   await p.evaluate(() => { const hp = [...document.querySelectorAll('#home .card, #home .pn, #home .hcl')].find(e => /heat pump|热泵/i.test(e.textContent) && e.getBoundingClientRect().height < 260); if (hp) hp.dataset.rec = 'hp'; });
   await c.spot('#home .hs', 6, 22); await c.wait(3200);

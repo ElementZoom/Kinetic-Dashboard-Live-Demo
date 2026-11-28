@@ -1,5 +1,5 @@
 const tag = (p, sel, i, n) => p.evaluate(([sel, i, n]) => { const e = [...document.querySelectorAll(sel)].filter(x => x.getBoundingClientRect().width > 0)[i]; if (e) e.dataset.rec = n; return !!e; }, [sel, i, n]);
-export default { file: 'EZ_Loop_OneLook_Light_v11', hash: '#home', async run(p, c) {
+export default { file: 'EZ_Loop_OneLook_Light_v12', hash: '#home', async run(p, c) {
   await c.wait(1200);
   await c.spot('#hc', 6, 24); await c.wait(2000);
   await c.tap('#nacc'); await c.wait(1600);
