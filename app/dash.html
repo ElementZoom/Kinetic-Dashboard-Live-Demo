@@ -1708,7 +1708,7 @@ body.np-on:not(.sp-on):not(.np-home):not(.np-media) .main{padding-bottom:unset}
 /* opening and closing: the card is solid black from the first frame, so the page behind never shows through it (the Home heading and the camera buttons used to sit on top of each other for a moment).
    Opening: the card grows a little while its contents fade in. Closing: the buttons fade out quickly while the picture dissolves into the tile that is waiting underneath. */
 .cam.fs{background:#000;animation:none}
-.cam.fs.fin:not(.fclose):not(.ls){animation:camBgIn .2s cubic-bezier(.2,.8,.2,1) both}
+.cam.fs.fin:not(.fclose):not(.ls){animation:none;clip-path:none;border-radius:0}   /* no scale-up / rounded corners on the first frames: the black card is already full size, only its contents fade in (it used to open as a small rounded box that then jumped to full screen) */
 .cam.fs.fin:not(.fclose):not(.ls)>*{animation:camKidsIn .22s ease-out both}
 @keyframes camBgIn{from{transform:scale(.97)}}
 @keyframes camKidsIn{from{opacity:0}}
@@ -1872,7 +1872,7 @@ html:not(#x) .cam .pbth img{position:absolute;inset:0;width:100%;height:100%;max
 .cam>video::-webkit-media-controls,.cam>video::-webkit-media-controls-overlay-play-button,.cam>video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
 /* pinch to zoom / drag on a full-screen camera (37-camera-zoom.js): the picture moves, the buttons stay put */
 .cam.fs>img,.cam.fs>video,.cam.vf>img,.cam.vf>video,.pbv>video,.dtv>video{touch-action:none}
-.zm>img,.zm>video{transform:translate(var(--zx,0px),var(--zy,0px)) scale(var(--zs,1))!important;transform-origin:50% 50%;transition:none!important;will-change:transform}
+.zm>img,.zm>video{transform:translate(var(--zx,0px),var(--zy,0px)) scale(var(--zs,1))!important;transform-origin:50% 50%;transition:none!important}
 .zm{overflow:hidden}
 /* notifications pop-up: live camera cards (32-notifications-popup.js). The card is the same live card as the Security page, without its full-screen and playback buttons: a tap opens the full view */
 .snap.npcam{aspect-ratio:16/9;background:#000}.npcam>.cam{height:100%;border:0;border-radius:inherit}.npcam .cam .fsb,.npcam .cam .cx,.npcam .cam .px,.npcam .cam .aud,.npcam .cam .cpanel{display:none!important}
@@ -2106,6 +2106,15 @@ header.hmerge #ttl{display:none}header.hmerge>.hs{margin-left:0;padding-left:8px
 @media(min-width:761px){#outs{display:none}nav .t#nclk{display:block;cursor:pointer;font-size:30px;white-space:nowrap}#clk{display:none}}
 /* light mode: the 7-day highs and lows get the same darkening as the hourly forecast tiles (a pale yellow high was unreadable on a cream card) */
 html[data-mode=light] .wdy b{color:color-mix(in srgb,var(--hc) 55%,#1d1d2b)}
+
+/* MetService words and fire danger under the Now card's readings */
+.wmet{display:flex;flex-direction:column;gap:8px;margin:12px 0 2px}
+.wmt{font-size:14px;line-height:1.4;color:var(--ink)}
+.wmt small{display:block;font-size:10px;letter-spacing:.12em;opacity:.6;margin-bottom:1px}
+.wmf{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:8px 12px;border-radius:12px;background:color-mix(in srgb,var(--fk) 14%,transparent);border:1px solid color-mix(in srgb,var(--fk) 38%,transparent);font-size:14px}
+.wmf>svg{width:20px;height:20px;fill:var(--fk);flex:none}
+.wmf span small{display:block;font-size:10px;letter-spacing:.12em;opacity:.65}
+.polsrc{text-transform:none}
 /* Home: today's schedule (tablet strip under the cameras, phone card under the greeting) */
 #sch{cursor:pointer;position:relative;box-sizing:border-box;padding:0 40px 0 14px;min-height:46px;display:flex;align-items:center;border-radius:18px;border:1px solid rgba(var(--mint-rgb),.5);background:rgba(var(--mint-rgb),.09)}
 #sch[hidden]{display:none!important}
@@ -2589,6 +2598,11 @@ body.cl-sheet.cl-out #clbk{animation:thOut .24s ease both}@keyframes thOut{from{
 @media(max-width:760px){#grid>.card.rm:not([data-open]) .lbl.il::after{transform:rotate(-45deg)}}
 /* the House number climbs through values with different digits: every digit the same width, so nothing beside it shifts (the number is also pinned to that width while it climbs, 62-chart-motion.js) */
 .czh .cur{font-variant-numeric:tabular-nums}
+/* the single On / Off button of a room that only has Off and one running mode: no track or box behind it (Glass drew a grey track, Material squared one side of the pill), one full-width pill in every look */
+html:not(#x):not(#y):not(#z):not(#w) #grid>.card.rm .chips.chips1{gap:0;padding:0;background:none;border:0;box-shadow:none;border-radius:0;backdrop-filter:none}
+html:not(#x):not(#y):not(#z):not(#w) #grid>.card.rm .chips.chips1 .chip{flex:1 1 auto;margin:0;min-height:46px;border-radius:999px;box-shadow:none;clip-path:none}
+html:not(#x):not(#y):not(#z):not(#w) #grid>.card.rm .chips.chips1 .chip:not(.on){background:rgba(var(--w),.08);border:1px solid var(--line)}
+html:not(#x):not(#y):not(#z):not(#w) #grid>.card.rm .chips.chips1 .chip::before,html:not(#x):not(#y):not(#z):not(#w) #grid>.card.rm .chips.chips1 .chip::after{display:none}
 /* Events: view switch, tablet week + list, phone week + month */
 .evvw{gap:0;padding:4px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--w),.05)}
 .evvw .eb{padding:9px 16px;border:0;background:transparent;border-radius:999px;font-size:12px}
@@ -3534,8 +3548,9 @@ html[data-mode=light] .upx .upv svg{fill:#17703d}html[data-mode=light] .upx .upe
 #security[data-tab=det] #sectog{display:none}
 #sectog:empty{display:none}
 #sectog .sectg{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px 10px 18px;margin-bottom:14px;border-radius:18px}
-#sectog .sectg>.lbl{flex:1;min-width:0;margin:0}
-#sectog .sectc{display:flex;gap:8px;flex-wrap:wrap}
+#sectog .sectg>.lbl{flex:1 1 auto;min-width:0;margin:0}
+#sectog .sectc{display:flex;gap:8px;flex-wrap:wrap;flex:0 0 auto;max-width:100%}
+#sectog .sectc .chip{flex:0 0 auto;white-space:nowrap;max-width:100%;box-sizing:border-box}   /* the chips keep their own width ("Person off" was squeezed and its text ran past the border), the label shares the row or the chips drop to the line below */
 #sectog .chip{margin:0;white-space:nowrap}
 #sectog .chip.off{background:rgba(var(--heat-rgb),.16);border-color:rgba(var(--heat-rgb),.45);color:var(--heat)}
 html[data-mode=light] #sectog .chip.off{color:#a3211a}
@@ -3878,6 +3893,8 @@ html[data-mode=dark] .nbg{color:#000}   /* dark mode colours are light, so the n
 
 .wpl.zbp{background:rgba(var(--heat-rgb),.2);color:var(--heat);font-weight:600}
 html[data-mode=light] .wpl.zbp{color:#b3261e;background:rgba(179,38,30,.12)}
+
+#hpls .wpl{animation:wplIn .28s ease-out both}@keyframes wplIn{from{opacity:0}}@media(prefers-reduced-motion:reduce){#hpls .wpl{animation:none}}
 /* ---------- Weather page scenes (20-weather-scenes.js): the animated skies, their sliders and the Forecast week explorer ---------- */
 .wsc{position:relative;overflow:hidden;border-radius:14px;margin:10px 0 0;background:#2d3f78;isolation:isolate}
 .wsc>canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-1}
@@ -4585,9 +4602,14 @@ html:not(#x) :is(#security > #stabs,#insights > .insnav).stk{box-shadow:0 8px 14
 /* the search block (Entities, Automations, Logs) is a card of its own with a full outline: it had no top border and square top corners where it met the tab row */
 @media(min-width:761px){#admin .adlog>.adlh{border:1px solid var(--line)!important;border-radius:18px!important;margin-top:-8px}}
 /* Search (2.6.0): the header button, the search screen, and the flash on the card or tile a result opens */
-#hsrch{position:relative;display:inline-flex;flex:none;width:30px;height:32px;padding:0;border:0;background:none;color:var(--mint);align-items:center;justify-content:center;cursor:pointer}
-#hsrch svg{width:20px;height:20px;fill:currentColor}
-header .hr>#hsrch{order:11;margin:0 0 0 6px}   /* the last thing on the right, after the clock */
+#hss,#hsrch{position:relative;display:inline-flex;flex:none;width:30px;height:32px;padding:0;border:0;background:none;color:var(--mint);align-items:center;justify-content:center;cursor:pointer}
+#hss[hidden]{display:none}
+@media(max-width:1100px){#hss{display:none}}   /* no room in a narrow header: the other pills come first */
+#hss svg,#hsrch svg{width:20px;height:20px;fill:currentColor}
+header .hr>#hss{order:11;margin:0 0 0 6px}   /* after the clock, not before it: the merged header slides the notification pill under the alarm button, over whatever sits just before it */
+@media(hover:hover){#hss:hover{color:var(--ink)}}
+#hss:active{transform:scale(.86)}
+header .hr>#hsrch{order:12;margin:0 0 0 6px}   /* the last thing on the right, after the clock */
 #hsrch::before{content:"";position:absolute;left:-7px;top:50%;height:18px;margin-top:-9px;border-left:1px solid var(--mut);opacity:.6}
 header .hr>#hsrch{margin-left:14px}   /* a | before the magnifier on every size: time | search on a phone, chip | search on a tablet */
 body.vwb #hsrch{display:none}
@@ -4720,6 +4742,8 @@ mark.srk{background:rgba(var(--mint-rgb),.3);color:inherit;border-radius:4px}
    The colour follows the condition (--nk, set by 32-notifications-popup.js); the most urgent one wins. With nothing urgent but notifications waiting it is a quiet "N new" pill.
    Wide screens use the same pill too (greeting and weather stay in the bar). ---------- */
 @media(max-width:1179px){html:not(#x) #clk{display:none}}
+/* a condition without a colour of its own (the roster one had none: the pill was drawn with no background) falls back to amber; the per-condition rules and the inline colour from 32-notifications-popup.js still win */
+#nacc{--nk:#ffb04a}#nacc[data-k=roster],#nacc .nai[data-k=roster]{--nk:#ffb04a}
 @media all{
 html:not(#x) #hc{gap:0;min-height:40px}
 html:not(#x) #nacc[data-k]{position:relative;display:flex;align-items:center;gap:7px;height:40px;box-sizing:border-box;width:auto;max-width:min(52vw,300px);padding:0 11px 0 12px;border-radius:20px;background:color-mix(in srgb,var(--nk) 22%,transparent);color:color-mix(in srgb,var(--nk) 70%,#fff);animation:none;filter:none;transition:background .25s,color .25s}
@@ -5170,6 +5194,13 @@ html[data-style=glass]:not(#x):not(#y):not(#z) .insgh{padding:8px 0}
 /* Insights "More": each group keeps its Glass card (rule above strips the card from every .pn; this puts it back for the group, like the other Insights cards) */
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .insm>.insgp.pn{background:var(--gg)!important;border-radius:20px!important;padding-left:14px!important;padding-right:14px!important;margin-bottom:10px!important}
 @media(max-width:760px){html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .insm{gap:0}}
+/* dark mode: content cards are see-through frosted glass (the wallpaper shows through, softly blurred) like the Settings groups, not a dense dark slab; sheets, pop-ups, the open room card and the mini player keep the solid --gc / --gg */
+html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w){--gt:rgba(60,58,82,.40)}
+html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w) :is(.pn:not(#npw):not(#npmini):not(header .hs),:is(#rl.rooms2,.hm #hrooms.rooms) a.rc,#climate .card:not([data-open]),.insm>.insgp.pn,#mp .mpc,#fcp,#lvc,#insc,#updc,#sch,.wxl,.tl:not(.wt):not(.sir):not(.cl):not(.on):not(.cpanel .tl)):not(#npw){background:var(--gt)!important;-webkit-backdrop-filter:blur(18px) saturate(150%)!important;backdrop-filter:blur(18px) saturate(150%)!important}
+html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w) :is(.card:is(.heat,.cool,.auto),#climate .card:is(.heat,.cool,.auto)):not([data-open]){background:color-mix(in srgb,var(--cs) 20%,var(--gt))!important}
+html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w) .alert{background:color-mix(in srgb,var(--al) 22%,var(--gt))!important;-webkit-backdrop-filter:blur(18px) saturate(150%)!important;backdrop-filter:blur(18px) saturate(150%)!important}
+html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w) .tl.cl.on{background:color-mix(in srgb,var(--mint) 26%,var(--gt))!important}
+@media(prefers-reduced-transparency:reduce){html[data-style=glass][data-mode=dark]:not(#x):not(#y):not(#z):not(#w){--gt:rgb(46,44,64)}}
 /* iOS look, tablet and desktop: the title pill floats and the page scrolls under it, with the same progressive blur band as the phone
    (73-frosted-header.css). The page runs up to the top of the main area; its own padding keeps the layout where it was. */
 @media(min-width:761px){
@@ -5230,7 +5261,7 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl:not(.sir){border-radius:22px}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr .tn svg{position:static!important;transform:none!important;left:auto;width:38px;height:38px}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl:not(.dr) .tn svg{background:none!important}   /* Liquid Glass: no disc behind the glyph (it showed as a grey square) */
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.on:not(.dr) .tn svg{background:none!important;fill:color-mix(in srgb,rgb(var(--tcx,224,150,40)) 70%,#000)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.on:not(.dr) .tn svg{background:none!important;fill:color-mix(in srgb,rgb(var(--tcx,224,150,40)) 62%,#d98400)!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.dr:not(.on) .tn svg{background:none!important}
 @media(max-width:760px),(max-height:520px){
   html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam.hasc .cpanel .tg3{grid-auto-columns:minmax(196px,230px)}
@@ -5242,16 +5273,19 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v) .cam .cpanel .tl.
   html:not(#x):not(#y) .cam.cpo .cpanel,html:not(#x):not(#y) .cam.cpo.ls .cpanel{padding-bottom:calc(60px + env(safe-area-inset-bottom,0px))}
   html:not(#x):not(#y) .cam.cpo[data-gal] .cpanel{padding-bottom:calc(var(--galh,26px) + 60px + env(safe-area-inset-bottom,0px))}
 }
-/* dark mode: a light that is on keeps the colour language of the room pages (a dark tile tinted with the light's own colour, white text, the icon and the level in that colour) instead of turning white;
+/* Kinetic (both modes: the panel sits on a dark picture backing) and the rooms look: a light that is on keeps the colour language of the room pages (a dark tile tinted with the light's own colour, white text, the icon and the level in that colour) instead of turning white;
    light mode keeps the white tile, which reads best on a picture. The garage door keeps its own green and red. */
-html[data-mode=dark]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr){background:linear-gradient(rgba(var(--tcx,224,150,40),.26),rgba(var(--tcx,224,150,40),.26)),rgba(14,16,22,.62)!important;border-color:rgba(var(--tcx,224,150,40),.62)!important;--ink:#fff;--mut:rgba(255,255,255,.78);--w:255,255,255;--ink-rgb:255,255,255;color:#fff}
-html[data-mode=dark]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr) :is(.tn,.nm,.tmr){color:#fff!important}
-html[data-mode=dark]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr) .ts2{color:color-mix(in srgb,rgb(var(--tcx,224,150,40)) 78%,#fff)!important}
-html[data-mode=dark]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr) .tn svg{fill:rgb(var(--tcx,224,150,40))!important}
-html[data-mode=dark]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.dim.on .fill{background:rgba(var(--tcx,224,150,40),.4)!important}
-html[data-mode=dark][data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr){box-shadow:inset 0 1px 0 rgba(255,255,255,.3)!important}
-html[data-mode=dark][data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr) .tn svg{fill:rgb(var(--tcx,224,150,40))!important}
-html[data-mode=dark][data-style=material]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr){border-color:transparent!important;background:linear-gradient(rgba(var(--tcx,224,150,40),.34),rgba(var(--tcx,224,150,40),.34)),rgba(14,16,22,.72)!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr){background:linear-gradient(rgba(var(--tcx,224,150,40),.26),rgba(var(--tcx,224,150,40),.26)),rgba(14,16,22,.62)!important;border-color:rgba(var(--tcx,224,150,40),.62)!important;--ink:#fff;--mut:rgba(255,255,255,.78);--w:255,255,255;--ink-rgb:255,255,255;color:#fff}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr) :is(.tn,.nm,.tmr){color:#fff!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr) .ts2{color:color-mix(in srgb,rgb(var(--tcx,224,150,40)) 78%,#fff)!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr) .tn svg{fill:rgb(var(--tcx,224,150,40))!important}
+html:not([data-style=glass]):not([data-style=material]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.dim.on .fill{background:rgba(var(--tcx,224,150,40),.4)!important}
+html[data-style=material]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr){background:color-mix(in srgb,var(--mint) 30%,var(--m-high))!important;border-color:transparent!important}
+html[data-style=material][data-mode=dark]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr){--ink:#fff;--mut:rgba(255,255,255,.78);--w:255,255,255;--ink-rgb:255,255,255;color:#fff}
+html[data-style=material][data-mode=dark]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr) :is(.tn,.nm,.tmr){color:#fff!important}
+html[data-style=material][data-mode=dark]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr) .ts2{color:rgba(255,255,255,.78)!important}
+html[data-style=material][data-mode=dark]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr) .tn svg{fill:var(--mint)!important}
+html[data-style=material][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u) .cam .cpanel .tl.on:not(.dr) .tn svg{fill:color-mix(in srgb,var(--mint) 80%,#000)!important}
 /* a camera entry with hideOn: "tablet" is not drawn on a touch tablet: a wide screen whose main pointer is a finger (a phone and a PC with a mouse still show it) */
 @media(min-width:761px) and (pointer:coarse){.cam.nt{display:none!important}}
 /* Weather alerts and take-overs, one design per look (the 2026-11 mockups): the alert cards (31-weather-alerts.js wxaCard) and the pop-up sheets (49-takeover.js tkShell).
@@ -6823,6 +6857,8 @@ html:not(#x) #spot :is(.spib,.spq2,.spgo){transition:transform .12s ease}
 #spot :is(.spib,.spq2).flash{animation:spFlash .6s ease-out}
 #spot .spgo.flash{animation:spFlashGo .6s ease-out}
 @media(prefers-reduced-motion:reduce){html:not(#x) #spot :is(.spib,.spq2,.spgo):active{transform:none}}
+/* a long Spotify message wraps to two or three lines (and stays longer) instead of being cut with an ellipsis */
+#evtoast.spw{border-radius:22px;align-items:flex-start}#evtoast.spw span{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.3}#evtoast.spw svg{margin-top:1px}
 /* SPOTIFY: add a song to a playlist (61-spotify-add.js). The + on every song row, the Add to playlist sheet (the speaker sheet's box) and the Now Playing button. */
 #spot .spq2{margin:-4px 0}#spot .spq2:last-of-type{margin-right:-4px}
 #spot .spq2.spap{color:var(--mut)}
@@ -7271,8 +7307,13 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .tl input[type=range]::-w
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .tl input[type=range]:active::-webkit-slider-thumb{transform:none;background:rgba(255,255,255,.95);box-shadow:0 2px 8px rgba(0,0,0,.28)}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .tl input[type=range]:active::-moz-range-thumb{transform:none;background:rgba(255,255,255,.95)}
 html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) .tl input[type=range]:active::-webkit-slider-thumb{box-shadow:0 2px 8px rgba(40,40,70,.3)}
-#ssv{position:fixed;inset:0;z-index:2147483640;background:#000;color:#ece9e1;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .8s ease;touch-action:none;cursor:none;user-select:none;-webkit-user-select:none}
+#ssv{position:fixed;inset:0;z-index:2147483640;background:inherit;box-shadow:inset 0 0 0 200vmax rgba(0,0,0,var(--ssw));color:#ece9e1;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .8s ease;touch-action:none;cursor:none;user-select:none;-webkit-user-select:none}
 #ssv[hidden]{display:none}
+/* Always-On look (like a phone's lock screen when it dims): the wallpaper stays, dimmed, in every theme; the clock and chips are always light. --ssl (screensaver.dim / nightDim) still dims the clock and, a little, the wallpaper */
+#ssv{--ssw:calc(.58 + (1 - var(--ssl,1)) * .3)}
+/* Kinetic and Material have no wallpaper: one colour (--ssc: screensaver.color, else the colour picked in Settings > Theme) as a wash of its own shades, lighter, deeper and darkest, so a teal gives teal hues; the same dimming then turns it into a deep, soft glow */
+#ssv{--ssc:var(--mint,#1fa58a)}   /* the colour you picked in Settings > Theme (Magenta gives magenta tones); screensaver.color replaces it */
+html:not([data-style=glass]) #ssv{background:radial-gradient(90% 75% at 16% 10%,color-mix(in srgb,var(--ssc) 78%,#fff) 0%,transparent 62%),radial-gradient(85% 75% at 90% 95%,color-mix(in srgb,var(--ssc) 62%,#000) 0%,transparent 60%),radial-gradient(60% 50% at 78% 12%,var(--ssc) 0%,transparent 70%),color-mix(in srgb,var(--ssc) 30%,#000)}
 #ssv.on{opacity:1}
 #ssv.out{opacity:0;transition:opacity .35s ease}
 #ssv .ssb{display:flex;flex-direction:column;gap:clamp(10px,2.2vmin,22px);opacity:var(--ssl,1);transition:transform 4s ease-in-out;padding:0 6vw;max-width:100vw}
@@ -7289,8 +7330,109 @@ html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w) .tl inpu
 #ssv .ssp.ok{color:#a9cf6a}
 #ssv .ssp.warn{color:#f0b45c}
 #ssv .ssp.bad{color:#ff7a70;border-color:rgba(255,122,112,.5)}
+#ssv .ssp.kc{color:var(--k);border-color:color-mix(in srgb,var(--k) 55%,transparent)}   /* the colour of its kind, as on the room cards and the Alerts tab */
+/* quick cards (tap a chip or the weather): one card over the dark screen, in the look the dashboard is set to (default = Kinetic, glass, material) */
+#ssv .ssq-t,#ssv .ssw[data-q=weather]{cursor:pointer;-webkit-tap-highlight-color:transparent}
+#ssv .ssq-t{min-height:44px}
+#ssv .ssw[data-q=weather]{padding:6px 0}
+#ssv .ssqw{position:absolute;left:50%;bottom:clamp(16px,7vh,72px);transform:translateX(-50%);width:min(560px,92vw);display:flex;flex-direction:column;gap:8px;z-index:2;pointer-events:none}
+#ssv .ssq{position:relative;pointer-events:auto;box-sizing:border-box;--k:var(--mint,#8ff0c4);padding:clamp(14px,2.6vmin,22px) clamp(16px,3vmin,26px);background:#14161a;color:#ece9e1;border:1px solid #2a2d33;border-top:3px solid var(--mint,#8ff0c4);border-radius:12px;opacity:0;transform:translateY(14px);transition:opacity .3s ease,transform .3s ease,padding .25s ease}
+#ssv .ssq[hidden]{display:none}
+#ssv .ssq.on{opacity:1;transform:none}
+/* several cards at once: the newest is open at the bottom, older ones fold to a one-line row above it (tap one to bring it forward) */
+#ssv .ssq.min{padding-top:10px;padding-bottom:10px;cursor:pointer}
+#ssv .ssq.min .ssqt,#ssv .ssq.min .ssqs,#ssv .ssq.min .ssqr,#ssv .ssq.min>:not(.ssqh):not(.ssxb){display:none}
+#ssv .ssq.min .ssqh{opacity:.85;padding-right:36px}
+#ssv .ssq.min .ssxb{top:50%;margin-top:-18px}
+#ssv .ssp.op{background:color-mix(in srgb,currentColor 22%,transparent);box-shadow:0 0 0 1px currentColor inset}
+#ssv .ssqn{font-size:clamp(12px,2vmin,15px);opacity:.6;margin-top:8px;line-height:1.35}
+#ssv .sshl{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+#ssv .sshp{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.06);border-left:3px solid var(--k)}
+#ssv .sshn{flex:1;min-width:0;display:flex;flex-direction:column}
+#ssv .sshn span{font-size:clamp(15px,2.6vmin,20px);font-weight:500}
+#ssv .sshn small{font-size:clamp(11px,1.9vmin,14px);opacity:.6;color:var(--k)}
+#ssv .sshp b{font-size:clamp(17px,3vmin,24px);font-weight:500;white-space:nowrap}
+#ssv .sshp em{font-style:normal;color:var(--k)}
+#ssv .sshp button{width:44px;height:44px;flex:none;border-radius:50%;border:1px solid #3a3e46;background:#1c1f24;color:inherit;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+#ssv .sshp button svg{width:22px;height:22px;fill:currentColor;margin:0}
+#ssv .sshp button:active{filter:brightness(1.3)}
+#ssv .ssce-l{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+#ssv .ssce{display:flex;align-items:baseline;gap:10px;padding:6px 10px;border-left:3px solid var(--c);border-radius:4px;background:rgba(255,255,255,.05)}
+#ssv .ssce small{font-size:clamp(12px,2.1vmin,16px);opacity:.7;min-width:4.2em}
+#ssv .ssce span{flex:1;min-width:0;font-size:clamp(15px,2.5vmin,19px)}
+#ssv .ssce span i{display:block;font-style:normal;font-size:.8em;opacity:.55}
+#ssv .ssce em{font-style:normal;font-size:clamp(12px,2vmin,15px);opacity:.65}
+#ssv .ssqh{font-family:var(--mono,ui-monospace,monospace);font-size:clamp(11px,1.9vmin,14px);letter-spacing:.08em;text-transform:uppercase;opacity:.6}
+#ssv .ssqt{font-size:clamp(22px,4.2vmin,34px);font-weight:500;margin-top:4px;line-height:1.15}
+#ssv .ssqs{font-size:clamp(14px,2.4vmin,19px);opacity:.65;margin-top:4px}
+#ssv .ssqr{display:flex;gap:10px;margin-top:clamp(12px,2.6vmin,20px)}
+#ssv .ssb2{flex:1;min-height:48px;font:inherit;font-size:clamp(15px,2.6vmin,20px);font-weight:500;color:inherit;background:#1c1f24;border:1px solid #3a3e46;border-radius:8px;padding:10px 12px;cursor:pointer}
+#ssv .ssb2.p{background:var(--mint,#8ff0c4);color:#06201d;border-color:var(--mint,#8ff0c4)}
+#ssv .ssb2:active{filter:brightness(1.25)}
+#ssv .sshr{display:flex;justify-content:space-between;margin-top:12px;font-size:clamp(13px,2.2vmin,17px)}
+#ssv .sshr div{display:flex;flex-direction:column;align-items:center;gap:4px}
+#ssv .sshr span{opacity:.6;font-size:.85em}
+#ssv .sshr svg{width:1.5em;height:1.5em;fill:currentColor}
+#ssv .sshr b{font-weight:500}
+#ssv .ssk{margin-top:10px}
+#ssv .ssxb{z-index:2;position:absolute;top:clamp(10px,2vmin,16px);right:clamp(10px,2vmin,16px);width:36px;height:36px;padding:0;display:grid;place-items:center;border-radius:50%;border:0;background:rgba(255,255,255,.1);color:inherit;cursor:pointer}
+#ssv .ssxb svg{width:20px;height:20px;fill:currentColor;margin:0;vertical-align:baseline}
+#ssv .ssxb:active{background:rgba(255,255,255,.22)}
+#ssv .ssqh{padding-right:44px}
+#ssv .ssqh svg{width:1.2em;height:1.2em;fill:currentColor;vertical-align:-.2em}
+/* the keypad: the dashboard's own (round keys, ring dots, the confirm key in the accent) */
+#ssv .ssdots{display:flex;justify-content:center;gap:14px;height:22px;align-items:center;margin-bottom:clamp(10px,2vmin,16px)}
+#ssv .ssdots i{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;opacity:.45;box-sizing:border-box}
+#ssv .ssdots i.f{background:var(--mint,#8ff0c4);border-color:var(--mint,#8ff0c4);opacity:1}
+#ssv .ssg{display:grid;grid-template-columns:repeat(3,clamp(56px,10vmin,72px));gap:clamp(10px,2vmin,14px);justify-content:center;margin:0 auto}
+#ssv .ssg button{width:clamp(56px,10vmin,72px);height:clamp(56px,10vmin,72px);padding:0;justify-self:center;font:inherit;font-size:clamp(22px,4vmin,28px);font-weight:400;color:inherit;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:50%;cursor:pointer}
+#ssv .ssg button.ok{background:var(--mint,#8ff0c4);color:#06201d;border-color:var(--mint,#8ff0c4)}
+#ssv .ssg svg{width:1em;height:1em;fill:currentColor;vertical-align:-.12em}
+#ssv .ssg button:active{filter:brightness(1.3)}
+#ssv .ssp.mus,#ssv .ssp[data-q=music]{max-width:34vw;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+#ssv .ssb2.s{flex:none;min-height:40px;padding:6px 14px;font-size:clamp(13px,2.2vmin,17px)}
+#ssv .sstl{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+#ssv .sstr{display:flex;align-items:center;gap:8px}
+#ssv .sstn{flex:1;min-width:0}
+#ssv .sstn span{display:block;opacity:.65;font-size:clamp(13px,2.2vmin,17px)}
+#ssv .sstm{font-size:clamp(26px,5vmin,40px);font-weight:400;font-variant-numeric:tabular-nums}
+#ssv .sstb,#ssv .ssmp{display:block;height:5px;border-radius:5px;background:rgba(255,255,255,.14);overflow:hidden;margin-top:6px}
+#ssv .sstb i,#ssv .ssmp i{display:block;height:100%;width:0;background:var(--mint,#8ff0c4)}
+#ssv .ssmr{display:flex;gap:14px;align-items:center;margin-top:8px}
+#ssv .ssmr .ssqt{font-size:clamp(18px,3.4vmin,26px);margin-top:0}
+#ssv .ssmr>div{min-width:0}
+#ssv .ssart{flex:none;width:clamp(56px,10vmin,84px);height:clamp(56px,10vmin,84px);border-radius:8px;overflow:hidden;display:block}
+#ssv .ssart img,#ssv .ssart .ph{width:100%;height:100%;object-fit:cover;display:block}
+#ssv .ssart svg{width:100%;height:100%}
+#ssv .ssqr .ssb2 svg{width:1.4em;height:1.4em;fill:currentColor;vertical-align:-.3em}
+/* while a card is open the clock block steps up and back, so the chips stay visible above the card; on the keypad it all but fades */
+#ssv .ssb{transition:transform 4s ease-in-out,translate .4s ease,scale .4s ease}
+#ssv.qopen .ssb{translate:0 calc(var(--qy,13vh) * -1);scale:.78;opacity:calc(var(--ssl,1)*.55);transition:transform 4s ease-in-out,translate .4s ease,scale .4s ease,opacity .4s ease}
+#ssv.qkp .ssb{opacity:calc(var(--ssl,1)*.12)}
+#ssv.qkp .ssqw{bottom:50%;transform:translate(-50%,50%)}
+/* Liquid Glass: a near-opaque frosted card (it must stay readable on black), capsule buttons */
+html[data-style=glass] #ssv .ssq{background:#2b2d33;border:.5px solid rgba(255,255,255,.2);border-radius:28px}
+html[data-style=glass] #ssv .ssqh{font-family:inherit;text-transform:none;letter-spacing:0;font-size:clamp(13px,2.2vmin,17px)}
+html[data-style=glass] #ssv .ssb2,html[data-style=glass] #ssv .ssg button{border:0;border-radius:999px;background:rgba(255,255,255,.14)}
+html[data-style=glass] #ssv .ssb2.p,html[data-style=glass] #ssv .ssg button.ok{background:#fff;color:#111}
+/* Material 3: tonal surface, sentence case, filled tonal pills */
+html[data-style=material] #ssv .ssq{background:#2b2930;border:0;border-radius:28px;color:#e6e0e9}
+html[data-style=material] #ssv .ssqh{font-family:inherit;text-transform:none;letter-spacing:.02em;font-size:clamp(13px,2.2vmin,17px)}
+html[data-style=material] #ssv .ssb2,html[data-style=material] #ssv .ssg button{border:0;border-radius:999px;background:#4a4458;color:#e8def8}
+html[data-style=material] #ssv .ssb2.p,html[data-style=material] #ssv .ssg button.ok{background:#d0bcff;color:#381e72}
+@media (prefers-reduced-motion:reduce){#ssv .ssq,#ssv .ssb{transition:none}}
 @media (prefers-reduced-motion:reduce){#ssv,#ssv .ssb{transition:none}}
 html.ssv-on *,html.ssv-on *::before,html.ssv-on *::after{animation-play-state:paused!important}
+#ssv.qopen[data-qn="2"] .ssb,#ssv.qopen[data-qn="3"] .ssb{scale:.7}
+
+/* Slow wallpaper drift (Settings > Animation > Always on display): the wallpaper is copied onto a layer a little larger than the screen and that one layer is moved with transform only (the graphics chip does it, nothing is repainted); a second layer carries the dimming. A back-and-forth of about 80 s each way (roughly 10 to 15 px a second; config screensaver.driftSeconds changes it), so the bright areas of the picture keep moving across the panel. Off: the old still wallpaper with the inset dimming */
+#ssv.ssa{box-shadow:none}
+#ssv.ssa::before,#ssv.ssa::after{content:"";position:absolute;pointer-events:none;z-index:-1}
+#ssv.ssa::before{inset:-26%;background:inherit;animation:ssdrift var(--ssdur,80s) ease-in-out infinite alternate;will-change:transform}
+#ssv.ssa::after{inset:0;background:rgba(0,0,0,var(--ssw))}
+@keyframes ssdrift{0%{transform:translate3d(-11%,-9%,0) rotate(-3deg) scale(1)}35%{transform:translate3d(9%,-5%,0) rotate(2deg) scale(1.1)}70%{transform:translate3d(11%,10%,0) rotate(4deg) scale(1.04)}100%{transform:translate3d(-9%,7%,0) rotate(-2deg) scale(1.12)}}
+@media(prefers-reduced-motion:reduce){#ssv.ssa::before{animation:none}}
+html.ssv-on #ssv.ssa::before{animation-play-state:running!important}   /* the one animation that keeps running while the saver pauses everything else */
 /* LIQUID GLASS ONLY: one frosted card at the top, never two.
    - a page with a pinned tab row: while the row is stuck the title bar slides away (.hhid) and the row glides up to the top edge (--gpy, set by wpSync in 31-section-pills.js); the row itself is the frosted card.
    - a page with no pinned row: the title bar is the frosted card (a floating pill) once the page has scrolled (.hstk), and sticks to the top on tablets and desktops too.
@@ -7369,18 +7511,16 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w) .page :is(.hsw,.secw).stk
 @media(max-width:760px){html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):has(:is(#scenes,#irrigation).on) #bband{display:none!important}}
 /* phone: the tab capsule that sits in the title bar looks the same at the top of the page as it does once the page has scrolled (a thin bright ring), not a heavier grey ring that changes when you scroll */
 @media(max-width:760px){
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page .hthr > :is(.chips.tabs,.secnav,.setchips,.inschips){background:rgba(40,38,58,.5)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
-html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page .hthr > :is(.chips.tabs,.secnav,.setchips,.inschips){background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
 }
 /* phone: the second pinned row (Settings sub-tabs and the like) is the same frosted card from the first frame, not only once the page has scrolled */
 @media(max-width:760px){
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav) > :is(.chips.tabs,.secnav,.setchips,.inschips){background:rgba(40,38,58,.5)!important;border:1px solid rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
-html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav) > :is(.chips.tabs,.secnav,.setchips,.inschips){background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav):not(.hthr) > :is(.chips.tabs,.secnav,.setchips,.inschips){background:rgba(40,38,58,.5)!important;border:1px solid rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(1.6)!important;backdrop-filter:blur(24px) saturate(1.6)!important;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)!important}
+html[data-style=glass][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav):not(.hthr) > :is(.chips.tabs,.secnav,.setchips,.inschips){background:rgba(255,255,255,.5)!important;border-color:rgba(255,255,255,.65)!important;box-shadow:0 10px 28px -14px rgba(60,60,90,.35)!important}
 }
 
 /* the second row's capsule is frosted from its first frame (no fade from the plain look), and the tab you pick gets its ring and shadow at once instead of fading in (it read as a heavy outline for a moment); the glide itself is untouched */
 @media(max-width:760px){
-html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav) > :is(.chips.tabs,.secnav,.setchips,.inschips){transition-property:none!important}
+html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav):not(.hthr) > :is(.chips.tabs,.secnav,.setchips,.inschips){transition-property:none!important}
 html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q) .page :is(.hmt,.secw,.insnav) .chip{transition-property:color,transform,opacity,filter!important}
 }
 /* One header row for Kinetic and Material too (phones): same structure as Liquid Glass, each style keeps its own capsule look */
@@ -7443,6 +7583,11 @@ html[data-style=glass]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):n
 @media(max-width:760px){
 html:not(#x):not(#y):not(#z) #scenes.enter .scll{animation:none!important;transform:none!important;filter:none!important}
 html:not(#x):not(#y):not(#z) #scenes.enter .scll>.sclib{animation:cdIn calc(.5s*var(--pgs,1)) var(--ez,cubic-bezier(.2,.7,.2,1)) both}
+}
+/* Kinetic and Material phone: the drop-down (the tabs do not fit beside the chips) keeps the same accent line under its selector as the tab row; the arrow stays on ::after, the line moves to ::before (same as the tablet rules in 130) */
+@media(max-width:760px){
+  html:not([data-style=glass]):not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q):not(#p) .page .hthr .hdd:not(.hddo) .chip.on::before{content:""!important;display:block!important;position:absolute!important;left:12px!important;right:12px!important;bottom:0!important;top:auto!important;width:auto!important;height:3px!important;border-radius:3px 3px 0 0!important;background:var(--mint)!important;margin:0!important;letter-spacing:0!important}
+  html[data-style=material][data-mode=light]:not(#x):not(#y):not(#z):not(#w):not(#v):not(#u):not(#t):not(#s):not(#r):not(#q):not(#p) .page .hthr .hdd:not(.hddo) .chip.on::before{background:var(--ink)!important}
 }
 /* LIQUID GLASS, tablets and desktops: the tab capsule of a page takes the greeting's place in the header strip (placed by wpSync: --hx / --hy), in front of the weather chips.
    It is position:fixed like on the phone, so the page keeps no empty row below the header. The fold order (extra pills, wind, drop-down) is decided in wpSync (hnx, hnw, hdd). */
@@ -7573,6 +7718,37 @@ html:not(#x):not(#y) .cam.snpc .lv svg{display:none}
 #spot .spgo .spsp{display:block;flex:none;width:16px;height:16px;box-sizing:border-box;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;animation:spspin .7s linear infinite}
 @media(prefers-reduced-motion:reduce){#spot .spkl.spin .spr{animation:none}#spot .spa.spim.spimo{transition:none}}
 .cam .cdbg{position:absolute;left:8px;bottom:8px;z-index:9;max-width:calc(100% - 16px);font:10px/1.35 var(--mono,monospace);white-space:pre-wrap;color:#fff;background:rgba(0,0,0,.65);padding:4px 6px;border-radius:6px;pointer-events:none}
+/* the doorbell picture: Back button (top left, in the header row) and the TAP TO TALK bar above the light tiles; the small mic / speaker icons are replaced by the bar */
+.cam.hdb .aud{display:none!important}
+#vw .cam .vwb{display:inline-flex;align-items:center;gap:6px;box-sizing:border-box;height:44px;padding:0 16px 0 12px;border-radius:22px;border:1px solid rgba(255,255,255,.2);background:rgba(18,18,24,.55);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;font:600 14px var(--sans,inherit);cursor:pointer;order:0!important}
+#vw .cam .vwb svg{width:20px;height:20px;fill:currentColor}
+.cam .tkw{display:flex;gap:8px;margin:0 0 10px}
+.cam .tkb,.cam .tks{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;border-radius:24px;border:1px solid rgba(255,255,255,.2);background:rgba(18,28,38,.92);color:#fff;font:600 15px var(--sans,inherit);cursor:pointer}
+.cam .tkb{flex:1;min-width:0}.cam .tks{flex:none;padding:0 18px}
+.cam .tkb svg,.cam .tks svg{width:22px;height:22px;fill:currentColor;flex:none}
+.cam .tkb.on{background:var(--mint);border-color:transparent;color:var(--onmint,#000)}
+.cam .tkb.err{border-color:#e8a33d;color:#e8a33d}
+.cam .tks.on{background:rgba(var(--w),.22)}
+@media(max-width:760px){#vw .cam .vwb span{display:none}#vw .cam .vwb{width:44px;padding:0;justify-content:center}.cam .tks span{display:none}.cam .tks{padding:0 14px}}
+/* Tab drop-down: one overlay surface (#hddp) anchored under the selector, like Google's menu and iOS's pull-down.
+   Only clip / scale / opacity animate (never layout). Kinetic and Material: a clip reveal from the anchor, a quick fade on close. Liquid Glass: a spring grow out of the selector, blurred. Follows the speed setting (--pgs). */
+#hddp{position:fixed;z-index:9000;box-sizing:border-box;display:flex;flex-direction:column;gap:2px;padding:6px;border-radius:20px;background:var(--bg2,#1d1b20);color:var(--ink,#fff);border:1px solid var(--line,rgba(255,255,255,.12));box-shadow:0 10px 30px rgba(0,0,0,.28);overflow:auto;overscroll-behavior:contain;opacity:0;clip-path:inset(0 0 100% 0 round 20px);will-change:clip-path,opacity}
+#hddp.on{opacity:1;clip-path:inset(0 0 0 0 round 20px);transition:clip-path calc(.26s*var(--pgs,1)) cubic-bezier(.05,.7,.1,1),opacity calc(.18s*var(--pgs,1)) linear}
+#hddp.out{opacity:0;clip-path:inset(0 0 0 0 round 20px);transition:opacity calc(.12s*var(--pgs,1)) linear;pointer-events:none}
+#hddp button{all:unset;box-sizing:border-box;display:block;min-height:44px;padding:0 18px;line-height:44px;border-radius:14px;font:inherit;font-size:15px;font-weight:600;white-space:nowrap;cursor:pointer;color:inherit;-webkit-tap-highlight-color:transparent;text-transform:inherit;letter-spacing:inherit}
+#hddp button.on{background:color-mix(in srgb,var(--mint,#8ff0c4) 16%,transparent);color:var(--mint,#8ff0c4)}
+html[data-mode=light][data-style=material] #hddp button.on{color:var(--ink,#1b1b1f)}
+#hddp button:active,#hddp button.pk{background:color-mix(in srgb,var(--mint,#8ff0c4) 28%,transparent)}
+html[data-style=glass] #hddp{background:color-mix(in srgb,var(--bg2,#2a2a2f) 70%,transparent);-webkit-backdrop-filter:blur(26px) saturate(1.6);backdrop-filter:blur(26px) saturate(1.6);border-radius:22px;clip-path:none;scale:.4}
+html[data-style=glass] #hddp.on{scale:1;clip-path:none;transition:scale calc(.34s*var(--pgs,1)) cubic-bezier(.34,1.35,.5,1),opacity calc(.16s*var(--pgs,1)) linear}
+html[data-style=glass] #hddp.out{scale:.96;clip-path:none;transition:opacity calc(.12s*var(--pgs,1)) linear,scale calc(.12s*var(--pgs,1)) ease-in}
+/* the selector's arrow turns up while the list is open (rotate is its own property, so the arrow's own transform is untouched) */
+html:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f):not(#g):not(#h):not(#i):not(#j):not(#k):not(#l) .page .hdd .chip.on::after{transition:rotate calc(.2s*var(--pgs,1)) var(--ez,cubic-bezier(.2,.7,.2,1))!important}
+html:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f):not(#g):not(#h):not(#i):not(#j):not(#k):not(#l) .page .hdd.hddv .chip.on::after{rotate:180deg}
+@media(prefers-reduced-motion:reduce){#hddp,#hddp.on,#hddp.out,html[data-style=glass] #hddp,html[data-style=glass] #hddp.on{transition:none!important;scale:1!important}}
+/* "Opening Climate" after a reload put you back on your last page */
+#rsnote{position:fixed;left:50%;top:max(14px,env(safe-area-inset-top));translate:-50% 0;z-index:9990;padding:8px 16px;border-radius:20px;background:color-mix(in srgb,var(--bg2,#222) 92%,transparent);color:var(--ink,#fff);border:1px solid var(--line,rgba(255,255,255,.15));font:600 13px/1.2 inherit;font-family:inherit;box-shadow:0 6px 22px rgba(0,0,0,.28);pointer-events:none;opacity:0;transition:opacity .3s ease,translate .3s var(--ez,cubic-bezier(.2,.7,.2,1))}
+#rsnote.on{opacity:1}
 /* Value picker sheet (37-value-picker.js): common values as chips, - and + to fine tune, Done */
 .ctf.sel{cursor:pointer}.ctf.sel select{pointer-events:none}
 #vpk{position:fixed;inset:0;z-index:97;display:flex;align-items:flex-end;justify-content:center}
@@ -7622,7 +7798,7 @@ html[data-style=material] #vpk .vpg button.on{background:var(--mint);border-colo
 <div id="npsheet"><div class="npbk" data-np="close"></div><div class="pn npb" id="npbody"></div><div id="npfs" hidden></div><div id="npsk" hidden></div></div>
 <div id="mshe"><div class="mgh" data-g="home">HOME</div><a href="#energy" data-g="home" data-i2="n-energy"><span>Energy</span></a><a href="#scenes" data-g="home" data-i2="n-scenes"><span>Scenes</span></a><div class="mgh" data-g="outside">OUTSIDE</div><a href="#weather" data-g="outside" data-i2="n-weather"><span>Weather</span></a><a href="#irrigation" data-g="outside" data-i2="n-irr"><span>Irrigation</span></a><a href="#vehicle" data-g="outside" data-i2="v-car"><span>Vehicle</span></a><a href="#hazards" data-g="outside" data-i2="volcano"><span>Hazards</span></a><div class="mgh" data-g="info">INFO</div><a href="#insights" data-g="info" data-i2="lightbulb-on"><span>Insights</span></a><a href="#media" data-g="info" data-i2="music-note"><span>Media</span></a><a href="#events" data-g="info" data-i2="n-events"><span>Events</span></a><a href="#settings" id="navset2" class="mset" data-i2="n-set"><span>Settings</span></a></div>
 <div class="main">
-  <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><div id="hnp" class="npoff"></div><div class="hr"><div id="hmp" data-np="sheet" title="Now playing" hidden></div><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><button id="hsrch" type="button" aria-label="Search"></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header><script>try{var h=document.querySelector(".main > header");if(h&&innerWidth<=760&&localStorage.getItem("dashStyle")==="glass")h.classList.add("hstk")}catch(e){}</script>
+  <header><button id="hb" aria-label="Menu" data-i="menu"></button><h1 id="ttl">Home</h1><div id="hnp" class="npoff"></div><div class="hr"><div id="hmp" data-np="sheet" title="Now playing" hidden></div><button id="al" class="al s-x" data-i="shield-outline"></button><span id="st" class="bad">CONNECTING</span><span id="bat" hidden></span><button id="hnote" aria-label="Open Media"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></button><button id="hss" type="button" aria-label="Always on display" title="Start the always on display" data-i="weather-night" hidden></button><button id="hsrch" type="button" aria-label="Search"></button><div id="hc" role="button" aria-label="Notifications"><i id="nacc"></i><span id="clk">--:--</span></div></div></header><script>try{var h=document.querySelector(".main > header");if(h&&innerWidth<=760&&localStorage.getItem("dashStyle")==="glass")h.classList.add("hstk")}catch(e){}</script>
   <div id="alb" hidden></div>
   <div id="cdb" hidden></div>
 
@@ -7682,6 +7858,34 @@ html[data-style=material] #vpk .vpg button.on{background:var(--mint);border-colo
 <script src="config.js?v=4"></script>
 <script src="brand-logo.js?v=1"></script><script src="mock.js?v=2.8.2"></script><script>if(/[?&]lang=zh\b/.test(location.search))document.write('<script src="zh-dict.js?v=2.8.0"><\/script><script src="zh.js?v=1"><\/script>')</script>
 <script>
+// Reload keeps your place (first half; the second half is js/modules/71-restore-page.js).
+// The Home Assistant app (and now and then a browser or the tablet) reloads the page by itself. The page you were on lives in the address (#security, #rooms/kitchen ...),
+// and a reload comes back on the plain address, so you landed on Home. The page notes where you are (localStorage "dashLast"); if it starts on a plain address soon after,
+// this puts the same address back before anything reads it. Runs before brand-splash.js, so the start-up logo treats it like any page opened on a page of its own.
+// Not restored: an address that names a page (a notification tap, a bookmark, a Fully Kiosk load_url), the return from the sign-in, an unplanned reload twice within 20 s
+// (a page that makes the app reload would loop), and the wall tablet (Fully Kiosk), where a plain address means "start again from Home".
+// Settings in config.js:  restorePage: false (off) | true (also on the Fully Kiosk tablet);  restoreMin: minutes a note stays valid (default 30).
+(function () { try {
+  var C = window.DASH_CONFIG || {}, L = null;
+  if (C.restorePage === false) return;
+  try { L = JSON.parse(localStorage.getItem("dashLast") || "null"); } catch (e) {}
+  window.__last = L;   // 71-restore-page.js reads the scroll position and the section tab from it
+  if (!L || !L.h || typeof L.h !== "string") return;
+  if (location.hash && location.hash !== "#") return;   // an address of its own wins
+  if (/[?&](code|state|go|tablet)=/.test(location.search)) return;   // coming back from the sign-in, or a link that names its page
+  var fully = typeof window.fully !== "undefined" || /FullyKiosk|Fully Kiosk/i.test(navigator.userAgent);
+  if (fully && C.restorePage !== true) return;
+  try { if (window.parent !== window) { var P = window.parent.location; if ((P.hash && /^#[a-z]/i.test(P.hash)) || new URLSearchParams(P.search).get("go")) return; } } catch (e) {}   // the Home Assistant page around this one names a page
+  var now = Date.now(), win = (C.restoreMin != null && +C.restoreMin > 0 ? +C.restoreMin : 30) * 60000;
+  if (!(now - (+L.t || 0) < win)) return;   // the page was closed for a while: a fresh start is Home
+  if (L.r && now - L.r < 20000) return;   // we restored just now and it ended again: let this one start on Home
+  if (!/^#(climate|events|rooms|security|weather|energy|irrigation|scenes|media|theme|vehicle|hazards|insights|admin|view|camera)(\/[\w.%~-]*)*$/i.test(L.h) || /^#security\/disarm/i.test(L.h)) return;
+  history.replaceState(null, "", location.pathname + location.search + L.h);
+  L.r = now; window.__restored = true;
+  try { localStorage.setItem("dashLast", JSON.stringify(L)); } catch (e) {}
+} catch (e) {} })();
+</script>
+<script>
 // Brand splash (config.js -> brand). Runs before the big script so the very first paint already shows the logo instead of the spinner.
 // A short intro plays only on a cold start: the page was not open for brand.introAfter minutes (default 30), it is not a deep link
 // (notification tap such as #view/driveway, #security ...), not the return from the login, and the device has not asked for reduced motion.
@@ -7689,7 +7893,7 @@ window.brandLogo = function () { var L = window.DASH_LOGO, B = (window.DASH_CONF
 window.brandMark = function (s) { var g = window.brandLogo(); if (!g) return ""; return g.svg.replace(/\bid="([\w-]+)"/g, 'id="$1' + s + '"').replace(/url\(#([\w-]+)\)/g, 'url(#$1' + s + ')'); };
 window.DASH_VER = "3.0.0";   // the one place to change the version
 window.DASH_NEW = {"3.0.0":{"n":["Each speaker now has a Sound button under its volume: tap it to change Bass and Treble.","**Add songs to your playlists.** Tap the + on any song, or the Add to playlist button on Now Playing, then pick a playlist or start a new one with that song in it.","**Liquid Glass follows Apple's design more closely.** Tabs and option rows are glass capsules with a highlight that slides and stretches to the one you pick, sheets float with rounder corners, and the whole look is lighter and smoother on phones.","**Material follows Google's Material 3.** Sentence-case labels, outlined fields, Material switches and tonal tabs everywhere, including the pop-ups and Settings.","**Each look has its own page motion.** Kinetic rises card by card, Liquid Glass fades the page in softly, Material slides a short way in the direction you moved. Pop-ups that change size now do it smoothly.","**A new time picker and date picker.** Setting a time or a date now opens the dashboard's own picker in whichever look you use, big and easy to tap on a tablet or phone.","**A tidier top bar on tablets.** Everything is the same size with room between, and a small music player sits there on every page except Media.","**Split view no longer repeats the garage door button** on the driveway camera.","**Fixes for the fan, charger and curtain tiles** in Liquid Glass.","**Smoother Liquid Glass on phones.** Pop-ups open and pages scroll more smoothly, and the phone should stay cooler.","**Irrigation has Rain and Soil moisture tabs** at the top, like the Weather page.","**Smoother cameras and Weather.** No black blink when you pick a recording, and the Weather page opens as smoothly the first time as it does after.","**Escape closes more pop-ups** on a computer.","**A Spotify page.** Browse your playlists and albums, pick a song, choose which speakers play it, and control it from a small player that floats at the bottom of the screen.","**136 room scenes with real photos.** Every scene has its own picture and the colours it uses.","**Cameras say \"Connecting to camera\" on the camera page too.** No more guessing while the soft picture turns clear.","**Fixes.** The arrows on the Scenes tabs sit on the tabs, and the Scenes and Irrigation pop-ups look like cards again in Liquid Glass.","**A new Media page.** Each speaker card now looks right in every style, with the time under the progress bar and volume sliders that fill as you drag.","**Now Playing floats.** On a phone it is a card that rises from the bottom of the screen.","**Smoother cameras.** No flash when a camera opens big, a clear \"Connecting to camera\" message, and a RETRY button if it can't connect.","**Raining, Wet or Dry.** The greeting can tell if it is really raining right now.","**Colour-coded weather alerts.** UV is yellow, rain is blue, wind is teal.","**Every style polished.** Kinetic, Liquid Glass and Material each got their own finishing touches across the app."],"f":0},"2.8.1":{"n":["**Smoother pages.** Every page now rises into place card by card, and switching tabs does the same.","**Zigbee alert.** If the Zigbee network goes down you get a chip on Home and an alert.","**Liquid Glass:** a soft frosted header when you scroll, and see-through cards."],"f":0},"2.8.0":{"n":["**One look for \"on\".** Switches, fans, the towel rail and charging tiles now glow like the lights, each in its own colour, with the time left shown as a line along the bottom. Open curtains glow too.","**Garage first.** When the garage door is open its camera moves to the top of the Security page, tapping a camera in the pop-up opens it full screen, and the pop-up links to the Security page.","**Weather cards open full screen.** Tap a weather card in Notifications (look for \"Open full screen\") for the big view.","**Settings feels like the rest.** Moving between Settings tabs now uses the same page transition as every other page.","**Smarter search.** Tap the magnifier to get quick buttons for every page, your rooms and cameras, and anything that needs attention. Start typing and results are grouped, with filters to narrow them. On a phone the box sits at the bottom, easy to reach.","**Bigger siren button.** Hold it for 2 seconds: a large count shows above your thumb, and the stop button is big too.","**Lights that are on** glow warmer the brighter they are, with a thin level line along the bottom of a dimmable light.","**Notification list:** no more jump when you pick a filter."],"f":0},"2.7.1":{"n":["**What's new button.** It now has its own card in Settings, on tablets and computers too."],"f":0},"2.7.0":{"n":["**What's new.** After an update, a sheet like this one shows what changed. You can open it again from Settings."],"f":0},"2.6.1":{"n":["**Garage camera pop-up.** The live picture now shows in the pop-up even when Notifications is open behind it.","**Easier to read in dark mode.** The number on the count badges (such as the one on Settings) is now black.","**Steadier Hazards page.** It no longer slowly uses more memory the longer the dashboard stays open."],"f":0},"2.6.0":{"n":["**Search.** Tap the magnifier at the top (or press Ctrl+K on a computer) to find any page, room, card, device or camera. It takes you there and flashes the card."],"f":0}};   // WHATSNEW.md as { version: { n: [lines], f: 1 if a patch release should show the sheet } }
-window.DASH_BUILD = "319f2a";   // filled in by build.mjs: tells two copies of the same version apart
+window.DASH_BUILD = "4e31a2";   // filled in by build.mjs: tells two copies of the same version apart
 (function () { try {
   window.__deep = !!location.hash && !/^#(home)?$/.test(location.hash) && !/[?&]code=/.test(location.search);   // opened on a page of its own (a notification tap such as #view/driveway): 05-first-load-gate.js does not hold the logo for a minimum time
   var B = (window.DASH_CONFIG || {}).brand, el = document.getElementById("bootld"), r = document.documentElement, lp = "on";
@@ -7981,6 +8185,7 @@ Object.assign(MDI, {"minus":"M19,13H5V11H19V13Z"});
 
 // the count inside a filter chip ("ROOMS 60"): one style everywhere
 const chipN = n => ' <small class="cn">' + n + '</small>';
+Object.assign(MDI, {"arrow-left":"M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z","microphone":"M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z","microphone-off":"M19,11C19,12.19 18.66,13.3 18.1,14.28L16.87,13.05C17.14,12.43 17.3,11.74 17.3,11H19M15,11.16L9,5.18V5A3,3 0 0,1 12,2A3,3 0 0,1 15,5V11L15,11.16M4.27,3L21,19.73L19.73,21L15.54,16.81C14.77,17.27 13.91,17.58 13,17.72V21H11V17.72C7.72,17.23 5,14.41 5,11H6.7C6.7,14 9.24,16.1 12,16.1C12.81,16.1 13.6,15.91 14.31,15.58L12.65,13.92L12,14A3,3 0 0,1 9,11V9.27L3,3.27L4.27,3Z"});
 const isMobile = () => window.matchMedia("(max-width:760px)").matches;
 const MAIN = CONFIG.rooms.filter(r => r.main)[0].id, W = CONFIG.weather;
 const MODE = { heat_cool: "AUTO", fan_only: "FAN", off: "OFF", heat: "HEAT", cool: "COOL", dry: "DRY", auto: "AUTO" };
@@ -8328,7 +8533,7 @@ function openWs(tk) {
       wsAuthed = true; setStatus(true); hideLogin();
       if (camPage() && typeof startCams === "function" && !Object.keys(states).length) { try { startCams(); } catch (_) {} }   // the cameras on this page connect now, while the (large) list of states is still coming, not after it
       send({ type: "get_states" }, list => { list.forEach(setState); if (typeof LV !== "undefined") LV.t = null; loadFc(); loadFcH(); calFix(); palTick(); schLoad(); vGroups(); buildDep(); drawGsum(); if (cards[MAIN]) render(MAIN); if (!identDone) identify(); batTick(); tick(); bootMark("s"); setTimeout(() => { if (typeof lkReady === "function") lkReady(); }, 600); LV.t = null; lvQ(); queueNotif(); setTimeout(bootGo, 1400); if (camPage()) startCams(); if (onRooms) { if (curRoom) drawRoom(curRoom.id); else updRooms(); } });
-      send({ type: "subscribe_events", event_type: "state_changed" }); cfgFetch();
+      send({ type: "subscribe_events", event_type: "state_changed" }); cfgFetch(); enLoad();
       evBtn(); if (curPg() === "energy") { en.busy = false; loadEnergy(); }
     } else if (m.type === "result" && pending[m.id]) { try { pending[m.id](m.result, m); } catch (x) {} delete pending[m.id]; }
     else if (m.type === "event") { if (m.event && m.event.event_type === "state_changed") skewSample(Date.now() - Date.parse(m.event.time_fired)); if (subs[m.id]) subs[m.id](m.event); else if (m.event.data && m.event.data.new_state) setState(m.event.data.new_state); }
@@ -8343,12 +8548,30 @@ function drawGsum() {
   el.style.setProperty("--tcs", v != null ? tempColor(parseFloat(v)).replace(/,0\.7\)$/, ",1)") : "rgb(245,245,245)");   // the same colour at full strength, for the room cards' stronger temperature cues
   el.innerHTML = '<div><div class="lbl">' + mdi("thermometer") + ' House average</div></div><div class="gv">' + (v != null ? f1(v) : "--") + '<small>°C</small></div>';
 }
+const WXG = {};   // the raw Google weather state, kept so MetService can be laid over it again whenever either changes
+// Names: newer Home Assistant builds an entity's friendly_name as "<device name> <entity name>" ("Lights (ETR) Pendant Lights"). The dashboard shows the entity's own Name field from Settings > Entities ("Pendant Lights"):
+// the registry (config/entity_registry/list_for_display, `en` = that Name) is loaded once per connection and the device-name prefix is cut off every friendly_name that ends with it. config `entityNames: "device"` keeps Home Assistant's long names.
+const ENM = {};
+function enFix(s) { const e = ENM[s.entity_id], a = s.attributes, f = a && a.friendly_name; if (!e || typeof f !== "string" || f === e || !f.endsWith(" " + e)) return s; const o = Object.assign({}, s); o.attributes = Object.assign({}, a, { friendly_name: e }); return o; }
+function enLoad() {
+  if (CONFIG.entityNames === "device") return;
+  send({ type: "config/entity_registry/list_for_display" }, (r, m) => {
+    const L = m && m.success !== false && m.result && m.result.entities; if (!L) return; let n = 0;
+    L.forEach(x => { if (x.ei && x.en && typeof x.en === "string") ENM[x.ei] = x.en.trim(); });
+    Object.keys(states).forEach(id => { const t = enFix(states[id]); if (t !== states[id]) { states[id] = t; n++; } });
+    if (n) { if (cards[MAIN]) render(MAIN); if (typeof queueHome === "function") queueHome(); LV.t = null; if (typeof lvQ === "function") lvQ(); if (typeof queueNotif === "function") queueNotif(); if (typeof onRooms !== "undefined" && onRooms) { if (curRoom) drawRoom(curRoom.id); else updRooms(); } }
+  });
+}
 function setState(s) {
-  const id = s.entity_id;
+  s = enFix(s); const id = s.entity_id;
   if (!vBusy) { REAL[id] = 1; if (VGM[id]) { clearTimeout(vTm); vTm = setTimeout(vGroups, 120); } }
   if (id === (CONFIG.houseAvg || CONFIG.indoor)) { states[id] = s; drawGsum(); }
   if (id === CONFIG.outside) { $("#outs").textContent = f1(s.state) + "°C"; if (cards[MAIN]) setTimeout(() => render(MAIN), 0); }
+  if (!states[id] && typeof MET !== "undefined") MET.at = 0;   // a new entity: MetService's sensors are looked for again
+  if (id === W && CONFIG.weatherMet) { WXG.g = s; s = wxBlend(); }   // the weather entity: MetService values over Google's (weatherMet)
   states[id] = s;
+  if (CONFIG.billing && CONFIG.billing.tariff && id === CONFIG.billing.tariff) tarBill();   // prices from the bill (38-energy.js)
+  if (CONFIG.weatherMet && id === CONFIG.weatherMet && WXG.g) states[W] = wxBlend();
   galOnState(id, s); if (typeof cwOnState === "function") cwOnState(id);
   if (id === E("access")) ruRefresh();
   if (CAUTO && CAUTO.ids.indexOf(id) > -1) caDraw();
@@ -8433,7 +8656,7 @@ function build(r) {
     '<div class="chips"></div><button class="fanb"><span>FAN</span><b>--</b></button><div class="cbar"><s class="g"></s><u></u><i></i><b class="mk h" hidden></b><b class="mk c" hidden></b></div><div class="clft" hidden></div>';
   cards[r.id] = { el: el, r: r, key: "" };
   $$(".rnd", el).forEach(b => b.onclick = () => bump(r.id, +b.dataset.d));
-  $(".chips", el).onclick = e => { const m = e.target.dataset.m; if (m) call("climate", "set_hvac_mode", r.id, { hvac_mode: m }); };
+  $(".chips", el).onclick = e => { const m = e.target.dataset.a || e.target.dataset.m; if (m) call("climate", "set_hvac_mode", r.id, { hvac_mode: m }); };
   $(".fanb", el).onclick = () => {
     const a = (states[r.id] || {}).attributes || {}, fm = a.fan_modes || [];
     if (fm.length) call("climate", "set_fan_mode", r.id, { fan_mode: fm[(fm.indexOf(a.fan_mode) + 1) % fm.length] });
@@ -8454,9 +8677,10 @@ function render(id) {
       if (ct == null || isNaN(parseFloat(ct))) { const z = CONFIG.rooms.filter(r => !r.main && !entHidden(r.id)).map(r => states[r.id] && parseFloat(states[r.id].attributes.current_temperature)).filter(x => x != null && !isNaN(x)); ct = z.length ? z.reduce((p, x) => p + x, 0) / z.length : null; }
     } $(".cur", el).textContent = f1(ct); }
   showT(id);
-  const modes = a.hvac_modes || [], key = modes.join() + (c.r.main ? "" : "|" + ((states[MAIN] || {}).state || "")), chips = $(".chips", el);
-  if (c.key !== key) { chips.innerHTML = modes.map(m => '<button class="chip" data-m="' + m + '">' + label(c.r, m) + '</button>').join(""); c.key = key; }
-  $$(".chip", chips).forEach(b => b.classList.toggle("on", b.dataset.m === s.state));
+  const modes = a.hvac_modes || [], one = !c.r.main && modes.length === 2 && modes.indexOf("off") > -1, isOff = s.state === "off", key = modes.join() + (c.r.main ? "" : "|" + ((states[MAIN] || {}).state || "")) + (one ? "|1" + isOff : ""), chips = $(".chips", el);
+  // a room that only has Off and one running mode gets ONE button: "On" while it is off, "Off" while it is on (a pair of Off / On chips in a box was one too many)
+  if (c.key !== key) { chips.classList.toggle("chips1", one); chips.innerHTML = one ? '<button class="chip c1" data-m="' + (isOff ? modes.filter(m => m !== "off")[0] : s.state) + '" data-a="' + (isOff ? modes.filter(m => m !== "off")[0] : "off") + '">' + (isOff ? "On" : "Off") + '</button>' : modes.map(m => '<button class="chip" data-m="' + m + '">' + label(c.r, m) + '</button>').join(""); c.key = key; }
+  $$(".chip", chips).forEach(b => b.classList.toggle("on", one ? !isOff : b.dataset.m === s.state));
   const fan = $(".fanb", el);
   fan.style.display = a.fan_modes ? "" : "none";
   $("b", fan).textContent = (a.fan_mode || "--").toUpperCase();
@@ -8516,7 +8740,7 @@ function loadFc(n) {
   n = +n || 0; if (!fcReady()) { if (n < 10) setTimeout(() => loadFc(n + 1), 60000); return; }
   send({ type: "call_service", domain: "weather", service: "get_forecasts", service_data: { type: "daily" }, target: { entity_id: W }, return_response: true },
     r => { const x = r && r.response && r.response[W]; if (!x) { if (n < 10) setTimeout(() => loadFc(n + 1), 60000); return; }
-      bootMark("f"); fc = x.forecast || []; drawFc(); home(); });
+      wxMetFc("daily", x.forecast || [], l => { bootMark("f"); fc = l; drawFc(); home(); }); });
 }
 // Today's tile covers what is left of today: its rain chance, rain and sky come from the hourly forecast from this hour to midnight
 // (the daily forecast gives the whole day, so a wet morning kept saying 40% all evening). High / low stay the day's. Other days are unchanged.
@@ -8986,7 +9210,7 @@ function snapLoop(c) {
 }
 // config.js camDebug: true writes the timing of every camera start on its tile (which stream, how long each step took, how many times it was started): start of the request, config answer, offer sent, answer, first track, first picture
 function camDbg(c, k, eid) {
-  if (!CONFIG.camDebug || !c.o) return; const n = performance.now();
+  if (!(CONFIG.camDebug || (c.talk && c.stream)) || !c.o) return; const n = performance.now();
   if (k === "start") { c._dg = { t0: n, id: String(eid || "").replace(/^camera\./, "") + (c.upg ? " (light)" : ""), m: [] }; (c._dgs = c._dgs || []).push(c._dg); if (c._dgs.length > 4) c._dgs.shift(); } else if (c._dg) c._dg.m.push(k + " " + Math.round(n - c._dg.t0));
   let e = c.o.el.querySelector(".cdbg"); if (!e) { e = document.createElement("div"); e.className = "cdbg"; c.o.el.appendChild(e); }
   e.textContent = (c._dgs || []).map(d => d.id + ": " + d.m.join(" · ")).join("\n");
@@ -8997,19 +9221,29 @@ function camPauseOthers(c) {
   CONFIG.cameras.concat(CONFIG.security).forEach(o => { if (o === c || !o.o || o.live || !o.pc || !o._conn || Date.now() - o._conn > 15000 || o.snap) return; clearTimeout(o.rt); stopCam(o); CAM_PAUSED.push(o); });
 }
 function camResume() { CAM_PAUSED.splice(0).forEach((o, i) => setTimeout(() => { if (camPage() && !o.live && !o.pc && !(o.o.el.classList.contains("fs"))) liveCam(o); }, 400 + i * 160)); }
+// the live entity of a snapshot-only camera (stream:): the one named in the config if it exists in Home Assistant, otherwise the same device's other camera entity (Fluent / Clear / main)
+function camStream(c) {
+  const ok = k => states[k] && states[k].state !== "unavailable" && states[k].state !== "unknown";
+  if (ok(c.stream)) return c.stream;
+  const base = String(c.id).replace(/^camera\./, "").replace(/_?snapshots?.*$/, ""), all = Object.keys(states).filter(k => k.indexOf("camera." + base) === 0 && !/snapshot/.test(k) && ok(k));
+  const pick = all.find(k => /fluent|sub/.test(k)) || all.find(k => /clear|main/.test(k)) || all[0];
+  c._sm = "stream:" + c.stream + (states[c.stream] ? " (" + states[c.stream].state + ")" : " (not in HA)") + " found:" + (all.join(",") || "none") + " use:" + (pick || c.stream); return pick || c.stream;
+}
 function liveCam(c, up, big) {   // HA built-in WebRTC (go2rtc); falls back to snapshots if it fails. up = a switch between the light and the clear stream: the picture that is playing keeps playing until the new one has its first picture
   if (SLP.on) return;   // idle sleep (68-idle-sleep.js): no stream starts until the screen is touched
-  if (c.snap) {   // a camera that only has snapshots (a battery doorbell: snap: true, or the seconds between pictures): no stream to connect, so no "Couldn't connect"; the picture is renewed every few seconds while it is on screen
+  const bigNow = !!(c.o && (c.o.el.classList.contains("fs") || c.o.el.classList.contains("vf")));
+  if (c.snap && c.stream && !bigNow && c.pc) { clearTimeout(c.rt); stopCam(c); }   // stream: a live entity for the big view / talking only; back on the small card the stream is closed and the battery camera sleeps again
+  if (c.snap && !(c.stream && bigNow)) {   // a camera that only has snapshots (a battery doorbell: snap: true, or the seconds between pictures): no stream to connect, so no "Couldn't connect"; the picture is renewed every few seconds while it is on screen
     if (c.still && !big && !(c.o && c.o.el.classList.contains("fs"))) { snBat(c); camSnap(c); return; }
     snapLoop(c); return;
   }
   if (c.still && !big && !(c.o && c.o.el.classList.contains("fs"))) { camSnap(c); return; }   // a battery camera (still: true on its entry) shows its snapshot; the stream starts when the tile is tapped to full screen
   const o = c.o, sid = { v: null }, q = [];
-  let eid = big ? c.id : camEnt(c);
+  let eid = big ? c.id : camEnt(c); if (c.stream && eid === c.id) eid = camStream(c);   // stream: the live camera entity of a battery doorbell whose own entry is the snapshot one
   // a stream whose connection was closed leaves a dead picture behind: that is not "playing"
   const alive = !!(o.vid.srcObject && o.vid.srcObject.getTracks().some(t => t.readyState === "live"));
   // nothing is playing yet and the big (clear) stream is wanted: the light stream connects first (a small picture arrives in about a second) and the clear one follows and fades in over it (12-init.js onplaying), like the Reolink app starting on its small stream. CONFIG.camLightFirst:false turns it off
-  const lt0 = camLt(c);
+  const lt0 = c.stream ? "" : camLt(c);
   // the tile's own light stream is still connecting when it is tapped to full screen: keep it (a new request would queue behind the others at the server); the clear stream follows once it plays
   if (up && big !== true && !c.live && c.pc && c._conn && Date.now() - c._conn < 12000 && eid === c.id && lt0 && c.eid === lt0) { c.upg = 1; return; }
   { const lt = lt0; c.upg = 0;
@@ -9055,13 +9289,15 @@ function liveCam(c, up, big) {   // HA built-in WebRTC (go2rtc); falls back to s
         const id = msgId++; c.sub = id;
         subs[id] = ev => {
           if (ev.type === "session") { camDbg(c, "session"); sid.v = ev.session_id; q.splice(0).forEach(cand); }
-          else if (ev.type === "answer") { camDbg(c, "answer"); pc.setRemoteDescription({ type: "answer", sdp: ev.answer }); }
+          else if (ev.type === "answer") { camDbg(c, "answer"); pc.setRemoteDescription({ type: "answer", sdp: ev.answer }); if (mt) { const am = String(ev.answer || "").split(/\r?\nm=/).filter(x => /^audio/.test(x))[0] || ""; camDbg(c, "talk:" + ((am.match(/a=(sendrecv|recvonly|sendonly|inactive)/) || [])[1] || "none") + " " + (am.match(/a=rtpmap:\d+ ([A-Za-z0-9\-]+)/g) || []).map(x => x.replace(/.* /, "")).join("/")); pc.addEventListener("iceconnectionstatechange", () => camDbg(c, "ice:" + pc.iceConnectionState)); }
+            if (mt) { const am = String(ev.answer || "").split(/\r?\nm=/).filter(x => /^audio/.test(x))[0] || "", ok = /a=recvonly|a=sendrecv/.test(am) && !/^audio 0 /.test(am);   // we offered a microphone: if the camera's answer does not take it, the camera has no talk channel on this stream
+              if (!ok) { c.talkNo = 1; const mb = c.o && $(".mic", c.o.el); if (mb) { mb.dataset.e = "This stream has no talk channel (RTSP + two-way audio needed)"; mb.classList.add("err"); setTimeout(() => mb.classList.remove("err"), 9000); } } else c.talkNo = 0; } }
           else if (ev.type === "candidate") pc.addIceCandidate(ev.candidate).catch(() => {});
-          else if (ev.type === "error") { retryCam(c, 30000); camSnap(c); }
+          else if (ev.type === "error") { camDbg(c, "error:" + String(ev.code || "") + " " + String(ev.message || "").slice(0, 70) + " " + (c._sm || "")); retryCam(c, 30000); camSnap(c); }
         };
         camDbg(c, "offer"); ws.send(JSON.stringify({ id: id, type: "camera/webrtc/offer", entity_id: eid, offer: of.sdp }));
-      })).catch(() => { retryCam(c, 30000); camSnap(c); });
-    } catch (x) { retryCam(c, 30000); camSnap(c); }
+      })).catch(x => { camDbg(c, "offer-failed:" + String(x && (x.name + " " + x.message)).slice(0, 80)); retryCam(c, 30000); camSnap(c); });
+    } catch (x) { camDbg(c, "failed:" + String(x && (x.name + " " + x.message)).slice(0, 60) + " " + (c._sm || "")); retryCam(c, 30000); camSnap(c); }
   });
 }
 
@@ -9387,6 +9623,16 @@ const AUD = {
 function micOff(c) { if (c.mic) { c.mic.getTracks().forEach(t => t.stop()); c.mic = null; } c.talk = false; const b = c.o && $(".mic", c.o.el); if (b) b.classList.remove("on"); }
 const camHide = c => !!c && /tablet/.test([].concat(c.hideOn || []).join(" "));
 const camHideNow = c => camHide(c) && window.matchMedia("(min-width:761px) and (pointer:coarse)").matches;   // a tablet: a wide screen whose main pointer is a finger (a PC with a mouse is not)
+// the TAP TO TALK bar (with the sound switch): above the control tiles of a camera picture, on every camera that can talk; the small mic / speaker icons are hidden where it is
+// a snapshot-only camera (the battery doorbell: snap) has no stream to talk or listen through
+const camTalks = c => !c.snap && !(CONFIG.view && CONFIG.view.doorbell && CONFIG.view.doorbell.id === c.id);
+function mkTalkBar(c, el, cp, mic, snd) {
+  if (el._tk) return; el._tk = 1;
+  const tk = document.createElement("div"); tk.className = "tkw"; tk.innerHTML = '<button class="tkb" type="button">' + mdi("microphone") + '<span>Tap to talk</span></button><button class="tks" type="button" aria-label="Sound">' + mdi("volume-off") + '<span>Sound off</span></button>'; cp.insertBefore(tk, cp.firstChild); el.classList.add("hasc", "hdb");
+      const tb = $(".tkb", tk), ts = $(".tks", tk), sync = () => { const err = mic.classList.contains("err"); tb.classList.toggle("on", !!c.talk); tb.classList.toggle("err", err); $("span", tb).textContent = err ? (mic.dataset.e || "Mic unavailable") : c.talk ? "Tap to stop" : "Tap to talk"; tb.firstChild.outerHTML = mdi(c.talk ? "microphone-off" : "microphone"); const on = !!c.snd; ts.classList.toggle("on", on); $("span", ts).textContent = on ? "Sound on" : "Sound off"; ts.firstChild.outerHTML = mdi(on ? "volume-high" : "volume-off"); };
+      tb.onclick = async e => { e.stopPropagation(); await mic.onclick({ stopPropagation() {} }); sync(); }; ts.onclick = e => { e.stopPropagation(); snd.onclick({ stopPropagation() {} }); sync(); };
+      const mo = new MutationObserver(sync); mo.observe(mic, { attributes: true, attributeFilter: ["class"] }); mo.observe(snd, { attributes: true, attributeFilter: ["class"] });
+}
 function mkCam(c, host) {
   const el = document.createElement("div"); el.className = "cam" + (camHide(c) ? " nt" : "");   // hideOn: "tablet" on a camera entry: not shown on a touch tablet (a phone and a PC still show it) (the .nt rule in 82-camera-tiles.css)
   el.innerHTML = '<div class="lbl">' + esc(c.name) + '</div><span class="lv">' + mdi("circle") + ' LIVE</span><img alt=""><video muted autoplay playsinline poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></video><button class="fsb" aria-label="Landscape"><svg viewBox="0 0 24 24"><path d="M5 5h5v2H7v3H5V5m9 0h5v5h-2V7h-3V5M5 14h2v3h3v2H5v-5m12 0h2v5h-5v-2h3v-3"/></svg></button><button class="cx" aria-label="Close">' + mdi("close") + '</button><button class="px">' + mdi("play") + ' PLAYBACK</button><span class="dl"></span><div class="aud"><button class="snd" aria-label="Sound">' + AUD.off + '</button><button class="mic" aria-label="Talk">' + AUD.mic + '</button>' + (CONFIG.detectLive && CONFIG.detectAI && CONFIG.detectMark !== false ? '<button class="det' + (mkPref("live") ? " on" : "") + '" data-mkt="live" aria-label="Detection boxes">' + AUD.det + '</button>' : '') + '</div><div class="cpanel"></div><div class="pbk"></div><div class="gal" role="status" aria-live="polite"></div>';
@@ -9399,13 +9645,14 @@ function mkCam(c, host) {
   snd.onclick = e => { e.stopPropagation(); c.snd = !c.snd; o.vid.muted = !c.snd; snd.classList.toggle("on", c.snd); snd.innerHTML = c.snd ? AUD.on : AUD.off; if (c.snd) o.vid.play().catch(() => {}); };
   mic.onclick = async e => {
     e.stopPropagation();
+    if (c.snap && !c.stream && !c.talk) { mic.dataset.e = "Talk needs a live stream (this camera is snapshot only)"; mic.classList.add("err"); setTimeout(() => mic.classList.remove("err"), 6000); return; }   // a battery doorbell set up with snap: pictures only, nothing to talk through
     if (c.talk) { if (c.mic) c.mic.getAudioTracks().forEach(t => { t.enabled = false; }); c.talk = false; mic.classList.remove("on"); return; }
     if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) { mic.dataset.e = "Mic unavailable (needs HTTPS)"; mic.classList.add("err"); setTimeout(() => mic.classList.remove("err"), 4500); return; }
     try {
       const fresh = !c.mic; if (fresh) c.mic = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
       c.mic.getAudioTracks().forEach(t => { t.enabled = true; }); c.talk = true; mic.classList.add("on");
       if (fresh) { c.snd = true; o.vid.muted = false; snd.classList.add("on"); snd.innerHTML = AUD.on; c._conn = 0; liveCam(c); }   // reconnect once with a send channel
-    } catch (x) { mic.dataset.e = "Mic blocked: " + (x && x.name || "error"); mic.classList.add("err"); setTimeout(() => mic.classList.remove("err"), 4500); }
+    } catch (x) { console.error("talk", x && x.stack); mic.dataset.e = "Mic blocked: " + (x && x.name || "error"); mic.classList.add("err"); setTimeout(() => mic.classList.remove("err"), 4500); }
   };
   o.bind = v => { v.onplaying = () => { camDbg(c, "play"); c.live = true; el.classList.remove("still"); clearTimeout(c.ft); el.classList.add("live"); el.classList.remove("cwait", "cfail"); o.vid.classList.add("on"); camLiveSync(); setTimeout(() => { if (c.live) camMem.put(c.id, o.vid); }, 1500); if (c.upg) { c.upg = 0; if (el.classList.contains("fs") || el.classList.contains("vf")) setTimeout(() => liveCam(c, true), 50); } }; };   // the light picture is up and the big view is open: now the clear stream connects and fades in over it
   { const ar = m => { const w = m.videoWidth || m.naturalWidth, h = m.videoHeight || m.naturalHeight; if (w > 0 && h > 0) el.style.setProperty("--ar", w + " / " + h); };   // the two-feed landscape view sizes each picture from this
@@ -9420,7 +9667,12 @@ function mkCam(c, host) {
   if (host.id === "vw") {   // the camera view's top controls share one wrapper, so the layout can put them in one row (tablets) or two (phones)
     const vh = document.createElement("div"); vh.className = "vh"; ["lbl", "dl", "lv", "aud", "px", "cx", "fsb"].forEach(k => { const n = el.querySelector("." + k); if (n) vh.appendChild(n); }); el.appendChild(vh); el.dataset.k = c.k;
   }
-  if (host.id === "vw") { el.classList.add("vf"); setTimeout(() => pbPre(c), 600); const ctl = camCtl(c.id); if (ctl) { cp.innerHTML = '<div class="tg3">' + ctl.map(tileHtml).join("") + '</div>'; cp.dataset.b = 1; } if (ctl) el.classList.add("hasc"); el.onclick = e => { if (e.target.closest(".ctb")) el._ctb(); else if (e.target.closest(".fsb")) camLand(el); else if (e.target.closest(".cx")) vwClose(); }; host.appendChild(el); setTimeout(vwDedupe, 80); return el; }   // phones: the card has the same X as a Security camera (the tablet keeps the round X above the pictures)
+  if (host.id === "vw") { el.classList.add("vf"); setTimeout(() => pbPre(c), 600); const ctl = camCtl(c.id); if (ctl) { cp.innerHTML = '<div class="tg3">' + ctl.map(tileHtml).join("") + '</div>'; cp.dataset.b = 1; } if (ctl) el.classList.add("hasc");
+    if (c.k === "doorbell") {   // the doorbell picture: a Back button to the view it was opened from, and a TAP TO TALK bar (with the sound switch) above the light tiles; the small mic / speaker icons are hidden here
+      const bk = document.createElement("button"); bk.className = "vwb"; bk.setAttribute("aria-label", "Back"); bk.innerHTML = mdi("arrow-left") + "<span>Back</span>"; bk.onclick = e => { e.stopPropagation(); vwBack(); }; $(".vh", el).prepend(bk);
+      el.classList.add("hasc", "hdb");   // a snapshot-only doorbell cannot talk or play sound: no mic / speaker icons
+    } else if (camTalks(c)) mkTalkBar(c, el, cp, mic, snd);
+    el.onclick = e => { if (e.target.closest(".ctb")) el._ctb(); else if (e.target.closest(".fsb")) camLand(el); else if (e.target.closest(".cx")) vwClose(); }; host.appendChild(el); setTimeout(vwDedupe, 80); return el; }   // phones: the card has the same X as a Security camera (the tablet keeps the round X above the pictures)
   el.addEventListener("pointerdown", e => {   // the clear stream starts connecting on touch-down, so it is usually ready by the time the card has grown
     if (e.button || !el.onclick || el.classList.contains("fs") || el.classList.contains("vf") || !c.live || c.old || c.eid === c.id || e.target.closest(".cpanel, .pbk, .px, .ctb, .fsb, .cx")) return;
     const t = c.pre = Date.now(); liveCam(c, true, true); setTimeout(() => { if (c.pre === t && !el.classList.contains("fs")) { c.pre = 0; liveCam(c, true); } }, 3000); });
@@ -9432,7 +9684,7 @@ function mkCam(c, host) {
     if (el.classList.contains("fs")) {   // close: only with the X (a tap on the picture does nothing, so a stray touch never leaves the camera)
       if (!e.target.closest(".cx")) return;
       mkLiveOff(el); closePb(c, false); c.snd = false; micOff(c); snd.classList.remove("on"); snd.innerHTML = AUD.off; o.vid.muted = true;
-      camClose(el, () => { el.classList.remove("fs"); setTimeout(() => { if (el.dataset.det) dlPlace(el); }, 50); if (el.classList.contains("cpo")) el._ctb(); if (el._ph) { el._ph.remove(); el._ph = null; } if (isMobile() && CONFIG.mobileLive === false) { clearTimeout(c.rt); stopCam(c); } else liveCam(c, true); camResume(); });
+      camClose(el, () => { el.classList.remove("fs"); czReset(el); setTimeout(() => { if (el.dataset.det) dlPlace(el); }, 50); if (el.classList.contains("cpo")) el._ctb(); if (el._ph) { el._ph.remove(); el._ph = null; } if (isMobile() && CONFIG.mobileLive === false) { clearTimeout(c.rt); stopCam(c); } else liveCam(c, true); camResume(); });
       return;
     }
     if (!el._ph && el.parentNode && el.parentNode.id !== "vw") { const cs = getComputedStyle(el), ph = document.createElement("div"); ph.className = "camph"; ph.style.height = el.offsetHeight + "px"; ph.style.gridColumn = cs.gridColumnStart + " / " + cs.gridColumnEnd; ph.style.margin = cs.margin; el.parentNode.insertBefore(ph, el); el._ph = ph; }   // the card leaves the page layout while full screen: this holds its place so the page behind does not jump during the fade
@@ -9440,7 +9692,9 @@ function mkCam(c, host) {
     if (isMobile()) camNative(el);   // phones: straight to real full screen
     const ctl = camCtl(c.id);
     if (ctl && !cp.dataset.b) { cp.innerHTML = '<div class="tg3">' + ctl.map(tileHtml).join("") + '</div>'; cp.dataset.b = 1; }
-    el.classList.toggle("hasc", !!ctl);
+    const tkOn = camTalks(c);   // every camera that can talk gets the TAP TO TALK bar (in place of the small mic / speaker icons)
+    if (tkOn) mkTalkBar(c, el, cp, mic, snd);
+    el.classList.toggle("hasc", !!ctl || tkOn);
     updTiles(); camPauseOthers(c); if (!(c.pre && Date.now() - c.pre < 2500 && c.eid === c.id)) liveCam(c, true); c.pre = 0; mkLiveOn(el); };
   host.appendChild(el);
 }
@@ -9454,11 +9708,13 @@ const DBC = CONFIG.view.doorbell && CONFIG.view.doorbell.id ? CONFIG.view.doorbe
 if (DBC) {
   const c = Object.assign({ k: "doorbell", name: "Doorbell" }, DBC); VWC.push(c); mkCam(c, $("#vw"));
   const d = document.createElement("div"); d.className = "vwdb"; d.innerHTML = '<img alt="" onerror="this.style.visibility=\'hidden\'" onload="this.style.visibility=\'\'"><div class="vdt"><b></b><small></small></div><button class="vdl">' + mdi("video") + '<span>Go live</span></button><button class="vdx" aria-label="Dismiss">' + mdi("close") + '</button>'; $("#vw").appendChild(d);
-  $(".vdl", d).onclick = e => { e.stopPropagation(); location.hash = "#view/doorbell"; };
+  $(".vdl", d).onclick = e => { e.stopPropagation(); VW.from = location.hash || "#view"; location.hash = "#view/doorbell"; };
   $(".vdx", d).onclick = e => { e.stopPropagation(); VW.dbX = true; VW.hold.doorbell = 0; applyView(); };
 }
 const slug = n => n.toLowerCase().replace(/[^a-z0-9]+/g, "-");   // "Right walkway" -> right-walkway
 CONFIG.security.forEach(s => { const c = { k: "cam:" + slug(s.name), id: s.id, name: s.name, hideOn: s.hideOn }; VWC.push(c); mkCam(c, $("#vw")); });
+// Back from the doorbell picture: to the view it was opened from (the doorbell card is dismissed so an automatic view does not jump straight back to it)
+function vwBack() { const f = VW.from && VW.from !== "#view/doorbell" ? VW.from : "#view/driveway"; VW.dbX = true; VW.hold.doorbell = 0; VW.from = ""; location.hash = f; }
 function vwClose() { location.hash = VW.back && VW.back.indexOf("#view") !== 0 ? VW.back : "#home"; }
 (() => { const b = document.createElement("button"); b.className = "vwx"; b.setAttribute("aria-label", "Close"); b.innerHTML = mdi("close"); b.onclick = vwClose; $("#vw").appendChild(b); })();
 const viewTrig = k => [].concat(CONFIG.view[k].trig || []).some(isOn);
@@ -9816,6 +10072,7 @@ function rvCamMount() {
 }
 function rvCamStop() { RVC.forEach(c => { clearTimeout(c.rt); if (c._on) { c._on = 0; stopCam(c); } }); }
 function updTiles() {
+  if (typeof vwDedupe === "function" && typeof VW !== "undefined" && VW.mode === "both") vwDedupe();
   if (curRoom) { const r = curRoom, hv = roomHum(r); $("#rvt").textContent = f1(roomTemp(r)) + "°C" + (hv != null ? "  ·  " + f1(hv) + "% RH" : ""); }
   $$("#rv [data-e], #rv [data-c], #cpp [data-e], .cpanel [data-e], #alp [data-e], #np [data-e]").forEach(el => {
     if (el.dataset.sir) { sirenUpd(el); return; }
@@ -10370,7 +10627,8 @@ function lkDraw() {
 Object.assign(MDI, { "pollen": "M9.70,12.00a2.3,2.3 0 1,0 4.6,0a2.3,2.3 0 1,0 -4.6,0ZM8.90,5.70a3.1,3.1 0 1,0 6.2,0a3.1,3.1 0 1,0 -6.2,0ZM14.89,10.05a3.1,3.1 0 1,0 6.2,0a3.1,3.1 0 1,0 -6.2,0ZM12.60,17.10a3.1,3.1 0 1,0 6.2,0a3.1,3.1 0 1,0 -6.2,0ZM5.20,17.10a3.1,3.1 0 1,0 6.2,0a3.1,3.1 0 1,0 -6.2,0ZM2.91,10.05a3.1,3.1 0 1,0 6.2,0a3.1,3.1 0 1,0 -6.2,0Z" });
 const POLN = ["None", "Very low", "Low", "Moderate", "High", "Very high"], POLC = ["#5f9e7f", "#4fd59a", "#9ad66b", "#f2c261", "#ff9f43", "#ff4d5e"];
 const POLAD = ["No pollen to speak of.", "Very little pollen about.", "Low pollen. Most people will not notice it.", "Hay fever is likely for sensitive people. Keep windows closed in the afternoon and rinse off after being outside.", "High pollen. Sensitive people should limit time outside, keep windows shut and take their usual hay fever precautions.", "Very high pollen. Stay indoors if you can and keep windows closed."];
-const polCfg = () => CONFIG.pollen && CONFIG.pollen.risk ? CONFIG.pollen : null;
+// the level (risk) comes from MetService when weatherMet / metservice finds its Pollen sensor; the types, plants and grass stay Google's (pollen.risk is the fallback, or pollen.metRisk: false pins it)
+function polCfg() { const c = CONFIG.pollen || {}, m = c.metRisk === false || typeof metSen !== "function" ? "" : metSen("pollen"), ok = m && polParse((states[m] || {}).state) != null, r = ok ? m : c.risk; return r ? Object.assign({}, c, { risk: r, src: ok ? (c.top || c.plants || c.grass ? "MetService · Google" : "MetService") : "Google Pollen" }) : null; }
 function polParse(v) {   // 0-5, or null when unknown
   const t = String(v == null ? "" : v).toLowerCase().trim();
   if (!t || t === "unknown" || t === "unavailable") return null;
@@ -10380,7 +10638,7 @@ function polParse(v) {   // 0-5, or null when unknown
 const polLevel = id => polParse(states[id] && states[id].state);
 const polTxt = id => { const s = id && states[id] && states[id].state; return !s || /^(unknown|unavailable|none)$/i.test(s) ? "" : String(s).replace(/^\[|\]$/g, "").replace(/'/g, ""); };
 const polFrom = () => { const a = (polCfg() || {}).alertFrom; if (a === false) return 99; const n = polParse(a == null ? "moderate" : a); return n == null ? 3 : Math.max(1, n); };
-function polNow() { const c = polCfg(); if (!c) return null; const l = polLevel(c.risk); return l == null ? null : { l: l, name: POLN[l], col: POLC[l], top: polTxt(c.top), plants: polTxt(c.plants), grass: c.grass ? polLevel(c.grass) : null }; }
+function polNow() { const c = polCfg(); if (!c) return null; const l = polLevel(c.risk); return l == null ? null : { l: l, name: POLN[l], col: POLC[l], top: polTxt(c.top), src: c.src, plants: polTxt(c.plants), grass: c.grass ? polLevel(c.grass) : null }; }
 const polOn = () => { const p = polNow(); return !!p && p.l >= polFrom(); };
 const polRel = id => { const c = polCfg(); return !!c && [c.risk, c.top, c.plants, c.grass].indexOf(id) > -1; };
 const polRx = () => { const c = polCfg(); return c ? "^(" + [c.risk, c.top, c.plants, c.grass].filter(Boolean).map(x => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")$" : ""; };
@@ -10388,7 +10646,7 @@ function polCard() {   // the Pollen card on the Weather page (nothing when the 
   const p = polNow(); if (!p) return "";
   const segs = [1, 2, 3, 4, 5].map(i => '<i' + (i <= p.l ? ' style="background:' + POLC[i] + '"' : "") + '></i>').join(""), keys = POLN.slice(1).map((x, i) => '<span' + (i + 1 === p.l ? ' class="on"' : "") + '>' + x + '</span>').join("");
   const st = (l, v) => '<div class="wnp"><small>' + l + '</small>' + esc(v) + '</div>', sc = wxsOn(), mt = p.top ? '<div class="' + (sc ? "wns" : "sm") + '">Main type today: ' + esc(p.top) + '</div>' : "", hd = '<div class="polh">' + p.name + '</div>' + mt;
-  return '<div class="pn pg pol" id="wxpol" style="--pk:' + p.col + '"><div class="polt"><div><div class="lbl">Pollen · today</div>' + (sc ? "" : hd) + '</div><span class="polsrc">Google Pollen</span></div>' +
+  return '<div class="pn pg pol" id="wxpol" style="--pk:' + p.col + '"><div class="polt"><div><div class="lbl">Pollen · today</div>' + (sc ? "" : hd) + '</div><span class="polsrc">' + esc(p.src || "Google Pollen") + '</span></div>' +
     '<div class="lvt">POLLEN LEVEL</div><div class="polb">' + segs + '</div><div class="polk">' + keys + '</div>' +
     (sc ? wxsPolScene(wxsPolDays(), hd) : "") +
     ((p.top || p.plants || p.grass != null) ? '<div class="wnr polp">' + st("TOP TYPE", p.top || "--") + st("IN SEASON", p.plants || "--") + st("GRASS", p.grass == null ? "--" : p.grass ? POLN[p.grass] + " · " + p.grass + " of 5" : "None") + '</div>' : "") +
@@ -10466,11 +10724,61 @@ let fcH = [];
 // Home Assistant answers "did not match any entities" (and logs an error) when the weather entity is not set up yet, as after a restart. Ask only once it is there,
 // and try again in a minute if it is not or the answer is empty (up to 10 times); the 30 minute refresh carries on after that.
 const fcReady = () => !!states[W] && states[W].state !== "unavailable";
+// ----- weatherMet: MetService (or any second weather entity) leads, the main entity (Google) fills what it does not have -----
+// MetService gives the sky, temperature, wind and rain amounts (hourly) and sky, high / low and rain chance (daily). Humidity, pressure, gusts, cloud, UV and the hourly rain chance stay Google's.
+const WX_CMP = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+const wxDeg = b => typeof b === "number" ? b : (i => i < 0 ? undefined : i * 22.5)(WX_CMP.indexOf(String(b || "").toUpperCase()));
+const wxSame = (u, k) => { const g = (states[W] || {}).attributes || {}, m = (states[CONFIG.weatherMet] || {}).attributes || {}; return !g[u] || !m[u] || g[u] === m[u]; };   // do not mix km/h with mph, or °C with °F
+function wxBlend() {
+  const g = WXG.g, M = CONFIG.weatherMet, m = M && states[M]; if (!g || !m || m.state === "unavailable" || m.state === "unknown") return g;
+  const a = Object.assign({}, g.attributes), b = m.attributes || {}, ok = (u) => !g.attributes[u] || !b[u] || g.attributes[u] === b[u];
+  if (b.temperature != null && ok("temperature_unit")) a.temperature = b.temperature;
+  if (b.wind_speed != null && ok("wind_speed_unit")) { a.wind_speed = b.wind_speed; const d = wxDeg(b.wind_bearing); if (d != null) a.wind_bearing = d; }
+  return Object.assign({}, g, { state: typeof COND !== "undefined" && COND[m.state] ? m.state : g.state, attributes: a });
+}
+function wxMetFc(type, list, done) {
+  const M = CONFIG.weatherMet, m = M && states[M]; if (!m || m.state === "unavailable" || m.state === "unknown") return done(list);
+  let fin = 0; const end = l => { if (!fin) { fin = 1; clearTimeout(tm); done(l); } }, tm = setTimeout(() => end(list), 8000);
+  send({ type: "call_service", domain: "weather", service: "get_forecasts", service_data: { type: type }, target: { entity_id: M }, return_response: true },
+    r => { const x = r && r.response && r.response[M], f = x && x.forecast; if (!f || !f.length) return end(list); try { end(wxMerge(type, list, f)); } catch (e) { end(list); } });
+}
+function wxMerge(type, list, met) {
+  const T = wxSame("temperature_unit"), Wd = wxSame("wind_speed_unit"), P = wxSame("precipitation_unit"), key = type === "daily" ? (t => new Date(t).toDateString()) : (t => String(Date.parse(t))), by = {};
+  met.forEach(x => { by[key(x.datetime)] = x; });
+  return list.map(g => { const m = by[key(g.datetime)]; if (!m) return g; const o = Object.assign({}, g);
+    if (m.condition) o.condition = m.condition;
+    if (T && m.temperature != null) o.temperature = m.temperature;
+    if (T && m.templow != null) o.templow = m.templow;
+    if (Wd && m.wind_speed != null) o.wind_speed = m.wind_speed;
+    const d = wxDeg(m.wind_bearing); if (d != null) o.wind_bearing = d;
+    if (P && (m.precipitation != null || m.precipitation_probability != null || type === "hourly")) o.precipitation = m.precipitation != null ? m.precipitation : 0;
+    if (m.precipitation_probability != null) o.precipitation_probability = m.precipitation_probability;
+    return o; });
+}
+// MetService's own sensors (the same device as weatherMet): found by name, or set in config  metservice: { pollen, fire, season, today, tomorrow }  (entity ids)
+const MET_RX = { pollen: /pollen/, fire: /fire.?danger/, season: /fire.?season/, today: /(weather|desc|text|summary|forecast)[a-z_ ]*today/, tomorrow: /(weather|desc|text|summary|forecast)[a-z_ ]*tomorrow/ }, MET_NOT = /condition|temperature|high|low|uv|issued|moon|sun/;
+var MET = { at: 0 };
+function metSen(k) {
+  const o = CONFIG.metservice || {}; if (o[k]) return o[k]; if (!CONFIG.weatherMet && !o.prefix) return "";
+  const pre = (o.prefix || String(CONFIG.weatherMet).replace(/^weather\./, "").replace(/_forecast$/, "")).toLowerCase(), now = Date.now();
+  if (MET[k] && states[MET[k]]) return MET[k]; if (now - MET.at < 3000) return "";   // a miss is not remembered for long: the states may still be arriving
+  const ids = Object.keys(states).filter(x => x.indexOf("sensor.") === 0 && x.indexOf(pre) > -1); MET.at = now;
+  Object.keys(MET_RX).forEach(q => { const f = ids.filter(x => { const t = (x + " " + ((states[x].attributes || {}).friendly_name || "")).toLowerCase(); return MET_RX[q].test(t) && (q === "today" || q === "tomorrow" ? !MET_NOT.test(x.replace(/.*?(today|tomorrow)/, "$1") + " " + x.split("_").filter(w => /^(condition|temperature|high|low|uv|issued)$/.test(w)).join(" ")) && String(states[x].state).length > 12 : true) && !(q === "pollen" && /type|plant|grass/.test(x)); }); MET[q] = f[0] || ""; });
+  return MET[k] || "";
+}
+const metTxt = id => { const s = id && states[id]; return !s || /^(unknown|unavailable|none)$/i.test(s.state) ? "" : String(s.state); };
+const MET_FIRE = [[/extreme|severe/, "#ff4d5e"], [/very\s*high/, "#ff6b4a"], [/high/, "#ff9f43"], [/moderate|medium/, "#f2c261"], [/low/, "#4fd59a"]];
+function wxMetBlock() {   // what MetService says in words, and the fire danger, under the Now card's readings
+  const t = metTxt(metSen("today")), tm = metTxt(metSen("tomorrow")), fd = metTxt(metSen("fire")), fs = metTxt(metSen("season")); if (!t && !tm && !fd && !fs) return "";
+  const col = (MET_FIRE.find(x => x[0].test(fd.toLowerCase())) || [0, "#8a8f98"])[1];
+  return '<div class="wmet">' + (t ? '<div class="wmt"><small>TODAY</small>' + esc(t) + '</div>' : "") + (tm ? '<div class="wmt"><small>TOMORROW</small>' + esc(tm) + '</div>' : "") +
+    (fd || fs ? '<div class="wmf" style="--fk:' + col + '">' + mdi("fire") + (fd ? '<span><small>FIRE DANGER</small>' + esc(fd) + '</span>' : "") + (fs ? '<span><small>FIRE SEASON</small>' + esc(fs) + '</span>' : "") + '</div>' : "") + '</div>';
+}
 function loadFcH(n) {
   n = +n || 0; if (!fcReady()) { if (n < 10) setTimeout(() => loadFcH(n + 1), 60000); return; }
   send({ type: "call_service", domain: "weather", service: "get_forecasts", service_data: { type: "hourly" }, target: { entity_id: W }, return_response: true },
     r => { const x = r && r.response && r.response[W]; if (!x) { if (n < 10) setTimeout(() => loadFcH(n + 1), 60000); return; }
-      fcH = x.forecast || []; drawFc(); queueNotif(); queueHome(); if (curPg() === "weather") drawWeather(); else { if (curPg() === "irrigation") drawIrr(); wxWarm(); } });
+      wxMetFc("hourly", x.forecast || [], l => { fcH = l; drawFc(); queueNotif(); queueHome(); if (curPg() === "weather") drawWeather(); else { if (curPg() === "irrigation") drawIrr(); wxWarm(); } }); });
 }
 // The first visit to the Weather page was the only one that stuttered: the page is built, laid out and its code run for the first time while it fades in. Once, a moment after the first forecast, it is drawn while it is hidden, so the first visit costs the same as the second.
 let wxWarmed = 0;
@@ -10638,8 +10946,8 @@ function drawWeather() {
   const wnm = st("Indoor", sv(CONFIG.indoor) != null ? f1(sv(CONFIG.indoor)) + "°" : "--") + st("Pressure", n(a.pressure, a.pressure_unit)) + st("Gusts", n(a.wind_gust_speed, wu)) + st("Cloud", n(a.cloud_coverage, "%")) + st("Air quality", esc(sv(E("airQuality")) || "--")) + (fd[1] != null ? st("Dew point", f1(fd[1]) + "°") : "") + (wxPresTrend(a) ? st("Pressure trend", wxPresTrend(a)) : (a.visibility != null ? st("Visibility", n(a.visibility, a.visibility_unit)) : ""));
   const wdy = fc.slice(0, 7).map((d, i) => { const dt = new Date(d.datetime), td = i === 0 && dt.toDateString() === new Date().toDateString(), lw = d.templow != null ? d.templow : d.temperature, p = d.precipitation_probability; const t13 = new Date(dt); t13.setHours(13, 0, 0, 0); return '<div class="wdy' + (td ? " td" : "") + '" data-wday="' + (+t13) + '" style="--hc:' + tcol(d.temperature) + '"><span class="lbl">' + (td ? "Today" : dt.toLocaleDateString([], { weekday: "short" })) + '</span><i class="wb">' + wic(d.condition) + '</i><b>' + Math.round(d.temperature) + '°</b><small>' + Math.round(lw) + '°</small><em>' + (p != null && p >= 30 ? Math.round(p) + "%" : "") + '</em></div>'; }).join("");
   const nowHead = '<div><span class="big2">' + f1(ot != null ? ot : a.temperature) + '°</span><div class="wns">' + (fd[0] != null ? "Feels " + f1(fd[0]) + "°" : "") + (fd[0] != null && d0 ? " · " : "") + (d0 ? "H " + Math.round(d0.temperature) + "° L " + Math.round(lo0) + "°" : "") + '</div></div>';
-  let h = wxsOn() ? wxsNowCard({ head: nowHead, wxl: wxl, wu: wu, wdy: wdy, wnm: wnm, cd: cd[1] }) : '<div class="pn pg wnow' + (wnMore ? " open" : "") + '"><div class="lbl">Now · ' + cd[1] + '</div><div class="wnh"><div><span class="big2">' + f1(ot != null ? ot : a.temperature) + '°</span><div class="wns">' + (fd[0] != null ? "Feels " + f1(fd[0]) + "°" : "") + (fd[0] != null && d0 ? " · " : "") + (d0 ? "H " + Math.round(d0.temperature) + "° L " + Math.round(lo0) + "°" : "") + '</div></div><span class="wbig">' + wic(w && w.state) + '</span></div>' +
-    '<div class="wnr">' + pill(mdi("weather-windy"), n(a.wind_speed, wu), wxl ? " wnd wt" + wxl : "") + pill("HUM", n(a.humidity, "%")) + pill("RAIN", fcH.length ? f1(+fcH[0].precipitation || 0) + " mm" : "--") + pill("UV", a.uv_index != null ? a.uv_index : "--") + '</div>' +
+  let h = wxsOn() ? wxsNowCard({ head: nowHead, wxl: wxl, wu: wu, wdy: wdy, wnm: wnm, cd: cd[1], met: wxMetBlock() }) : '<div class="pn pg wnow' + (wnMore ? " open" : "") + '"><div class="lbl">Now · ' + cd[1] + '</div><div class="wnh"><div><span class="big2">' + f1(ot != null ? ot : a.temperature) + '°</span><div class="wns">' + (fd[0] != null ? "Feels " + f1(fd[0]) + "°" : "") + (fd[0] != null && d0 ? " · " : "") + (d0 ? "H " + Math.round(d0.temperature) + "° L " + Math.round(lo0) + "°" : "") + '</div></div><span class="wbig">' + wic(w && w.state) + '</span></div>' +
+    '<div class="wnr">' + pill(mdi("weather-windy"), n(a.wind_speed, wu), wxl ? " wnd wt" + wxl : "") + pill("HUM", n(a.humidity, "%")) + pill("RAIN", fcH.length ? f1(+fcH[0].precipitation || 0) + " mm" : "--") + pill("UV", a.uv_index != null ? a.uv_index : "--") + '</div>' + wxMetBlock() +
     '<button class="wnb" data-wnmore aria-label="More conditions">More ' + mdi("chevron-down") + '</button><div class="wnm wg">' + wnm + '</div>' +
     (wdy ? '<div class="wn7"><div class="lbl">Next 7 days</div>' + hsw('<div class="wn7s">' + wdy + '</div>') + '</div>' : "") + '</div>';
   h += fcPanel(a, wu);   // order (and the phone tabs): Now, Forecast, Sun and moon, Pollen
@@ -11145,7 +11453,7 @@ function wxsNowCard(o) {
   return '<div class="pn pg wnow' + (wnMore ? " open" : "") + '"><div class="lbl">Now · ' + o.cd + '</div>' + wxsLvW("now", wxsLvl("uv", wxsNowRec())) +
     '<div class="wsc wscn"><canvas data-sc="now" aria-hidden="true"></canvas><div class="wnh" data-wsn data-wpill="temp" title="Temperature chart">' + P.head + '</div><span class="wstag" data-wst>' + P.tag + '</span></div>' +
     (H.length > 2 ? wxsSlider("now", H.length - 1, WXS.now, { a: "Hours ahead" }, WXS.now > 0 || WXS.dd) : "") +
-    '<div class="wnr" data-wsp>' + P.pills + '</div><div class="wsch" data-wsc>' + (WXS.pill ? wxsSpark(WXS.pill, H, WXS.dd ? -1 : WXS.now) : "") + '</div>' +
+    '<div class="wnr" data-wsp>' + P.pills + '</div><div class="wsch" data-wsc>' + (WXS.pill ? wxsSpark(WXS.pill, H, WXS.dd ? -1 : WXS.now) : "") + '</div>' + (o.met || "") +
     '<button class="wnb" data-wnmore aria-label="More conditions">More ' + mdi("chevron-down") + '</button><div class="wnm wg">' + o.wnm + '</div>' +
     (wdy ? '<div class="wn7"><div class="lbl">Next 7 days</div>' + hsw('<div class="wn7s">' + wdy + '</div>') + '</div>' : "") + '</div>';
 }
@@ -12890,11 +13198,12 @@ document.addEventListener("click", e => { const g = e.target.closest && e.target
 
 // ---------- palette page ----------
 function savePal() { try { localStorage.setItem("dashPal", JSON.stringify(PAL)); } catch (x) {} }
+const ssvDrift = () => { try { return localStorage.getItem("dashSsAnim") !== "off"; } catch (_) { return true; } };   // Settings > Animation > Always on display: the wallpaper drifts (default) or stays still
 const logoPref = () => { try { const v = localStorage.getItem("dashLogo"); return v === "load" || v === "off" ? v : "on"; } catch (_) { return "on"; } };
 function drawPalette() {
   const m = palMode(), P = PAL[m];
   // phones: one tab per group of cards, so a short card isn't a near-empty page of its own (31-section-pills.js reads data-tab)
-  const TB = { "Mode": "Display", "Clock": "Display", "Page transition": "Animation", "Start-up logo": "Animation" }, tb = t => /Language/.test(t) ? "Display" : /^Seasonal/.test(t) ? "Seasons" : TB[t] || "";
+  const TB = { "Mode": "Display", "Clock": "Display", "Page transition": "Animation", "Start-up logo": "Animation", "Always on display": "Animation" }, tb = t => /Language/.test(t) ? "Display" : /^Seasonal/.test(t) ? "Seasons" : TB[t] || "";
   const sec = (t, inner) => '<div class="pn pg"' + (tb(t) ? ' data-tab="' + tb(t) + '"' : "") + '><div class="lbl">' + t + '</div>' + inner + '</div>';
   const FAM = palFam(), same = (F, n) => PAL.dark.accent === F[n].dark.accent && PAL.light.accent === F[n].light.accent, preOn = Object.keys(FAM).filter(n => same(FAM, n))[0], preAny = preOn || Object.keys(PAL_PRE).filter(n => same(PAL_PRE, n))[0];   // the list shows the current look's colours; the summary still names a colour from another look
   const fnt = (FONTS.filter(x => x[0] === FONT)[0] || FONTS[0])[1].replace(/^Plus /, "").split(/[ (]/)[0] + (/mono/i.test(FONT) ? " mono" : ""), sum = [preAny || "Custom", fnt, { dark: "Dark", light: "Light", auto: "Auto", sun: "Sun", time: "Schedule" }[PAL.mode] || ""].join(" · ");
@@ -12906,6 +13215,7 @@ function drawPalette() {
     sec("Clock", '<div class="seg" style="margin-top:12px">' + [["auto", "DEVICE"], ["12", "12-HOUR"], ["24", "24-HOUR"]].map(x => '<button class="eb' + (CLOCK === x[0] ? " on" : "") + '" data-clock="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">How times are shown on this dashboard. Device follows the language of this phone or tablet. Saved on this device only.</div>') +
     sec(LANG === "zh" ? "语言 · Language" : "Language", '<div class="seg" style="margin-top:12px" data-notr>' + [["en", "English"], ["zh", "中文（简体）"]].map(x => '<button class="eb' + (LANG === x[0] ? " on" : "") + '" data-lang="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">' + (LANG === "zh" ? "标签、标题、按钮和日期显示为中文；Home Assistant 中的名称保持不变。切换后页面会重新加载。" : "Labels, headings, buttons and dates. Names from Home Assistant stay as they are. The page reloads to switch.") + '</div>') +
     (brandOn() ? sec("Start-up logo", '<div class="seg" style="margin-top:12px">' + [["on", "LOGO + INTRO"], ["load", "WHILE LOADING ONLY"], ["off", "OFF"]].map(x => '<button class="eb' + (logoPref() === x[0] ? " on" : "") + '" data-logo="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">Applies the next time the dashboard starts. Saved on this device only.</div>') : "") +
+    (true ? sec("Always on display", '<div class="seg" style="margin-top:12px">' + [["on", "WALLPAPER DRIFTS"], ["off", "STILL"]].map(x => '<button class="eb' + (ssvDrift() === (x[0] === "on") ? " on" : "") + '" data-ssa="' + x[0] + '">' + x[1] + '</button>').join("") + '</div><div class="lbl" style="margin-top:10px;text-transform:none;letter-spacing:0">The wallpaper behind the clock slowly drifts across the screen (one layer moved by the graphics chip, it travels about 10 to 15 pixels a second; the clock and chips also shift a little every minute). Saved on this device only: set it on the wall tablet, where the Always on display runs.' + (window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches ? ' <b>This device has reduced motion switched on (Android: Remove animations), so the wallpaper stays still here whatever you choose.</b>' : '') + '</div>') : "") +
     ('<div class="pn pg thab" data-tab="Display"><span class="lbl ver">Kinetic ' + esc(ENGINE_VERSION) + ' · build ' + esc(window.DASH_BUILD || "") + ' · screen ' + innerWidth + " x " + innerHeight + " @" + (Math.round(devicePixelRatio * 100) / 100) + 'x</span></div>');   // the size the page really gets: what to test new designs against
   // Settings: DISPLAY (these cards) and ACCOUNT (sign out, change password) share this page; the admin tabs live on #admin (30-settings.js)
   const acc = setTab() === "account";
@@ -12937,6 +13247,8 @@ $("#theme").onclick = e => {
   const lgb = e.target.closest("button[data-lang]"); if (lgb) { if (lgb.dataset.lang !== LANG) langSet(lgb.dataset.lang); return; }
   const ck = e.target.closest("button[data-clock]");
   if (ck) { CLOCK = ck.dataset.clock; try { localStorage.setItem("dashClock", CLOCK); } catch (_) {} tick(); drawPalette(); queueHome(); return; }
+  const sa = e.target.closest("button[data-ssa]");
+  if (sa) { try { localStorage.setItem("dashSsAnim", sa.dataset.ssa); } catch (_) {} if (typeof ssvDriftApply === "function") ssvDriftApply(); drawPalette(); return; }
   const lg = e.target.closest("button[data-logo]");
   if (lg) { try { localStorage.setItem("dashLogo", lg.dataset.logo); } catch (_) {} drawPalette(); return; }
   const so = e.target.closest("[data-signout]");
@@ -13165,14 +13477,29 @@ function hcbEnsure() {
 // the drop-down's open state lives here, not on the row: some pages redraw their tab row (Settings > status, live data), which would otherwise close it mid-tap
 const HDD = { open: false, hm: null, hm0: null, row: null, sig: "" };
 let sig = "";
-const hddClose = () => { HDD.open = false; document.querySelectorAll(".hddo").forEach(e => e.classList.remove("hddo")); };
+// The tab drop-down is one overlay surface (#hddp), like Google's menu and iOS's pull-down: the selector in the header never changes layout, the list opens anchored under it
+// (a clip reveal on Kinetic / Material, a spring grow from the selector on Liquid Glass) and closes with a quick fade. Only opacity / clip / scale are animated, never the layout.
+const hddRm = now => document.querySelectorAll("#hddp").forEach(p => { if (now) p.remove(); else if (!p.classList.contains("out")) { p.classList.remove("on"); p.classList.add("out"); setTimeout(() => p.remove(), 160); } });
+const hddClose = () => { const was = HDD.open; HDD.open = false; clearTimeout(HDD.tc); document.querySelectorAll(".hdd.hddv").forEach(x => x.classList.remove("hddv")); if (was || document.getElementById("hddp")) hddRm(matchMedia("(prefers-reduced-motion:reduce)").matches); };
+function hddOpen(dd) {
+  const chips = [].slice.call(dd.querySelectorAll(".chip")); if (!chips.length) return; const on = dd.querySelector(".chip.on") || chips[0];
+  hddRm(true); const cr = dd.getBoundingClientRect(), or = on.getBoundingClientRect(), cs = getComputedStyle(on), p = document.createElement("div");
+  p.id = "hddp"; p.setAttribute("role", "menu"); p.style.textTransform = cs.textTransform; p.style.letterSpacing = cs.letterSpacing;
+  p.innerHTML = chips.map((c, i) => '<button type="button" role="menuitem" data-i="' + i + '"' + (c === on ? ' class="on"' : "") + '>' + esc(c.textContent.replace(/\s+/g, " ").trim()) + '</button>').join("");
+  p.style.minWidth = Math.max(or.width + 44, 176) + "px"; document.body.appendChild(p);
+  const left = Math.max(8, Math.min(or.left - 18, innerWidth - p.offsetWidth - 8)), top = Math.round(cr.bottom + 6);
+  p.style.left = left + "px"; p.style.top = top + "px"; p.style.maxHeight = Math.max(120, innerHeight - top - 12) + "px"; p.style.transformOrigin = Math.max(20, or.left - left + or.width / 2) + "px 0";
+  HDD.open = true; dd.classList.add("hddv"); void p.offsetWidth; p.classList.add("on");
+  p.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; e.stopPropagation(); b.classList.add("pk"); const cur = document.querySelector(".page.on .hdd") || dd, c = cur.querySelectorAll(".chip")[+b.dataset.i]; if (c) c.click(); setTimeout(hddClose, 90); });
+}
+addEventListener("hashchange", hddClose); addEventListener("resize", hddClose); document.addEventListener("keydown", e => { if (e.key === "Escape") hddClose(); });
 document.addEventListener("click", e => {
   if (!e.isTrusted) return;   // only a real tap opens the pop-ups; a script that clicks a tab just switches it
   const hd = document.querySelector(".main > header"), t = e.target, cb = t.closest && t.closest("#hcb"), op = hd && hd.classList.contains("hpop");
   if (cb) { hpanSet(!op); e.stopPropagation(); return; }
   if (op) { if (t.closest && t.closest("#hpan")) setTimeout(() => hpanSet(false), 0); else hpanSet(false); }
   const dd = document.querySelector(".hdd"), ch = t.closest && t.closest(".hdd .chip");
-  if (dd) { if (ch && !HDD.open) { e.stopPropagation(); e.preventDefault(); HDD.open = true; dd.classList.add("hddo"); } else if (HDD.open) { if (ch) setTimeout(hddClose, 0); else hddClose(); } }
+  if (dd) { if (HDD.open) { if (t.closest && t.closest("#hddp")) return; if (ch) { e.stopPropagation(); e.preventDefault(); } hddClose(); } else if (ch) { e.stopPropagation(); e.preventDefault(); hddOpen(dd); } }
   if (ch || (t.closest && t.closest(".hthr .chip"))) [60, 250, 600].forEach(ms => setTimeout(wpSync, ms));   // the page redraws its tab row after a tap: settle the header straight away
 }, true);
 function wpSync() { if (typeof hmgSync === "function") hmgSync();
@@ -13199,7 +13526,7 @@ function wpSync() { if (typeof hmgSync === "function") hmgSync();
         const sg = on => TB ? [innerWidth, cap.children.length, cap.textContent.length, hsE.clientWidth, Math.round(hd.getBoundingClientRect().top), ["wchip", "wwind", "wpls", "hpls"].map(i => (document.getElementById(i) || {}).textContent).join("~"), hd.classList.contains("hnx"), hd.classList.contains("hnw"), cap.classList.contains("hdd"), on].join("|") : [innerWidth, cap.children.length, cap.textContent.length, hr.children.length, (document.getElementById("hc") || {}).offsetWidth, (document.getElementById("st") || {}).textContent, hd.classList.contains("hcol"), cap.classList.contains("hdd"), on].join("|");
         const measTb = () => { hd.classList.toggle("hth", true); row.classList.add("hthr");   /* measure the capsule as it will look in the header (Kinetic numbers its tabs and pads them differently outside it) */ hd.classList.remove("hs1", "hs2", "hs3"); const hw0 = hsE.querySelector(".hsw"), hsr = (hw0 && getComputedStyle(hw0).display !== "contents" ? hw0 : hsE).getBoundingClientRect(), w0 = cap.style.width; for (const t of [[0, 0, 0], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 1, 0], [1, 1, 1]]) { cap.classList.toggle("hdd", !!t[0]); hd.classList.toggle("hnx", !!t[1]); hd.classList.toggle("hnw", !!t[2]); cap.style.width = "max-content"; const cw = Math.max(cap.scrollWidth, Math.ceil(cap.getBoundingClientRect().width)); cap.style.width = w0; hd.style.setProperty("--hcw", cw + "px"); if (cw > 0 && (typeof hdFits === "function" ? hdFits() : hsE.scrollWidth <= hsE.clientWidth + 1)) return { row, left: Math.round(hsr.left + 5), top: Math.round(hsr.top + (hsr.height - 40) / 2) }; } return null; };
         const meas = () => { const hb = hd.getBoundingClientRect(), h = hr.getBoundingClientRect(), left = Math.round(hb.left + 40), room = Math.round(h.left - 10 - left), w0 = cap.style.width; cap.style.width = "max-content"; const cw = cap.scrollWidth; cap.style.width = w0; /* fixed offset from the header edge: the back arrow has a nudge animation, so it is never measured */ return cw > 0 && cw <= room ? { row, left, top: Math.round(hb.top + (hb.height - 40) / 2) } : null; };
-        if ((hd.classList.contains("hpop") || HDD.open) && HDD.hm) { if (HDD.open) cap.classList.add("hdd", "hddo"); hm = { row, left: HDD.hm.left, top: HDD.hm.top }; }
+        if ((hd.classList.contains("hpop") || HDD.open) && HDD.hm) { if (HDD.open) cap.classList.add("hdd"); hm = { row, left: HDD.hm.left, top: HDD.hm.top }; }
         else if ((sig = sg(row.classList.contains("hthr"))) === HDD.sig && (HDD.row === row || (HDD.row && !HDD.row.isConnected)) && HDD.hm0 && !(TB && row.classList.contains("hthr") && Math.abs(cap.offsetWidth - (parseFloat(hd.style.getPropertyValue("--hcw")) || 0)) > 2)) { HDD.row = row; hm = { row, left: HDD.hm0.left, top: HDD.hm0.top }; }   // a redraw of the page replaces the row element but not what decides the fit: no new measuring (it was the slow part on Scenes).  // nothing that decides the fit changed: skip the measuring (it forces layout, and this runs every frame for a while after any tap)
         else {
           const mk = TB ? [innerWidth, cap.children.length, cap.textContent.length, hsE.clientWidth, Math.round(hd.getBoundingClientRect().top), ["wchip", "wwind", "wpls", "hpls"].map(i => (document.getElementById(i) || {}).textContent).join("~"), row.id || row.className].join("|") : "", mm = TB && HDD.mem && HDD.mem[mk], stale = TB && row.classList.contains("hthr") && Math.abs(cap.offsetWidth - (parseFloat(hd.style.getPropertyValue("--hcw")) || 0)) > 2;
@@ -13209,10 +13536,12 @@ function wpSync() { if (typeof hmgSync === "function") hmgSync();
           if (!hm) { cap.classList.add("hdd"); hm = meas(); } }
           HDD.hm = hm && { left: hm.left, top: hm.top }; HDD.hm0 = HDD.hm; HDD.row = row; HDD.sig = sg(true);
         }
+        // the chips on the right can grow after the fit was measured (the lock and the status pill arrive late on the Climate page): if the tabs now run under them, forget the answer so the next pass measures again and folds the chips into the three dots
+        if (hm && !(hd.classList.contains("hcol") && cap.classList.contains("hdd"))) { const cr = cap.getBoundingClientRect(), rr = hr.getBoundingClientRect(); if (cr.width && rr.width && cr.right > rr.left - 4 && cr.left < rr.right) { HDD.sig = ""; HDD.hm0 = null; HDD.mem = null; } }
         const st = document.getElementById("st"), bd = document.querySelector("#hcb i"); if (bd) bd.hidden = !(st && st.classList.contains("bad"));
       }
     }
-    if (!hm) { HDD.open = false; if (hd.classList.contains("hpop")) hpanSet(false); hd.classList.remove("hcol", "hnx", "hnw"); document.querySelectorAll(".hdd").forEach(e => e.classList.remove("hdd", "hddo")); }
+    if (!hm) { if (HDD.open) hddClose(); if (hd.classList.contains("hpop")) hpanSet(false); hd.classList.remove("hcol", "hnx", "hnw"); document.querySelectorAll(".hdd").forEach(e => e.classList.remove("hdd", "hddo")); }
     document.querySelectorAll(".hthr").forEach(e => { if (!hm || e !== hm.row) e.classList.remove("hthr", "hthp"); });
     hd.classList.toggle("hth", !!hm);
     if (hm) { hm.row.classList.add("hthr"); hm.row.classList.toggle("hthp", moved); hm.row.style.setProperty("--hx", hm.left + "px"); hm.row.style.setProperty("--hy", hm.top + "px"); }
@@ -15394,9 +15723,21 @@ function cmCount(n) {   // (an automated browser such as the test runner reads t
   const out = k => { const q = P.slice(); N.forEach(x => { q[x.i] = f(x, k >= 1 ? x.to : x.to * (1 - Math.pow(1 - k, 3))); }); return q.join(""); }, t0 = performance.now(), T = 1100;
   let last = raw;
   // the digits are not all the same width ("1" is narrower), so a number that is a flex / grid item would change width with every step and push what sits beside it (the degree sign, the mode switch) back and forth: it keeps the width of its widest possible value while it climbs
-  const box = n.nodeType === 3 ? n.parentElement : n; let pin = false, od = "", inl = false;
-  try { const par = box && box.parentElement, pd = par ? getComputedStyle(par).display : "", gd = par && par.parentElement ? getComputedStyle(par.parentElement).display : ""; if (/flex|grid/.test(pd) || /flex|grid/.test(gd)) { let w = box.getBoundingClientRect().width; if (w > 0) { for (let d = 0; d < 10; d++) { n.textContent = raw.replace(/\d/g, d); w = Math.max(w, box.getBoundingClientRect().width); } n.textContent = raw; if (!/flex|grid/.test(pd) && getComputedStyle(box).display === "inline") { od = box.style.display; box.style.display = "inline-block"; inl = true; } box.style.minWidth = w + "px"; pin = true; } } } catch (_) {}   // (the price on the Vehicle fuel card is a flex item's child: its width changing pushed the graph beside it)
-  const unpin = () => { if (pin) { box.style.minWidth = ""; if (inl) box.style.display = od; pin = false; } };
+  const box = n.nodeType === 3 ? n.parentElement : n; let pin = false, od = "", inl = false, ta = "", al = false;
+  try { const par = box && box.parentElement, pd = par ? getComputedStyle(par).display : "", gd = par && par.parentElement ? getComputedStyle(par.parentElement).display : ""; if (/flex|grid/.test(pd) || /flex|grid/.test(gd)) { let w = box.getBoundingClientRect().width; if (w > 0) {
+    // a unit right after the number (the ° on the Home heat pump card) must stay against the digits: the digits get one fixed width (tabular figures), the box is that wide and right-aligned, so the ° neither floats away from a short number nor jumps when the climb ends
+    // (the unit must sit on the SAME LINE, beside the digits: on the Vehicle Trips tiles "km" is under the number, and right-aligning the number there made it start on the right and slide left when the climb ended)
+    const sb = box.nextElementSibling, br0 = box.getBoundingClientRect(), unit = !!sb && !box.nextSibling.nodeValue && /^(SMALL|SUP|SPAN|I)$/.test(sb.tagName) && sb.textContent.length <= 3 && !(box.closest && box.closest(".czh")) && sb.getBoundingClientRect().top < br0.bottom - 1 && sb.getBoundingClientRect().left >= br0.left + br0.width * 0.4;
+    if (unit) { box.style.fontVariantNumeric = "tabular-nums"; w = box.getBoundingClientRect().width; ta = box.style.textAlign; box.style.textAlign = "right"; al = true; }
+    else {
+      for (let d = 0; d < 10; d++) { n.textContent = raw.replace(/\d/g, d); w = Math.max(w, box.getBoundingClientRect().width); }
+      // a number that is centred in its parent (the % on the Vehicle fuel ring) is centred inside the pinned width as well, or it sits to the left until the climb ends
+      n.textContent = raw; const par = box.parentElement, pr = par.getBoundingClientRect(), pcs = getComputedStyle(par), br = box.getBoundingClientRect(), inner = pr.width - (parseFloat(pcs.paddingLeft) || 0) - (parseFloat(pcs.paddingRight) || 0);   // (the parent's content width: a block number that fills its padded tile is left-aligned text, not centred)
+      if (br.width < inner - 4 && Math.abs((br.left + br.right) / 2 - (pr.left + pr.right) / 2) < 1.5) { ta = box.style.textAlign; box.style.textAlign = "center"; al = true; }
+    }
+    n.textContent = raw; if (!/flex|grid/.test(pd) && getComputedStyle(box).display === "inline") { od = box.style.display; box.style.display = "inline-block"; inl = true; } box.style.minWidth = w + "px"; pin = true; } } } catch (_) {}   // (the price on the Vehicle fuel card is a flex item's child: its width changing pushed the graph beside it)
+  // (a unit right after the number, the ° on the heat pump card, stays against the digits while the number is narrower than its widest value: it is right-aligned in the pinned width)
+  const unpin = () => { if (pin) { box.style.minWidth = ""; if (al) { box.style.textAlign = ta; al = false; } if (inl) box.style.display = od; pin = false; } };
   const step = t => { const k = Math.min(1, (t - t0) / T);
     if (n.textContent !== last) { unpin(); return; }   // something else wrote a new value while it climbed: let that stand
     last = out(k); n.textContent = last; if (k < 1) requestAnimationFrame(step); else unpin(); };
@@ -16287,7 +16628,7 @@ WFX.c = document.getElementById("wfx"); requestAnimationFrame(wfxFrame);
 // ---------- cameras: pinch to zoom, drag to move the picture ----------
 // Works on the live picture of a full-screen camera card (Home / Security card, and the #view page) and on the recording players (camera Playback, Detections). Two fingers (or the mouse wheel) zoom,
 // one finger moves the zoomed picture, a tap while zoomed puts it back (a tap on the unzoomed live picture still closes the card; on a zoomed recording a tap shows the round play / pause button and a double tap puts it back). Turn it off with  camZoom: false  in config.js.
-const CZ = { pts: new Map(), el: null, s0: 1, d0: 0, x0: 0, y0: 0, fx: 0, fy: 0, px: 0, py: 0, moved: 0, t: 0, max: 6 };
+const CZ = { pts: new Map(), el: null, s0: 1, d0: 0, x0: 0, y0: 0, fx: 0, fy: 0, px: 0, py: 0, moved: 0, t: 0, max: 4.5 };
 const czOk = el => CONFIG.camZoom !== false && !!el && (el.classList.contains("fs") || el.classList.contains("vf")) && !el.classList.contains("pb") && !el.classList.contains("fclose");
 const czRot = el => !!el.closest(".cam.ls") || el.classList.contains("zls");   // turned with CSS (not by the phone): the card's x axis runs down the screen
 const czState = el => el._z || (el._z = { s: 1, x: 0, y: 0 });
@@ -16321,6 +16662,7 @@ document.addEventListener("pointerdown", e => {
   if (e.pointerType === "mouse" && e.button !== 0) return;   // the mouse drags a zoomed picture too (hold the left button and move), like a finger
   const el = czTarget(e); if (!el) return;
   if (CZ.el && CZ.el !== el) { CZ.pts.clear(); } CZ.el = el;
+  if (e.isPrimary) CZ.pts.clear();   // the first finger down starts a new gesture: a finger whose pointerup was lost (the picture under it was swapped or the page lost focus) must not turn the next one-finger drag into a pinch
   CZ.pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (CZ.pts.size === 1) CZ.moved = 0; else CZ.moved = 1;
   czBase(el);
 }, true);
@@ -16339,6 +16681,7 @@ const czUp = e => {
   if (!CZ.pts.has(e.pointerId)) return; CZ.pts.delete(e.pointerId); if (CZ.moved) CZ.t = Date.now();   // a drag or pinch must not count as a tap that closes the card
   if (CZ.el) czBase(CZ.el); if (!CZ.pts.size) CZ.el = null;
 };
+addEventListener("blur", () => { CZ.pts.clear(); CZ.el = null; }); document.addEventListener("visibilitychange", () => { CZ.pts.clear(); CZ.el = null; });
 document.addEventListener("pointerup", czUp, true); document.addEventListener("pointercancel", czUp, true);
 document.addEventListener("click", e => {
   const el = czTarget(e); if (!el) return;
@@ -16348,7 +16691,7 @@ document.addEventListener("click", e => {
   }
   if (el._z && el._z.s > 1) { czReset(el); e.stopPropagation(); e.preventDefault(); }   // tap while zoomed = back to normal
 }, true);
-["loadstart", "emptied"].forEach(n => document.addEventListener(n, e => { const p = e.target && e.target.tagName === "VIDEO" ? e.target.parentElement : null; if (p && p._z) czReset(p); }, true));   // a new recording starts unzoomed
+["loadstart", "emptied"].forEach(n => document.addEventListener(n, e => { const p = e.target && e.target.tagName === "VIDEO" ? e.target.parentElement : null; if (p && p._z && czPlayer(p)) czReset(p); }, true));   // a new recording starts unzoomed. A live camera keeps its zoom when its stream is swapped (light to clear) or reconnects: its card is reset when it closes (12-init.js)
 document.addEventListener("wheel", e => {
   const el = czTarget(e); if (!el) return;
   const z = czState(el), s = Math.max(1, Math.min(CZ.max, z.s * Math.exp(-e.deltaY * .0015))), m = czLocal(el, e.clientX, e.clientY);
@@ -16749,6 +17092,13 @@ function enCyc(kind, oo, at) {
   L.sort((a, b) => a - b); let i = 0; while (i + 1 < L.length && L[i + 1] <= t) i++; i += oo;
   return i >= 0 && i + 1 < L.length ? { s: L[i], e: L[i + 1] } : null;
 }
+// the gas the power company billed for the cycle shown (billing.gas.usage: "start:kWh[:cost excl. GST],..." kept by the bill email script); Home Assistant's own gas figures can miss readings
+function enBilled(sp) {
+  const B = (CONFIG.billing || {}).gas, s = B && B.usage && states[B.usage]; if (!s || !s.state || en.r !== "month") return null;
+  const k = sp.s.getFullYear() + "-" + String(sp.s.getMonth() + 1).padStart(2, "0") + "-" + String(sp.s.getDate()).padStart(2, "0");
+  for (const x of String(s.state).split(",")) { const a = x.split(":"); if (a[0] === k && isFinite(+a[1])) return { kwh: +a[1], cost: a[2] != null && isFinite(+a[2]) ? +a[2] : null }; }
+  return null;
+}
 function enSpan(oo, kind) {  if (oo == null) oo = en.o;
   const n = new Date(), s = new Date(n.getFullYear(), n.getMonth(), n.getDate()); let e, per, lab;
   if (en.r === "day") { s.setDate(s.getDate() + oo); e = new Date(s); e.setDate(e.getDate() + 1); per = "hour"; lab = s.toLocaleDateString([], { weekday: "long", day: "numeric", month: "long" }); }
@@ -16803,6 +17153,15 @@ const TARIFF_DEF = { symbol: "$", daily: 2.687, periods: [{ from: 0, to: 21, rat
 const enRate = t => tarRate(t);
 // Tariff periods: { from, to, rate, name, days } with from/to hours of the day (from inclusive, to exclusive) and days optional (0 = Sunday … 6 = Saturday).
 // A period with days wins over one without on those days, so "free 9pm - midnight Mon-Fri" goes on top of an all-day charged rate.
+// prices from the bill (billing.tariff: an input_text such as "daily=2.611;gasDaily=1.804;0-21=0.354;21-24=0" kept by the bill email script). They replace the daily charges and the time bands of config.js tariff; a config with day-limited periods keeps its own bands. Unset or unreadable: config.js as it was
+function tarBill() {
+  const B = (CONFIG.billing || {}).tariff, s = B && states[B]; if (!B) return;
+  const base = CONFIG._tar0 || (CONFIG._tar0 = JSON.parse(JSON.stringify(CONFIG.tariff || { symbol: "$" }))), v = s && s.state && s.state !== "unknown" && s.state !== "unavailable" ? String(s.state) : "", o = {}, bands = [];
+  v.split(";").forEach(x => { const a = x.split("="), r = parseFloat(a[1]), m = /^(\d{1,2})-(\d{1,2})$/.exec(a[0]); if (!isFinite(r) || r < 0) return; if (m) bands.push({ from: +m[1], to: +m[2], rate: r }); else if (a[0] === "daily" || a[0] === "gasDaily") o[a[0]] = r; });
+  bands.sort((a, b) => a.from - b.from); let at = 0; const full = bands.length && bands.every(b => b.from === at && b.to > b.from && b.to <= 24 && (at = b.to)) && at === 24, keep = (base.periods || []).some(p => p && Array.isArray(p.days)), h = n => n === 0 || n === 24 ? "midnight" : n === 12 ? "noon" : n < 12 ? n + "am" : n - 12 + "pm";
+  const t = Object.assign({}, base, o); if (full && !keep) t.periods = bands.map(b => ({ from: b.from, to: b.to, rate: b.rate, name: (b.rate === 0 ? "Free" : "Charged") + " (" + h(b.from) + " – " + h(b.to) + ")" }));
+  const was = JSON.stringify(CONFIG.tariff); CONFIG.tariff = t; if (was !== JSON.stringify(t) && en && en.data && typeof drawEnergy === "function") drawEnergy();
+}
 function tarT() { return CONFIG.tariff || TARIFF_DEF; }
 function tarPer(t, T) {
   T = T || tarT(); const d = new Date(t), h = d.getHours(), w = d.getDay(), P = (T.periods || []).filter(p => p && h >= p.from && h < p.to);
@@ -16865,9 +17224,9 @@ function enDraw() {
   else {
     const h0 = h.length, bk = enBuckets(sp), fm = v => v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2);
     const CS = enCost(sp), TT = CONFIG.tariff || TARIFF_DEF, mny = v => TT.symbol + v.toFixed(2);
-    const GU = en.gasUnit || "kWh", sm = o => o ? Object.keys(o).reduce((a, k) => a + o[k], 0) : 0, gT = sm(en.gas), gC = en.gasCost ? sm(en.gasCost) : null, hasGas = en.gas && (gT > 0.0005 || gC > 0.005);
+    const GU = en.gasUnit || "kWh", sm = o => o ? Object.keys(o).reduce((a, k) => a + o[k], 0) : 0, gbl = enBilled(enSpan(en.o, "gas")), gT = gbl ? gbl.kwh : sm(en.gas), gC = gbl && gbl.cost != null ? gbl.cost : en.gasCost ? sm(en.gasCost) : null, hasGas = (en.gas || gbl) && (gT > 0.0005 || gC > 0.005);
     // gas readings can arrive in lumps, so its daily charge counts the days that have passed, as the bill does
-    const gsp = enSpan(en.o, "gas"), gbk = enBuckets(gsp), gdays = (() => { let n = 0; const now = Date.now(); for (const d = new Date(gsp.s); d < gsp.e; d.setDate(d.getDate() + 1)) if (+d <= now) n++; return n; })(), gD = (TT.gasDaily || 0) * gdays, gTot = (gC || 0) + gD, gdates = en.r === "month" && CONFIG.billing && CONFIG.billing.gas ? gsp.lab : "";
+    const gsp = enSpan(en.o, "gas"), gbk = enBuckets(gsp), gdays = (() => { let n = 0; const now = Date.now(); for (const d = new Date(gsp.s); d < gsp.e; d.setDate(d.getDate() + 1)) if (+d <= now) n++; return n; })(), gD = gbl && gbl.cost != null ? 0 : (TT.gasDaily || 0) * gdays, gTot = (gC || 0) + gD, gdates = en.r === "month" && CONFIG.billing && CONFIG.billing.gas ? gsp.lab : "";
     let hgas = "", htot = "";
     const GR = +CONFIG.gst || 0, subT = CS ? Math.round((CS.total + (hasGas ? gTot : 0)) * 100) / 100 : 0, gstA = Math.round(subT * GR * 100) / 100, gx = GR ? "excl. GST" : "";   // gst: 0.15 in config.js adds GST to the total (the power company's figures are excl. GST)
     if (CS) htot = '<div class="pn pg entot" data-k="t"><div class="eh"><div><div class="lbl">Total energy cost</div><div class="h2" style="margin-top:4px">' + mny(subT + gstA) + '</div></div><div class="lbl ensub" style="margin-left:auto;text-align:right">' + (GR ? "incl. GST" : "") + '</div></div>' + (subT > 0 ? '<div class="enseg"><i style="flex:' + CS.total + ';background:#6bb8ff"></i>' + (hasGas && gTot > 0 ? '<i style="flex:' + gTot + ';background:#f78c6b"></i>' : '') + (gstA > 0 ? '<i style="flex:' + gstA + ';background:#8a94a6"></i>' : '') + '</div>' : '') + '<div class="enb">' +
@@ -16877,8 +17236,8 @@ function enDraw() {
     if (hasGas) {
       hgas = '<div class="pn pg" data-k="g"><div class="eh"><div><div class="lbl">Gas cost' + (gdates ? ' · ' + esc(gdates) : '') + '</div><div class="h2" style="margin-top:4px">' + (gC != null ? mny(gTot) : "-") + '</div></div><div class="lbl ensub" style="margin-left:auto;text-align:right">' + fm(gT) + ' ' + esc(GU) + (GR ? ' · excl. GST' : '') + '</div></div><div class="enb">' +
         (gD > 0 ? '<div class="enr"><i class="end" style="background:#8a94a6"></i><span class="enn">Daily charge</span><span class="lbl">' + gdays + ' day' + (gdays === 1 ? "" : "s") + ' × ' + TT.symbol + TT.gasDaily.toFixed(3) + '</span><b>' + mny(gD) + '</b></div>' : '') +
-        '<div class="enr"><i class="end" style="background:#f78c6b"></i><span class="enn">Usage</span><span class="lbl">' + fm(gT) + ' ' + esc(GU) + (gC != null && gT > 0.001 ? ' × ' + (gC / gT * 100).toFixed(1) + 'c' : '') + '</span><b>' + (gC != null ? mny(gC) : "-") + '</b></div></div>' +
-        (en.r === "day" ? '<div class="lbl" style="margin:12px 0 -6px;text-transform:none;letter-spacing:0;opacity:.7">Gas readings arrive in lumps, so a single day\u2019s bars are approximate.</div>' : '') + '<div class="lbl" style="margin-top:14px">Usage · ' + esc(GU) + '</div>' + enBars(gbk, gsp, (() => { const v = {}; Object.keys(en.gas).forEach(t => { const b = enBk(gsp, +t); v[b] = (v[b] || 0) + en.gas[t]; }); return v; })(), "#f78c6b", FS, mob, fm, "en-gas", GU) + '</div>';
+        '<div class="enr"><i class="end" style="background:#f78c6b"></i><span class="enn">' + (gbl ? "Billed" : "Usage") + '</span><span class="lbl">' + fm(gT) + ' ' + esc(GU) + (gC != null && gT > 0.001 ? ' × ' + (gC / gT * 100).toFixed(1) + 'c' : '') + '</span><b>' + (gC != null ? mny(gC) : "-") + '</b></div></div>' +
+        (gbl ? '<div class="lbl" style="margin:12px 0 -6px;text-transform:none;letter-spacing:0;opacity:.7">Total from your bill. The bars below come from Home Assistant and can miss readings.</div>' : '') + (en.r === "day" ? '<div class="lbl" style="margin:12px 0 -6px;text-transform:none;letter-spacing:0;opacity:.7">Gas readings arrive in lumps, so a single day\u2019s bars are approximate.</div>' : '') + '<div class="lbl" style="margin-top:14px">Usage · ' + esc(GU) + '</div>' + enBars(gbk, gsp, (() => { const v = {}; Object.keys(en.gas || {}).forEach(t => { const b = enBk(gsp, +t); v[b] = (v[b] || 0) + en.gas[t]; }); return v; })(), "#f78c6b", FS, mob, fm, "en-gas", GU) + '</div>';
     }
     if (CS) {
       h += htot;
@@ -17932,11 +18291,13 @@ function hplDraw() {
   if (isMobile()) {
     const lv = typeof lvItems === "function" ? lvItems() : [], need = insOn() && PAGE_ON("insights") ? (INS.last || []).filter(x => x.lvl === 2) : [];
     if (lv.length) h += '<span class="wpl lvp" data-lvo>' + mdi("door-open") + esc(lv[0].s + (lv.length > 1 ? " +" + (lv.length - 1) : "")) + '</span>';
-    const un = typeof nbgUpd === "function" ? nbgUpd() : 0;
-    if (un) h += '<span class="wpl upp" data-updgo>' + mdi("download") + un + ' update' + (un > 1 ? "s" : "") + '</span>';
     if (need.length) h += '<span class="wpl inp" data-go="#insights">' + mdi("lightbulb-on") + need.length + ' need' + (need.length > 1 ? "" : "s") + ' you</span>';
   }
-  if (el._h !== h) { el._h = h; el.innerHTML = h; }
+  if (el._h !== h) {
+    const hb = hs.offsetHeight; el._h = h; el.innerHTML = h;
+    const ha = hs.offsetHeight;   // a pill that arrives late can wrap onto a new line: the greeting card eases to its new height instead of jumping
+    if (hb > 0 && ha !== hb && !(typeof reducedMotion === "function" && reducedMotion())) { hs.style.transition = "none"; hs.style.height = hb + "px"; void hs.offsetHeight; hs.style.transition = "height .28s cubic-bezier(.2,.8,.2,1)"; hs.style.height = ha + "px"; clearTimeout(hs._ht); hs._ht = setTimeout(() => { hs.style.height = ""; hs.style.transition = ""; }, 320); }
+  }
 }
 document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-lvo]"); if (b) { e.stopPropagation(); e.preventDefault(); lvOpen(); } }, true);
 addEventListener("resize", () => hplDraw());
@@ -20960,7 +21321,7 @@ const spImg = (o, w) => { const L = (o && (o.images || (o.album && o.album.image
 const spSub = o => o._sub ? o._sub : o.type === "artist" ? (o._like ? "Like " + o._like : "Artist") : o.type === "playlist" ? "Playlist" + (o.owner && o.owner.display_name ? " · " + o.owner.display_name : "") : o.type === "track" ? (o.artists || []).map(a => a.name).join(", ") : (o.artists || []).map(a => a.name).join(", ") || "Album";
 function spToast(t) {
   let tt = $("#evtoast"); if (!tt) { tt = document.createElement("div"); tt.id = "evtoast"; document.body.appendChild(tt); }
-  tt.classList.remove("spst"); tt.innerHTML = mdi("spotify") + "<span>" + esc(t) + "</span>"; void tt.offsetWidth; tt.classList.add("on"); clearTimeout(SP.tt); SP.tt = setTimeout(() => tt.classList.remove("on"), 4200);
+  tt.classList.remove("spst"); tt.classList.toggle("spw", String(t).length > 34); tt.innerHTML = mdi("spotify") + "<span>" + esc(t) + "</span>"; void tt.offsetWidth; tt.classList.add("on"); clearTimeout(SP.tt); SP.tt = setTimeout(() => tt.classList.remove("on"), String(t).length > 34 ? 7500 : 4200);
 }
 // "Starting <song>…" with a spinner: stays until the speaker reports the song (or 20 s), for a song picked where no row can show it (the header search)
 function spStarting(title) {
@@ -20972,7 +21333,7 @@ function spStartDone() {
   if (!SP.st) return; const m = spMain(), at = ((m && states[m]) || {}).attributes || {}, tt = $("#evtoast");
   if (at.media_title && at.media_title === SP.st.title) { SP.st = null; clearTimeout(SP.tt); if (tt) tt.classList.remove("on"); }
 }
-const SP_ERR = [[/Desktop Player authorization token|Cast Application could not be activated/i, "This Chromecast needs SpotifyPlus's one-time Desktop Player token setup first.", 0],
+const SP_ERR = [[/Desktop Player authorization token|Cast Application could not be activated/i, "This Chromecast needs the SpotifyPlus Desktop Player token first (a one-time setup on the Home Assistant side).", 0],
   [/discoverable via Zeroconf/i, "That speaker can't be reached. Check it is on and on the same network as Home Assistant.", 0],
   [/no active Spotify player/i, "Pick a speaker to play on.", 1]];   // third value: 1 = open the speaker sheet, because only picking a speaker fixes it
 function spFail(msg) {
@@ -22120,11 +22481,18 @@ if (window.fully && typeof fully.bind === "function") {   // Fully Kiosk's own s
 // config.js -> screensaver: { entity: "binary_sensor.presence_sensor_kitchen", after: 120 }
 //   entity = a presence sensor ("on" = someone there). The screensaver starts once it has been off for `after` seconds (default 120) and nobody has touched the screen in that time; it ends when the screen is touched (or an alarm goes pending). Someone walking in does NOT end it; wakeOnPresence: true makes the sensor turning on end it as well (and Fully's screen-on event).
 //   idle   = seconds without a touch before it starts, with or without a sensor (default 600 with no entity). 0 = never from touches alone.
-//   dim    = how bright the clock is, 0.1 to 1 (default 1: the screen's own brightness, such as the tablet's automatic brightness, decides; a lower number dims the clock); nightDim = the same from 22:00 to 06:00 (default 1). chips: [["binary_sensor.freezer_door", "Freezer open", "door-open"]] adds a chip while that entity is on.
+//   dim    = how bright the clock is, 0.1 to 1 (default 1: the screen's own brightness, such as the tablet's automatic brightness, decides; a lower number dims the clock); nightDim = the same while the dashboard is in its dark theme (Settings -> Theme: device, sun or schedule; default 1). The wallpaper is always dimmed, like a phone's Always-On lock screen, in every theme (Kinetic and Material, which have none, get a wash of shades of one colour, color: "#1fa58a", else the colour picked in Settings > Theme, dimmed the same way). chips: [["binary_sensor.freezer_door", "Freezer open", "door-open"]] adds a chip while that entity is on.
 //   hold   = seconds the screensaver stays away after the page is sent somewhere without a touch (Home Assistant's fully_kiosk.load_url, a notification link, a camera detection): default 300. The page that arrives is never covered at once, and a page change always ends the screensaver.
 //   where  = "kiosk" (default): only the Fully Kiosk tablet runs it, a phone or desktop browser never does; "always" lets any device run it.
+//   Tap a chip (the alarm, Garage open, N doors open) or the weather and a small card opens over the dark screen (alarm: arm / disarm with the keypad; weather: the next hours; garage: close it; doors: which are open) without entering the dashboard. It closes itself after 15 s (30 s on the keypad) or on a tap outside it, and takes the look of the dashboard (Kinetic, Liquid Glass, Material). quick: false turns the cards off.
+//   Cards stack: tap another chip and it opens too (the newest in front, older ones folded to a row, three at most); tap an open chip, its X or outside to close. Also: Next calendar event (screensaver reads config calendars), Heat pump (follows the Climate page, + and - change the target), Washing done (the Insights laundry logic), Roster not updating (Sync now), and warning / pollen / bins chips open a card.
+//   The same screen also has a Timer chip (config notifTimers: ["timer.kitchen"] while one runs: time left, pause / resume / cancel), a Now playing chip (title; previous, play / pause, next, volume) and, from 21:00 to 05:00, a Goodnight chip: one card that turns off the lights that are on, closes the garage, arms the alarm in night mode (keypad if it wants a code) and can run more:
+//     goodnight: { from: 21, until: 5, keep: ["light.hall_night"], off: ["switch.tv"], script: "script.goodnight", arm: "arm_night" }  (arm: false = leave the alarm alone; goodnight: false = no Goodnight chip)
+//   A moon button in the tablet's top bar starts the screen at once (button: false hides it).
 //   screensaver: false (or leaving it out) switches it off. An alarm that goes pending or triggered ends it and opens Security.
-var SSV = { on: false, shown: false, t: 0, seen: 0, last: Date.now(), cfg: null, hold: 0 };
+var SSV = { qc: 0, man: false, on: false, shown: false, t: 0, seen: 0, last: Date.now(), cfg: null, hold: 0, qs: [], infos: [], cal: [], calT: 0 };
+Object.defineProperty(SSV, "q", { get() { return this.qs.length ? this.qs[this.qs.length - 1] : null; } });   // the card in front (null when none is open)
+Object.defineProperty(SSV, "qt", { get() { const q = this.q; return q ? q.t : 0; } });
 // Only the wall tablet runs it: a phone or browser that opens the same dashboard never shows it (it would cover the page after 2 quiet minutes there too). Same test as the tablet battery pill: the Fully Kiosk JS interface, a FullyKiosk user agent, or ?tablet=1 once (?tablet=0 forces it off). screensaver.where: "always" lets any device run it (default "kiosk").
 const ssvKiosk = () => { let ls = null; try { ls = localStorage.getItem("dashTablet"); } catch (_) {} if (ls === "0") return false; return ls === "1" || typeof window.fully !== "undefined" || /FullyKiosk|Fully Kiosk/i.test(navigator.userAgent); };
 const ssvCfg = () => { const c = CONFIG.screensaver; if (!c) return null; const o = typeof c === "object" ? c : {}; return o.where === "always" || ssvKiosk() ? o : null; };
@@ -22132,7 +22500,7 @@ const ssvIcon = { sunny: "weather-sunny", "clear-night": "weather-night", cloudy
 function ssvEl() {
   let el = $("#ssv"); if (el) return el;
   el = document.createElement("div"); el.id = "ssv"; el.hidden = true; el.setAttribute("role", "presentation");
-  el.innerHTML = '<div class="ssb"><div class="sst"></div><div class="ssd"></div><div class="ssw"></div><div class="ssc"></div></div>'; document.body.appendChild(el); return el;
+  el.innerHTML = '<div class="ssb"><div class="sst"></div><div class="ssd"></div><div class="ssw"></div><div class="ssc"></div></div><div class="ssqw"></div>'; document.body.appendChild(el); return el;
 }
 function ssvWx() {
   const w = typeof W !== "undefined" && states[W]; if (!w) return "";
@@ -22143,50 +22511,299 @@ function ssvWx() {
   if (r && !/rainy|pouring|snowy/.test(st)) h += '<span class="ssm">Rain from ' + wxHM(new Date(r.datetime)) + '</span>';
   return h;
 }
+
+if (typeof MDI !== "undefined" && !MDI["calendar-clock"]) MDI["calendar-clock"] = "M15,13H16.5V15.82L18.94,17.23L18.19,18.53L15,16.69V13M19,8H5V19H9.67C9.24,18.09 9,17.07 9,16A7,7 0 0,1 16,9C17.07,9 18.09,9.24 19,9.67V8M5,21C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3H6V1H8V3H16V1H18V3H19A2,2 0 0,1 21,5V11.1C22.24,12.36 23,14.09 23,16A7,7 0 0,1 16,23C14.09,23 12.36,22.24 11.1,21H5M16,11.15A4.85,4.85 0 0,0 11.15,16C11.15,18.68 13.32,20.85 16,20.85A4.85,4.85 0 0,0 20.85,16C20.85,13.32 18.68,11.15 16,11.15Z";
+// ---- heat pump chip/card: follows the Climate page (the House unit and the zones that are on; the target moves with the same bump() as the + and - there)
+const ssvHpTg = id => { const t = T[id], a = (states[id] || {}).attributes || {}; return t && t.v != null ? t.v : a.temperature; };
+function ssvHp() {
+  const hp = states[MAIN]; if (!hp || isOff(hp) || hp.state === "unavailable" || hp.state === "unknown") return null; const a = hp.attributes || {}, tg = ssvHpTg(MAIN), c = cls[hp.state] || "auto";
+  const W2 = { heat: "Heating to ", cool: "Cooling to ", dry: "Drying to ", auto: "Auto at ", fan: "Fan only" }[c] || "On", tgs = tg != null && !isNaN(+tg) ? f1(tg) + "°" : (a.target_temp_low != null ? f1(a.target_temp_low) + "-" + f1(a.target_temp_high) + "°" : "");
+  return { chip: c === "fan" ? "Fan only" : W2 + tgs, ic: { heat: "fire", cool: "snowflake", dry: "water-percent", auto: "thermometer", fan: "fan" }[c] || "thermometer", col: c === "heat" ? "rgb(var(--heat-rgb))" : c === "cool" ? "rgb(var(--cool-rgb))" : "rgb(var(--mint-rgb))", c: c };
+}
+function ssvHpRows() {
+  const rows = [{ id: MAIN, n: "House" }]; try { HOUSE().forEach(r => { const z = [].concat(r.climate || []).filter(x => x !== MAIN && states[x] && !isOff(states[x]))[0]; if (z && !rows.some(q => q.id === z)) rows.push({ id: z, n: r.name }); }); } catch (_) {}
+  return rows.filter(q => states[q.id]).slice(0, 5);
+}
+// ---- next calendar event (the calendars of the Events page), the next 36 hours
+function ssvCalLoad() {
+  if (!Array.isArray(CONFIG.calendars) || !CONFIG.calendars.length || typeof getToken !== "function" || SSV.calB || Date.now() - SSV.calT < 300000) return; SSV.calB = true;
+  const a = new Date(), b = new Date(a.getTime() + 36 * 36e5), q = "?start=" + encodeURIComponent(a.toISOString()) + "&end=" + encodeURIComponent(b.toISOString()), out = [];
+  Promise.all(CONFIG.calendars.map((c, i) => getToken().then(tk => fetch(CONFIG.url + "/api/calendars/" + c + q, { headers: { Authorization: "Bearer " + tk } })).then(r => r.json()).then(j => { if (!Array.isArray(j)) return; j.forEach(v => { try { if (!v.start.dateTime) return; out.push({ t: pd(v.start), e: pd(v.end), s: v.summary || "", l: String(v.location || "").trim(), c: (typeof evColOf === "function" && evColOf(c, v)) || (typeof CALCOL !== "undefined" && CALCOL[i % CALCOL.length]) || "#7fb3ff" }); } catch (_) {} }); }).catch(() => {})))
+    .then(() => { SSV.cal = out.sort((x, y) => x.t - y.t); SSV.calT = Date.now(); SSV.calB = false; }, () => { SSV.calB = false; SSV.calT = Date.now(); });
+}
+function ssvCalNext() {
+  const now = Date.now(), L = SSV.cal.filter(v => v.e > now), n = L[0]; if (!n) return null; if (n.t - now > 24 * 36e5) return null;
+  const s = n.s.length > 22 ? n.s.slice(0, 21) + "…" : n.s, day = new Date(n.t).toDateString() === new Date().toDateString() ? "" : "Tomorrow ";
+  return { chip: (n.t <= now ? "Now · " : day + schTm(new Date(n.t)) + " · ") + s, col: n.c, list: L.slice(0, 4) };
+}
 function ssvChips() {
-  const o = [], add = (t, tone, ic) => o.push('<span class="ssp' + (tone ? " " + tone : "") + '">' + (ic ? mdi(ic) : "") + esc(t) + '</span>');
-  const al = CONFIG.alarm && states[CONFIG.alarm]; if (al) { const m = ALS[al.state] || [String(al.state).toUpperCase(), ""], w = m[0].charAt(0) + m[0].slice(1).toLowerCase(); add(w, /pending|triggered/.test(al.state) ? "bad" : al.state === "disarmed" ? "" : "ok", ALI[al.state] || "shield-outline"); }
-  if (typeof GAL === "object" && Object.keys(GAL).some(k => GAL[k] && GAL[k].st !== "closed")) add("Garage open", "warn", "garage-open-variant");
-  let dr = null; try { dr = doorsOpen(); } catch (_) {} if (dr) add(dr.length > 1 ? dr.length + " doors open" : "Door open", "warn", "door-open");
+  SSV.info = {}; const info = (id, h, t, sub, go, ic) => { SSV.info[id] = { h: h, t: t, s: sub || "", go: go || "", ic: ic || "" }; };
+  const o = [], add = (t, tone, ic, q, col, qi) => o.push('<span class="ssp' + (tone ? " " + tone : "") + (col ? " kc" : "") + (q ? " ssq-t" : "") + '"' + (q ? ' data-q="' + q + '"' : "") + (qi != null ? ' data-qi="' + esc(qi) + '"' : "") + (col ? ' style="--k:' + col + '"' : "") + '>' + (ic ? mdi(ic) : "") + esc(t) + '</span>');   // col: the colour of that kind on the room cards (open doors and the garage red, ...)
+  const KCR = "#ff5a5f";   // doors and the open garage: the room-page chip red (dark theme value; the screen is always dark)
+  const al = CONFIG.alarm && states[CONFIG.alarm]; if (al) { const m = ALS[al.state] || [String(al.state).toUpperCase(), ""], w = m[0].charAt(0) + m[0].slice(1).toLowerCase(); add(w, /pending|triggered/.test(al.state) ? "bad" : al.state === "disarmed" ? "" : "ok", ALI[al.state] || "shield-outline", "alarm"); }
+  if (typeof GAL === "object" && Object.keys(GAL).some(k => GAL[k] && GAL[k].st !== "closed")) add("Garage open", "warn", "garage-open-variant", "garage", KCR);
+  let dr = null; try { dr = doorsOpen(); } catch (_) {} if (dr) add(dr.length > 1 ? dr.length + " doors open" : "Door open", "warn", "door-open", "doors", KCR);
+  try { const t = ssvTimers(); if (t.length) { const a = t.filter(x => x.st === "active").map(x => x.fin - Date.now()), m = a.length ? Math.max(0, Math.ceil(Math.min.apply(null, a) / 60000)) : 0; add(a.length ? (m < 1 ? "Timer · <1 min" : "Timer · " + m + " min") : "Timer paused", "", "timer-outline", "timer"); } } catch (_) {}
+  try { const g = typeof npActive === "function" ? npActive()[0] : null; if (g) { const a = (states[g.ctl] || {}).attributes || {}, t = typeof mpTitle === "function" ? mpTitle(a, "playing") : a.media_title; add(t || "Playing", "", (states[g.ctl] || {}).state === "playing" ? "music-note" : "pause", "music"); } } catch (_) {}
+  try { if (ssvGn()) add("Goodnight", "", "weather-night", "goodnight"); } catch (_) {}
   try { LEAKS().forEach(x => { if (isOn(x[0])) add(x[1] + ": leak", "bad", "water-alert"); }); } catch (_) {}
-  try { if (typeof binsCfg === "function" && binsCfg() && binsDue().length) add("Bins due", "warn"); } catch (_) {}
+  try { if (typeof binsCfg === "function" && binsCfg() && binsDue().length) { const bd = binsDue(); info("bins", "Bins", "Bins due", bd.map(x => esc(x[1] || fname(x[0]))).join(", "), "#home"); add("Bins due", "warn", "", "info", "#f2c261", "bins"); } } catch (_) {}
+  try { const L = insxLaundry().find(x => x.lvl === 2); if (L) add("Washing done", L.tone === "warn" ? "warn" : "ok", "washing-machine", "wash"); } catch (_) {}
+  try { if (typeof rosterBad === "function" && rosterBad()) add("Roster not updating", "", "calendar-alert", "roster", "#ffb04a"); } catch (_) {}
+  try { const h = ssvHp(); if (h) add(h.chip, "", h.ic, "hp", h.col); } catch (_) {}
+  try { const n = ssvCalNext(); if (n) add(n.chip, "", "calendar-clock", "cal", n.col); } catch (_) {}
+  // weather and civil warnings, in the colours the Alerts tab gives them (wind, rain, UV, several alerts, Civil Defence, tsunami, pollen, road problems)
+  try { const seen = {}; NSK.forEach(k => { if (seen[k[0]] || ["cd", "tsu", "road", "wind", "rain", "uv", "wx"].indexOf(k[0]) < 0 || !k[3]()) return; seen[k[0]] = 1;
+    const col = k[0] === "wind" || k[0] === "rain" || k[0] === "uv" || k[0] === "wx" ? wxaCol(k[0]) : k[0] === "cd" ? "#e5483b" : k[0] === "tsu" ? (slvLevel() === 2 ? "#e5483b" : "#e89a2c") : "#e89a2c";
+    const nm = typeof k[2] === "function" ? k[2]() : k[2]; info("w" + k[0], "Warning", esc(nm), "See the Alerts tab for the details.", "#notifications"); add(nm, "", k[1], "info", col, "w" + k[0]); });
+    const pn = typeof polOn === "function" && polOn() && typeof polNow === "function" ? polNow() : null; if (pn) { info("pol", "Pollen", esc(pn.name) + " pollen", [pn.top, pn.plants].filter(Boolean).map(esc).join(" · "), ""); add("Pollen · " + pn.name, "", "pollen", "info", pn.col, "pol"); } } catch (_) {}
   (ssvCfg().chips || []).forEach(c => { if (c && isOn(c[0])) add(c[1] || fname(c[0]), "warn", c[2] || ""); });
   return o.join("");
 }
 function ssvDraw() {
-  const el = $("#ssv"); if (!el || !SSV.on) return;
+  const el = $("#ssv"); if (!el || !SSV.on) return; ssvCalLoad();
   const d = new Date(), parts = d.toLocaleTimeString([], tmo({ hour: "numeric", minute: "2-digit" })).split(" "), k = parts.join("|");
   if (el._k !== k) { el._k = k; $(".sst", el).innerHTML = esc(parts[0]) + (parts[1] ? '<small>' + esc(parts[1].toLowerCase()) + '</small>' : ""); $(".ssd", el).textContent = d.toLocaleDateString([], { weekday: "long", day: "numeric", month: "long" }); }
-  const w = ssvWx(), c = ssvChips(); if (el._w !== w) { el._w = w; $(".ssw", el).innerHTML = w; } if (el._c !== c) { el._c = c; $(".ssc", el).innerHTML = c; }
-  const n = d.getHours() >= 22 || d.getHours() < 6, c0 = ssvCfg(), lv = Math.max(.1, Math.min(1, +(n ? (c0.nightDim != null ? c0.nightDim : 1) : (c0.dim != null ? c0.dim : 1)) || 1)); el.style.setProperty("--ssl", lv);
+  const w = ssvWx(), c = ssvChips(); if (el._w !== w) { el._w = w; $(".ssw", el).innerHTML = w; $(".ssw", el).dataset.q = w ? "weather" : ""; } if (el._c !== c) { el._c = c; $(".ssc", el).innerHTML = c; }
+  SSV.qs.slice().forEach(q => { const al = states[CONFIG.alarm]; if (q.k === "alarm" && al && q.s0 !== al.state) ssvQClose(q); else ssvQDraw(q); });   // the alarm changed (armed, disarmed): the card has done its job
+  const n = document.documentElement.getAttribute("data-mode") !== "light", c0 = ssvCfg(), lv = Math.max(.1, Math.min(1, +(n ? (c0.nightDim != null ? c0.nightDim : 1) : (c0.dim != null ? c0.dim : 1)) || 1)); el.style.setProperty("--ssl", lv); if (c0.color) el.style.setProperty("--ssc", c0.color); else el.style.removeProperty("--ssc");
   const m = Math.floor(Date.now() / 60000); if (el._m !== m) { el._m = m; $(".ssb", el).style.transform = "translate(" + Math.round((Math.random() - .5) * 8) + "%," + Math.round((Math.random() - .5) * 10) + "%)"; }   // a slow drift, so no pixel stays lit
 }
+function ssvDriftApply() { const el = $("#ssv"); if (el) { const c = ssvCfg(), d = c && +c.driftSeconds; el.style.setProperty("--ssdur", (d >= 10 ? d : 80) + "s"); } if (el) el.classList.toggle("ssa", ssvDrift() && !(window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches)); }   // the slow wallpaper drift (css/126-screensaver.css, .ssa); a setting per device
 function ssvEnter() {
-  if (SSV.on || !ssvCfg()) return; SSV.on = true; SSV.shown = true; const el = ssvEl(); el.classList.remove("out"); el.hidden = false; el._k = el._w = el._c = ""; ssvDraw(); void el.offsetWidth; el.classList.add("on");
+  if (SSV.on || !ssvCfg()) return; SSV.on = true; SSV.shown = true; const el = ssvEl(); el.classList.remove("out"); el.hidden = false; el._k = el._w = el._c = ""; ssvDriftApply(); ssvDraw(); void el.offsetWidth; el.classList.add("on");
   document.documentElement.classList.add("ssv-on"); if (typeof slpEnter === "function") slpEnter(); clearInterval(SSV.t); SSV.t = setInterval(ssvDraw, 1000);
 }
 function ssvWake(go) {
-  if (!SSV.on) return; SSV.on = false; SSV.last = Date.now(); clearInterval(SSV.t); const el = $("#ssv"); document.documentElement.classList.remove("ssv-on");
+  if (!SSV.on) return; SSV.on = false; SSV.man = false; SSV.last = Date.now(); clearInterval(SSV.t); ssvQ(null, true); const el = $("#ssv"); document.documentElement.classList.remove("ssv-on");
   if (typeof slpWake === "function") slpWake();
   if (go) location.hash = go;
   if (el) { el.classList.remove("on"); el.classList.add("out"); clearTimeout(el._h); el._h = setTimeout(() => { if (!SSV.on) { el.hidden = true; el.classList.remove("out"); } }, 450); }   // it fades out and keeps covering the screen for a moment, so the touch that woke it is not also a tap on the page
 }
 const ssvHold = () => { const c = ssvCfg() || {}; SSV.hold = Date.now() + (c.hold != null ? Math.max(0, +c.hold || 0) : 300) * 1000; };
 if (window.__deep) ssvHold();   // opened on a page of its own (load_url, a notification tap)
+// ---------- quick cards: tap a chip or the weather and a small card opens over the screensaver ----------
+const ssvQOk = () => { const c = ssvCfg(); return !!c && c.quick !== false; };
+// Cards stack: tap a chip and its card opens; tap another and that one opens too (the newest in front and open, older ones folded to a one-line row, three at most). Tap an open chip again, a card's X, or outside to close.
+function ssvQTimer(q) { if (!q) return; clearTimeout(q.t); q.t = setTimeout(() => ssvQClose(q), q.step === "kp" ? 30000 : 15000); }
+const ssvQKey = c => (c.dataset.q || "") + (c.dataset.qi != null ? ":" + c.dataset.qi : "");
+function ssvQLayout() {
+  const el = $("#ssv"); if (!el) return; const n = SSV.qs.length;
+  el.classList.toggle("qopen", n > 0); el.dataset.qn = n; el.classList.toggle("qkp", n > 0 && SSV.qs[n - 1].step === "kp");
+  SSV.qs.forEach((q, i) => q.box.classList.toggle("min", i < n - 1)); ssvQChips();
+  // the clock and chips lift just far enough to stay clear of however tall the stack is (they are centred, drawn at .78 scale)
+  const sb = $(".ssb", el), w = $(".ssqw", el); if (!n || !sb || !w) return; const vh = innerHeight, H = sb.offsetHeight, off = Math.max(16, Math.min(72, vh * .07)), want = vh / 2 + H * (n > 1 ? .35 : .39) - (vh - off - w.offsetHeight - 30), top = vh / 2 - H * (n > 1 ? .35 : .39) - 6;
+  el.style.setProperty("--qy", Math.round(Math.max(vh * .13, Math.min(want, top))) + "px");
+}
+function ssvQChips() { $$("#ssv .ssp[data-q]").forEach(c => c.classList.toggle("op", SSV.qs.some(q => q.key === ssvQKey(c)))); }   // the chip of an open card is lit
+function ssvQClose(q, now) {
+  const i = SSV.qs.indexOf(q); if (i < 0) return; SSV.qs.splice(i, 1); clearTimeout(q.t); q.box.classList.remove("on"); clearTimeout(q.box._h);
+  if (now) q.box.remove(); else q.box._h = setTimeout(() => q.box.remove(), 330); ssvQLayout();
+}
+function ssvQFront(q) { const i = SSV.qs.indexOf(q); if (i < 0 || i === SSV.qs.length - 1) return; SSV.qs.splice(i, 1); SSV.qs.push(q); q.box.parentNode.appendChild(q.box); ssvQLayout(); ssvQTimer(q); }
+function ssvQ(k, now, arg) {
+  const el = $("#ssv"); if (!el) return; const wrap = $(".ssqw", el); if (!wrap) return;
+  if (!k) { SSV.qs.slice().forEach(q => ssvQClose(q, now)); return; }
+  const key = k + (arg != null ? ":" + arg : ""), ex = SSV.qs.find(q => q.key === key); if (ex) { ssvQClose(ex); return; }   // an open chip again: close its card
+  const q = { k: k, key: key, arg: arg, step: "", v: "", m: "", s0: k === "alarm" ? (states[CONFIG.alarm] || {}).state : "", t: 0, box: document.createElement("div") };
+  q.box.className = "ssq"; q.box._q = q; if (!ssvQBody(q)) return;
+  SSV.qs.push(q); while (SSV.qs.length > 3) ssvQClose(SSV.qs[0], true);
+  wrap.appendChild(q.box); ssvQDraw(q); if (!SSV.qs.includes(q)) return; ssvQLayout(); void q.box.offsetWidth; q.box.classList.add("on"); ssvQTimer(q);
+}
+const ssvQSince = e => { const t = e && Date.parse(e.last_changed || ""); return t ? wxHM(new Date(t)) : ""; };
+const ssvTimers = () => (CONFIG.notifTimers || []).filter(x => states[x] && /^(active|paused)$/.test(states[x].state)).map(x => { const t = states[x].attributes || {}, dur = (t.duration || "0:00:00").split(":").reduce((p, q) => p * 60 + +q, 0) * 1000, rem = (t.remaining || "0:00:00").split(":").reduce((p, q) => p * 60 + +q, 0) * 1000; return { id: x, st: states[x].state, fin: Date.parse(t.finishes_at || "") || 0, dur: dur, rem: rem }; });
+const ssvClock = ms => { const t = Math.max(0, Math.ceil(ms / 1000)), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60; return (h ? h + ":" + String(m).padStart(2, "0") : m) + ":" + String(s).padStart(2, "0"); };
+// Goodnight: what one tap would do right now (null when there is nothing to do, or outside the evening window)
+function ssvGn(any) {
+  const c0 = ssvCfg(); if (!c0 || c0.goodnight === false) return null; const c = typeof c0.goodnight === "object" ? c0.goodnight : {}, h = new Date().getHours(), from = c.from != null ? +c.from : 21, until = c.until != null ? +c.until : 5;
+  if (!any && !(from > until ? h >= from || h < until : h >= from && h < until)) return null;
+  const keep = [].concat(c.keep || []), lights = []; try { HOUSE().forEach(r => roomLights(r).filter(x => /^light\./.test(x) && isOn(x) && keep.indexOf(x) < 0 && lights.indexOf(x) < 0).forEach(x => lights.push(x))); } catch (_) {}
+  const off = [].concat(c.off || []).filter(x => states[x] && isOn(x)), cam = Object.keys(GAL).find(k => GAL[k] && GAL[k].st !== "closed") || "", al = CONFIG.alarm && states[CONFIG.alarm], mode = c.arm === false ? "" : (c.arm || "arm_night"), arm = al && al.state === "disarmed" && mode ? mode : "", script = c.script && states[c.script] ? c.script : "";
+  return lights.length || off.length || cam || arm || script ? { lights: lights, off: off, cam: cam, arm: arm, script: script } : null;
+}
+function ssvQBody(q) {
+  if (!q) return null; const btn = (a, t, p) => '<button class="ssb2' + (p ? " p" : "") + '" data-qa="' + a + '">' + t + '</button>';
+  if (q.k === "alarm") {
+    const al = states[CONFIG.alarm]; if (!al) return null; const st = al.state, a = al.attributes || {}, m = ALS[st] || [String(st).toUpperCase(), ""], nm = m[0].charAt(0) + m[0].slice(1).toLowerCase();
+    if (q.step === "kp") { let g = ""; for (let i = 1; i < 10; i++) g += '<button data-qa="key:' + i + '">' + i + '</button>'; const n = Math.max(4, q.v.length), dots = Array.from({ length: n }, (_, i) => '<i class="' + (i < q.v.length ? "f" : "") + '"></i>').join("");
+      return { h: { arm_away: "Arm away", arm_home: "Arm home", arm_night: "Arm night", disarm: "Disarm" }[q.m] || "Alarm", s: "Enter the alarm code", b: '<div class="ssk"><div class="ssdots">' + dots + '</div><div class="ssg">' + g + '<button data-qa="key:bk" aria-label="Delete">' + mdi("backspace-outline") + '</button><button data-qa="key:0">0</button><button class="ok" data-qa="key:ok" aria-label="Confirm">' + mdi("check") + '</button></div></div>', r: btn("key:x", "Cancel") };
+    }
+    const s0 = ssvQSince(al), doors = (() => { try { return doorsOpen(); } catch (_) { return null; } })(), z = doors && doors.length ? doors.length + " open" : "Doors and windows shut";
+    if (st === "disarmed") return { h: "Alarm", t: nm, s: (s0 ? "Since " + s0 + " · " : "") + z, r: btn("arm:arm_night", "Arm night") + btn("arm:arm_away", "Arm away", 1) };
+    if (st === "arming" || st === "pending" || st === "triggered") return { h: "Alarm", t: nm, s: st === "arming" ? "Leave now" : "Disarm now", r: btn("arm:disarm", st === "arming" ? "Cancel" : "Disarm", 1) };
+    return { h: "Alarm", t: nm, s: (s0 ? "Since " + s0 + " · " : "") + z, r: btn("close", "Close") + btn("arm:disarm", "Disarm", 1) };
+  }
+  if (q.k === "weather") {
+    const w = typeof W !== "undefined" && states[W]; if (!w) return null; const at = w.attributes || {}, st = wxNowState(), ot = sv(E("outdoorTemp")), t = ot != null && ot !== "" && !isNaN(parseFloat(ot)) ? parseFloat(ot) : at.temperature, d = typeof fc !== "undefined" && fc && fc[0];
+    const H = (typeof fcH !== "undefined" && fcH ? fcH : []).filter(x => Date.parse(x.datetime) > Date.now() - 36e5).filter((x, i) => i % 2 === 0).slice(0, 5);
+    const hr = H.map(x => '<div><span>' + esc(wxHM(new Date(x.datetime))) + '</span>' + mdi(ssvIcon[x.condition] || "weather-cloudy") + '<b>' + (x.temperature != null ? Math.round(x.temperature) + '°' : "") + '</b></div>').join("");
+    const rain = (typeof fcH !== "undefined" && fcH ? fcH : []).find(x => { const ms = Date.parse(x.datetime); return ms > Date.now() && ms < Date.now() + 12 * 36e5 && (x.precipitation_probability >= 60 || /rainy|pouring|snowy/.test(x.condition || "")); });
+    return { h: "Weather", t: (t != null && !isNaN(+t) ? Math.round(+t) + "° · " : "") + esc((COND[st] || ["", title(st)])[1]), s: [rain && !/rainy|pouring|snowy/.test(st) ? "Rain from " + esc(wxHM(new Date(rain.datetime))) : "", d && d.temperature != null ? "H " + Math.round(d.temperature) + "°" + (d.templow != null ? " · L " + Math.round(d.templow) + "°" : "") : ""].filter(Boolean).join(" · "), b: hr ? '<div class="sshr">' + hr + '</div>' : "", r: btn("close", "Close") + btn("open:#weather", "5-day", 1) };
+  }
+  if (q.k === "garage") {
+    const cam = Object.keys(GAL).find(k => GAL[k] && GAL[k].st !== "closed"); if (!cam) return null; const g = GAL[cam], c = galCfg()[cam] || {}, sn = c.sensor && states[c.sensor], mv = g.st === "opening" || g.st === "closing";
+    const t0 = sn && Date.parse(sn.last_changed || ""), mins = t0 ? Math.max(0, Math.round((Date.now() - t0) / 60000)) : 0;
+    const title = mv ? "Garage " + g.st : "Garage open", sub = !mv && mins >= 1 ? "For " + (mins >= 60 ? Math.floor(mins / 60) + " h " + (mins % 60) + " min" : mins + " min") : "";
+    if (q.step === "confirm") return { h: "Garage", t: "Close the garage door?", s: "Check nothing is in the way.", r: btn("gcl:no", "Keep open") + btn("gcl:go", "Close garage", 1) };
+    return { h: "Garage", t: title, s: sub, r: btn("close", "Close") + (c.opener ? btn("gcl", "Close garage", 1) : btn("open:#view/garage", "View camera", 1)) };
+  }
+  if (q.k === "timer") {
+    const t = ssvTimers(); if (!t.length) return null;
+    return { h: "Timers", t: t.length > 1 ? t.length + " timers" : "", b: '<div class="sstl">' + t.map(x => '<div class="sstr"><div class="sstn"><span>' + esc(fname(x.id)) + '</span><b class="sstm" data-st="' + x.st + '" data-fin="' + x.fin + '" data-dur="' + x.dur + '" data-rem="' + x.rem + '">--</b><i class="sstb"><i></i></i></div>' + btn("tp:" + x.id, x.st === "paused" ? "Resume" : "Pause").replace('class="ssb2', 'class="ssb2 s') + btn("tc:" + x.id, "Cancel").replace('class="ssb2', 'class="ssb2 s') + '</div>').join("") + '</div>', r: btn("close", "Close") };
+  }
+  if (q.k === "music") {
+    const g = typeof npActive === "function" ? npActive()[0] : null; if (!g) return null; const s = states[g.ctl] || { state: "idle", attributes: {} }, a = s.attributes || {}, play = s.state === "playing";
+    return { h: "Now playing", b: '<div class="ssmr"><span class="ssart">' + mpArt(a, s.state, a.entity_picture) + '</span><div><div class="ssqt">' + esc(mpTitle(a, "playing") || "Playing") + '</div><div class="ssqs">' + [a.media_artist, g.mem.map(fname).join(" · ")].filter(Boolean).map(esc).join(" · ") + '</div></div></div><div class="ssmp" data-ctl="' + esc(g.ctl) + '"><i></i></div>',
+      r: btn("mp:vd", mdi("volume-minus")) + btn("mp:prev", mdi("skip-previous")) + btn("mp:pp", mdi(play ? "pause" : "play"), 1) + btn("mp:next", mdi("skip-next")) + btn("mp:vu", mdi("volume-plus")) };
+  }
+  if (q.k === "goodnight") {
+    const g = ssvGn(true); if (!g) return null; const al = states[CONFIG.alarm], need = [];
+    if (g.lights.length + g.off.length) need.push(g.lights.length + g.off.length + (g.lights.length + g.off.length > 1 ? " lights and devices off" : " light off")); if (g.cam) need.push("Close the garage"); if (g.script) need.push("Run " + esc(fname(g.script))); if (g.arm) need.push("Arm " + g.arm.replace("arm_", ""));
+    let dr = null; try { dr = doorsOpen(); } catch (_) {}
+    return { h: "Goodnight", t: "Lock up for the night?", s: need.join(" · ") + (g.arm && dr && dr.length ? " · " + dr.length + (dr.length > 1 ? " doors" : " door") + " open" : ""), r: btn("close", "Not yet") + btn("gn", "Goodnight", 1) };
+  }
+  if (q.k === "info") { const i = SSV.info[q.arg]; if (!i) return null; return { h: i.h, t: i.t, s: i.s, r: btn("close", "Close") + (i.go ? btn("open:" + i.go, "Open", 1) : "") }; }
+  if (q.k === "wash") {
+    const L = typeof insxLaundry === "function" ? insxLaundry().find(x => x.lvl === 2) : null; if (!L) return null;
+    return { h: "Laundry", t: "Washing done", s: esc(L.sub) + " · " + L.stats.filter(x => x[0] === "Waiting").map(x => "waiting " + x[1]).join(""), r: btn("close", "Close") + btn("open:#notifications", "Insights", 1) };
+  }
+  if (q.k === "roster") {
+    const b = typeof rosterBad === "function" ? rosterBad() : null; if (!b) return null;
+    return { h: "Roster", t: "Not updating", s: [b.sensorBad ? "Day code sensor down" + (b.since ? " since " + esc(schTm(new Date(b.since))) : "") : "", b.calBad ? "No shifts in the next 14 days" : ""].filter(Boolean).join(" · "), b: '<div class="ssqn">' + esc(rosterSteps) + '</div>', r: btn("close", "Close") + btn("rs", "Sync now", 1) };
+  }
+  if (q.k === "hp") {
+    const h = ssvHp(); if (!h) return null; const rows = ssvHpRows();
+    const row = x => { const a = (states[x.id] || {}).attributes || {}, ct = parseFloat(a.current_temperature), tg = ssvHpTg(x.id), st = states[x.id].state, c = cls[st] || "auto", nm = { heat: "Heating", cool: "Cooling", dry: "Drying", auto: "Auto", fan: "Fan" }[c] || "On";
+      const gap = !isNaN(ct) && tg != null && !isNaN(+tg) ? +tg - ct : null, far = gap != null && Math.abs(gap) >= .3 && c !== "fan" ? (gap > 0 ? "warming up" : "cooling down") : "";
+      return '<div class="sshp" style="--k:' + (c === "heat" ? "rgb(var(--heat-rgb))" : c === "cool" ? "rgb(var(--cool-rgb))" : "rgb(var(--mint-rgb))") + '"><div class="sshn"><span>' + esc(x.n) + '</span><small>' + nm + (far ? " · " + far : "") + '</small></div><b>' + (isNaN(ct) ? "--" : f1(ct) + "°") + '<em> → ' + (tg != null && !isNaN(+tg) ? f1(tg) + "°" : "--") + '</em></b><button data-qa="hb:' + esc(x.id) + '|-1" aria-label="Lower">' + mdi("minus") + '</button><button data-qa="hb:' + esc(x.id) + '|1" aria-label="Raise">' + mdi("plus") + '</button></div>'; };
+    return { h: "Heat pump", t: h.chip, b: '<div class="sshl">' + rows.map(row).join("") + '</div>', r: btn("close", "Close") + btn("open:#climate", "Climate", 1) };
+  }
+  if (q.k === "cal") {
+    const n = ssvCalNext(); if (!n) return null; const now = Date.now();
+    const rows = n.list.map(v => { const m = Math.round((v.t - now) / 60000), eta = v.t <= now ? "now" : m < 60 ? "in " + m + " min" : m < 180 ? "in " + Math.floor(m / 60) + " h " + (m % 60) + " min" : ""; return '<div class="ssce" style="--c:' + v.c + '"><small>' + esc(schTm(new Date(v.t))) + '</small><span>' + esc(v.s) + (v.l ? '<i>' + esc(v.l) + '</i>' : "") + '</span>' + (eta ? '<em>' + eta + '</em>' : "") + '</div>'; }).join("");
+    return { h: "Calendar", t: "Next up", b: '<div class="ssce-l">' + rows + '</div>', r: btn("close", "Close") + btn("open:#events", "Events", 1) };
+  }
+  if (q.k === "doors") {
+    let dr = null; try { dr = doorsOpen(); } catch (_) {} if (!dr || !dr.length) return null;
+    return { h: "Doors", t: dr.length > 1 ? dr.length + " doors open" : "Door open", s: dr.slice(0, 4).map(x => esc(fname(x))).join(", ") + (dr.length > 4 ? " +" + (dr.length - 4) : ""), r: btn("close", "Close") + btn("open:#security", "Security", 1) };
+  }
+  return null;
+}
+function ssvQTick(box) {   // the numbers that move every second are written in place, so a tap on a button is never lost to a redraw
+  box.querySelectorAll(".sstm").forEach(b => { const fin = +b.dataset.fin, dur = +b.dataset.dur, paused = b.dataset.st === "paused", ms = paused ? +b.dataset.rem : fin - Date.now(); b.textContent = ssvClock(ms); const i = b.parentNode.querySelector(".sstb i"); if (i) i.style.width = (dur > 0 ? Math.max(0, Math.min(100, (1 - ms / dur) * 100)) : 0) + "%"; });
+  box.querySelectorAll(".ssmp").forEach(b => { let q = null; try { q = mpPos(b.dataset.ctl); } catch (_) {} const i = b.firstChild; if (i) i.style.width = q && q.dur > 0 ? Math.max(0, Math.min(100, q.pos / q.dur * 100)) + "%" : "0%"; });
+}
+function ssvQDraw(q) {
+  const box = q && q.box; if (!box || SSV.qs.indexOf(q) < 0) return; const d = ssvQBody(q); if (!d) { ssvQClose(q); return; }
+  const h = '<button class="ssxb" data-qa="close" aria-label="Close">' + mdi("close") + '</button><div class="ssqh">' + (q.step === "kp" ? mdi("shield-lock") + " " : "") + esc(d.h) + '</div>' + (d.t ? '<div class="ssqt">' + d.t + '</div>' : "") + (d.s ? '<div class="ssqs">' + d.s + '</div>' : "") + (d.b || "") + '<div class="ssqr">' + d.r + '</div>';
+  if (box._k !== h) { box._k = h; box.innerHTML = h; } ssvQLayout(); ssvQTick(box);
+}
+function ssvQAct(a, q) {
+  if (!q) return; const [k, v] = a.split(":");
+  if (k === "close") return ssvQClose(q);
+  if (k === "open") return ssvWake(v);
+  if (k === "arm") { const s = states[CONFIG.alarm], at = s ? s.attributes : {}, m = v, need = at.code_format && (m === "disarm" || at.code_arm_required !== false);
+    if (!need) { call("alarm_control_panel", "alarm_" + m, CONFIG.alarm, {}); ssvQClose(q); return; }
+    if (at.code_format === "number") { q.step = "kp"; q.m = m; q.v = ""; ssvQFront(q); ssvQDraw(q); ssvQTimer(q); return; }
+    ssvWake("#security"); return; }   // a text code: the dashboard asks for it
+  if (k === "key") { if (q.step !== "kp") return; if (v === "x") { q.step = ""; q.v = ""; } else if (v === "bk") q.v = q.v.slice(0, -1); else if (v === "ok") { if (q.v) { call("alarm_control_panel", "alarm_" + q.m, CONFIG.alarm, { code: q.v }); ssvQClose(q); return; } } else if (q.v.length < 12) q.v += v; ssvQDraw(q); ssvQTimer(q); return; }
+  if (k === "rs") { if (typeof rosterSync === "function") rosterSync(); ssvQTimer(q); return; }
+  if (k === "hb") { const [id, d] = v.split("|"); bump(id, +d); ssvQTimer(q); setTimeout(() => ssvQDraw(q), 60); return; }
+  if (k === "tp") { const t = states[v]; if (t) call("timer", t.state === "paused" ? "start" : "pause", v); ssvQTimer(q); return; }
+  if (k === "tc") { call("timer", "cancel", v); ssvQTimer(q); return; }
+  if (k === "mp") { const g = typeof npActive === "function" ? npActive()[0] : null; if (!g) return; if (v === "vd" || v === "vu") call("media_player", v === "vd" ? "volume_down" : "volume_up", g.ctl); else mpDo(v, g.ctl); ssvQTimer(q); return; }
+  if (k === "gn") { const g = ssvGn(true); if (!g) return ssvQClose(q);
+    if (g.lights.length) call("light", "turn_off", g.lights); if (g.off.length) call("homeassistant", "turn_off", g.off); if (g.cam) galPress(g.cam, false); if (g.script) call("script", "turn_on", g.script);
+    if (g.arm) { ssvQAct("arm:" + g.arm, q); if (q.step !== "kp") ssvQClose(q); } else ssvQClose(q); return; }
+  if (k === "gcl") { if (v === "go") { const cam = Object.keys(GAL).find(x => GAL[x] && GAL[x].st !== "closed"); if (cam) galPress(cam, false); ssvQClose(q); } else if (v === "no") { q.step = ""; ssvQDraw(q); ssvQTimer(q); } else { q.step = "confirm"; ssvQDraw(q); ssvQTimer(q); } }
+}
+document.addEventListener("click", e => {
+  if (!SSV.on || !ssvQOk()) return; const a = e.target.closest && e.target.closest("#ssv [data-qa]"), t = e.target.closest && e.target.closest("#ssv [data-q]");
+  if (a) { e.stopPropagation(); const bx = a.closest(".ssq"); ssvQAct(a.dataset.qa, bx && bx._q); } else if (t && t.dataset.q) { e.stopPropagation(); ssvQ(t.dataset.q, false, t.dataset.qi); }
+}, true);
 function ssvCheck() {
-  const c = ssvCfg(); if (!c) return; const now = Date.now(), ent = c.entity && states[c.entity], pres = ent && ent.state !== "unavailable" && ent.state !== "unknown" ? ent.state : "";
+  const c = ssvCfg(), hb = $("#hss"); if (hb) hb.hidden = !(c && c.button !== false); if (!c) return; const now = Date.now(), ent = c.entity && states[c.entity], pres = ent && ent.state !== "unavailable" && ent.state !== "unknown" ? ent.state : "";
   const al = CONFIG.alarm && states[CONFIG.alarm], alarm = al && /^(pending|triggered)$/.test(al.state);
-  if (SSV.on) { if (alarm) ssvWake("#security"); else if (pres === "on" && c.wakeOnPresence === true) ssvWake(); return; }
+  if (SSV.on) { if (alarm) ssvWake("#security"); else if (pres === "on" && c.wakeOnPresence === true && !SSV.man) ssvWake(); return; }
   if (alarm || now < SSV.hold) return;
   const quiet = (now - SSV.last) / 1000;
   if (pres === "off") { if (!SSV.seen) SSV.seen = now; const lc = Date.parse(ent.last_changed || ""), since = !isNaN(lc) && lc <= now ? now - lc : now - SSV.seen; if (since / 1000 >= (+c.after > 0 ? +c.after : 120) && quiet >= (+c.after > 0 ? +c.after : 120) && now - SSV.seen > 4000) ssvEnter(); }
   else SSV.seen = 0;
   const idle = c.idle != null ? +c.idle : (c.entity ? 0 : 600); if (idle > 0 && quiet >= idle) ssvEnter();
 }
-["pointerdown", "touchstart", "keydown", "wheel"].forEach(t => addEventListener(t, () => { SSV.last = Date.now(); if (SSV.on) ssvWake(); }, { capture: true, passive: true }));
+["pointerdown", "touchstart", "keydown", "wheel"].forEach(t => addEventListener(t, e => {
+  SSV.last = Date.now(); if (!SSV.on) return;
+  if (Date.now() - SSV.qc < 700) return;   // the same tap closed a card a moment ago (a touch sends pointerdown, then touchstart): its other events must not wake the screen
+  if (ssvQOk() && e.target && e.target.closest && e.target.closest("#ssv .ssq, #ssv [data-q]")) { const bx = e.target.closest("#ssv .ssq"); if (bx && bx._q) { ssvQTimer(bx._q); if (bx.classList.contains("min")) ssvQFront(bx._q); } return; }   // a chip or the card: the click handler below opens or runs it; nothing wakes
+  if (SSV.q) { if (e.type === "pointerdown" || e.type === "touchstart") { ssvQ(null); SSV.qc = Date.now(); } return; }   // a tap outside an open card only closes the card
+  ssvWake();
+}, { capture: true, passive: true }));
 addEventListener("hashchange", () => { if (Date.now() - SSV.last > 1500) ssvHold(); ssvWake(); });   // a page change nobody touched for (fully_kiosk.load_url to #view/driveway): it ends the screensaver and keeps it away for `hold` seconds
-setInterval(ssvCheck, 2000);
+const hss = $("#hss"); if (hss) hss.onclick = () => { if (!ssvCfg() || SSV.on) return; SSV.man = true; SSV.last = Date.now(); ssvEnter(); };   // the moon button in the tablet's top bar: start the screen now (a touch ends it, and it stays up while someone is in the room)
+setInterval(ssvCheck, 2000); ssvCheck();
 if (window.fully && typeof fully.bind === "function") { window.ssvOff = ssvEnter; window.ssvOn = () => { const c = ssvCfg(); if (c && c.wakeOnPresence === true) ssvWake(); }; try { fully.bind("onScreenOn", "ssvOn();"); fully.bind("onScreensaverStop", "ssvOn();"); } catch (_) {} }
+// Crash trail: the Home Assistant app sometimes reloads the page by itself (its web view gives up). To tell that apart from a normal close or navigation, the page notes what it is doing
+// (camera open, zoomed) and marks itself "left cleanly" when it is hidden or closed. If the next start finds the note without that mark, it shows a short line saying what the last page was doing.
+// Kept in localStorage only (never sent anywhere). Off unless  crashTrail: true  is set in config.js.
+(function () {
+  if (CONFIG.crashTrail !== true) return;
+  const K = "dashTrail", rd = () => { try { return JSON.parse(localStorage.getItem(K) || "null"); } catch (e) { return null; } }, wr = o => { try { localStorage.setItem(K, JSON.stringify(o)); } catch (e) {} };
+  const prev = rd(), now = Date.now();
+  if (prev && !prev.clean && now - prev.t < 600000 && prev.did) {
+    const ago = Math.max(1, Math.round((now - prev.t) / 1000)), d = document.createElement("div");
+    d.textContent = "The last page ended unexpectedly " + ago + " s before this start" + (prev.zoom ? ", while zoomed on " + prev.zoom : prev.cam ? ", with " + prev.cam + " open" : "") + ".";
+    d.style.cssText = "position:fixed;left:12px;right:12px;bottom:12px;z-index:99999;padding:10px 14px;border-radius:12px;background:rgba(20,20,24,.92);color:#fff;font:13px/1.35 system-ui,sans-serif;text-align:center";
+    const add = () => { document.body.appendChild(d); setTimeout(() => d.remove(), 12000); d.onclick = () => d.remove(); };
+    if (document.body) add(); else addEventListener("DOMContentLoaded", add);
+    try { console.warn("[dash] " + d.textContent); } catch (e) {}
+  }
+  let st = { t: now, clean: false, did: false, cam: "", zoom: "" };
+  const snap = () => {
+    const c = document.querySelector(".cam.fs,.cam.vf"); st.t = Date.now(); st.did = !!c; st.cam = c ? ((c.querySelector(".lbl") || {}).textContent || "a camera") : ""; st.zoom = c && c.classList.contains("zm") ? st.cam : ""; wr(st);
+  };
+  const clean = () => { st.clean = true; st.t = Date.now(); wr(st); };
+  setInterval(() => { if (!document.hidden) { st.clean = false; snap(); } }, 3000);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) clean(); else { st.clean = false; snap(); } });
+  addEventListener("pagehide", clean);
+})();
+// Reload keeps your place (second half; the first half is js/boot/restore-page.js, which puts the address back).
+// Here: note where you are every few seconds (page address, scroll position, the section tab each page had open), and after a restore bring the scroll position and the tabs back.
+// Kept in localStorage only ("dashLast"), never sent anywhere. Off with  restorePage: false  in config.js.
+(function () {
+  if (CONFIG.restorePage === false) return;
+  const K = "dashLast", PAGE = /^#(climate|events|rooms|security|weather|energy|irrigation|scenes|media|theme|vehicle|hazards|insights|admin|view|camera)(\/[\w.%~-]*)*$/i, NO = /^#security\/disarm/i;
+  const L = window.__last || {}, restored = window.__restored === true, cur = { h: "", y: 0, sel: {}, r: L.r || 0 };
+  const pgEl = () => { const p = curPg(); return p === "view" || p === "camera" ? null : $("#" + (p === "rooms" ? "roomspg" : p)); };
+  // the section tab each page had open (Rooms and Weather capsule rows, 31-section-pills.js) comes back before the first draw
+  if (restored && L.sel && typeof L.sel === "object") Object.keys(L.sel).forEach(k => { if (typeof L.sel[k] === "string") SECP.sel[k] = L.sel[k]; });
+  const save = () => {
+    try {
+      const h = location.hash;
+      if (!h || /^#(home)?$/.test(h)) { cur.h = ""; cur.y = 0; cur.sel = {}; }   // Home is where a plain start lands: nothing to bring back
+      else if (PAGE.test(h) && !NO.test(h)) { const e = pgEl(); cur.h = h; cur.y = e ? Math.max(0, Math.round(e.scrollTop)) : 0; cur.sel = Object.assign({}, SECP.sel); }
+      // anything else (#popup, #disarm, #active ...) is an overlay or a one-off link: the note keeps the last real page
+      cur.t = Date.now(); localStorage.setItem(K, JSON.stringify(cur));
+    } catch (_) {}
+  };
+  setInterval(() => { if (!document.hidden) save(); }, 4000);
+  addEventListener("hashchange", () => setTimeout(save, 0));
+  document.addEventListener("visibilitychange", () => { if (document.hidden) save(); });
+  addEventListener("pagehide", save);
+  save();
+  // a short "Opening Climate" so the jump back to your last page does not look like a glitch
+  if (restored && L.h) setTimeout(() => { try { const t = ($("#ttl") || {}).textContent, n = String(t || "").trim(); if (!n || document.hidden) return; const d = document.createElement("div"); d.id = "rsnote"; d.textContent = "Opening " + n; document.body.appendChild(d); requestAnimationFrame(() => d.classList.add("on")); setTimeout(() => { d.classList.remove("on"); setTimeout(() => d.remove(), 400); }, 2200); } catch (_) {} }, 900);
+  // the scroll position: each page is its own scroller. The page fills in as its data arrives, so try a few times, and stop for good at the first touch or when the page changes
+  if (restored && L.y > 24) {
+    let off = false; const h0 = location.hash, stop = () => { off = true; ["pointerdown", "wheel", "touchstart", "keydown"].forEach(t => removeEventListener(t, stop, true)); };
+    ["pointerdown", "wheel", "touchstart", "keydown"].forEach(t => addEventListener(t, stop, { capture: true, passive: true }));
+    [400, 900, 1600, 2600, 4000].forEach(ms => setTimeout(() => {
+      if (off) return; if (location.hash !== h0) return stop();
+      const e = pgEl(); if (!e || Math.abs(e.scrollTop - L.y) < 4 || e.scrollHeight - e.clientHeight < L.y - 4) return;   // already there, or the page is not tall enough yet
+      e.scrollTo({ top: L.y, behavior: "instant" });
+    }, ms));
+    setTimeout(stop, 4200);
+  }
+})();
 (() => {
   const SEL = ".chip, .chmt button, .seg > .eb";
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
